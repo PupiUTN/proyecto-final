@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador.service;
+package controlador;
 
 import java.util.List;
 import javax.ejb.Stateless;
@@ -19,7 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import modelo.Perro;
-import persistencia.PerroDAO;
+import persistencia.BaseDatos;
 
 /**
  *
@@ -29,31 +29,31 @@ import persistencia.PerroDAO;
 @Path("perro")
 public class PerroREST {
 
-    private PerroDAO perroDAO;
+    private BaseDatos<Perro> baseDatos;
 
     public PerroREST() {
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Perro entity) {
+    public void create(Perro entity) throws Exception {
         System.out.println("======================================================");
         System.out.println(entity);
-        perroDAO = new PerroDAO();
-        perroDAO.persist(entity, Perro.class);
+        baseDatos = new BaseDatos<>();
+        baseDatos.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void edit(@PathParam("id") Long id, Perro entity) {
-        perroDAO.edit(entity);
+        baseDatos.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
-        perroDAO.remove(id, Perro.class);
+//        baseDatos.remove(entity);
     }
 
     @GET
@@ -66,9 +66,9 @@ public class PerroREST {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Perro> findAll() {
-        perroDAO = new PerroDAO();
-        return perroDAO.findAllPerros();
+    public List<Perro> findAll() throws Exception {
+        baseDatos = new BaseDatos<>();
+        return baseDatos.findAll();
     }
 
 }

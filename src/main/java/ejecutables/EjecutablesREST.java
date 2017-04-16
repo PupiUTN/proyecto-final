@@ -15,7 +15,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import persistencia.PerroDAO;
+
 
 /**
  *
@@ -31,14 +31,6 @@ public class EjecutablesREST {
         return " Ping : " + new Date();
     }
 
-    @Path("insert")
-    @GET
-    @Produces({MediaType.TEXT_PLAIN})
-    public String insert() {
-        PerroDAO perroDAO = new PerroDAO();
-        perroDAO.cargarDatos();
-        return " Insert: " + new Date();
-
-    }
+    
 
 }
