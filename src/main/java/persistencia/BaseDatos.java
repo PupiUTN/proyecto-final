@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import modelo.Dueno;
 import modelo.Perro;
 import modelo.Raza;
 import modelo.Tamanio;
@@ -27,11 +28,10 @@ import modelo.Vacuna;
  * @author jose
  */
 // solo visible para su packete, asi resperamos el uso de los daos de cada clase
-public class BaseDatos<T> {
+public class BaseDatos {
 
     private static EntityManagerFactory emf;
-    EntityManager em;
-    private Class<T> entityClass;
+    private EntityManager em;
     // se pueden mejorar todas las consultas con el criteria API en vez de escribir la consulta
     private static int selector = -1;
     private static final int LOCAljose = 1;
@@ -75,44 +75,8 @@ public class BaseDatos<T> {
         }
     }
 
-    public void create(T entity) {
-        em.persist(entity);
-    }
-
-    public void edit(T entity) {
-        em.merge(entity);
-    }
-
-    public void remove(T entity) {
-        em.remove(em.merge(entity));
-    }
-
-    public T find(Object id) {
-        return em.find(entityClass, id);
-    }
-
-    public List<T> findAll() {
-        javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-        cq.select(cq.from(entityClass));
-        return em.createQuery(cq).getResultList();
-    }
-
-//    public <T> void persist(Object o, Class<T> clazz) {
-//        em.getTransaction().begin();
-//        em.persist(clazz.cast(o));
-//        em.getTransaction().commit();
-//    }
-//
-//    public <T> void remove(Object o, Class<T> clazz) {
-//        em.getTransaction().begin();
-//        em.remove(clazz.cast(o));
-//        em.getTransaction().commit();
-//    }
-    public <T> T find(Object id, Class<T> clazz) {
-        return em.find(clazz, id);
-    }
-
-    public EntityManager getEm() {
+   
+    protected EntityManager getEntityManager() {
         return em;
     }
 
@@ -185,46 +149,6 @@ public class BaseDatos<T> {
         persistenceMap.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
         persistenceMap.put("javax.persistence.schema-generation.database.action", "create-or-extend-tables");
         emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
-    }
-
-    public boolean cargarDatos() {
-        Raza razaCalle = new Raza();
-        razaCalle.setNombre("callejero");
-        Raza razaPura = new Raza();
-        razaPura.setNombre("pura sangre");
-
-        Tamanio tamanioS = new Tamanio();
-        tamanioS.setNombre('S');
-
-        Tamanio tamanioM = new Tamanio();
-        tamanioM.setNombre('M');
-
-        Tamanio tamanioL = new Tamanio();
-        tamanioL.setNombre('L');
-
-        Vacuna vacunaRabia = new Vacuna();
-        vacunaRabia.setNombre("rabia");
-        List<Vacuna> vacunas = new LinkedList<>();
-        vacunas.add(vacunaRabia);
-        Perro betoben = new Perro();
-        betoben.setNombre("Betoben");
-        betoben.setRaza(razaPura);
-        betoben.setTamanio(tamanioL);
-        betoben.setVacunacionList(vacunas);
-        betoben.setComentario("una pelicula");
-
-        Perro fatigas = new Perro();
-        fatigas.setNombre("fatigas");
-        fatigas.setRaza(razaCalle);
-        fatigas.setTamanio(tamanioS);
-        fatigas.setVacunacionList(vacunas);
-        fatigas.setComentario("pepe argento");
-        em.getTransaction().begin();
-        em.persist(fatigas);
-        em.persist(betoben);
-        em.getTransaction().commit();
-
-        return true;
     }
 
     private void localMySQljorge() {

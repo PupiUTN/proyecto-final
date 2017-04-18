@@ -6,24 +6,58 @@
 package persistencia;
 
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import modelo.Dueno;
 import modelo.Perro;
+import modelo.Raza;
+import modelo.Tamanio;
+import modelo.Vacuna;
 
 /**
  *
- * @author jose
+ * @author agile
  */
-public class PerroDAO extends BaseDatos {
-     
-    public List<Perro> findAllPerros(){
-        Query query = em.createQuery(" SELECT p FROM Perro p");
-        return query.getResultList();
-    }
-    
-    public void insert(){
+public class PerroDAO extends DAO<Perro> {
+
+    public PerroDAO() throws Exception {
+                super(Perro.class);
         cargarDatos();
     }
 
+    private void cargarDatos() throws Exception {
+        if (count() == 0) {
+            RazaDAO razaDAO = new RazaDAO();
+            List<Raza> findAllRazas = razaDAO.findAll();
+
+            TamanioDAO tamanioDAO = new TamanioDAO();
+            List<Tamanio> findAllTamanio = tamanioDAO.findAll();
+
+            VacunaDAO vacunaDAO = new VacunaDAO();
+            List<Vacuna> findAllVacuna = vacunaDAO.findAll();
+
+            DuenoDAO duenoDAO = new DuenoDAO();
+            List<Dueno> findAllDueno = duenoDAO.findAll();
+            // PERRO 1
+            Perro betoben = new Perro();
+            betoben.setDueno(findAllDueno.remove(0));
+            betoben.setNombre("Betoben");
+            betoben.setRaza(findAllRazas.remove(0));
+            betoben.setTamanio(findAllTamanio.remove(0));
+            betoben.setVacunacionList(findAllVacuna);
+            betoben.setComentario("una pelicula");
+
+            //PERRO 2
+            Perro fatigas = new Perro();
+            fatigas.setDueno(findAllDueno.remove(0));
+            fatigas.setNombre("Fatigas");
+            fatigas.setRaza(findAllRazas.remove(0));
+            fatigas.setTamanio(findAllTamanio.remove(0));
+            fatigas.setVacunacionList(findAllVacuna);
+            fatigas.setComentario("De pelaje blanco y contextura gorda, generalmente aparece echado en algún lugar, prioritariamente en el vetusto sillón preferido de la familia, sin hacer nada. ");
+
+            create(fatigas);
+            create(betoben);
+        }
+
+    }
 
 }

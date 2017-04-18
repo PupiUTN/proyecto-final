@@ -20,6 +20,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import modelo.Perro;
 import persistencia.BaseDatos;
+import persistencia.PerroDAO;
 
 /**
  *
@@ -29,7 +30,7 @@ import persistencia.BaseDatos;
 @Path("perro")
 public class PerroREST {
 
-    private BaseDatos<Perro> baseDatos;
+    private PerroDAO perroDAO;
 
     public PerroREST() {
     }
@@ -39,15 +40,15 @@ public class PerroREST {
     public void create(Perro entity) throws Exception {
         System.out.println("======================================================");
         System.out.println(entity);
-        baseDatos = new BaseDatos<>();
-        baseDatos.create(entity);
+        perroDAO = new PerroDAO();
+        perroDAO.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void edit(@PathParam("id") Long id, Perro entity) {
-        baseDatos.edit(entity);
+//        baseDatos.edit(entity);
     }
 
     @DELETE
@@ -67,8 +68,8 @@ public class PerroREST {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Perro> findAll() throws Exception {
-        baseDatos = new BaseDatos<>();
-        return baseDatos.findAll();
+//        baseDatos = new BaseDatos<>();
+        return null;
     }
 
 }

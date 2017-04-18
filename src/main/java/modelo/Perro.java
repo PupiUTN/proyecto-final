@@ -27,6 +27,8 @@ public class Perro implements Serializable {
     private Raza raza;
     @OneToOne(cascade = CascadeType.ALL)
     private Tamanio tamanio;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Dueno dueno;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Vacuna> vacunacionList;
     private String fotoRuta;
@@ -91,6 +93,15 @@ public class Perro implements Serializable {
     public void setComentario(String comentario) {
         this.comentario = comentario;
     }
+
+    public Dueno getDueno() {
+        return dueno;
+    }
+
+    public void setDueno(Dueno dueno) {
+        this.dueno = dueno;
+    }
+    
 
     @Override
     public String toString() {

@@ -15,7 +15,7 @@ import javax.persistence.Id;
 public class Vacuna implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String nombre;
 
@@ -39,8 +39,5 @@ public class Vacuna implements Serializable {
     public String toString() {
         return "Vacuna{" + "id=" + id + ", nombre=" + nombre + '}';
     }
-    
-    
-    
-    
+
 }

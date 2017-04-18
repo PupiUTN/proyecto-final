@@ -8,6 +8,8 @@ package modelo;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,16 +18,17 @@ import javax.persistence.TemporalType;
 public class Reserva implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    
+
     @Temporal(TemporalType.DATE)
     private Date fechaTransaccion;
     private Hospedaje hospedaje;
-    private DuenoMascota duenoMascota;
-    
+    private Perro perro;
+
     @Temporal(TemporalType.DATE)
     private Date fechaInicio;
-    
+
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
 
@@ -40,4 +43,46 @@ public class Reserva implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Date getFechaTransaccion() {
+        return fechaTransaccion;
+    }
+
+    public void setFechaTransaccion(Date fechaTransaccion) {
+        this.fechaTransaccion = fechaTransaccion;
+    }
+
+    public Hospedaje getHospedaje() {
+        return hospedaje;
+    }
+
+    public void setHospedaje(Hospedaje hospedaje) {
+        this.hospedaje = hospedaje;
+    }
+
+    public Perro getPerro() {
+        return perro;
+    }
+
+    public void setPerro(Perro perro) {
+        this.perro = perro;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+    
+    
 }

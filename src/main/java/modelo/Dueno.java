@@ -7,17 +7,20 @@ package modelo;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class DuenoMascota implements Serializable {
+public class Dueno implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String nombre;
 
     //para jpa, necesito constructor vacio y todos los stegest y getters de cada atributo
-    public DuenoMascota() {
+    public Dueno() {
     }
 
     public Long getId() {
@@ -28,4 +31,13 @@ public class DuenoMascota implements Serializable {
         this.id = id;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    
 }

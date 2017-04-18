@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Tamanio implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private char nombre;
     private int valorMinimo;
@@ -47,7 +47,5 @@ public class Tamanio implements Serializable {
     public String toString() {
         return "Tamanio{" + "id=" + id + ", nombre=" + nombre + ", valorMinimo=" + valorMinimo + ", valorMaximo=" + valorMaximo + '}';
     }
-    
-    
 
 }
