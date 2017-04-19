@@ -33,7 +33,7 @@ public class ApplicationConfig extends Application {
         resources.add(controlador.EjecutablesREST.class);
         resources.add(controlador.JsonMoxyConfigurationContextResolver.class);
         resources.add(controlador.PerroREST.class);
-        resources.add(controlador.service.RazaFacadeREST.class);
+        resources.add(controlador.RazaFacadeREST.class);
     }
 
 }

@@ -38,19 +38,17 @@ public class BaseDatos {
     private static final int LOCAljorge = 2;
     private static final int LOCAlpaolo = 3;
     private static final int OpenShift = 4;
-//        private static boolean cargarDatos = false;
-
     private String conexionJose = "jdbc:mysql://localhost:6603/pupi";
     private String userJose = "root";
     private String passwordJose = "mypassword";
 
-    private String conexionJorge = "jdbc:mysql://localhost:3306/pupi";
+    private String conexionJorge = "jdbc:mysql://localhost:6603/pupi";
     private String userJorge = "root";
     private String passwordJorge = "mypassword";
 
-    private String conexionPaolo = "jdbc:mysql://localhost:6603/pupi";
+    private String conexionPaolo = "jdbc:mysql://localhost:3306/pupi";
     private String userPaolo = "root";
-    private String passwordPaolo = "mypassword";
+    private String passwordPaolo = "MilikiJimenezCrack77";
 
     public BaseDatos() throws Exception {
         initEntityManagerFactory();
@@ -176,8 +174,5 @@ public class BaseDatos {
         emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
 
     }
-    
-    
-    
 
 }

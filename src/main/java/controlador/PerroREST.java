@@ -68,8 +68,9 @@ public class PerroREST {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Perro> findAll() throws Exception {
-        perroDAO = new PerroDAO();
-        return perroDAO.findAll();
+      PerroDAO perroDAO = new PerroDAO();
+        List<Perro> findAll = perroDAO.findAll();
+        return findAll;
     }
 
 }
