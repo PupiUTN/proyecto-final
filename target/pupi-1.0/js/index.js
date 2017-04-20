@@ -19,7 +19,13 @@ function generarPerros(jsonArray) {
         <div class="col s12 m6"> \n\
             <p> Raza: ' + jsonArray[i].raza.nombre + ' <br>\n\
             Tamanio: ' + jsonArray[i].tamanio.nombre + '<br>\n\
-            Vacunacion: ' + jsonArray[i].vacunacionList[0].nombre + ' <br>\n\
+        Vacunación: ' + jsonArray[i].vacunacionList[0].nombre;
+        if (jsonArray[i].vacunacionList.length > 1) {
+            for (var j = 1; j < jsonArray[i].vacunacionList.length; j++) {
+                itmeList += ', ' + jsonArray[i].vacunacionList[j].nombre;
+            }
+        }
+        itmeList += '<br>\n\
             </p> \n\
         </div> \n\
         <div class="col s12 m6"> \n\
@@ -92,12 +98,12 @@ function getPerroDesdeForm() {
     var tamanio = new Object();
     tamanio.nombre = $('#tamanio').val();
 
-
-    var vacuna = new Object();
-    vacuna.nombre = $('#vacuna').val();
-
     var vacunaList = [];
-    vacunaList.push(vacuna);
+    for (var i = 0; i < $('#vacuna').val().length; i++) {
+        var vacuna = new Object();
+        vacuna.nombre = $('#vacuna').val()[i];
+        vacunaList.push(vacuna);
+    }
 
     var perro = new Object();
     perro.nombre = $('#nombre').val();
@@ -115,20 +121,39 @@ window.onload = function () {
     $('#nuevoPerro').hide();
     getEventos(hostURL);
     obtenerRazas(hostURL);
+    obtenerTamanios(hostURL);
+    obtenerVacunas(hostURL);
+    $('select').material_select();
 }
 
-
-
 function obtenerRazas(hostURL) {
-    //var url = hostURL + "api/modelo.raza";
-    $.getJSON("http://localhost:8084/pupi/api/modelo.raza", function (datos) {
-        generarRazas(datos);
+    var url = hostURL + "api/modelo.raza";
+    $.getJSON(url, function (datos) {
+        llenarSelect('#raza', datos);
     });
 }
 
-function generarRazas(jsonArray) {
+function obtenerTamanios(hostURL) {
+    var url = hostURL + "api/modelo.tamanio";
+    $.getJSON(url, function (datos) {
+        llenarSelect('#tamanio', datos);
+    });
+}
+
+function obtenerVacunas(hostURL) {
+    var url = hostURL + "api/modelo.vacuna";
+    $.getJSON(url, function (datos) {
+        llenarSelect('#vacuna', datos);
+    });
+}
+
+function llenarSelect(idSelect, jsonArray) {
     for (var i = 0; i < jsonArray.length; i++) {
-        $('#miSelect').append('<option value="' + jsonArray[i].id + '">' + jsonArray[i].nombre + '</option>')
+        $(idSelect).append('<option value="' + jsonArray[i].nombre + '">' + jsonArray[i].nombre + '</option>')
         $('select').material_select();
     }
 }
+
+function mostrarImagen(){
+    $('#muestraImagen').append('<img src="'+$('#imagen').val()+' height="200" width="200" alt="Imagen previsualizada">');
+    }

@@ -83,30 +83,45 @@
                                     <label for="nombre">Nombre</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <select id="miSelect">
-                                        <option value="" disabled selected>Choose your option</option>
+                                    <select id="raza" class="validate" required>
+                                        <option value="" disabled selected>Selecciona raza</option>
                                     </select>
-                                    <label>Materialize Select</label>
+                                    <label for="raza">Raza</label>
                                 </div>
+                                <div class="input-field col s12">
+                                    <select id="tamanio" class="validate" required>
+                                        <option value="" disabled selected>Selecciona tamaño</option>
+                                    </select>
+                                    <label for="tamanio">Tamaño</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <select multiple id="vacuna" class="validate" required>
+                                        <option value="" disabled selected>Selecciona vacunas</option>
+                                    </select>
+                                    <label for="vacuna">Vacunas</label>
+                                </div>
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>Imagen</span>
+                                        <input id="imagen" type="file" onchange="mostrarImagen()">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text">
+                                    </div>
+                                </div>
+                                <div id="muestraImagen" class="input-field col s12">
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="input-field col s12">
+                                        <textarea id="comentario" class="materialize-textarea" required></textarea>
+                                        <label for="comentario">Comentario</label>
+                                    </div><div class="input-field col s12 center">
+                                        <button class="btn waves-effect waves-light" type="submit">
+                                            Enviar<i class="material-icons right">send</i>
+                                        </button>
+                                    </div>
 
-                                <div class="input-field col s12">
-                                    <input id="tamanio" type="text" class="validate" required>
-                                    <label for="tamanio">Tamanio</label>
                                 </div>
-                                <div class="input-field col s12">
-                                    <input id="vacuna" type="text" class="validate" required>
-                                    <label for="vacuna">Vacuna</label>
-                                </div>
-                                <div class="input-field col s12">
-                                    <textarea id="comentario" class="materialize-textarea" required></textarea>
-                                    <label for="comentario">Comentario</label>
-                                </div><div class="input-field col s12 center">
-                                    <button class="btn waves-effect waves-light" type="submit">
-                                        Enviar<i class="material-icons right">send</i>
-                                    </button>
-                                </div>
-
-                            </div>
                         </form>
                     </div>
 

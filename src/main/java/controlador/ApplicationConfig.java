@@ -34,6 +34,8 @@ public class ApplicationConfig extends Application {
         resources.add(controlador.JsonMoxyConfigurationContextResolver.class);
         resources.add(controlador.PerroREST.class);
         resources.add(controlador.RazaFacadeREST.class);
+        resources.add(controlador.TamanioFacadeREST.class);
+        resources.add(controlador.VacunaFacadeREST.class);
     }
 
 }

@@ -18,30 +18,29 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import modelo.Raza;
-import persistencia.RazaDAO;
+import modelo.Vacuna;
+import persistencia.VacunaDAO;
 
 /**
  *
  * @author Usuario
  */
 @Stateless
-@Path("modelo.raza")
-public class RazaFacadeREST {
+@Path("modelo.vacuna")
+public class VacunaFacadeREST {
 
-    public RazaFacadeREST() {
+    public VacunaFacadeREST() {
     }
-    
+
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Raza entity) {
-
+    public void create(Vacuna entity) {
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Raza entity) {
+    public void edit(@PathParam("id") Long id, Vacuna entity) {
     }
 
     @DELETE
@@ -52,20 +51,20 @@ public class RazaFacadeREST {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Raza find(@PathParam("id") Long id) {
+    public Vacuna find(@PathParam("id") Long id) {
         return null;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Raza> findAll() throws Exception {
-        return new RazaDAO().findAll();
+    public List<Vacuna> findAll() throws Exception {
+        return new VacunaDAO().findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Raza> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Vacuna> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return null;
     }
 
