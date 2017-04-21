@@ -149,11 +149,11 @@ function obtenerVacunas(hostURL) {
 
 function llenarSelect(idSelect, jsonArray) {
     for (var i = 0; i < jsonArray.length; i++) {
-        $(idSelect).append('<option value="' + jsonArray[i].nombre + '">' + jsonArray[i].nombre + '</option>')
+        $(idSelect).append('<option value="' + jsonArray[i].nombre + '">' + jsonArray[i].nombre + '</option>');
         $('select').material_select();
     }
 }
 
 function mostrarImagen(){
-    $('#muestraImagen').append('<img src="'+$('#imagen').val()+' height="200" width="200" alt="Imagen previsualizada">');
-    }
+    $('#muestraImagen').attr('src', window.URL.createObjectURL($('#imagen').get(0).files.item(0)));
+}

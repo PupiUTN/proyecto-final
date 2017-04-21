@@ -78,6 +78,20 @@
                     <div class="row" id="nuevoPerro">
                         <form class="col s12">
                             <div class="row">
+
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>Imagen</span>
+                                        <input id="imagen" type="file" onchange="mostrarImagen()">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" placeholder="Cargue la imagen">
+                                    </div>
+                                    <div class="input-field col s12">
+                                        <img id="muestraImagen" src="" height="200" width="200" alt="Imagen previsualizada">
+                                    </div>
+                                </div>
+
                                 <div class="input-field col s12">
                                     <input id="nombre" type="text" class="validate" required>
                                     <label for="nombre">Nombre</label>
@@ -85,35 +99,32 @@
                                 <div class="input-field col s12">
                                     <select id="raza" class="validate" required>
                                         <option value="" disabled selected>Selecciona raza</option>
+<!--                                        <option value="Pura sangre">Pura sangre</option>
+                                        <option value="Callejero">Callejero</option>-->
                                     </select>
                                     <label for="raza">Raza</label>
                                 </div>
                                 <div class="input-field col s12">
                                     <select id="tamanio" class="validate" required>
                                         <option value="" disabled selected>Selecciona tamaño</option>
+<!--                                        <option value="S">S (0-20 kg.)</option>
+                                        <option value="M">M (20-40 kg.)</option>
+                                        <option value="L">L (40-60 kg.)</option>-->
                                     </select>
                                     <label for="tamanio">Tamaño</label>
                                 </div>
                                 <div class="input-field col s12">
                                     <select multiple id="vacuna" class="validate" required>
                                         <option value="" disabled selected>Selecciona vacunas</option>
+<!--                                        <option value="Parvovirus">Parvovirus</option>
+                                        <option value="Antirrabica">Antirrabica</option>-->
                                     </select>
                                     <label for="vacuna">Vacunas</label>
                                 </div>
-                                <div class="file-field input-field">
-                                    <div class="btn">
-                                        <span>Imagen</span>
-                                        <input id="imagen" type="file" onchange="mostrarImagen()">
-                                    </div>
-                                    <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text">
-                                    </div>
-                                </div>
-                                <div id="muestraImagen" class="input-field col s12">
-                                </div>
+
                                 <div class="input-field col s12">
                                     <div class="input-field col s12">
-                                        <textarea id="comentario" class="materialize-textarea" required></textarea>
+                                        <textarea id="comentario" class="materialize-textarea"></textarea>
                                         <label for="comentario">Comentario</label>
                                     </div><div class="input-field col s12 center">
                                         <button class="btn waves-effect waves-light" type="submit">
