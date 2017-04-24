@@ -131,7 +131,7 @@ public class BaseDatos {
         String password = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
 
         Map<String, String> persistenceMap = new HashMap<>();
-        persistenceMap.put("javax.persistence.jdbc.url", "jdbc:mysql://" + host + ":" + port + "/solomochila");
+        persistenceMap.put("javax.persistence.jdbc.url", "jdbc:mysql://" + host + ":" + port + "/pupi");
         persistenceMap.put("javax.persistence.jdbc.user", user);
         persistenceMap.put("javax.persistence.jdbc.password", password);
         persistenceMap.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");

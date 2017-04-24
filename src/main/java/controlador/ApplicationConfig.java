@@ -32,7 +32,6 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
 
         //resources.add(controlador.ArchivoREST.class);
-        resources.add(controlador.ArchivoREST.class);
         resources.add(controlador.EjecutablesREST.class);
         resources.add(controlador.JsonMoxyConfigurationContextResolver.class);
         resources.add(controlador.PerroREST.class);
