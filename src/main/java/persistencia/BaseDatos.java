@@ -50,6 +50,13 @@ public class BaseDatos {
     private String userPaolo = "root";
     private String passwordPaolo = "MilikiJimenezCrack77";
 
+    private String hostOpenShift = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+    private String portOpenShift = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+    private String userOpenShift = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+    private String passwordOpenShift = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+    private String conexionOpenShift = "jdbc:mysql://"+hostOpenShift+":"+ portOpenShift+ "/pupi";
+
+    //jdbc:mysql://" + host + ":" + port + "/pupi
     public BaseDatos() throws Exception {
         initEntityManagerFactory();
         em = emf.createEntityManager();
@@ -75,7 +82,6 @@ public class BaseDatos {
         }
     }
 
-   
     protected EntityManager getEntityManager() {
         return em;
     }
@@ -108,7 +114,7 @@ public class BaseDatos {
                         Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex3);
                         try {
                             System.out.println("============  pruebo open shift");
-                            connect = (Connection) DriverManager.getConnection(conexionPaolo + "?user=" + userPaolo + "&password=" + passwordPaolo);
+                            connect = (Connection) DriverManager.getConnection(conexionOpenShift + "?user=" + userOpenShift + "&password=" + passwordOpenShift);
                             selector = OpenShift;
 
                         } catch (Exception ex4) {
@@ -125,15 +131,11 @@ public class BaseDatos {
 
     private void openShift() {
         System.out.println("============================= CONFIGURO OPEN SHIFT");
-        String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
-        String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
-        String user = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
-        String password = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
 
         Map<String, String> persistenceMap = new HashMap<>();
-        persistenceMap.put("javax.persistence.jdbc.url", "jdbc:mysql://" + host + ":" + port + "/pupi");
-        persistenceMap.put("javax.persistence.jdbc.user", user);
-        persistenceMap.put("javax.persistence.jdbc.password", password);
+        persistenceMap.put("javax.persistence.jdbc.url", "jdbc:mysql://" + hostOpenShift + ":" + portOpenShift + "/pupi");
+        persistenceMap.put("javax.persistence.jdbc.user", userOpenShift);
+        persistenceMap.put("javax.persistence.jdbc.password", passwordOpenShift);
         persistenceMap.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
         persistenceMap.put("javax.persistence.schema-generation.database.action", "create-or-extend-tables");
 
