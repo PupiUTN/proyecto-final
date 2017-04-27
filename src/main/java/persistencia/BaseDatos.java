@@ -54,7 +54,7 @@ public class BaseDatos {
     private String portOpenShift = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
     private String userOpenShift = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
     private String passwordOpenShift = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
-    private String conexionOpenShift = "jdbc:mysql://"+hostOpenShift+":"+ portOpenShift+ "/pupi";
+    private String conexionOpenShift = "jdbc:mysql://" + hostOpenShift + ":" + portOpenShift + "/pupi";
 
     //jdbc:mysql://" + host + ":" + port + "/pupi
     public BaseDatos() throws Exception {
@@ -119,6 +119,8 @@ public class BaseDatos {
 
                         } catch (Exception ex4) {
                             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex4);
+                            Logger.getLogger(BaseDatos.class.getName()).log(Level.WARNING, null, conexionOpenShift + "?user=" + userOpenShift + "&password=" + passwordOpenShift);
+
                             throw ex4;
                         }
 
@@ -131,7 +133,6 @@ public class BaseDatos {
 
     private void openShift() {
         System.out.println("============================= CONFIGURO OPEN SHIFT");
-
         Map<String, String> persistenceMap = new HashMap<>();
         persistenceMap.put("javax.persistence.jdbc.url", "jdbc:mysql://" + hostOpenShift + ":" + portOpenShift + "/pupi");
         persistenceMap.put("javax.persistence.jdbc.user", userOpenShift);
