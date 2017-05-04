@@ -47,16 +47,24 @@ public class EjecutablesREST {
     public String insert() throws Exception {
         //soprte
         RazaDAO razaDAO = new RazaDAO();
+        razaDAO.cargarDatos();
         VacunaDAO vacunaDAO = new VacunaDAO();
+        vacunaDAO.cargarDatos();
         TamanioDAO tamanioDAO = new TamanioDAO();
+        tamanioDAO.cargarDatos();
         //dueno
         DuenoDAO duenoDAO = new DuenoDAO();
+        duenoDAO.cargarDatos();
         PerroDAO perroDAO = new PerroDAO();
+        perroDAO.cargarDatos();
         //Cuidador
         CuidadorDAO cuidadorDAO = new CuidadorDAO();
+        cuidadorDAO.cargarDatos();
         //transaccion
         ReservaDAO reservaDAO = new ReservaDAO();
+        reservaDAO.cargarDatos();
         CalificacionDAO calificacionDAO = new CalificacionDAO();
+        calificacionDAO.cargarDatos();
         return " insert : " + new Date();
     }
 

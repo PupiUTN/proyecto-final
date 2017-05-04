@@ -16,10 +16,9 @@ public class TamanioDAO extends DAO<Tamanio> {
 
     public TamanioDAO() throws Exception {
                 super(Tamanio.class);
-        cargarDatos();
     }
 
-    private void cargarDatos() {
+    public void cargarDatos() {
         if (count() == 0) {
 
             Tamanio tamanioS = new Tamanio();

@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@XmlRootElement
 public class Tamanio implements Serializable {
 
     @Id

@@ -19,10 +19,9 @@ public class CalificacionDAO extends DAO<Califiacion> {
 
     public CalificacionDAO() throws Exception {
         super(Califiacion.class);
-        cargarDatos();
     }
 
-    private void cargarDatos() throws Exception {
+    public void cargarDatos() throws Exception {
         if (count() == 0) {
 
             ReservaDAO reservaDAO = new ReservaDAO();

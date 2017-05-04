@@ -59,7 +59,9 @@ public class BaseDatos {
     //jdbc:mysql://" + host + ":" + port + "/pupi
     public BaseDatos() throws Exception {
         initEntityManagerFactory();
-        em = emf.createEntityManager();
+        if (em == null) {
+            em = emf.createEntityManager();
+        }
     }
 
     private void initEntityManagerFactory() throws Exception {

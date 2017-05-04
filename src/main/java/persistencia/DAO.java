@@ -7,27 +7,33 @@ package persistencia;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 /**
  *
  * @author agile
  */
-public abstract class DAO<T> {
+public abstract class DAO<T> implements IDao<T>{
 
     private Class<T> entityClass;
     private BaseDatos baseDatos;
 
+//    @PersistenceContext
+//    protected EntityManager entityManager;
+
+    
     public DAO(Class<T> entityClass) throws Exception {
         this.entityClass = entityClass;
         baseDatos = new BaseDatos();
     }
 
     protected EntityManager getEntityManager() {
+       // return entityManager;
         return baseDatos.getEntityManager();
     }
 
-    @Transactional
+   // @Transactional
     public void create(T entity) {
         getEntityManager().getTransaction().begin();
         getEntityManager().persist(entity);

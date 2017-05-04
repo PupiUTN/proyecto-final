@@ -19,11 +19,11 @@ import modelo.Vacuna;
 public class PerroDAO extends DAO<Perro> {
 
     public PerroDAO() throws Exception {
-                super(Perro.class);
-        cargarDatos();
+        super(Perro.class);
+
     }
 
-    private void cargarDatos() throws Exception {
+    public void cargarDatos() throws Exception {
         if (count() == 0) {
             RazaDAO razaDAO = new RazaDAO();
             List<Raza> findAllRazas = razaDAO.findAll();

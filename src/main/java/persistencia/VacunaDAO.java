@@ -17,10 +17,9 @@ public class VacunaDAO<T> extends DAO<Vacuna> {
 
     public VacunaDAO() throws Exception {
         super(Vacuna.class);
-        cargarDatos();
     }
 
-    private void cargarDatos() {
+    public void cargarDatos() {
         if (count() == 0) {
             Vacuna vacunaRabia = new Vacuna();
             vacunaRabia.setNombre("Rabia");

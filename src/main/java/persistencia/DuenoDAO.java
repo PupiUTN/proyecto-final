@@ -16,10 +16,9 @@ public class DuenoDAO extends DAO<Dueno> {
 
     public DuenoDAO() throws Exception {
                 super(Dueno.class);
-        cargarDatos();
     }
 
-    private void cargarDatos() {
+    public void cargarDatos() {
         if (count() == 0) {
 
             Dueno pepeDueno = new Dueno();

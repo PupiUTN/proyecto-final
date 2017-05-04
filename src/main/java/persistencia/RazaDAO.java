@@ -17,11 +17,10 @@ public class RazaDAO extends DAO<Raza>{
 
     public RazaDAO() throws Exception {
         super(Raza.class);
-        cargarDatos();
 
     }
 
-    private void cargarDatos() {
+    public void cargarDatos() {
         if (count() == 0) {
             Raza razaCalle = new Raza();
             razaCalle.setNombre("callejero");

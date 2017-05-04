@@ -19,10 +19,9 @@ public class CuidadorDAO extends DAO<Cuidador> {
 
     public CuidadorDAO() throws Exception {
         super(Cuidador.class);
-        cargarDatos();
     }
 
-    private void cargarDatos() throws Exception {
+    public void cargarDatos() throws Exception {
         if (count() == 0) {
             Cuidador cuidador1 = new Cuidador();
             cuidador1.setNombre("El encantador de perros");

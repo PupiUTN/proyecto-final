@@ -21,10 +21,9 @@ public class ReservaDAO extends DAO<Reserva> {
 
     public ReservaDAO() throws Exception {
                 super(Reserva.class);
-        cargarDatos();
     }
-
-    private void cargarDatos() throws Exception {
+    
+    public void cargarDatos() throws Exception {
         if (count() == 0) {
             CuidadorDAO cuidadorDAO = new CuidadorDAO();
             List<Cuidador> findAllCuidadores = cuidadorDAO.findAll();
