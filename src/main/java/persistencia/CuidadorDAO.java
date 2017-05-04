@@ -8,7 +8,7 @@ package persistencia;
 import java.util.List;
 import modelo.Cuidador;
 import modelo.Dueno;
-import modelo.Hospedaje;
+
 import modelo.Raza;
 
 /**

@@ -7,8 +7,8 @@ package persistencia;
 
 import java.util.Date;
 import java.util.List;
+import modelo.Cuidador;
 import modelo.Dueno;
-import modelo.Hospedaje;
 import modelo.Perro;
 import modelo.Raza;
 import modelo.Reserva;
@@ -26,8 +26,8 @@ public class ReservaDAO extends DAO<Reserva> {
 
     private void cargarDatos() throws Exception {
         if (count() == 0) {
-            HospedajeDAO hospedajeDAO = new HospedajeDAO();
-            List<Hospedaje> findAllHospedaje = hospedajeDAO.findAll();
+            CuidadorDAO cuidadorDAO = new CuidadorDAO();
+            List<Cuidador> findAllCuidadores = cuidadorDAO.findAll();
             PerroDAO perroDAO = new PerroDAO();
             List<Perro> findAllPerros = perroDAO.findAll();
             Reserva reserva1 = new Reserva();
@@ -35,7 +35,7 @@ public class ReservaDAO extends DAO<Reserva> {
             reserva1.setFechaFin(new Date(1492375244L));
             reserva1.setFechaTransaccion(new Date());
             reserva1.setPerro(findAllPerros.remove(0));
-            reserva1.setHospedaje(findAllHospedaje.remove(0));
+            reserva1.setCuidador(findAllCuidadores.remove(0));
             
             
             Reserva reserva2 = new Reserva();
@@ -43,7 +43,7 @@ public class ReservaDAO extends DAO<Reserva> {
             reserva2.setFechaFin(new Date(1592375244L));
             reserva2.setFechaTransaccion(new Date());
             reserva2.setPerro(findAllPerros.remove(0));
-            reserva2.setHospedaje(findAllHospedaje.remove(0));
+            reserva2.setCuidador(findAllCuidadores.remove(0));
             
             create(reserva1);
             create(reserva2);

@@ -23,7 +23,7 @@ public class Reserva implements Serializable {
 
     @Temporal(TemporalType.DATE)
     private Date fechaTransaccion;
-    private Hospedaje hospedaje;
+    private Cuidador cuidador;
     private Perro perro;
 
     @Temporal(TemporalType.DATE)
@@ -52,13 +52,15 @@ public class Reserva implements Serializable {
         this.fechaTransaccion = fechaTransaccion;
     }
 
-    public Hospedaje getHospedaje() {
-        return hospedaje;
+    public Cuidador getCuidador() {
+        return cuidador;
     }
 
-    public void setHospedaje(Hospedaje hospedaje) {
-        this.hospedaje = hospedaje;
+    public void setCuidador(Cuidador cuidador) {
+        this.cuidador = cuidador;
     }
+
+    
 
     public Perro getPerro() {
         return perro;

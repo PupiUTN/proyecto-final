@@ -21,7 +21,6 @@ import modelo.Vacuna;
 import persistencia.CalificacionDAO;
 import persistencia.CuidadorDAO;
 import persistencia.DuenoDAO;
-import persistencia.HospedajeDAO;
 import persistencia.PerroDAO;
 import persistencia.RazaDAO;
 import persistencia.ReservaDAO;
@@ -55,7 +54,6 @@ public class EjecutablesREST {
         PerroDAO perroDAO = new PerroDAO();
         //Cuidador
         CuidadorDAO cuidadorDAO = new CuidadorDAO();
-        HospedajeDAO hospedajeDAO = new HospedajeDAO();
         //transaccion
         ReservaDAO reservaDAO = new ReservaDAO();
         CalificacionDAO calificacionDAO = new CalificacionDAO();
