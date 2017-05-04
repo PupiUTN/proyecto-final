@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@XmlRootElement
 public class Raza implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

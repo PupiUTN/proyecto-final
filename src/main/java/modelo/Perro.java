@@ -22,13 +22,13 @@ public class Perro implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Raza raza;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Tamanio tamanio;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Dueno dueno;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<Vacuna> vacunacionList;
     private String fotoRuta;
     private String comentario;

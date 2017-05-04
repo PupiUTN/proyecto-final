@@ -33,7 +33,6 @@ public abstract class DAO<T> implements IDao<T>{
         return baseDatos.getEntityManager();
     }
 
-   // @Transactional
     public void create(T entity) {
         getEntityManager().getTransaction().begin();
         getEntityManager().persist(entity);
