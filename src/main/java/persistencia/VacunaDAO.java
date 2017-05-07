@@ -23,9 +23,10 @@ public class VacunaDAO<T> extends DAO<Vacuna> {
         if (count() == 0) {
             Vacuna vacunaRabia = new Vacuna();
             vacunaRabia.setNombre("Rabia");
+            create(vacunaRabia);
+
             Vacuna vacunaParvovirus = new Vacuna();
             vacunaParvovirus.setNombre("Parvovirus");
-            create(vacunaRabia);
             create(vacunaParvovirus);
         }
 
