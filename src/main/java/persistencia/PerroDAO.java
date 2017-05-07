@@ -44,6 +44,7 @@ public class PerroDAO extends DAO<Perro> {
             betoben.setTamanio(findAllTamanio.remove(0));
             betoben.setVacunacionList(findAllVacuna);
             betoben.setComentario("una pelicula");
+            create(betoben);
 
             //PERRO 2
             Perro fatigas = new Perro();
@@ -55,7 +56,6 @@ public class PerroDAO extends DAO<Perro> {
             fatigas.setComentario("De pelaje blanco y contextura gorda, generalmente aparece echado en algún lugar, prioritariamente en el vetusto sillón preferido de la familia, sin hacer nada. ");
 
             create(fatigas);
-            create(betoben);
         }
 
     }

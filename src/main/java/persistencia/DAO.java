@@ -8,28 +8,31 @@ package persistencia;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 /**
  *
  * @author agile
  */
-public abstract class DAO<T> implements IDao<T>{
+public abstract class DAO<T> implements IDao<T> {
 
     private Class<T> entityClass;
     private BaseDatos baseDatos;
 
 //    @PersistenceContext
 //    protected EntityManager entityManager;
-
-    
     public DAO(Class<T> entityClass) throws Exception {
         this.entityClass = entityClass;
         baseDatos = new BaseDatos();
     }
 
     protected EntityManager getEntityManager() {
-       // return entityManager;
+        // return entityManager;
         return baseDatos.getEntityManager();
     }
 
@@ -55,28 +58,39 @@ public abstract class DAO<T> implements IDao<T>{
 
     }
 
+    public void removeAll() {
+                getEntityManager().getTransaction().begin();
+
+        CriteriaBuilder cBuilder = getEntityManager().getCriteriaBuilder();
+        CriteriaDelete<T> cq = cBuilder.createCriteriaDelete(entityClass);
+        Root<T> root = cq.from(entityClass);
+        int result = getEntityManager().createQuery(cq).executeUpdate();
+        getEntityManager().getTransaction().commit();
+
+    }
+
     public T find(Object id) {
         return getEntityManager().find(entityClass, id);
     }
 
     public List<T> findAll() {
-        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery(cq).getResultList();
     }
 
     public List<T> findRange(int[] range) {
-        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        javax.persistence.Query q = getEntityManager().createQuery(cq);
+        Query q = getEntityManager().createQuery(cq);
         q.setMaxResults(range[1] - range[0] + 1);
         q.setFirstResult(range[0]);
         return q.getResultList();
     }
 
     public int count() {
-        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
-        javax.persistence.criteria.Root<T> rt = cq.from(entityClass);
+        CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        Root<T> rt = cq.from(entityClass);
         cq.select(getEntityManager().getCriteriaBuilder().count(rt));
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
