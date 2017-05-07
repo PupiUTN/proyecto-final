@@ -24,10 +24,8 @@ import persistencia.PerroDAO;
  * @author agile
  */
 @Stateless
-@Path("perro")
+@Path("perros")
 public class PerroREST {
-
-    private PerroDAO perroDAO;
 
     public PerroREST() {
     }
@@ -35,10 +33,8 @@ public class PerroREST {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void create(Perro entity) throws Exception {
-        System.out.println("======================================================");
         System.out.println(entity);
-        
-        perroDAO = new PerroDAO();
+        PerroDAO perroDAO = new PerroDAO();
         perroDAO.create(entity);
     }
 
@@ -66,7 +62,7 @@ public class PerroREST {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Perro> findAll() throws Exception {
-      PerroDAO perroDAO = new PerroDAO();
+        PerroDAO perroDAO = new PerroDAO();
         List<Perro> findAll = perroDAO.findAll();
         return findAll;
     }

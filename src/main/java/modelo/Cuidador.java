@@ -21,7 +21,7 @@ public class Cuidador implements Serializable {
     private String email;
     private long telefono;
     private Direccion direccion;
-    private int CantidadMaxDePerros;
+    private int cantidadMaxDePerros;
     
 
     //para jpa, necesito constructor vacio y todos los stegest y getters de cada atributo
@@ -69,13 +69,14 @@ public class Cuidador implements Serializable {
     }
 
     public int getCantidadMaxDePerros() {
-        return CantidadMaxDePerros;
+        return cantidadMaxDePerros;
     }
 
     public void setCantidadMaxDePerros(int CantidadMaxDePerros) {
-        this.CantidadMaxDePerros = CantidadMaxDePerros;
+        this.cantidadMaxDePerros = CantidadMaxDePerros;
     }
 
+    
     
     
     
