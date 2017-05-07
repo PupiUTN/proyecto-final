@@ -24,7 +24,7 @@ import persistencia.RazaDAO;
  * @author Usuario
  */
 @Stateless
-@Path("modelo.raza")
+@Path("razas")
 public class RazaFacadeREST {
 
     public RazaFacadeREST() {
