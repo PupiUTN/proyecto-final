@@ -11,6 +11,7 @@
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
         <link href="css/jquery.toast.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
+        <link href="css/cuidadores.css" rel="stylesheet">
 
 
     </head>
@@ -20,14 +21,17 @@
             <nav class="grey lighten-1" role="navigation">
                 <div class="nav-wrapper container">
                     <a id="logo-container" href="index.html" class="brand-logo"><img src="img/logo.png" style="height: 65px" /></a>
+                    
                     <ul class="right hide-on-med-and-down">
-
-
+                        <li><a href="perro.html">Perros</a></li>
+                        <li><a href="cuidadores.html">Cuidadores</a></li>
                     </ul>
 
                     <ul id="nav-mobile" class="side-nav">
-
+                        <li><a href="perro.html">Perros</a></li>
+                        <li><a href="cuidadores.html">Cuidadores</a></li>
                     </ul>
+                  
                     <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
                 </div>
             </nav>
@@ -40,6 +44,40 @@
                         <h3>Cuidador CRUD / ABM </h3>
                     </div>
                     <!-- MODELO A SEGUIR http://materializecss.com/collections.html -->
+                    <div class="row" id="listaCuidadores">
+                        <!--back up html estatico-->
+                        <!--                        <div class="col s12">
+                                                    <div class="card horizontal  blue-grey darken-1  white-text">
+                                                        <div class="card-image">
+                                                            <img src="img/pope_200.jpg">
+                                                        </div>
+                                                        <div class="card-stacked">
+                                                            <div class="card-content">
+                                                                <span class="card-title">Jorge Mario Bergoglio
+                                                                    <a href="#"><span class="new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="Eliminar"></span></a>
+                                                                </span>
+                        
+                                                                <div class="row">
+                                                                    <div class="col s12 m6">
+                                                                        <p> <i class="material-icons black-text">phone</i> 325923652</p>
+                                                                        <p> <i class="material-icons black-text">email</i> francis@pope.com</p>
+                        
+                        
+                                                                    </div>
+                                                                    <div class="col s12 m6">
+                                                                        <p> <i class="material-icons black-text">location_on</i>Museo Emilio Caraffa</p>
+                                                                        <p> <i class="material-icons black-text">info</i>Max perros: 4</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-action">
+                                                                <a href="#">Solicitar Reserva</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+
+                    </div>
                     <div class="row">
                         <div class="col s12">
                             <ul class="collection" id="perroList">
@@ -125,9 +163,9 @@
                     </div>
 
                 </div>
-
             </div>
         </main>
+  
         <footer class="page-footer orange">
             <div class="container">
                 <div class="row">
@@ -156,8 +194,8 @@
         <script src="https://code.jquery.com/jquery-2.1.1.min.js "></script>
         <script src="js/jquery.toast.min.js"></script>
         <script src="js/materialize.js "></script>
-        <script src="js/cuidador.js"></script>
         <script src="js/init.js "></script>
+        <script src="js/cuidadores.js"></script>
 
     </body>
 
