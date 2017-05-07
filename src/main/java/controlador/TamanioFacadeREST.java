@@ -26,7 +26,7 @@ import persistencia.TamanioDAO;
  * @author Usuario
  */
 @Stateless
-@Path("modelo.tamanio")
+@Path("tamanios")
 public class TamanioFacadeREST {
 
     public TamanioFacadeREST() {

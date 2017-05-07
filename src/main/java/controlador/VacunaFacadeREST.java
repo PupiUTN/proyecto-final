@@ -26,7 +26,7 @@ import persistencia.VacunaDAO;
  * @author Usuario
  */
 @Stateless
-@Path("modelo.vacuna")
+@Path("vacunas")
 public class VacunaFacadeREST {
 
     public VacunaFacadeREST() {
