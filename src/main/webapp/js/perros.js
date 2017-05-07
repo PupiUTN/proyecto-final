@@ -124,7 +124,8 @@ window.onload = function () {
     obtenerTamanios(hostURL);
     obtenerVacunas(hostURL);
     $('select').material_select();
-}
+};
+
 
 function obtenerRazas(hostURL) {
     var url = hostURL + "api/modelo.raza";
