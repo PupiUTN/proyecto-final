@@ -21,17 +21,17 @@
             <nav class="grey lighten-1" role="navigation">
                 <div class="nav-wrapper container">
                     <a id="logo-container" href="index.html" class="brand-logo"><img src="img/logo.png" style="height: 65px" /></a>
+                    
                     <ul class="right hide-on-med-and-down">
                         <li><a href="perro.html">Perros</a></li>
                         <li><a href="cuidadores.html">Cuidadores</a></li>
-
                     </ul>
 
                     <ul id="nav-mobile" class="side-nav">
                         <li><a href="perro.html">Perros</a></li>
                         <li><a href="cuidadores.html">Cuidadores</a></li>
-
                     </ul>
+                  
                     <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
                 </div>
             </nav>
@@ -39,6 +39,11 @@
         <main>
             <div class="container">
                 <div class="section">
+
+                    <div class="center-align">
+                        <h3>Cuidador CRUD / ABM </h3>
+                    </div>
+                    <!-- MODELO A SEGUIR http://materializecss.com/collections.html -->
                     <div class="row" id="listaCuidadores">
                         <!--back up html estatico-->
                         <!--                        <div class="col s12">
@@ -73,11 +78,94 @@
                                                 </div>-->
 
                     </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <ul class="collection" id="perroList">
+                                <!--                                <li class="collection-item avatar">
+                                                                    <img src="img/dog-1.jpg" alt="" class="circle">
+                                                                    <span class="title"> <b>Fatigas</b></span>
+                                                                    <div class="row">
+                                                                        <div class="col s12 m6">
+                                                                            <p> Raza: Callerjero<br>
+                                                                                Tamanio: S <br>
+                                                                                Vacunacion: Rabia <br>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col s12 m6">
+                                                                            <p> Comentario: Callerjero<br>
+                                                                            </p>
+                                                                        </div>
+                                
+                                                                    </div>
+                                                                    <div class="secondary-content">
+                                                                        <a href="#!" ><i class="material-icons">delete</i></a>
+                                                                        <br>
+                                                                        <a href="#!" ><i class="material-icons">edit</i></a>
+                                                                    </div>
+                                
+                                                                </li>-->
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="center-align">
+                        <a class="waves-effect waves-light btn" onclick="mostarFormNuevoCuidador()"><i class="material-icons right">library_add</i> Nuevo Cuidador</a>
+                    </div>
+
+                    <div class="row" id="nuevoCuidador">
+                        <form class="col s12">
+                            <div class="row">
+
+                                <div class="input-field col s12">
+                                    <input id="nombre" type="text" class="validate" required>
+                                    <label for="nombre">Nombre</label>
+                                </div>
+
+                                <div class="input-field col s12">
+                                    <input id="email" type="text" class="validate" required>
+                                    <label for="email">Email</label>
+                                </div>
+
+                                <div class="input-field col s12">
+                                    <input id="direccion" type="text" class="validate" required>
+                                    <label for="direccion">Dirección</label>
+                                </div>
+
+                                <div class="input-field col s12">
+                                    <input id="telefono" type="text" class="validate" required>
+                                    <label for="telefono">Teléfono</label>
+                                </div>
+
+                                <div class="input-field col s12">
+                                    <input id="maxPerros" type="text" class="validate" required>
+                                    <label for="maxPerros">Cantidad máxima de perros</label>
+                                </div>
+                                
+                                <div class="file-field input-field col s12">
+                                    <div class="file-path-wrapper">
+                                        <input id="URLImagen" class="file-path validate" type="text" placeholder="Copie la URL de la imagen (se pueden agregar hasta 4 imágenes)" required>
+                                        <a class="waves-effect waves-light btn" onclick="mostrarImagen()"><i class="material-icons right">perm_media</i>Agregar</a>
+                                    </div>
+
+                                    <div id="contenedorImagen" class="input-field col s12">
+                                    </div>
+                                </div>
+
+                                <div class="input-field col s12 center">
+                                    <button class="btn waves-effect waves-light" type="submit">
+                                        Enviar<i class="material-icons right">send</i>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
 
                 </div>
             </div>
-
         </main>
+  
         <footer class="page-footer orange">
             <div class="container">
                 <div class="row">

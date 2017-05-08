@@ -22,7 +22,7 @@ function generarCuidadores(jsonArray) {
 <div class="col s12">\n\
     <div class="card horizontal blue-grey darken-1 white-text">\n\
         <div class="card-image">\n\
-            <img src="img/'+ imagenesURL[i]+'"> \n\
+            <img src="img/' + imagenesURL[i] + '"> \n\
         </div> \n\
         <div class="card-stacked"> \n\
             <div class="card-content"> \n\
@@ -54,4 +54,130 @@ function generarCuidadores(jsonArray) {
 }
 
 
-getCuidadores();
+
+var imagenes = [];
+/* global e */
+
+function mostarFormNuevoCuidador() {
+    $('#nuevoCuidador').show();
+}
+
+
+$('#nuevoCuidador').submit(function () {
+    //postPerro();
+    var emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+    //Se muestra un texto a modo de ejemplo, luego va a ser un icono
+    if (!emailRegex.test($('#email').val())) {
+        console.log("error agregar cuidador");
+        $.toast({
+            heading: 'Error',
+            text: 'El email ingresado no es válido.',
+            showHideTransition: 'fade',
+            icon: 'error'
+        });
+        return false;
+    }
+});
+
+
+/*function postPerro() {
+ var perro = getPerroDesdeForm();
+ $.ajax({
+ type: "POST",
+ url: hostURL + 'api/perro',
+ data: JSON.stringify(perro),
+ contentType: "application/json",
+ success: function () {
+ console.log("exito crear perro");
+ $('#nuevoPerro').hide();
+ $.toast({
+ heading: 'Success',
+ text: 'Exito al crear nuevo perro. Refrescar la pagina para verlo',
+ showHideTransition: 'slide',
+ icon: 'success'
+ });
+ //location.reload();
+ 
+ },
+ error: function () {
+ console.log("error crear perro");
+ $.toast({
+ heading: 'Error',
+ text: 'Erro al crear nuevo perro.',
+ showHideTransition: 'fade',
+ icon: 'error'
+ })
+ }
+ });
+ 
+ }
+ function getPerroDesdeForm() {
+ var raza = new Object();
+ raza.nombre = $('#raza').val();
+ 
+ var tamanio = new Object();
+ tamanio.nombre = $('#tamanio').val();
+ 
+ var vacunaList = [];
+ for (var i = 0; i < $('#vacuna').val().length; i++) {
+ var vacuna = new Object();
+ vacuna.nombre = $('#vacuna').val()[i];
+ vacunaList.push(vacuna);
+ }
+ 
+ var perro = new Object();
+ perro.nombre = $('#nombre').val();
+ perro.comentario = $('#comentario').val();
+ perro.raza = raza;
+ perro.tamanio = tamanio;
+ perro.vacunacionList = vacunaList;
+ return perro;
+ 
+ }*/
+
+
+
+
+function mostrarImagen() {
+    var pathImagen = $('#URLImagen').val();
+    var pos = pathImagen.lastIndexOf("/");
+    var nombreImagen;
+    if (pos > 0) {
+        nombreImagen = pathImagen.substr(pos + 1);
+    } else
+    {
+        nombreImagen = pathImagen;
+    }
+    if ((/\.(jpg|png|gif)$/i).test(nombreImagen))
+    {
+        if (imagenes.length <= 3)
+        {
+            $('#contenedorImagen').append('<img src="' + pathImagen + '" height="100" width="100" alt="Imagen previsualizada">');
+            imagenes.push(pathImagen);
+        } else {
+            console.log("error agregar imagen");
+            $.toast({
+                heading: 'Error',
+                text: 'Ya hay 4 imágenes agregadas.',
+                showHideTransition: 'fade',
+                icon: 'error'
+            });
+        }
+    } else {
+        console.log("error agregar imagen");
+        $.toast({
+            heading: 'Error',
+            text: 'El archivo a agregar no es una imagen.',
+            showHideTransition: 'fade',
+            icon: 'error'
+        });
+    }
+    //$('#muestraImagen').attr('src', window.URL.createObjectURL($('#imagen').get(0).files.item(0)));
+}
+
+
+window.onload = function () {
+    $('#nuevoCuidador').hide();
+    getCuidadores();
+
+};
