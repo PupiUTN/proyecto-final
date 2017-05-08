@@ -1,6 +1,6 @@
 function getEventos(hostURL) {
     console.log("getPerros() - Index");
-    var url = hostURL + "api/perro";
+    var url = hostURL + "api/perros";
     $.getJSON(url, function (datos) {
         generarPerros(datos);
     });
@@ -124,24 +124,25 @@ window.onload = function () {
     obtenerTamanios(hostURL);
     obtenerVacunas(hostURL);
     $('select').material_select();
-}
+};
+
 
 function obtenerRazas(hostURL) {
-    var url = hostURL + "api/modelo.raza";
+    var url = hostURL + "api/razas";
     $.getJSON(url, function (datos) {
         llenarSelect('#raza', datos);
     });
 }
 
 function obtenerTamanios(hostURL) {
-    var url = hostURL + "api/modelo.tamanio";
+    var url = hostURL + "api/tamanios";
     $.getJSON(url, function (datos) {
         llenarSelect('#tamanio', datos);
     });
 }
 
 function obtenerVacunas(hostURL) {
-    var url = hostURL + "api/modelo.vacuna";
+    var url = hostURL + "api/vacunas";
     $.getJSON(url, function (datos) {
         llenarSelect('#vacuna', datos);
     });
