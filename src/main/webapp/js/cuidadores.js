@@ -1,56 +1,61 @@
+function getCuidadores() {
+    console.log("getCuidadores()");
+    var url = hostURL + "api/cuidadores";
+    $.getJSON(url, function (datos) {
+        generarCuidadores(datos);
+    });
+}
+
+function generarCuidadores(jsonArray) {
+    //esto esta hard codeado, se debe cambiar
+    var imagenesURL = [];
+    imagenesURL.push('cesar_200.jpg');
+    imagenesURL.push('riquelme_200.jpg');
+    imagenesURL.push('marcelo_200.jpg');
+    imagenesURL.push('pope_200.jpg');
+    imagenesURL.push('carrio_200.jpg');
+
+
+    for (var i = 0; i < jsonArray.length; i++) {
+        //existe un problema con los espacios, entonces al html lo copiamos en la barra url del explorador y luego lo cortamos para tenr bien el formato
+        var cuidador = '\
+<div class="col s12">\n\
+    <div class="card horizontal blue-grey darken-1 white-text">\n\
+        <div class="card-image">\n\
+            <img src="img/' + imagenesURL[i] + '"> \n\
+        </div> \n\
+        <div class="card-stacked"> \n\
+            <div class="card-content"> \n\
+            <span class="card-title">' + jsonArray[i].nombre + ' \n\
+            <a href="#"><span class="new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="Eliminar"></span></a> \n\
+            </span> \n\
+            <div class="row"> \n\
+                <div class="col s12 m6"> \n\
+                <p> <i class="material-icons black-text">phone</i> ' + jsonArray[i].telefono + '</p> \n\
+                <p> <i class="material-icons black-text">email</i> ' + jsonArray[i].email + '</p> \n\
+                </div> \n\
+                <div class="col s12 m6"> \n\
+                <p> <i class="material-icons black-text">location_on</i>' + jsonArray[i].direccion.nombre + '</p> \n\
+                <p> <i class="material-icons black-text">info</i>Max perros: ' + jsonArray[i].cantidadMaxDePerros + ' </p> \n\
+                </div> \n\
+                </div> \n\
+            </div> \n\
+            <div class="card-action"> \n\
+            <a href="#">Solicitar Reserva</a> \n\
+            </div> \n\
+        </div> \n\
+    </div> \n\
+</div>';
+
+        $('#listaCuidadores').append(cuidador);
+
+
+    }
+}
+
+
+
 var imagenes = [];
-
-/*function getEventos(hostURL) {
- console.log("getPerros() - Index");
- var url = hostURL + "api/perro";
- $.getJSON(url, function (datos) {
- generarPerros(datos);
- });
- }
- 
- function generarPerros(jsonArray) {
- var arrayLength = jsonArray.length;
- for (var i = 0; i < arrayLength; i++) {
- //existe un problema con los espacios, entonces al html lo copiamos en la barra url del explorador y luego lo cortamos para tenr bien el formato
- var itmeList = '\
- \<li class="collection-item avatar"> \n\
- <img src="img/dog-1.jpg" alt="" class="circle"> \n\
- <span class="title"> \n\
- <b>' + jsonArray[i].nombre + '</b></span> \n\
- <div class="row"> \n\
- <div class="col s12 m6"> \n\
- <p> Raza: ' + jsonArray[i].raza.nombre + ' <br>\n\
- Tamanio: ' + jsonArray[i].tamanio.nombre + '<br>\n\
- Vacunación: ' + jsonArray[i].vacunacionList[0].nombre;
- if (jsonArray[i].vacunacionList.length > 1) {
- for (var j = 1; j < jsonArray[i].vacunacionList.length; j++) {
- itmeList += ', ' + jsonArray[i].vacunacionList[j].nombre;
- }
- }
- itmeList += '<br>\n\
- </p> \n\
- </div> \n\
- <div class="col s12 m6"> \n\
- <p> Comentario: ' + jsonArray[i].comentario + '<br>\n\
- </p> \n\
- </div> \n\
- </div> \n\
- <div class="secondary-content"> \n\
- <a href="#!" >\n\
- <i class="material-icons">delete</i>\n\
- </a> <br> \n\
- <a href="#!" >\n\
- <i class="material-icons">edit</i>\n\
- </a> </div> \n\
- </li>\
- ';
- 
- $('#perroList').append(itmeList);
- }
- 
- 
- }*/
-
 /* global e */
 
 function mostarFormNuevoCuidador() {
@@ -132,10 +137,6 @@ $('#nuevoCuidador').submit(function () {
 
 
 
-window.onload = function () {
-    $('#nuevoCuidador').hide();
-    //getEventos(hostURL);
-};
 
 function mostrarImagen() {
     var pathImagen = $('#URLImagen').val();
@@ -174,3 +175,9 @@ function mostrarImagen() {
     //$('#muestraImagen').attr('src', window.URL.createObjectURL($('#imagen').get(0).files.item(0)));
 }
 
+
+window.onload = function () {
+    $('#nuevoCuidador').hide();
+    getCuidadores();
+
+};
