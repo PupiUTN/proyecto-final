@@ -4,6 +4,7 @@ function getCuidadores() {
     $.getJSON(url, function (datos) {
         generarCuidadores(datos);
         eliminarCuidador();
+        solicitarReserva();
 
     });
 }
@@ -30,7 +31,7 @@ function generarCuidadores(jsonArray) {
             <div class="card-content"> \n\
             <span class="card-title">' + jsonArray[i].nombre + ' \n\
             <a href="#!"><span data-target="modal1" class="eliminar new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="Eliminar" ></span>\n\
-            <input type="hidden" value="' + jsonArray[i].id + '">\n\</a> \n\
+            <input class="idCuidador" type="hidden" value="' + jsonArray[i].id + '">\n\</a> \n\
             </span> \n\
             <div class="row"> \n\
                 <div class="col s12 m6"> \n\
@@ -44,7 +45,7 @@ function generarCuidadores(jsonArray) {
                 </div> \n\
             </div> \n\
             <div class="card-action"> \n\
-            <a href="#">Solicitar Reserva</a> \n\
+            <a href="#!" class="reserva" data-open="false">Solicitar Reserva</a> \n\
             </div> \n\
         </div> \n\
     </div> \n\
@@ -56,21 +57,71 @@ function generarCuidadores(jsonArray) {
     }
 }
 
+function solicitarReserva() {
+    $('.reserva').on('click', function () {
+        var btnSolicitarReserva = $(this);
+        if (btnSolicitarReserva.attr('data-open') === "false") {
+            $('#nuevaReserva').remove();
+            $('.reserva').attr('data-open', "false");
+            btnSolicitarReserva.attr('data-open', "true");
+            var id = $('.idCuidador').eq(($('.reserva').index(this))).val();
+            console.log(id);
+            btnSolicitarReserva.parent().parent().parent().parent().append('\
+<div class="row nuevaReserva" id="nuevaReserva">\n\
+    <form class="col s12">\n\
+        <div class="row">\n\
+            <div class="input-field col s12">\n\
+                Seleccione fecha de inicio:\n\
+                <input id="fechaInicio" type="date" class="datepicker validate" required>\n\
+            </div>\n\
+            <div class="input-field col s12">\n\
+                Seleccione fecha de fin:\n\
+                <input id="fechaFin" type="date" class="datepicker validate" required>\n\
+            </div>\n\
+            <div class="input-field col s12">\n\
+                <select id="perro" class="validate" required>\n\
+                <option value="" disabled selected>Seleccione perro</option>\n\
+                </select>\n\
+                <label for="perro">Perro</label>Datos del dueño:</div>\n\
+            <div class="input-field col s12">\n\
+                <input id="nombreDuenio" type="text" class="validate" required>\n\
+                <label for="nombreDuenio">Nombre</label>\n\
+            </div>\n\
+            <div class="input-field col s12">\n\
+                <input id="emailDuenio" type="text" class="validate" required>\n\
+                <label for="emailDuenio">Email</label>\n\
+            </div>\n\
+            <div class="input-field col s12">\n\
+                <input id="telefonoDuenio" type="text" class="validate" required>\n\
+                <label for="telefonoDuenio">Teléfono</label>\n\
+            </div>\n\
+            <div class="input-field col s12">\n\
+                <input id="dniDuenio" type="text" class="validate" required>\n\
+                <label for="dniDuenio">DNI</label>\n\
+            </div>\n\
+            <div class="input-field col s12 center">\n\
+            <button class="btn waves-effect waves-light" type="submit">Enviar<i class="material-icons right">send</i></button>\n\
+            </div>\n\
+        </div>\n\
+    </form>\n\
+</div>');
+            obtenerPerros(hostURL);
+        }
+    });
+}
 
 var btnEliminar;
 function eliminarCuidador() {
     $('.eliminar').on('click', function () {
 
-       btnEliminar = $(this);
-        
+        btnEliminar = $(this);
         var id = $(this).next().val();
         console.log($(this).next().val());
         $('#modal1').modal('open');
         $('#aceptarEliminar').on('click', function () {
-            
+
             eliminarAJAX(id);
         });
-
     });
 }
 
@@ -83,18 +134,17 @@ function eliminarAJAX(id) {
             btnEliminar.parent().parent().parent().parent().parent().parent().remove();
             console.log('Se borro cuidador con ID: ' + id);
         },
-        error: function() {
+        error: function () {
             alert('El cuidador no pudo ser eliminado.');
         }
     });
 }
 
 $(document).ready(function () {
-    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    //$('.modal').modal();
+// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+//$('.modal').modal();
 
 });
-
 $('.modal').modal({
 
     dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -104,8 +154,11 @@ $('.modal').modal({
     startingTop: '4%', // Starting top style attribute
     endingTop: '10%' // Ending top style attribute
 
-}
-);
+});
+$('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15 // Creates a dropdown of 15 years to control year
+});
 var imagenes = [];
 /* global e */
 
@@ -116,9 +169,12 @@ function mostarFormNuevoCuidador() {
 
 $('#nuevoCuidador').submit(function () {
     //postPerro();
+    validarEmail($('#email'));
+});
+function validarEmail(campo) {
     var emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
     //Se muestra un texto a modo de ejemplo, luego va a ser un icono
-    if (!emailRegex.test($('#email').val())) {
+    if (!emailRegex.test(campo.val())) {
         console.log("error agregar cuidador");
         $.toast({
             heading: 'Error',
@@ -128,8 +184,7 @@ $('#nuevoCuidador').submit(function () {
         });
         return false;
     }
-});
-
+}
 
 /*function postPerro() {
  var perro = getPerroDesdeForm();
@@ -232,7 +287,19 @@ function mostrarImagen() {
 window.onload = function () {
     $('#nuevoCuidador').hide();
     getCuidadores();
-
-
+    $('select').material_select();
 };
+function obtenerPerros(hostURL) {
+    var url = hostURL + "api/perros";
+    $.getJSON(url, function (datos) {
+        llenarSelect('#perro', datos);
+    });
+}
+
+function llenarSelect(idSelect, jsonArray) {
+    for (var i = 0; i < jsonArray.length; i++) {
+        $(idSelect).append('<option value="' + jsonArray[i].nombre + '">' + jsonArray[i].nombre + '</option>');
+        $('select').material_select();
+    }
+}
 
