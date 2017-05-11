@@ -21,7 +21,7 @@
             <nav class="grey lighten-1" role="navigation">
                 <div class="nav-wrapper container">
                     <a id="logo-container" href="index.html" class="brand-logo"><img src="img/logo.png" style="height: 65px" /></a>
-                    
+
                     <ul class="right hide-on-med-and-down">
                         <li><a href="perro.html">Perros</a></li>
                         <li><a href="cuidadores.html">Cuidadores</a></li>
@@ -31,7 +31,7 @@
                         <li><a href="perro.html">Perros</a></li>
                         <li><a href="cuidadores.html">Cuidadores</a></li>
                     </ul>
-                  
+
                     <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
                 </div>
             </nav>
@@ -80,7 +80,7 @@
                     </div>
                     <div class="row">
                         <div class="col s12">
-                            <ul class="collection" id="perroList">
+                            <ul class="collection" id="listaCuidadores">
                                 <!--                                <li class="collection-item avatar">
                                                                     <img src="img/dog-1.jpg" alt="" class="circle">
                                                                     <span class="title"> <b>Fatigas</b></span>
@@ -107,7 +107,20 @@
                             </ul>
                         </div>
                     </div>
-
+                    <!-- Modal Trigger 
+                    <button  class="btn">Modal</button>
+                     -->
+                    <div id="modal1" class="modal">
+                        <div class="modal-content">
+                            <h4>Alerta!</h4>
+                            <p>¿Está seguro que desea eliminar el cuidador?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" id="cancelarEliminar" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                            <a href="#!" id="aceptarEliminar" class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
+                            
+                        </div>
+                    </div>
 
                     <div class="center-align">
                         <a class="waves-effect waves-light btn" onclick="mostarFormNuevoCuidador()"><i class="material-icons right">library_add</i> Nuevo Cuidador</a>
@@ -141,7 +154,7 @@
                                     <input id="maxPerros" type="text" class="validate" required>
                                     <label for="maxPerros">Cantidad máxima de perros</label>
                                 </div>
-                                
+
                                 <div class="file-field input-field col s12">
                                     <div class="file-path-wrapper">
                                         <input id="URLImagen" class="file-path validate" type="text" placeholder="Copie la URL de la imagen (se pueden agregar hasta 4 imágenes)" required>
@@ -165,7 +178,7 @@
                 </div>
             </div>
         </main>
-  
+
         <footer class="page-footer orange">
             <div class="container">
                 <div class="row">

@@ -3,6 +3,8 @@ function getCuidadores() {
     var url = hostURL + "api/cuidadores";
     $.getJSON(url, function (datos) {
         generarCuidadores(datos);
+        eliminarCuidador();
+
     });
 }
 
@@ -27,7 +29,7 @@ function generarCuidadores(jsonArray) {
         <div class="card-stacked"> \n\
             <div class="card-content"> \n\
             <span class="card-title">' + jsonArray[i].nombre + ' \n\
-            <a href="#"><span class="new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="Eliminar"></span></a> \n\
+            <a href="#!"><span data-target="modal1" class="eliminar new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="Eliminar" ></span></a> \n\
             </span> \n\
             <div class="row"> \n\
                 <div class="col s12 m6"> \n\
@@ -55,6 +57,35 @@ function generarCuidadores(jsonArray) {
 
 
 
+function eliminarCuidador() {
+    $('.eliminar').on('click', function () {
+            
+        var btnEliminar = $(this);
+        $('#modal1').modal('open');
+        $('#aceptarEliminar').on('click', function(){
+            btnEliminar.parent().parent().parent().parent().parent().parent().remove(); 
+        });
+
+    });
+}
+
+$(document).ready(function () {
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    //$('.modal').modal();
+
+});
+
+$('.modal').modal({
+
+    dismissible: true, // Modal can be dismissed by clicking outside of the modal
+    opacity: .5, // Opacity of modal background
+    inDuration: 300, // Transition in duration
+    outDuration: 200, // Transition out duration
+    startingTop: '4%', // Starting top style attribute
+    endingTop: '10%' // Ending top style attribute
+
+}
+);
 var imagenes = [];
 /* global e */
 
@@ -176,8 +207,12 @@ function mostrarImagen() {
 }
 
 
+
+
 window.onload = function () {
     $('#nuevoCuidador').hide();
     getCuidadores();
 
+
 };
+
