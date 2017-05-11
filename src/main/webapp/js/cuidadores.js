@@ -29,7 +29,8 @@ function generarCuidadores(jsonArray) {
         <div class="card-stacked"> \n\
             <div class="card-content"> \n\
             <span class="card-title">' + jsonArray[i].nombre + ' \n\
-            <a href="#!"><span data-target="modal1" class="eliminar new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="Eliminar" ></span></a> \n\
+            <a href="#!"><span data-target="modal1" class="eliminar new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="Eliminar" ></span>\n\
+            <input type="hidden" value="' + jsonArray[i].id + '">\n\</a> \n\
             </span> \n\
             <div class="row"> \n\
                 <div class="col s12 m6"> \n\
@@ -56,16 +57,35 @@ function generarCuidadores(jsonArray) {
 }
 
 
-
+var btnEliminar;
 function eliminarCuidador() {
     $('.eliminar').on('click', function () {
-            
-        var btnEliminar = $(this);
+
+       btnEliminar = $(this);
+        
+        var id = $(this).next().val();
+        console.log($(this).next().val());
         $('#modal1').modal('open');
-        $('#aceptarEliminar').on('click', function(){
-            btnEliminar.parent().parent().parent().parent().parent().parent().remove(); 
+        $('#aceptarEliminar').on('click', function () {
+            
+            eliminarAJAX(id);
         });
 
+    });
+}
+
+function eliminarAJAX(id) {
+    var url = hostURL + "api/cuidadores/" + id;
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+        success: function () {
+            btnEliminar.parent().parent().parent().parent().parent().parent().remove();
+            console.log('Se borro cuidador con ID: ' + id);
+        },
+        error: function() {
+            alert('El cuidador no pudo ser eliminado.');
+        }
     });
 }
 
