@@ -1,56 +1,112 @@
+function getCuidadores() {
+    console.log("getCuidadores()");
+    var url = hostURL + "api/cuidadores";
+    $.getJSON(url, function (datos) {
+        generarCuidadores(datos);
+        eliminarCuidador();
+
+    });
+}
+
+function generarCuidadores(jsonArray) {
+    //esto esta hard codeado, se debe cambiar
+    var imagenesURL = [];
+    imagenesURL.push('cesar_200.jpg');
+    imagenesURL.push('riquelme_200.jpg');
+    imagenesURL.push('marcelo_200.jpg');
+    imagenesURL.push('pope_200.jpg');
+    imagenesURL.push('carrio_200.jpg');
+
+
+    for (var i = 0; i < jsonArray.length; i++) {
+        //existe un problema con los espacios, entonces al html lo copiamos en la barra url del explorador y luego lo cortamos para tenr bien el formato
+        var cuidador = '\
+<div class="col s12">\n\
+    <div class="card horizontal blue-grey darken-1 white-text">\n\
+        <div class="card-image">\n\
+            <img src="img/' + imagenesURL[i] + '"> \n\
+        </div> \n\
+        <div class="card-stacked"> \n\
+            <div class="card-content"> \n\
+            <span class="card-title">' + jsonArray[i].nombre + ' \n\
+            <a href="#!"><span data-target="modal1" class="eliminar new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="Eliminar" ></span>\n\
+            <input type="hidden" value="' + jsonArray[i].id + '">\n\</a> \n\
+            </span> \n\
+            <div class="row"> \n\
+                <div class="col s12 m6"> \n\
+                <p> <i class="material-icons black-text">phone</i> ' + jsonArray[i].telefono + '</p> \n\
+                <p> <i class="material-icons black-text">email</i> ' + jsonArray[i].email + '</p> \n\
+                </div> \n\
+                <div class="col s12 m6"> \n\
+                <p> <i class="material-icons black-text">location_on</i>' + jsonArray[i].direccion.nombre + '</p> \n\
+                <p> <i class="material-icons black-text">info</i>Max perros: ' + jsonArray[i].cantidadMaxDePerros + ' </p> \n\
+                </div> \n\
+                </div> \n\
+            </div> \n\
+            <div class="card-action"> \n\
+            <a href="#">Solicitar Reserva</a> \n\
+            </div> \n\
+        </div> \n\
+    </div> \n\
+</div>';
+
+        $('#listaCuidadores').append(cuidador);
+
+
+    }
+}
+
+
+var btnEliminar;
+function eliminarCuidador() {
+    $('.eliminar').on('click', function () {
+
+       btnEliminar = $(this);
+        
+        var id = $(this).next().val();
+        console.log($(this).next().val());
+        $('#modal1').modal('open');
+        $('#aceptarEliminar').on('click', function () {
+            
+            eliminarAJAX(id);
+        });
+
+    });
+}
+
+function eliminarAJAX(id) {
+    var url = hostURL + "api/cuidadores/" + id;
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+        success: function () {
+            btnEliminar.parent().parent().parent().parent().parent().parent().remove();
+            console.log('Se borro cuidador con ID: ' + id);
+        },
+        error: function() {
+            alert('El cuidador no pudo ser eliminado.');
+        }
+    });
+}
+
+$(document).ready(function () {
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    //$('.modal').modal();
+
+});
+
+$('.modal').modal({
+
+    dismissible: true, // Modal can be dismissed by clicking outside of the modal
+    opacity: .5, // Opacity of modal background
+    inDuration: 300, // Transition in duration
+    outDuration: 200, // Transition out duration
+    startingTop: '4%', // Starting top style attribute
+    endingTop: '10%' // Ending top style attribute
+
+}
+);
 var imagenes = [];
-
-/*function getEventos(hostURL) {
- console.log("getPerros() - Index");
- var url = hostURL + "api/perro";
- $.getJSON(url, function (datos) {
- generarPerros(datos);
- });
- }
- 
- function generarPerros(jsonArray) {
- var arrayLength = jsonArray.length;
- for (var i = 0; i < arrayLength; i++) {
- //existe un problema con los espacios, entonces al html lo copiamos en la barra url del explorador y luego lo cortamos para tenr bien el formato
- var itmeList = '\
- \<li class="collection-item avatar"> \n\
- <img src="img/dog-1.jpg" alt="" class="circle"> \n\
- <span class="title"> \n\
- <b>' + jsonArray[i].nombre + '</b></span> \n\
- <div class="row"> \n\
- <div class="col s12 m6"> \n\
- <p> Raza: ' + jsonArray[i].raza.nombre + ' <br>\n\
- Tamanio: ' + jsonArray[i].tamanio.nombre + '<br>\n\
- Vacunación: ' + jsonArray[i].vacunacionList[0].nombre;
- if (jsonArray[i].vacunacionList.length > 1) {
- for (var j = 1; j < jsonArray[i].vacunacionList.length; j++) {
- itmeList += ', ' + jsonArray[i].vacunacionList[j].nombre;
- }
- }
- itmeList += '<br>\n\
- </p> \n\
- </div> \n\
- <div class="col s12 m6"> \n\
- <p> Comentario: ' + jsonArray[i].comentario + '<br>\n\
- </p> \n\
- </div> \n\
- </div> \n\
- <div class="secondary-content"> \n\
- <a href="#!" >\n\
- <i class="material-icons">delete</i>\n\
- </a> <br> \n\
- <a href="#!" >\n\
- <i class="material-icons">edit</i>\n\
- </a> </div> \n\
- </li>\
- ';
- 
- $('#perroList').append(itmeList);
- }
- 
- 
- }*/
-
 /* global e */
 
 function mostarFormNuevoCuidador() {
@@ -132,10 +188,6 @@ $('#nuevoCuidador').submit(function () {
 
 
 
-window.onload = function () {
-    $('#nuevoCuidador').hide();
-    //getEventos(hostURL);
-};
 
 function mostrarImagen() {
     var pathImagen = $('#URLImagen').val();
@@ -173,4 +225,14 @@ function mostrarImagen() {
     }
     //$('#muestraImagen').attr('src', window.URL.createObjectURL($('#imagen').get(0).files.item(0)));
 }
+
+
+
+
+window.onload = function () {
+    $('#nuevoCuidador').hide();
+    getCuidadores();
+
+
+};
 

@@ -79,30 +79,35 @@ public class EjecutablesREST {
     @GET
     @Produces({MediaType.TEXT_PLAIN})
     public String drop() throws Exception {
-        //soprte
-        RazaDAO razaDAO = new RazaDAO();
-        razaDAO.removeAll();
-        VacunaDAO vacunaDAO = new VacunaDAO();
-        vacunaDAO.removeAll();
-        TamanioDAO tamanioDAO = new TamanioDAO();
-        tamanioDAO.removeAll();
-        //dueno
-        DuenoDAO duenoDAO = new DuenoDAO();
-        duenoDAO.removeAll();
-        //Perro
-        PerroDAO perroDAO = new PerroDAO();
-        perroDAO.removeAll();
-        //Direccion
-        DireccionDAO direccionDAO = new DireccionDAO();
-        direccionDAO.removeAll();
-        //Cuidador
-        CuidadorDAO cuidadorDAO = new CuidadorDAO();
-        cuidadorDAO.removeAll();
+        
         //transaccion
         ReservaDAO reservaDAO = new ReservaDAO();
         reservaDAO.removeAll();
         CalificacionDAO calificacionDAO = new CalificacionDAO();
         calificacionDAO.removeAll();
+        //soprte
+        VacunaDAO vacunaDAO = new VacunaDAO();
+        vacunaDAO.removeAll();
+        //Perro
+        PerroDAO perroDAO = new PerroDAO();
+        perroDAO.removeAll();
+        //Soporte Perro
+        RazaDAO razaDAO = new RazaDAO();
+        razaDAO.removeAll();
+        
+        TamanioDAO tamanioDAO = new TamanioDAO();
+        tamanioDAO.removeAll();
+        //dueno
+        DuenoDAO duenoDAO = new DuenoDAO();
+        duenoDAO.removeAll();
+        //Cuidador
+        CuidadorDAO cuidadorDAO = new CuidadorDAO();
+        cuidadorDAO.removeAll();
+        //Direccion
+        DireccionDAO direccionDAO = new DireccionDAO();
+        direccionDAO.removeAll();
+        
+        
         return " drop (Remove all) : " + new Date();
     }
 
