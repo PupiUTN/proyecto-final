@@ -15,16 +15,24 @@ function generarCuidadores(jsonArray) {
     imagenesURL.push('riquelme_200.jpg');
     imagenesURL.push('marcelo_200.jpg');
     imagenesURL.push('pope_200.jpg');
-    imagenesURL.push('carrio_200.jpg');
+    //imagenesURL.push('carrio_200.jpg');
 
 
     for (var i = 0; i < jsonArray.length; i++) {
+        var url ;
+        //console.log
+        if(jsonArray[i].listaImagenes.length=== 0){
+            url="https://pbs.twimg.com/profile_images/492236288406605824/HcFDZXSg.jpeg";
+        }else{
+            url=jsonArray[i].listaImagenes[0].url;
+        }
+        console.log(url);
         //existe un problema con los espacios, entonces al html lo copiamos en la barra url del explorador y luego lo cortamos para tenr bien el formato
         var cuidador = '\
 <div class="col s12">\n\
     <div class="card horizontal blue-grey darken-1 white-text hoverable">\n\
-        <div class="card-image">\n\
-            <img src="img/' + imagenesURL[i] + '"> \n\
+        <div class="card-image col s3 ">\n\
+            <img src="' + url + '"> \n\
         </div> \n\
         <div class="card-stacked"> \n\
             <div class="card-content"> \n\
@@ -61,13 +69,13 @@ var btnEliminar;
 function eliminarCuidador() {
     $('.eliminar').on('click', function () {
 
-       btnEliminar = $(this);
-        
+        btnEliminar = $(this);
+
         var id = $(this).next().val();
         console.log($(this).next().val());
         $('#modal1').modal('open');
         $('#aceptarEliminar').on('click', function () {
-            
+
             eliminarAJAX(id);
         });
 
@@ -83,16 +91,53 @@ function eliminarAJAX(id) {
             btnEliminar.parent().parent().parent().parent().parent().parent().remove();
             console.log('Se borro cuidador con ID: ' + id);
         },
-        error: function() {
+        error: function () {
             alert('El cuidador no pudo ser eliminado.');
         }
     });
 }
 
+function getCuidadorDesdeForm() {
+    var dir = new Object();
+    dir.nombre = $('#direccion').val();
+    var fotosList = [];
+    var i = 0;
+    $(".imagenCuidador").each(function () {
+        var imagen = new Object();
+        imagen.url = $(this).attr('src');
+        fotosList[i] = imagen;
+        i++;
+    });
+    var cuidador = new Object();
+    cuidador.nombre = $('#nombre').val();
+    cuidador.email = $('#email').val();
+    cuidador.telefono = $('#telefono').val();
+    cuidador.cantidadMaxDePerros = $('#maxPerros').val();
+    cuidador.direccion = dir;
+    cuidador.listaImagenes = fotosList;
+    return cuidador;
+
+}
+
+
 $(document).ready(function () {
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     //$('.modal').modal();
-
+    $(".numero").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                // Allow: Ctrl+A, Command+A
+                        (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                        // Allow: home, end, left, right, down, up
+                                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    // let it happen, don't do anything
+                    return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
 });
 
 $('.modal').modal({
@@ -128,63 +173,42 @@ $('#nuevoCuidador').submit(function () {
         });
         return false;
     }
+    postCuidador();
+    return false;
+
 });
+function postCuidador() {
+    var cuidador = getCuidadorDesdeForm();
+    console.log(cuidador);
+    $.ajax({
+        type: "POST",
+        url: hostURL + 'api/cuidadores',
+        data: JSON.stringify(cuidador),
+        contentType: "application/json",
+        success: function () {
+            console.log("exito crear cuidador");
+            $('#nuevoCuidador').hide();
+            $.toast({
+                heading: 'Success',
+                text: 'Exito al crear nuevo cuidador. Refrescar la pagina para verlo',
+                showHideTransition: 'slide',
+                icon: 'success'
+            });
+            location.reload();
 
+        },
+        error: function () {
+            console.log("error crear cuidador");
+            $.toast({
+                heading: 'Error',
+                text: 'Erro al crear nuevo cuidador.',
+                showHideTransition: 'fade',
+                icon: 'error'
+            });
+        }
+    });
+}
 
-/*function postPerro() {
- var perro = getPerroDesdeForm();
- $.ajax({
- type: "POST",
- url: hostURL + 'api/perro',
- data: JSON.stringify(perro),
- contentType: "application/json",
- success: function () {
- console.log("exito crear perro");
- $('#nuevoPerro').hide();
- $.toast({
- heading: 'Success',
- text: 'Exito al crear nuevo perro. Refrescar la pagina para verlo',
- showHideTransition: 'slide',
- icon: 'success'
- });
- //location.reload();
- 
- },
- error: function () {
- console.log("error crear perro");
- $.toast({
- heading: 'Error',
- text: 'Erro al crear nuevo perro.',
- showHideTransition: 'fade',
- icon: 'error'
- })
- }
- });
- 
- }
- function getPerroDesdeForm() {
- var raza = new Object();
- raza.nombre = $('#raza').val();
- 
- var tamanio = new Object();
- tamanio.nombre = $('#tamanio').val();
- 
- var vacunaList = [];
- for (var i = 0; i < $('#vacuna').val().length; i++) {
- var vacuna = new Object();
- vacuna.nombre = $('#vacuna').val()[i];
- vacunaList.push(vacuna);
- }
- 
- var perro = new Object();
- perro.nombre = $('#nombre').val();
- perro.comentario = $('#comentario').val();
- perro.raza = raza;
- perro.tamanio = tamanio;
- perro.vacunacionList = vacunaList;
- return perro;
- 
- }*/
 
 
 
@@ -203,7 +227,7 @@ function mostrarImagen() {
     {
         if (imagenes.length <= 3)
         {
-            $('#contenedorImagen').append('<img src="' + pathImagen + '" height="100" width="100" alt="Imagen previsualizada">');
+            $('#contenedorImagen').append('<img src="' + pathImagen + '" height="100" width="100"  class="imagenCuidador" alt="Imagen previsualizada">');
             imagenes.push(pathImagen);
         } else {
             console.log("error agregar imagen");
@@ -234,5 +258,6 @@ window.onload = function () {
     getCuidadores();
 
 
-};
+}
+;
 

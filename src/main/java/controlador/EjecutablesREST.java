@@ -81,10 +81,11 @@ public class EjecutablesREST {
     public String drop() throws Exception {
         
         //transaccion
-        ReservaDAO reservaDAO = new ReservaDAO();
-        reservaDAO.removeAll();
         CalificacionDAO calificacionDAO = new CalificacionDAO();
         calificacionDAO.removeAll();
+        ReservaDAO reservaDAO = new ReservaDAO();
+        reservaDAO.removeAll();
+        
         //soprte
         VacunaDAO vacunaDAO = new VacunaDAO();
         vacunaDAO.removeAll();
@@ -101,6 +102,7 @@ public class EjecutablesREST {
         DuenoDAO duenoDAO = new DuenoDAO();
         duenoDAO.removeAll();
         //Cuidador
+        
         CuidadorDAO cuidadorDAO = new CuidadorDAO();
         cuidadorDAO.removeAll();
         //Direccion
