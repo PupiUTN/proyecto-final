@@ -10,7 +10,7 @@ var hostURL;
     
     //determino el host
     if (window.location.hostname === "localhost") {
-        hostURL = "http://" + window.location.host + "/pupi/";
+        hostURL = "http://" + window.location.host + "/";
     } else {
         hostURL = "http://" + window.location.host + "/";
     }

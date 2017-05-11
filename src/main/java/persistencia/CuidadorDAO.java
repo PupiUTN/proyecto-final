@@ -27,8 +27,6 @@ public class CuidadorDAO extends DAO<Cuidador> {
 
     public void cargarDatos() throws Exception {
         if (count() == 0) {
-            Imagen imagen1 = new Imagen();
-            List<Imagen> imagenes = new LinkedList<>();
 
             DireccionDAO direccionDAO = new DireccionDAO();
             List<Direccion> findAll = direccionDAO.findAll();
@@ -39,9 +37,11 @@ public class CuidadorDAO extends DAO<Cuidador> {
             cuidador1.setTelefono(3515644404L);
             cuidador1.setDireccion(findAll.remove(0));
 
-//            imagen1.setUrl("http://e.noticias.americadigital.pe/ima/0/0/2/5/7/257161.jpg");
-//            imagenes.add(imagen1);
-//            cuidador1.setListaImagenes(imagenes);
+            Imagen imagen1 = new Imagen();
+            List<Imagen> imagenes1 = new LinkedList<>();
+            imagen1.setUrl("http://e.noticias.americadigital.pe/ima/0/0/2/5/7/257161.jpg");
+            imagenes1.add(imagen1);
+            cuidador1.setListaImagenes(imagenes1);
             
             create(cuidador1);
 
@@ -51,11 +51,12 @@ public class CuidadorDAO extends DAO<Cuidador> {
             cuidador2.setEmail("juan@bocajuniors.com.ar");
             cuidador2.setTelefono(1126354896);
             cuidador2.setDireccion(findAll.remove(0));
-
-//            imagen1.setUrl("https://www.pagina12.com.ar/fotos/20100723/notas/na27fo01.jpg");
-//            imagenes.clear();
-//            imagenes.add(imagen1);
-//            cuidador2.setListaImagenes(imagenes);
+            
+            Imagen imagen2 = new Imagen();
+            List<Imagen> imagenes2 = new LinkedList<>();
+            imagen2.setUrl("https://www.pagina12.com.ar/fotos/20100723/notas/na27fo01.jpg");
+            imagenes2.add(imagen2);
+            cuidador2.setListaImagenes(imagenes2);
 
             create(cuidador2);
 
@@ -66,10 +67,13 @@ public class CuidadorDAO extends DAO<Cuidador> {
             cuidador3.setTelefono(1195378619);
             cuidador3.setDireccion(findAll.remove(0));
             
-//            imagen1.setUrl("http://static.wixstatic.com/media/f07ef9_3bb69e586d1341588117507acb8c2f60~mv2.jpg");
-//            imagenes.clear();
-//            imagenes.add(imagen1);
-//            cuidador3.setListaImagenes(imagenes);
+            
+            Imagen imagen3 = new Imagen();
+            List<Imagen> imagenes3 = new LinkedList<>();
+            imagen3.setUrl("http://static.wixstatic.com/media/f07ef9_3bb69e586d1341588117507acb8c2f60~mv2.jpg");
+            imagenes3.clear();
+            imagenes3.add(imagen3);
+            cuidador3.setListaImagenes(imagenes3);
             
             create(cuidador3);
 
@@ -79,6 +83,14 @@ public class CuidadorDAO extends DAO<Cuidador> {
             cuidador4.setEmail("francis@pope.com");
             cuidador4.setTelefono(325923652);
             cuidador4.setDireccion(findAll.remove(0));
+            
+            Imagen imagen4 = new Imagen();
+            List<Imagen> imagenes4 = new LinkedList<>();
+            imagen4.setUrl("http://africa.com/wp-content/uploads/2016/02/Pope-Francis-with-wine.jpg");
+            imagenes4.clear();
+            imagenes4.add(imagen4);
+            cuidador4.setListaImagenes(imagenes4);
+            
             create(cuidador4);
 
             Cuidador cuidador5 = new Cuidador();
@@ -87,6 +99,17 @@ public class CuidadorDAO extends DAO<Cuidador> {
             cuidador5.setEmail("lilita@ucr.com");
             cuidador5.setTelefono(586237470);
             cuidador5.setDireccion(findAll.remove(0));
+            
+            
+            
+            
+            Imagen imagen5 = new Imagen();
+            List<Imagen> imagenes5 = new LinkedList<>();
+            imagen5.setUrl("http://3.bp.blogspot.com/-gLc6JaCgytA/VG5gXza1YgI/AAAAAAAAO40/wq_cQd8Ebp0/s1600/carrio.png");
+            imagenes5.clear();
+            imagenes5.add(imagen5);
+            cuidador5.setListaImagenes(imagenes5);
+            
             create(cuidador5);
         }
     }
