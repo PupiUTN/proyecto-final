@@ -57,6 +57,13 @@ public abstract class DAO<T> implements IDao<T> {
         getEntityManager().getTransaction().commit();
 
     }
+     public void removeID(Object id) {
+        getEntityManager().getTransaction().begin();
+        T entity = getEntityManager().find(entityClass, id);
+        getEntityManager().remove(getEntityManager().merge(entity));
+        getEntityManager().getTransaction().commit();
+
+    }
 
     public void removeAll() {
                 getEntityManager().getTransaction().begin();
