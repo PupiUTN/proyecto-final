@@ -10,15 +10,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ *
+ * @author agile
+ */
 @Entity
-public class Vacuna implements Serializable {
-
+public class Imagen implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String nombre;
+    private String url;
+
+    public Imagen() {
+    }
 
     public Long getId() {
         return id;
@@ -28,17 +33,13 @@ public class Vacuna implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getUrl() {
+        return url;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setUrl(String url) {
+        this.url = url;
     }
-
-    @Override
-    public String toString() {
-        return "Vacuna{" + "id=" + id + ", nombre=" + nombre + '}';
-    }
-
+    
+    
 }

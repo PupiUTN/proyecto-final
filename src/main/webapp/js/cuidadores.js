@@ -22,7 +22,7 @@ function generarCuidadores(jsonArray) {
         //existe un problema con los espacios, entonces al html lo copiamos en la barra url del explorador y luego lo cortamos para tenr bien el formato
         var cuidador = '\
 <div class="col s12">\n\
-    <div class="card horizontal blue-grey darken-1 white-text">\n\
+    <div class="card horizontal blue-grey darken-1 white-text hoverable">\n\
         <div class="card-image">\n\
             <img src="img/' + imagenesURL[i] + '"> \n\
         </div> \n\
@@ -110,7 +110,7 @@ var imagenes = [];
 /* global e */
 
 function mostarFormNuevoCuidador() {
-    $('#nuevoCuidador').show();
+    $('#nuevoCuidador').toggle();
 }
 
 
