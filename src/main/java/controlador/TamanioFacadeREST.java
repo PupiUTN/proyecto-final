@@ -32,47 +32,11 @@ public class TamanioFacadeREST {
     public TamanioFacadeREST() {
     }
 
-    @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Tamanio entity) {
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Tamanio entity) {
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
-    }
-
-    @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Tamanio find(@PathParam("id") Long id) {
-        return null;
-    }
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Tamanio> findAll() throws Exception {
         return new TamanioDAO().findAll();
     }
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Tamanio> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return null;
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return null;
-    }
-
+ 
 }

@@ -32,47 +32,11 @@ public class VacunaFacadeREST {
     public VacunaFacadeREST() {
     }
 
-    @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Vacuna entity) {
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Vacuna entity) {
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
-    }
-
-    @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Vacuna find(@PathParam("id") Long id) {
-        return null;
-    }
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Vacuna> findAll() throws Exception {
         return new VacunaDAO().findAll();
     }
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Vacuna> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return null;
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return null;
-    }
     
 }

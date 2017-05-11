@@ -38,27 +38,6 @@ public class PerroREST {
         perroDAO.create(entity);
     }
 
-    @PUT
-    @Path("{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void edit(@PathParam("id") Long id, Perro entity) {
-//        baseDatos.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
-//        baseDatos.remove(entity);
-    }
-
-    @GET
-    @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Perro find(@PathParam("id") Long id) {
-        return null;
-
-    }
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Perro> findAll() throws Exception {
