@@ -78,9 +78,56 @@
                                                 </div>-->
 
                     </div>
-                     <!-- Modal Trigger 
-                    <button  class="btn">Modal</button>
-                     -->
+                    <div id="modalReserva" class="modal">
+                        <div class="modal-content">
+                            <div class="row" id="nuevaReserva">
+                                <form class="col s12">
+                                    <div class="row">
+                                        <div class='center-align'>
+                                            <h3>Reserva CRUD / ABM </h3>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            Seleccione fecha de inicio:
+                                            <input id="fechaInicio" type="date" class="datepicker validate" required>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            Seleccione fecha de fin:
+                                            <input id="fechaFin" type="date" class="datepicker validate" required>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <select id="perro" class="validate" required>
+                                                <option value="" disabled selected>Seleccione perro</option>
+                                            </select>
+                                            <label for="perro">Perro</label>Datos del dueño:</div>
+                                        <div class="input-field col s12">
+                                            <input id="nombreDuenio" type="text" class="validate" required>
+                                            <label for="nombreDuenio">Nombre</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input id="emailDuenio" type="text" class="validate" required>
+                                            <label for="emailDuenio">Email</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input id="telefonoDuenio" type="text" class="validate" required>
+                                            <label for="telefonoDuenio">Teléfono</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input id="dniDuenio" type="text" class="validate" required>
+                                            <label for="dniDuenio">DNI</label>
+                                        </div>
+                                        <div class="input-field col s12 center">
+                                            <button class="btn waves-effect waves-light" type="submit">Enviar<i class="material-icons right">send</i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Trigger 
+                   <button  class="btn">Modal</button>
+                    -->
+
                     <div id="modal1" class="modal">
                         <div class="modal-content">
                             <h4>Alerta!</h4>
@@ -89,7 +136,7 @@
                         <div class="modal-footer">
                             <a href="#!" id="cancelarEliminar" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
                             <a href="#!" id="aceptarEliminar" class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
-                            
+
                         </div>
                     </div>
 

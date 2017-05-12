@@ -45,7 +45,7 @@ function generarCuidadores(jsonArray) {
                 </div> \n\
             </div> \n\
             <div class="card-action"> \n\
-            <a href="#!" class="reserva" data-open="false">Solicitar Reserva</a> \n\
+            <a href="#!" class="reserva">Solicitar Reserva</a> \n\
             </div> \n\
         </div> \n\
     </div> \n\
@@ -59,57 +59,12 @@ function generarCuidadores(jsonArray) {
 
 function solicitarReserva() {
     $('.reserva').on('click', function () {
-        var btnSolicitarReserva = $(this);
-        if (btnSolicitarReserva.attr('data-open') === "false") {
-            $('#nuevaReserva').remove();
-            $('.reserva').attr('data-open', "false");
-            btnSolicitarReserva.attr('data-open', "true");
-            var id = $('.idCuidador').eq(($('.reserva').index(this))).val();
-            console.log(id);
-            btnSolicitarReserva.parent().parent().parent().parent().append('\
-<div class="row nuevaReserva" id="nuevaReserva">\n\
-    <form class="col s12">\n\
-        <div class="row">\n\
-            <div class="input-field col s12">\n\
-                Seleccione fecha de inicio:\n\
-                <input id="fechaInicio" type="date" class="datepicker validate" required>\n\
-            </div>\n\
-            <div class="input-field col s12">\n\
-                Seleccione fecha de fin:\n\
-                <input id="fechaFin" type="date" class="datepicker validate" required>\n\
-            </div>\n\
-            <div class="input-field col s12">\n\
-                <select id="perro" class="validate" required>\n\
-                <option value="" disabled selected>Seleccione perro</option>\n\
-                </select>\n\
-                <label for="perro">Perro</label>Datos del dueño:</div>\n\
-            <div class="input-field col s12">\n\
-                <input id="nombreDuenio" type="text" class="validate" required>\n\
-                <label for="nombreDuenio">Nombre</label>\n\
-            </div>\n\
-            <div class="input-field col s12">\n\
-                <input id="emailDuenio" type="text" class="validate" required>\n\
-                <label for="emailDuenio">Email</label>\n\
-            </div>\n\
-            <div class="input-field col s12">\n\
-                <input id="telefonoDuenio" type="text" class="validate" required>\n\
-                <label for="telefonoDuenio">Teléfono</label>\n\
-            </div>\n\
-            <div class="input-field col s12">\n\
-                <input id="dniDuenio" type="text" class="validate" required>\n\
-                <label for="dniDuenio">DNI</label>\n\
-            </div>\n\
-            <div class="input-field col s12 center">\n\
-            <button class="btn waves-effect waves-light" type="submit">Enviar<i class="material-icons right">send</i></button>\n\
-            </div>\n\
-        </div>\n\
-    </form>\n\
-</div>');
-            obtenerPerros(hostURL);
-        }
+        var id = $('.idCuidador').eq(($('.reserva').index(this))).val();
+        console.log(id);
+        $('#modalReserva').modal('open');
+        $('#modalReserva').modal;
     });
 }
-
 var btnEliminar;
 function eliminarCuidador() {
     $('.eliminar').on('click', function () {
@@ -167,9 +122,10 @@ function mostarFormNuevoCuidador() {
 }
 
 
-$('#nuevoCuidador').submit(function () {
-    //postPerro();
-    validarEmail($('#email'));
+$('#nuevaReserva').submit(function () {
+    if( validarEmail($('#email'))){
+        postReserva();
+    }
 });
 function validarEmail(campo) {
     var emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
@@ -183,22 +139,25 @@ function validarEmail(campo) {
             icon: 'error'
         });
         return false;
+    }else{
+        return true;
     }
 }
 
-/*function postPerro() {
- var perro = getPerroDesdeForm();
+function postReserva() {
+    
+ var reserva = getReservaDesdeForm();
  $.ajax({
  type: "POST",
- url: hostURL + 'api/perro',
- data: JSON.stringify(perro),
+ url: hostURL + 'api/reservas',
+ data: JSON.stringify(reserva),
  contentType: "application/json",
  success: function () {
- console.log("exito crear perro");
- $('#nuevoPerro').hide();
+ console.log("exito crear reserva");
+ $('#modalReserva').modal('close');
  $.toast({
  heading: 'Success',
- text: 'Exito al crear nuevo perro. Refrescar la pagina para verlo',
+ text: 'Exito al crear nueva reserva. Refrescar la pagina para verla',
  showHideTransition: 'slide',
  icon: 'success'
  });
@@ -206,40 +165,38 @@ function validarEmail(campo) {
  
  },
  error: function () {
- console.log("error crear perro");
+ console.log("error crear reserva");
  $.toast({
  heading: 'Error',
- text: 'Erro al crear nuevo perro.',
+ text: 'Error al crear nueva reserva.',
  showHideTransition: 'fade',
  icon: 'error'
- })
+ });
  }
  });
  
  }
- function getPerroDesdeForm() {
- var raza = new Object();
- raza.nombre = $('#raza').val();
- 
- var tamanio = new Object();
- tamanio.nombre = $('#tamanio').val();
- 
- var vacunaList = [];
- for (var i = 0; i < $('#vacuna').val().length; i++) {
- var vacuna = new Object();
- vacuna.nombre = $('#vacuna').val()[i];
- vacunaList.push(vacuna);
- }
- 
+ function getReservaDesdeForm() {
+ var fechaInicio = $('#fechaInicio').val();
+ var fechaFin = $('#fechaFin').val();
  var perro = new Object();
- perro.nombre = $('#nombre').val();
- perro.comentario = $('#comentario').val();
- perro.raza = raza;
- perro.tamanio = tamanio;
- perro.vacunacionList = vacunaList;
- return perro;
+ perro.nombre=$('#perro').val();
+ var nombreDuenio=$('#nombreDuenio').val();
+ var emailDuenio=$('#emailDuenio').val();
+ var telefonoDuenio=$('#telefonoDuenio').val();
+ var dniDuenio=$('#dniDuenio').val();
  
- }*/
+ var reserva = new Object();
+ reserva.fechaInicio = $('#fechaInicio').val();
+ reserva.fechaFin = $('#fechaFin').val();
+ reserva.perro = perro;
+ reserva.nombreDuenio=$('#nombreDuenio').val();
+ reserva.emailDuenio=$('#emailDuenio').val();
+ reserva.telefonoDuenio=$('#telefonoDuenio').val();
+ reserva.dniDuenio=$('#dniDuenio').val();
+ return reserva;
+ 
+ }
 
 
 
@@ -287,6 +244,7 @@ function mostrarImagen() {
 window.onload = function () {
     $('#nuevoCuidador').hide();
     getCuidadores();
+    obtenerPerros(hostURL);
     $('select').material_select();
 };
 function obtenerPerros(hostURL) {
