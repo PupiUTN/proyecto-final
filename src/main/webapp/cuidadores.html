@@ -12,7 +12,13 @@
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
         <link href="css/jquery.toast.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
         <link href="css/cuidadores.css" rel="stylesheet">
-
+        <style>
+            input[type=number]::-webkit-inner-spin-button, 
+            input[type=number]::-webkit-outer-spin-button { 
+                -webkit-appearance: none; 
+                margin: 0; 
+            }
+        </style>
 
     </head>
 
@@ -68,19 +74,19 @@
                                 </div>
 
                                 <div class="input-field col s12">
-                                    <input id="telefono" type="text" class="validate" required>
+                                    <input id="telefono" type="text"  class="validate numero" required>
                                     <label for="telefono">Teléfono</label>
                                 </div>
 
                                 <div class="input-field col s12">
-                                    <input id="maxPerros" type="text" class="validate" required>
+                                    <input id="maxPerros" type="text" class="validate numero" required>
                                     <label for="maxPerros">Cantidad máxima de perros</label>
                                 </div>
 
                                 <div class="file-field input-field col s12">
                                     <div class="file-path-wrapper">
 
-                                        <input id="URLImagen" class="file-path validate" type="text" placeholder="Copie la URL de la imagen (se pueden agregar hasta 4 imágenes)" required>
+                                        <input id="URLImagen" class="file-path validate" type="text" placeholder="Copie la URL de la imagen (se pueden agregar hasta 4 imágenes)" >
                                         <a class="waves-effect waves-light btn left" onclick="mostrarImagen()"><i class="material-icons right">loop</i>Procesar link</a>
 
                                         <a class="waves-effect waves-light btn right" target="_blank" href="https://kn3.net/"><i class="material-icons right">present_to_all</i>Subir imagenes y copiar el link</a>
@@ -136,9 +142,7 @@
                                                 </div>-->
 
                     </div>
-                    <!-- Modal Trigger 
-                   <button  class="btn">Modal</button>
-                    -->
+
                     <div id="modal1" class="modal">
                         <div class="modal-content">
                             <h4>Alerta!</h4>

@@ -12,7 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Cuidador implements Serializable {
@@ -23,6 +25,8 @@ public class Cuidador implements Serializable {
     private String nombre;
     private String email;
     private long telefono;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    //@JoinColumn(name = "ID", referencedColumnName = "ID")
     private Direccion direccion;
     private int cantidadMaxDePerros;
     @OneToMany(cascade = CascadeType.PERSIST) // guarda las imagen
