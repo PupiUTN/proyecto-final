@@ -230,7 +230,7 @@ function mostrarImagen() {
 
 
 window.onload = function () {
-    $('#nuevoCuidador').hide();
+    
     getCuidadores();
 
 

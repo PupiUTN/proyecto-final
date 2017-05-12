@@ -24,8 +24,6 @@ public abstract class DAO<T> implements IDao<T> {
     private Class<T> entityClass;
     private BaseDatos baseDatos;
 
-//    @PersistenceContext
-//    protected EntityManager entityManager;
     public DAO(Class<T> entityClass) throws Exception {
         this.entityClass = entityClass;
         baseDatos = new BaseDatos();

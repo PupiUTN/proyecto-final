@@ -7,7 +7,7 @@
         <title>Pupi</title>
 
         <!-- CSS  -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="css/material-icons.css" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
         <link href="css/jquery.toast.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
@@ -48,7 +48,7 @@
                         <a class="waves-effect waves-light btn" onclick="mostarFormNuevoCuidador()"><i class="material-icons right">library_add</i> Nuevo Cuidador</a>
                     </div>
 
-                    <div class="row" id="nuevoCuidador">
+                    <div class="row" id="nuevoCuidador" hidden="">
                         <form class="col s12">
                             <div class="row">
 
@@ -82,7 +82,7 @@
 
                                         <input id="URLImagen" class="file-path validate" type="text" placeholder="Copie la URL de la imagen (se pueden agregar hasta 4 imágenes)" required>
                                         <a class="waves-effect waves-light btn left" onclick="mostrarImagen()"><i class="material-icons right">loop</i>Procesar link</a>
-                                        
+
                                         <a class="waves-effect waves-light btn right" target="_blank" href="https://kn3.net/"><i class="material-icons right">present_to_all</i>Subir imagenes y copiar el link</a>
 
                                     </div>
@@ -182,7 +182,7 @@
 
 
         <!--  Scripts-->
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js "></script>
+        <script src="js/jquery-2.1.1.min.js"></script>
         <script src="js/jquery.toast.min.js"></script>
         <script src="js/materialize.js "></script>
         <script src="js/init.js "></script>
