@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d3c8eb10-22e7-4860-8571-94ce7b1a37d5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/controlador/CuidadorREST.java" afterPath="$PROJECT_DIR$/src/main/java/controlador/CuidadorREST.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/controlador/PerroREST.java" afterPath="$PROJECT_DIR$/src/main/java/controlador/PerroREST.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -894,7 +891,7 @@
       <workItem from="1495315654603" duration="2649000" />
       <workItem from="1495318466236" duration="674000" />
       <workItem from="1495319155498" duration="527000" />
-      <workItem from="1495323118162" duration="1209000" />
+      <workItem from="1495323118162" duration="1239000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor a spring boot + Intelli J">
       <created>1495318750347</created>
@@ -910,7 +907,14 @@
       <option name="project" value="LOCAL" />
       <updated>1495323919674</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Mapping json to Object listo.&#10;@RequestBody">
+      <created>1495324350705</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1495324350705</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -922,7 +926,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5059000" />
+    <option name="totallyTimeSpent" value="5089000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1043,7 +1047,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactor a spring boot + Intelli J" />
     <MESSAGE value="cuidadores html y js listos.&#10;Error en spring mvc, no me tmapea bien el json como entidad en el post." />
-    <option name="LAST_COMMIT_MESSAGE" value="cuidadores html y js listos.&#10;Error en spring mvc, no me tmapea bien el json como entidad en el post." />
+    <MESSAGE value="Mapping json to Object listo.&#10;@RequestBody" />
+    <option name="LAST_COMMIT_MESSAGE" value="Mapping json to Object listo.&#10;@RequestBody" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
