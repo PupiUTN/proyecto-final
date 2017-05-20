@@ -3,7 +3,7 @@ function getCuidadores() {
     var url = hostURL + "api/cuidadores";
     $.getJSON(url, function (datos) {
         generarCuidadores(datos);
-        eliminarCuidador();
+        //eliminarCuidador();
         solicitarReserva();
 
     });
@@ -11,12 +11,12 @@ function getCuidadores() {
 
 function generarCuidadores(jsonArray) {
     //esto esta hard codeado, se debe cambiar
-    var imagenesURL = [];
-    imagenesURL.push('cesar_200.jpg');
-    imagenesURL.push('riquelme_200.jpg');
-    imagenesURL.push('marcelo_200.jpg');
-    imagenesURL.push('pope_200.jpg');
-    //imagenesURL.push('carrio_200.jpg');
+//    var imagenesURL = [];
+//    imagenesURL.push('cesar_200.jpg');
+//    imagenesURL.push('riquelme_200.jpg');
+//    imagenesURL.push('marcelo_200.jpg');
+//    imagenesURL.push('pope_200.jpg');
+//    //imagenesURL.push('carrio_200.jpg');
 
 
     for (var i = 0; i < jsonArray.length; i++) {
@@ -38,8 +38,8 @@ function generarCuidadores(jsonArray) {
         <div class="card-stacked"> \n\
             <div class="card-content"> \n\
             <span class="card-title">' + jsonArray[i].nombre + ' \n\
-            <a href="#!"><span data-target="modal1" class="eliminar new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="Eliminar" ></span>\n\
-            <input class="idCuidador" type="hidden" value="' + jsonArray[i].id + '">\n\</a> \n\
+            <a href="#!"><span id="btnEliminar' + jsonArray[i].id + '" data-target="modalEliminar" onclick="eliminarCuidador(' + jsonArray[i].id + ')" class=" new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="Eliminar" ></span>\n\
+            </a> \n\
             </span> \n\
             <div class="row"> \n\
                 <div class="col s12 m6"> \n\
@@ -53,7 +53,7 @@ function generarCuidadores(jsonArray) {
                 </div> \n\
             </div> \n\
             <div class="card-action"> \n\
-            <a href="#!" class="reserva">Solicitar Reserva</a> \n\
+            <a href="#!" data-target="modalReserva" class="reserva">Solicitar Reserva</a> \n\
             </div> \n\
         </div> \n\
     </div> \n\
@@ -69,35 +69,38 @@ function solicitarReserva() {
     $('.reserva').on('click', function () {
         var id = $('.idCuidador').eq(($('.reserva').index(this))).val();
         console.log(id);
-        $('#modalReserva').modal('open');
-        $('#modalReserva').modal;
+//        $('#modalReserva').modal('open');
+//        $('#modalReserva').modal;
     });
 }
 var btnEliminar;
-function eliminarCuidador() {
-    $('.eliminar').on('click', function () {
+var idElim;
+function eliminarCuidador(idEliminar) {
+    var boton="#btnEliminar"+idEliminar;
+    idElim=idEliminar;
+    console.log(boton);
+    btnEliminar = $(boton);
+    console.log(idElim);
+    //idEliminar = $(this).next().val();
+    //console.log(idEliminar);
+    //('#modal1').modal('open');
 
-        btnEliminar = $(this);
-        var id = $(this).next().val();
-        console.log($(this).next().val());
-        $('#modal1').modal('open');
-        $('#aceptarEliminar').on('click', function () {
-            eliminarAJAX(id);
-        });
-    });
+
 }
 
-function eliminarAJAX(id) {
-    var url = hostURL + "api/cuidadores/" + id;
+function eliminarAJAX() {
+    var url = hostURL + "api/cuidadores/" + idElim;
     $.ajax({
         url: url,
         type: 'DELETE',
         success: function () {
             btnEliminar.parent().parent().parent().parent().parent().parent().remove();
-            console.log('Se borro cuidador con ID: ' + id);
+            console.log('Se borro cuidador con ID: ' + idElim);
         },
         error: function () {
+            idElim = 0;
             alert('El cuidador no pudo ser eliminado.');
+
         }
     });
 }
@@ -127,8 +130,6 @@ function getCuidadorDesdeForm() {
 
 $(document).ready(function () {
 
-    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    //$('.modal').modal();
     $(".numero").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
@@ -144,8 +145,6 @@ $(document).ready(function () {
                     e.preventDefault();
                 }
             });
-// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-//$('.modal').modal();
 
 });
 $('.modal').modal({
@@ -168,6 +167,12 @@ function mostarFormNuevoCuidador() {
     $('#nuevoCuidador').toggle();
 }
 
+$('#guardarCuidador').submit(function () {
+    if (validarEmail($('#email'))) {
+        postCuidador();
+    }
+});
+
 
 $('#nuevaReserva').submit(function () {
     if (validarEmail($('#email'))) {
@@ -187,41 +192,44 @@ function validarEmail(campo) {
         });
         return false;
     } else {
-        postCuidador();
+        console.log('aprobo mail, voy a guardar')
         return true;
-    }}
+    }
+}
 
 function postCuidador() {
-            var cuidador = getCuidadorDesdeForm();
-            console.log(cuidador);
-            $.ajax({
-                type: "POST",
-                url: hostURL + 'api/cuidadores',
-                data: JSON.stringify(cuidador),
-                contentType: "application/json",
-                success: function () {
-                    console.log("exito crear cuidador");
-                    $('#nuevoCuidador').hide();
-                    $.toast({
-                        heading: 'Success',
-                        text: 'Exito al crear nuevo cuidador. Refrescar la pagina para verlo',
-                        showHideTransition: 'slide',
-                        icon: 'success'
-                    });
-                    location.reload();
-
-                },
-                error: function () {
-                    console.log("error crear cuidador");
-                    $.toast({
-                        heading: 'Error',
-                        text: 'Erro al crear nuevo cuidador.',
-                        showHideTransition: 'fade',
-                        icon: 'error'
-                    });
-                }
-            });
+    if (validarEmail($('#email'))) {
+        var cuidador = getCuidadorDesdeForm();
+        console.log(cuidador);
+        console.log(JSON.stringify(cuidador));
+        $.ajax({
+            type: "POST",
+            url: hostURL + 'api/cuidadores',
+            data: JSON.stringify(cuidador),
+            contentType: "application/json",
+            success: function () {
+                console.log("exito crear cuidador");
+                $('#nuevoCuidador').hide();
+                $.toast({
+                    heading: 'Success',
+                    text: 'Exito al crear nuevo cuidador. Refrescar la pagina para verlo',
+                    showHideTransition: 'slide',
+                    icon: 'success'
+                });
+                location.reload();
+            },
+            error: function () {
+                console.log("error crear cuidador");
+                $.toast({
+                    heading: 'Error',
+                    text: 'Erro al crear nuevo cuidador.',
+                    showHideTransition: 'fade',
+                    icon: 'error'
+                });
             }
+        });
+    }
+}
 
 
 
@@ -235,7 +243,7 @@ function postReserva() {
         contentType: "application/json",
         success: function () {
             console.log("exito crear reserva");
-            $('#modalReserva').modal('close');
+            //$('#modalReserva').modal('close');
             $.toast({
                 heading: 'Success',
                 text: 'Exito al crear nueva reserva. Refrescar la pagina para verla',
@@ -255,7 +263,6 @@ function postReserva() {
             });
         }
     });
-
 }
 function getReservaDesdeForm() {
     var fechaInicio = $('#fechaInicio').val();
@@ -266,7 +273,6 @@ function getReservaDesdeForm() {
     var emailDuenio = $('#emailDuenio').val();
     var telefonoDuenio = $('#telefonoDuenio').val();
     var dniDuenio = $('#dniDuenio').val();
-
     var reserva = new Object();
     reserva.fechaInicio = $('#fechaInicio').val();
     reserva.fechaFin = $('#fechaFin').val();
@@ -276,48 +282,47 @@ function getReservaDesdeForm() {
     reserva.telefonoDuenio = $('#telefonoDuenio').val();
     reserva.dniDuenio = $('#dniDuenio').val();
     return reserva;
-
 }
 
 
 
 
-        function mostrarImagen() {
-            var pathImagen = $('#URLImagen').val();
-            var pos = pathImagen.lastIndexOf("/");
-            var nombreImagen;
-            if (pos > 0) {
-                nombreImagen = pathImagen.substr(pos + 1);
-            } else
-            {
-                nombreImagen = pathImagen;
-            }
-            if ((/\.(jpg|png|gif)$/i).test(nombreImagen))
-            {
-                if (imagenes.length <= 3)
-                {
-                    $('#contenedorImagen').append('<img src="' + pathImagen + '" height="100" width="100"  class="imagenCuidador" alt="Imagen previsualizada">');
-                    imagenes.push(pathImagen);
-                } else {
-                    console.log("error agregar imagen");
-                    $.toast({
-                        heading: 'Error',
-                        text: 'Ya hay 4 imágenes agregadas.',
-                        showHideTransition: 'fade',
-                        icon: 'error'
-                    });
-                }
-            } else {
-                console.log("error agregar imagen");
-                $.toast({
-                    heading: 'Error',
-                    text: 'El archivo a agregar no es una imagen.',
-                    showHideTransition: 'fade',
-                    icon: 'error'
-                });
-            }
-            //$('#muestraImagen').attr('src', window.URL.createObjectURL($('#imagen').get(0).files.item(0)));
+function mostrarImagen() {
+    var pathImagen = $('#URLImagen').val();
+    var pos = pathImagen.lastIndexOf("/");
+    var nombreImagen;
+    if (pos > 0) {
+        nombreImagen = pathImagen.substr(pos + 1);
+    } else
+    {
+        nombreImagen = pathImagen;
+    }
+    if ((/\.(jpg|png|gif)$/i).test(nombreImagen))
+    {
+        if (imagenes.length <= 3)
+        {
+            $('#contenedorImagen').append('<img src="' + pathImagen + '" height="100" width="100"  class="imagenCuidador" alt="Imagen previsualizada">');
+            imagenes.push(pathImagen);
+        } else {
+            console.log("error agregar imagen");
+            $.toast({
+                heading: 'Error',
+                text: 'Ya hay 4 imágenes agregadas.',
+                showHideTransition: 'fade',
+                icon: 'error'
+            });
         }
+    } else {
+        console.log("error agregar imagen");
+        $.toast({
+            heading: 'Error',
+            text: 'El archivo a agregar no es una imagen.',
+            showHideTransition: 'fade',
+            icon: 'error'
+        });
+    }
+//$('#muestraImagen').attr('src', window.URL.createObjectURL($('#imagen').get(0).files.item(0)));
+}
 
 
 
@@ -328,7 +333,6 @@ window.onload = function () {
     obtenerPerros(hostURL);
     $('select').material_select();
 };
-
 function obtenerPerros(hostURL) {
     var url = hostURL + "api/perros";
     $.getJSON(url, function (datos) {

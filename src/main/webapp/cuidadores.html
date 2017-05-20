@@ -50,7 +50,7 @@
 
                         <h3>Cuidadores</h3>
                     </div>
-                    
+
                     <div class="center-align">
                         <a class="waves-effect waves-light btn" onclick="mostarFormNuevoCuidador()"><i class="material-icons right">library_add</i> Nuevo Cuidador</a>
                     </div>
@@ -99,7 +99,7 @@
                                 </div>
 
                                 <div class="input-field col s12 center">
-                                    <button class="btn waves-effect waves-light green" type="submit">
+                                    <button id ="guardarCuidador" onclick="postCuidador()" class="btn waves-effect waves-light green" type="submit">
                                         Enviar<i class="material-icons right">send</i>
                                     </button>
                                 </div>
@@ -107,7 +107,8 @@
                             </div>
                         </form>
                     </div>
-                    <!-- MODELO A SEGUIR http://materializecss.com/collections.html -->
+                    <!-- http://materializecss.com/collections.html -->
+                    <!-- LISTAR CUIDADORES-->
                     <div class="row" id="listaCuidadores">
                         <!--back up html estatico-->
                         <!--                        <div class="col s12">
@@ -142,6 +143,7 @@
                                                 </div>-->
 
                     </div>
+                    <!-- MODAL RESERVAR-->
                     <div id="modalReserva" class="modal">
                         <div class="modal-content">
                             <div class="row" id="nuevaReserva">
@@ -186,75 +188,20 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Modal Trigger 
-                   <button  class="btn">Modal</button>
-                    -->
-
-                    <div id="modal1" class="modal">
+                    </div> 
+                    <!-- MODAL ELIMINAR-->
+                    <div id="modalEliminar" class="modal">
                         <div class="modal-content">
                             <h4>Alerta!</h4>
                             <p>¿Está seguro que desea eliminar el cuidador?</p>
                         </div>
                         <div class="modal-footer">
-                            <a href="#!" id="cancelarEliminar" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                            <a href="#!" id="aceptarEliminar" class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
+                            <a href="#!" id="cancelarEliminar"  class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                            <a href="#!" id="aceptarEliminar" onclick="eliminarAJAX()" class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
 
                         </div>
                     </div>
-
-
-                    <!-- MODELO A SEGUIR http://materializecss.com/collections.html -->
-                    <div class="row" id="listaCuidadores">
-                        <!--back up html estatico-->
-                        <!--                        <div class="col s12">
-                                                    <div class="card horizontal  blue-grey darken-1  white-text">
-                                                        <div class="card-image">
-                                                            <img src="img/pope_200.jpg">
-                                                        </div>
-                                                        <div class="card-stacked">
-                                                            <div class="card-content">
-                                                                <span class="card-title">Jorge Mario Bergoglio
-                                                                    <a href="#"><span class="new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="Eliminar"></span></a>
-                                                                </span>
-                        
-                                                                <div class="row">
-                                                                    <div class="col s12 m6">
-                                                                        <p> <i class="material-icons black-text">phone</i> 325923652</p>
-                                                                        <p> <i class="material-icons black-text">email</i> francis@pope.com</p>
-                        
-                        
-                                                                    </div>
-                                                                    <div class="col s12 m6">
-                                                                        <p> <i class="material-icons black-text">location_on</i>Museo Emilio Caraffa</p>
-                                                                        <p> <i class="material-icons black-text">info</i>Max perros: 4</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="card-action">
-                                                                <a href="#">Solicitar Reserva</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>-->
-
-                    </div>
-
-                    <div id="modal1" class="modal">
-                        <div class="modal-content">
-                            <h4>Alerta!</h4>
-                            <p>¿Está seguro que desea eliminar el cuidador?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="#!" id="cancelarEliminar" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                            <a href="#!" id="aceptarEliminar" class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
-
-                        </div>
-                    </div>
-
-
-
+                    
                 </div>
             </div>
         </main>

@@ -46,7 +46,7 @@ public class CuidadorREST {
     }
 
 
-    @RequestMapping(value = "{id}" , method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public void create(Cuidador entity) throws Exception {
         System.out.println(entity);
         CuidadorDAO cuidadorDAO = new CuidadorDAO();
