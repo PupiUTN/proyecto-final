@@ -6,6 +6,7 @@
 package controlador;
 
 import modelo.Cuidador;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,7 +48,7 @@ public class CuidadorREST {
 
 
     @RequestMapping(method = RequestMethod.POST)
-    public void create(Cuidador entity) throws Exception {
+    public void create(@RequestBody Cuidador entity) throws Exception {
         System.out.println(entity);
         CuidadorDAO cuidadorDAO = new CuidadorDAO();
         cuidadorDAO.create(entity);
