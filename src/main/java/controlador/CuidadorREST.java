@@ -5,51 +5,38 @@
  */
 package controlador;
 
-import java.util.List;
-import javax.ejb.Stateless;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import modelo.Cuidador;
-import modelo.Perro;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import persistencia.CuidadorDAO;
-import persistencia.PerroDAO;
 
-/**
- *
- * @author agile
- */
-@Stateless
-@Path("cuidadores")
+import javax.websocket.server.PathParam;
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/api/cuidadores")
 public class CuidadorREST {
 
     public CuidadorREST() {
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
+
+    @RequestMapping(method = RequestMethod.GET)
     public List<Cuidador> findAll() throws Exception {
         CuidadorDAO cuidadorDAO = new CuidadorDAO();
         return cuidadorDAO.findAll();
     }
 
-    @GET
-    @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+
+    @RequestMapping(value = "{id}" , method = RequestMethod.GET)
     public Cuidador find(@PathParam("id") Long id) throws Exception {
         CuidadorDAO cuidadorDAO = new CuidadorDAO();
         return cuidadorDAO.find(id);
    
     }
-    
-    @DELETE
-    @Path("{id}")
-    //@Produces(MediaType.APPLICATION_JSON)
+
+    @RequestMapping(value = "{id}" , method = RequestMethod.DELETE)
     public void delete(@PathParam("id") Long id) throws Exception {
         CuidadorDAO cuidadorDAO = new CuidadorDAO();
         cuidadorDAO.removeID(id);
@@ -58,8 +45,8 @@ public class CuidadorREST {
    
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+
+    @RequestMapping(value = "{id}" , method = RequestMethod.POST)
     public void create(Cuidador entity) throws Exception {
         System.out.println(entity);
         CuidadorDAO cuidadorDAO = new CuidadorDAO();

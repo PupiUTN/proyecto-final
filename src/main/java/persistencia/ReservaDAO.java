@@ -5,13 +5,12 @@
  */
 package persistencia;
 
+import modelo.Cuidador;
+import modelo.Perro;
+import modelo.Reserva;
+
 import java.util.Date;
 import java.util.List;
-import modelo.Cuidador;
-import modelo.Dueno;
-import modelo.Perro;
-import modelo.Raza;
-import modelo.Reserva;
 
 /**
  *

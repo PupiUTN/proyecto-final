@@ -5,8 +5,6 @@
  */
 package persistencia;
 
-import java.util.List;
-import modelo.Raza;
 import modelo.Vacuna;
 
 /**

@@ -5,14 +5,13 @@
  */
 package persistencia;
 
-import java.util.List;
 import modelo.Raza;
 
 /**
  *
  * @author agile
  */
-public class RazaDAO extends DAO<Raza>{
+public class RazaDAO extends DAO<Raza> {
 
 
     public RazaDAO() throws Exception {

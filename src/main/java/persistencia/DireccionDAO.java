@@ -5,7 +5,6 @@
  */
 package persistencia;
 
-import java.util.List;
 import modelo.Direccion;
 
 /**

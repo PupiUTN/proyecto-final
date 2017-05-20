@@ -5,15 +5,12 @@
  */
 package persistencia;
 
-import java.util.AbstractList;
-import java.util.LinkedList;
-import java.util.List;
 import modelo.Cuidador;
 import modelo.Direccion;
-import modelo.Dueno;
-
-import modelo.Raza;
 import modelo.Imagen;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *

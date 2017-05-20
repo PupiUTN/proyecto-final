@@ -5,47 +5,24 @@
  */
 package controlador;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import persistencia.*;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import modelo.Cuidador;
-import modelo.Direccion;
-import modelo.Tamanio;
-import modelo.Vacuna;
-import persistencia.CalificacionDAO;
-import persistencia.CuidadorDAO;
-import persistencia.DireccionDAO;
-import persistencia.DuenoDAO;
-import persistencia.PerroDAO;
-import persistencia.RazaDAO;
-import persistencia.ReservaDAO;
-import persistencia.TamanioDAO;
-import persistencia.VacunaDAO;
 
-/**
- *
- * @author jose
- */
-@Path("test")
+@RestController
+@RequestMapping(value = "/api/test")
 public class EjecutablesREST {
 
-    @Path("ping")
-    @GET
-    @Produces({MediaType.TEXT_PLAIN})
+
+    @RequestMapping(value = "ping",method = RequestMethod.GET)
     public String ping() {
         return " Ping : " + new Date();
     }
 
-    @Path("insert")
-    @GET
-    @Produces({MediaType.TEXT_PLAIN})
+
+    @RequestMapping(value = "insert",method = RequestMethod.GET)
     public String insert() throws Exception {
         //soprte
         RazaDAO razaDAO = new RazaDAO();
@@ -73,11 +50,10 @@ public class EjecutablesREST {
         calificacionDAO.cargarDatos();
         return " insert : " + new Date();
     }
-    
-    
-    @Path("drop")
-    @GET
-    @Produces({MediaType.TEXT_PLAIN})
+
+
+
+    @RequestMapping(value = "drop",method = RequestMethod.GET)
     public String drop() throws Exception {
         
         //transaccion

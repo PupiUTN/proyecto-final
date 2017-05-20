@@ -5,41 +5,28 @@
  */
 package controlador;
 
-import java.util.List;
-import javax.ejb.Stateless;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import modelo.Perro;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import persistencia.PerroDAO;
+import java.util.List;
 
-/**
- *
- * @author agile
- */
-@Stateless
-@Path("perros")
+@RestController
+@RequestMapping(value = "/api/perros")
 public class PerroREST {
 
     public PerroREST() {
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @RequestMapping(method = RequestMethod.POST)
     public void create(Perro entity) throws Exception {
         System.out.println(entity);
         PerroDAO perroDAO = new PerroDAO();
         perroDAO.create(entity);
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @RequestMapping(method = RequestMethod.GET)
     public List<Perro> findAll() throws Exception {
         PerroDAO perroDAO = new PerroDAO();
         List<Perro> findAll = perroDAO.findAll();

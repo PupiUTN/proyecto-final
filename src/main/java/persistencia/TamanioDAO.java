@@ -5,7 +5,6 @@
  */
 package persistencia;
 
-import modelo.Raza;
 import modelo.Tamanio;
 
 /**

@@ -5,33 +5,22 @@
  */
 package controlador;
 
-import java.util.List;
-import javax.ejb.Stateless;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import modelo.Raza;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import persistencia.RazaDAO;
 
-/**
- *
- * @author Usuario
- */
-@Stateless
-@Path("razas")
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/api/razas")
 public class RazaFacadeREST {
 
     public RazaFacadeREST() {
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @RequestMapping(method = RequestMethod.GET)
     public List<Raza> findAll() throws Exception {
         return new RazaDAO().findAll();
     }

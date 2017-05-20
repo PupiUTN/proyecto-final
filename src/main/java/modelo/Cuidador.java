@@ -5,16 +5,9 @@
  */
 package modelo;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Cuidador implements Serializable {
@@ -30,7 +23,7 @@ public class Cuidador implements Serializable {
     private Direccion direccion;
     private int cantidadMaxDePerros;
     @OneToMany(cascade = CascadeType.PERSIST) // guarda las imagen
-    private List<Imagen> listaImagenes; 
+    private List<Imagen> listaImagenes;
 
     //para jpa, necesito constructor vacio y todos los stegest y getters de cada atributo
     public Cuidador() {

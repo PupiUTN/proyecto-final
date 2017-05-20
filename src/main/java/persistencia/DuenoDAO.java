@@ -6,7 +6,6 @@
 package persistencia;
 
 import modelo.Dueno;
-import modelo.Raza;
 
 /**
  *
