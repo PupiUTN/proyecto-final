@@ -1,5 +1,8 @@
 # Metodologias Agiles - UTN FRC - 2017
 
+[![Build Status](https://travis-ci.org/PupiUTN/Agiles.svg?branch=master)](https://travis-ci.org/PupiUTN/Agiles)
+
+
 ### Que hacemos?
 
 ¡Olvídese de la perrera! Pupi es el principal servicio en línea que conecta a los dueños de mascotas con más de 40,000 cuidadores en toda Argentina. Con nuestros cuidadores de cinco estrellas y las actualizaciones diarias de las fotos, los padres pueden viajar o dejar a sus amigos peludos en la guardería con tranquilidad.
