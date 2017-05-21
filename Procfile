@@ -1,2 +1,1 @@
-web: java -jar target/pupi-0.0.1.jar -Dserver.port=$PORT
-
+web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/*.jar  
