@@ -353,16 +353,24 @@ function llenarSelect(idSelect, jsonArray) {
 function mostrarLocalidades() {
     var data=[];
     if ($('#busquedaProv').val() === 'Buenos Aires') {
-        data = {"Tandil": null,
-            "Necochea": null,
-            "La Plata": null
-        };
+        data = [{"name":"Tandil","code":"TA"},
+            {"name":"Necochea","code":"NE"},{
+            "name":"La Plata","code":"LP"}
+    ];
     } else {
-        data = {"Cordoba": null,
-            "Jesus Maria": null,
-            "Colonia Caroya": null
-        };
+        data = [{"name":"Cordoba","code":"CO"},
+            {"name":"Jesus Maria","code":"JM"},{
+            "name":"Colonia Caroya","code":"CC"}
+        ];
     }
-    $('#busquedaLoc').show();
-    $('#busquedaLocal').autocomplete({data:data});
+    $('#busquedaDiv').show();
+    $('#busquedaLocal').easyAutocomplete({
+        data:data,
+        getValue:"name",
+        list:{
+            match:{
+                enabled:true
+            }
+        }
+    });
 }

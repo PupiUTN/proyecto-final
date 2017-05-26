@@ -11,6 +11,8 @@
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
         <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
         <link href="css/jquery.toast.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
+        <link href="css/easy-autocomplete.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
+        <link href="css/easy-autocomplete.themes.min" type="text/css" rel="stylesheet" media="screen,projection" />
         <link href="css/cuidadores.css" rel="stylesheet">
         <style>
             input[type=number]::-webkit-inner-spin-button, 
@@ -123,10 +125,10 @@
                                 <label for="busquedaProv">Provincia</label>
                             </div>
 
-                            <div id="busquedaLoc" class="input-field col s12"hidden="">
-                                <i class="material-icons prefix">room</i>
-                                <input type="text" id="busquedaLocal" class="autocomplete">
+                            <div id="busquedaDiv" class="input col s12" hidden="">
                                 <label for="busquedaLocal">Localidad</label>
+                                <i class="material-icons prefix">room</i>
+                                <input type="text" id="busquedaLocal">
                             </div>
                         </div>
                     </div>
@@ -257,6 +259,7 @@
         <script src="js/jquery-2.1.1.min.js"></script>
         <script src="js/jquery.toast.min.js"></script>
         <script src="js/materialize.js "></script>
+        <script src="js/jquery.easy-autocomplete.min.js"></script>
         <script src="js/init.js "></script>
         <script src="js/cuidadores.js"></script>
 
