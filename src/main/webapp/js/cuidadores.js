@@ -5,12 +5,11 @@ function getCuidadores() {
         generarCuidadores(datos);
         //eliminarCuidador();
         solicitarReserva();
-
     });
 }
 
 function generarCuidadores(jsonArray) {
-    //esto esta hard codeado, se debe cambiar
+//esto esta hard codeado, se debe cambiar
 //    var imagenesURL = [];
 //    imagenesURL.push('cesar_200.jpg');
 //    imagenesURL.push('riquelme_200.jpg');
@@ -58,10 +57,7 @@ function generarCuidadores(jsonArray) {
         </div> \n\
     </div> \n\
 </div>';
-
         $('#listaCuidadores').append(cuidador);
-
-
     }
 }
 
@@ -76,8 +72,8 @@ function solicitarReserva() {
 var btnEliminar;
 var idElim;
 function eliminarCuidador(idEliminar) {
-    var boton="#btnEliminar"+idEliminar;
-    idElim=idEliminar;
+    var boton = "#btnEliminar" + idEliminar;
+    idElim = idEliminar;
     console.log(boton);
     btnEliminar = $(boton);
     console.log(idElim);
@@ -100,7 +96,6 @@ function eliminarAJAX() {
         error: function () {
             idElim = 0;
             alert('El cuidador no pudo ser eliminado.');
-
         }
     });
 }
@@ -124,14 +119,13 @@ function getCuidadorDesdeForm() {
     cuidador.direccion = dir;
     cuidador.listaImagenes = fotosList;
     return cuidador;
-
 }
 
 
 $(document).ready(function () {
 
     $(".numero").keydown(function (e) {
-        // Allow: backspace, delete, tab, escape, enter and .
+// Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
                 // Allow: Ctrl+A, Command+A
                         (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
@@ -145,7 +139,6 @@ $(document).ready(function () {
                     e.preventDefault();
                 }
             });
-
 });
 $('.modal').modal({
     dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -167,13 +160,15 @@ function mostarFormNuevoCuidador() {
     $('#nuevoCuidador').toggle();
 }
 
+function mostarFormBuscarCuidador() {
+    $('#buscarCuidador').toggle();
+}
+
 $('#guardarCuidador').submit(function () {
     if (validarEmail($('#email'))) {
         postCuidador();
     }
 });
-
-
 $('#nuevaReserva').submit(function () {
     if (validarEmail($('#email'))) {
         postReserva();
@@ -326,13 +321,21 @@ function mostrarImagen() {
 
 
 
-
 window.onload = function () {
 
     getCuidadores();
     obtenerPerros(hostURL);
     $('select').material_select();
+    $('#busquedaLocal').autocomplete({
+        limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+        onAutocomplete: function (val) {
+            console.log('elegiste a ' + val);
+            // Callback function when value is autcompleted.
+        },
+        minLength: 3 // The minimum length of the input for the autocomplete to start. Default: 1.
+    });
 };
+
 function obtenerPerros(hostURL) {
     var url = hostURL + "api/perros";
     $.getJSON(url, function (datos) {
@@ -345,4 +348,21 @@ function llenarSelect(idSelect, jsonArray) {
         $(idSelect).append('<option value="' + jsonArray[i].nombre + '">' + jsonArray[i].nombre + '</option>');
         $('select').material_select();
     }
+}
+
+function mostrarLocalidades() {
+    var data=[];
+    if ($('#busquedaProv').val() === 'Buenos Aires') {
+        data = {"Tandil": null,
+            "Necochea": null,
+            "La Plata": null
+        };
+    } else {
+        data = {"Cordoba": null,
+            "Jesus Maria": null,
+            "Colonia Caroya": null
+        };
+    }
+    $('#busquedaLoc').show();
+    $('#busquedaLocal').autocomplete({data:data});
 }
