@@ -16,6 +16,7 @@ public class Perro implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;
+
     @ManyToOne
     private Raza raza;
     @ManyToOne

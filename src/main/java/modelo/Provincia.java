@@ -22,6 +22,8 @@ public class Provincia implements Serializable{
     private Long id;
     private String nombre;
 
+    public Provincia() {}
+
     public Long getId() {
         return id;
     }

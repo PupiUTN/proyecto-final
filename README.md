@@ -1,32 +1,19 @@
 # Metodologias Agiles - UTN FRC - 2017
 
-[![Build Status](https://travis-ci.org/PupiUTN/Agiles.svg?branch=master)](https://travis-ci.org/PupiUTN/Agiles)
+Integracion Continua: Travis [![Build Status](https://travis-ci.org/PupiUTN/Agiles.svg?branch=master)](https://travis-ci.org/PupiUTN/Agiles)
 
-
-### Que hacemos?
-
-¡Olvídese de la perrera! Pupi es el principal servicio en línea que conecta a los dueños de mascotas con más de 40,000 cuidadores en toda Argentina. Con nuestros cuidadores de cinco estrellas y las actualizaciones diarias de las fotos, los padres pueden viajar o dejar a sus amigos peludos en la guardería con tranquilidad.
-
-### Project Managment
-
-[https://www.zenhub.com/](https://www.zenhub.com/)
 <a href="https://zenhub.com"><img src="https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png"></a>
 
-### Technology Stack
 
-[logo]: http://www.codingpedia.org/wp-content/uploads/2014/05/Rest-Demo-Diagram.png "Logo Title Text 2"
-![alt text][logo]
 
-* JDK: **1.7**
-* Servidor de apliaciones: **Tomcat 7**
-* Base de datos: **MySql 5.7** , Driver: [5.x](https://dev.mysql.com/doc/connector-j/6.0/en/connector-j-versions.html)
-* Gestión de dependencias: **Maven**
-* Framework de persitencia: **EclipseLink 2.5**
-* Implementación REST en java: **Jersey**
-* Implementación JSON en java: **MOXy**
-* Build: **Jenkins** webhook con GitHub sobre en branch production
-* Hosting: **OpenShift**
-* IDE: **Netbeans 8.1**
+## Menifiesto
+
+La parte más dura de hacer software es, precisamente, decidir lo que hacer. Ninguna otra de las partes en que se divide este trabajo es tan difícil como establecer los requisitos técnicos detallados, incluyendo todas las interfaces con la personas, las máquinas y los otros sistemas de software. Ninguna otra parte del trabajo destroza tanto el resultado final si se hace mal. Ninguna otra parte resulta tan díficil de rectificar a posteriori.
+
+Por tanto, la función más importante que realiza el diseñador de software para el cliente es la extracción iterativa y el refinamiento de los requisitos del producto. La verdas es que el cliente no sabe lo que quiere.
+
+
+
 
 ### Wiki
 

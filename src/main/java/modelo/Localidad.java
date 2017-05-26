@@ -22,6 +22,9 @@ public class Localidad implements Serializable {
     @ManyToOne
     private Provincia provincia;
 
+    //para jpa o jackson, necesito constructor vacio y todos los setters y getters de cada atributo
+    public Localidad() {}
+
     public Long getId() {
         return id;
     }
