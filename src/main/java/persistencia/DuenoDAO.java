@@ -14,7 +14,7 @@ import modelo.Dueno;
 public class DuenoDAO extends DAO<Dueno> {
 
     public DuenoDAO() throws Exception {
-                super(Dueno.class);
+        super(Dueno.class);
     }
 
     public void cargarDatos() {

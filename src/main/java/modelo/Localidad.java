@@ -5,28 +5,26 @@
  */
 package modelo;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.io.Serializable;
 import javax.persistence.OneToOne;
 
+/**
+ *
+ * @author jorge
+ */
 @Entity
-public class Direccion implements Serializable {
+public class Localidad implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String nombre;
-    private double latitud;
-    private double longitud;
     @OneToOne
-    private Localidad localidad;
-    //para jpa, necesito constructor vacio y todos los stegest y getters de cada atributo
-
-    public Direccion() {
-    }
+    private Provincia provincia;
 
     public Long getId() {
         return id;
@@ -44,28 +42,13 @@ public class Direccion implements Serializable {
         this.nombre = nombre;
     }
 
-    public double getLatitud() {
-        return latitud;
+    public Provincia getProvincia() {
+        return provincia;
     }
 
-    public void setLatitud(double latitud) {
-        this.latitud = latitud;
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
     }
-
-    public double getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(double longitud) {
-        this.longitud = longitud;
-    }
-
-    public Localidad getLocalidad() {
-        return localidad;
-    }
-
-    public void setLocalidad(Localidad localidad) {
-        this.localidad = localidad;
-    }
+    
 
 }
