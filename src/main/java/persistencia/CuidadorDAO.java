@@ -31,7 +31,7 @@ public class CuidadorDAO extends DAO<Cuidador> {
             cuidador1.setNombre("Cesar Millan");
             cuidador1.setCantidadMaxDePerros(100);
             cuidador1.setEmail("cesar@encantadordeperros.com");
-            cuidador1.setTelefono(3515644404L);
+            cuidador1.setTelefono(3515644);
             cuidador1.setDireccion(findAll.remove(0));
 
             Imagen imagen1 = new Imagen();

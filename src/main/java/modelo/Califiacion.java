@@ -16,7 +16,7 @@ public class Califiacion implements Serializable {
     private Long id;
     private int puntaje;
     private String comentario;
-    @OneToOne
+    @ManyToOne
     private Reserva reserva;
 
     //para jpa, necesito constructor vacio y todos los stegest y getters de cada atributo

@@ -5,12 +5,8 @@
  */
 package modelo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Direccion implements Serializable {
@@ -21,7 +17,7 @@ public class Direccion implements Serializable {
     private String nombre;
     private double latitud;
     private double longitud;
-    @OneToOne
+    @ManyToOne
     private Localidad localidad;
     //para jpa, necesito constructor vacio y todos los stegest y getters de cada atributo
 
