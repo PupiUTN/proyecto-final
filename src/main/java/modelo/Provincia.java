@@ -5,21 +5,24 @@
  */
 package modelo;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.io.Serializable;
 
+/**
+ *
+ * @author jorge
+ */
 @Entity
-public class Vacuna implements Serializable {
-
+public class Provincia implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String nombre;
 
-    public Vacuna() {}
+    public Provincia() {}
 
     public Long getId() {
         return id;
@@ -39,7 +42,8 @@ public class Vacuna implements Serializable {
 
     @Override
     public String toString() {
-        return "Vacuna{" + "id=" + id + ", nombre=" + nombre + '}';
+        return "Provincia{" + "id=" + id + ", nombre=" + nombre + '}';
     }
-
+    
+    
 }

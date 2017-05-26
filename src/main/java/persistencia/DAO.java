@@ -53,6 +53,7 @@ public abstract class DAO<T> implements IDao<T> {
         getEntityManager().getTransaction().commit();
 
     }
+    //se puede usar una consulta JPQL
      public void removeID(Object id) {
         getEntityManager().getTransaction().begin();
         T entity = getEntityManager().find(entityClass, id);
