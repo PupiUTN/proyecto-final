@@ -6,11 +6,7 @@
 package modelo;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 /**
  *
@@ -23,8 +19,11 @@ public class Localidad implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String nombre;
-    @OneToOne
+    @OneToMany
     private Provincia provincia;
+
+    //para jpa o jackson, necesito constructor vacio y todos los setters y getters de cada atributo
+    public Localidad() {}
 
     public Long getId() {
         return id;

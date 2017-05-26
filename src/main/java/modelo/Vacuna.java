@@ -19,6 +19,8 @@ public class Vacuna implements Serializable {
     private Long id;
     private String nombre;
 
+    public Vacuna() {}
+
     public Long getId() {
         return id;
     }
