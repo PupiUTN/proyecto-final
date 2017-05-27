@@ -287,8 +287,7 @@ function getReservaDesdeForm() {
 
 
 
-function mostrarImagen() {
-    var pathImagen = $('#URLImagen').val();
+function mostrarImagen(pathImagen) {
     var pos = pathImagen.lastIndexOf("/");
     var nombreImagen;
     if (pos > 0) {
@@ -346,3 +345,36 @@ function llenarSelect(idSelect, jsonArray) {
         $('select').material_select();
     }
 }
+
+//FILE
+
+$('#imageFile').on('change', function () {
+    var file = this.files[0];
+    if (file.size > 1048576 ){
+        alert('max upload size is 1 mb')
+    }
+
+    // Also see .name, .type
+});
+
+$('#imageButton').on('click', function() {
+    $.ajax({
+        // Your server script to process the upload
+        url: '/api/file/',
+        type: 'POST',
+
+        // Form data
+        data: new FormData($('form')[1]),
+        // Tell jQuery not to process data or worry about content-type
+        // You *must* include these options!
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            console.log(data);
+            mostrarImagen(data);
+
+
+        }
+    });
+});
