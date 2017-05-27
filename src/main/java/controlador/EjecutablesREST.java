@@ -15,14 +15,12 @@ import java.util.Date;
 @RequestMapping(value = "/api/test")
 public class EjecutablesREST {
 
-
-    @RequestMapping(value = "ping",method = RequestMethod.GET)
+    @RequestMapping(value = "ping", method = RequestMethod.GET)
     public String ping() {
         return " Ping : " + new Date();
     }
 
-
-    @RequestMapping(value = "insert",method = RequestMethod.GET)
+    @RequestMapping(value = "insert", method = RequestMethod.GET)
     public String insert() throws Exception {
         //soprte
         RazaDAO razaDAO = new RazaDAO();
@@ -37,6 +35,12 @@ public class EjecutablesREST {
         //Perro
         PerroDAO perroDAO = new PerroDAO();
         perroDAO.cargarDatos();
+        //Provincia
+        ProvinciaDAO provinciaDAO= new ProvinciaDAO();
+        provinciaDAO.cargarDatos();
+        //Localidad
+        LocalidadDAO localidadDAO = new LocalidadDAO();
+        localidadDAO.cargarDatos();
         //Direccion
         DireccionDAO direccionDAO = new DireccionDAO();
         direccionDAO.cargarDatos();
@@ -51,17 +55,15 @@ public class EjecutablesREST {
         return " insert : " + new Date();
     }
 
-
-
-    @RequestMapping(value = "drop",method = RequestMethod.GET)
+    @RequestMapping(value = "drop", method = RequestMethod.GET)
     public String drop() throws Exception {
-        
+
         //transaccion
         CalificacionDAO calificacionDAO = new CalificacionDAO();
         calificacionDAO.removeAll();
         ReservaDAO reservaDAO = new ReservaDAO();
         reservaDAO.removeAll();
-        
+
         //soprte
         VacunaDAO vacunaDAO = new VacunaDAO();
         vacunaDAO.removeAll();
@@ -71,21 +73,20 @@ public class EjecutablesREST {
         //Soporte Perro
         RazaDAO razaDAO = new RazaDAO();
         razaDAO.removeAll();
-        
+
         TamanioDAO tamanioDAO = new TamanioDAO();
         tamanioDAO.removeAll();
         //dueno
         DuenoDAO duenoDAO = new DuenoDAO();
         duenoDAO.removeAll();
         //Cuidador
-        
+
         CuidadorDAO cuidadorDAO = new CuidadorDAO();
         cuidadorDAO.removeAll();
         //Direccion
         DireccionDAO direccionDAO = new DireccionDAO();
         direccionDAO.removeAll();
-        
-        
+
         return " drop (Remove all) : " + new Date();
     }
 

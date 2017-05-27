@@ -18,7 +18,7 @@ public class Cuidador implements Serializable {
     private String nombre;
     private String email;
     private long telefono;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     //@JoinColumn(name = "ID", referencedColumnName = "ID")
     private Direccion direccion;
     private int cantidadMaxDePerros;

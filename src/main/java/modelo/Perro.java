@@ -16,13 +16,14 @@ public class Perro implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;
-    @OneToOne
+
+    @ManyToOne
     private Raza raza;
-    @OneToOne
+    @ManyToOne
     private Tamanio tamanio;
-    @OneToOne
+    @ManyToOne
     private Dueno dueno;
-    @OneToMany
+    @ManyToMany
     private List<Vacuna> vacunacionList;
     private String fotoRuta;
     private String comentario;

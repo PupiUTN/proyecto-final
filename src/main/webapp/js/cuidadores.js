@@ -187,7 +187,7 @@ function validarEmail(campo) {
         });
         return false;
     } else {
-        console.log('aprobo mail, voy a guardar')
+        console.log('aprobo mail, voy a guardar');
         return true;
     }
 }
