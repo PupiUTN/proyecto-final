@@ -351,25 +351,14 @@ function llenarSelect(idSelect, jsonArray) {
 }
 
 function mostrarLocalidades() {
-    var data=[];
-    if ($('#busquedaProv').val() === 'Buenos Aires') {
-        data = [{"name":"Tandil","code":"TA"},
-            {"name":"Necochea","code":"NE"},{
-            "name":"La Plata","code":"LP"}
-    ];
-    } else {
-        data = [{"name":"Cordoba","code":"CO"},
-            {"name":"Jesus Maria","code":"JM"},{
-            "name":"Colonia Caroya","code":"CC"}
-        ];
-    }
     $('#busquedaDiv').show();
     $('#busquedaLocal').easyAutocomplete({
-        data:data,
-        getValue:"name",
-        list:{
-            match:{
-                enabled:true
+        url: hostURL + "api/perros",
+        placeholder: "Localidad",
+        getValue: "nombre",
+        list: {
+            match: {
+                enabled: true
             }
         }
     });
