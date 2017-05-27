@@ -325,15 +325,8 @@ window.onload = function () {
 
     getCuidadores();
     obtenerPerros(hostURL);
+    obtenerProvincias(hostURL);
     $('select').material_select();
-    $('#busquedaLocal').autocomplete({
-        limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-        onAutocomplete: function (val) {
-            console.log('elegiste a ' + val);
-            // Callback function when value is autcompleted.
-        },
-        minLength: 3 // The minimum length of the input for the autocomplete to start. Default: 1.
-    });
 };
 
 function obtenerPerros(hostURL) {
@@ -343,22 +336,46 @@ function obtenerPerros(hostURL) {
     });
 }
 
+function obtenerProvincias(hostURL) {
+    var url = hostURL + "api/provincias";
+    $.getJSON(url, function (datos) {
+        llenarSelect('#busquedaProv', datos);
+    });
+}
+
 function llenarSelect(idSelect, jsonArray) {
     for (var i = 0; i < jsonArray.length; i++) {
-        $(idSelect).append('<option value="' + jsonArray[i].nombre + '">' + jsonArray[i].nombre + '</option>');
+        $(idSelect).append('<option value="' + jsonArray[i].id + '">' + jsonArray[i].nombre + '</option>');
         $('select').material_select();
     }
 }
 
 function mostrarLocalidades() {
+    var idProv = $('#busquedaProv').val();
+    console.log(idProv);
     $('#busquedaDiv').show();
     $('#busquedaLocal').easyAutocomplete({
-        url: hostURL + "api/perros",
+        url: hostURL + "api/provincias/" + idProv + "/localidades",
         placeholder: "Localidad",
         getValue: "nombre",
         list: {
+            sort: {
+                enabled: true
+            },
+            maxNumberOfElements: 10,
             match: {
                 enabled: true
+            },
+            showAnimation: {
+                type: "slide", //normal|slide|fade
+                time: 400,
+                callback: function () {}
+            },
+
+            hideAnimation: {
+                type: "slide", //normal|slide|fade
+                time: 400,
+                callback: function () {}
             }
         }
     });

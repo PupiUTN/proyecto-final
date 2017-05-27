@@ -10,19 +10,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  *
  * @author jorge
  */
 @Entity
-public class Provincia implements Serializable{
+public class Provincia implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String nombre;
 
-    public Provincia() {}
+    public Provincia() {
+    }
 
     public Long getId() {
         return id;
@@ -44,6 +47,5 @@ public class Provincia implements Serializable{
     public String toString() {
         return "Provincia{" + "id=" + id + ", nombre=" + nombre + '}';
     }
-    
-    
+
 }
