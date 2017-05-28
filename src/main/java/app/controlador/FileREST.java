@@ -1,12 +1,11 @@
 package app.controlador;
 
 import app.modelo.soporte.FileJson;
-import app.service.StorageService;
+import app.servicio.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import app.service.StorageServiceFileSystem;
+import app.servicio.StorageServiceFileSystem;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,13 +15,13 @@ import java.util.List;
 @RequestMapping(value = "/api/file")
 public class FileREST {
 
+    // https://spring.io/guides/gs/uploading-files/
     private final StorageService storageService;
 
     @Autowired
-    public FileREST(StorageServiceFileSystem storageService) {
+    public FileREST(StorageService storageService) {
         this.storageService = storageService;
     }
-
     @GetMapping("/")
     public List<FileJson> listUploadedFiles() throws IOException {
         List<FileJson> fileJsons = storageService.loadAll();
@@ -35,6 +34,10 @@ public class FileREST {
         return store;
 
     }
+
+//    public StorageService getStorageService(){
+//        return new StorageServiceFileSystem();
+//    }
 
 
 }

@@ -43,7 +43,6 @@ public class CuidadorREST {
         cuidadorDAO.removeID(id);
         System.out.println("Eliminar "+id);
         //return cuidadorDAO.find(id);
-   
     }
 
 

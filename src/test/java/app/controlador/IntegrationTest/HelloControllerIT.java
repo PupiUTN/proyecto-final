@@ -29,7 +29,7 @@ public class HelloControllerIT {
 
     @Before
     public void setUp() throws Exception {
-        this.base = new URL("http://localhost:" + port + "/hello");
+        this.base = new URL("http://localhost:" + port + "/api/hello");
     }
 
     @Test

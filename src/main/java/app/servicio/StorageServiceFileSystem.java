@@ -1,9 +1,8 @@
-package app.service;
+package app.servicio;
 
 import app.modelo.soporte.FileJson;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.core.io.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,17 +11,14 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 @Service
 public class StorageServiceFileSystem  implements  StorageService{
 
 
 
-    @Autowired
-    Environment environment;
 
-    final static Logger logger = Logger.getLogger(StorageServiceFileSystem.class.getSimpleName());
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //Local
     private String rootPath;
@@ -31,6 +27,7 @@ public class StorageServiceFileSystem  implements  StorageService{
     private String completePath;
     // Remote address
     private String hostName;
+    private String port = String.valueOf(5000);
 
     public StorageServiceFileSystem() {
         rootPath = System.getProperty("user.dir");
@@ -104,8 +101,7 @@ public class StorageServiceFileSystem  implements  StorageService{
     }
 
     private String getUrlFromFileName(String serverFileName){
-        // Remote Port
-        String port = environment.getProperty("server.port");
+
         if (hostName.equals("localhost")){
             String remoteUrl = "http://" + hostName + ":" + port + folder + File.separator + serverFileName;
             logger.info("file url:" + remoteUrl);

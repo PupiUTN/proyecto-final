@@ -1,4 +1,4 @@
-package app.service;
+package app.servicio;
 
 import app.modelo.soporte.FileJson;
 import org.springframework.web.multipart.MultipartFile;
