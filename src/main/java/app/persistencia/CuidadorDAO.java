@@ -36,7 +36,7 @@ public class CuidadorDAO extends DAO<Cuidador> {
 
             Imagen imagen1 = new Imagen();
             List<Imagen> imagenes1 = new LinkedList<>();
-            imagen1.setUrl("http://e.noticias.americadigital.pe/ima/0/0/2/5/7/257161.jpg");
+            imagen1.setUrl("http://localhost:5000/img/cesar_200.jpg");
             imagenes1.add(imagen1);
             cuidador1.setListaImagenes(imagenes1);
             
@@ -51,7 +51,7 @@ public class CuidadorDAO extends DAO<Cuidador> {
             
             Imagen imagen2 = new Imagen();
             List<Imagen> imagenes2 = new LinkedList<>();
-            imagen2.setUrl("https://www.pagina12.com.ar/fotos/20100723/notas/na27fo01.jpg");
+            imagen2.setUrl("http://localhost:5000/img/riquelme_200.jpg");
             imagenes2.add(imagen2);
             cuidador2.setListaImagenes(imagenes2);
 
@@ -67,7 +67,7 @@ public class CuidadorDAO extends DAO<Cuidador> {
             
             Imagen imagen3 = new Imagen();
             List<Imagen> imagenes3 = new LinkedList<>();
-            imagen3.setUrl("http://static.wixstatic.com/media/f07ef9_3bb69e586d1341588117507acb8c2f60~mv2.jpg");
+            imagen3.setUrl("http://localhost:5000/img/marcelo_200.jpg");
             imagenes3.clear();
             imagenes3.add(imagen3);
             cuidador3.setListaImagenes(imagenes3);
@@ -83,7 +83,7 @@ public class CuidadorDAO extends DAO<Cuidador> {
             
             Imagen imagen4 = new Imagen();
             List<Imagen> imagenes4 = new LinkedList<>();
-            imagen4.setUrl("http://africa.com/wp-content/uploads/2016/02/Pope-Francis-with-wine.jpg");
+            imagen4.setUrl("http://localhost:5000/img/pope_200.jpg");
             imagenes4.clear();
             imagenes4.add(imagen4);
             cuidador4.setListaImagenes(imagenes4);
@@ -102,7 +102,7 @@ public class CuidadorDAO extends DAO<Cuidador> {
             
             Imagen imagen5 = new Imagen();
             List<Imagen> imagenes5 = new LinkedList<>();
-            imagen5.setUrl("http://3.bp.blogspot.com/-gLc6JaCgytA/VG5gXza1YgI/AAAAAAAAO40/wq_cQd8Ebp0/s1600/carrio.png");
+            imagen5.setUrl("http://localhost:5000/img/carrio_200.jpg");
             imagenes5.clear();
             imagenes5.add(imagen5);
             cuidador5.setListaImagenes(imagenes5);

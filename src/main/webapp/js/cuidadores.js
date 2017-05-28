@@ -1,33 +1,25 @@
+window.onload = function () {
+    getCuidadores();
+    $('select').material_select();
+};
+
 function getCuidadores() {
     console.log("getCuidadores()");
     var url = hostURL + "api/cuidadores";
     $.getJSON(url, function (datos) {
         generarCuidadores(datos);
-        //eliminarCuidador();
-        solicitarReserva();
-
     });
 }
 
 function generarCuidadores(jsonArray) {
-    //esto esta hard codeado, se debe cambiar
-//    var imagenesURL = [];
-//    imagenesURL.push('cesar_200.jpg');
-//    imagenesURL.push('riquelme_200.jpg');
-//    imagenesURL.push('marcelo_200.jpg');
-//    imagenesURL.push('pope_200.jpg');
-//    //imagenesURL.push('carrio_200.jpg');
-
-
     for (var i = 0; i < jsonArray.length; i++) {
         var url;
         //console.log
         if (jsonArray[i].listaImagenes.length === 0) {
-            url = "https://pbs.twimg.com/profile_images/492236288406605824/HcFDZXSg.jpeg";
+            url = hostURL + '/img/no-avatar.png';
         } else {
             url = jsonArray[i].listaImagenes[0].url;
         }
-        console.log(url);
         //existe un problema con los espacios, entonces al html lo copiamos en la barra url del explorador y luego lo cortamos para tenr bien el formato
         var cuidador = '\
 <div class="col s12">\n\
@@ -65,19 +57,18 @@ function generarCuidadores(jsonArray) {
     }
 }
 
-function solicitarReserva() {
-    $('.reserva').on('click', function () {
-        var id = $('.idCuidador').eq(($('.reserva').index(this))).val();
-        console.log(id);
-//        $('#modalReserva').modal('open');
-//        $('#modalReserva').modal;
-    });
-}
+
+$('.reserva').on('click', function () {
+    var id = $('.idCuidador').eq(($('.reserva').index(this))).val();
+    console.log(id);
+});
+
+
 var btnEliminar;
 var idElim;
 function eliminarCuidador(idEliminar) {
-    var boton="#btnEliminar"+idEliminar;
-    idElim=idEliminar;
+    var boton = "#btnEliminar" + idEliminar;
+    idElim = idEliminar;
     console.log(boton);
     btnEliminar = $(boton);
     console.log(idElim);
@@ -133,20 +124,21 @@ $(document).ready(function () {
     $(".numero").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-                // Allow: Ctrl+A, Command+A
-                        (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-                        // Allow: home, end, left, right, down, up
-                                (e.keyCode >= 35 && e.keyCode <= 40)) {
-                    // let it happen, don't do anything
-                    return;
-                }
-                // Ensure that it is a number and stop the keypress
-                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                    e.preventDefault();
-                }
-            });
+            // Allow: Ctrl+A, Command+A
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
 
 });
+
 $('.modal').modal({
     dismissible: true, // Modal can be dismissed by clicking outside of the modal
     opacity: .5, // Opacity of modal background
@@ -232,7 +224,6 @@ function postCuidador() {
 }
 
 
-
 function postReserva() {
 
     var reserva = getReservaDesdeForm();
@@ -265,14 +256,8 @@ function postReserva() {
     });
 }
 function getReservaDesdeForm() {
-    var fechaInicio = $('#fechaInicio').val();
-    var fechaFin = $('#fechaFin').val();
     var perro = new Object();
     perro.nombre = $('#perro').val();
-    var nombreDuenio = $('#nombreDuenio').val();
-    var emailDuenio = $('#emailDuenio').val();
-    var telefonoDuenio = $('#telefonoDuenio').val();
-    var dniDuenio = $('#dniDuenio').val();
     var reserva = new Object();
     reserva.fechaInicio = $('#fechaInicio').val();
     reserva.fechaFin = $('#fechaFin').val();
@@ -285,21 +270,16 @@ function getReservaDesdeForm() {
 }
 
 
-
-
 function mostrarImagen(pathImagen) {
     var pos = pathImagen.lastIndexOf("/");
     var nombreImagen;
     if (pos > 0) {
         nombreImagen = pathImagen.substr(pos + 1);
-    } else
-    {
+    } else {
         nombreImagen = pathImagen;
     }
-    if ((/\.(jpg|png|gif)$/i).test(nombreImagen))
-    {
-        if (imagenes.length <= 3)
-        {
+    if ((/\.(jpg|png|gif)$/i).test(nombreImagen)) {
+        if (imagenes.length <= 3) {
             $('#contenedorImagen').append('<img src="' + pathImagen + '" height="100" width="100"  class="imagenCuidador" alt="Imagen previsualizada">');
             imagenes.push(pathImagen);
         } else {
@@ -326,18 +306,7 @@ function mostrarImagen(pathImagen) {
 
 
 
-window.onload = function () {
 
-    getCuidadores();
-    obtenerPerros(hostURL);
-    $('select').material_select();
-};
-function obtenerPerros(hostURL) {
-    var url = hostURL + "api/perros";
-    $.getJSON(url, function (datos) {
-        llenarSelect('#perro', datos);
-    });
-}
 
 function llenarSelect(idSelect, jsonArray) {
     for (var i = 0; i < jsonArray.length; i++) {
@@ -346,18 +315,40 @@ function llenarSelect(idSelect, jsonArray) {
     }
 }
 
-//FILE
+
 
 $('#imageFile').on('change', function () {
+
     var file = this.files[0];
-    if (file.size > 1048576 ){
-        alert('max upload size is 1 mb')
+    console.log(file);
+    if (file.size > 1048576) {
+        $.toast({
+            heading: 'Error',
+            text: 'Superaste el tamano maximo de 1MB.',
+            showHideTransition: 'fade',
+            icon: 'error'
+        });
+
+        $('#imageFile').empty();
+        return;
     }
 
-    // Also see .name, .type
+    var regexExtensionValidator = /(\.jpg|\.jpeg|\.png)$/i;
+    if (!regexExtensionValidator.exec(file.name.toLocaleLowerCase())) {
+        $.toast({
+            heading: 'Error',
+            text: 'Extension no soportada.',
+            showHideTransition: 'fade',
+            icon: 'error'
+        });
+
+        $('#imageFile').empty();
+    }
+
+
 });
 
-$('#imageButton').on('click', function() {
+$('#imageButton').on('click', function () {
     $.ajax({
         // Your server script to process the upload
         url: '/api/file/',
