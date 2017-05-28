@@ -10,6 +10,7 @@ import com.mysql.jdbc.Connection;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.net.URI;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ public class BaseDatos {
     private static final int LOCAljorge = 2;
     private static final int LOCAlpaolo = 3;
     private static final int OpenShift = 4;
+    private static final int HEROKU = 5;
     private String conexionJose = "jdbc:mysql://localhost:6603/pupi";
     private String userJose = "root";
     private String passwordJose = "mypassword";
@@ -49,6 +51,18 @@ public class BaseDatos {
     private String userOpenShift = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
     private String passwordOpenShift = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
     private String conexionOpenShift = "jdbc:mysql://" + hostOpenShift + ":" + portOpenShift + "/pupi";
+
+
+    URI dbUri = new URI(System.getenv("DATABASE_URL"));
+    private String hostHeroku = dbUri.getHost();
+    private int portHeroku = dbUri.getPort();
+    private String userHeroku = dbUri.getUserInfo().split(":")[0];
+    private String passwordHeroku = dbUri.getUserInfo().split(":")[1];
+    private String dbNameHeroku = dbUri.getPath();
+    private String conexionHeroku = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+
+
+
 
     //jdbc:mysql://" + host + ":" + port + "/pupi
     public BaseDatos() throws Exception {
@@ -117,7 +131,17 @@ public class BaseDatos {
                             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex4);
                             Logger.getLogger(BaseDatos.class.getName()).log(Level.WARNING, null, conexionOpenShift + "?user=" + userOpenShift + "&password=" + passwordOpenShift);
 
-                            throw ex4;
+                            try {
+                                System.out.println("============  pruebo heoroku");
+                                Class.forName("org.postgresql.Driver");
+                                DriverManager.getConnection(conexionHeroku, userHeroku, passwordHeroku);
+                                selector = HEROKU;
+
+                            } catch (Exception ex5) {
+                                Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex4);
+                                Logger.getLogger(BaseDatos.class.getName()).log(Level.WARNING, null, conexionOpenShift + "?user=" + userOpenShift + "&password=" + passwordOpenShift);
+                                throw ex5;
+                            }
                         }
 
                     }
@@ -125,6 +149,19 @@ public class BaseDatos {
             }
         }
 
+    }
+
+
+    private void heroku() {
+        System.out.println("============================= CONFIGURO HEROKU");
+        Map<String, String> persistenceMap = new HashMap<>();
+        persistenceMap.put("javax.persistence.jdbc.url", conexionHeroku);
+        persistenceMap.put("javax.persistence.jdbc.user", userHeroku);
+        persistenceMap.put("javax.persistence.jdbc.password", passwordHeroku);
+        persistenceMap.put("javax.persistence.jdbc.driver", "org.postgresql.Driver");
+        persistenceMap.put("javax.persistence.schema-generation.database.action", "create-or-extend-tables");
+
+        emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
     }
 
     private void openShift() {
