@@ -114,7 +114,7 @@
                         <a class="waves-effect waves-light btn" onclick="mostarFormBuscarCuidador()"><i class="material-icons right">search</i> Buscar Cuidador</a>
                     </div>
 
-                    <div class="row" id="buscarCuidador" hidden="">
+                    <div class="row" id="nuevaBusqueda" hidden="">
                         <div class="row">
                             <div class="input-field col s12">
                                 <select id="busquedaProv" class="validate" onchange="mostrarLocalidades()" required>
@@ -128,6 +128,12 @@
                                 <i class="material-icons prefix">room</i>
                                 <input type="text" id="busquedaLocal">
                             </div>
+                            
+                            <div class="input-field col s12 center">
+                                    <button id ="buscarCuidadores" onclick="buscarCuidadores()" class="btn waves-effect waves-light green" type="submit">
+                                        Enviar<i class="material-icons right">send</i>
+                                    </button>
+                                </div>
                         </div>
                     </div>
                     <!-- http://materializecss.com/collections.html -->

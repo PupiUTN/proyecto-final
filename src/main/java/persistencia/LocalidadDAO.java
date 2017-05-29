@@ -29,6 +29,11 @@ public class LocalidadDAO extends DAO<Localidad> {
             cbaCapital.setProvincia(provincias.get(0));
             create(cbaCapital);
 
+            Localidad capitalFederal = new Localidad();
+            capitalFederal.setNombre("Capital Federal");
+            capitalFederal.setProvincia(provincias.get(1));
+            create(capitalFederal);
+
             Localidad jesusMaria = new Localidad();
             jesusMaria.setNombre("Jesus Maria");
             jesusMaria.setProvincia(provincias.get(0));
@@ -43,11 +48,6 @@ public class LocalidadDAO extends DAO<Localidad> {
             laBolsa.setNombre("La Bolsa");
             laBolsa.setProvincia(provincias.get(0));
             create(laBolsa);
-
-            Localidad capitalFederal = new Localidad();
-            capitalFederal.setNombre("Capital Federal");
-            capitalFederal.setProvincia(provincias.get(1));
-            create(capitalFederal);
 
             Localidad quilmes = new Localidad();
             quilmes.setNombre("Quilmes");

@@ -161,7 +161,7 @@ function mostarFormNuevoCuidador() {
 }
 
 function mostarFormBuscarCuidador() {
-    $('#buscarCuidador').toggle();
+    $('#nuevaBusqueda').toggle();
 }
 
 $('#guardarCuidador').submit(function () {
@@ -358,6 +358,7 @@ function mostrarLocalidades() {
         url: hostURL + "api/provincias/" + idProv + "/localidades",
         placeholder: "Localidad",
         getValue: "nombre",
+        minCharNumber: 3,
         list: {
             sort: {
                 enabled: true
@@ -366,7 +367,6 @@ function mostrarLocalidades() {
             match: {
                 enabled: false
             },
-            minCharNumber: 3,
             showAnimation: {
                 type: "slide", //normal|slide|fade
                 time: 400,
@@ -379,5 +379,20 @@ function mostrarLocalidades() {
                 callback: function () {}
             }
         }
+    });
+}
+
+function buscarCuidadores() {
+    $('#listaCuidadores').empty();
+    var url = hostURL + "api/cuidadores";
+    $.getJSON(url, function (datos) {
+        var cuidadoresFiltrados = [];
+        for (var i = 0; i < datos.length; i++) {
+            if (datos[i].direccion.localidad.nombre === $('#busquedaLocal').val())
+            {
+               cuidadoresFiltrados.push(datos[i]);
+            }
+        }
+        generarCuidadores(cuidadoresFiltrados);
     });
 }
