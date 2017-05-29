@@ -19,7 +19,42 @@ public class LocalidadDAO extends DAO<Localidad> {
 
     public void cargarDatos() throws Exception {
         if (count() == 0) {
+<<<<<<< HEAD
             this.execSQL("src\\main\\sql\\Localidad.sql");
+=======
+            ProvinciaDAO provinciaDao = new ProvinciaDAO();
+            List<Provincia> provincias = provinciaDao.findAll();
+
+            Localidad cbaCapital = new Localidad();
+            cbaCapital.setNombre("Cordoba");
+            cbaCapital.setProvincia(provincias.get(0));
+            create(cbaCapital);
+
+            Localidad capitalFederal = new Localidad();
+            capitalFederal.setNombre("Capital Federal");
+            capitalFederal.setProvincia(provincias.get(1));
+            create(capitalFederal);
+
+            Localidad jesusMaria = new Localidad();
+            jesusMaria.setNombre("Jesus Maria");
+            jesusMaria.setProvincia(provincias.get(0));
+            create(jesusMaria);
+
+            Localidad colCaroya = new Localidad();
+            colCaroya.setNombre("Colonia Caroya");
+            colCaroya.setProvincia(provincias.get(0));
+            create(colCaroya);
+
+            Localidad laBolsa = new Localidad();
+            laBolsa.setNombre("La Bolsa");
+            laBolsa.setProvincia(provincias.get(0));
+            create(laBolsa);
+
+            Localidad quilmes = new Localidad();
+            quilmes.setNombre("Quilmes");
+            quilmes.setProvincia(provincias.get(1));
+            create(quilmes);
+>>>>>>> refs/remotes/origin/master
         }
     }
 
