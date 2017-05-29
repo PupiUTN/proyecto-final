@@ -364,7 +364,7 @@ function mostrarLocalidades() {
             },
             maxNumberOfElements: 10,
             match: {
-                enabled: false
+                enabled: true
             },
             showAnimation: {
                 type: "slide", //normal|slide|fade

@@ -657,7 +657,6 @@ INSERT INTO `localidad` (`ID`, `PROVINCIA_ID`, `NOMBRE`) VALUES
 (662, 7, 'La Laguna'),
 (663, 7, 'La Paisanita'),
 (664, 7, 'La Palestina'),
-(665, 7, '12'),
 (666, 7, 'La Paquita'),
 (667, 7, 'La Para'),
 (668, 7, 'La Paz'),
