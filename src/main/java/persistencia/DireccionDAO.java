@@ -64,8 +64,6 @@ public class DireccionDAO extends DAO<Direccion> {
             direccion5.setLocalidad(localidades.get(1));
 
             create(direccion5);
-            List<Direccion> dir = this.findAll();
-            dir.size();
         }
     }
 

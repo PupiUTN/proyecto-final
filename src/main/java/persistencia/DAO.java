@@ -5,6 +5,8 @@
  */
 package persistencia;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,6 +14,7 @@ import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -53,8 +56,9 @@ public abstract class DAO<T> implements IDao<T> {
         getEntityManager().getTransaction().commit();
 
     }
+
     //se puede usar una consulta JPQL
-     public void removeID(Object id) {
+    public void removeID(Object id) {
         getEntityManager().getTransaction().begin();
         T entity = getEntityManager().find(entityClass, id);
         getEntityManager().remove(getEntityManager().merge(entity));
@@ -63,7 +67,7 @@ public abstract class DAO<T> implements IDao<T> {
     }
 
     public void removeAll() {
-                getEntityManager().getTransaction().begin();
+        getEntityManager().getTransaction().begin();
 
         CriteriaBuilder cBuilder = getEntityManager().getCriteriaBuilder();
         CriteriaDelete<T> cq = cBuilder.createCriteriaDelete(entityClass);
@@ -98,6 +102,19 @@ public abstract class DAO<T> implements IDao<T> {
         cq.select(getEntityManager().getCriteriaBuilder().count(rt));
         Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
+    }
+
+    public void execSQL(String path) throws FileNotFoundException {
+        getEntityManager().getTransaction().begin();
+        File file =new File(path);
+        Scanner sc= new Scanner(file, "utf-8");
+        String sql="";
+        while(sc.hasNext()){
+            sql+=sc.nextLine();
+        }
+        Query q = getEntityManager().createNativeQuery(sql);
+        q.executeUpdate();
+        getEntityManager().getTransaction().commit();
     }
 
 }

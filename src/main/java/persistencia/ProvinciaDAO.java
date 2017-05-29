@@ -20,13 +20,15 @@ public class ProvinciaDAO extends DAO<Provincia> {
     public void cargarDatos() throws Exception {
         if (count() == 0) {
             
-            Provincia cordoba = new  Provincia();
-            cordoba.setNombre("Cordoba");
-            create(cordoba);
             
-            Provincia buenosAires = new Provincia();
-            buenosAires.setNombre("Capital Federal");
-            create(buenosAires);
+            this.execSQL("src\\main\\sql\\Provincia.sql");
+//            Provincia cordoba = new  Provincia();
+//            cordoba.setNombre("Cordoba");
+//            create(cordoba);
+//            
+//            Provincia buenosAires = new Provincia();
+//            buenosAires.setNombre("Capital Federal");
+//            create(buenosAires);
             
         }
     }
