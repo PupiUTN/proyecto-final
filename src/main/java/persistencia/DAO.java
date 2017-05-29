@@ -53,8 +53,9 @@ public abstract class DAO<T> implements IDao<T> {
         getEntityManager().getTransaction().commit();
 
     }
+
     //se puede usar una consulta JPQL
-     public void removeID(Object id) {
+    public void removeID(Object id) {
         getEntityManager().getTransaction().begin();
         T entity = getEntityManager().find(entityClass, id);
         getEntityManager().remove(getEntityManager().merge(entity));
@@ -63,7 +64,7 @@ public abstract class DAO<T> implements IDao<T> {
     }
 
     public void removeAll() {
-                getEntityManager().getTransaction().begin();
+        getEntityManager().getTransaction().begin();
 
         CriteriaBuilder cBuilder = getEntityManager().getCriteriaBuilder();
         CriteriaDelete<T> cq = cBuilder.createCriteriaDelete(entityClass);
@@ -90,6 +91,13 @@ public abstract class DAO<T> implements IDao<T> {
         q.setMaxResults(range[1] - range[0] + 1);
         q.setFirstResult(range[0]);
         return q.getResultList();
+    }
+
+    public List<T> findAll(String parameter, Object value) throws Exception{
+        CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        Root<T> t=cq.from(entityClass);
+        cq.select(t).where(t.get(parameter).in(value));
+        return getEntityManager().createQuery(cq).getResultList();
     }
 
     public int count() {
