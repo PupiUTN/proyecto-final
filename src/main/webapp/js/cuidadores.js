@@ -352,6 +352,7 @@ function llenarSelect(idSelect, jsonArray) {
 
 function mostrarLocalidades() {
     var idProv = $('#busquedaProv').val();
+    $('#busquedaLocal').val("");
     $('#busquedaDiv').show();
     $('#busquedaLocal').easyAutocomplete({
         url: hostURL + "api/provincias/" + idProv + "/localidades",

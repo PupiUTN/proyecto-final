@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package persistencia;
-
-import java.util.List;
 import modelo.Direccion;
 import modelo.Localidad;
 
