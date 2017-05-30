@@ -5,9 +5,8 @@
  */
 package app.persistencia;
 
-import java.util.List;
 import app.modelo.entidades.Localidad;
-import app.modelo.entidades.Provincia;
+import java.io.File;
 
 /**
  *
@@ -21,18 +20,9 @@ public class LocalidadDAO extends DAO<Localidad> {
 
     public void cargarDatos() throws Exception {
         if (count() == 0) {
-            ProvinciaDAO provinciaDao = new ProvinciaDAO();
-            List<Provincia> provincias = provinciaDao.findAll();
+            String rootPath = System.getProperty("user.dir");
+            this.execSQL(rootPath+ File.separator +"src"+ File.separator +"main"+ File.separator +"sql"+ File.separator +"Localidad.sql");
 
-            Localidad cbaCapital = new Localidad();
-            cbaCapital.setNombre("Cordoba");
-            cbaCapital.setProvincia(provincias.get(0));
-            create(cbaCapital);
-            
-            Localidad capitalFederal = new Localidad();
-            capitalFederal.setNombre("Capital Federal");
-            capitalFederal.setProvincia(provincias.get(1));
-            create(capitalFederal);
         }
     }
 

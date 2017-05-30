@@ -50,10 +50,7 @@ function generarCuidadores(jsonArray) {
         </div> \n\
     </div> \n\
 </div>';
-
         $('#listaCuidadores').append(cuidador);
-
-
     }
 }
 
@@ -62,6 +59,7 @@ $('.reserva').on('click', function () {
     var id = $('.idCuidador').eq(($('.reserva').index(this))).val();
     console.log(id);
 });
+
 
 
 var btnEliminar;
@@ -91,7 +89,6 @@ function eliminarAJAX() {
         error: function () {
             idElim = 0;
             alert('El cuidador no pudo ser eliminado.');
-
         }
     });
 }
@@ -115,14 +112,13 @@ function getCuidadorDesdeForm() {
     cuidador.direccion = dir;
     cuidador.listaImagenes = fotosList;
     return cuidador;
-
 }
 
 
 $(document).ready(function () {
 
     $(".numero").keydown(function (e) {
-        // Allow: backspace, delete, tab, escape, enter and .
+// Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
             // Allow: Ctrl+A, Command+A
             (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
@@ -136,7 +132,6 @@ $(document).ready(function () {
             e.preventDefault();
         }
     });
-
 });
 
 $('.modal').modal({
@@ -159,13 +154,15 @@ function mostarFormNuevoCuidador() {
     $('#nuevoCuidador').toggle();
 }
 
+function mostarFormBuscarCuidador() {
+    $('#nuevaBusqueda').toggle();
+}
+
 $('#guardarCuidador').submit(function () {
     if (validarEmail($('#email'))) {
         postCuidador();
     }
 });
-
-
 $('#nuevaReserva').submit(function () {
     if (validarEmail($('#email'))) {
         postReserva();
@@ -306,11 +303,31 @@ function mostrarImagen(pathImagen) {
 
 
 
+window.onload = function () {
 
+    getCuidadores();
+    obtenerPerros(hostURL);
+    obtenerProvincias(hostURL);
+    $('select').material_select();
+};
+
+function obtenerPerros(hostURL) {
+    var url = hostURL + "api/perros";
+    $.getJSON(url, function (datos) {
+        llenarSelect('#perro', datos);
+    });
+}
+
+function obtenerProvincias(hostURL) {
+    var url = hostURL + "api/provincias";
+    $.getJSON(url, function (datos) {
+        llenarSelect('#busquedaProv', datos);
+    });
+}
 
 function llenarSelect(idSelect, jsonArray) {
     for (var i = 0; i < jsonArray.length; i++) {
-        $(idSelect).append('<option value="' + jsonArray[i].nombre + '">' + jsonArray[i].nombre + '</option>');
+        $(idSelect).append('<option value="' + jsonArray[i].id + '">' + jsonArray[i].nombre + '</option>');
         $('select').material_select();
     }
 }
@@ -369,3 +386,50 @@ $('#imageButton').on('click', function () {
         }
     });
 });
+
+function mostrarLocalidades() {
+    var idProv = $('#busquedaProv').val();
+    $('#busquedaLocal').val("");
+    $('#busquedaDiv').show();
+    $('#busquedaLocal').easyAutocomplete({
+        url: hostURL + "api/provincias/" + idProv + "/localidades",
+        placeholder: "Localidad",
+        getValue: "nombre",
+        minCharNumber: 3,
+        list: {
+            sort: {
+                enabled: true
+            },
+            maxNumberOfElements: 10,
+            match: {
+                enabled: true
+            },
+            showAnimation: {
+                type: "slide", //normal|slide|fade
+                time: 400,
+                callback: function () {}
+            },
+
+            hideAnimation: {
+                type: "slide", //normal|slide|fade
+                time: 400,
+                callback: function () {}
+            }
+        }
+    });
+}
+
+function buscarCuidadores() {
+    $('#listaCuidadores').empty();
+    var url = hostURL + "api/cuidadores";
+    $.getJSON(url, function (datos) {
+        var cuidadoresFiltrados = [];
+        for (var i = 0; i < datos.length; i++) {
+            if (datos[i].direccion.localidad.nombre === $('#busquedaLocal').val())
+            {
+               cuidadoresFiltrados.push(datos[i]);
+            }
+        }
+        generarCuidadores(cuidadoresFiltrados);
+    });
+}
