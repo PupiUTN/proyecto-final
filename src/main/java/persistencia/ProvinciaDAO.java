@@ -7,6 +7,8 @@ package persistencia;
 
 import modelo.Provincia;
 
+import java.io.File;
+
 /**
  *
  * @author jorge
@@ -19,17 +21,10 @@ public class ProvinciaDAO extends DAO<Provincia> {
 
     public void cargarDatos() throws Exception {
         if (count() == 0) {
-            
-            
-            this.execSQL("src\\main\\sql\\Provincia.sql");
-//            Provincia cordoba = new  Provincia();
-//            cordoba.setNombre("Cordoba");
-//            create(cordoba);
-//            
-//            Provincia buenosAires = new Provincia();
-//            buenosAires.setNombre("Capital Federal");
-//            create(buenosAires);
-            
+
+            String rootPath = System.getProperty("user.dir");
+            this.execSQL(rootPath+ File.separator +"src"+ File.separator +"main"+ File.separator +"sql"+ File.separator +"Provincia.sql");
+
         }
     }
 
