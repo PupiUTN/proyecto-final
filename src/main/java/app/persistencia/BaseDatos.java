@@ -85,6 +85,9 @@ public class BaseDatos {
                 case OpenShift:
                     openShift();
                     break;
+                case HEROKU:
+                    heroku();
+                    break;
             }
         }
     }
@@ -139,8 +142,13 @@ public class BaseDatos {
                                 String conexionHeroku = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
 
                                 System.out.println("============  pruebo heoroku");
+                                logger.info("Host Heroku:" + hostHeroku);
+                                logger.info("port Heroku:" + portHeroku);
+                                logger.info("user Heroku:" + userHeroku);
+                                logger.info("password Heroku:" + passwordHeroku);
+                                logger.info("dbName Heroku:" + dbNameHeroku);
+                                logger.info("conexion Heroku:" + conexionHeroku);
                                 Class.forName("org.postgresql.Driver");
-                                logger.info(conexionHeroku +userHeroku +passwordHeroku);
                                 DriverManager.getConnection(conexionHeroku, userHeroku, passwordHeroku);
                                 selector = HEROKU;
 
