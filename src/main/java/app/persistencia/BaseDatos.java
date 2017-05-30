@@ -6,11 +6,13 @@
 package app.persistencia;
 
 import com.mysql.jdbc.Connection;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -27,6 +29,8 @@ public class BaseDatos {
 
     private static EntityManagerFactory emf;
     private EntityManager em;
+
+    protected org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
     // se pueden mejorar todas las consultas con el criteria API en vez de escribir la consulta
     private static int selector = -1;
     private static final int LOCAljose = 1;
@@ -53,13 +57,6 @@ public class BaseDatos {
     private String conexionOpenShift = "jdbc:mysql://" + hostOpenShift + ":" + portOpenShift + "/pupi";
 
 
-    URI dbUri = new URI(System.getenv("DATABASE_URL"));
-    private String hostHeroku = dbUri.getHost();
-    private int portHeroku = dbUri.getPort();
-    private String userHeroku = dbUri.getUserInfo().split(":")[0];
-    private String passwordHeroku = dbUri.getUserInfo().split(":")[1];
-    private String dbNameHeroku = dbUri.getPath();
-    private String conexionHeroku = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
 
 
 
@@ -103,43 +100,51 @@ public class BaseDatos {
             System.out.println("============  decidirBaseDatos()");
             try {
                 System.out.println("============  pruebo jose");
+                logger.info(conexionJose + userJose + passwordJose);
                 Class.forName("com.mysql.jdbc.Driver");
-                connect = (Connection) DriverManager.getConnection(conexionJose + "?user=" + userJose + "&password=" + passwordJose);
+                connect = (Connection) DriverManager.getConnection(conexionJose, userJose, passwordJose);
                 selector = LOCAljose;
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
-
                 try {
                     System.out.println("============  pruebo jorge");
+                    logger.info(conexionJorge +userJorge +passwordJorge);
+
                     connect = (Connection) DriverManager.getConnection(conexionJorge + "?user=" + userJorge + "&password=" + passwordJorge);
                     selector = LOCAljorge;
                 } catch (SQLException ex2) {
                     Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex2);
-
                     try {
                         System.out.println("============  pruebo paolo");
+                        logger.info(conexionPaolo +userPaolo +passwordPaolo);
                         connect = (Connection) DriverManager.getConnection(conexionPaolo + "?user=" + userPaolo + "&password=" + passwordPaolo);
                         selector = LOCAlpaolo;
                     } catch (SQLException ex3) {
                         Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex3);
                         try {
                             System.out.println("============  pruebo open shift");
+                            logger.info(conexionOpenShift +userOpenShift + passwordOpenShift);
                             connect = (Connection) DriverManager.getConnection(conexionOpenShift + "?user=" + userOpenShift + "&password=" + passwordOpenShift);
                             selector = OpenShift;
 
                         } catch (Exception ex4) {
                             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex4);
-                            Logger.getLogger(BaseDatos.class.getName()).log(Level.WARNING, null, conexionOpenShift + "?user=" + userOpenShift + "&password=" + passwordOpenShift);
-
                             try {
+                                URI dbUri = new URI(System.getenv("DATABASE_URL"));
+                                String hostHeroku = dbUri.getHost();
+                                int portHeroku = dbUri.getPort();
+                                String userHeroku = dbUri.getUserInfo().split(":")[0];
+                                String passwordHeroku = dbUri.getUserInfo().split(":")[1];
+                                String dbNameHeroku = dbUri.getPath();
+                                String conexionHeroku = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+
                                 System.out.println("============  pruebo heoroku");
                                 Class.forName("org.postgresql.Driver");
+                                logger.info(conexionHeroku +userHeroku +passwordHeroku);
                                 DriverManager.getConnection(conexionHeroku, userHeroku, passwordHeroku);
                                 selector = HEROKU;
 
                             } catch (Exception ex5) {
-                                Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex4);
-                                Logger.getLogger(BaseDatos.class.getName()).log(Level.WARNING, null, conexionOpenShift + "?user=" + userOpenShift + "&password=" + passwordOpenShift);
                                 throw ex5;
                             }
                         }
@@ -152,7 +157,15 @@ public class BaseDatos {
     }
 
 
-    private void heroku() {
+    private void heroku() throws URISyntaxException {
+        URI dbUri = new URI(System.getenv("DATABASE_URL"));
+        String hostHeroku = dbUri.getHost();
+        int portHeroku = dbUri.getPort();
+        String userHeroku = dbUri.getUserInfo().split(":")[0];
+        String passwordHeroku = dbUri.getUserInfo().split(":")[1];
+        String dbNameHeroku = dbUri.getPath();
+        String conexionHeroku = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+
         System.out.println("============================= CONFIGURO HEROKU");
         Map<String, String> persistenceMap = new HashMap<>();
         persistenceMap.put("javax.persistence.jdbc.url", conexionHeroku);
