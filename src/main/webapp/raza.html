@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <title>Pupi</title>
+
+    <!-- CSS  -->
+    <link href="css/material-icons.css" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/jquery.toast.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
+
+</head>
+<body>
+
+
+<form name="myForm" class="form-horizontal" with-errors>
+
+    <div class="page-title">
+
+        <div class="col-md-8">
+            <h3> Razas
+            </h3>
+        </div>
+
+
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+                    <div class="well">
+                        <div class="form-horizontal">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Nombre*
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text"
+                                           name="Nombre" tabindex="1"
+                                           ng-model="marca.Nombre"
+                                           class="form-control col-md-7 col-xs-12" maxlength="100" required>
+                                    <fielderrors for="Nombre"></fielderrors>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="pull-left">
+                                        <button class="btn btn-success" post-validator tabindex="2" type="button" ng-click="save()">Guardar</button>
+                                        <button class="btn btn-default" type="button" tabindex="3" ng-click="cancelar()">Cancelar</button>
+                                    </div>
+                                    <div class="pull-right" ng-show="accion=='Editar'">
+                                        <confirm-button confirm-action="eliminar()" tabindex="4" mensaje="Esta seguro que desea eliminar el registro"></confirm-button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+</body>
+
+</html>
