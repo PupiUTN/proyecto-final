@@ -14,7 +14,7 @@
       <class>app.modelo.entidades.Raza</class>
       <class>app.modelo.entidades.Reserva</class>
       <class>app.modelo.entidades.Tamanio</class>
-
+      <class>app.modelo.entidades.Vacuna</class>
       <exclude-unlisted-classes>false</exclude-unlisted-classes>
       <shared-cache-mode>ALL</shared-cache-mode>
   </persistence-unit>
