@@ -181,7 +181,6 @@ public class BaseDatos {
         persistenceMap.put("javax.persistence.jdbc.password", passwordHeroku);
         persistenceMap.put("javax.persistence.jdbc.driver", "org.postgresql.Driver");
         persistenceMap.put("javax.persistence.schema-generation.database.action", "create-or-extend-tables");
-
         emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
     }
 
