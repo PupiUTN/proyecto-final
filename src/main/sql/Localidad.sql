@@ -1,5 +1,5 @@
-INSERT INTO `LOCALIDAD` (`ID`, `PROVINCIA_ID`, `NOMBRE`) VALUES
-(1, 1, '25 de Mayo'),
+INSERT INTO LOCALIDAD (ID, PROVINCIA_ID, NOMBRE) VALUES
+ (1, 1, '25 de Mayo'),
 (2, 1, '3 de febrero'),
 (3, 1, 'A. Alsina'),
 (4, 1, 'A. Gonzáles Cháves'),
