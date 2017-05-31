@@ -6,6 +6,7 @@
 package controlador;
 
 import modelo.Vacuna;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,5 +26,11 @@ public class VacunaFacadeREST {
         return new VacunaDAO().findAll();
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    public void create(@RequestBody Vacuna entity) throws Exception {
+        System.out.println(entity);
+        VacunaDAO vacunaDAO = new VacunaDAO<>();
+        vacunaDAO.create(entity);
+    }
     
 }
