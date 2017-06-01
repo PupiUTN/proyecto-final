@@ -5,16 +5,19 @@
  */
 package controlador;
 
+import modelo.Cuidador;
 import modelo.Raza;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import persistencia.CuidadorDAO;
 import persistencia.RazaDAO;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/razas")
+@RequestMapping(value = "api/razas")
 public class RazaFacadeREST {
 
     public RazaFacadeREST() {
@@ -23,5 +26,12 @@ public class RazaFacadeREST {
     @RequestMapping(method = RequestMethod.GET)
     public List<Raza> findAll() throws Exception {
         return new RazaDAO().findAll();
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public void create(@RequestBody Raza entity) throws Exception {
+        System.out.println(entity);
+        RazaDAO razaDao = new RazaDAO();
+        razaDao.create(entity);
     }
 }
