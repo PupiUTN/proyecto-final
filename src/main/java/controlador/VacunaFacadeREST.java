@@ -6,11 +6,10 @@
 package controlador;
 
 import modelo.Vacuna;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import persistencia.VacunaDAO;
+
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 
@@ -31,6 +30,13 @@ public class VacunaFacadeREST {
         System.out.println(entity);
         VacunaDAO vacunaDAO = new VacunaDAO<>();
         vacunaDAO.create(entity);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    public void delete(@RequestParam("Id") Long id) throws Exception {
+        VacunaDAO vacunaDAO = new VacunaDAO();
+        vacunaDAO.removeID(id);
+        System.out.println("Eliminar "+id);
     }
     
 }

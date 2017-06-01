@@ -25,25 +25,6 @@ function generarVacunas(jsonArray) {
     }
 }
 
-
-$(document).ready(function () {
-
-    $(".numero").keydown(function (e) {
-// Allow: backspace, delete, tab, escape, enter and .
-        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-            // Allow: Ctrl+A, Command+A
-            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-            // Allow: home, end, left, right, down, up
-            (e.keyCode >= 35 && e.keyCode <= 40)) {
-            // let it happen, don't do anything
-            return;
-        }
-        // Ensure that it is a number and stop the keypress
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            e.preventDefault();
-        }
-    });
-});
 $('.modal').modal({
     dismissible: true, // Modal can be dismissed by clicking outside of the modal
     opacity: .5, // Opacity of modal background
@@ -52,19 +33,6 @@ $('.modal').modal({
     startingTop: '4%', // Starting top style attribute
     endingTop: '10%' // Ending top style attribute
 
-});
-$('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15 // Creates a dropdown of 15 years to control year
-});
-
-
-function mostrarFormNuevaVacuna() {
-    $('#nuevaVacuna').toggle();
-}
-
-$('#guardarVacuna').submit(function () {
-    postVacuna();
 });
 
 function postVacuna() {
@@ -78,14 +46,13 @@ function postVacuna() {
         contentType: "application/json",
         success: function () {
             console.log("exito al guardar vacuna");
-            $('#nuevaVacuna').hide();
             $.toast({
                 heading: 'Success',
-                text: 'Exito al crear nueva vacuna. Refrescar la pagina para verla',
+                text: 'Exito al crear nueva vacuna',
                 showHideTransition: 'slide',
                 icon: 'success'
             });
-            location.reload();
+            getVacunas()
         },
         error: function () {
             console.log("error al crear vacuna");
@@ -108,3 +75,29 @@ function getVacunaDesdeForm() {
 window.onload = function () {
     getVacunas();
 };
+
+var btnEliminar;
+var idElim;
+function eliminarVacuna(idEliminar) {
+    var boton = "#btnEliminar" + idEliminar;
+    idElim = idEliminar;
+    console.log(boton);
+    btnEliminar = $(boton);
+    console.log(idElim);
+}
+
+function eliminarAJAX() {
+    var url = hostURL + "api/vacunas"
+    $.ajax({
+        url: url + '?' + $.param({"Id": idElim}),
+        type: 'DELETE',
+        success: function () {
+            btnEliminar.parent().parent().parent().parent().parent().parent().remove();
+            console.log('Se borro la vacuna con ID: ' + idElim);
+        },
+        error: function () {
+            idElim = 0;
+            alert('La vacuna no pudo ser eliminada.');
+        }
+    });
+}
