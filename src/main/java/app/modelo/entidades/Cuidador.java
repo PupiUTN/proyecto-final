@@ -18,11 +18,11 @@ public class Cuidador implements Serializable {
     private String nombre;
     private String email;
     private long telefono;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "ID", referencedColumnName = "ID")
     private Direccion direccion;
     private int cantidadMaxDePerros;
-    @OneToMany(cascade = CascadeType.PERSIST) // guarda las imagen
+    @OneToMany(cascade = CascadeType.ALL) // guarda las imagen
     private List<Imagen> listaImagenes;
 
     //para jpa, necesito constructor vacio y todos los stegest y getters de cada atributo
