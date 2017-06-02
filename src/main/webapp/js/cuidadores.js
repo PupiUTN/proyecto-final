@@ -304,19 +304,10 @@ function mostrarImagen(pathImagen) {
 
 
 window.onload = function () {
-
     getCuidadores();
-    obtenerPerros(hostURL);
-    obtenerProvincias(hostURL);
     $('select').material_select();
 };
 
-function obtenerPerros(hostURL) {
-    var url = hostURL + "api/perros";
-    $.getJSON(url, function (datos) {
-        llenarSelect('#perro', datos);
-    });
-}
 
 function obtenerProvincias(hostURL) {
     var url = hostURL + "api/provincias";
@@ -423,11 +414,3 @@ function mostrarLocalidades() {
     });
 }
 
-function buscarCuidadores() {
-    var idLocalidad=$('#buscarCuidadores').val();
-    $('#listaCuidadores').empty();
-    var url = hostURL + "api/cuidadores/localidades/"+idLocalidad;
-    $.getJSON(url, function (datos) {
-        generarCuidadores(datos);
-    });
-}
