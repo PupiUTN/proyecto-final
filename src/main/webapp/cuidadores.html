@@ -128,35 +128,8 @@
 
 
             <div>
-                <!--BOTON BUSQUEDA-->
-                <div class="input-field col s12 center-align">
-                    <a class="waves-effect waves-light btn" onclick="mostarFormBuscarCuidador()"><i
-                            class="material-icons right">search</i> Buscar Cuidador</a>
-                </div>
-                <!--BUSQUEDA-->
-                <div class="row" id="nuevaBusqueda" hidden="">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <select id="busquedaProv" class="validate" onchange="mostrarLocalidades()" required>
-                                <option value="" disabled selected>Selecciona provincia</option>
-                            </select>
-                            <label for="busquedaProv">Provincia</label>
-                        </div>
 
-                        <div id="busquedaDiv" class="input col s12" hidden="">
-                            <label for="busquedaLocal">Localidad</label>
-                            <i class="material-icons prefix">room</i>
-                            <input type="text" id="busquedaLocal">
-                        </div>
 
-                        <div class="input-field col s12 center">
-                            <a id="buscarCuidadores" onclick="buscarCuidadores()"
-                               class="btn waves-effect waves-light green">
-                                Buscar<i class="material-icons right">search</i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
                 <!-- LISTAR CUIDADORES-->
                 <div class="row" id="listaCuidadores"></div>
                 <!-- MODAL RESERVAR-->
