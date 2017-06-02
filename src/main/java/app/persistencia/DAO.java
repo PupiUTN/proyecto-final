@@ -96,10 +96,10 @@ public abstract class DAO<T> implements IDao<T> {
         return q.getResultList();
     }
 
-    public List<T> findAll(String parameter, Object value) throws Exception{
+    public List<T> findAll(String attribute, Object value) throws Exception{
         CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         Root<T> t=cq.from(entityClass);
-        cq.select(t).where(t.get(parameter).in(value));
+        cq.select(t).where(t.get(attribute).in(value));
         return getEntityManager().createQuery(cq).getResultList();
     }
 

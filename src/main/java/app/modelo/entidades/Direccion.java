@@ -17,7 +17,7 @@ public class Direccion implements Serializable {
     private String nombre;
     private double latitud;
     private double longitud;
-    @ManyToOne
+    @OneToOne
     private Localidad localidad;
     //para jpa, necesito constructor vacio y todos los stegest y getters de cada atributo
 

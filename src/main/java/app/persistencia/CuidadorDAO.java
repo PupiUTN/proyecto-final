@@ -11,6 +11,10 @@ import app.modelo.entidades.Imagen;
 
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -20,6 +24,15 @@ public class CuidadorDAO extends DAO<Cuidador> {
 
     public CuidadorDAO() throws Exception {
         super(Cuidador.class);
+    }
+
+    public List<Cuidador> findPorLocalidad(int idLocalidad) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery();
+        Root<Cuidador> cuidador = cq.from(Cuidador.class);
+        Join<Cuidador, Direccion> direccion = cuidador.join("direccion");
+        cq.select(cuidador).where(direccion.get("localidad").in(idLocalidad));
+        return getEntityManager().createQuery(cq).getResultList();
     }
 
     public void cargarDatos() throws Exception {
@@ -39,7 +52,7 @@ public class CuidadorDAO extends DAO<Cuidador> {
             imagen1.setUrl("http://localhost:5000/img/cesar_200.jpg");
             imagenes1.add(imagen1);
             cuidador1.setListaImagenes(imagenes1);
-            
+
             create(cuidador1);
 
             Cuidador cuidador2 = new Cuidador();
@@ -48,7 +61,7 @@ public class CuidadorDAO extends DAO<Cuidador> {
             cuidador2.setEmail("juan@bocajuniors.com.ar");
             cuidador2.setTelefono(1126354896);
             cuidador2.setDireccion(findAll.remove(0));
-            
+
             Imagen imagen2 = new Imagen();
             List<Imagen> imagenes2 = new LinkedList<>();
             imagen2.setUrl("http://localhost:5000/img/riquelme_200.jpg");
@@ -63,15 +76,14 @@ public class CuidadorDAO extends DAO<Cuidador> {
             cuidador3.setEmail("marce@show.com.ar");
             cuidador3.setTelefono(1195378619);
             cuidador3.setDireccion(findAll.remove(0));
-            
-            
+
             Imagen imagen3 = new Imagen();
             List<Imagen> imagenes3 = new LinkedList<>();
             imagen3.setUrl("http://localhost:5000/img/marcelo_200.jpg");
             imagenes3.clear();
             imagenes3.add(imagen3);
             cuidador3.setListaImagenes(imagenes3);
-            
+
             create(cuidador3);
 
             Cuidador cuidador4 = new Cuidador();
@@ -80,14 +92,14 @@ public class CuidadorDAO extends DAO<Cuidador> {
             cuidador4.setEmail("francis@pope.com");
             cuidador4.setTelefono(325923652);
             cuidador4.setDireccion(findAll.remove(0));
-            
+
             Imagen imagen4 = new Imagen();
             List<Imagen> imagenes4 = new LinkedList<>();
             imagen4.setUrl("http://localhost:5000/img/pope_200.jpg");
             imagenes4.clear();
             imagenes4.add(imagen4);
             cuidador4.setListaImagenes(imagenes4);
-            
+
             create(cuidador4);
 
             Cuidador cuidador5 = new Cuidador();
@@ -96,17 +108,14 @@ public class CuidadorDAO extends DAO<Cuidador> {
             cuidador5.setEmail("lilita@ucr.com");
             cuidador5.setTelefono(586237470);
             cuidador5.setDireccion(findAll.remove(0));
-            
-            
-            
-            
+
             Imagen imagen5 = new Imagen();
             List<Imagen> imagenes5 = new LinkedList<>();
             imagen5.setUrl("http://localhost:5000/img/carrio_200.jpg");
             imagenes5.clear();
             imagenes5.add(imagen5);
             cuidador5.setListaImagenes(imagenes5);
-            
+
             create(cuidador5);
         }
     }

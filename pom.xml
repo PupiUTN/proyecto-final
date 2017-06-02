@@ -38,6 +38,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
         <!-- end::tests[] -->
         <!--CONECTORES A LAS DISTINTAS BASES DE DATOS-->
         <!--Version 6 es para java 8 y open shift tiene java 7-->
@@ -86,6 +90,7 @@
                     <execution>
                         <goals>
                             <goal>build-info</goal>
+                            <goal>repackage</goal>
                         </goals>
                         <configuration>
                             <additionalProperties>
