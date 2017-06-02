@@ -4,6 +4,7 @@ package app.persistencia;
 
 import app.modelo.entidades.Direccion;
 import app.modelo.entidades.Localidad;
+import java.io.File;
 
 
 /**
@@ -62,6 +63,9 @@ public class DireccionDAO extends DAO<Direccion> {
             direccion5.setLocalidad(palermo);
 
             create(direccion5);
+            
+            String rootPath = System.getProperty("user.dir");
+            this.execSQL(rootPath + File.separator + "src" + File.separator + "main" + File.separator + "sql" + File.separator + "Direccion.sql");
         }
     }
 

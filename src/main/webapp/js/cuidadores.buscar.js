@@ -31,7 +31,7 @@ function generarCuidadores(jsonArray) {
                 <p> <i class="material-icons black-text">email</i> ' + jsonArray[i].email + '</p> \n\
                 </div> \n\
                 <div class="col s12 m6"> \n\
-                <p> <i class="material-icons black-text">location_on</i>' + jsonArray[i].direccion.nombre + '</p> \n\
+                <p> <i class="material-icons black-text">location_on</i>' + jsonArray[i].direccion.nombre + ', '+jsonArray[i].direccion.localidad.nombre+', '+jsonArray[i].direccion.localidad.provincia.nombre+'</p> \n\
                 <p> <i class="material-icons black-text">info</i>Max perros: ' + jsonArray[i].cantidadMaxDePerros + ' </p> \n\
                 </div> \n\
                 </div> \n\
