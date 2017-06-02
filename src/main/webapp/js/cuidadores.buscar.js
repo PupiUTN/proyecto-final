@@ -247,7 +247,7 @@ function mostrarLocalidades() {
         list: {
             onSelectItemEvent: function() {
 			var value = $("#busquedaLocal").getSelectedItemData().id;
-			$("#buscarCuidadores").val(value);
+			$("#idLocalidad").val(value);
                     },
             sort: {
                 enabled: true
@@ -272,7 +272,7 @@ function mostrarLocalidades() {
 }
 
 function buscarCuidadores() {
-    var idLocalidad=$('#buscarCuidadores').val();
+    var idLocalidad=$('#idLocalidad').val();
     $('#listaCuidadores').empty();
     var url = hostURL + "api/cuidadores/localidades/"+idLocalidad;
     $.getJSON(url, function (datos) {
