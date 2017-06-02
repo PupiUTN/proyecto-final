@@ -94,25 +94,29 @@ function eliminarAJAX() {
 }
 
 function getCuidadorDesdeForm() {
-    var dir = new Object();
-    dir.nombre = $('#direccion').val();
-    var fotosList = [];
-    var i = 0;
-    $(".imagenCuidador").each(function () {
-        var imagen = new Object();
-        imagen.url = $(this).attr('src');
-        fotosList[i] = imagen;
-        i++;
-    });
-    var cuidador = new Object();
-    cuidador.nombre = $('#nombre').val();
-    cuidador.email = $('#email').val();
-    cuidador.telefono = $('#telefono').val();
-    cuidador.cantidadMaxDePerros = $('#maxPerros').val();
-    cuidador.direccion = dir;
-    cuidador.listaImagenes = fotosList;
-    return cuidador;
-}
+ var dir = new Object();
+ dir.nombre = $('#direccion').val();
+ var localidad=new Object();
+ localidad.nombre = $('#localidad').val();
+ localidad.id=$('#idLocalidad').val();
+ dir.localidad=localidad;
+ var fotosList = [];
+ var i = 0;
+ $(".imagenCuidador").each(function () {
+ var imagen = new Object();
+ imagen.url = $(this).attr('src');
+ fotosList[i] = imagen;
+ i++;
+ });
+ var cuidador = new Object();
+ cuidador.nombre = $('#nombre').val();
+ cuidador.email = $('#email').val();
+ cuidador.direccion=dir;
+ cuidador.telefono = $('#telefono').val();
+ cuidador.cantidadMaxDePerros = $('#maxPerros').val();
+ cuidador.listaImagenes = fotosList;
+ return cuidador;
+ }
 
 
 $(document).ready(function () {
@@ -120,18 +124,18 @@ $(document).ready(function () {
     $(".numero").keydown(function (e) {
 // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-            // Allow: Ctrl+A, Command+A
-            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-            // Allow: home, end, left, right, down, up
-            (e.keyCode >= 35 && e.keyCode <= 40)) {
-            // let it happen, don't do anything
-            return;
-        }
-        // Ensure that it is a number and stop the keypress
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            e.preventDefault();
-        }
-    });
+                // Allow: Ctrl+A, Command+A
+                        (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                        // Allow: home, end, left, right, down, up
+                                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    // let it happen, don't do anything
+                    return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
 });
 
 $('.modal').modal({
@@ -305,6 +309,7 @@ function mostrarImagen(pathImagen) {
 
 window.onload = function () {
     getCuidadores();
+    obtenerProvincias(hostURL);
     $('select').material_select();
 };
 
@@ -323,7 +328,41 @@ function llenarSelect(idSelect, jsonArray) {
     }
 }
 
+function mostrarLocalidades() {
+    var idProv = $('#busquedaProv').val();
+    $('#localidad').val("");
+    $('#localidadDiv').show();
+    $('#localidad').easyAutocomplete({
+        url: hostURL + "api/provincias/" + idProv + "/localidades",
+        placeholder: "Localidad",
+        getValue: "nombre",
+        minCharNumber: 3,
+        list: {
+            onSelectItemEvent: function () {
+                var value = $("#localidad").getSelectedItemData().id;
+                $("#idLocalidad").val(value);
+            },
+            sort: {
+                enabled: true
+            },
+            maxNumberOfElements: 10,
+            match: {
+                enabled: true
+            },
+            showAnimation: {
+                type: "slide", //normal|slide|fade
+                time: 400,
+                callback: function () {}
+            },
 
+            hideAnimation: {
+                type: "slide", //normal|slide|fade
+                time: 400,
+                callback: function () {}
+            }
+        }
+    });
+}
 
 $('#imageFile').on('change', function () {
 
@@ -377,40 +416,4 @@ $('#imageButton').on('click', function () {
         }
     });
 });
-
-function mostrarLocalidades() {
-    var idProv = $('#busquedaProv').val();
-    $('#busquedaLocal').val("");
-    $('#busquedaDiv').show();
-    $('#busquedaLocal').easyAutocomplete({
-        url: hostURL + "api/provincias/" + idProv + "/localidades",
-        placeholder: "Localidad",
-        getValue: "nombre",
-        minCharNumber: 3,
-        list: {
-            onSelectItemEvent: function() {
-			var value = $("#busquedaLocal").getSelectedItemData().id;
-			$("#buscarCuidadores").val(value);
-                    },
-            sort: {
-                enabled: true
-            },
-            maxNumberOfElements: 10,
-            match: {
-                enabled: true
-            },
-            showAnimation: {
-                type: "slide", //normal|slide|fade
-                time: 400,
-                callback: function () {}
-            },
-
-            hideAnimation: {
-                type: "slide", //normal|slide|fade
-                time: 400,
-                callback: function () {}
-            }
-        }
-    });
-}
 
