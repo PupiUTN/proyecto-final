@@ -6,10 +6,9 @@
 package app.controlador;
 
 import app.modelo.entidades.Cuidador;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import app.persistencia.CuidadorDAO;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,10 +50,16 @@ public class CuidadorREST {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void create(@RequestBody Cuidador entity) throws Exception {
+    public ResponseEntity create(@RequestBody Cuidador entity) throws Exception {
         System.out.println(entity);
+        if (entity.getNombre().isEmpty()) return new ResponseEntity<>("El nombre es requerido",HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        if (entity.getEmail().isEmpty()) return new ResponseEntity<>("El email es requerido",HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        if (entity.getTelefono() == 0l) return new ResponseEntity<>("El telefono es requerido",HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        if (entity.getListaImagenes().size() > 4) return new ResponseEntity<>("El maximo de imagenes es 4",HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+
         CuidadorDAO cuidadorDAO = new CuidadorDAO();
         cuidadorDAO.create(entity);
+        return new ResponseEntity<>(entity,HttpStatus.OK);
     }
 
 }
