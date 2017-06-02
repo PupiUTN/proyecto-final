@@ -87,6 +87,19 @@ public class Cuidador implements Serializable {
 
 
     @Override
+    public String toString() {
+        return "Cuidador{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", email='" + email + '\'' +
+                ", telefono=" + telefono +
+                ", direccion=" + direccion +
+                ", cantidadMaxDePerros=" + cantidadMaxDePerros +
+                ", listaImagenes=" + listaImagenes +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         Cuidador oCuidador = (Cuidador)o;
         if (this.nombre != oCuidador.nombre) return false;

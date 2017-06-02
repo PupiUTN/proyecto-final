@@ -39,7 +39,7 @@ function generarCuidadores(jsonArray) {
                 <p> <i class="material-icons black-text">email</i> ' + jsonArray[i].email + '</p> \n\
                 </div> \n\
                 <div class="col s12 m6"> \n\
-                <p> <i class="material-icons black-text">location_on</i>' + jsonArray[i].direccion.nombre +', '+jsonArray[i].direccion.localidad.nombre+', '+jsonArray[i].direccion.localidad.provincia.nombre+'</p> \n\
+                <p> <i class="material-icons black-text">location_on</i>' + jsonArray[i].direccion.nombre + ', ' + jsonArray[i].direccion.localidad.nombre + ', ' + jsonArray[i].direccion.localidad.provincia.nombre + '</p> \n\
                 <p> <i class="material-icons black-text">info</i>Max perros: ' + jsonArray[i].cantidadMaxDePerros + ' </p> \n\
                 </div> \n\
                 </div> \n\
@@ -59,7 +59,6 @@ $('.reserva').on('click', function () {
     var id = $('.idCuidador').eq(($('.reserva').index(this))).val();
     console.log(id);
 });
-
 
 
 var btnEliminar;
@@ -94,29 +93,34 @@ function eliminarAJAX() {
 }
 
 function getCuidadorDesdeForm() {
- var dir = new Object();
- dir.nombre = $('#direccion').val();
- var localidad=new Object();
- localidad.nombre = $('#localidad').val();
- localidad.id=$('#idLocalidad').val();
- dir.localidad=localidad;
- var fotosList = [];
- var i = 0;
- $(".imagenCuidador").each(function () {
- var imagen = new Object();
- imagen.url = $(this).attr('src');
- fotosList[i] = imagen;
- i++;
- });
- var cuidador = new Object();
- cuidador.nombre = $('#nombre').val();
- cuidador.email = $('#email').val();
- cuidador.direccion=dir;
- cuidador.telefono = $('#telefono').val();
- cuidador.cantidadMaxDePerros = $('#maxPerros').val();
- cuidador.listaImagenes = fotosList;
- return cuidador;
- }
+    var provincia = new Object();
+    provincia.id = $('#busquedaProv').val();
+    provincia.nombre = $('#busquedaProv :selected').text();
+
+    var dir = new Object();
+    dir.nombre = $('#direccion').val();
+    var localidad = new Object();
+    localidad.nombre = $('#localidad').val();
+    localidad.id = $('#idLocalidad').val();
+    localidad.provincia  = provincia;
+    dir.localidad = localidad;
+    var fotosList = [];
+    var i = 0;
+    $(".imagenCuidador").each(function () {
+        var imagen = new Object();
+        imagen.url = $(this).attr('src');
+        fotosList[i] = imagen;
+        i++;
+    });
+    var cuidador = new Object();
+    cuidador.nombre = $('#nombre').val();
+    cuidador.email = $('#email').val();
+    cuidador.direccion = dir;
+    cuidador.telefono = $('#telefono').val();
+    cuidador.cantidadMaxDePerros = $('#maxPerros').val();
+    cuidador.listaImagenes = fotosList;
+    return cuidador;
+}
 
 
 $(document).ready(function () {
@@ -124,18 +128,18 @@ $(document).ready(function () {
     $(".numero").keydown(function (e) {
 // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-                // Allow: Ctrl+A, Command+A
-                        (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-                        // Allow: home, end, left, right, down, up
-                                (e.keyCode >= 35 && e.keyCode <= 40)) {
-                    // let it happen, don't do anything
-                    return;
-                }
-                // Ensure that it is a number and stop the keypress
-                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                    e.preventDefault();
-                }
-            });
+            // Allow: Ctrl+A, Command+A
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
 });
 
 $('.modal').modal({
@@ -305,8 +309,6 @@ function mostrarImagen(pathImagen) {
 }
 
 
-
-
 window.onload = function () {
     getCuidadores();
     obtenerProvincias(hostURL);
@@ -352,13 +354,15 @@ function mostrarLocalidades() {
             showAnimation: {
                 type: "slide", //normal|slide|fade
                 time: 400,
-                callback: function () {}
+                callback: function () {
+                }
             },
 
             hideAnimation: {
                 type: "slide", //normal|slide|fade
                 time: 400,
-                callback: function () {}
+                callback: function () {
+                }
             }
         }
     });
