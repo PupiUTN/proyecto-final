@@ -397,6 +397,10 @@ function mostrarLocalidades() {
         getValue: "nombre",
         minCharNumber: 3,
         list: {
+            onSelectItemEvent: function() {
+			var value = $("#busquedaLocal").getSelectedItemData().id;
+			$("#buscarCuidadores").val(value);
+                    },
             sort: {
                 enabled: true
             },
@@ -420,16 +424,10 @@ function mostrarLocalidades() {
 }
 
 function buscarCuidadores() {
+    var idLocalidad=$('#buscarCuidadores').val();
     $('#listaCuidadores').empty();
-    var url = hostURL + "api/cuidadores";
+    var url = hostURL + "api/cuidadores/localidades/"+idLocalidad;
     $.getJSON(url, function (datos) {
-        var cuidadoresFiltrados = [];
-        for (var i = 0; i < datos.length; i++) {
-            if (datos[i].direccion.localidad.nombre === $('#busquedaLocal').val())
-            {
-               cuidadoresFiltrados.push(datos[i]);
-            }
-        }
-        generarCuidadores(cuidadoresFiltrados);
+        generarCuidadores(datos);
     });
 }
