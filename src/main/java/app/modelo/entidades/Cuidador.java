@@ -85,9 +85,12 @@ public class Cuidador implements Serializable {
         this.listaImagenes = listaImagenes;
     }
 
-    
-    
-    
-    
 
+    @Override
+    public boolean equals(Object o) {
+        Cuidador oCuidador = (Cuidador)o;
+        if (this.nombre != oCuidador.nombre) return false;
+        if (this.telefono != oCuidador.telefono) return false;
+        return true;
+    }
 }
