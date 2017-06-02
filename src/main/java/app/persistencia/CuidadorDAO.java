@@ -8,6 +8,7 @@ package app.persistencia;
 import app.modelo.entidades.Cuidador;
 import app.modelo.entidades.Direccion;
 import app.modelo.entidades.Imagen;
+import java.io.File;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -117,6 +118,9 @@ public class CuidadorDAO extends DAO<Cuidador> {
             cuidador5.setListaImagenes(imagenes5);
 
             create(cuidador5);
+
+            String rootPath = System.getProperty("user.dir");
+            this.execSQL(rootPath + File.separator + "src" + File.separator + "main" + File.separator + "sql" + File.separator + "Cuidador.sql");
         }
     }
 
