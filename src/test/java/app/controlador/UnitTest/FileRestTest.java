@@ -1,6 +1,7 @@
 package app.controlador.UnitTest;
 
 import app.modelo.soporte.FileJson;
+import app.persistencia.CuidadorDAO;
 import app.servicio.StorageService;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -41,7 +42,8 @@ public class FileRestTest{
     @Autowired
     private MockMvc mockMvc;
 
-
+    @MockBean //no entiendo porque tengo que mockear el dao TODO
+    private CuidadorDAO mockCuidadorDAO;
     @MockBean
     private StorageService storageService;
 

@@ -8,6 +8,7 @@ package app.persistencia;
 import app.modelo.entidades.Cuidador;
 import app.modelo.entidades.Direccion;
 import app.modelo.entidades.Imagen;
+import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,6 +21,7 @@ import javax.persistence.criteria.Root;
  *
  * @author agile
  */
+@Repository
 public class CuidadorDAO extends DAO<Cuidador> {
 
     public CuidadorDAO() throws Exception {
