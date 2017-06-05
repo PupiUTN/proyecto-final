@@ -96,9 +96,6 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
 
             }
 
-
-                //    location.reload();
-
         };
 
         function validar ()
@@ -159,8 +156,6 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
                         else {
 
                         }
-
-                      //  location.reload();
                     };
 
                 $scope.delete = function (id)
