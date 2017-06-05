@@ -3,10 +3,7 @@ package app.controlador;
 
 import app.modelo.entidades.Cuidador;
 import app.modelo.entidades.Raza;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import app.persistencia.CuidadorDAO;
 import app.persistencia.RazaDAO;
 
@@ -41,11 +38,10 @@ public class RazaFacadeREST {
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public void delete(@PathParam("id") int id) throws Exception {
+    public void delete(@RequestParam("id") Long id) throws Exception {
         RazaDAO razaDAO = new RazaDAO();
         razaDAO.removeID(id);
-        System.out.println("Eliminar " + id);
+        System.out.println("Eliminar "+id);
     }
-
 
 }

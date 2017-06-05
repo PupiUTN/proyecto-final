@@ -255,7 +255,7 @@ public class BaseDatos {
 
 
     private void localMySQlGabi() {
-        System.out.println("============================= CONFIGURO local MYSQL jose");
+        System.out.println("============================= CONFIGURO local MYSQL gabi");
         Map<String, String> persistenceMap = new HashMap<>();
         persistenceMap.put("javax.persistence.jdbc.url", conexionGabi);
         persistenceMap.put("javax.persistence.jdbc.user", userGabi);

@@ -50,22 +50,67 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
         $scope.get();
     };
 
+
+
     $scope.save = function ()
         {
-            var data = $scope.raza;
-            $http.post(url, data)
-                .then(function (data, status, headers, config) {
 
-                    alert( "accion realizada con exito");
-                    location.reload();
-                },
-                    function errorCallback(response) {
-                    alert( "failure message: " + JSON.stringify({data: data}));
+
+            if($scope.raza.nombre === undefined  || validar() === true)
+            {
+
+                $.toast({
+                    heading: 'error ',
+                    text: 'error al crear nueva raza - campo vacio o existente',
+                    showHideTransition: 'slide',
+                    icon: 'error'
                 });
+            }
+            else
+            {
 
-                    location.reload();
+                var data = $scope.raza;
+
+
+                $http.post(url, data)
+                    .then(function (data, status, headers, config) {
+
+                            $.toast({
+                                heading: 'Success',
+                                text: 'Exito al crear nueva raza.',
+                                showHideTransition: 'slide',
+                                icon: 'success'
+                            });
+                            location.reload();
+
+                        },
+                        function errorCallback(response) {
+                            $.toast({
+                                heading: 'error ',
+                                text: 'error al crear nueva raza.',
+                                showHideTransition: 'slide',
+                                icon: 'error'
+                            });
+                        });
+
+
+            }
+
+
+                //    location.reload();
 
         };
+
+        function validar ()
+        {
+          var existe = false;
+            var length = $scope.myWelcome .length;
+            for ( i=0; i < length; i++) {
+                if( $scope.myWelcome[i].nombre === $scope.raza.nombre)
+                    existe = true;
+                    };
+            return existe;
+        }
 
 
                 $scope.get = function ()
@@ -109,28 +154,44 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
                         if (statusConfirm == true)
                         {
                             $scope.delete(idEliminar)
-                            location.reload();
+
                         }
                         else {
-                            var statusConfirm2 = alert("sete culia");
+
                         }
+
+                      //  location.reload();
                     };
 
                 $scope.delete = function (id)
                 {
-                    var url = hostURL + "api/razas";
 
+
+
+                    var url = hostURL + "api/razas"
                     $.ajax({
-
                         url: url + '?' + $.param({"id": id}),
                         type: 'DELETE',
                         success: function () {
-
-                            console.log('Se borro la raza con ID: ' + idElim);
+                         //   btnEliminar.closest('div').remove();
+                            console.log('Se borro la vacuna con ID: ' + id);
+                            $.toast({
+                                heading: 'Success ',
+                                text: 'exito al eliimnar  raza',
+                                showHideTransition: 'slide',
+                                icon: 'sucess'
+                            });
+                          var  btnEliminar = $("#btnEliminar" + id);
+                            btnEliminar.closest('div').remove();
                         },
                         error: function () {
                             idElim = 0;
-                            alert('La raza no pudo ser eliminada.');
+                            $.toast({
+                                heading: 'error ',
+                                text: 'error al eliimnar  raza',
+                                showHideTransition: 'slide',
+                                icon: 'error'
+                            });
                         }
                     });
                 };

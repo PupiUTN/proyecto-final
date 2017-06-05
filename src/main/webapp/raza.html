@@ -14,6 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.min.js" data-semver="2.0.11" data-require="ng-grid@*"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" data-semver="2.1.1" data-require="jquery@*"></script>
+    <link href="css/jquery.toast.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
     <script src="js/raza.js"></script>
     <script src="js/init.js "></script>
 
@@ -44,7 +45,7 @@
         </div>
     </nav>
 </header>
-
+<main>
 <form name="myForm" class="form-horizontal" >
 
     <div class="page-title">
@@ -66,9 +67,9 @@
             <div class="row">
 
 
-
-                        <div class="input-field col s12">
-                            <input id="nombre" type="text" class="validate" required ng-model ="raza.nombre">
+                            <div class="input-field col s4"></div>
+                        <div class="input-field col s5">
+                            <input id="nombre" type="text" class="validate"  ng-model ="raza.nombre" required >
                             <label for="nombre">Nombre</label>
                         </div>
 
@@ -111,6 +112,7 @@
     </div>
 
 </form>
+</main>
 <footer class="page-footer orange">
     <div class="container">
         <div class="row">
@@ -141,7 +143,7 @@
 <script src="js/materialize.js "></script>
 <!--primero init-->
 <script src="js/init.js "></script>
-<script src="js/perros.js"></script>
+
 
 </body>
 
