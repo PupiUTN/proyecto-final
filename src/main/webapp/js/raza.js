@@ -163,7 +163,7 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
 
 
 
-                    var url = hostURL + "api/razas"
+                    var url = hostURL + "api/razas";
                     $.ajax({
                         url: url + '?' + $.param({"id": id}),
                         type: 'DELETE',
