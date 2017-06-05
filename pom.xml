@@ -38,6 +38,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
         <!-- end::tests[] -->
         <!--CONECTORES A LAS DISTINTAS BASES DE DATOS-->
         <!--Version 6 es para java 8 y open shift tiene java 7-->
@@ -46,6 +50,12 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.40</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4.1208</version>
         </dependency>
         <!--FRAMEWORK DE PERSISTENCIA-->
         <dependency>
@@ -80,6 +90,7 @@
                     <execution>
                         <goals>
                             <goal>build-info</goal>
+                            <goal>repackage</goal>
                         </goals>
                         <configuration>
                             <additionalProperties>

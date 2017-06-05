@@ -2,10 +2,20 @@
 
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="PersistenceUnit" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-
-    
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <shared-cache-mode>ALL</shared-cache-mode>
+      <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+      <class>app.modelo.entidades.Califiacion</class>
+      <class>app.modelo.entidades.Cuidador</class>
+      <class>app.modelo.entidades.Direccion</class>
+      <class>app.modelo.entidades.Dueno</class>
+      <class>app.modelo.entidades.Imagen</class>
+      <class>app.modelo.entidades.Localidad</class>
+      <class>app.modelo.entidades.Perro</class>
+      <class>app.modelo.entidades.Provincia</class>
+      <class>app.modelo.entidades.Raza</class>
+      <class>app.modelo.entidades.Reserva</class>
+      <class>app.modelo.entidades.Tamanio</class>
+      <class>app.modelo.entidades.Vacuna</class>
+      <exclude-unlisted-classes>false</exclude-unlisted-classes>
+      <shared-cache-mode>ALL</shared-cache-mode>
   </persistence-unit>
 </persistence>

@@ -17,3 +17,6 @@ hs_err_pid*
 .env
 .idea/
 *.iml
+
+#Files
+/src/main/webapp/file_upload

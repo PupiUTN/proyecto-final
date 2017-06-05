@@ -1,6 +1,6 @@
 
-INSERT INTO `PROVINCIA` (`ID`, `NOMBRE`) VALUES
-(1, 'Buenos Aires'), 
+INSERT INTO PROVINCIA (ID,NOMBRE) VALUES
+ (1, 'Buenos Aires'),
 (2, 'Buenos Aires-GBA'), 
 (3, 'Capital Federal'), 
 (4, 'Catamarca'), 

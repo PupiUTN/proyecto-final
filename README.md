@@ -1,12 +1,12 @@
-# Metodologias Agiles - UTN FRC - 2017
+# Proyecto Final - UTN FRC - 2017
 
 Integracion Continua: Travis [![Build Status](https://travis-ci.org/PupiUTN/Agiles.svg?branch=master)](https://travis-ci.org/PupiUTN/Agiles)
 
 <a href="https://zenhub.com"><img src="https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png"></a>
 
 
-
-## Menifiesto
+> Lo que no se ve, no existe para los profes (Documentacion)
+## Manifiesto
 
 La parte más dura de hacer software es, precisamente, decidir lo que hacer. Ninguna otra de las partes en que se divide este trabajo es tan difícil como establecer los requisitos técnicos detallados, incluyendo todas las interfaces con la personas, las máquinas y los otros sistemas de software. Ninguna otra parte del trabajo destroza tanto el resultado final si se hace mal. Ninguna otra parte resulta tan díficil de rectificar a posteriori.
 
