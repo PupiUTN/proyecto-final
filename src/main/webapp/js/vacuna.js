@@ -79,10 +79,8 @@ window.onload = function () {
 var btnEliminar;
 var idElim;
 function eliminarVacuna(idEliminar) {
-    var boton = "#btnEliminar" + idEliminar;
+    btnEliminar = $("#btnEliminar" + idEliminar);
     idElim = idEliminar;
-    console.log(boton);
-    btnEliminar = $(boton);
     console.log(idElim);
 }
 
@@ -92,7 +90,7 @@ function eliminarAJAX() {
         url: url + '?' + $.param({"Id": idElim}),
         type: 'DELETE',
         success: function () {
-            btnEliminar.parent().parent().parent().parent().parent().parent().remove();
+            btnEliminar.closest('div').remove();
             console.log('Se borro la vacuna con ID: ' + idElim);
         },
         error: function () {
