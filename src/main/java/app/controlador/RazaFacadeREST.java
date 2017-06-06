@@ -44,4 +44,11 @@ public class RazaFacadeREST {
         System.out.println("Eliminar "+id);
     }
 
+
+    @RequestMapping(method = RequestMethod.PUT )
+    public void put(@RequestBody Raza entity) throws Exception {
+        RazaDAO razaDAO = new RazaDAO();
+        razaDAO.edit(entity);
+        System.out.println("editar "+entity.getId());
+    }
 }

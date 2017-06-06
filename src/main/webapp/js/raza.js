@@ -9,6 +9,7 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
             $scope.edicion = false;
        //  var HostUrl="http://" + window.location.host + "/"; ;
     $scope.myWelcome = {};
+           var posicion =0;
 
     var url = hostURL + 'api/razas';
 
@@ -30,12 +31,14 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
 
         for (var i = 0; i < jsonArray.length; i++) {
             var raza = '\
-<div class="col s12">\n\
+<div class="col s12 ">\n\
     <div class="card horizontal blue-grey darken-1 white-text hoverable">\n\
         <div class="card-stacked"> \n\
             <div class="card-content"> \n\
             <span class="card-title">' + jsonArray[i].nombre + ' \n\
             <a href="#!"><span id="btnEliminar' + jsonArray[i].id + '" data-target="modalEliminar" onClick="eliminarRaza(' + jsonArray[i].id + ')" class=" new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="Eliminar" ></span>\n\
+            </a> \n\
+            <a href="#!"><span id="btnEditar' + jsonArray[i].id + '" data-target="modalEditar" onClick="editarRaza(' + jsonArray[i].id + ')" class=" new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="editar" ></span>\n\
             </a> \n\
             </span> \n\
         </div> \n\
@@ -51,6 +54,28 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
     };
 
 
+
+
+    $scope.SaveOrEdit = function ()
+        {
+
+           if ($scope.edicion === false)
+           {
+               $scope.save();
+           }
+           else
+           {
+
+               $scope.put();
+
+               $('#nuevaRaza').toggle();
+
+               location.reload();
+
+           }
+
+
+        };
 
     $scope.save = function ()
         {
@@ -95,8 +120,62 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
 
 
             }
+            $scope.edicion = false;
 
         };
+
+
+
+        $scope.put = function ()
+        {
+
+            if($scope.raza.nombre === undefined  || validar() === true)
+            {
+
+                $.toast({
+                    heading: 'error ',
+                    text: 'error al crear nueva raza - campo vacio o existente',
+                    showHideTransition: 'slide',
+                    icon: 'error'
+                });
+            }
+            else
+            {
+
+                $.ajax({
+                    type: "PUT",
+                    url: hostURL + 'api/razas',
+                    data: JSON.stringify($scope.raza),
+                    contentType: "application/json",
+                    success: function () {
+                        console.log("Exito al editar raza");
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Exito al editar raza',
+                            showHideTransition: 'slide',
+                            icon: 'success'
+                        });
+                        $scope.edicion = false
+
+
+
+                    },
+                    error: function () {
+                        console.log("error al editar raza");
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Error al editar raza .',
+                            showHideTransition: 'fade',
+                            icon: 'error'
+                        });
+                    }
+                });
+
+            }
+
+
+        };
+
 
         function validar ()
         {
@@ -123,8 +202,27 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
                     });
                 };
 
-                        var razaid= 1;
 
+
+                    editarRaza =  function (idEditar) {
+                        $('#consultarRaza').toggle();
+
+                        $scope.edicion = true;
+                        $scope.raza.id = idEditar;
+
+                        var length = $scope.myWelcome .length;
+                        for ( i=0; i < length; i++) {
+                            if( $scope.myWelcome[i].id === idEditar) {
+                                posicion = i;
+                                $scope.raza.nombre = $scope.myWelcome[i].nombre;
+                                document.getElementById("nombre").value = $scope.myWelcome[i].nombre;
+                                break;
+                            }
+
+                        };
+                        $('#nuevaRaza').toggle();
+                        document.getElementById("nombre").focus();
+                    };
 
                 $scope.getxId = function (razaid)
                 {  var url = hostURL + "api/razas";
@@ -148,9 +246,19 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
 
                     eliminarRaza =  function (idEliminar) {
                         var statusConfirm = confirm("¿Desea eliminar la raza ?");
-                        if (statusConfirm == true)
+                        if (statusConfirm === true)
                         {
-                            $scope.delete(idEliminar)
+                            $scope.delete(idEliminar);
+
+                            var length = $scope.myWelcome .length;
+                            for ( i=0; i < length; i++) {
+                                if( $scope.myWelcome[i].id === idEliminar) {
+                                     $scope.myWelcome.splice(i,1);
+
+                                    break;
+                                }
+
+                            };
 
                         }
                         else {
@@ -160,16 +268,13 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
 
                 $scope.delete = function (id)
                 {
-
-
-
                     var url = hostURL + "api/razas";
                     $.ajax({
                         url: url + '?' + $.param({"id": id}),
                         type: 'DELETE',
                         success: function () {
                          //   btnEliminar.closest('div').remove();
-                            console.log('Se borro la vacuna con ID: ' + id);
+                            console.log('Se borro la raza con ID: ' + id);
                             $.toast({
                                 heading: 'Success ',
                                 text: 'exito al eliimnar  raza',
@@ -189,13 +294,19 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
                             });
                         }
                     });
+
                 };
+
+
 
 
             $scope.cancelar = function (){
                 $('#nuevaRaza').toggle();
+                $scope.edicion = false;
+                $scope.raza = {};
             };
-            $scope.cancelar2  = function (){
+            $scope.cancelarConsulta  = function (){
                 $('#consultarRaza').toggle();
+                $scope.raza = {};
             };
 }]);
