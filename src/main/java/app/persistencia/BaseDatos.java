@@ -38,6 +38,7 @@ public class BaseDatos {
     private static final int LOCAlpaolo = 3;
     private static final int OpenShift = 4;
     private static final int HEROKU = 5;
+    private static final int LOCAlfede = 6;
     private String conexionJose = "jdbc:mysql://localhost:6603/pupi";
     private String userJose = "root";
     private String passwordJose = "mypassword";
@@ -49,6 +50,10 @@ public class BaseDatos {
     private String conexionPaolo = "jdbc:mysql://localhost:3306/pupi";
     private String userPaolo = "root";
     private String passwordPaolo = "MilikiJimenezCrack77";
+
+    private String conexionFede = "jdbc:mysql://localhost:3306/pupi";
+    private String userFede = "root";
+    private String passwordFede = "mypassword";
 
     private String hostOpenShift = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
     private String portOpenShift = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
@@ -85,6 +90,8 @@ public class BaseDatos {
                 case OpenShift:
                     openShift();
                     break;
+                case LOCAlfede:
+                    localMySQlFede();
                 case HEROKU:
                     heroku();
                     break;
@@ -225,6 +232,18 @@ public class BaseDatos {
         persistenceMap.put("javax.persistence.jdbc.url", conexionPaolo);
         persistenceMap.put("javax.persistence.jdbc.user", userPaolo);
         persistenceMap.put("javax.persistence.jdbc.password", passwordPaolo);
+        persistenceMap.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
+        persistenceMap.put("javax.persistence.schema-generation.database.action", "create-or-extend-tables");
+        emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
+
+    }
+
+    private void localMySQlFede() {
+        System.out.println("============================= CONFIGURO local MYSQL fede");
+        Map<String, String> persistenceMap = new HashMap<>();
+        persistenceMap.put("javax.persistence.jdbc.url", conexionFede);
+        persistenceMap.put("javax.persistence.jdbc.user", userFede);
+        persistenceMap.put("javax.persistence.jdbc.password", passwordFede);
         persistenceMap.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
         persistenceMap.put("javax.persistence.schema-generation.database.action", "create-or-extend-tables");
         emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
