@@ -1,5 +1,5 @@
 function getVacunas() {
-    console.log("getVacunas()");
+    console.log($('#listaVacunas'));
     var url = hostURL + "api/vacunas";
     $.getJSON(url, function (datos) {
         generarVacunas(datos);
@@ -7,7 +7,7 @@ function getVacunas() {
 }
 
 function generarVacunas(jsonArray) {
-
+    $('#listaVacunas').empty();
     for (var i = 0; i < jsonArray.length; i++) {
         var vacuna = '\
 <div class="col s12">\n\
@@ -15,6 +15,7 @@ function generarVacunas(jsonArray) {
         <div class="card-stacked"> \n\
             <div class="card-content"> \n\
             <span class="card-title">' + jsonArray[i].nombre + ' \n\
+            <a href="#!"><span id="btnEditar' + jsonArray[i].id + '" data-target="modalEditar" onclick="editarVacuna(' + jsonArray[i].id + ')" class=" new badge btn waves-effect waves-light blue accent-2 black-text" data-badge-caption="Editar" ></span>\n\
             <a href="#!"><span id="btnEliminar' + jsonArray[i].id + '" data-target="modalEliminar" onclick="eliminarVacuna(' + jsonArray[i].id + ')" class=" new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="Eliminar" ></span>\n\
             </a> \n\
             </span> \n\
@@ -37,33 +38,85 @@ $('.modal').modal({
 
 function postVacuna() {
     var vacuna = getVacunaDesdeForm();
-    console.log(vacuna);
-    console.log(JSON.stringify(vacuna));
-    $.ajax({
-        type: "POST",
-        url: hostURL + 'api/vacunas',
-        data: JSON.stringify(vacuna),
-        contentType: "application/json",
-        success: function () {
-            console.log("exito al guardar vacuna");
-            $.toast({
-                heading: 'Success',
-                text: 'Exito al crear nueva vacuna',
-                showHideTransition: 'slide',
-                icon: 'success'
-            });
-            getVacunas()
-        },
-        error: function () {
-            console.log("error al crear vacuna");
-            $.toast({
-                heading: 'Error',
-                text: 'Error al crear nueva vacuna.',
-                showHideTransition: 'fade',
-                icon: 'error'
-            });
-        }
-    });
+    if (vacuna['nombre'].isEmpty()) {
+        $.toast({
+            heading: 'Error',
+            text: 'El nombre de la vacuna no puede estar vacío',
+            showHideTransition: 'slide',
+            icon: 'error'
+        });
+    }
+    else {
+        console.log(JSON.stringify(vacuna));
+        $.ajax({
+            type: "POST",
+            url: hostURL + 'api/vacunas',
+            data: JSON.stringify(vacuna),
+            contentType: "application/json",
+            success: function () {
+                console.log("Exito al guardar vacuna");
+                $.toast({
+                    heading: 'Success',
+                    text: 'Exito al crear nueva vacuna',
+                    showHideTransition: 'slide',
+                    icon: 'success'
+                });
+                getVacunas();
+            },
+            error: function () {
+                console.log("Error al guardar vacuna");
+                $.toast({
+                    heading: 'Error',
+                    text: 'Error al crear nueva vacuna.',
+                    showHideTransition: 'fade',
+                    icon: 'error'
+                });
+            }
+        });
+    }
+}
+
+function putVacuna() {
+    var vacuna = getVacunaDesdeForm();
+    if (vacuna['nombre'].isEmpty()) {
+        $.toast({
+            heading: 'Error',
+            text: 'El nombre de la vacuna no puede estar vacío',
+            showHideTransition: 'slide',
+            icon: 'error'
+        });
+    }
+    else {
+        vacuna['id'] = idEdit;
+        console.log(JSON.stringify(vacuna));
+        $.ajax({
+            type: "PUT",
+            url: hostURL + 'api/vacunas',
+            data: JSON.stringify(vacuna),
+            contentType: "application/json",
+            success: function () {
+                console.log("Exito al editar vacuna");
+                $.toast({
+                    heading: 'Success',
+                    text: 'Exito al editar la vacuna',
+                    showHideTransition: 'slide',
+                    icon: 'success'
+                });
+                getVacunas();
+                $('#editarVacuna').hide();
+                $('#guardarVacuna').show();
+            },
+            error: function () {
+                console.log("error al crear vacuna");
+                $.toast({
+                    heading: 'Error',
+                    text: 'Error al crear nueva vacuna.',
+                    showHideTransition: 'fade',
+                    icon: 'error'
+                });
+            }
+        });
+    }
 }
 
 function getVacunaDesdeForm() {
@@ -73,6 +126,7 @@ function getVacunaDesdeForm() {
 }
 
 window.onload = function () {
+    $('#editarVacuna').hide();
     getVacunas();
 };
 
@@ -84,10 +138,19 @@ function eliminarVacuna(idEliminar) {
     console.log(idElim);
 }
 
+var idEdit;
+function editarVacuna(idEditar) {
+    btnEditar = $("#btnEditar" + idEditar);
+    idEdit = idEditar;
+    $("#nombre").focus();
+    $('#editarVacuna').show();
+    $('#guardarVacuna').hide();
+}
+
 function eliminarAJAX() {
     var url = hostURL + "api/vacunas"
     $.ajax({
-        url: url + '?' + $.param({"Id": idElim}),
+        url: url + '/' + idElim,
         type: 'DELETE',
         success: function () {
             btnEliminar.closest('div').remove();
@@ -99,3 +162,7 @@ function eliminarAJAX() {
         }
     });
 }
+
+String.prototype.isEmpty = function() {
+    return (this.length === 0 || !this.trim());
+};

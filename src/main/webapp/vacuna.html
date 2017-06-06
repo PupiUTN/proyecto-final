@@ -63,8 +63,12 @@
                         <div class="input-field col s12 center">
                             <button id="guardarVacuna" onclick="postVacuna()" class="btn waves-effect waves-light green"
                                     type="submit">
-                                Enviar<i class="material-icons right">send</i>
-                            </button>
+                                Guardar<i class="material-icons right">send</i>
+                                <button id="editarVacuna" onclick="putVacuna()"
+                                        class="btn waves-effect waves-light yellow"
+                                        type="submit">
+                                    Editar<i class="material-icons right">send</i>
+                                </button>
                         </div>
 
                     </div>
@@ -76,11 +80,13 @@
             <div id="modalEliminar" class="modal">
                 <div class="modal-content">
                     <h4>Alerta!</h4>
-                    <p>¿Está seguro que desea eliminar el cuidador?</p>
+                    <p>¿Está seguro que desea eliminar la vacuna?</p>
                 </div>
                 <div class="modal-footer">
-                    <a href="#!" id="cancelarEliminar"  class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                    <a href="#!" id="aceptarEliminar" onclick="eliminarAJAX()" class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
+                    <a href="#!" id="cancelarEliminar"
+                       class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                    <a href="#!" id="aceptarEliminar" onclick="eliminarAJAX()"
+                       class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
                 </div>
             </div>
         </div>

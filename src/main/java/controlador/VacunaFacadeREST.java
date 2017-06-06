@@ -17,26 +17,44 @@ import java.util.List;
 @RequestMapping(value = "/api/vacunas")
 public class VacunaFacadeREST {
 
+    private VacunaDAO instance;
+
     public VacunaFacadeREST() {
+    }
+
+    private VacunaDAO getInstance() {
+        if(instance == null) {
+            try {
+                instance = new VacunaDAO<>();
+                System.out.println("Instancia creada con exito");
+            }
+            catch(Exception e) {
+                System.out.println("Error al crear la instancia: " + e.toString());
+            }
+        }
+        return instance;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Vacuna> findAll() throws Exception {
-        return new VacunaDAO().findAll();
+        return getInstance().findAll();
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public void create(@RequestBody Vacuna entity) throws Exception {
-        System.out.println(entity);
-        VacunaDAO vacunaDAO = new VacunaDAO<>();
-        vacunaDAO.create(entity);
+        getInstance().create(entity);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public void delete(@RequestParam("Id") Long id) throws Exception {
-        VacunaDAO vacunaDAO = new VacunaDAO();
-        vacunaDAO.removeID(id);
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void delete(@PathVariable Long id) throws Exception {
+        getInstance().removeID(id);
         System.out.println("Eliminar "+id);
     }
-    
+
+    @RequestMapping(method = RequestMethod.PUT)
+    @ResponseBody
+    public void update(@RequestBody Vacuna entity) throws Exception{
+        getInstance().edit(entity);
+    }
 }
