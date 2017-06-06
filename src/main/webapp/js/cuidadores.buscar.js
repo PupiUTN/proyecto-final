@@ -1,17 +1,9 @@
 window.onload = function () {
-    getCuidadores();
     $('select').material_select();
 };
-
-function getCuidadores() {
-    console.log("getCuidadores()");
-    var url = hostURL + "api/cuidadores";
-    $.getJSON(url, function (datos) {
-        generarCuidadores(datos);
-    });
-}
-
+var listaCuidadoresGlobal;
 function generarCuidadores(jsonArray) {
+    listaCuidadoresGlobal = jsonArray;
     for (var i = 0; i < jsonArray.length; i++) {
         var url;
         //console.log
@@ -39,7 +31,7 @@ function generarCuidadores(jsonArray) {
                 <p> <i class="material-icons black-text">email</i> ' + jsonArray[i].email + '</p> \n\
                 </div> \n\
                 <div class="col s12 m6"> \n\
-                <p> <i class="material-icons black-text">location_on</i>' + jsonArray[i].direccion.nombre + ', ' + jsonArray[i].direccion.localidad.nombre + ', ' + jsonArray[i].direccion.localidad.provincia.nombre + '</p> \n\
+                <p> <i class="material-icons black-text">location_on</i>' + jsonArray[i].direccion.nombre + ', '+jsonArray[i].direccion.localidad.nombre+', '+jsonArray[i].direccion.localidad.provincia.nombre+'</p> \n\
                 <p> <i class="material-icons black-text">info</i>Max perros: ' + jsonArray[i].cantidadMaxDePerros + ' </p> \n\
                 </div> \n\
                 </div> \n\
@@ -59,6 +51,7 @@ $('.reserva').on('click', function () {
     var id = $('.idCuidador').eq(($('.reserva').index(this))).val();
     console.log(id);
 });
+
 
 
 var btnEliminar;
@@ -92,36 +85,6 @@ function eliminarAJAX() {
     });
 }
 
-function getCuidadorDesdeForm() {
-    var provincia = new Object();
-    provincia.id = $('#busquedaProv').val();
-    provincia.nombre = $('#busquedaProv :selected').text();
-
-    var dir = new Object();
-    dir.nombre = $('#direccion').val();
-    var localidad = new Object();
-    localidad.nombre = $('#localidad').val();
-    localidad.id = $('#idLocalidad').val();
-    localidad.provincia  = provincia;
-    dir.localidad = localidad;
-    var fotosList = [];
-    var i = 0;
-    $(".imagenCuidador").each(function () {
-        var imagen = new Object();
-        imagen.url = $(this).attr('src');
-        fotosList[i] = imagen;
-        i++;
-    });
-    var cuidador = new Object();
-    cuidador.nombre = $('#nombre').val();
-    cuidador.email = $('#email').val();
-    cuidador.direccion = dir;
-    cuidador.telefono = $('#telefono').val();
-    cuidador.cantidadMaxDePerros = $('#maxPerros').val();
-    cuidador.listaImagenes = fotosList;
-    return cuidador;
-}
-
 
 $(document).ready(function () {
 
@@ -151,10 +114,12 @@ $('.modal').modal({
     endingTop: '10%' // Ending top style attribute
 
 });
+
 $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 15 // Creates a dropdown of 15 years to control year
 });
+
 var imagenes = [];
 /* global e */
 
@@ -176,6 +141,7 @@ $('#nuevaReserva').submit(function () {
         postReserva();
     }
 });
+
 function validarEmail(campo) {
     var emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
     //Se muestra un texto a modo de ejemplo, luego va a ser un icono
@@ -193,41 +159,6 @@ function validarEmail(campo) {
         return true;
     }
 }
-
-function postCuidador() {
-    if (validarEmail($('#email'))) {
-        var cuidador = getCuidadorDesdeForm();
-        console.log(cuidador);
-        console.log(JSON.stringify(cuidador));
-        $.ajax({
-            type: "POST",
-            url: hostURL + 'api/cuidadores',
-            data: JSON.stringify(cuidador),
-            contentType: "application/json",
-            success: function () {
-                console.log("exito crear cuidador");
-                $('#nuevoCuidador').hide();
-                $.toast({
-                    heading: 'Success',
-                    text: 'Exito al crear nuevo cuidador. Refrescar la pagina para verlo',
-                    showHideTransition: 'slide',
-                    icon: 'success'
-                });
-                location.reload();
-            },
-            error: function () {
-                console.log("error crear cuidador");
-                $.toast({
-                    heading: 'Error',
-                    text: 'Erro al crear nuevo cuidador.',
-                    showHideTransition: 'fade',
-                    icon: 'error'
-                });
-            }
-        });
-    }
-}
-
 
 function postReserva() {
 
@@ -260,6 +191,7 @@ function postReserva() {
         }
     });
 }
+
 function getReservaDesdeForm() {
     var perro = new Object();
     perro.nombre = $('#perro').val();
@@ -274,47 +206,18 @@ function getReservaDesdeForm() {
     return reserva;
 }
 
-
-function mostrarImagen(pathImagen) {
-    var pos = pathImagen.lastIndexOf("/");
-    var nombreImagen;
-    if (pos > 0) {
-        nombreImagen = pathImagen.substr(pos + 1);
-    } else {
-        nombreImagen = pathImagen;
-    }
-    if ((/\.(jpg|png|gif)$/i).test(nombreImagen)) {
-        if (imagenes.length <= 3) {
-            $('#contenedorImagen').append('<img src="' + pathImagen + '" height="100" width="100"  class="imagenCuidador" alt="Imagen previsualizada">');
-            imagenes.push(pathImagen);
-        } else {
-            console.log("error agregar imagen");
-            $.toast({
-                heading: 'Error',
-                text: 'Ya hay 4 imágenes agregadas.',
-                showHideTransition: 'fade',
-                icon: 'error'
-            });
-        }
-    } else {
-        console.log("error agregar imagen");
-        $.toast({
-            heading: 'Error',
-            text: 'El archivo a agregar no es una imagen.',
-            showHideTransition: 'fade',
-            icon: 'error'
-        });
-    }
-//$('#muestraImagen').attr('src', window.URL.createObjectURL($('#imagen').get(0).files.item(0)));
-}
-
-
 window.onload = function () {
-    getCuidadores();
+    obtenerPerros(hostURL);
     obtenerProvincias(hostURL);
     $('select').material_select();
 };
 
+function obtenerPerros(hostURL) {
+    var url = hostURL + "api/perros";
+    $.getJSON(url, function (datos) {
+        llenarSelect('#perro', datos);
+    });
+}
 
 function obtenerProvincias(hostURL) {
     var url = hostURL + "api/provincias";
@@ -330,20 +233,22 @@ function llenarSelect(idSelect, jsonArray) {
     }
 }
 
+
+
 function mostrarLocalidades() {
     var idProv = $('#busquedaProv').val();
-    $('#localidad').val("");
-    $('#localidadDiv').show();
-    $('#localidad').easyAutocomplete({
+    $('#busquedaLocal').val("");
+    $('#busquedaDiv').show();
+    $('#busquedaLocal').easyAutocomplete({
         url: hostURL + "api/provincias/" + idProv + "/localidades",
         placeholder: "Localidad",
         getValue: "nombre",
         minCharNumber: 3,
         list: {
-            onSelectItemEvent: function () {
-                var value = $("#localidad").getSelectedItemData().id;
-                $("#idLocalidad").val(value);
-            },
+            onSelectItemEvent: function() {
+			var value = $("#busquedaLocal").getSelectedItemData().id;
+			$("#idLocalidad").val(value);
+                    },
             sort: {
                 enabled: true
             },
@@ -354,70 +259,54 @@ function mostrarLocalidades() {
             showAnimation: {
                 type: "slide", //normal|slide|fade
                 time: 400,
-                callback: function () {
-                }
+                callback: function () {}
             },
 
             hideAnimation: {
                 type: "slide", //normal|slide|fade
                 time: 400,
-                callback: function () {
-                }
+                callback: function () {}
             }
         }
     });
 }
 
-$('#imageFile').on('change', function () {
-
-    var file = this.files[0];
-    console.log(file);
-    if (file.size > 1048576) {
-        $.toast({
-            heading: 'Error',
-            text: 'Superaste el tamano maximo de 1MB.',
-            showHideTransition: 'fade',
-            icon: 'error'
-        });
-
-        $('#imageFile').empty();
-        return;
-    }
-
-    var regexExtensionValidator = /(\.jpg|\.jpeg|\.png)$/i;
-    if (!regexExtensionValidator.exec(file.name.toLocaleLowerCase())) {
-        $.toast({
-            heading: 'Error',
-            text: 'Extension no soportada.',
-            showHideTransition: 'fade',
-            icon: 'error'
-        });
-
-        $('#imageFile').empty();
-    }
-
-
-});
-
-$('#imageButton').on('click', function () {
-    $.ajax({
-        // Your server script to process the upload
-        url: '/api/file/',
-        type: 'POST',
-
-        // Form data
-        data: new FormData($('form')[1]),
-        // Tell jQuery not to process data or worry about content-type
-        // You *must* include these options!
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-            console.log(data);
-            mostrarImagen(data);
-
-
-        }
+function buscarCuidadores() {
+    var idLocalidad=$('#idLocalidad').val();
+    $('#listaCuidadores').empty();
+    var url = hostURL + "api/cuidadores/localidades/"+idLocalidad;
+    $.getJSON(url, function (datos) {
+        generarCuidadores(datos);
     });
-});
+    $('#buscadores').show();
+}
 
+$('#ordenarPorCantidad').on('click', function () {
+    var listaCuidadoresOrdenada;
+    $('#listaCuidadores').empty();
+    var ordenarPorCantidadObject = $('#ordenarPorCantidad');
+
+    if (ordenarPorCantidadObject.data("sense") == 'asc'){
+        console.log("Ordeno asc");
+        listaCuidadoresOrdenada = listaCuidadoresGlobal.sort(function(a, b) {
+            return parseFloat(a.cantidadMaxDePerros) - parseFloat(b.cantidadMaxDePerros);
+        });
+        ordenarPorCantidadObject.data("sense", "desc");
+        ordenarPorCantidadObject.children('i').text('thumb_up');
+
+
+    }else {
+        console.log("Ordeno desc");
+        listaCuidadoresOrdenada = listaCuidadoresGlobal.sort(function(a, b) {
+            return parseFloat(b.cantidadMaxDePerros) - parseFloat(a.cantidadMaxDePerros);
+        });
+        ordenarPorCantidadObject.data("sense", "asc");
+        ordenarPorCantidadObject.children('i').text('thumb_down');
+
+
+
+    }
+
+    generarCuidadores(listaCuidadoresOrdenada);
+
+});
