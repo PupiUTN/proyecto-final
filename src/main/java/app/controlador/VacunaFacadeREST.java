@@ -29,7 +29,7 @@ public class VacunaFacadeREST {
                 instance = new VacunaDAO<>();
                 System.out.println("Instancia creada con exito");
             } catch (Exception e) {
-                System.out.println("Error al crear la instancia: "e.toString());
+                System.out.println("Error al crear la instancia: " + e.toString());
             }
         }
         return instance;
@@ -57,6 +57,4 @@ public class VacunaFacadeREST {
     public void update(@RequestBody Vacuna entity) throws Exception {
         getInstance().edit(entity);
     }
-}
-
 }
