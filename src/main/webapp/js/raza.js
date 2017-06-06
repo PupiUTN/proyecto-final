@@ -15,6 +15,7 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
 
 
         $scope.mostrarNuevaRaza = function () {
+            $('#consultarRaza').toggle();
             $('#nuevaRaza').toggle();
         };
 
@@ -23,6 +24,7 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
 
         $('#consultarRaza').toggle();
         $scope.edicion = true;
+
     };
 
 
@@ -308,5 +310,6 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
             $scope.cancelarConsulta  = function (){
                 $('#consultarRaza').toggle();
                 $scope.raza = {};
+
             };
 }]);
