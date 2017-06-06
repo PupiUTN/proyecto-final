@@ -8,7 +8,9 @@ package app.controlador;
 import app.modelo.entidades.Vacuna;
 import org.springframework.web.bind.annotation.*;
 import app.persistencia.VacunaDAO;
+
 import java.util.List;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,10 +48,11 @@ public class VacunaFacadeREST {
         getInstance().create(entity);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public void delete(@RequestParam("Id") Long id) throws Exception {
-        VacunaDAO vacunaDAO = new VacunaDAO();
-        vacunaDAO.removeID(id);
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void delete(@PathVariable Long id) throws Exception {
+        getInstance().removeID(id);
+        System.out.println("Eliminar " + id);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
