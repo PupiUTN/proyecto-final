@@ -3,7 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app.controlador;
+package controlador;
+
+import modelo.Vacuna;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import persistencia.VacunaDAO;
+import java.util.List;
+
+
+@RestController
+@RequestMapping(value = "/api/vacunas")
+public class VacunaFacadeREST {
+
+    public VacunaFacadeREST() {
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public List<Vacuna> findAll() throws Exception {
+        return new VacunaDAO().findAll();
+    }
+
+    
+}
 
 import app.modelo.entidades.Vacuna;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,3 +51,6 @@ public class VacunaFacadeREST {
 
     
 }
+
+package controlador;
+package app.controlador;
