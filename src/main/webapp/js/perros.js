@@ -135,7 +135,7 @@ function obtenerRazas(hostURL) {
 }
 
 function obtenerTamanios(hostURL) {
-    var url = hostURL + "api/tamanios";
+    var url = hostURL + "api/tamaños";
     $.getJSON(url, function (datos) {
         llenarSelect('#tamanio', datos);
     });

@@ -7,6 +7,7 @@ function getCuidadores() {
     console.log("getCuidadores()");
     var url = hostURL + "api/cuidadores";
     $.getJSON(url, function (datos) {
+        console.log(datos);
         generarCuidadores(datos);
     });
 }
