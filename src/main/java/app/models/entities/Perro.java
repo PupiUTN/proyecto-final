@@ -17,17 +17,17 @@ public class Perro implements Serializable {
     private Long id;
     private String nombre;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Raza raza;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Tamaño tamaño;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Dueño dueño;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Vacuna> vacunacionList;
     private String fotoRuta;
     private String comentario;
-    //para jpa, necesito constructor vacio y todos los stegest y getters de cada atributo
+    //para jpa, necesito constructor vacio y todos los setters y getters de cada atributo
 
     public Perro() {
     }

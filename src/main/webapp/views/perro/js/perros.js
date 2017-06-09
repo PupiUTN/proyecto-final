@@ -18,7 +18,7 @@ function generarPerros(jsonArray) {
     <div class="row"> \n\
         <div class="col s12 m6"> \n\
             <p> Raza: ' + jsonArray[i].raza.nombre + ' <br>\n\
-            Tamanio: ' + jsonArray[i].tamanio.nombre + '<br>\n\
+            Tamaño: ' + jsonArray[i].tamaño.nombre + '<br>\n\
         Vacunación: ' + jsonArray[i].vacunacionList[0].nombre;
         if (jsonArray[i].vacunacionList.length > 1) {
             for (var j = 1; j < jsonArray[i].vacunacionList.length; j++) {
@@ -64,7 +64,7 @@ function postPerro() {
     var perro = getPerroDesdeForm();
     $.ajax({
         type: "POST",
-        url: hostURL + 'api/perro',
+        url: hostURL + 'api/perros',
         data: JSON.stringify(perro),
         contentType: "application/json",
         success: function () {
@@ -95,8 +95,8 @@ function getPerroDesdeForm() {
     var raza = new Object();
     raza.nombre = $('#raza').val();
 
-    var tamanio = new Object();
-    tamanio.nombre = $('#tamanio').val();
+    var tamaño = new Object();
+    tamaño.nombre = $('#tamaño').val();
 
     var vacunaList = [];
     for (var i = 0; i < $('#vacuna').val().length; i++) {
@@ -109,7 +109,7 @@ function getPerroDesdeForm() {
     perro.nombre = $('#nombre').val();
     perro.comentario = $('#comentario').val();
     perro.raza = raza;
-    perro.tamanio = tamanio;
+    perro.tamaño = tamaño;
     perro.vacunacionList = vacunaList;
     return perro;
 
@@ -121,7 +121,7 @@ window.onload = function () {
     $('#nuevoPerro').hide();
     getEventos(hostURL);
     obtenerRazas(hostURL);
-    obtenerTamanios(hostURL);
+    obtenerTamaños(hostURL);
     obtenerVacunas(hostURL);
     $('select').material_select();
 };
@@ -134,10 +134,10 @@ function obtenerRazas(hostURL) {
     });
 }
 
-function obtenerTamanios(hostURL) {
+function obtenerTamaños(hostURL) {
     var url = hostURL + "api/tamaños";
     $.getJSON(url, function (datos) {
-        llenarSelect('#tamanio', datos);
+        llenarSelect('#tamaño', datos);
     });
 }
 
