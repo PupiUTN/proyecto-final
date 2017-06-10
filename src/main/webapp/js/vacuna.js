@@ -1,6 +1,6 @@
 function getVacunas() {
     console.log($('#listaVacunas'));
-    var url = hostURL + "api/vacunas";
+    var url = "/api/vacunas";
     $.getJSON(url, function (datos) {
         generarVacunas(datos);
     });
@@ -51,7 +51,7 @@ function postVacuna() {
         console.log(JSON.stringify(vacuna));
         $.ajax({
             type: "POST",
-            url: hostURL + 'api/vacunas',
+            url: '/api/vacunas',
             data: JSON.stringify(vacuna),
             contentType: "application/json",
             success: function () {
@@ -93,7 +93,7 @@ function putVacuna() {
         console.log(JSON.stringify(vacuna));
         $.ajax({
             type: "PUT",
-            url: hostURL + 'api/vacunas',
+            url: '/api/vacunas',
             data: JSON.stringify(vacuna),
             contentType: "application/json",
             success: function () {
@@ -135,7 +135,7 @@ function putVacuna() {
         console.log(JSON.stringify(vacuna));
         $.ajax({
             type: "PUT",
-            url: hostURL + 'api/vacunas',
+            url: '/api/vacunas',
             data: JSON.stringify(vacuna),
             contentType: "application/json",
             success: function () {
@@ -201,7 +201,7 @@ function editarVacuna(idEditar) {
     $('#guardarVacuna').hide();
 }
 function eliminarAJAX() {
-    var url = hostURL + "api/vacunas"
+    var url = "/api/vacunas"
     $.ajax({
         url: url + '/' + idElim,
         type: 'DELETE',

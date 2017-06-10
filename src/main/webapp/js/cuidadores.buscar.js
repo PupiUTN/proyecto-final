@@ -8,7 +8,7 @@ function generarCuidadores(jsonArray) {
         var url;
         //console.log
         if (jsonArray[i].listaImagenes.length === 0) {
-            url = hostURL + '/img/no-avatar.png';
+            url = '/img/no-avatar.png';
         } else {
             url = jsonArray[i].listaImagenes[0].url;
         }
@@ -62,15 +62,11 @@ function eliminarCuidador(idEliminar) {
     console.log(boton);
     btnEliminar = $(boton);
     console.log(idElim);
-    //idEliminar = $(this).next().val();
-    //console.log(idEliminar);
-    //('#modal1').modal('open');
-
 
 }
 
 function eliminarAJAX() {
-    var url = hostURL + "api/cuidadores/" + idElim;
+    var url = "/api/cuidadores/" + idElim;
     $.ajax({
         url: url,
         type: 'DELETE',
@@ -165,7 +161,7 @@ function postReserva() {
     var reserva = getReservaDesdeForm();
     $.ajax({
         type: "POST",
-        url: hostURL + 'api/reservas',
+        url: '/api/reservas',
         data: JSON.stringify(reserva),
         contentType: "application/json",
         success: function () {
@@ -207,20 +203,20 @@ function getReservaDesdeForm() {
 }
 
 window.onload = function () {
-    obtenerPerros(hostURL);
-    obtenerProvincias(hostURL);
+    obtenerPerros();
+    obtenerProvincias();
     $('select').material_select();
 };
 
-function obtenerPerros(hostURL) {
-    var url = hostURL + "api/perros";
+function obtenerPerros() {
+    var url = "api/perros";
     $.getJSON(url, function (datos) {
         llenarSelect('#perro', datos);
     });
 }
 
-function obtenerProvincias(hostURL) {
-    var url = hostURL + "api/provincias";
+function obtenerProvincias() {
+    var url = "api/provincias";
     $.getJSON(url, function (datos) {
         llenarSelect('#busquedaProv', datos);
     });
@@ -240,7 +236,7 @@ function mostrarLocalidades() {
     $('#busquedaLocal').val("");
     $('#busquedaDiv').show();
     $('#busquedaLocal').easyAutocomplete({
-        url: hostURL + "api/provincias/" + idProv + "/localidades",
+        url: "/api/provincias/" + idProv + "/localidades",
         placeholder: "Localidad",
         getValue: "nombre",
         minCharNumber: 3,
@@ -274,7 +270,7 @@ function mostrarLocalidades() {
 function buscarCuidadores() {
     var idLocalidad=$('#idLocalidad').val();
     $('#listaCuidadores').empty();
-    var url = hostURL + "api/cuidadores/localidades/"+idLocalidad;
+    var url = "/api/cuidadores/localidades/"+idLocalidad;
     $.getJSON(url, function (datos) {
         generarCuidadores(datos);
     });
