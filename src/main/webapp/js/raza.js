@@ -7,11 +7,10 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
         $scope.raza =  raza|| {};
          $scope.myData = null;
             $scope.edicion = false;
-       //  var HostUrl="http://" + window.location.host + "/"; ;
     $scope.myWelcome = {};
            var posicion =0;
 
-    var url = hostURL + 'api/razas';
+    var url = '/api/razas';
 
 
         $scope.mostrarNuevaRaza = function () {
@@ -146,7 +145,7 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
 
                 $.ajax({
                     type: "PUT",
-                    url: hostURL + 'api/razas',
+                    url: '/api/razas',
                     data: JSON.stringify($scope.raza),
                     contentType: "application/json",
                     success: function () {
@@ -227,7 +226,7 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
                     };
 
                 $scope.getxId = function (razaid)
-                {  var url = hostURL + "api/razas";
+                {  var url = "/api/razas";
 
                     $http({
                         method : "GET",
@@ -270,7 +269,7 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
 
                 $scope.delete = function (id)
                 {
-                    var url = hostURL + "api/razas";
+                    var url = "/api/razas";
                     $.ajax({
                         url: url + '?' + $.param({"id": id}),
                         type: 'DELETE',
