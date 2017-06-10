@@ -5,6 +5,8 @@
  */
 package app.persistencia;
 
+import app.persistencia.Conection.BaseDatosSql;
+import app.persistencia.Conection.MySqlGabi;
 import com.mysql.jdbc.Connection;
 import org.slf4j.LoggerFactory;
 
@@ -87,6 +89,7 @@ public class BaseDatos {
     private void initEntityManagerFactory() throws Exception {
         decidirBaseDatos();
         if (emf == null) {
+/*
             switch (selector) {
                 case LOCAljose:
                     localMySQlJose();
@@ -108,7 +111,16 @@ public class BaseDatos {
                 case HEROKU:
                     heroku();
                     break;
-            }
+            }*/
+
+
+            BaseDatosSql baseBd = new BaseDatosSql();
+
+            //cambio de estado a gabi: la app se conectará con mysql de gabi
+            baseBd.setTypeWeather(new MySqlGabi());
+         emf =  baseBd.request(emf);
+
+
         }
     }
 
