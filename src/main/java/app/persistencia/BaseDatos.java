@@ -5,8 +5,7 @@
  */
 package app.persistencia;
 
-import app.persistencia.Conection.BaseDatosSql;
-import app.persistencia.Conection.MySqlGabi;
+import app.persistencia.Conection.*;
 import com.mysql.jdbc.Connection;
 import org.slf4j.LoggerFactory;
 
@@ -87,40 +86,62 @@ public class BaseDatos {
     }
 
     private void initEntityManagerFactory() throws Exception {
-        decidirBaseDatos();
-        if (emf == null) {
-/*
-            switch (selector) {
-                case LOCAljose:
-                    localMySQlJose();
-                    break;
-                case LOCAljorge:
-                    localMySQljorge();
-                    break;
-                case LOCAlpaolo:
-                    localMySQlpaolo();
-                    break;
-                case LOCALGabi:
-                    localMySQlGabi();
-                    break;
-                case OpenShift:
-                    openShift();
-                    break;
-                case LOCAlfede:
-                    localMySQlFede();
-                case HEROKU:
-                    heroku();
-                    break;
-            }*/
+       selector = decidirBaseDatos();
+        BaseDatosSql baseBd = new BaseDatosSql();
+        if (emf == null && selector > 0) {
+             if (selector== 1)
+             {
+                 //cambio de estado a jose : la app se conectará con mysql de jose
+                 baseBd.setTypeWeather(new MySqlJose());
+                 emf =  baseBd.request(emf);
+             }
+             else{
+                 if(selector == 2)
+                 {
+                     //cambio de estado a jorge: la app se conectará con mysql de jorge
+                     baseBd.setTypeWeather(new MySqlJorge());
+                     emf =  baseBd.request(emf);
+                 }
+                 else {
 
+                     if (selector == 3)
+                     {
+                         //cambio de estado a paolo: la app se conectará con mysql de paolo
+                         baseBd.setTypeWeather(new MySqlPaolo());
+                         emf =  baseBd.request(emf);
+                     }
+                     else{
+                         if (selector == 4)
+                         {
+                             //cambio de estado a openShift: la app se conectará con mysql de openshift
+                             baseBd.setTypeWeather(new MySqlOpenShift());
+                             emf =  baseBd.request(emf);
+                         }
+                         else{
+                             if (selector == 5)
+                             {  //cambio de estado a Heroku: la app se conectará con Heroku
+                               //  baseBd.setTypeWeather(new MySqlHeroku());
+                                 //emf =  baseBd.request(emf);
+                                 heroku();
+                             }
+                             else{
+                                 if (selector == 6)
+                                 {
+                                     //cambio de estado a fede: la app se conectará con mysql de fede
+                                     baseBd.setTypeWeather(new MySqlFede());
+                                     emf =  baseBd.request(emf);
+                                 }
+                                 else{
 
-            BaseDatosSql baseBd = new BaseDatosSql();
-
-            //cambio de estado a gabi: la app se conectará con mysql de gabi
-            baseBd.setTypeWeather(new MySqlGabi());
-         emf =  baseBd.request(emf);
-
-
+                                     //cambio de estado a gabi: la app se conectará con mysql de gabi
+                                     baseBd.setTypeWeather(new MySqlGabi());
+                                     emf =  baseBd.request(emf);
+                                 }
+                             }
+                         }
+                     }
+                 }
+             }
         }
     }
 
@@ -128,17 +149,17 @@ public class BaseDatos {
         return em;
     }
 
-    public void decidirBaseDatos() throws Exception {
+    public int decidirBaseDatos() throws Exception {
         Connection connect;
         //se ejecuta una sola vez en toda la vida de la aplicaccion
-        if (selector == -1) {
             System.out.println("============  decidirBaseDatos()");
             try {
                 System.out.println("============  pruebo jose");
                 logger.info(conexionJose + userJose + passwordJose);
                 Class.forName("com.mysql.jdbc.Driver");
                 connect = (Connection) DriverManager.getConnection(conexionJose, userJose, passwordJose);
-                selector = LOCAljose;
+               return LOCAljose;
+
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
                 try {
@@ -146,21 +167,21 @@ public class BaseDatos {
                     logger.info(conexionJorge +userJorge +passwordJorge);
 
                     connect = (Connection) DriverManager.getConnection(conexionJorge + "?user=" + userJorge + "&password=" + passwordJorge);
-                    selector = LOCAljorge;
+                    return LOCAljorge;
                 } catch (SQLException ex2) {
                     Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex2);
                     try {
                         System.out.println("============  pruebo paolo");
                         logger.info(conexionPaolo +userPaolo +passwordPaolo);
                         connect = (Connection) DriverManager.getConnection(conexionPaolo + "?user=" + userPaolo + "&password=" + passwordPaolo);
-                        selector = LOCAlpaolo;
+                        return LOCAlpaolo;
                     } catch (SQLException ex3) {
                         Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex3);
 
                         try {
                             System.out.println("============  pruebo Gabi");
                             connect = (Connection) DriverManager.getConnection( conexionGabi + "?user=" + userGabi + "&password=" + passwordGabi);
-                            selector = LOCALGabi;
+                            return LOCALGabi;
                         } catch (SQLException ex4) {
                             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex2);
 
@@ -168,7 +189,7 @@ public class BaseDatos {
                             System.out.println("============  pruebo open shift");
                             logger.info(conexionOpenShift +userOpenShift + passwordOpenShift);
                             connect = (Connection) DriverManager.getConnection(conexionOpenShift + "?user=" + userOpenShift + "&password=" + passwordOpenShift);
-                            selector = OpenShift;
+                                return OpenShift;
 
                         } catch (Exception ex5) {
                             Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex4);
@@ -190,10 +211,11 @@ public class BaseDatos {
                                 logger.info("conexion Heroku:" + conexionHeroku);
                                 Class.forName("org.postgresql.Driver");
                                 DriverManager.getConnection(conexionHeroku, userHeroku, passwordHeroku);
-                                selector = HEROKU;
+                                return HEROKU;
 
                             } catch (Exception ex6) {
                                 throw ex5;
+
                             }
                         }
 
@@ -202,100 +224,28 @@ public class BaseDatos {
             }
         }
 
-    }
+
     }
 
 
     private void heroku() throws URISyntaxException {
         URI dbUri = new URI(System.getenv("DATABASE_URL"));
-        String hostHeroku = dbUri.getHost();
-        int portHeroku = dbUri.getPort();
-        String userHeroku = dbUri.getUserInfo().split(":")[0];
-        String passwordHeroku = dbUri.getUserInfo().split(":")[1];
-        String dbNameHeroku = dbUri.getPath();
+       String hostHeroku = dbUri.getHost();
+      int portHeroku = dbUri.getPort();
+     String userHeroku = dbUri.getUserInfo().split(":")[0];
+    String passwordHeroku = dbUri.getUserInfo().split(":")[1];
+     String dbNameHeroku = dbUri.getPath();
         String conexionHeroku = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
 
-        System.out.println("============================= CONFIGURO HEROKU");
+       System.out.println("============================= CONFIGURO HEROKU");
         Map<String, String> persistenceMap = new HashMap<>();
-        persistenceMap.put("javax.persistence.jdbc.url", conexionHeroku);
+      persistenceMap.put("javax.persistence.jdbc.url", conexionHeroku);
         persistenceMap.put("javax.persistence.jdbc.user", userHeroku);
-        persistenceMap.put("javax.persistence.jdbc.password", passwordHeroku);
+       persistenceMap.put("javax.persistence.jdbc.password", passwordHeroku);
         persistenceMap.put("javax.persistence.jdbc.driver", "org.postgresql.Driver");
         persistenceMap.put("javax.persistence.schema-generation.database.action", "create-or-extend-tables");
-        emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
+       emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
     }
 
-    private void openShift() {
-        System.out.println("============================= CONFIGURO OPEN SHIFT");
-        Map<String, String> persistenceMap = new HashMap<>();
-        persistenceMap.put("javax.persistence.jdbc.url", "jdbc:mysql://" + hostOpenShift + ":" + portOpenShift + "/pupi");
-        persistenceMap.put("javax.persistence.jdbc.user", userOpenShift);
-        persistenceMap.put("javax.persistence.jdbc.password", passwordOpenShift);
-        persistenceMap.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
-        persistenceMap.put("javax.persistence.schema-generation.database.action", "create-or-extend-tables");
-
-        emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
-    }
-
-    private void localMySQlJose() {
-        System.out.println("============================= CONFIGURO local MYSQL jose");
-        Map<String, String> persistenceMap = new HashMap<>();
-        persistenceMap.put("javax.persistence.jdbc.url", conexionJose);
-        persistenceMap.put("javax.persistence.jdbc.user", userJose);
-        persistenceMap.put("javax.persistence.jdbc.password", passwordJose);
-        persistenceMap.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
-        persistenceMap.put("javax.persistence.schema-generation.database.action", "create-or-extend-tables");
-        emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
-    }
-
-    private void localMySQljorge() {
-        System.out.println("============================= CONFIGURO local MYSQL jorge");
-        Map<String, String> persistenceMap = new HashMap<>();
-        persistenceMap.put("javax.persistence.jdbc.url", conexionJorge);
-        persistenceMap.put("javax.persistence.jdbc.user", userJorge);
-        persistenceMap.put("javax.persistence.jdbc.password", passwordJorge);
-        persistenceMap.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
-        persistenceMap.put("javax.persistence.schema-generation.database.action", "create-or-extend-tables");
-        emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
-
-    }
-
-    private void localMySQlpaolo() {
-        System.out.println("============================= CONFIGURO local MYSQL jose");
-        Map<String, String> persistenceMap = new HashMap<>();
-        persistenceMap.put("javax.persistence.jdbc.url", conexionPaolo);
-        persistenceMap.put("javax.persistence.jdbc.user", userPaolo);
-        persistenceMap.put("javax.persistence.jdbc.password", passwordPaolo);
-        persistenceMap.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
-        persistenceMap.put("javax.persistence.schema-generation.database.action", "create-or-extend-tables");
-        emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
-
-    }
-
-
-
-    private void localMySQlGabi() {
-        System.out.println("============================= CONFIGURO local MYSQL gabi");
-        Map<String, String> persistenceMap = new HashMap<>();
-        persistenceMap.put("javax.persistence.jdbc.url", conexionGabi);
-        persistenceMap.put("javax.persistence.jdbc.user", userGabi);
-        persistenceMap.put("javax.persistence.jdbc.password", passwordGabi);
-         persistenceMap.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
-        persistenceMap.put("javax.persistence.schema-generation.database.action", "create-or-extend-tables");
-        emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
-    }
-
-    private void localMySQlFede() {
-        System.out.println("============================= CONFIGURO local MYSQL fede");
-        Map<String, String> persistenceMap = new HashMap<>();
-        persistenceMap.put("javax.persistence.jdbc.url", conexionFede);
-        persistenceMap.put("javax.persistence.jdbc.user", userFede);
-        persistenceMap.put("javax.persistence.jdbc.password", passwordFede);
-
-        persistenceMap.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
-        persistenceMap.put("javax.persistence.schema-generation.database.action", "create-or-extend-tables");
-        emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
-
-    }
 
 }
