@@ -4,7 +4,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import app.persistence.CuidadorDAO;
+import app.persistence.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,26 @@ public class HelloControllerTest {
 
     @MockBean //no entiendo porque tengo que mockear el dao TODO
     private CuidadorDAO mockCuidadorDAO;
+    @MockBean
+    private CalificacionDAO mockCalificacionDAO;
+    @MockBean
+    private DireccionDAO mockDireccionDAO;
+    @MockBean
+    private DueñoDAO mockDueñoDAO;
+    @MockBean
+    private LocalidadDAO mockLocalidadDAO;
+    @MockBean
+    private PerroDAO mockPerroDAO;
+    @MockBean
+    private ProvinciaDAO mockProvinciaDAO;
+    @MockBean
+    private RazaDAO mockRazaDAO;
+    @MockBean
+    private ReservaDAO mockReservaDAO;
+    @MockBean
+    private TamañoDAO mockTamañoDAO;
+    @MockBean
+    private VacunaDAO mockVacunaDAO;
 
     @Test
     public void getHello() throws Exception {

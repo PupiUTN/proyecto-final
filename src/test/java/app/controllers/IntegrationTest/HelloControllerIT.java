@@ -5,10 +5,12 @@ import static org.junit.Assert.assertThat;
 
 import java.net.URL;
 
-import app.persistence.CuidadorDAO;
+import app.models.entities.Reserva;
+import app.persistence.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,6 +33,26 @@ public class HelloControllerIT {
 
     @MockBean //no entiendo porque tengo que mockear el dao TODO
     private CuidadorDAO mockCuidadorDAO;
+    @MockBean
+    private CalificacionDAO mockCalificacionDAO;
+    @MockBean
+    private DireccionDAO mockDireccionDAO;
+    @MockBean
+    private DueñoDAO mockDueñoDAO;
+    @MockBean
+    private LocalidadDAO mockLocalidadDAO;
+    @MockBean
+    private PerroDAO mockPerroDAO;
+    @MockBean
+    private ProvinciaDAO mockProvinciaDAO;
+    @MockBean
+    private RazaDAO mockRazaDAO;
+    @MockBean
+    private ReservaDAO mockReservaDAO;
+    @MockBean
+    private TamañoDAO mockTamañoDAO;
+    @MockBean
+    private VacunaDAO mockVacunaDAO;
 
     @Before
     public void setUp() throws Exception {

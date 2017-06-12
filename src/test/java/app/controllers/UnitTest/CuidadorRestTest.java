@@ -2,7 +2,7 @@ package app.controllers.UnitTest;
 
 import app.models.entities.Cuidador;
 import app.models.entities.Imagen;
-import app.persistence.CuidadorDAO;
+import app.persistence.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -43,8 +43,28 @@ public class CuidadorRestTest {
     private MockMvc mockMvc;
 
 
-    @MockBean
+    @MockBean //no entiendo porque tengo que mockear el dao TODO
     private CuidadorDAO mockCuidadorDAO;
+    @MockBean
+    private CalificacionDAO mockCalificacionDAO;
+    @MockBean
+    private DireccionDAO mockDireccionDAO;
+    @MockBean
+    private DueñoDAO mockDueñoDAO;
+    @MockBean
+    private LocalidadDAO mockLocalidadDAO;
+    @MockBean
+    private PerroDAO mockPerroDAO;
+    @MockBean
+    private ProvinciaDAO mockProvinciaDAO;
+    @MockBean
+    private RazaDAO mockRazaDAO;
+    @MockBean
+    private ReservaDAO mockReservaDAO;
+    @MockBean
+    private TamañoDAO mockTamañoDAO;
+    @MockBean
+    private VacunaDAO mockVacunaDAO;
 
     @Test
     public void cuidadorConTodosLosCamposRequeridos() throws Exception {

@@ -1,7 +1,7 @@
 package app.controllers.UnitTest;
 
 import app.models.support.FileJson;
-import app.persistence.CuidadorDAO;
+import app.persistence.*;
 import app.services.StorageService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,6 +42,26 @@ public class FileRestTest{
     private CuidadorDAO mockCuidadorDAO;
     @MockBean
     private StorageService storageService;
+    @MockBean
+    private CalificacionDAO mockCalificacionDAO;
+    @MockBean
+    private DireccionDAO mockDireccionDAO;
+    @MockBean
+    private DueñoDAO mockDueñoDAO;
+    @MockBean
+    private LocalidadDAO mockLocalidadDAO;
+    @MockBean
+    private PerroDAO mockPerroDAO;
+    @MockBean
+    private ProvinciaDAO mockProvinciaDAO;
+    @MockBean
+    private RazaDAO mockRazaDAO;
+    @MockBean
+    private ReservaDAO mockReservaDAO;
+    @MockBean
+    private TamañoDAO mockTamañoDAO;
+    @MockBean
+    private VacunaDAO mockVacunaDAO;
 
     @Test
     public void shouldListAllFiles() throws Exception {
