@@ -17,13 +17,13 @@ public class Perro implements Serializable {
     private Long id;
     private String nombre;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Raza raza;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Tamaño tamaño;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Dueño dueño;
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     private List<Vacuna> vacunacionList;
     private String fotoRuta;
     private String comentario;
