@@ -1,6 +1,6 @@
-function getEventos(hostURL) {
+function getEventos() {
     console.log("getPerros() - Index");
-    var url = hostURL + "api/perros";
+    var url = "/api/perros";
     $.getJSON(url, function (datos) {
         generarPerros(datos);
     });
@@ -64,7 +64,7 @@ function postPerro() {
     var perro = getPerroDesdeForm();
     $.ajax({
         type: "POST",
-        url: hostURL + 'api/perros',
+        url: '/api/perro',
         data: JSON.stringify(perro),
         contentType: "application/json",
         success: function () {
@@ -119,30 +119,30 @@ function getPerroDesdeForm() {
 
 window.onload = function () {
     $('#nuevoPerro').hide();
-    getEventos(hostURL);
-    obtenerRazas(hostURL);
-    obtenerTamaños(hostURL);
-    obtenerVacunas(hostURL);
+    obtenerRazas();
+    obtenerTamanios();
+    obtenerVacunas();
+    getEventos();
     $('select').material_select();
 };
 
 
-function obtenerRazas(hostURL) {
-    var url = hostURL + "api/razas";
+function obtenerRazas() {
+    var url = "/api/razas";
     $.getJSON(url, function (datos) {
         llenarSelect('#raza', datos);
     });
 }
 
 function obtenerTamaños(hostURL) {
-    var url = hostURL + "api/tamaños";
+    var url = "/api/tamanios";
     $.getJSON(url, function (datos) {
         llenarSelect('#tamaño', datos);
     });
 }
 
-function obtenerVacunas(hostURL) {
-    var url = hostURL + "api/vacunas";
+function obtenerVacunas() {
+    var url = "/api/vacunas";
     $.getJSON(url, function (datos) {
         llenarSelect('#vacuna', datos);
     });

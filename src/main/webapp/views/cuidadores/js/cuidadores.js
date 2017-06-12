@@ -5,7 +5,7 @@ window.onload = function () {
 
 function getCuidadores() {
     console.log("getCuidadores()");
-    var url = hostURL + "api/cuidadores";
+    var url = "/api/cuidadores";
     $.getJSON(url, function (datos) {
         console.log(datos);
         generarCuidadores(datos);
@@ -17,7 +17,7 @@ function generarCuidadores(jsonArray) {
         var url;
         //console.log
         if (jsonArray[i].listaImagenes.length === 0) {
-            url = hostURL + '/img/no-avatar.png';
+            url = '/img/no-avatar.png';
         } else {
             url = jsonArray[i].listaImagenes[0].url;
         }
@@ -78,7 +78,7 @@ function eliminarCuidador(idEliminar) {
 }
 
 function eliminarAJAX() {
-    var url = hostURL + "api/cuidadores/" + idElim;
+    var url = "/api/cuidadores/" + idElim;
     $.ajax({
         url: url,
         type: 'DELETE',
@@ -202,7 +202,7 @@ function postCuidador() {
         console.log(JSON.stringify(cuidador));
         $.ajax({
             type: "POST",
-            url: hostURL + 'api/cuidadores',
+            url: '/api/cuidadores',
             data: JSON.stringify(cuidador),
             contentType: "application/json",
             success: function () {
@@ -235,7 +235,7 @@ function postReserva() {
     var reserva = getReservaDesdeForm();
     $.ajax({
         type: "POST",
-        url: hostURL + 'api/reservas',
+        url: '/api/reservas',
         data: JSON.stringify(reserva),
         contentType: "application/json",
         success: function () {
@@ -312,13 +312,13 @@ function mostrarImagen(pathImagen) {
 
 window.onload = function () {
     getCuidadores();
-    obtenerProvincias(hostURL);
+    obtenerProvincias();
     $('select').material_select();
 };
 
 
-function obtenerProvincias(hostURL) {
-    var url = hostURL + "api/provincias";
+function obtenerProvincias() {
+    var url = "/api/provincias";
     $.getJSON(url, function (datos) {
         llenarSelect('#busquedaProv', datos);
     });
@@ -336,7 +336,7 @@ function mostrarLocalidades() {
     $('#localidad').val("");
     $('#localidadDiv').show();
     $('#localidad').easyAutocomplete({
-        url: hostURL + "api/provincias/" + idProv + "/localidades",
+        url: "/api/provincias/" + idProv + "/localidades",
         placeholder: "Localidad",
         getValue: "nombre",
         minCharNumber: 3,
