@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/tamanios")
+@RequestMapping(value = "api/tamanios")
 public class TamanioFacadeREST {
 
     public TamanioFacadeREST() {
