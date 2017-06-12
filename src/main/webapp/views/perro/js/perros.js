@@ -64,7 +64,7 @@ function postPerro() {
     var perro = getPerroDesdeForm();
     $.ajax({
         type: "POST",
-        url: '/api/perro',
+        url: '/api/perros',
         data: JSON.stringify(perro),
         contentType: "application/json",
         success: function () {
@@ -120,7 +120,7 @@ function getPerroDesdeForm() {
 window.onload = function () {
     $('#nuevoPerro').hide();
     obtenerRazas();
-    obtenerTamanios();
+    obtenerTamaños();
     obtenerVacunas();
     getEventos();
     $('select').material_select();
@@ -134,8 +134,8 @@ function obtenerRazas() {
     });
 }
 
-function obtenerTamaños(hostURL) {
-    var url = "/api/tamanios";
+function obtenerTamaños() {
+    var url = "/api/tamaños";
     $.getJSON(url, function (datos) {
         llenarSelect('#tamaño', datos);
     });
