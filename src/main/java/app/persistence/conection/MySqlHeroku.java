@@ -1,13 +1,13 @@
-package app.persistencia.Conection;
+package app.persistence.conection;
+
 
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.net.*;
+import java.net.URI;
+
 import java.util.HashMap;
 import java.util.Map;
-
-
 
 
 
@@ -19,16 +19,16 @@ public class MySqlHeroku extends ConeccionMySql {
 
 
     @Override
-    public EntityManagerFactory executeAction  (EntityManagerFactory emf) {
+    public EntityManagerFactory executeAction  (EntityManagerFactory emf)   {
          return  newHeroku(emf);
 
     }
 
-    public EntityManagerFactory newHeroku (EntityManagerFactory emf)
-    {  return null;
+    public EntityManagerFactory newHeroku  (EntityManagerFactory emf)
+    {
 
-
-    /*    URI dbUri = new URI(System.getenv("DATABASE_URL"));
+        try{
+       URI dbUri = new URI(System.getenv("DATABASE_URL"));
         String hostHeroku = dbUri.getHost();
         int portHeroku = dbUri.getPort();
         String userHeroku = dbUri.getUserInfo().split(":")[0];
@@ -43,7 +43,15 @@ public class MySqlHeroku extends ConeccionMySql {
         persistenceMap.put("javax.persistence.jdbc.password", passwordHeroku);
         persistenceMap.put("javax.persistence.jdbc.driver", "org.postgresql.Driver");
         persistenceMap.put("javax.persistence.schema-generation.database.action", "create-or-extend-tables");
-    return    emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);*/
+        emf = Persistence.createEntityManagerFactory("PersistenceUnit", persistenceMap);
 
+
+        }
+        catch(Exception ex)
+        {
+            System.out.println("error HEROKU");
+        }
+
+        return emf;
     }
 }
