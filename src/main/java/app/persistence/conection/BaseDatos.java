@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app.persistence;
+package app.persistence.conection;
 
-import app.persistence.conection.*;
 import com.mysql.jdbc.Connection;
 import org.slf4j.LoggerFactory;
 
@@ -140,7 +139,7 @@ public class BaseDatos {
         }
     }
 
-    protected EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
         return em;
     }
 
