@@ -80,63 +80,21 @@ public class BaseDatos {
     }
 
     private void initEntityManagerFactory() throws Exception {
-       selector = decidirBaseDatos();
+        ConeccionMySql cm [] = new ConeccionMySql[7];
+        cm[0] = new MySqlJose();
+        cm[1] = new MySqlJorge();
+        cm[2] = new MySqlPaolo();
+        cm[3] = new MySqlOpenShift();
+        cm[4] = new MySqlHeroku();
+        cm[5] = new MySqlFede();
+        cm[6] = new MySqlGabi();
+
+        selector = decidirBaseDatos();
         BaseDatosSql baseBd = new BaseDatosSql();
-        if (emf == null && selector > 0) {
-             if (selector== 1)
-             {
-                 //cambio de estado a jose : la app se conectará con mysql de jose
-                 baseBd.setTypeWeather(new MySqlJose());
-                 emf =  baseBd.request(emf);
-             }
-             else{
-                 if(selector == 2)
-                 {
-                     //cambio de estado a jorge: la app se conectará con mysql de jorge
-                     baseBd.setTypeWeather(new MySqlJorge());
-                     emf =  baseBd.request(emf);
-                 }
-                 else {
+        baseBd.setTypeWeather(cm[selector-1]);
 
-                     if (selector == 3)
-                     {
-                         //cambio de estado a paolo: la app se conectará con mysql de paolo
-                         baseBd.setTypeWeather(new MySqlPaolo());
-                         emf =  baseBd.request(emf);
-                     }
-                     else{
-                         if (selector == 4)
-                         {
-                             //cambio de estado a openShift: la app se conectará con mysql de openshift
-                             baseBd.setTypeWeather(new MySqlOpenShift());
-                             emf =  baseBd.request(emf);
-                         }
-                         else{
-                             if (selector == 5)
-                             {  //cambio de estado a Heroku: la app se conectará con Heroku
-                                baseBd.setTypeWeather(new MySqlHeroku());
-                                 emf =  baseBd.request(emf);
+        emf =  baseBd.request(emf);
 
-                             }
-                             else{
-                                 if (selector == 6)
-                                 {
-                                     //cambio de estado a fede: la app se conectará con mysql de fede
-                                     baseBd.setTypeWeather(new MySqlFede());
-                                     emf =  baseBd.request(emf);
-                                 }
-                                 else{
-
-                                     //cambio de estado a gabi: la app se conectará con mysql de gabi
-                                     baseBd.setTypeWeather(new MySqlGabi());
-                                     emf =  baseBd.request(emf);
-                                 }
-                             }
-                         }
-                     }
-                 }
-             }
-        }
     }
 
     public EntityManager getEntityManager() {
