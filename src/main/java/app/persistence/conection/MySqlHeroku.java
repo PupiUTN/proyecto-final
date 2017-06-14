@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by gabriellorenzatti on 10/6/17.
  */
-public class MySqlHeroku extends ConeccionMySql {
+public class MySqlHeroku extends ConectionMySql {
 
 
 

@@ -7,9 +7,9 @@ import javax.persistence.EntityManagerFactory;
  */
 public class BaseDatosSql {
 
-    private ConeccionMySql baseDatos;
+    private ConectionMySql baseDatos;
 
-    public void setTypeWeather(ConeccionMySql baseDatos) {
+    public void setTypeConection(ConectionMySql baseDatos) {
         this.baseDatos = baseDatos;
     }
 

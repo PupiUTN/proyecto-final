@@ -80,7 +80,7 @@ public class BaseDatos {
     }
 
     private void initEntityManagerFactory() throws Exception {
-        ConeccionMySql cm [] = new ConeccionMySql[7];
+        ConectionMySql cm [] = new ConectionMySql[7];
         cm[0] = new MySqlJose();
         cm[1] = new MySqlJorge();
         cm[2] = new MySqlPaolo();
@@ -91,7 +91,7 @@ public class BaseDatos {
 
         selector = decidirBaseDatos();
         BaseDatosSql baseBd = new BaseDatosSql();
-        baseBd.setTypeWeather(cm[selector-1]);
+        baseBd.setTypeConection(cm[selector-1]);
 
         emf =  baseBd.request(emf);
 

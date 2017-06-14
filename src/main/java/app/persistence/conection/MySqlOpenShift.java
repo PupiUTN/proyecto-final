@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by gabriellorenzatti on 10/6/17.
  */
-public class MySqlOpenShift extends ConeccionMySql {
+public class MySqlOpenShift extends ConectionMySql {
 
 
     private String hostOpenShift = System.getenv("OPENSHIFT_MYSQL_DB_HOST");

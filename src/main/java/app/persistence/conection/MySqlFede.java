@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by gabriellorenzatti on 10/6/17.
  */
-public class MySqlFede extends ConeccionMySql {
+public class MySqlFede extends ConectionMySql {
 
 
     private String conexionFede = "jdbc:mysql://localhost:3306/pupi";
