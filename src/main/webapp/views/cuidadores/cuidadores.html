@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+        <title>Pupi</title>
+
+        <!-- CSS  -->
+        <link href="../../css/material-icons.css" rel="stylesheet">
+        <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="../../css/jquery.toast.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="../../css/easy-autocomplete.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="../../css/easy-autocomplete.themes.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="../../css/cuidadores.css" rel="stylesheet">
+        <style>
+            input[type=number]::-webkit-inner-spin-button,
+            input[type=number]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <header>
+            <nav class="grey lighten-1" role="navigation">
+                <div class="nav-wrapper container">
+                    <a id="logo-container" href="../../index.html" class="brand-logo"><img src="../../img/logo.png"
+                                                                                           style="height: 65px"/></a>
+
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="../perro/perro.html">Perros</a></li>
+                        <li><a href="cuidadores.html">Cuidadores</a></li>
+                        <li><a href="cuidadores-buscar.html">Buscar Cuidadores</a></li>
+                    </ul>
+
+                    <ul id="nav-mobile" class="side-nav">
+                        <li><a href="../perro/perro.html">Perros</a></li>
+                        <li><a href="cuidadores.html">Cuidadores</a></li>
+                        <li><a href="cuidadores-buscar.html">Buscar Cuidadores</a></li>
+                    </ul>
+
+                    <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div class="container">
+                <div class="section">
+
+
+                    <div class="center-align">
+                        <h3>Cuidadores</h3>
+                    </div>
+
+                    <!--BOTON CUIDADOR-->
+                    <div class="center-align">
+                        <a class="waves-effect waves-light btn" onclick="mostarFormNuevoCuidador()"><i
+                                class="material-icons right">library_add</i> Nuevo Cuidador</a>
+                    </div>
+
+                    <div class="row" id="nuevoCuidador" hidden="">
+                        <!--FORM CUIDADOR-->
+                        <form class="col s12">
+                            <div class="row">
+
+                                <div class="input-field col s12">
+                                    <input id="nombre" type="text" class="validate" required>
+                                    <label for="nombre">Nombre</label>
+                                </div>
+
+                                <div class="input-field col s12">
+                                    <input id="email" type="text" class="validate" required>
+                                    <label for="email">Email</label>
+                                </div>
+
+                                <div class="input-field col s12">
+                                    <input id="direccion" type="text" class="validate" required>
+                                    <label for="direccion">Dirección</label>
+                                </div>
+
+                                <div class="input-field col s12">
+                                    <select id="busquedaProv" class="validate" onchange="mostrarLocalidades()" required>
+                                        <option value="" disabled selected>Selecciona provincia</option>
+                                    </select>
+                                    <label for="busquedaProv">Provincia</label>
+                                </div>
+
+                                <div id="localidadDiv" class="col s12" hidden="">
+                                    <label for="localidad">Localidad</label>
+                                    <i class="material-icons prefix">room</i>
+                                    <input type="text" id="localidad">
+                                    <a id="idLocalidad" hidden=""></a>
+                                </div>
+
+                                <div class="input-field col s12">
+                                    <input id="telefono" type="text" class="validate numero" required>
+                                    <label for="telefono">Teléfono</label>
+                                </div>
+
+                                <div class="input-field col s12">
+                                    <input id="maxPerros" type="text" class="validate numero" required>
+                                    <label for="maxPerros">Cantidad máxima de perros</label>
+                                </div>
+
+                                <div class="file-field input-field col s12">
+                                    <div id="contenedorImagen" class="input-field col s12">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!--FORM IMAGEN-->
+                        <form id="imageForm" enctype="multipart/form-data">
+                            <div class="file-field input-field col s12 m6">
+                                <div class="btn">
+                                    <span>Selecionar Imagen</span>
+                                    <input id="imageFile" name="file" type="file" accept="image/x-png,image/jpg,image/jpeg"/>
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                </div>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <a id="imageButton" class="waves-effect waves-light btn center">
+                                    <i class="material-icons right">present_to_all</i>
+                                    Subir
+                                </a>
+                            </div>
+
+
+                        </form>
+                        <!--POST CUIDADOR-->
+                        <div class="input-field col s12 center">
+                            <button id="guardarCuidador" onclick="postCuidador()"
+                                    class="btn waves-effect waves-light green" type="submit">
+                                Enviar<i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div>
+
+
+                        <!-- LISTAR CUIDADORES-->
+                        <div class="row" id="listaCuidadores"></div>
+                        <!-- MODAL RESERVAR-->
+                        <div id="modalReserva" class="modal">
+                            <div class="modal-content">
+                                <div class="row" id="nuevaReserva">
+                                    <form class="col s12">
+                                        <div class="row">
+                                            <div class='center-align'>
+                                                <h3>Reserva CRUD / ABM </h3>
+                                            </div>
+                                            <div class="input-field col s12">
+                                                Seleccione fecha de inicio:
+                                                <input id="fechaInicio" type="date" class="datepicker validate" required>
+                                            </div>
+                                            <div class="input-field col s12">
+                                                Seleccione fecha de fin:
+                                                <input id="fechaFin" type="date" class="datepicker validate" required>
+                                            </div>
+                                            <div class="input-field col s12">
+                                                <select id="perro" class="validate" required>
+                                                    <option value="" disabled selected>Seleccione perro</option>
+                                                </select>
+                                                <label for="perro">Perro</label>Datos del dueño:
+                                            </div>
+                                            <div class="input-field col s12">
+                                                <input id="nombreDuenio" type="text" class="validate" required>
+                                                <label for="nombreDuenio">Nombre</label>
+                                            </div>
+                                            <div class="input-field col s12">
+                                                <input id="emailDuenio" type="text" class="validate" required>
+                                                <label for="emailDuenio">Email</label>
+                                            </div>
+                                            <div class="input-field col s12">
+                                                <input id="telefonoDuenio" type="text" class="validate" required>
+                                                <label for="telefonoDuenio">Teléfono</label>
+                                            </div>
+                                            <div class="input-field col s12">
+                                                <input id="dniDuenio" type="text" class="validate" required>
+                                                <label for="dniDuenio">DNI</label>
+                                            </div>
+                                            <div class="input-field col s12 center">
+                                                <button class="btn waves-effect waves-light" type="submit">Enviar<i
+                                                        class="material-icons right">send</i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- MODAL ELIMINAR-->
+                        <div id="modalEliminar" class="modal">
+                            <div class="modal-content">
+                                <h4>Alerta!</h4>
+                                <p>¿Está seguro que desea eliminar el cuidador?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" id="cancelarEliminar"
+                                   class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                                <a href="#!" id="aceptarEliminar" onclick="eliminarAJAX()"
+                                   class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="page-footer orange">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">Footer Content</h5>
+                        <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer
+                            content.</p>
+                    </div>
+                    <div class="col l4 offset-l2 s12">
+                        <h5 class="white-text">Links</h5>
+                        <ul>
+                            <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    © 2014 Copyright Text
+                    <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+                </div>
+            </div>
+        </footer>
+
+
+        <!--  Scripts-->
+        <script src="../../js/jquery-2.1.1.min.js"></script>
+        <script src="../../js/jquery.toast.min.js"></script>
+        <script src="../../js/materialize.js "></script>
+        <script src="../../js/jquery.easy-autocomplete.min.js"></script>
+        <script src="../../js/init.js "></script>
+        <script src="js/cuidadores.js"></script>
+
+    </body>
+
+</html>
