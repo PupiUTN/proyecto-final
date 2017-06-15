@@ -1,4 +1,4 @@
-window.onload = function () {
+    window.onload = function () {
     getCuidadores();
     $('select').material_select();
 };
