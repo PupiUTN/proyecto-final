@@ -1,7 +1,6 @@
 package app.persistence.conection;
 
 import com.mysql.jdbc.Connection;
-import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
 import org.slf4j.LoggerFactory;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
