@@ -1,72 +1,74 @@
 <!DOCTYPE html>
 <html lang="en"  ng-app="app" >
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
-    <title>Pupi</title>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+        <title>Pupi</title>
 
-    <!-- CSS  -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-    <link href="../../css/material-icons.css" rel="stylesheet">
-    <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
-    <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.min.js" data-semver="2.0.11" data-require="ng-grid@*"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" data-semver="2.1.1" data-require="jquery@*"></script>
-    <link href="../../css/jquery.toast.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
-    <script src="js/raza.js"></script>
+        <!-- CSS  -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+        <link href="../../css/material-icons.css" rel="stylesheet">
+        <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+        <link href="../../css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.min.js" data-semver="2.0.11" data-require="ng-grid@*"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" data-semver="2.1.1" data-require="jquery@*"></script>
+        <link href="../../css/jquery.toast.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
+        <script src="js/raza.js"></script>
 
 </html>
 
 </head>
 <body ng-controller="razaController">
-<header>
-    <nav class="grey lighten-1" role="navigation">
-        <div class="nav-wrapper container">
-            <a id="logo-container" href="../../index.html" class="brand-logo"><img src="../../img/logo.png" style="height: 65px" /></a>
-            <ul class="right hide-on-med-and-down">
+    <header>
+        <nav class="grey lighten-1" role="navigation">
+            <div class="nav-wrapper container">
+                <a id="logo-container" href="../../index.html" class="brand-logo"><img src="../../img/logo.png" style="height: 65px" alt="Pupi" /></a>
 
-                <li><a href="../perro/perro.html">Perros</a></li>
-                <li><a href="../cuidadores/cuidadores.html">Cuidadores</a></li>
-                <li><a href="raza.html">raza</a></li>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="/views/perro/perro.html">Perros</a></li>
+                    <li><a href="/views/cuidadores/cuidadores.html">Cuidadores</a></li>
+                    <li><a href="/views/vacuna/vacuna.html">Vacunas</a></li>
+                    <li><a href="/views/raza/raza.html">Razas</a></li>
+                    <li><a href="/views/cuidadores/cuidadores-buscar.html">Buscar Cuidadores</a></li>
+                </ul>
 
-            </ul>
+                <ul id="nav-mobile" class="side-nav">
+                    <li><a href="/views/perro/perro.html">Perros</a></li>
+                    <li><a href="/views/cuidadores/cuidadores.html">Cuidadores</a></li>
+                    <li><a href="/views/vacuna/vacuna.html">Vacunas</a></li>
+                    <li><a href="/views/raza/raza.html">Razas</a></li>
+                    <li><a href="/views/cuidadores/cuidadores-buscar.html">Buscar Cuidadores</a></li>
+                </ul>
 
-            <ul id="nav-mobile" class="side-nav">
+                <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <form name="myForm" class="form-horizontal" >
 
-                <li><a href="../perro/perro.html">Perros</a></li>
-                <li><a href="../cuidadores/cuidadores.html">Cuidadores</a></li>
-                <li><a href="raza.html">raza</a></li>
+            <div class="page-title">
 
-            </ul>
-            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-        </div>
-    </nav>
-</header>
-<main>
-<form name="myForm" class="form-horizontal" >
+                <div class="center-align">
 
-    <div class="page-title">
+                    <h3>Razas</h3>
+                </div>
 
-        <div class="center-align">
-
-            <h3>Razas</h3>
-        </div>
-
-    </div>
-    <div class="center-align">
-        <a class="waves-effect waves-light btn" ng-click="mostrarNuevaRaza()"><i class="material-icons right">library_add</i> Nueva Raza</a>
-    </div>
-
-
-
-    <div class="row" id="nuevaRaza" hidden="">
-        <form class="col s12">
-            <div class="row">
+            </div>
+            <div class="center-align">
+                <a class="waves-effect waves-light btn" ng-click="mostrarNuevaRaza()"><i class="material-icons right">library_add</i> Nueva Raza</a>
+            </div>
 
 
-                            <div class="input-field col s4"></div>
+
+            <div class="row" id="nuevaRaza" hidden="">
+                <form class="col s12">
+                    <div class="row">
+
+
+                        <div class="input-field col s4"></div>
                         <div class="input-field col s5">
                             <input id="nombre" type="text" class="validate"  ng-model ="raza.nombre" required maxlength="30">
                             <label for="nombre">Nombre</label>
@@ -75,75 +77,75 @@
 
 
 
+                    </div>
+
+                    <div class="input-field col s12 center">
+                        <div class="show-on-medium-and-down ">
+                            <button class="btn btn-success" post-validator tabindex="2" type="button" ng-click="SaveOrEdit()">Guardar</button>
+                            <button class="btn btn-default" type="button" tabindex="3" ng-click="cancelar()">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
             </div>
+
+            <div class="input-field col s12 center-align">
+                <a class="waves-effect waves-light btn" ng-click="buscarRaza()"><i class="material-icons right">search</i> ver Razas</a>
+            </div>
+
 
             <div class="input-field col s12 center">
                 <div class="show-on-medium-and-down ">
-                    <button class="btn btn-success" post-validator tabindex="2" type="button" ng-click="SaveOrEdit()">Guardar</button>
-                    <button class="btn btn-default" type="button" tabindex="3" ng-click="cancelar()">Cancelar</button>
+                    <div class="row" id="consultarRaza"   hidden="">
+
+                        <div class="row" id="listaRazas">
+                        </div>
+                        <div id="modalEliminar" class="modal">
+                            <div class="modal-content">
+                                <h4>Alerta!</h4>
+                                <p>¿Está seguro que desea eliminar la raza?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" id="cancelarEliminar"  class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                                <a href="#!" id="aceptarEliminar" ng-click="eliminarAJAX()" class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-default" type="button" tabindex="3" ng-click="cancelarConsulta()">Cancelar</button>
+                    </div>
                 </div>
             </div>
         </form>
-    </div>
-
-    <div class="input-field col s12 center-align">
-        <a class="waves-effect waves-light btn" ng-click="buscarRaza()"><i class="material-icons right">search</i> ver Razas</a>
-    </div>
-
-
-    <div class="input-field col s12 center">
-        <div class="show-on-medium-and-down ">
-    <div class="row" id="consultarRaza"   hidden="">
-
-        <div class="row" id="listaRazas">
-        </div>
-        <div id="modalEliminar" class="modal">
-            <div class="modal-content">
-                <h4>Alerta!</h4>
-                <p>¿Está seguro que desea eliminar la raza?</p>
-            </div>
-            <div class="modal-footer">
-                <a href="#!" id="cancelarEliminar"  class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                <a href="#!" id="aceptarEliminar" ng-click="eliminarAJAX()" class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
-            </div>
-        </div>
-
-        <button class="btn btn-default" type="button" tabindex="3" ng-click="cancelarConsulta()">Cancelar</button>
-    </div>
-        </div>
-    </div>
-</form>
-</main>
-<footer class="page-footer orange">
-    <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">Footer Content</h5>
-                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-            </div>
-            <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Links</h5>
-                <ul>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="footer-copyright">
+    </main>
+    <footer class="page-footer orange">
         <div class="container">
-            © 2014 Copyright Text
-            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Footer Content</h5>
+                    <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Links</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>
-</footer>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2014 Copyright Text
+                <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+        </div>
+    </footer>
 
 
-<!--  Scripts-->
-<script src="../../js/jquery-2.1.1.min.js"></script>
-<script src="../../js/jquery.toast.min.js"></script>
-<script src="../../js/materialize.js "></script>
-<!--primero init-->
-<script src="../../js/init.js "></script>
+    <!--  Scripts-->
+    <script src="../../js/jquery-2.1.1.min.js"></script>
+    <script src="../../js/jquery.toast.min.js"></script>
+    <script src="../../js/materialize.js "></script>
+    <!--primero init-->
+    <script src="../../js/init.js "></script>
 
 
 </body>

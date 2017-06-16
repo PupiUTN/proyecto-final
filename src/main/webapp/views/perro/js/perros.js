@@ -12,7 +12,7 @@ function generarPerros(jsonArray) {
         //existe un problema con los espacios, entonces al html lo copiamos en la barra url del explorador y luego lo cortamos para tenr bien el formato
         var itmeList = '\
     \<li class="collection-item avatar"> \n\
-    <img src="img/dog-1.jpg" alt="" class="circle"> \n\
+    <img src="/img/dog-1.jpg" alt="" class="circle"> \n\
     <span class="title"> \n\
     <b>' + jsonArray[i].nombre + '</b></span> \n\
     <div class="row"> \n\
@@ -83,7 +83,7 @@ function postPerro() {
             console.log("error crear perro");
             $.toast({
                 heading: 'Error',
-                text: 'Erro al crear nuevo perro.',
+                text: 'Error al crear nuevo perro.',
                 showHideTransition: 'fade',
                 icon: 'error'
             })
@@ -93,26 +93,39 @@ function postPerro() {
 }
 function getPerroDesdeForm() {
     var raza = new Object();
+    raza.id = $('#idRaza').val();
     raza.nombre = $('#raza').val();
 
     var tamaño = new Object();
-    tamaño.nombre = $('#tamaño').val();
+    tamaño.id = $('#tamaño').val();
+    tamaño.nombre = $('#tamaño :selected').text();
 
     var vacunaList = [];
-    for (var i = 0; i < $('#vacuna').val().length; i++) {
+
+    $('#vacuna :selected').each(function () {
         var vacuna = new Object();
-        vacuna.nombre = $('#vacuna').val()[i];
+        vacuna.id = $(this).val();
+        vacuna.nombre = $(this).text();
         vacunaList.push(vacuna);
-    }
+    });
+
+//    for (var i = 0; i < $('#vacuna').val().length; i++) {
+//        var vacuna = new Object();
+//        vacuna.id = $('#vacuna').val()[i];
+//        vacunaList.push(vacuna);
+
+    var fotoRuta = null;
+    var dueño = null;
 
     var perro = new Object();
     perro.nombre = $('#nombre').val();
-    perro.comentario = $('#comentario').val();
     perro.raza = raza;
     perro.tamaño = tamaño;
     perro.vacunacionList = vacunaList;
+    perro.fotoRuta = fotoRuta;
+    perro.dueño = dueño;
+    perro.comentario = $('#comentario').val();
     return perro;
-
 }
 
 
@@ -126,11 +139,36 @@ window.onload = function () {
     $('select').material_select();
 };
 
-
 function obtenerRazas() {
-    var url = "/api/razas";
-    $.getJSON(url, function (datos) {
-        llenarSelect('#raza', datos);
+    $('#raza').easyAutocomplete({
+        url: "/api/razas/",
+        placeholder: "Escriba raza",
+        getValue: "nombre",
+        minCharNumber: 3,
+        list: {
+            onSelectItemEvent: function () {
+                var value = $("#raza").getSelectedItemData().id;
+                $("#idRaza").val(value);
+            },
+            sort: {
+                enabled: true
+            },
+            maxNumberOfElements: 10,
+            match: {
+                enabled: true
+            },
+            showAnimation: {
+                type: "slide", //normal|slide|fade
+                time: 400,
+                callback: function () {}
+            },
+
+            hideAnimation: {
+                type: "slide", //normal|slide|fade
+                time: 400,
+                callback: function () {}
+            }
+        }
     });
 }
 
@@ -150,11 +188,12 @@ function obtenerVacunas() {
 
 function llenarSelect(idSelect, jsonArray) {
     for (var i = 0; i < jsonArray.length; i++) {
-        $(idSelect).append('<option value="' + jsonArray[i].nombre + '">' + jsonArray[i].nombre + '</option>');
+        $(idSelect).append('<option value="' + jsonArray[i].id + '">' + jsonArray[i].nombre + '</option>');
+        $(idSelect).prop('selectedIndex', -1);
         $('select').material_select();
     }
 }
 
-function mostrarImagen(){
+function mostrarImagen() {
     $('#muestraImagen').attr('src', window.URL.createObjectURL($('#imagen').get(0).files.item(0)));
 }
