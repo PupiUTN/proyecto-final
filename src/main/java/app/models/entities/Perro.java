@@ -13,7 +13,7 @@ import java.util.List;
 public class Perro implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String nombre;
 
