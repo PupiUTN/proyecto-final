@@ -16,6 +16,8 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Scanner;
 
+import app.persistence.conection.BaseDatos;
+
 /**
  *
  * @author agile
