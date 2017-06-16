@@ -128,18 +128,40 @@
                                 </div>
 
                                 <div class="input-field col s12">
-                                    <div class="input-field col s12">
-                                        <textarea id="comentario" class="materialize-textarea"></textarea>
-                                        <label for="comentario">Comentario</label>
-                                    </div><div class="input-field col s12 center">
-                                        <button class="btn waves-effect waves-light" type="submit">
-                                            Enviar<i class="material-icons right">send</i>
-                                        </button>
-                                    </div>
+                                    <textarea id="comentario" class="materialize-textarea"></textarea>
+                                    <label for="comentario">Comentario</label>
                                 </div>
 
+                                <div class="file-field input-field col s12">
+                                    <div id="contenedorImagen" class="input-field col s12">
+                                    </div>
+                                </div>
                             </div>
                         </form>
+                            <!--FORM IMAGEN-->
+                        <form id="imageForm" enctype="multipart/form-data">
+                            <div class="file-field input-field col s12 m6">
+                                <div class="btn">
+                                    <span>Selecionar Imagen</span>
+                                    <input id="imageFile" name="file" type="file" accept="image/x-png,image/jpg,image/jpeg"/>
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                </div>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <a id="imageButton" class="waves-effect waves-light btn center">
+                                    <i class="material-icons right">present_to_all</i>
+                                    Subir
+                                </a>
+                            </div>
+                        </form>
+                        <!--POST PERRO-->
+                            <div class="input-field col s12 center">
+                                <button id="guardarPerro" onclick="postPerro()" class="btn waves-effect waves-light" type="submit">
+                                    Enviar<i class="material-icons right">send</i>
+                                </button>
+                            </div>
 
                     </div>
 
