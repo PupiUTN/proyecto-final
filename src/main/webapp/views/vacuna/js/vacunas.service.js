@@ -27,15 +27,7 @@ function generarVacunas(jsonArray) {
     }
 }
 
-$('.modal').modal({
-    dismissible: true, // Modal can be dismissed by clicking outside of the modal
-    opacity: .5, // Opacity of modal background
-    inDuration: 300, // Transition in duration
-    outDuration: 200, // Transition out duration
-    startingTop: '4%', // Starting top style attribute
-    endingTop: '10%' // Ending top style attribute
 
-});
 
 function postVacuna() {
     var vacuna = getVacunaDesdeForm();
@@ -174,14 +166,6 @@ window.onload = function () {
     getVacunas();
 };
 
-var idEdit;
-function editarVacuna(idEditar) {
-    btnEditar = $("#btnEditar" + idEditar);
-    idEdit = idEditar;
-    $("#nombre").focus();
-    $('#editarVacuna').show();
-    $('#guardarVacuna').hide();
-}
 
 
 var btnEliminar;
@@ -226,6 +210,3 @@ function eliminarAJAX() {
         }
     });
 }
-String.prototype.isEmpty = function () {
-    return (this.length === 0 || !this.trim());
-};
