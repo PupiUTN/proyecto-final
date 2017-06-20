@@ -56,27 +56,19 @@ public class EjecutablesService {
     }
 
     public String drop() throws Exception {
-
+        //ES MUY IMPORTANTE EL ORDEN
         //transaccion
         calificacionDAO.removeAll();
         reservaDAO.removeAll();
-
-        //soprte
-        vacunaDAO.removeAll();
-        //Perro
-        perroDAO.removeAll();
-        //Soporte Perro
-        razaDAO.removeAll();
-
-        tamañoDAO.removeAll();
-        //dueno
-        dueñoDAO.removeAll();
-        //Cuidador
-
         cuidadorDAO.removeAll();
-        //Direccion
         direccionDAO.removeAll();
-
+        localidadDAO.removeAll();
+        provinciaDAO.removeAll();
+        perroDAO.removeAll();
+        dueñoDAO.removeAll();
+        tamañoDAO.removeAll();
+        vacunaDAO.removeAll();
+        razaDAO.removeAll();
         return " drop (Remove all) : " + new Date();
     }
 }
