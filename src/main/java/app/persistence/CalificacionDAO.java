@@ -27,6 +27,8 @@ public class CalificacionDAO extends DAO<Calificacion> {
 
     public void cargarDatos() throws Exception {
         if (count() == 0) {
+            //rompe en heroku
+
             List<Reserva> findAllReservas = reservaDAO.findAll();
             Calificacion calificacion = new Calificacion();
             calificacion.setPuntaje(5);
