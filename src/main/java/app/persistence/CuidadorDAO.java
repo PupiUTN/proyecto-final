@@ -47,7 +47,7 @@ public class CuidadorDAO extends DAO<Cuidador> {
         if (count() == 0) {
 
             String rootPath = System.getProperty("user.dir");
-            this.execSQL(rootPath + File.separator + "src" + File.separator + "main" + File.separator + "sql" + File.separator + "Cuidador.sql");
+            this.execSQL(rootPath + File.separator + "src" + File.separator + "main" + File.separator + "sql" + File.separator + "CUIDADOR.sql");
         }
     }
 
