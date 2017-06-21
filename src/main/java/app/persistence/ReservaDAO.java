@@ -32,6 +32,7 @@ public class ReservaDAO extends DAO<Reserva> {
     
     public void cargarDatos() throws Exception {
         if (count() == 0) {
+            //rompe en heroku
             List<Cuidador> findAllCuidadores = cuidadorDAO.findAll();
             List<Perro> findAllPerros = perroDAO.findAll();
             Reserva reserva1 = new Reserva();
@@ -40,18 +41,18 @@ public class ReservaDAO extends DAO<Reserva> {
             reserva1.setFechaTransaccion(new Date());
             reserva1.setPerro(findAllPerros.remove(0));
             reserva1.setCuidador(findAllCuidadores.remove(0));
-            
-            
+
+
             Reserva reserva2 = new Reserva();
             reserva2.setFechaInicio(new Date(1086821420000L));
             reserva2.setFechaFin(new Date(1592375244L));
             reserva2.setFechaTransaccion(new Date());
             reserva2.setPerro(findAllPerros.remove(0));
             reserva2.setCuidador(findAllCuidadores.remove(0));
-            
+
             create(reserva1);
             create(reserva2);
-            
+
         }
     }
 
