@@ -209,14 +209,14 @@ window.onload = function () {
 };
 
 function obtenerPerros() {
-    var url = "api/perros";
+    var url = "/api/perros";
     $.getJSON(url, function (datos) {
         llenarSelect('#perro', datos);
     });
 }
 
 function obtenerProvincias() {
-    var url = "api/provincias";
+    var url = "/api/provincias";
     $.getJSON(url, function (datos) {
         llenarSelect('#busquedaProv', datos);
     });

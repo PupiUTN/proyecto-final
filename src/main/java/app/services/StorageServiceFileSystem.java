@@ -101,17 +101,8 @@ public class StorageServiceFileSystem  implements  StorageService{
     }
 
     private String getUrlFromFileName(String serverFileName){
-
-        if (hostName.equals("localhost")){
-            String remoteUrl = "http://" + hostName + ":" + port + folder + File.separator + serverFileName;
-            logger.info("file url:" + remoteUrl);
-            return remoteUrl;
-
-        }else {
-            String remoteUrl = "http://" + hostName  + folder + File.separator + serverFileName;
-            logger.info("file url:" + remoteUrl);
-            return remoteUrl;
-
-        }
+        String remoteUrl = folder + File.separator + serverFileName;
+        logger.info("file url:" + remoteUrl);
+        return remoteUrl;
     }
 }

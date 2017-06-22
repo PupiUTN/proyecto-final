@@ -26,6 +26,7 @@ public class EjecutablesController {
 
     @RequestMapping(value = "insert", method = RequestMethod.GET)
     public String insert() throws Exception {
+
        return ejecutablesService.insert();
     }
 
