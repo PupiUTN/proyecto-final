@@ -2,11 +2,20 @@
  * Created by gabriellorenzatti on 16/6/17.
  */
 
+var listaCuidadoresGlobal;
+
+
 $('.reserva').on('click', function () {
     var id = $('.idCuidador').eq(($('.reserva').index(this))).val();
     console.log(id);
 });
 
+window.onload = function () {
+    $('select').material_select();
+    obtenerPerros();
+    obtenerProvincias();
+    $('select').material_select();
+};
 
 $(document).ready(function () {
 
@@ -51,6 +60,38 @@ function mostarFormBuscarCuidador() {
     $('#nuevaBusqueda').toggle();
 }
 
+
+
+$('#ordenarPorCantidad').on('click', function () {
+    var listaCuidadoresOrdenada;
+    $('#listaCuidadores').empty();
+    var ordenarPorCantidadObject = $('#ordenarPorCantidad');
+
+    if (ordenarPorCantidadObject.data("sense") == 'asc'){
+        console.log("Ordeno asc");
+        listaCuidadoresOrdenada = listaCuidadoresGlobal.sort(function(a, b) {
+            return parseFloat(a.cantidadMaxDePerros) - parseFloat(b.cantidadMaxDePerros);
+        });
+        ordenarPorCantidadObject.data("sense", "desc");
+        ordenarPorCantidadObject.children('i').text('thumb_up');
+
+
+    }else {
+        console.log("Ordeno desc");
+        listaCuidadoresOrdenada = listaCuidadoresGlobal.sort(function(a, b) {
+            return parseFloat(b.cantidadMaxDePerros) - parseFloat(a.cantidadMaxDePerros);
+        });
+        ordenarPorCantidadObject.data("sense", "asc");
+        ordenarPorCantidadObject.children('i').text('thumb_down');
+
+
+
+    }
+
+    generarCuidadores(listaCuidadoresOrdenada);
+
+});
+
 function generarCuidadores(jsonArray) {
     listaCuidadoresGlobal = jsonArray;
     for (var i = 0; i < jsonArray.length; i++) {
@@ -93,4 +134,47 @@ function generarCuidadores(jsonArray) {
 </div>';
         $('#listaCuidadores').append(cuidador);
     }
+}
+
+
+function llenarSelect(idSelect, jsonArray) {
+    for (var i = 0; i < jsonArray.length; i++) {
+        $(idSelect).append('<option value="' + jsonArray[i].id + '">' + jsonArray[i].nombre + '</option>');
+        $('select').material_select();
+    }
+}
+function mostrarLocalidades() {
+    var idProv = $('#busquedaProv').val();
+    $('#busquedaLocal').val("");
+    $('#busquedaDiv').show();
+    $('#busquedaLocal').easyAutocomplete({
+        url: "/api/provincias/" + idProv + "/localidades",
+        placeholder: "Localidad",
+        getValue: "nombre",
+        minCharNumber: 3,
+        list: {
+            onSelectItemEvent: function() {
+                var value = $("#busquedaLocal").getSelectedItemData().id;
+                $("#idLocalidad").val(value);
+            },
+            sort: {
+                enabled: true
+            },
+            maxNumberOfElements: 10,
+            match: {
+                enabled: true
+            },
+            showAnimation: {
+                type: "slide", //normal|slide|fade
+                time: 400,
+                callback: function () {}
+            },
+
+            hideAnimation: {
+                type: "slide", //normal|slide|fade
+                time: 400,
+                callback: function () {}
+            }
+        }
+    });
 }

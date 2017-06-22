@@ -8,10 +8,6 @@ function getCuidadores() {
     });
 }
 
-
-
-
-
 var btnEliminar;
 var idElim;
 function eliminarCuidador(idEliminar) {
@@ -20,10 +16,6 @@ function eliminarCuidador(idEliminar) {
     console.log(boton);
     btnEliminar = $(boton);
     console.log(idElim);
-    //idEliminar = $(this).next().val();
-    //console.log(idEliminar);
-    //('#modal1').modal('open');
-
 
 }
 
@@ -45,33 +37,6 @@ function eliminarAJAX() {
 
 
 
-$('#guardarCuidador').submit(function () {
-    if (validarEmail($('#email'))) {
-        postCuidador();
-    }
-});
-$('#nuevaReserva').submit(function () {
-    if (validarEmail($('#email'))) {
-        postReserva();
-    }
-});
-function validarEmail(campo) {
-    var emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
-    //Se muestra un texto a modo de ejemplo, luego va a ser un icono
-    if (!emailRegex.test(campo.val())) {
-        console.log("error agregar cuidador");
-        $.toast({
-            heading: 'Error',
-            text: 'El email ingresado no es válido.',
-            showHideTransition: 'fade',
-            icon: 'error'
-        });
-        return false;
-    } else {
-        console.log('aprobo mail, voy a guardar');
-        return true;
-    }
-}
 
 function postCuidador() {
     if (validarEmail($('#email'))) {

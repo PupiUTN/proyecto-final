@@ -19,11 +19,6 @@ function getPerroDesdeForm() {
         vacunaList.push(vacuna);
     });
 
-//    for (var i = 0; i < $('#vacuna').val().length; i++) {
-//        var vacuna = new Object();
-//        vacuna.id = $('#vacuna').val()[i];
-//        vacunaList.push(vacuna);
-
     var fotoRuta = null;
     $(".imagenPerro").each(function () {
         fotoRuta = $(this).attr('src');
@@ -42,4 +37,44 @@ function getPerroDesdeForm() {
     perro.comentario = $('#comentario').val();
     return perro;
 }
+
+
+$('#guardarPerro').submit(function () {
+    postPerro();
+    return false;
+});
+
+function obtenerRazas() {
+    $('#raza').easyAutocomplete({
+        url: "/api/razas/",
+        placeholder: "Escriba raza",
+        getValue: "nombre",
+        minCharNumber: 3,
+        list: {
+            onSelectItemEvent: function () {
+                var value = $("#raza").getSelectedItemData().id;
+                $("#idRaza").val(value);
+            },
+            sort: {
+                enabled: true
+            },
+            maxNumberOfElements: 10,
+            match: {
+                enabled: true
+            },
+            showAnimation: {
+                type: "slide", //normal|slide|fade
+                time: 400,
+                callback: function () {}
+            },
+
+            hideAnimation: {
+                type: "slide", //normal|slide|fade
+                time: 400,
+                callback: function () {}
+            }
+        }
+    });
+}
+
 

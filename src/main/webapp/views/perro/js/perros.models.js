@@ -6,10 +6,6 @@ function getEventos() {
     });
 }
 
-
-
-
-
 function postPerro() {
     var perro = getPerroDesdeForm();
     $.ajax({
@@ -40,41 +36,6 @@ function postPerro() {
         }
     });
 
-}
-
-
-
-function obtenerRazas() {
-    $('#raza').easyAutocomplete({
-        url: "/api/razas/",
-        placeholder: "Escriba raza",
-        getValue: "nombre",
-        minCharNumber: 3,
-        list: {
-            onSelectItemEvent: function () {
-                var value = $("#raza").getSelectedItemData().id;
-                $("#idRaza").val(value);
-            },
-            sort: {
-                enabled: true
-            },
-            maxNumberOfElements: 10,
-            match: {
-                enabled: true
-            },
-            showAnimation: {
-                type: "slide", //normal|slide|fade
-                time: 400,
-                callback: function () {}
-            },
-
-            hideAnimation: {
-                type: "slide", //normal|slide|fade
-                time: 400,
-                callback: function () {}
-            }
-        }
-    });
 }
 
 function obtenerTamaños() {

@@ -157,10 +157,6 @@
  }
 
 
- $('#guardarPerro').submit(function () {
-     postPerro();
-     return false;
- });
 
  function llenarSelect(idSelect, jsonArray) {
      for (var i = 0; i < jsonArray.length; i++) {
