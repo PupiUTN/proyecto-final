@@ -1,9 +1,11 @@
 package app.services;
 
 import app.persistence.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Date;
+
 
 /**
  * Created by fbackhaus on 7/6/17.
@@ -11,6 +13,7 @@ import java.util.Date;
 @Service
 public class EjecutablesService {
 
+    private final Logger LOG = Logger.getLogger(this.getClass());
     @Autowired
     RazaDAO razaDAO;
     @Autowired
@@ -35,50 +38,37 @@ public class EjecutablesService {
     CalificacionDAO calificacionDAO;
 
     public String insert() throws Exception {
-        //soprte
+        //ES MUY IMPORTANTE EL ORDEN
         razaDAO.cargarDatos();
         vacunaDAO.cargarDatos();
         tamañoDAO.cargarDatos();
-        //dueno
         dueñoDAO.cargarDatos();
-        //Perro
         perroDAO.cargarDatos();
-        //Provincia
         provinciaDAO.cargarDatos();
-        //Localidad
         localidadDAO.cargarDatos();
-        //Direccion
         direccionDAO.cargarDatos();
-        //Cuidador
         cuidadorDAO.cargarDatos();
-        //transaccion
-        reservaDAO.cargarDatos();
-        calificacionDAO.cargarDatos();
+        //rompe en heroku
+//        reservaDAO.cargarDatos();
+//        calificacionDAO.cargarDatos();
+
         return " insert : " + new Date();
     }
 
     public String drop() throws Exception {
-
+        //ES MUY IMPORTANTE EL ORDEN
         //transaccion
         calificacionDAO.removeAll();
         reservaDAO.removeAll();
-
-        //soprte
-        vacunaDAO.removeAll();
-        //Perro
-        perroDAO.removeAll();
-        //Soporte Perro
-        razaDAO.removeAll();
-
-        tamañoDAO.removeAll();
-        //dueno
-        dueñoDAO.removeAll();
-        //Cuidador
-
         cuidadorDAO.removeAll();
-        //Direccion
         direccionDAO.removeAll();
-
+        localidadDAO.removeAll();
+        provinciaDAO.removeAll();
+        perroDAO.removeAll();
+        dueñoDAO.removeAll();
+        tamañoDAO.removeAll();
+        vacunaDAO.removeAll();
+        razaDAO.removeAll();
         return " drop (Remove all) : " + new Date();
     }
 }

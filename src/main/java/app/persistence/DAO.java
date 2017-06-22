@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import app.persistence.conection.BaseDatos;
+import org.apache.commons.lang.StringUtils;
+
 
 /**
  *
@@ -117,12 +119,22 @@ public abstract class DAO<T> implements IDao<T> {
         getEntityManager().getTransaction().begin();
         File file =new File(path);
         Scanner sc= new Scanner(file, "utf-8");
+
         String sql="";
         while(sc.hasNext()){
             sql+=sc.nextLine();
         }
-        Query q = getEntityManager().createNativeQuery(sql);
-        q.executeUpdate();
+
+        String[] statements = sql.split(";");
+        for (int i = 0; i < statements.length; i++) {
+
+            String statement = statements[i];
+            if(!StringUtils.isBlank(statement)){
+                Query q = getEntityManager().createNativeQuery(statement);
+                q.executeUpdate();
+            }
+
+        }
         getEntityManager().getTransaction().commit();
     }
 
