@@ -31,8 +31,8 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
     function generarRazas(jsonArray) {
 
         for (var i = 0; i < jsonArray.length; i++) {
-            var raza = '\
-<div class="col s12 ">\n\
+            var raza = '\<div class="col s3"></div>\n\
+<div class="col s7 ">\n\
     <div class="card horizontal blue-grey darken-1 white-text hoverable">\n\
         <div class="card-stacked"> \n\
             <div class="card-content"> \n\
@@ -207,7 +207,7 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
 
                     editarRaza =  function (idEditar) {
                         $('#consultarRaza').toggle();
-
+                        $('#nuevaRaza').toggle();
                         $scope.edicion = true;
                         $scope.raza.id = idEditar;
 
@@ -221,7 +221,7 @@ app.controller('razaController',['$scope','$log','$http',function($scope,$log,$h
                             }
 
                         };
-                        $('#nuevaRaza').toggle();
+
                         document.getElementById("nombre").focus();
                     };
 

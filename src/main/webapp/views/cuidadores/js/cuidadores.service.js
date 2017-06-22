@@ -1,62 +1,13 @@
-window.onload = function () {
-    getCuidadores();
-    $('select').material_select();
-
-    obtenerProvincias();
-    $('select').material_select();
-};
 
 function getCuidadores() {
     console.log("getCuidadores()");
     var url = "/api/cuidadores";
     $.getJSON(url, function (datos) {
         console.log(datos);
-        generarCuidadores(datos);
+        generarCuidadoresView(datos);
     });
 }
 
-function generarCuidadores(jsonArray) {
-    for (var i = 0; i < jsonArray.length; i++) {
-        var url;
-        //console.log
-        if (jsonArray[i].listaImagenes.length === 0) {
-            url = '/img/no-avatar.png';
-        } else {
-            url = jsonArray[i].listaImagenes[0].url;
-        }
-        //existe un problema con los espacios, entonces al html lo copiamos en la barra url del explorador y luego lo cortamos para tenr bien el formato
-        var cuidador = '\
-<div class="col s12">\n\
-    <div class="card horizontal blue-grey darken-1 white-text hoverable">\n\
-        <div class="card-image col s3 ">\n\
-            <img src="' + url + '"> \n\
-        </div> \n\
-        <div class="card-stacked"> \n\
-            <div class="card-content"> \n\
-            <span class="card-title">' + jsonArray[i].nombre + ' \n\
-            <a href="#!"><span id="btnEliminar' + jsonArray[i].id + '" data-target="modalEliminar" onclick="eliminarCuidador(' + jsonArray[i].id + ')" class=" new badge btn waves-effect waves-light orange accent-2 black-text" data-badge-caption="Eliminar" ></span>\n\
-            </a> \n\
-            </span> \n\
-            <div class="row"> \n\
-                <div class="col s12 m6"> \n\
-                <p> <i class="material-icons black-text">phone</i> ' + jsonArray[i].telefono + '</p> \n\
-                <p> <i class="material-icons black-text">email</i> ' + jsonArray[i].email + '</p> \n\
-                </div> \n\
-                <div class="col s12 m6"> \n\
-                <p> <i class="material-icons black-text">location_on</i>' + jsonArray[i].direccion.nombre + ', ' + jsonArray[i].direccion.localidad.nombre + ', ' + jsonArray[i].direccion.localidad.provincia.nombre + '</p> \n\
-                <p> <i class="material-icons black-text">info</i>Max perros: ' + jsonArray[i].cantidadMaxDePerros + ' </p> \n\
-                </div> \n\
-                </div> \n\
-            </div> \n\
-            <div class="card-action"> \n\
-            <a href="#!" data-target="modalReserva" class="reserva">Solicitar Reserva</a> \n\
-            </div> \n\
-        </div> \n\
-    </div> \n\
-</div>';
-        $('#listaCuidadores').append(cuidador);
-    }
-}
 
 
 
@@ -92,35 +43,6 @@ function eliminarAJAX() {
     });
 }
 
-function getCuidadorDesdeForm() {
-    var provincia = new Object();
-    provincia.id = $('#busquedaProv').val();
-    provincia.nombre = $('#busquedaProv :selected').text();
-
-    var dir = new Object();
-    dir.nombre = $('#direccion').val();
-    var localidad = new Object();
-    localidad.nombre = $('#localidad').val();
-    localidad.id = $('#idLocalidad').val();
-    localidad.provincia  = provincia;
-    dir.localidad = localidad;
-    var fotosList = [];
-    var i = 0;
-    $(".imagenCuidador").each(function () {
-        var imagen = new Object();
-        imagen.url = $(this).attr('src');
-        fotosList[i] = imagen;
-        i++;
-    });
-    var cuidador = new Object();
-    cuidador.nombre = $('#nombre').val();
-    cuidador.email = $('#email').val();
-    cuidador.direccion = dir;
-    cuidador.telefono = $('#telefono').val();
-    cuidador.cantidadMaxDePerros = $('#maxPerros').val();
-    cuidador.listaImagenes = fotosList;
-    return cuidador;
-}
 
 
 $('#guardarCuidador').submit(function () {
@@ -188,7 +110,7 @@ function postCuidador() {
 
 function postReserva() {
 
-    var reserva = getReservaDesdeForm();
+    var reserva = getReservaDesdeFormCuidadores();
     $.ajax({
         type: "POST",
         url: '/api/reservas',
@@ -217,19 +139,6 @@ function postReserva() {
         }
     });
 }
-function getReservaDesdeForm() {
-    var perro = new Object();
-    perro.nombre = $('#perro').val();
-    var reserva = new Object();
-    reserva.fechaInicio = $('#fechaInicio').val();
-    reserva.fechaFin = $('#fechaFin').val();
-    reserva.perro = perro;
-    reserva.nombreDuenio = $('#nombreDuenio').val();
-    reserva.emailDuenio = $('#emailDuenio').val();
-    reserva.telefonoDuenio = $('#telefonoDuenio').val();
-    reserva.dniDuenio = $('#dniDuenio').val();
-    return reserva;
-}
 
 
 
@@ -239,17 +148,8 @@ function getReservaDesdeForm() {
 function obtenerProvincias() {
     var url = "/api/provincias";
     $.getJSON(url, function (datos) {
-        llenarSelect('#busquedaProv', datos);
+        llenarSelectCuidadores('#busquedaProv', datos);
     });
 }
-
-function llenarSelect(idSelect, jsonArray) {
-    for (var i = 0; i < jsonArray.length; i++) {
-        $(idSelect).append('<option value="' + jsonArray[i].id + '">' + jsonArray[i].nombre + '</option>');
-        $('select').material_select();
-    }
-}
-
-
 
 

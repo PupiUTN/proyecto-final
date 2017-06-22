@@ -4,7 +4,14 @@
  }
 
 
-
+ window.onload = function () {
+     $('#nuevoPerro').hide();
+     obtenerRazas();
+     obtenerTamaños();
+     obtenerVacunas();
+     getEventos();
+     $('select').material_select();
+ };
 
 
 
@@ -97,3 +104,68 @@
          }
      });
  });
+
+
+ function generarPerros(jsonArray) {
+     var arrayLength = jsonArray.length;
+     for (var i = 0; i < arrayLength; i++) {
+         //existe un problema con los espacios, entonces al html lo copiamos en la barra url del explorador y luego lo cortamos para tenr bien el formato
+         var url;
+         console.log(jsonArray[i].fotoRuta);
+         if (jsonArray[i].fotoRuta === null) {
+             url = '/img/dog-1.jpg';
+         } else {
+             url = jsonArray[i].fotoRuta;
+         }
+         var itmeList = '\
+    \<li class="collection-item avatar"> \n\
+    <img src="'+url+'" alt="" class="circle"> \n\
+    <span class="title"> \n\
+    <b>' + jsonArray[i].nombre + '</b></span> \n\
+    <div class="row"> \n\
+        <div class="col s12 m6"> \n\
+            <p> Raza: ' + jsonArray[i].raza.nombre + ' <br>\n\
+            Tamaño: ' + jsonArray[i].tamaño.nombre + '<br>\n\
+        Vacunación: ' + jsonArray[i].vacunacionList[0].nombre;
+         if (jsonArray[i].vacunacionList.length > 1) {
+             for (var j = 1; j < jsonArray[i].vacunacionList.length; j++) {
+                 itmeList += ', ' + jsonArray[i].vacunacionList[j].nombre;
+             }
+         }
+         itmeList += '<br>\n\
+            </p> \n\
+        </div> \n\
+        <div class="col s12 m6"> \n\
+            <p> Comentario: ' + jsonArray[i].comentario + '<br>\n\
+            </p> \n\
+        </div> \n\
+    </div> \n\
+        <div class="secondary-content"> \n\
+        <a href="#!" >\n\
+        <i class="material-icons">delete</i>\n\
+        </a> <br> \n\
+        <a href="#!" >\n\
+        <i class="material-icons">edit</i>\n\
+        </a> </div> \n\
+</li>\
+';
+
+         $('#perroList').append(itmeList);
+     }
+
+
+ }
+
+
+ $('#guardarPerro').submit(function () {
+     postPerro();
+     return false;
+ });
+
+ function llenarSelect(idSelect, jsonArray) {
+     for (var i = 0; i < jsonArray.length; i++) {
+         $(idSelect).append('<option value="' + jsonArray[i].id + '">' + jsonArray[i].nombre + '</option>');
+         $(idSelect).prop('selectedIndex', -1);
+         $('select').material_select();
+     }
+ }
