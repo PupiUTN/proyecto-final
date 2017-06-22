@@ -45,7 +45,7 @@ public class MySqlFede implements ConectionMySql {
            System.out.println("============  pruebo fede");
            logger.info(conexionFede + userFede + passwordFede);
            Class.forName("com.mysql.jdbc.Driver");
-           connect = (Connection) DriverManager.getConnection(conexionFede + userFede + passwordFede);
+           connect = (Connection) DriverManager.getConnection(conexionFede, userFede, passwordFede);
            return true;
 
        } catch (ClassNotFoundException | SQLException e) {

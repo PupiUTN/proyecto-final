@@ -240,6 +240,7 @@ function mostrarLocalidades() {
         placeholder: "Localidad",
         getValue: "nombre",
         minCharNumber: 3,
+        adjustWidth: false,
         list: {
             onSelectItemEvent: function() {
 			var value = $("#busquedaLocal").getSelectedItemData().id;

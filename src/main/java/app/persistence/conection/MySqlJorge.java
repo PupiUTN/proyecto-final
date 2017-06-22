@@ -17,10 +17,10 @@ import java.util.logging.Logger;
  */
 public class MySqlJorge implements ConectionMySql {
 
-    private org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
     private String conexionJorge = "jdbc:mysql://localhost:3306/pupi";
     private String userJorge = "root";
     private String passwordJorge = "mypassword";
+    private org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public EntityManagerFactory conectionWithBd(EntityManagerFactory emf) {
@@ -42,7 +42,7 @@ public class MySqlJorge implements ConectionMySql {
             System.out.println("============  pruebo jorge");
             logger.info(conexionJorge + userJorge + passwordJorge);
             Class.forName("com.mysql.jdbc.Driver");
-            connect = (Connection) DriverManager.getConnection(conexionJorge + userJorge + passwordJorge);
+            connect = (Connection) DriverManager.getConnection(conexionJorge, userJorge, passwordJorge);
             return true;
 
         } catch (ClassNotFoundException | SQLException e) {
