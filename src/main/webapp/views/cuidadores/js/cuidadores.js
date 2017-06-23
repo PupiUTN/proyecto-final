@@ -179,8 +179,18 @@ function validarEmail(campo) {
     }
 }
 
-function postCuidador() {
 
+function validarFormualrio() {
+    //validar
+    $('#submit_handle').click();
+}
+
+//option A
+$("form").submit(function(e){
+    e.preventDefault();
+});
+
+function postCuidador() {
     var cuidador = getCuidadorDesdeForm();
     console.log(cuidador);
     console.log(JSON.stringify(cuidador));
@@ -210,6 +220,8 @@ function postCuidador() {
             });
         }
     });
+
+
 
 }
 
