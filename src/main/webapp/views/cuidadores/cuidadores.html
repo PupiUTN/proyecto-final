@@ -68,9 +68,8 @@
 
                     <div class="row" id="nuevoCuidador" hidden="">
                         <!--FORM CUIDADOR-->
-                        <form class="col s12">
+                        <form class="col s12" onsubmit="postCuidador(); return false">
                             <div class="row">
-
                                 <div class="input-field col s12">
                                     <input id="nombre" type="text" class="validate" required>
                                     <label for="nombre">Nombre</label>
@@ -115,7 +114,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <input id="submit_handle" type="submit" style="display: none">
                         </form>
+
                         <!--FORM IMAGEN-->
                         <form id="imageForm" enctype="multipart/form-data">
                             <div class="file-field input-field col s12 m6">
@@ -138,7 +139,7 @@
                         </form>
                         <!--POST CUIDADOR-->
                         <div class="input-field col s12 center">
-                            <button id="guardarCuidador" onclick="postCuidador()"
+                            <button id="guardarCuidador" onclick="validarFormualrio()"
                                     class="btn waves-effect waves-light green" type="submit">
                                 Enviar<i class="material-icons right">send</i>
                             </button>
