@@ -77,7 +77,7 @@ function postPerro() {
                 showHideTransition: 'slide',
                 icon: 'success'
             });
-            location.reload();
+            // location.reload();
 
         },
         error: function (ts) {
@@ -97,14 +97,14 @@ function getPerroDesdeForm() {
     var mensajesError = [];
     var validacion = true;
 
-    var perro = new Object();
+    var perro = {};
     perro.nombre = $('#nombre').val();
     if (perro.nombre === '') {
         mensajesError.push("ingrese nombre");
         validacion = false;
     }
 
-    var raza = new Object();
+    var raza = {};
     raza.id = $('#idRaza').val();
     raza.nombre = $('#raza').val();
     perro.raza = raza;
@@ -113,7 +113,7 @@ function getPerroDesdeForm() {
         validacion = false;
     }
 
-    var tamaño = new Object();
+    var tamaño = {};
     tamaño.id = $('#tamaño').val();
     tamaño.nombre = $('#tamaño :selected').text();
     perro.tamaño = tamaño;
@@ -124,7 +124,7 @@ function getPerroDesdeForm() {
 
     var vacunaList = [];
     $('#vacuna :selected').each(function () {
-        var vacuna = new Object();
+        var vacuna = {};
         vacuna.id = $(this).val();
         vacuna.nombre = $(this).text();
         vacunaList.push(vacuna);
@@ -232,7 +232,7 @@ $('#raza').on('focus', function () {
 
     $(this).val('');
     $('#idRaza').val('');
-    return;
+
 });
 
 function obtenerTamaños() {
