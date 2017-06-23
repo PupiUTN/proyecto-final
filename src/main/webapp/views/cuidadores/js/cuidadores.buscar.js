@@ -31,7 +31,7 @@ function generarCuidadores(jsonArray) {
                 <p> <i class="material-icons black-text">email</i> ' + jsonArray[i].email + '</p> \n\
                 </div> \n\
                 <div class="col s12 m6"> \n\
-                <p> <i class="material-icons black-text">location_on</i>' + jsonArray[i].direccion.nombre + ', '+jsonArray[i].direccion.localidad.nombre+', '+jsonArray[i].direccion.localidad.provincia.nombre+'</p> \n\
+                <p> <i class="material-icons black-text">location_on</i>' + jsonArray[i].direccion.nombre + ', ' + jsonArray[i].direccion.localidad.nombre + ', ' + jsonArray[i].direccion.localidad.provincia.nombre + '</p> \n\
                 <p> <i class="material-icons black-text">info</i>Max perros: ' + jsonArray[i].cantidadMaxDePerros + ' </p> \n\
                 </div> \n\
                 </div> \n\
@@ -85,18 +85,18 @@ $(document).ready(function () {
     $(".numero").keydown(function (e) {
 // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-            // Allow: Ctrl+A, Command+A
-            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-            // Allow: home, end, left, right, down, up
-            (e.keyCode >= 35 && e.keyCode <= 40)) {
-            // let it happen, don't do anything
-            return;
-        }
-        // Ensure that it is a number and stop the keypress
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            e.preventDefault();
-        }
-    });
+                // Allow: Ctrl+A, Command+A
+                        (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                        // Allow: home, end, left, right, down, up
+                                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    // let it happen, don't do anything
+                    return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
 });
 
 window.onload = function () {
@@ -115,11 +115,10 @@ function obtenerProvincias() {
 function llenarSelect(idSelect, jsonArray) {
     for (var i = 0; i < jsonArray.length; i++) {
         $(idSelect).append('<option value="' + jsonArray[i].id + '">' + jsonArray[i].nombre + '</option>');
+        $(idSelect).prop('selectedIndex', -1);
         $('select').material_select();
     }
 }
-
-
 
 function mostrarLocalidades() {
     var idProv = $('#busquedaProv').val();
@@ -132,10 +131,10 @@ function mostrarLocalidades() {
         minCharNumber: 3,
         adjustWidth: false,
         list: {
-            onSelectItemEvent: function() {
-			var value = $("#busquedaLocal").getSelectedItemData().id;
-			$("#idLocalidad").val(value);
-                    },
+            onSelectItemEvent: function () {
+                var value = $("#busquedaLocal").getSelectedItemData().id;
+                $("#idLocalidad").val(value);
+            },
             sort: {
                 enabled: true
             },
@@ -158,8 +157,13 @@ function mostrarLocalidades() {
     });
 }
 
+$('#busquedaLocal').on('focus', function () {
+    $(this).val('');
+    $('#idLocalidad').val('');
+});
+
 function buscarCuidadores() {
-    var idLocalidad=$('#idLocalidad').val();
+    var idLocalidad = $('#idLocalidad').val();
     if (idLocalidad === "") {
         $.toast({
             heading: 'Error',
@@ -170,7 +174,7 @@ function buscarCuidadores() {
         return;
     }
     $('#listaCuidadores').empty();
-    var url = "/api/cuidadores/localidades/"+idLocalidad;
+    var url = "/api/cuidadores/localidades/" + idLocalidad;
     $.getJSON(url, function (datos) {
         generarCuidadores(datos);
         if (datos.length === 0) {
@@ -194,18 +198,18 @@ $('#ordenarPorCantidad').on('click', function () {
     $('#listaCuidadores').empty();
     var ordenarPorCantidadObject = $('#ordenarPorCantidad');
 
-    if (ordenarPorCantidadObject.data("sense") === 'asc'){
+    if (ordenarPorCantidadObject.data("sense") === 'asc') {
         console.log("Ordeno asc");
-        listaCuidadoresOrdenada = listaCuidadoresGlobal.sort(function(a, b) {
+        listaCuidadoresOrdenada = listaCuidadoresGlobal.sort(function (a, b) {
             return parseFloat(a.cantidadMaxDePerros) - parseFloat(b.cantidadMaxDePerros);
         });
         ordenarPorCantidadObject.data("sense", "desc");
         ordenarPorCantidadObject.children('i').text('thumb_up');
 
 
-    }else {
+    } else {
         console.log("Ordeno desc");
-        listaCuidadoresOrdenada = listaCuidadoresGlobal.sort(function(a, b) {
+        listaCuidadoresOrdenada = listaCuidadoresGlobal.sort(function (a, b) {
             return parseFloat(b.cantidadMaxDePerros) - parseFloat(a.cantidadMaxDePerros);
         });
         ordenarPorCantidadObject.data("sense", "asc");
