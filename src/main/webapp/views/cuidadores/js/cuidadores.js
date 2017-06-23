@@ -160,7 +160,16 @@ function validarEmail(campo) {
 
 function validarFormualrio() {
     //validar
-    $('#submit_handle').click();
+    if ($('#busquedaProv').prop('selectedIndex') === -1) {
+        $.toast({
+            heading: 'Error',
+            text: 'Seleccione provincia',
+            showHideTransition: 'fade',
+            icon: 'error'
+        });
+        return;
+        $('#submit_handle').click();
+    }
 }
 
 //option A
@@ -284,6 +293,7 @@ function obtenerProvincias() {
 function llenarSelect(idSelect, jsonArray) {
     for (var i = 0; i < jsonArray.length; i++) {
         $(idSelect).append('<option value="' + jsonArray[i].id + '">' + jsonArray[i].nombre + '</option>');
+        $(idSelect).prop('selectedIndex', -1);
         $('select').material_select();
     }
 }

@@ -246,10 +246,8 @@ function obtenerRazas() {
 }
 
 $('#raza').on('focus', function () {
-
     $(this).val('');
     $('#idRaza').val('');
-
 });
 
 function obtenerTamaños() {
