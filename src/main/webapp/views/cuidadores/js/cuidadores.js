@@ -126,26 +126,6 @@ function getCuidadorDesdeForm() {
     return cuidador;
 }
 
-
-$(document).ready(function () {
-
-    $(".numero").keydown(function (e) {
-// Allow: backspace, delete, tab, escape, enter and .
-        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-            // Allow: Ctrl+A, Command+A
-            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-            // Allow: home, end, left, right, down, up
-            (e.keyCode >= 35 && e.keyCode <= 40)) {
-            // let it happen, don't do anything
-            return;
-        }
-        // Ensure that it is a number and stop the keypress
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            e.preventDefault();
-        }
-    });
-});
-
 var imagenes = [];
 /* global e */
 
@@ -155,11 +135,9 @@ function mostarFormNuevoCuidador() {
 
 
 
-$('#guardarCuidador').submit(function () {
-    if (validarEmail($('#email'))) {
-        postCuidador();
-    }
-});
+/*$('#guardarCuidador').submit(function () {
+ 
+ });*/
 
 function validarEmail(campo) {
     var emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
@@ -186,7 +164,7 @@ function validarFormualrio() {
 }
 
 //option A
-$("form").submit(function(e){
+$("form").submit(function (e) {
     e.preventDefault();
 });
 
@@ -200,6 +178,7 @@ function postCuidador() {
         data: JSON.stringify(cuidador),
         contentType: "application/json",
         success: function () {
+            limpiarCampos();
             console.log("exito crear cuidador");
             $('#nuevoCuidador').hide();
             $.toast({
@@ -220,11 +199,27 @@ function postCuidador() {
             });
         }
     });
-
-
-
+    $(':input', '#myform')
+            .removeAttr('checked')
+            .removeAttr('selected')
+            .not(':button, :submit, :reset, :hidden, :radio, :checkbox')
+            .val('');
 }
 
+function limpiarCampos() {
+    $(':input', '#formCuidador')
+            .removeAttr('checked')
+            .removeAttr('selected')
+            .not(':button, :submit, :reset, :hidden, :radio, :checkbox')
+            .val('');
+    $(':input', '#imageForm')
+            .removeAttr('checked')
+            .removeAttr('selected')
+            .not(':button, :submit, :reset, :hidden, :radio, :checkbox')
+            .val('');
+    $('#contenedorImagen').empty();
+    imagenes = [];
+}
 
 function mostrarImagen(pathImagen) {
     var pos = pathImagen.lastIndexOf("/");
@@ -234,30 +229,10 @@ function mostrarImagen(pathImagen) {
     } else {
         nombreImagen = pathImagen;
     }
-    if ((/\.(jpg|png|gif)$/i).test(nombreImagen)) {
-        if (imagenes.length <= 3) {
-            $('#contenedorImagen').append('<img src="' + pathImagen + '" height="100" width="100"  class="imagenCuidador" alt="Imagen previsualizada">');
-            imagenes.push(pathImagen);
-        } else {
-            console.log("error agregar imagen");
-            $.toast({
-                heading: 'Error',
-                text: 'Ya hay 4 imágenes agregadas.',
-                showHideTransition: 'fade',
-                icon: 'error'
-            });
-        }
-    } else {
-        console.log("error agregar imagen");
-        $.toast({
-            heading: 'Error',
-            text: 'El archivo a agregar no es una imagen.',
-            showHideTransition: 'fade',
-            icon: 'error'
-        });
-    }
-//$('#muestraImagen').attr('src', window.URL.createObjectURL($('#imagen').get(0).files.item(0)));
+    $('#contenedorImagen').append('<img src="' + pathImagen + '" height="100" width="100"  class="imagenPerro" alt="Imagen previsualizada">');
+    imagenes.push(pathImagen);
 }
+//$('#muestraImagen').attr('src', window.URL.createObjectURL($('#imagen').get(0).files.item(0)));
 
 
 window.onload = function () {
@@ -265,6 +240,38 @@ window.onload = function () {
     obtenerProvincias();
     $('select').material_select();
 };
+
+$(".letras").keydown(function (e) {
+// Allow: backspace, delete, tab, escape, enter, shift and .
+    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190, 16, 32]) !== -1 ||
+            // Allow: Ctrl+A, Command+A
+                    (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                    // Allow: home, end, left, right, down, up
+                            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a letter and stop the keypress
+            if ((e.keyCode < 65 || e.keyCode > 90)) {
+                e.preventDefault();
+            }
+        });
+
+$(".numero").keydown(function (e) {
+// Allow: backspace, delete, tab, escape, enter and .
+    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+            // Allow: Ctrl+A, Command+A
+                    (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                    // Allow: home, end, left, right, down, up
+                            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
 
 
 function obtenerProvincias() {
@@ -330,8 +337,6 @@ $('#imageFile').on('change', function () {
             showHideTransition: 'fade',
             icon: 'error'
         });
-
-        $('#imageFile').empty();
         return;
     }
 
@@ -343,31 +348,53 @@ $('#imageFile').on('change', function () {
             showHideTransition: 'fade',
             icon: 'error'
         });
-
-        $('#imageFile').empty();
     }
 
-
+    console.log(imagenes);
 });
 
 $('#imageButton').on('click', function () {
-    $.ajax({
-        // Your server script to process the upload
-        url: '/api/file/',
-        type: 'POST',
+    if (imagenes.length <= 3) {
+        console.log($('#imageFile').val());
+        var file = $('#imageFile').val();
+        var regexExtensionValidator = /(\.jpg|\.jpeg|\.png)$/i;
+        if (regexExtensionValidator.exec(file)) {
+            $.ajax({
+                // Your server script to process the upload
+                url: '/api/file/',
+                type: 'POST',
 
-        // Form data
-        data: new FormData($('form')[1]),
-        // Tell jQuery not to process data or worry about content-type
-        // You *must* include these options!
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-            console.log(data);
-            mostrarImagen(data);
+                // Form data
+                data: new FormData($('form')[1]),
+                // Tell jQuery not to process data or worry about content-type
+                // You *must* include these options!
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log(data);
+                    mostrarImagen(data);
+
+
+                }
+            });
+        } else {
+            $.toast({
+                heading: 'Error',
+                text: 'Extension no soportada.',
+                showHideTransition: 'fade',
+                icon: 'error'
+            });
         }
-    });
+    } else {
+        console.log("error agregar imagen");
+        $.toast({
+            heading: 'Error',
+            text: 'Ya hay 4 imágenes agregadas.',
+            showHideTransition: 'fade',
+            icon: 'error'
+        });
+    }
 });
 
 $('.modal').modal({
