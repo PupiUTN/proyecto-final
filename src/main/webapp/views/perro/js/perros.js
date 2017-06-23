@@ -69,6 +69,7 @@ function postPerro() {
         data: JSON.stringify(perro),
         contentType: "application/json",
         success: function () {
+            limpiarCampos();
             console.log("exito crear perro");
             $('#nuevoPerro').hide();
             $.toast({
@@ -91,8 +92,23 @@ function postPerro() {
             });
         }
     });
-
 }
+
+function limpiarCampos() {
+    $(':input', '#formCuidador')
+            .removeAttr('checked')
+            .removeAttr('selected')
+            .not(':button, :submit, :reset, :hidden, :radio, :checkbox')
+            .val('');
+    $(':input', '#imageForm')
+            .removeAttr('checked')
+            .removeAttr('selected')
+            .not(':button, :submit, :reset, :hidden, :radio, :checkbox')
+            .val('');
+    $('#contenedorImagen').empty();
+    imagenes = [];
+}
+
 function getPerroDesdeForm() {
     var mensajesError = [];
     var validacion = true;
@@ -177,22 +193,23 @@ window.onload = function () {
     obtenerVacunas();
     getEventos();
     $('select').material_select();
-    $(".letras").keydown(function (e) {
-// Allow: backspace, delete, tab, escape, enter, shift and .
-        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190, 16, 32]) !== -1 ||
-                // Allow: Ctrl+A, Command+A
-                        (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-                        // Allow: home, end, left, right, down, up
-                                (e.keyCode >= 35 && e.keyCode <= 40)) {
-                    // let it happen, don't do anything
-                    return;
-                }
-                // Ensure that it is a letter and stop the keypress
-                if ((e.keyCode < 65 || e.keyCode > 90) && (e.keyCode < 97 || e.keyCode > 122)) {
-                    e.preventDefault();
-                }
-            });
 };
+
+$(".letras").keydown(function (e) {
+// Allow: backspace, delete, tab, escape, enter, shift and .
+    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190, 16, 32]) !== -1 ||
+            // Allow: Ctrl+A, Command+A
+                    (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                    // Allow: home, end, left, right, down, up
+                            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a letter and stop the keypress
+            if ((e.keyCode < 65 || e.keyCode > 90)) {
+                e.preventDefault();
+            }
+        });
 
 function obtenerRazas() {
     $('#raza').easyAutocomplete({

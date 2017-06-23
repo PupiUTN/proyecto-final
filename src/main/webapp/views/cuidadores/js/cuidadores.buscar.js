@@ -160,23 +160,23 @@ function mostrarLocalidades() {
 
 function buscarCuidadores() {
     var idLocalidad=$('#idLocalidad').val();
-    if (idLocalidad == "") {
+    if (idLocalidad === "") {
         $.toast({
             heading: 'Error',
             text: 'Seleccione una provincia y luego una localidad para buscar',
             showHideTransition: 'fade',
             icon: 'error'
         });
-        return
+        return;
     }
     $('#listaCuidadores').empty();
     var url = "/api/cuidadores/localidades/"+idLocalidad;
     $.getJSON(url, function (datos) {
         generarCuidadores(datos);
-        if (datos.length == 0) {
+        if (datos.length === 0) {
             $.toast({
                 heading: 'Error',
-                text: 'No existen cuiadores en esta localidad',
+                text: 'No existen cuidadores en esta localidad',
                 showHideTransition: 'fade',
                 icon: 'error'
             });
@@ -194,7 +194,7 @@ $('#ordenarPorCantidad').on('click', function () {
     $('#listaCuidadores').empty();
     var ordenarPorCantidadObject = $('#ordenarPorCantidad');
 
-    if (ordenarPorCantidadObject.data("sense") == 'asc'){
+    if (ordenarPorCantidadObject.data("sense") === 'asc'){
         console.log("Ordeno asc");
         listaCuidadoresOrdenada = listaCuidadoresGlobal.sort(function(a, b) {
             return parseFloat(a.cantidadMaxDePerros) - parseFloat(b.cantidadMaxDePerros);
