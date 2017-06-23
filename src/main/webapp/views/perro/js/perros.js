@@ -11,7 +11,6 @@ function generarPerros(jsonArray) {
     for (var i = 0; i < arrayLength; i++) {
         //existe un problema con los espacios, entonces al html lo copiamos en la barra url del explorador y luego lo cortamos para tenr bien el formato
         var url;
-        console.log(jsonArray[i].fotoRuta);
         if (jsonArray[i].fotoRuta === null) {
             url = '/img/dog-1.jpg';
         } else {
@@ -19,7 +18,7 @@ function generarPerros(jsonArray) {
         }
         var itmeList = '\
     \<li class="collection-item avatar"> \n\
-    <img src="'+url+'" alt="" class="circle"> \n\
+    <img src="' + url + '" alt="" class="circle"> \n\
     <span class="title"> \n\
     <b>' + jsonArray[i].nombre + '</b></span> \n\
     <div class="row"> \n\
@@ -69,6 +68,8 @@ $('#guardarPerro').submit(function () {
 
 function postPerro() {
     var perro = getPerroDesdeForm();
+    if (perro === false)
+        return;
     $.ajax({
         type: "POST",
         url: '/api/perros',
@@ -83,40 +84,64 @@ function postPerro() {
                 showHideTransition: 'slide',
                 icon: 'success'
             });
-            //location.reload();
+            location.reload();
 
         },
-        error: function () {
+        error: function (ts) {
             console.log("error crear perro");
+            console.log(ts.responseText);
             $.toast({
                 heading: 'Error',
                 text: 'Error al crear nuevo perro.',
                 showHideTransition: 'fade',
                 icon: 'error'
-            })
+            });
         }
     });
 
 }
 function getPerroDesdeForm() {
+    var mensajesError = [];
+    var validacion = true;
+
+    var perro = new Object();
+    perro.nombre = $('#nombre').val();
+    if (perro.nombre === '') {
+        mensajesError.push("ingrese nombre");
+        validacion = false;
+    }
+
     var raza = new Object();
     raza.id = $('#idRaza').val();
     raza.nombre = $('#raza').val();
+    perro.raza = raza;
+    if (perro.raza.id === '') {
+        mensajesError.push("seleccione raza");
+        validacion = false;
+    }
 
     var tamaño = new Object();
     tamaño.id = $('#tamaño').val();
     tamaño.nombre = $('#tamaño :selected').text();
+    perro.tamaño = tamaño;
+    if (perro.tamaño.id === null) {
+        mensajesError.push("seleccione tamaño");
+        validacion = false;
+    }
 
     var vacunaList = [];
-
     $('#vacuna :selected').each(function () {
         var vacuna = new Object();
         vacuna.id = $(this).val();
         vacuna.nombre = $(this).text();
         vacunaList.push(vacuna);
     });
-
-//    for (var i = 0; i < $('#vacuna').val().length; i++) {
+    perro.vacunacionList = vacunaList;
+    if (perro.vacunacionList.length === 0) {
+        mensajesError.push("seleccione al menos una vacuna");
+        validacion = false;
+    }
+    //    for (var i = 0; i < $('#vacuna').val().length; i++) {
 //        var vacuna = new Object();
 //        vacuna.id = $('#vacuna').val()[i];
 //        vacunaList.push(vacuna);
@@ -125,21 +150,31 @@ function getPerroDesdeForm() {
     $(".imagenPerro").each(function () {
         fotoRuta = $(this).attr('src');
     });
-    console.log(fotoRuta);
-    
-    var dueño = null;
-
-    var perro = new Object();
-    perro.nombre = $('#nombre').val();
-    perro.raza = raza;
-    perro.tamaño = tamaño;
-    perro.vacunacionList = vacunaList;
     perro.fotoRuta = fotoRuta;
+
+    var dueño = null;
     perro.dueño = dueño;
+
     perro.comentario = $('#comentario').val();
+
+    if (validacion === false) {
+        var mensajeError = mensajesError[0];
+        if (mensajesError.length > 1) {
+            for (var i = 1; i < mensajesError.length; i++) {
+                mensajeError += ', ' + mensajesError[i];
+            }
+        }
+        $.toast({
+            heading: 'Error',
+            text: 'Error al crear nuevo perro: ' + mensajeError,
+            showHideTransition: 'fade',
+            icon: 'error'
+        });
+        return false;
+    }
+
     return perro;
 }
-
 
 
 window.onload = function () {
@@ -149,6 +184,21 @@ window.onload = function () {
     obtenerVacunas();
     getEventos();
     $('select').material_select();
+    $(".letras").keydown(function (e) {
+// Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                // Allow: Ctrl+A, Command+A
+                        (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                        // Allow: home, end, left, right, down, up
+                                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    // let it happen, don't do anything
+                    return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 65 || e.keyCode > 90))) {
+                    e.preventDefault();
+                }
+            });
 };
 
 function obtenerRazas() {
@@ -157,6 +207,7 @@ function obtenerRazas() {
         placeholder: "Escriba raza",
         getValue: "nombre",
         minCharNumber: 3,
+        adjustWidth: false,
         list: {
             onSelectItemEvent: function () {
                 var value = $("#raza").getSelectedItemData().id;
@@ -183,6 +234,13 @@ function obtenerRazas() {
         }
     });
 }
+
+$('#raza').on('focus', function () {
+
+    $(this).val('');
+    $('#idRaza').val('');
+    return;
+});
 
 function obtenerTamaños() {
     var url = "/api/tamaños";
@@ -216,28 +274,8 @@ function mostrarImagen(pathImagen) {
     } else {
         nombreImagen = pathImagen;
     }
-    if ((/\.(jpg|png|gif)$/i).test(nombreImagen)) {
-        if (imagenes.length === 0) {
-            $('#contenedorImagen').append('<img src="' + pathImagen + '" height="100" width="100"  class="imagenPerro" alt="Imagen previsualizada">');
-            imagenes.push(pathImagen);
-        } else {
-            console.log("error agregar imagen");
-            $.toast({
-                heading: 'Error',
-                text: 'Ya hay 1 imagen agregada.',
-                showHideTransition: 'fade',
-                icon: 'error'
-            });
-        }
-    } else {
-        console.log("error agregar imagen");
-        $.toast({
-            heading: 'Error',
-            text: 'El archivo a agregar no es una imagen.',
-            showHideTransition: 'fade',
-            icon: 'error'
-        });
-    }
+    $('#contenedorImagen').append('<img src="' + pathImagen + '" height="100" width="100"  class="imagenPerro" alt="Imagen previsualizada">');
+    imagenes.push(pathImagen);
 }
 //$('#muestraImagen').attr('src', window.URL.createObjectURL($('#imagen').get(0).files.item(0)));
 
@@ -252,8 +290,6 @@ $('#imageFile').on('change', function () {
             showHideTransition: 'fade',
             icon: 'error'
         });
-
-        $('#imageFile').empty();
         return;
     }
 
@@ -265,31 +301,51 @@ $('#imageFile').on('change', function () {
             showHideTransition: 'fade',
             icon: 'error'
         });
-
-        $('#imageFile').empty();
     }
 
-
+    console.log(imagenes);
 });
 
 $('#imageButton').on('click', function () {
-    $.ajax({
-        // Your server script to process the upload
-        url: '/api/file/',
-        type: 'POST',
+    if (imagenes.length === 0) {
+        console.log($('#imageFile').val());
+        var file = $('#imageFile').val();
+        var regexExtensionValidator = /(\.jpg|\.jpeg|\.png)$/i;
+        if (regexExtensionValidator.exec(file)) {
+            $.ajax({
+                // Your server script to process the upload
+                url: '/api/file/',
+                type: 'POST',
 
-        // Form data
-        data: new FormData($('form')[1]),
-        // Tell jQuery not to process data or worry about content-type
-        // You *must* include these options!
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-            console.log(data);
-            mostrarImagen(data);
+                // Form data
+                data: new FormData($('form')[1]),
+                // Tell jQuery not to process data or worry about content-type
+                // You *must* include these options!
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log(data);
+                    mostrarImagen(data);
 
 
+                }
+            });
+        } else {
+            $.toast({
+                heading: 'Error',
+                text: 'Extension no soportada.',
+                showHideTransition: 'fade',
+                icon: 'error'
+            });
         }
-    });
+    } else {
+        console.log("error agregar imagen");
+        $.toast({
+            heading: 'Error',
+            text: 'Ya hay 1 imagen agregada.',
+            showHideTransition: 'fade',
+            icon: 'error'
+        });
+    }
 });

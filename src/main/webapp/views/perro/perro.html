@@ -47,7 +47,7 @@
                 <div class="section">
 
                     <div class="center-align">
-                        <h3>Perro CRUD / ABM </h3>
+                        <h3>Perros</h3>
                     </div>
                     <!-- MODELO A SEGUIR http://materializecss.com/collections.html -->
                     <div class="row">
@@ -86,7 +86,7 @@
                     </div>
 
                     <div class="row" id="nuevoPerro">
-                        <form class="col s12">
+                        <form id=formPerro class="col s12">
                             <div class="row">
 
                                 <!--                                <div class="file-field input-field">
@@ -103,13 +103,13 @@
                                                                 </div>-->
 
                                 <div class="input-field col s12">
-                                    <input id="nombre" type="text" class="validate" required>
+                                    <input id="nombre" type="text" class="validate letras" maxlength=255 required>
                                     <label for="nombre">Nombre</label>
                                 </div>
 
                                 <div class="col s12">
                                     <label for="raza">Raza</label>
-                                    <input type="text" id="raza" required>
+                                    <input type="text" id="raza" maxlength=255 required>
                                     <a id="idRaza" hidden=""></a>
                                 </div>
 
@@ -128,7 +128,7 @@
                                 </div>
 
                                 <div class="input-field col s12">
-                                    <textarea id="comentario" class="materialize-textarea"></textarea>
+                                    <textarea id="comentario" class="materialize-textarea" maxlength=255></textarea>
                                     <label for="comentario">Comentario</label>
                                 </div>
 
