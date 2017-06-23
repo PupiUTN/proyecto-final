@@ -39,13 +39,6 @@ function generarPerros(jsonArray) {
             </p> \n\
         </div> \n\
     </div> \n\
-        <div class="secondary-content"> \n\
-        <a href="#!" >\n\
-        <i class="material-icons">delete</i>\n\
-        </a> <br> \n\
-        <a href="#!" >\n\
-        <i class="material-icons">edit</i>\n\
-        </a> </div> \n\
 </li>\
 ';
 
