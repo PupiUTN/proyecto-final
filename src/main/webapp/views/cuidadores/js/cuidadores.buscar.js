@@ -44,11 +44,6 @@ function generarCuidadores(jsonArray) {
 }
 
 
-$('.reserva').on('click', function () {
-    var id = $('.idCuidador').eq(($('.reserva').index(this))).val();
-    console.log(id);
-});
-
 
 
 var btnEliminar;
@@ -70,6 +65,12 @@ function eliminarAJAX() {
         success: function () {
             btnEliminar.parent().parent().parent().parent().parent().parent().remove();
             console.log('Se borro cuidador con ID: ' + idElim);
+            $.toast({
+                heading: 'Success',
+                text: 'Exito al borrar el cuidador',
+                showHideTransition: 'slide',
+                icon: 'success'
+            });
         },
         error: function () {
             idElim = 0;
@@ -98,119 +99,11 @@ $(document).ready(function () {
     });
 });
 
-$('.modal').modal({
-    dismissible: true, // Modal can be dismissed by clicking outside of the modal
-    opacity: .5, // Opacity of modal background
-    inDuration: 300, // Transition in duration
-    outDuration: 200, // Transition out duration
-    startingTop: '4%', // Starting top style attribute
-    endingTop: '10%' // Ending top style attribute
-
-});
-
-$('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15 // Creates a dropdown of 15 years to control year
-});
-
-var imagenes = [];
-/* global e */
-
-function mostarFormNuevoCuidador() {
-    $('#nuevoCuidador').toggle();
-}
-
-function mostarFormBuscarCuidador() {
-    $('#nuevaBusqueda').toggle();
-}
-
-$('#guardarCuidador').submit(function () {
-    if (validarEmail($('#email'))) {
-        postCuidador();
-    }
-});
-$('#nuevaReserva').submit(function () {
-    if (validarEmail($('#email'))) {
-        postReserva();
-    }
-});
-
-function validarEmail(campo) {
-    var emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
-    //Se muestra un texto a modo de ejemplo, luego va a ser un icono
-    if (!emailRegex.test(campo.val())) {
-        console.log("error agregar cuidador");
-        $.toast({
-            heading: 'Error',
-            text: 'El email ingresado no es válido.',
-            showHideTransition: 'fade',
-            icon: 'error'
-        });
-        return false;
-    } else {
-        console.log('aprobo mail, voy a guardar');
-        return true;
-    }
-}
-
-function postReserva() {
-
-    var reserva = getReservaDesdeForm();
-    $.ajax({
-        type: "POST",
-        url: '/api/reservas',
-        data: JSON.stringify(reserva),
-        contentType: "application/json",
-        success: function () {
-            console.log("exito crear reserva");
-            //$('#modalReserva').modal('close');
-            $.toast({
-                heading: 'Success',
-                text: 'Exito al crear nueva reserva. Refrescar la pagina para verla',
-                showHideTransition: 'slide',
-                icon: 'success'
-            });
-            //location.reload();
-
-        },
-        error: function () {
-            console.log("error crear reserva");
-            $.toast({
-                heading: 'Error',
-                text: 'Error al crear nueva reserva.',
-                showHideTransition: 'fade',
-                icon: 'error'
-            });
-        }
-    });
-}
-
-function getReservaDesdeForm() {
-    var perro = new Object();
-    perro.nombre = $('#perro').val();
-    var reserva = new Object();
-    reserva.fechaInicio = $('#fechaInicio').val();
-    reserva.fechaFin = $('#fechaFin').val();
-    reserva.perro = perro;
-    reserva.nombreDuenio = $('#nombreDuenio').val();
-    reserva.emailDuenio = $('#emailDuenio').val();
-    reserva.telefonoDuenio = $('#telefonoDuenio').val();
-    reserva.dniDuenio = $('#dniDuenio').val();
-    return reserva;
-}
-
 window.onload = function () {
-    obtenerPerros();
     obtenerProvincias();
     $('select').material_select();
 };
 
-function obtenerPerros() {
-    var url = "/api/perros";
-    $.getJSON(url, function (datos) {
-        llenarSelect('#perro', datos);
-    });
-}
 
 function obtenerProvincias() {
     var url = "/api/provincias";
@@ -267,12 +160,33 @@ function mostrarLocalidades() {
 
 function buscarCuidadores() {
     var idLocalidad=$('#idLocalidad').val();
+    if (idLocalidad == "") {
+        $.toast({
+            heading: 'Error',
+            text: 'Seleccione una provincia y luego una localidad para buscar',
+            showHideTransition: 'fade',
+            icon: 'error'
+        });
+        return
+    }
     $('#listaCuidadores').empty();
     var url = "/api/cuidadores/localidades/"+idLocalidad;
     $.getJSON(url, function (datos) {
         generarCuidadores(datos);
+        if (datos.length == 0) {
+            $.toast({
+                heading: 'Error',
+                text: 'No existen cuiadores en esta localidad',
+                showHideTransition: 'fade',
+                icon: 'error'
+            });
+            $('#buscadores').hide();
+        } else {
+            $('#buscadores').show();
+        }
+
     });
-    $('#buscadores').show();
+
 }
 
 $('#ordenarPorCantidad').on('click', function () {
@@ -302,5 +216,16 @@ $('#ordenarPorCantidad').on('click', function () {
     }
 
     generarCuidadores(listaCuidadoresOrdenada);
+
+});
+
+
+$('.modal').modal({
+    dismissible: true, // Modal can be dismissed by clicking outside of the modal
+    opacity: .5, // Opacity of modal background
+    inDuration: 300, // Transition in duration
+    outDuration: 200, // Transition out duration
+    startingTop: '4%', // Starting top style attribute
+    endingTop: '10%' // Ending top style attribute
 
 });
