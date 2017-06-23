@@ -178,8 +178,8 @@ window.onload = function () {
     getEventos();
     $('select').material_select();
     $(".letras").keydown(function (e) {
-// Allow: backspace, delete, tab, escape, enter and .
-        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+// Allow: backspace, delete, tab, escape, enter, shift and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190, 16, 32]) !== -1 ||
                 // Allow: Ctrl+A, Command+A
                         (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
                         // Allow: home, end, left, right, down, up
@@ -187,8 +187,8 @@ window.onload = function () {
                     // let it happen, don't do anything
                     return;
                 }
-                // Ensure that it is a number and stop the keypress
-                if ((e.shiftKey || (e.keyCode < 65 || e.keyCode > 90))) {
+                // Ensure that it is a letter and stop the keypress
+                if ((e.keyCode < 65 || e.keyCode > 90) && (e.keyCode < 97 || e.keyCode > 122)) {
                     e.preventDefault();
                 }
             });
