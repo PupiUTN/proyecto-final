@@ -160,9 +160,6 @@ function validarEmail(campo) {
 
 function validarFormualrio() {
     //validar
-    if (validarEmail($('#email'))){
-        return false;
-    }
     $('#submit_handle').click();
 }
 
