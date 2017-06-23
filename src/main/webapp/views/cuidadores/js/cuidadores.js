@@ -1,4 +1,4 @@
-    window.onload = function () {
+window.onload = function () {
     getCuidadores();
     $('select').material_select();
 };
@@ -82,6 +82,12 @@ function eliminarAJAX() {
         success: function () {
             btnEliminar.parent().parent().parent().parent().parent().parent().remove();
             console.log('Se borro cuidador con ID: ' + idElim);
+            $.toast({
+                heading: 'Success',
+                text: 'Exito al borrar el cuidador',
+                showHideTransition: 'slide',
+                icon: 'success'
+            });
         },
         error: function () {
             idElim = 0;
@@ -91,26 +97,26 @@ function eliminarAJAX() {
 }
 
 function getCuidadorDesdeForm() {
-    var provincia = new Object();
+    var provincia = {};
     provincia.id = $('#busquedaProv').val();
     provincia.nombre = $('#busquedaProv :selected').text();
 
-    var dir = new Object();
+    var dir = {};
     dir.nombre = $('#direccion').val();
-    var localidad = new Object();
+    var localidad = {};
     localidad.nombre = $('#localidad').val();
     localidad.id = $('#idLocalidad').val();
-    localidad.provincia  = provincia;
+    localidad.provincia = provincia;
     dir.localidad = localidad;
     var fotosList = [];
     var i = 0;
     $(".imagenCuidador").each(function () {
-        var imagen = new Object();
+        var imagen = {};
         imagen.url = $(this).attr('src');
         fotosList[i] = imagen;
         i++;
     });
-    var cuidador = new Object();
+    var cuidador = {};
     cuidador.nombre = $('#nombre').val();
     cuidador.email = $('#email').val();
     cuidador.direccion = dir;
@@ -140,19 +146,6 @@ $(document).ready(function () {
     });
 });
 
-$('.modal').modal({
-    dismissible: true, // Modal can be dismissed by clicking outside of the modal
-    opacity: .5, // Opacity of modal background
-    inDuration: 300, // Transition in duration
-    outDuration: 200, // Transition out duration
-    startingTop: '4%', // Starting top style attribute
-    endingTop: '10%' // Ending top style attribute
-
-});
-$('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15 // Creates a dropdown of 15 years to control year
-});
 var imagenes = [];
 /* global e */
 
@@ -160,20 +153,14 @@ function mostarFormNuevoCuidador() {
     $('#nuevoCuidador').toggle();
 }
 
-function mostarFormBuscarCuidador() {
-    $('#nuevaBusqueda').toggle();
-}
+
 
 $('#guardarCuidador').submit(function () {
     if (validarEmail($('#email'))) {
         postCuidador();
     }
 });
-$('#nuevaReserva').submit(function () {
-    if (validarEmail($('#email'))) {
-        postReserva();
-    }
-});
+
 function validarEmail(campo) {
     var emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
     //Se muestra un texto a modo de ejemplo, luego va a ser un icono
@@ -193,83 +180,37 @@ function validarEmail(campo) {
 }
 
 function postCuidador() {
-    if (validarEmail($('#email'))) {
-        var cuidador = getCuidadorDesdeForm();
-        console.log(cuidador);
-        console.log(JSON.stringify(cuidador));
-        $.ajax({
-            type: "POST",
-            url: '/api/cuidadores',
-            data: JSON.stringify(cuidador),
-            contentType: "application/json",
-            success: function () {
-                console.log("exito crear cuidador");
-                $('#nuevoCuidador').hide();
-                $.toast({
-                    heading: 'Success',
-                    text: 'Exito al crear nuevo cuidador. Refrescar la pagina para verlo',
-                    showHideTransition: 'slide',
-                    icon: 'success'
-                });
-                location.reload();
-            },
-            error: function () {
-                console.log("error crear cuidador");
-                $.toast({
-                    heading: 'Error',
-                    text: 'Erro al crear nuevo cuidador.',
-                    showHideTransition: 'fade',
-                    icon: 'error'
-                });
-            }
-        });
-    }
-}
 
-
-function postReserva() {
-
-    var reserva = getReservaDesdeForm();
+    var cuidador = getCuidadorDesdeForm();
+    console.log(cuidador);
+    console.log(JSON.stringify(cuidador));
     $.ajax({
         type: "POST",
-        url: '/api/reservas',
-        data: JSON.stringify(reserva),
+        url: '/api/cuidadores',
+        data: JSON.stringify(cuidador),
         contentType: "application/json",
         success: function () {
-            console.log("exito crear reserva");
-            //$('#modalReserva').modal('close');
+            console.log("exito crear cuidador");
+            $('#nuevoCuidador').hide();
             $.toast({
                 heading: 'Success',
-                text: 'Exito al crear nueva reserva. Refrescar la pagina para verla',
+                text: 'Exito al crear nuevo cuidador. Refrescar la pagina para verlo',
                 showHideTransition: 'slide',
                 icon: 'success'
             });
-            //location.reload();
-
+            // location.reload();
         },
         error: function () {
-            console.log("error crear reserva");
+            console.log("error crear cuidador");
             $.toast({
                 heading: 'Error',
-                text: 'Error al crear nueva reserva.',
+                text: 'Erro al crear nuevo cuidador.',
                 showHideTransition: 'fade',
                 icon: 'error'
             });
         }
     });
-}
-function getReservaDesdeForm() {
-    var perro = new Object();
-    perro.nombre = $('#perro').val();
-    var reserva = new Object();
-    reserva.fechaInicio = $('#fechaInicio').val();
-    reserva.fechaFin = $('#fechaFin').val();
-    reserva.perro = perro;
-    reserva.nombreDuenio = $('#nombreDuenio').val();
-    reserva.emailDuenio = $('#emailDuenio').val();
-    reserva.telefonoDuenio = $('#telefonoDuenio').val();
-    reserva.dniDuenio = $('#dniDuenio').val();
-    return reserva;
+
 }
 
 
@@ -413,9 +354,16 @@ $('#imageButton').on('click', function () {
         success: function (data) {
             console.log(data);
             mostrarImagen(data);
-
-
         }
     });
 });
 
+$('.modal').modal({
+    dismissible: true, // Modal can be dismissed by clicking outside of the modal
+    opacity: .5, // Opacity of modal background
+    inDuration: 300, // Transition in duration
+    outDuration: 200, // Transition out duration
+    startingTop: '4%', // Starting top style attribute
+    endingTop: '10%' // Ending top style attribute
+
+});
