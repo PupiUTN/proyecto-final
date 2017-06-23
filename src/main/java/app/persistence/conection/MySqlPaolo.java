@@ -42,7 +42,7 @@ public class MySqlPaolo implements ConectionMySql {
             System.out.println("============  pruebo paolo");
          //   logger.info(conexionPaolo + userPaolo + passwordPaolo);
             Class.forName("com.mysql.jdbc.Driver");
-            connect = (Connection) DriverManager.getConnection(conexionPaolo + userPaolo + passwordPaolo);
+            connect = (Connection) DriverManager.getConnection(conexionPaolo, userPaolo, passwordPaolo);
             return true;
 
         } catch (ClassNotFoundException | SQLException e) {

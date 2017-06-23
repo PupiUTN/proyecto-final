@@ -4,6 +4,7 @@ import app.models.entities.Cuidador;
 import app.persistence.CuidadorDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -28,7 +29,13 @@ public class CuidadorService {
     }
 
     public void deleteCuidador(Long id) {
-        cuidadorDAO.removeID(id);
+        if (id > 0) {
+            Cuidador cuidador = new Cuidador();
+            cuidador.setId(id);
+            cuidadorDAO.remove(cuidador);
+        } else {
+            //chupa el perro
+        }
     }
 
     public void createCuidador(Cuidador entity) {
