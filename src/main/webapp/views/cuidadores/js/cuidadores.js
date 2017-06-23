@@ -45,9 +45,6 @@ function generarCuidadores(jsonArray) {
                 </div> \n\
                 </div> \n\
             </div> \n\
-            <div class="card-action"> \n\
-            <a href="#!" data-target="modalReserva" class="reserva">Solicitar Reserva</a> \n\
-            </div> \n\
         </div> \n\
     </div> \n\
 </div>';

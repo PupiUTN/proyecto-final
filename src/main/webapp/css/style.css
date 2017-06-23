@@ -28,3 +28,12 @@ main {
     height: 300px;
 
 }
+
+.logo {
+    display: inline-block;
+    height: 100%;
+}
+
+.logo>img {
+    vertical-align: middle
+}
