@@ -5,54 +5,48 @@
  */
 package app.persistence.conection;
 
-import com.mysql.jdbc.Connection;
-import org.slf4j.LoggerFactory;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import java.net.URI;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
-/**
- *
- * @author jose
- * Refactor : Gabi
- */
 
 public class BaseDatos {
 
-    private static EntityManagerFactory emf;
-    private EntityManager em;
+    private static EntityManagerFactory entityManagerFactory;
+    private EntityManager entityManager;
+    private ConectionStrategy conectionStrategy;
+
     public BaseDatos() throws Exception {
         initEntityManagerFactory();
-        if (em == null) {
-            em = emf.createEntityManager();
+        if (entityManager == null) {
+            entityManager = entityManagerFactory.createEntityManager();
         }
     }
 
     private void initEntityManagerFactory() throws Exception {
+        if (entityManagerFactory == null) {
+            List<ConectionStrategy> conectionStrategies = new LinkedList<>();
+            conectionStrategies.add(new StrategyJose());
+            conectionStrategies.add(new StrategyJorge());
+            conectionStrategies.add(new StrategyFede());
+            conectionStrategies.add(new StrategyGabi());
+            for (Iterator<ConectionStrategy> iterator = conectionStrategies.iterator(); iterator.hasNext(); ) {
+                conectionStrategy = iterator.next();
+                if (conectionStrategy.isThisDataBaseOnline()) {
+                    entityManagerFactory = conectionStrategy.getEntityManagerFactory();
+                    break;
 
-        ConectionMySql cm [] = new ConectionMySql[7];
-        cm[0] = new MySqlJose();
-        cm[1] = new MySqlJorge();
-        cm[2] = new MySqlPaolo();
-        cm[3] = new MySqlOpenShift();
-        cm[4] = new MySqlHeroku();
-        cm[5] = new MySqlFede();
-        cm[6] = new MySqlGabi();
-        for (int i = 0; i < cm.length; i++) {
+                }
+            }
+        }
 
-           if( cm[i].isThisDataBaseOnline()){
-              emf = cm[i].conectionWithBd(emf);
-            break;
-        }
-        }
+
     }
+
     public EntityManager getEntityManager() {
-        return em;
+        return entityManager;
     }
 
 }
