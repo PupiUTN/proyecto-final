@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="490.0000000000001" y="396.0">app.models.entities.Raza</node>
+    <node x="0.0" y="359.0">app.models.entities.Tamaño</node>
+    <node x="668.8541666666667" y="912.0">app.models.entities.Reserva</node>
+    <node x="988.0000000000001" y="588.0">app.models.entities.Cuidador</node>
+    <node x="676.3541666666667" y="1163.0">app.models.entities.Calificacion</node>
+    <node x="342.2500000000001" y="588.0">app.models.entities.Perro</node>
+    <node x="1162.5" y="180.0">app.models.entities.Localidad</node>
+    <node x="1163.5" y="0.0">app.models.entities.Provincia</node>
+    <node x="300.0" y="396.0">app.models.entities.Dueño</node>
+    <node x="948.0000000000001" y="396.0">app.models.entities.Imagen</node>
+    <node x="733.0000000000001" y="383.5">app.models.entities.Vacuna</node>
+    <node x="1143.0" y="360.0">app.models.entities.Direccion</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="app.models.entities.Perro" target="app.models.entities.Raza">
+      <point x="37.75" y="-137.0" />
+      <point x="531.0000000000001" y="568.0" />
+      <point x="601.5000000000001" y="568.0" />
+      <point x="0.0" y="52.5" />
+    </edge>
+    <edge source="app.models.entities.Perro" target="app.models.entities.Tamaño">
+      <point x="-113.25" y="-137.0" />
+      <point x="380.0000000000001" y="568.0" />
+      <point x="140.0" y="568.0" />
+      <point x="0.0" y="89.5" />
+    </edge>
+    <edge source="app.models.entities.Calificacion" target="app.models.entities.Reserva">
+      <point x="0.0" y="-76.5" />
+      <point x="0.0" y="100.5" />
+    </edge>
+    <edge source="app.models.entities.Reserva" target="app.models.entities.Cuidador">
+      <point x="64.5" y="-100.5" />
+      <point x="862.3541666666667" y="887.0" />
+      <point x="1151.5" y="887.0" />
+      <point x="0.0" y="137.0" />
+    </edge>
+    <edge source="app.models.entities.Reserva" target="app.models.entities.Perro">
+      <point x="-64.5" y="-100.5" />
+      <point x="733.3541666666667" y="887.0" />
+      <point x="493.2500000000001" y="887.0" />
+      <point x="0.0" y="137.0" />
+    </edge>
+    <edge source="app.models.entities.Perro" target="app.models.entities.Vacuna">
+      <point x="113.25" y="-137.0" />
+      <point x="606.5000000000001" y="568.0" />
+      <point x="830.5000000000001" y="568.0" />
+      <point x="0.0" y="65.0" />
+    </edge>
+    <edge source="app.models.entities.Cuidador" target="app.models.entities.Imagen">
+      <point x="-81.75" y="-137.0" />
+      <point x="1069.75" y="568.0" />
+      <point x="1035.5" y="568.0" />
+      <point x="0.0" y="52.5" />
+    </edge>
+    <edge source="app.models.entities.Cuidador" target="app.models.entities.Direccion">
+      <point x="81.75" y="-137.0" />
+      <point x="1233.25" y="568.0" />
+      <point x="1267.5" y="568.0" />
+      <point x="0.0" y="88.5" />
+    </edge>
+    <edge source="app.models.entities.Perro" target="app.models.entities.Dueño">
+      <point x="-37.75" y="-137.0" />
+      <point x="455.5000000000001" y="558.0" />
+      <point x="385.0" y="558.0" />
+      <point x="0.0" y="52.5" />
+    </edge>
+    <edge source="app.models.entities.Direccion" target="app.models.entities.Localidad">
+      <point x="0.0" y="-88.5" />
+      <point x="0.0" y="64.5" />
+    </edge>
+    <edge source="app.models.entities.Localidad" target="app.models.entities.Provincia">
+      <point x="0.0" y="-64.5" />
+      <point x="0.0" y="65.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5586466165413534" x="692.0" y="706.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Constructors</Category>
+    <Category>Properties</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
