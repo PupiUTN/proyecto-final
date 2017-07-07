@@ -169,12 +169,17 @@ function validarFormualrio() {
         });
         return;
         $('#submit_handle').click();
+    }else{
+        console.log('cuidador');
+        postCuidador();
     }
 }
 
 //option A
 $("form").submit(function (e) {
-    e.preventDefault();
+    //e.preventDefault();
+    console.log('cuidador');
+    postCuidador();
 });
 
 function postCuidador() {
@@ -238,7 +243,7 @@ function mostrarImagen(pathImagen) {
     } else {
         nombreImagen = pathImagen;
     }
-    $('#contenedorImagen').append('<img src="' + pathImagen + '" height="100" width="100"  class="imagenPerro" alt="Imagen previsualizada">');
+    $('#contenedorImagen').append('<img src="' + pathImagen + '" height="100" width="100"  class="imagenCuidador" alt="Imagen previsualizada">');
     imagenes.push(pathImagen);
 }
 //$('#muestraImagen').attr('src', window.URL.createObjectURL($('#imagen').get(0).files.item(0)));
@@ -366,6 +371,7 @@ $('#imageFile').on('change', function () {
 $('#imageButton').on('click', function () {
     if (imagenes.length <= 3) {
         console.log($('#imageFile').val());
+        console.log('guardo imagen');
         var file = $('#imageFile').val();
         var regexExtensionValidator = /(\.jpg|\.jpeg|\.png)$/i;
         if (regexExtensionValidator.exec(file)) {
