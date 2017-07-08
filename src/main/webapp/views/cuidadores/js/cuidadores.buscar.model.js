@@ -100,10 +100,18 @@ function buscarCuidadores() {
         });
         return;
     }
+
+    getcuidadorxLocalidad(idLocalidad);
+
+
+}
+
+function  getcuidadorxLocalidad(idLocalidad)
+{
     $('#listaCuidadores').empty();
     var url = "/api/cuidadores/localidades/" + idLocalidad;
     $.getJSON(url, function (datos) {
-        generarCuidadores(datos);
+        generarCuidadoresaMostrar(datos);
         if (datos.length === 0) {
             $.toast({
                 heading: 'Error',
@@ -118,5 +126,6 @@ function buscarCuidadores() {
 
     });
 
-}
 
+
+}

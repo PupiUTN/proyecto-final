@@ -2,7 +2,6 @@
  * Created by gabriellorenzatti on 16/6/17.
  */
 
-var listaCuidadoresGlobal;
 
 
 $('.reserva').on('click', function () {
@@ -63,50 +62,50 @@ function mostarFormBuscarCuidador() {
 }
 
 
-
 $('#ordenarPorCantidad').on('click', function () {
     var listaCuidadoresOrdenada;
     $('#listaCuidadores').empty();
     var ordenarPorCantidadObject = $('#ordenarPorCantidad');
 
     if (ordenarPorCantidadObject.data("sense") === 'asc') {
-        console.log("Ordeno asc");
-        listaCuidadoresOrdenada = listaCuidadoresGlobal.sort(function (a, b) {
-            return parseFloat(a.cantidadMaxDePerros) - parseFloat(b.cantidadMaxDePerros);
-        });
+        listaCuidadoresOrdenada = ordenarpPorCantidadAsc(listaCuidadoresGlobal);
         ordenarPorCantidadObject.data("sense", "desc");
         ordenarPorCantidadObject.children('i').text('thumb_up');
-
-
     } else {
-        console.log("Ordeno desc");
-        listaCuidadoresOrdenada = listaCuidadoresGlobal.sort(function (a, b) {
-            return parseFloat(b.cantidadMaxDePerros) - parseFloat(a.cantidadMaxDePerros);
-        });
+        listaCuidadoresOrdenada = ordenarpPorCantidadDesc(listaCuidadoresGlobal);
         ordenarPorCantidadObject.data("sense", "asc");
         ordenarPorCantidadObject.children('i').text('thumb_down');
-
-
-
     }
-
-    generarCuidadores(listaCuidadoresOrdenada);
+    generarCuidadoresaMostrar(listaCuidadoresOrdenada);
 
 });
 
+
+
 var listaCuidadoresGlobal;
-function generarCuidadores(jsonArray) {
+function generarCuidadoresaMostrar(jsonArray) {
     listaCuidadoresGlobal = jsonArray;
     for (var i = 0; i < jsonArray.length; i++) {
         var url;
         //console.log
-        if (jsonArray[i].listaImagenes.length === 0) {
-            url = '/img/no-avatar.png';
-        } else {
-            url = jsonArray[i].listaImagenes[0].url;
-        }
-        //existe un problema con los espacios, entonces al html lo copiamos en la barra url del explorador y luego lo cortamos para tenr bien el formato
-        var cuidador = '\
+         url = urlImagen(jsonArray,i);
+        mostrarCuidadores(jsonArray,i,url);
+    }
+}
+
+var urlImagen = function (jsonArray,i) {
+
+    if (jsonArray[i].listaImagenes.length === 0) {
+        return   '/img/no-avatar.png';
+    } else {
+        return jsonArray[i].listaImagenes[0].url;
+    }
+};
+
+function mostrarCuidadores(jsonArray, i,url) {
+
+    //existe un problema con los espacios, entonces al html lo copiamos en la barra url del explorador y luego lo cortamos para tenr bien el formato
+    var cuidador = '\
 <div class="col s12">\n\
     <div class="card horizontal blue-grey darken-1 white-text hoverable">\n\
         <div class="card-image col s3 ">\n\
@@ -132,10 +131,9 @@ function generarCuidadores(jsonArray) {
         </div> \n\
     </div> \n\
 </div>';
-        $('#listaCuidadores').append(cuidador);
-    }
-}
+    $('#listaCuidadores').append(cuidador);
 
+}
 
 function llenarSelect(idSelect, jsonArray) {
     for (var i = 0; i < jsonArray.length; i++) {
@@ -148,6 +146,14 @@ function mostrarLocalidades() {
     var idProv = $('#busquedaProv').val();
     $('#busquedaLocal').val("");
     $('#busquedaDiv').show();
+
+    busquedaLocal(idProv);
+
+}
+
+
+function busquedaLocal (idProv)
+{
     $('#busquedaLocal').easyAutocomplete({
         url: "/api/provincias/" + idProv + "/localidades",
         placeholder: "Localidad",
@@ -179,7 +185,10 @@ function mostrarLocalidades() {
             }
         }
     });
+
+
 }
+
 
 $('#busquedaLocal').on('focus', function () {
     $(this).val('');

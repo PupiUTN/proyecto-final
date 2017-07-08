@@ -1,3 +1,4 @@
+/*
 window.onload = function () {
     $('select').material_select();
 };
@@ -232,4 +233,4 @@ $('.modal').modal({
     startingTop: '4%', // Starting top style attribute
     endingTop: '10%' // Ending top style attribute
 
-});
+});*/
