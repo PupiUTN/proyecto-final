@@ -36,53 +36,10 @@ function eliminarAJAX() {
 
 
 
-
-
-function postReserva() {
-
-    var reserva = getReservaDesdeForm();
-    $.ajax({
-        type: "POST",
-        url: '/api/reservas',
-        data: JSON.stringify(reserva),
-        contentType: "application/json",
-        success: function () {
-            console.log("exito crear reserva");
-            //$('#modalReserva').modal('close');
-            $.toast({
-                heading: 'Success',
-                text: 'Exito al crear nueva reserva. Refrescar la pagina para verla',
-                showHideTransition: 'slide',
-                icon: 'success'
-            });
-            //location.reload();
-
-        },
-        error: function () {
-            console.log("error crear reserva");
-            $.toast({
-                heading: 'Error',
-                text: 'Error al crear nueva reserva.',
-                showHideTransition: 'fade',
-                icon: 'error'
-            });
-        }
-    });
-}
-
-
-
-function obtenerPerros() {
-    var url = "/api/perros";
-    $.getJSON(url, function (datos) {
-        llenarSelect('#perro', datos);
-    });
-}
-
-function obtenerProvincias() {
+function obtenerProvinciasAmostrar() {
     var url = "/api/provincias";
     $.getJSON(url, function (datos) {
-        llenarSelect('#busquedaProv', datos);
+        llenarSelectCuidadores('#busquedaProv', datos);
     });
 }
 

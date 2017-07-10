@@ -4,16 +4,11 @@
 
 
 
-$('.reserva').on('click', function () {
-    var id = $('.idCuidador').eq(($('.reserva').index(this))).val();
-    console.log(id);
-});
-
 
 window.onload = function () {
     $('select').material_select();
-    obtenerPerros();
-    obtenerProvincias();
+
+    obtenerProvinciasAmostrar();
     $('select').material_select();
 };
 
@@ -48,18 +43,6 @@ $('.modal').modal({
 
 });
 
-$('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15 // Creates a dropdown of 15 years to control year
-});
-
-function mostarFormNuevoCuidador() {
-    $('#nuevoCuidador').toggle();
-}
-
-function mostarFormBuscarCuidador() {
-    $('#nuevaBusqueda').toggle();
-}
 
 
 $('#ordenarPorCantidad').on('click', function () {
@@ -135,7 +118,7 @@ function mostrarCuidadores(jsonArray, i,url) {
 
 }
 
-function llenarSelect(idSelect, jsonArray) {
+function llenarSelectCuidadores(idSelect, jsonArray) {
     for (var i = 0; i < jsonArray.length; i++) {
         $(idSelect).append('<option value="' + jsonArray[i].id + '">' + jsonArray[i].nombre + '</option>');
         $(idSelect).prop('selectedIndex', -1);
