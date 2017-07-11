@@ -3,7 +3,7 @@
 
 <a href="https://zenhub.com"><img src="https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png"></a>
 
-Integracion Continua: Travis [![Build Status](https://travis-ci.org/PupiUTN/Agiles.svg?branch=master)](https://travis-ci.org/PupiUTN/Agiles)
+Integracion Continua: Travis [![Build Status](https://travis-ci.org/PupiUTN/proyecto-final.svg?branch=master)](https://travis-ci.org/PupiUTN/proyecto-final)
 
 Code Quuality: [![BCH compliance](https://bettercodehub.com/edge/badge/PupiUTN/Agiles?branch=master)](https://bettercodehub.com/)
 
