@@ -8,9 +8,11 @@
 window.onload = function () {
     $('select').material_select();
 
-    obtenerProvinciasAmostrar();
-    $('select').material_select();
+    obtenerProv();
+
 };
+
+
 
 $(document).ready(function () {
 
