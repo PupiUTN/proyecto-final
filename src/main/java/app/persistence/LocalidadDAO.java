@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.io.File;
 
 /**
- *
  * @author jorge
  */
 @Repository
@@ -24,7 +23,7 @@ public class LocalidadDAO extends DAO<Localidad> {
     public void cargarDatos() throws Exception {
         if (count() == 0) {
             String rootPath = System.getProperty("user.dir");
-            this.execSQL(rootPath+ File.separator +"src"+ File.separator +"main"+ File.separator +"sql"+ File.separator +"Localidad.sql");
+            this.execSQL(rootPath + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "sql" + File.separator + "Localidad.sql");
 
         }
     }

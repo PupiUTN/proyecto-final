@@ -10,15 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.io.File;
 
 
-/**
- *
- * @author agile
- */
 @Repository
 public class DireccionDAO extends DAO<Direccion> {
 
-    @Autowired
-    LocalidadDAO localidadDAO;
 
     public DireccionDAO() throws Exception {
         super(Direccion.class);
@@ -27,7 +21,7 @@ public class DireccionDAO extends DAO<Direccion> {
     public void cargarDatos() throws Exception {
         if (count() == 0) {
             String rootPath = System.getProperty("user.dir");
-            this.execSQL(rootPath + File.separator + "src" + File.separator + "main" + File.separator + "sql" + File.separator + "Direccion.sql");
+            this.execSQL(rootPath + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "sql" + File.separator + "Direccion.sql");
         }
     }
 
