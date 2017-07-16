@@ -258,16 +258,17 @@
                             </div>
 
                             <div class="main-search-input-item">
-                                <input type="text" id="booking-date" data-lang="es" data-large-mode="true"
-                                       data-large-default="true" data-min-year="2017" data-max-year="2020">
-                                <!--<select data-placeholder="All Categories" class="chosen-select" >-->
-                                <!--<option>All Categories</option>	-->
-                                <!--<option>Shops</option>-->
-                                <!--<option>Hotels</option>-->
-                                <!--<option>Restaurants</option>-->
-                                <!--<option>Fitness</option>-->
-                                <!--<option>Events</option>-->
-                                <!--</select>-->
+                                <input type="text" id="booking-date-from" placeholder="Fecha Desde" data-lang="es"
+                                       data-init-set="false"
+                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
+                                       data-max-year="2020" data-lock="from">
+                            </div>
+                            <div class="main-search-input-item">
+                                <input type="text" id="booking-date-to" placeholder="Fecha Hasta" data-lang="es"
+                                       data-init-set="false"
+                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
+                                       data-max-year="2020" data-lock="from">
+
                             </div>
 
                             <button class="button" onclick="window.location.href='listings-half-screen-map-list.html'">
@@ -805,7 +806,8 @@
 <link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
 <script src="/assets/scripts/datedropper.js"></script>
 <script type="text/javascript">
-    $('#booking-date').dateDropper();
+    $('#booking-date-from').dateDropper();
+    $('#booking-date-to').dateDropper();
 </script>
 <!--https://developers.google.com/maps/documentation/javascript/places-autocomplete-->
 <script type="text/javascript"
@@ -854,7 +856,6 @@
             });
         }
     }
-
 
 
 </script>
