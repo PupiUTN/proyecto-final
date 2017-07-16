@@ -17,9 +17,9 @@ import java.util.Map;
 public class StrategyJose implements ConectionStrategy {
 
 
-    private String connectionString = "jdbc:mysql://localhost:6603/pupi";
-    private String username = "root";
-    private String password = "mypassword";
+    private String connectionString = "jdbc:mysql://130.211.214.126:3306/pupi";
+    private String username = "user";
+    private String password = "user";
     private Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     public EntityManagerFactory getEntityManagerFactory() {
