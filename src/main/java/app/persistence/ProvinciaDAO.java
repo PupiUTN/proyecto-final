@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.io.File;
 
 /**
- *
  * @author jorge
  */
 @Repository
@@ -25,7 +24,7 @@ public class ProvinciaDAO extends DAO<Provincia> {
         if (count() == 0) {
 
             String rootPath = System.getProperty("user.dir");
-            this.execSQL(rootPath+ File.separator +"src"+ File.separator +"main"+ File.separator +"sql"+ File.separator +"Provincia.sql");
+            this.execSQL(rootPath + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "sql" + File.separator + "Provincia.sql");
 
         }
     }

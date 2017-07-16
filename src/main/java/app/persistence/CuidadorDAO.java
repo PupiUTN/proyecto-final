@@ -27,8 +27,7 @@ import javax.persistence.criteria.Root;
 @Repository
 public class CuidadorDAO extends DAO<Cuidador> {
 
-    @Autowired
-    DireccionDAO direccionDAO;
+
 
     public CuidadorDAO() throws Exception {
         super(Cuidador.class);
@@ -47,7 +46,7 @@ public class CuidadorDAO extends DAO<Cuidador> {
         if (count() == 0) {
 
             String rootPath = System.getProperty("user.dir");
-            this.execSQL(rootPath + File.separator + "src" + File.separator + "main" + File.separator + "sql" + File.separator + "CUIDADOR.sql");
+            this.execSQL(rootPath + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "sql" + File.separator + "CUIDADOR.sql");
         }
     }
 
