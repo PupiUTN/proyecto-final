@@ -3,7 +3,7 @@
 
     <!-- Basic Page Needs
     ================================================== -->
-    <title>Listeo</title>
+    <title>Pupi</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -11,6 +11,11 @@
     ================================================== -->
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+
+    <!-- MY CSS
+    ================================================== -->
+    <link rel="stylesheet" href="/views/index/css/index.css">
+
 
 </head>
 
@@ -35,82 +40,6 @@
                         <a href="index.html"><img src="/assets/images/logo.png" alt=""></a>
                     </div>
 
-                    <!-- Mobile Navigation -->
-                    <div class="menu-responsive">
-                        <i class="fa fa-reorder menu-trigger"></i>
-                    </div>
-
-                    <!-- Main Navigation -->
-                    <nav id="navigation" class="style-1">
-                        <ul id="responsive">
-
-                            <li><a class="current" href="#">Home</a>
-                                <ul>
-                                    <li><a href="index.html">Home 1</a></li>
-                                    <li><a href="index-2.html">Home 2</a></li>
-                                    <li><a href="index-3.html">Home 3</a></li>
-                                    <li><a href="index-4.html">Home 4</a></li>
-                                </ul>
-                            </li>
-
-                            <li><a href="#">Listings</a>
-                                <ul>
-                                    <li><a href="#">List Layout</a>
-                                        <ul>
-                                            <li><a href="listings-list-with-sidebar.html">With Sidebar</a></li>
-                                            <li><a href="listings-list-full-width.html">Full Width</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Grid Layout</a>
-                                        <ul>
-                                            <li><a href="listings-grid-with-sidebar-1.html">With Sidebar 1</a></li>
-                                            <li><a href="listings-grid-with-sidebar-2.html">With Sidebar 2</a></li>
-                                            <li><a href="listings-grid-full-width.html">Full Width</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Half Screen Map</a>
-                                        <ul>
-                                            <li><a href="listings-half-screen-map-list.html">List Layout</a></li>
-                                            <li><a href="listings-half-screen-map-grid-1.html">Grid Layout 1</a></li>
-                                            <li><a href="listings-half-screen-map-grid-2.html">Grid Layout 2</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="listings-single-page.html">Single Listing</a></li>
-                                </ul>
-                            </li>
-
-                            <li><a href="#">User Panel</a>
-                                <ul>
-                                    <li><a href="dashboard.html">Dashboard</a></li>
-                                    <li><a href="dashboard-messages.html">Messages</a></li>
-                                    <li><a href="dashboard-my-listings.html">My Listings</a></li>
-                                    <li><a href="dashboard-reviews.html">Reviews</a></li>
-                                    <li><a href="dashboard-bookmarks.html">Bookmarks</a></li>
-                                    <li><a href="dashboard-add-listing.html">Add Listing</a></li>
-                                    <li><a href="dashboard-my-profile.html">My Profile</a></li>
-                                    <li><a href="dashboard-invoice.html">Invoice</a></li>
-                                </ul>
-                            </li>
-
-                            <li><a href="#">Pages</a>
-                                <ul>
-                                    <li><a href="pages-blog.html">Blog</a>
-                                        <ul>
-                                            <li><a href="pages-blog.html">Blog</a></li>
-                                            <li><a href="pages-blog-post.html">Blog Post</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="pages-contact.html">Contact</a></li>
-                                    <li><a href="pages-elements.html">Elements</a></li>
-                                    <li><a href="pages-pricing-tables.html">Pricing Tables</a></li>
-                                    <li><a href="pages-typography.html">Typography</a></li>
-                                    <li><a href="pages-404.html">404 Page</a></li>
-                                    <li><a href="pages-icons.html">Icons</a></li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </nav>
                     <div class="clearfix"></div>
                     <!-- Main Navigation / End -->
 
@@ -245,12 +174,9 @@
 
                         <div class="main-search-input">
 
-                            <!--<div class="main-search-input-item">-->
-                            <!--<input type="text" placeholder="What are you looking for?" value=""/>-->
-                            <!--</div>-->
 
                             <div class="main-search-input-item location">
-                                <input type="text" id="location" placeholder="Location" value=""/>
+                                <input type="text" id="location" placeholder="Ciudad" value=""/>
                                 <a href="#" id="geo-location" onclick="geolocate()"><i
                                         class="fa fa-dot-circle-o"></i></a>
                             </div>
@@ -270,7 +196,7 @@
                             </div>
 
                             <button class="button" onclick="window.location.href='listings-half-screen-map-list.html'">
-                                Search
+                                Buscar
                             </button>
 
                         </div>
@@ -706,60 +632,10 @@
 <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
 <link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
 <script src="/assets/scripts/datedropper.js"></script>
-<script type="text/javascript">
-    $('#booking-date-from').dateDropper();
-    $('#booking-date-to').dateDropper();
-</script>
 <!--https://developers.google.com/maps/documentation/javascript/places-autocomplete-->
 <script type="text/javascript"
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"></script>
-<!--autocomplete-->
-
-
-<script>
-    //    https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
-
-    var autocomplete;
-
-
-    function initAutocomplete() {
-        var input = document.getElementById('location');
-        var options = {
-            types: ['(cities)'],
-            componentRestrictions: {country: "ar"}
-        };
-        // Create the autocomplete object, restricting the search to geographical
-        // location types.
-        autocomplete = new google.maps.places.Autocomplete(input, options)
-
-    }
-    initAutocomplete();
-
-    function geolocate() {
-        console.log("geolocate()");
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var lat = position.coords.latitude;
-                var long = position.coords.longitude;
-//                https://developers.google.com/maps/documentation/geocoding/start
-                $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true', function (data) {
-                    var cityStatCountry = data.results[1].formatted_address;
-                    document.getElementById('location').value = cityStatCountry;
-
-
-                    var place = data.results[1];
-                    autocomplete.set("place", place);
-                    $('.pac-container').hide();
-
-                });
-
-
-            });
-        }
-    }
-
-
-</script>
-
+<script type="text/javascript" src="/views/index/js/index.view.js"></script>
+<script type="text/javascript" src="/views/index/js/index.data.js"></script>
 </body>
 </html>
