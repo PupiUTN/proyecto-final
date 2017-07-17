@@ -7,7 +7,7 @@ spring:
     validationQuery: SELECT 1
  jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
 #      dialect: org.hibernate.dialect.MySQL5Dialect
     show-sql: true
