@@ -7,6 +7,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface StorageService {
-    public List<FileJson> loadAll();
-    public String store(MultipartFile remoteFile)throws IOException;
+    List<FileJson> loadAll();
+    String store(MultipartFile remoteFile)throws IOException;
 }

@@ -1,9 +1,10 @@
 package app.services;
 
 import app.models.entities.Raza;
-import app.persistence.RazaDAO;
+import app.persistence.RazaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -11,26 +12,30 @@ import java.util.List;
  */
 @Service
 public class RazaService {
-    @Autowired
-    RazaDAO razaDAO;
+    RazaRepository razaRepository;
 
-    public List<Raza> getRazas() throws Exception{
-        return razaDAO.findAll();
+    @Autowired
+    public RazaService(RazaRepository razaRepository) {
+        this.razaRepository = razaRepository;
+    }
+
+    public List<Raza> getRazas() throws Exception {
+        return razaRepository.findAll();
     }
 
     public void createRaza(Raza entity) throws Exception {
-        razaDAO.create(entity);
+        razaRepository.save(entity);
     }
 
     public Raza getRaza(Long id) throws Exception {
-        return razaDAO.find(id);
+        return razaRepository.findOne(id);
     }
 
     public void deleteRaza(Long id) throws Exception {
-        razaDAO.removeID(id);
+        razaRepository.delete(id);
     }
 
     public void editRaza(Raza entity) throws Exception {
-        razaDAO.edit(entity);
+        throw new UnsupportedOperationException();
     }
 }

@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Entity
 public class Imagen implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String url;
 

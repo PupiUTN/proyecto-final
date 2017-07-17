@@ -25,27 +25,7 @@ public class HelloControllerTest {
     private MockMvc mvc;
 
     @MockBean //no entiendo porque tengo que mockear el dao TODO
-    private CuidadorDAO mockCuidadorDAO;
-    @MockBean
-    private CalificacionDAO mockCalificacionDAO;
-    @MockBean
-    private DireccionDAO mockDireccionDAO;
-    @MockBean
-    private DueñoDAO mockDueñoDAO;
-    @MockBean
-    private LocalidadDAO mockLocalidadDAO;
-    @MockBean
-    private PerroDAO mockPerroDAO;
-    @MockBean
-    private ProvinciaDAO mockProvinciaDAO;
-    @MockBean
-    private RazaDAO mockRazaDAO;
-    @MockBean
-    private ReservaDAO mockReservaDAO;
-    @MockBean
-    private TamañoDAO mockTamañoDAO;
-    @MockBean
-    private VacunaDAO mockVacunaDAO;
+    private CuidadorRepository mockCuidadorDAO;
 
     @Test
     public void getHello() throws Exception {
