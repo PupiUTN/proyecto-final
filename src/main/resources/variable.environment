@@ -1,0 +1,11 @@
+#edit the eviroment file
+sudo -H gedit /etc/environment
+
+#add this lines
+JDBC_DATABASE_URL=jdbc:mysql://130.211.214.126:3306/pupi?useSSL=false
+JDBC_DATABASE_USERNAME=user
+JDBC_DATABASE_PASSWORD=user
+
+#reboot your server
+#check if its all right
+env | grep JDBC
