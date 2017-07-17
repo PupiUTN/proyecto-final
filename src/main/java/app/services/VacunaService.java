@@ -1,9 +1,10 @@
 package app.services;
 
 import app.models.entities.Vacuna;
-import app.persistence.VacunaDAO;
+import app.persistence.VacunaRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -12,22 +13,27 @@ import java.util.List;
 @Service
 public class VacunaService {
 
+
+    VacunaRespository vacunaRespository;
+
     @Autowired
-    VacunaDAO vacunaDAO;
+    public VacunaService(VacunaRespository vacunaRespository) {
+        this.vacunaRespository = vacunaRespository;
+    }
 
     public List<Vacuna> getVacunas() throws Exception {
-        return vacunaDAO.findAll();
+        return vacunaRespository.findAll();
     }
 
     public void createVacuna(Vacuna entity) throws Exception {
-        vacunaDAO.create(entity);
+        vacunaRespository.save(entity);
     }
 
     public void deleteVacuna(Long id) throws Exception {
-        vacunaDAO.removeID(id);
+        vacunaRespository.delete(id);
     }
 
     public void editVacuna(Vacuna entity) throws Exception {
-        vacunaDAO.edit(entity);
+        throw new UnsupportedOperationException();
     }
 }

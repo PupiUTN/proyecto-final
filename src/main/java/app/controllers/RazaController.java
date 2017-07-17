@@ -12,10 +12,12 @@ import java.util.List;
 @RequestMapping(value = "api/razas")
 public class RazaController {
 
-    @Autowired
+
     RazaService razaService;
 
-    public RazaController() {
+    @Autowired
+    public RazaController(RazaService razaService) {
+        this.razaService = razaService;
     }
 
     @RequestMapping(method = RequestMethod.GET)

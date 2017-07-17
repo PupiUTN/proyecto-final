@@ -19,7 +19,7 @@ import javax.persistence.Id;
 public class Provincia implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;
 

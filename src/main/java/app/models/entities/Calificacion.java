@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Calificacion implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private int puntaje;
     private String comentario;

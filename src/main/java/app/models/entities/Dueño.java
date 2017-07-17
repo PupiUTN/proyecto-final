@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class Dueño implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;
 

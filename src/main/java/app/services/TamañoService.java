@@ -1,7 +1,7 @@
 package app.services;
 
 import app.models.entities.Tamaño;
-import app.persistence.TamañoDAO;
+import app.persistence.TamanoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,10 +12,14 @@ import java.util.List;
 @Service
 public class TamañoService {
 
+    private TamanoRepository tamanoRepository;
+
     @Autowired
-    TamañoDAO tamañoDAO;
+    public TamañoService(TamanoRepository tamanoRepository) {
+        this.tamanoRepository = tamanoRepository;
+    }
 
     public List<Tamaño> getTamaños() throws Exception {
-        return tamañoDAO.findAll();
+        return tamanoRepository.findAll();
     }
 }

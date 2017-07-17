@@ -1,7 +1,7 @@
 package app.services;
 
 import app.models.entities.Cuidador;
-import app.persistence.CuidadorDAO;
+import app.persistence.CuidadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,32 +13,32 @@ import java.util.List;
 @Service
 public class CuidadorService {
 
+    private CuidadorRepository cuidadorRepository;
+
     @Autowired
-    private CuidadorDAO cuidadorDAO;
+    public CuidadorService(CuidadorRepository cuidadorRepository) {
+        this.cuidadorRepository = cuidadorRepository;
+    }
 
     public List<Cuidador> getCuidadores() {
-        return cuidadorDAO.findAll();
+        return cuidadorRepository.findAll();
     }
 
     public List<Cuidador> getCuidadoresPorLocalidad(Long id) {
-        return cuidadorDAO.findPorLocalidad(id.intValue());
+        throw new UnsupportedOperationException();
     }
 
     public Cuidador getCuidador(Long id) {
-        return cuidadorDAO.find(id);
+        return cuidadorRepository.findOne(id);
     }
 
     public void deleteCuidador(Long id) {
         if (id > 0) {
-            Cuidador cuidador = new Cuidador();
-            cuidador.setId(id);
-            cuidadorDAO.remove(cuidador);
-        } else {
-            //chupa el perro
+            cuidadorRepository.delete(id);
         }
     }
 
     public void createCuidador(Cuidador entity) {
-        cuidadorDAO.create(entity);
+        cuidadorRepository.save(entity);
     }
 }

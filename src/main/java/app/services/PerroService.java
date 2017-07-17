@@ -1,7 +1,7 @@
 package app.services;
 
 import app.models.entities.Perro;
-import app.persistence.PerroDAO;
+import app.persistence.PerroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +13,18 @@ import java.util.List;
 @Service
 public class PerroService {
 
+    PerroRepository perroRepository;
+
     @Autowired
-    PerroDAO perroDAO;
+    public PerroService(PerroRepository perroRepository) {
+        this.perroRepository = perroRepository;
+    }
 
     public void createPerro(Perro entity) throws Exception {
-        perroDAO.create(entity);
+        perroRepository.save(entity);
     }
 
     public List<Perro> getPerros() throws Exception {
-        return perroDAO.findAll();
+        return perroRepository.findAll();
     }
 }

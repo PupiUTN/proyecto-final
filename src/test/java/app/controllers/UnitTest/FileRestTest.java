@@ -39,29 +39,10 @@ public class FileRestTest{
     private MockMvc mockMvc;
 
     @MockBean //no entiendo porque tengo que mockear el dao TODO
-    private CuidadorDAO mockCuidadorDAO;
+    private CuidadorRepository mockCuidadorDAO;
     @MockBean
     private StorageService storageService;
-    @MockBean
-    private CalificacionDAO mockCalificacionDAO;
-    @MockBean
-    private DireccionDAO mockDireccionDAO;
-    @MockBean
-    private DueñoDAO mockDueñoDAO;
-    @MockBean
-    private LocalidadDAO mockLocalidadDAO;
-    @MockBean
-    private PerroDAO mockPerroDAO;
-    @MockBean
-    private ProvinciaDAO mockProvinciaDAO;
-    @MockBean
-    private RazaDAO mockRazaDAO;
-    @MockBean
-    private ReservaDAO mockReservaDAO;
-    @MockBean
-    private TamañoDAO mockTamañoDAO;
-    @MockBean
-    private VacunaDAO mockVacunaDAO;
+
 
     @Test
     public void shouldListAllFiles() throws Exception {
