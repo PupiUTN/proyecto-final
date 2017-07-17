@@ -3,9 +3,19 @@
  */
 
 var pupi = new Vue({
-    el: '#pupi',
+    el: '#vacunas',
     data: {
-        appName: 'Pupi'
+        listaVacunas: getVacunas(),
+        titulo: "El pupi"
     }
 });
+
+function getVacunas() {
+    console.log($('#listaVacunas'));
+    var url = "/api/vacunas";
+    $.getJSON(url, function (datos) {
+        console.log(datos);
+        return datos;
+    });
+}
 
