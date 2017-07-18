@@ -19,13 +19,11 @@ public class Cuidador implements Serializable {
     private String email;
     private long telefono;
     @OneToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "ID", referencedColumnName = "ID")
     private Direccion direccion;
     private int cantidadMaxDePerros;
     @OneToMany(cascade = CascadeType.ALL) // guarda las imagen
     private List<Imagen> listaImagenes;
 
-    //para jpa, necesito constructor vacio y todos los stegest y getters de cada atributo
     public Cuidador() {
     }
 
@@ -101,7 +99,7 @@ public class Cuidador implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        Cuidador oCuidador = (Cuidador)o;
+        Cuidador oCuidador = (Cuidador) o;
         if (this.nombre != oCuidador.nombre) return false;
         if (this.telefono != oCuidador.telefono) return false;
         return true;
