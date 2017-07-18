@@ -1,6 +1,7 @@
 package app.services;
 
 import app.models.entities.Cuidador;
+import app.models.entities.Direccion;
 import app.persistence.CuidadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,9 @@ public class CuidadorService {
 
     public void createCuidador(Cuidador entity) {
         cuidadorRepository.save(entity);
+    }
+
+    public List<Cuidador> getCuidadoresPorCiudadPlaceId(String ciudadPlaceId) {
+        return cuidadorRepository.findAllbyCiudadPlaceId(ciudadPlaceId);
     }
 }
