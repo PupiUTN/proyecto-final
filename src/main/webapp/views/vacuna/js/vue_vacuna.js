@@ -3,19 +3,26 @@
  */
 
 var pupi = new Vue({
-    el: '#vacunas',
+    el: '#growler',
     data: {
-        listaVacunas: getVacunas(),
-        titulo: "El pupi"
+        vacunaSeleccionada: ''
     }
 });
 
-function getVacunas() {
-    console.log($('#listaVacunas'));
-    var url = "/api/vacunas";
-    $.getJSON(url, function (datos) {
-        console.log(datos);
-        return datos;
+var vacunas = function getVacunas() {
+    axios.get("/api/vacunas")
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+        console.log(error);
     });
 }
 
+Vue.component('vacunas', {
+    template: '<h3>{{ vacunas }}</h3>',
+    // template: '<select v-model="vacunaSeleccionada"><option disabled value="">Seleccionar Vacuna</option><option v-for="vacuna in listaVacunas" :value="vacuna.nombre">{{ vacuna.nombre }} </option> </select>',
+    data: function() {
+        return vacunas
+    }
+});

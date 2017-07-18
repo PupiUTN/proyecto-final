@@ -9,12 +9,12 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/colors/main.css" id="colors">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
 
 </head>
 
-<body>
+<body xmlns:v-bind="http://www.w3.org/1999/xhtml">
 
 <!-- Wrapper -->
 <div id="wrapper">
@@ -33,7 +33,7 @@
                     <!-- Logo -->
                     <div id="logo">
                         <a href="index.html"><img src="/img/vector.svg" style="height: 55px" alt="Pupi" /></a>
-                        <a href="index.html" class="dashboard-logo"><img src="images/logo2.png" alt=""></a>
+                        <a href="index.html" class="dashboard-logo"><img src="/assets/images/logo.png" alt=""></a>
                     </div>
 
                     <!-- Mobile Navigation -->
@@ -64,7 +64,7 @@
 
                         <!-- User Menu -->
                         <div class="user-menu">
-                            <div class="user-name"><span><img src="images/dashboard-avatar.jpg" alt=""></span>El Pupi</div>
+                            <div class="user-name"><span><img src="/assets/images/dashboard-avatar.jpg" alt=""></span>El Pupi</div>
                             <ul>
                                 <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
                                 <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>
@@ -73,7 +73,7 @@
                             </ul>
                         </div>
 
-                        <a href="dashboard-add-listing.html" class="button border with-icon">Agregar Vacuna <i class="sl sl-icon-plus"></i></a>
+                        <a onclick="getVacunas()" class="button border with-icon">Agregar Vacuna <i class="sl sl-icon-plus"></i></a>
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -136,11 +136,11 @@
             <div id="titlebar">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Nueva Vacuna</h2>
+                        <h2>Administrar Vacunas</h2>
                     </div>
                 </div>
             </div>
-
+        <div id="growler">
             <div class="row">
                 <div class="col-lg-12">
 
@@ -151,7 +151,7 @@
 
                             <!-- Headline -->
                             <div class="add-listing-headline">
-                                <h3><i class="sl sl-icon-doc"></i> Información Básica</h3>
+                                <h3><i class="sl sl-icon-doc"></i> Nueva Vacuna</h3>
                             </div>
 
                             <!-- Title -->
@@ -160,23 +160,48 @@
                                     <h5>Nombre <i class="tip" data-tip-content="Nombre de la vacuna"></i></h5>
                                     <input class="search-field" type="text" value=""/>
                                 </div>
+                                <a href="#" class="button preview">Guardar <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
+
+                        </div>
+                        <!-- Section / End -->
+
+                        <!-- Section -->
+                        <div class="add-listing-section">
+
+                            <!-- Headline -->
+                            <div class="add-listing-headline">
+                                <h3><i class="sl sl-icon-doc"></i> Editar Vacuna</h3>
+                            </div>
+
+                            <!-- Title -->
+                            <!-- Row -->
+                            <div class="row with-forms">
+
+                                <!-- Status -->
+                                <div class="col-md-6">
+                                    <h5>Vacunas</h5>
+                                    <select v-model="vacunaSeleccionada">
+                                        <option disabled value="">Seleccionar Vacuna</option>
+                                        <option v-for="vacuna in listaVacunas" :value="vacuna.nombre">
+                                            {{ vacuna.nombre }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <a href="#" class="button preview">Guardar <i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                            <!-- Row / End -->
 
                             <!-- Row -->
                             <div class="row with-forms">
 
                                 <!-- Status -->
                                 <div class="col-md-6">
-                                    <h5>Category</h5>
-                                    <select class="chosen-select-no-single" >
-                                        <option label="blank">Select Category</option>
-                                        <option>Eat & Drink</option>
-                                        <option>Shops</option>
-                                        <option>Hotels</option>
-                                        <option>Restaurants</option>
-                                        <option>Fitness</option>
-                                        <option>Events</option>
-                                    </select>
+                                    <h5>Editar</h5>
+                                    <div class="col-md-12">
+                                        <h5>Nombre <i class="tip" data-tip-content="Nombre de la vacuna"></i></h5>
+                                        <input class="search-field" type="text" :value="vacunaSeleccionada"/>
+                                    </div>
                                 </div>
 
                             </div>
@@ -186,7 +211,7 @@
                         <!-- Section / End -->
 
 
-                        <a href="#" class="button preview">Guardar <i class="fa fa-arrow-circle-right"></i></a>
+
 
                     </div>
                 </div>
@@ -197,6 +222,7 @@
                 </div>
 
             </div>
+        </div>
 
         </div>
         <!-- Content / End -->
@@ -212,17 +238,22 @@
 
 <!-- Scripts
 ================================================== -->
-<script type="text/javascript" src="scripts/jquery-2.2.0.min.js"></script>
-<script type="text/javascript" src="scripts/jpanelmenu.min.js"></script>
-<script type="text/javascript" src="scripts/chosen.min.js"></script>
-<script type="text/javascript" src="scripts/slick.min.js"></script>
-<script type="text/javascript" src="scripts/rangeslider.min.js"></script>
-<script type="text/javascript" src="scripts/magnific-popup.min.js"></script>
-<script type="text/javascript" src="scripts/waypoints.min.js"></script>
-<script type="text/javascript" src="scripts/counterup.min.js"></script>
-<script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
-<script type="text/javascript" src="scripts/tooltips.min.js"></script>
-<script type="text/javascript" src="scripts/custom.js"></script>
+<script type="text/javascript" src="/assets/scripts/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jpanelmenu.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/chosen.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/slick.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/rangeslider.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/magnific-popup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/waypoints.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/counterup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/custom.js"></script>
+<script type="text/javascript" src="https://unpkg.com/vue"></script>
+<script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/vacuna.model.js"></script>
+<script src="js/vacuna.service.js"></script>
+<script src="js/vue_vacuna.js"></script>
 
 </body>
 </html>
