@@ -6,7 +6,8 @@ var pupi = new Vue({
     el: '#growler',
     data: {
         vacunaSeleccionada: '',
-        listaVacunas: []
+        listaVacunas: [],
+        nombreVacuna: ''
     },
     created: function() {
         this.getVacunas();
@@ -22,9 +23,22 @@ var pupi = new Vue({
                 .catch(function (error) {
                     console.log(error);
                 });
-        },
-
+        }
     }
+
 });
+
+function postVacuna(){
+    axios.post("/api/vacunas", {
+        nombre: pupi.nombreVacuna
+    })
+    .then(function (response) {
+        console.log(response);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
+
 
 
