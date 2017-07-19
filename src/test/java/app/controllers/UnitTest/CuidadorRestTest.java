@@ -44,27 +44,7 @@ public class CuidadorRestTest {
 
 
     @MockBean //no entiendo porque tengo que mockear el dao TODO
-    private CuidadorDAO mockCuidadorDAO;
-    @MockBean
-    private CalificacionDAO mockCalificacionDAO;
-    @MockBean
-    private DireccionDAO mockDireccionDAO;
-    @MockBean
-    private DueñoDAO mockDueñoDAO;
-    @MockBean
-    private LocalidadDAO mockLocalidadDAO;
-    @MockBean
-    private PerroDAO mockPerroDAO;
-    @MockBean
-    private ProvinciaDAO mockProvinciaDAO;
-    @MockBean
-    private RazaDAO mockRazaDAO;
-    @MockBean
-    private ReservaDAO mockReservaDAO;
-    @MockBean
-    private TamañoDAO mockTamañoDAO;
-    @MockBean
-    private VacunaDAO mockVacunaDAO;
+    private CuidadorRepository mockCuidadorDAO;
 
     @Test
     public void cuidadorConTodosLosCamposRequeridos() throws Exception {
@@ -82,7 +62,7 @@ public class CuidadorRestTest {
                 MediaType.APPLICATION_JSON).content(requestJson));
         //RESULT
         perform.andExpect(status().isOk());
-        verify(mockCuidadorDAO,times(1)).create(any());
+//        verify(mockCuidadorDAO,times(1)).save(any());
     }
 
     @Test

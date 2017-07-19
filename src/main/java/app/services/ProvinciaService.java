@@ -2,10 +2,9 @@ package app.services;
 
 import app.models.entities.Localidad;
 import app.models.entities.Provincia;
-import app.persistence.LocalidadDAO;
-import app.persistence.ProvinciaDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -13,17 +12,14 @@ import java.util.List;
  */
 @Service
 public class ProvinciaService {
-    @Autowired
-    ProvinciaDAO provinciaDAO;
-    @Autowired
-    LocalidadDAO localidadDAO;
+
 
     public List<Provincia> getProvincias() {
-        return provinciaDAO.findAll();
+        throw new UnsupportedOperationException();
     }
 
-    public List<Localidad> getLocalidades(Long id) throws Exception{
-        return localidadDAO.findAll("provincia",id);
+    public List<Localidad> getLocalidades(Long id) throws Exception {
+        throw new UnsupportedOperationException();
     }
 
 }

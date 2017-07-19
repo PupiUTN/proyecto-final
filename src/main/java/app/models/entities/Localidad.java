@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Localidad implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;
     @ManyToOne
