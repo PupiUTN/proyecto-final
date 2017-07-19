@@ -32,7 +32,7 @@
 
                     <!-- Logo -->
                     <div id="logo">
-                        <a href="index.html"><img src="/img/vector.svg" style="height: 55px" alt="Pupi" /></a>
+                        <a href="index.html"><img src="/img/vector.svg" style="height: 55px" alt="Pupi"/></a>
                         <a href="index.html" class="dashboard-logo"><img src="/assets/images/logo.png" alt=""></a>
                     </div>
 
@@ -64,16 +64,21 @@
 
                         <!-- User Menu -->
                         <div class="user-menu">
-                            <div class="user-name"><span><img src="/assets/images/dashboard-avatar.jpg" alt=""></span>El Pupi</div>
+                            <div class="user-name"><span><img src="/assets/images/dashboard-avatar.jpg" alt=""></span>El
+                                Pupi
+                            </div>
                             <ul>
                                 <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
-                                <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>
-                                <li><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
+                                <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a>
+                                </li>
+                                <li><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a>
+                                </li>
                                 <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
                             </ul>
                         </div>
 
-                        <a onclick="getVacunas()" class="button border with-icon">Agregar Vacuna <i class="sl sl-icon-plus"></i></a>
+                        <a onclick="getVacunas()" class="button border with-icon">Agregar Vacuna <i
+                                class="sl sl-icon-plus"></i></a>
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -102,20 +107,24 @@
 
                 <ul data-submenu-title="Main">
                     <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
-                    <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages <span class="nav-tag messages">2</span></a></li>
+                    <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages <span
+                            class="nav-tag messages">2</span></a></li>
                 </ul>
 
                 <ul data-submenu-title="Listings">
                     <li><a><i class="sl sl-icon-layers"></i> My Listings</a>
                         <ul>
-                            <li><a href="dashboard-my-listings.html">Active <span class="nav-tag green">6</span></a></li>
-                            <li><a href="dashboard-my-listings.html">Pending <span class="nav-tag yellow">1</span></a></li>
+                            <li><a href="dashboard-my-listings.html">Active <span class="nav-tag green">6</span></a>
+                            </li>
+                            <li><a href="dashboard-my-listings.html">Pending <span class="nav-tag yellow">1</span></a>
+                            </li>
                             <li><a href="dashboard-my-listings.html">Expired <span class="nav-tag red">2</span></a></li>
                         </ul>
                     </li>
                     <li><a href="dashboard-reviews.html"><i class="sl sl-icon-star"></i> Reviews</a></li>
                     <li><a href="dashboard-bookmarks.html"><i class="sl sl-icon-heart"></i> Bookmarks</a></li>
-                    <li class="active"><a href="dashboard-add-listing.html"><i class="sl sl-icon-plus"></i> Add Listing</a></li>
+                    <li class="active"><a href="dashboard-add-listing.html"><i class="sl sl-icon-plus"></i> Add Listing</a>
+                    </li>
                 </ul>
 
                 <ul data-submenu-title="Account">
@@ -140,120 +149,90 @@
                     </div>
                 </div>
             </div>
-        <div id="growler">
-            <div class="row">
-                <div class="col-lg-12">
+            <div id="growler">
+                <div class="row">
+                    <div class="col-lg-12">
 
-                    <div id="add-listing">
+                        <div id="add-listing">
 
-                        <!-- Section -->
-                        <div class="add-listing-section">
+                            <!-- Section -->
+                            <div class="add-listing-section">
 
-                            <!-- Headline -->
-                            <div class="add-listing-headline">
-                                <h3><i class="sl sl-icon-doc"></i> Nueva Vacuna</h3>
-                            </div>
-
-                            <!-- Title -->
-                            <div class="row with-forms">
-                                <div class="col-md-12">
-                                    <h5>Nombre <i class="tip" data-tip-content="Nombre de la vacuna"></i></h5>
-                                    <input class="search-field" type="text" value=""/>
+                                <!-- Headline -->
+                                <div class="add-listing-headline">
+                                    <h3><i class="sl sl-icon-doc"></i> Nueva Vacuna</h3>
                                 </div>
-                                <a href="#" class="button preview">Guardar <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
 
-                        </div>
-                        <!-- Section / End -->
-
-                        <!-- Section -->
-                        <div class="add-listing-section">
-
-                            <!-- Headline -->
-                            <div class="add-listing-headline">
-                                <h3><i class="sl sl-icon-doc"></i> Editar Vacuna</h3>
-                            </div>
-
-                            <!-- Title -->
-                            <!-- Row -->
-                            <div class="row with-forms">
-
-                                <!-- Status -->
-                                <div class="col-md-6">
-                                    <h5>Vacunas</h5>
-                                    <select v-model="vacunaSeleccionada">
-                                        <option disabled value="">Seleccionar Vacuna</option>
-                                        <option v-for="vacuna in listaVacunas" :value="vacuna.nombre">
-                                            {{ vacuna.nombre }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <a href="#" class="button preview">Guardar <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                            <!-- Row / End -->
-
-                            <!-- Row -->
-                            <div class="row with-forms">
-
-                                <!-- Status -->
-                                <div class="col-md-6">
-                                    <h5>Editar</h5>
+                                <!-- Title -->
+                                <div class="row with-forms">
                                     <div class="col-md-12">
                                         <h5>Nombre <i class="tip" data-tip-content="Nombre de la vacuna"></i></h5>
-                                        <input class="search-field" type="text" :value="vacunaSeleccionada"/>
+                                        <input class="search-field" type="text" value=""/>
                                     </div>
+                                    <a href="#" class="button preview">Guardar <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
 
                             </div>
-                            <!-- Row / End -->
+                            <!-- Section / End -->
+
+                                <div class="dashboard-list-box margin-top-0">
+                                    <h4>Vacunas Registradas</h4>
+                                    <ul>
+                                        <li v-for="vacuna in listaVacunas">
+                                            <div class="list-box-listing">
+                                                <div class="list-box-listing-content">
+                                                    <div>
+                                                        <h3>{{ vacuna.nombre }}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="buttons-to-right">
+                                                <a href="#" class="button gray"><i class="sl sl-icon-note"></i> Edit</a>
+                                                <a href="#" class="button gray"><i class="sl sl-icon-close"></i> Delete</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
 
                         </div>
-                        <!-- Section / End -->
 
-
-
+                        <!-- Copyrights -->
+                        <div class="col-md-12">
+                            <div class="copyrights">© 2017 Pupi. All Rights Reserved.</div>
+                        </div>
 
                     </div>
                 </div>
 
-                <!-- Copyrights -->
-                <div class="col-md-12">
-                    <div class="copyrights">© 2017 Pupi. All Rights Reserved.</div>
-                </div>
-
             </div>
-        </div>
+            <!-- Content / End -->
+
 
         </div>
-        <!-- Content / End -->
+        <!-- Dashboard / End -->
 
 
     </div>
-    <!-- Dashboard / End -->
+    <!-- Wrapper / End -->
 
 
-</div>
-<!-- Wrapper / End -->
-
-
-<!-- Scripts
-================================================== -->
-<script type="text/javascript" src="/assets/scripts/jquery-2.2.0.min.js"></script>
-<script type="text/javascript" src="/assets/scripts/jpanelmenu.min.js"></script>
-<script type="text/javascript" src="/assets/scripts/chosen.min.js"></script>
-<script type="text/javascript" src="/assets/scripts/slick.min.js"></script>
-<script type="text/javascript" src="/assets/scripts/rangeslider.min.js"></script>
-<script type="text/javascript" src="/assets/scripts/magnific-popup.min.js"></script>
-<script type="text/javascript" src="/assets/scripts/waypoints.min.js"></script>
-<script type="text/javascript" src="/assets/scripts/counterup.min.js"></script>
-<script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
-<script type="text/javascript" src="/assets/scripts/custom.js"></script>
-<script type="text/javascript" src="https://unpkg.com/vue"></script>
-<script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="js/vacuna.model.js"></script>
-<script src="js/vacuna.service.js"></script>
-<script src="js/vue_vacuna.js"></script>
+    <!-- Scripts
+    ================================================== -->
+    <script type="text/javascript" src="/assets/scripts/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/jpanelmenu.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/chosen.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/slick.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/rangeslider.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/magnific-popup.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/waypoints.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/counterup.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/custom.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/vue_vacuna.js"></script>
 
 </body>
 </html>
