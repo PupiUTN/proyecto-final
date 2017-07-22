@@ -5,7 +5,7 @@
 
 Integracion Continua: Travis [![Build Status](https://travis-ci.org/PupiUTN/proyecto-final.svg?branch=master)](https://travis-ci.org/PupiUTN/proyecto-final)
 
-Code Quuality: [![BCH compliance](https://bettercodehub.com/edge/badge/PupiUTN/Agiles?branch=master)](https://bettercodehub.com/)
+Code Quality: [![BCH compliance](https://bettercodehub.com/edge/badge/PupiUTN/Agiles?branch=master)](https://bettercodehub.com/)
 
 > Lo que no se ve, no existe para los profes (Documentacion)
 ## 1. Manifiesto
@@ -17,6 +17,8 @@ Por tanto, la función más importante que realiza el diseñador de software par
 
 ## 2. Estado del producto
 ![BPMN](https://k61.kn3.net/2/1/C/0/E/7/93C.png)
+
+![BPMN-v3](https://k61.kn3.net/3/E/5/0/9/3/990.png)
 
 ## 3.1 Estado de la documentacion
 ![WBS](https://k60.kn3.net/BBBD4A974.png)
