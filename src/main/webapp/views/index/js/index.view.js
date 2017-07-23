@@ -27,9 +27,9 @@ function geolocate() {
             var long = position.coords.longitude;
             //https://developers.google.com/maps/documentation/geocoding/start
             $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true', function (data) {
-                var cityStatCountry = data.results[1].formatted_address;
+                var cityStatCountry = data.items[1].formatted_address;
                 document.getElementById('location').value = cityStatCountry;
-                var place = data.results[1];
+                var place = data.items[1];
                 autocomplete.set("place", place);
             });
 

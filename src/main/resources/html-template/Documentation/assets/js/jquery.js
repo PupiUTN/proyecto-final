@@ -666,7 +666,7 @@ jQuery.extend({
 				text.toString().replace( trimLeft, "" ).replace( trimRight, "" );
 		},
 
-	// results is for internal usage only
+	// items is for internal usage only
 	makeArray: function( array, results ) {
 		var ret = results || [];
 
@@ -5325,7 +5325,7 @@ jQuery.fn.extend({
 			jQuery.find( selector, this[i], ret );
 
 			if ( i > 0 ) {
-				// Make sure that the results are unique
+				// Make sure that the items are unique
 				for ( n = length; n < ret.length; n++ ) {
 					for ( r = 0; r < length; r++ ) {
 						if ( ret[r] === ret[n] ) {
@@ -7024,7 +7024,7 @@ jQuery.fn.extend({
 					});
 					// See if a selector was specified
 					self.html( selector ?
-						// Create a dummy div to hold the results
+						// Create a dummy div to hold the items
 						jQuery("<div>")
 							// inject the contents of the document in, removing the scripts
 							// to avoid any 'Permission Denied' errors in IE

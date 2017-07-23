@@ -23,8 +23,8 @@ public class RazaService {
         return razaRepository.findAll();
     }
 
-    public void createRaza(Raza entity) throws Exception {
-        razaRepository.save(entity);
+    public Raza createRaza(Raza entity) throws Exception {
+        return razaRepository.save(entity);
     }
 
     public Raza getRaza(Long id) throws Exception {

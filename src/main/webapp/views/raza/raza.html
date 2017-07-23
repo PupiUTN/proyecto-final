@@ -1,153 +1,398 @@
 <!DOCTYPE html>
-<html lang="en"  ng-app="app" >
 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
-        <title>Pupi</title>
 
-        <!-- CSS  -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-        <link href="../../css/material-icons.css" rel="stylesheet">
-        <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
-        <link href="../../css/stylePupi.css" type="text/css" rel="stylesheet" media="screen,projection" />
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.min.js" data-semver="2.0.11" data-require="ng-grid@*"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" data-semver="2.1.1" data-require="jquery@*"></script>
-        <link href="../../css/jquery.toast.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
-        <script src="js/raza.js"></script>
+<!-- Basic Page Needs
+================================================== -->
+<title>Listeo</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-</html>
+<!-- CSS
+================================================== -->
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
 
 </head>
-<body ng-controller="razaController">
-    <header>
-        <nav class="grey lighten-1" role="navigation">
-            <div class="nav-wrapper container">
-                <a id="logo-container" href="/index.html" class="brand-logo logo"><img src="/img/vector.svg" style="height: 55px" alt="Pupi" /></a>
 
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="/views/perro/perro.html">Perros</a></li>
-                    <li><a href="/views/cuidadores/cuidadores.html">Cuidadores</a></li>
-                    <li><a href="/views/vacuna/vacuna.html">Vacunas</a></li>
-                    <li><a href="/views/raza/raza.html">Razas</a></li>
-                    <li><a href="/views/cuidadores/cuidadores-buscar.html">Buscar Cuidadores</a></li>
-                </ul>
+<body>
 
-                <ul id="nav-mobile" class="side-nav">
-                    <li><a href="/views/perro/perro.html">Perros</a></li>
-                    <li><a href="/views/cuidadores/cuidadores.html">Cuidadores</a></li>
-                    <li><a href="/views/vacuna/vacuna.html">Vacunas</a></li>
-                    <li><a href="/views/raza/raza.html">Razas</a></li>
-                    <li><a href="/views/cuidadores/cuidadores-buscar.html">Buscar Cuidadores</a></li>
-                </ul>
+<!-- Wrapper -->
+<div id="wrapper">
 
-                <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-            </div>
-        </nav>
-    </header>
-    <main>
-        <form name="myForm" class="form-horizontal" >
+    <!-- Header Container
+    ================================================== -->
+    <header id="header-container" class="fixed fullwidth dashboard">
 
-            <div class="page-title">
-
-                <div class="center-align">
-
-                    <h3>Razas</h3>
-                </div>
-
-            </div>
-            <div class="center-align">
-                <a class="waves-effect waves-light btn" ng-click="mostrarNuevaRaza()"><i class="material-icons right">library_add</i> Nueva Raza</a>
-            </div>
-
-
-
-            <div class="row" id="nuevaRaza" hidden="">
-                <form class="col s12">
-                    <div class="row">
-
-
-                        <div class="input-field col s4"></div>
-                        <div class="input-field col s5">
-                            <input id="nombre" type="text" class="validate"  ng-model ="raza.nombre" required maxlength="30">
-                            <label for="nombre">Nombre</label>
-                        </div>
-
-
-
-
-                    </div>
-
-                    <div class="input-field col s12 center">
-                        <div class="show-on-medium-and-down ">
-                            <button class="btn btn-success" post-validator tabindex="2" type="button" ng-click="SaveOrEdit()">Guardar</button>
-                            <button class="btn btn-default" type="button" tabindex="3" ng-click="cancelar()">Cancelar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <div class="input-field col s12 center-align">
-                <a class="waves-effect waves-light btn" ng-click="buscarRaza()"><i class="material-icons right">search</i> ver Razas</a>
-            </div>
-
-
-            <div class="input-field col s12 center">
-                <div class="show-on-medium-and-down ">
-                    <div class="row" id="consultarRaza"   hidden="">
-
-                        <div class="row" id="listaRazas">
-                        </div>
-                        <div id="modalEliminar" class="modal">
-                            <div class="modal-content">
-                                <h4>Alerta!</h4>
-                                <p>¿Está seguro que desea eliminar la raza?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="#!" id="cancelarEliminar"  class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                                <a href="#!" id="aceptarEliminar" ng-click="eliminarAJAX()" class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
-                            </div>
-                        </div>
-
-                        <button class="btn btn-default" type="button" tabindex="3" ng-click="cancelarConsulta()">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </main>
-    <footer class="page-footer orange">
-        <div class="container">
-            <div class="row">
-                <div class="col l6 s12">
-                    <h5 class="white-text">Footer Content</h5>
-                    <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-                </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="white-text">Links</h5>
-                    <ul>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
+        <!-- Header -->
+        <div id="header" class="not-sticky">
             <div class="container">
-                © 2014 Copyright Text
-                <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+
+                <!-- Left Side Content -->
+                <div class="left-side">
+
+                    <!-- Logo -->
+                    <div id="logo">
+                        <a href="index.html"><img src="/assets/images/logo.png" alt=""></a>
+                        <a href="index.html" class="dashboard-logo"><img src="/assets/images/logo2.png" alt=""></a>
+                    </div>
+
+                    <!-- Mobile Navigation -->
+                    <div class="menu-responsive">
+                        <i class="fa fa-reorder menu-trigger"></i>
+                    </div>
+
+                    <!-- Main Navigation -->
+                    <nav id="navigation" class="style-1">
+                        <ul id="responsive">
+
+                            <li><a href="#">Home</a>
+                                <ul>
+                                    <li><a href="index.html">Home 1</a></li>
+                                    <li><a href="index-2.html">Home 2</a></li>
+                                    <li><a href="index-3.html">Home 3</a></li>
+                                    <li><a href="index-4.html">Home 4</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a href="#">Listings</a>
+                                <ul>
+                                    <li><a href="#">List Layout</a>
+                                        <ul>
+                                            <li><a href="listings-list-with-sidebar.html">With Sidebar</a></li>
+                                            <li><a href="listings-list-full-width.html">Full Width</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Grid Layout</a>
+                                        <ul>
+                                            <li><a href="listings-grid-with-sidebar-1.html">With Sidebar 1</a></li>
+                                            <li><a href="listings-grid-with-sidebar-2.html">With Sidebar 2</a></li>
+                                            <li><a href="listings-grid-full-width.html">Full Width</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Half Screen Map</a>
+                                        <ul>
+                                            <li><a href="listings-half-screen-map-list.html">List Layout</a></li>
+                                            <li><a href="listings-half-screen-map-grid-1.html">Grid Layout 1</a></li>
+                                            <li><a href="listings-half-screen-map-grid-2.html">Grid Layout 2</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="listings-single-page.html">Single Listing</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a class="current" href="#">User Panel</a>
+                                <ul>
+                                    <li><a href="dashboard.html">Dashboard</a></li>
+                                    <li><a href="dashboard-messages.html">Messages</a></li>
+                                    <li><a href="dashboard-my-listings.html">My Listings</a></li>
+                                    <li><a href="dashboard-reviews.html">Reviews</a></li>
+                                    <li><a href="dashboard-bookmarks.html">Bookmarks</a></li>
+                                    <li><a href="dashboard-add-listing.html">Add Listing</a></li>
+                                    <li><a href="dashboard-my-profile.html">My Profile</a></li>
+                                    <li><a href="dashboard-invoice.html">Invoice</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a href="#">Pages</a>
+                                <ul>
+                                    <li><a href="pages-blog.html">Blog</a>
+                                        <ul>
+                                            <li><a href="pages-blog.html">Blog</a></li>
+                                            <li><a href="pages-blog-post.html">Blog Post</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="pages-contact.html">Contact</a></li>
+                                    <li><a href="pages-elements.html">Elements</a></li>
+                                    <li><a href="pages-pricing-tables.html">Pricing Tables</a></li>
+                                    <li><a href="pages-typography.html">Typography</a></li>
+                                    <li><a href="pages-404.html">404 Page</a></li>
+                                    <li><a href="pages-icons.html">Icons</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+                    <div class="clearfix"></div>
+                    <!-- Main Navigation / End -->
+
+                </div>
+                <!-- Left Side Content / End -->
+
+                <!-- Right Side Content / End -->
+                <div class="right-side">
+                    <!-- Header Widget -->
+                    <div class="header-widget">
+
+                        <!-- User Menu -->
+                        <div class="user-menu">
+                            <div class="user-name"><span><img src="/assets/images/dashboard-avatar.jpg" alt=""></span>Tom
+                                Perrin
+                            </div>
+                            <ul>
+                                <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
+                                <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a>
+                                </li>
+                                <li><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a>
+                                </li>
+                                <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
+                            </ul>
+                        </div>
+
+                        <a href="dashboard-add-listing.html" class="button border with-icon">Add Listing <i
+                                class="sl sl-icon-plus"></i></a>
+                    </div>
+                    <!-- Header Widget / End -->
+                </div>
+                <!-- Right Side Content / End -->
+
             </div>
         </div>
-    </footer>
+        <!-- Header / End -->
+
+    </header>
+    <div class="clearfix"></div>
+    <!-- Header Container / End -->
 
 
-    <!--  Scripts-->
-    <script src="../../js/jquery-2.1.1.min.js"></script>
-    <script src="../../js/jquery.toast.min.js"></script>
-    <script src="../../js/materialize.js "></script>
-    <!--primero init-->
-    <script src="../../js/init.js "></script>
+    <!-- Dashboard -->
+    <div id="dashboard">
 
+        <!-- Navigation
+        ================================================== -->
+
+        <!-- Responsive Navigation Trigger -->
+        <a href="#" class="dashboard-responsive-nav-trigger"><i class="fa fa-reorder"></i> Dashboard Navigation</a>
+
+        <div class="dashboard-nav">
+            <div class="dashboard-nav-inner">
+
+                <ul data-submenu-title="Main">
+                    <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
+                    <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages <span
+                            class="nav-tag messages">2</span></a></li>
+                </ul>
+
+                <ul data-submenu-title="Listings">
+                    <li><a><i class="sl sl-icon-layers"></i> My Listings</a>
+                        <ul>
+                            <li><a href="dashboard-my-listings.html">Active <span class="nav-tag green">6</span></a>
+                            </li>
+                            <li><a href="dashboard-my-listings.html">Pending <span class="nav-tag yellow">1</span></a>
+                            </li>
+                            <li><a href="dashboard-my-listings.html">Expired <span class="nav-tag red">2</span></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="dashboard-reviews.html"><i class="sl sl-icon-star"></i> Reviews</a></li>
+                    <li><a href="dashboard-bookmarks.html"><i class="sl sl-icon-heart"></i> Bookmarks</a></li>
+                    <li class="active"><a href="dashboard-add-listing.html"><i class="sl sl-icon-plus"></i> Add Listing</a>
+                    </li>
+                </ul>
+
+                <ul data-submenu-title="Account">
+                    <li><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
+                    <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
+                </ul>
+
+            </div>
+        </div>
+        <!-- Navigation / End -->
+
+
+        <!-- Content
+        ================================================== -->
+        <div class="dashboard-content">
+
+            <!-- Titlebar -->
+            <div id="titlebar">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Add Listing</h2>
+                        <!-- Breadcrumbs -->
+                        <nav id="breadcrumbs">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Dashboard</a></li>
+                                <li>Add Listing</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row" id="appVue">
+                <div class="col-lg-12">
+                    <div id="add-listing">
+                        <!-- Section -->
+                        <div class="add-listing-section">
+
+                            <!-- Headline -->
+                            <div class="add-listing-headline">
+                                <h3><i class="sl sl-icon-doc"></i> ABM Razas</h3>
+                            </div>
+
+                            <!-- Form -->
+                            <div class="row">
+                                <form v-on:submit='postItem()'>
+                                    <div class="col-md-10 col-sm-12">
+                                        <div>
+                                            <input type="text" v-model="item.nombre" placeholder="Raza"
+                                                   required="required">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2 col-sm-12">
+                                        <div>
+                                            <button type="submit" class="button medium border"><i
+                                                    class="sl sl-icon-plus"></i> Nueva Raza
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+
+
+                        </div>
+                        <!-- Section / End -->
+
+                        <!-- Section -->
+
+                        <div class=" add-listing-section">
+                            <table class="table basic-table table-bordered table-hovers">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Raza</th>
+                                    <th>Editar</th>
+                                    <th>Eliminar</th>
+
+                                </tr>
+                                </thead>
+
+                                <tbody id="table-items">
+                                <tr v-for="(item, index) in items" id="table-section">
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.nombre }}</td>
+                                    <td><i class="fa fa-edit"></i></td>
+                                    <td><i class="fa fa-trash" v-on:click='deleteItemConfirm(index, item.id)'></i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="spinner">
+                                <div class="cube1"></div>
+                                <div class="cube2"></div>
+                            </div>
+                        </div>
+                        <!-- Section / End -->
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <!-- Content / End -->
+
+
+    </div>
+    <!-- Dashboard / End -->
+
+
+</div>
+<!-- Wrapper / End -->
+
+
+<!-- Scripts
+================================================== -->
+<script type="text/javascript" src="/assets/scripts/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jpanelmenu.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/chosen.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/slick.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/rangeslider.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/magnific-popup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/waypoints.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/counterup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/custom.js"></script>
+
+
+<!-- My Scripts
+================================================== -->
+<style>
+    .spinner {
+        margin: 100px auto;
+        width: 40px;
+        height: 40px;
+        position: relative;
+    }
+
+    .cube1, .cube2 {
+        background-color: #f91942;
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        -webkit-animation: sk-cubemove 1.8s infinite ease-in-out;
+        animation: sk-cubemove 1.8s infinite ease-in-out;
+    }
+
+    .cube2 {
+        -webkit-animation-delay: -0.9s;
+        animation-delay: -0.9s;
+    }
+
+    @-webkit-keyframes sk-cubemove {
+        25% {
+            -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5)
+        }
+        50% {
+            -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg)
+        }
+        75% {
+            -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5)
+        }
+        100% {
+            -webkit-transform: rotate(-360deg)
+        }
+    }
+
+    @keyframes sk-cubemove {
+        25% {
+            transform: translateX(42px) rotate(-90deg) scale(0.5);
+            -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
+        }
+        50% {
+            transform: translateX(42px) translateY(42px) rotate(-179deg);
+            -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+        }
+        50.1% {
+            transform: translateX(42px) translateY(42px) rotate(-180deg);
+            -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+        }
+        75% {
+            transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+            -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+        }
+        100% {
+            transform: rotate(-360deg);
+            -webkit-transform: rotate(-360deg);
+        }
+    }
+
+
+</style>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/js/vue.min.js"></script>
+<link rel="stylesheet" href="/css/sweetalert.css"></link>
+<script src="/js/sweetalert.min.js"></script>
+<script src="js/raza.js"></script>
 
 </body>
-
 </html>
