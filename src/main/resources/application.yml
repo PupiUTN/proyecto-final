@@ -10,3 +10,4 @@ spring:
       ddl-auto: none
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
     show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
