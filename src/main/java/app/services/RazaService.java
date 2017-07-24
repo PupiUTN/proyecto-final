@@ -35,7 +35,7 @@ public class RazaService {
         razaRepository.delete(id);
     }
 
-    public void editRaza(Raza entity) throws Exception {
-        throw new UnsupportedOperationException();
+    public Raza editRaza(Raza entity) throws Exception {
+        return razaRepository.save(entity);
     }
 }

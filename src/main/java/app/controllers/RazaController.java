@@ -41,9 +41,9 @@ public class RazaController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public void editRaza(@PathVariable("id") Long id,@RequestBody Raza entity) throws Exception {
+    public Raza editRaza(@PathVariable("id") Long id,@RequestBody Raza entity) throws Exception {
         entity.setId(id);
-        razaService.editRaza(entity);
+        return razaService.editRaza(entity);
     }
 
 }

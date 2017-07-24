@@ -1,58 +1,96 @@
 let vm = new Vue({
     el: '#appVue',
     data: {
-        items: [],
         url: "/api/razas",
         item: {
+            index: '',
+            id: '',
             nombre: ''
-        }
+        },
+        items: [],
+        formPost: true,
     },
     mounted() {
-        this.showLoader();
-        this.getItems(this.url);
+
+        this.getItemsAjax(this.url);
     },
     methods: {
-        showLoader() {
-            $('.spinner').show();
+        toggleLoader() {
+            $('#spinner').toggle();
         },
-        getItems() {
+        getItemsAjax() {
             axios.get(this.url)
                 .then((response) => {
-                    $('.spinner').hide();
                     this.items = response.data;
+                    this.toggleLoader();
                 })
                 .catch(error => {
                         console.log(error);
+                        sweetAlert("Oops...", "Error, ver consola", "error");
                     }
                 );
         },
-        postItem() {
-            var payload = {nombre: this.item.nombre};
-            this.item.nombre = 'Guardando...';
+        postItemAjax() {
+            this.toggleLoader();
+            var payload = jQuery.extend(true, {}, this.item);
             axios.post(this.url, payload)
                 .then((response) => {
+                    this.toggleLoader();
                     console.log(response);
                     this.items.push(response.data);
                     this.item.nombre = '';
-                    window.scrollTo(0,document.body.scrollHeight);
+                    sweetAlert("Guardado!", "Nueva raza creada exitosamente.", "success");
+
                 })
                 .catch(error => {
                         console.log(error);
+                        sweetAlert("Oops...", "Error, ver consola", "error");
                     }
                 );
         },
-        deleteItemAjax(index, id) {
+        editItemAjax() {
+            this.toggleLoader();
+            var payload = jQuery.extend(true, {}, this.item);
+            axios.put(this.url + '/' + this.item.id, payload)
+                .then((response) => {
+                    this.toggleLoader();
+                    this.items[this.item.index] = response.data;
+                    sweetAlert("Editado!", "Raza editada exitosamente.", "success");
+                    this.editItemButtonUndo();
+                    console.log(response);
+                })
+                .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error, ver consola", "error");
+
+                    }
+                );
+        },
+        editItemActionButton(index) {
+            this.formPost = false;
+            this.item.index = index;
+            this.item.id = this.items[index].id;
+            this.item.nombre = this.items[index].nombre;
+
+        },
+        deleteItemAjax(index) {
+            this.toggleLoader();
+            var id = this.items[index].id;
             axios.delete(this.url + '/' + id)
                 .then((response) => {
+                    this.toggleLoader();
                     sweetAlert("Deleted!", "Your imaginary file has been deleted.", "success");
                     Vue.delete(this.items, index);
                 })
                 .catch(error => {
                         console.log(error);
+                        sweetAlert("Oops...", "Error, ver consola", "error");
+
                     }
                 );
         },
-        deleteItemConfirm(index, id) {
+        deleteItemActionButton(index) {
+            var id = this.items[index].id;
             sweetAlert({
                     title: "Confirmar accion",
                     text: "Quiere eliminar la raza con id: " + id + " ?",
@@ -67,7 +105,13 @@ let vm = new Vue({
                 function () {
                     vm.deleteItemAjax(index, id)
                 });
-        }
+        },
+        editItemButtonUndo() {
+            this.formPost = true;
+            this.item.id = null;
+            this.item.nombre = null;
+        },
+
     }
 });
 

@@ -221,6 +221,7 @@
 
 
             <div class="row" id="appVue">
+                <div id="spinner"></div>
                 <div class="col-lg-12">
                     <div id="add-listing">
                         <!-- Section -->
@@ -233,59 +234,103 @@
 
                             <!-- Form -->
                             <div class="row">
-                                <form v-on:submit='postItem()'>
-                                    <div class="col-md-10 col-sm-12">
-                                        <div>
-                                            <input type="text" v-model="item.nombre" placeholder="Raza"
-                                                   required="required">
-                                        </div>
-                                    </div>
 
-                                    <div class="col-md-2 col-sm-12">
-                                        <div>
-                                            <button type="submit" class="button medium border"><i
-                                                    class="sl sl-icon-plus"></i> Nueva Raza
-                                            </button>
+                                <div v-if="formPost">
+                                    <form v-on:submit='postItemAjax()'>
+                                        <div class="col-md-10 col-sm-12">
+                                            <div>
+                                                <input type="text" v-model="item.nombre" placeholder="Raza"
+                                                       required="required">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                </form>
+                                        <div class="col-md-2 col-sm-12">
+                                            <div>
+                                                <button type="submit" class="button medium border"><i
+                                                        class="sl sl-icon-plus"></i> Nueva Raza
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div v-else>
+
+                                    <form v-on:submit='editItemAjax()'>
+                                        <div class="col-md-2 col-sm-12">
+
+                                            <div>
+                                                <input type="number" class="disabled" v-model="item.id" placeholder="Id"
+                                                       required="required" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+
+                                            <div>
+                                                <input type="text" v-model="item.nombre" placeholder="Raza"
+                                                       required="required">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-12">
+                                            <div>
+                                                <button type="submit" class="button medium border"><i
+                                                        class="sl sl-icon-note"></i> Editar Raza
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-sm-12">
+                                            <div>
+                                                <a href="#" class="button medium border"
+                                                   v-on:click='editItemButtonUndo'><i
+                                                        class="sl sl-icon-action-undo"></i> Volver a Nueva</a>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+
+
                             </div>
 
 
-                        </div>
-                        <!-- Section / End -->
+                            <!-- Section -->
+                            </br>
 
-                        <!-- Section -->
 
-                        <div class=" add-listing-section">
-                            <table class="table basic-table table-bordered table-hovers">
+                            <table class="table basic-table table-bordered table-hovers" id="tableList">
                                 <thead>
                                 <tr>
                                     <th>Id</th>
                                     <th>Raza</th>
                                     <th>Editar</th>
                                     <th>Eliminar</th>
-
                                 </tr>
                                 </thead>
 
+
                                 <tbody id="table-items">
+
+
                                 <tr v-for="(item, index) in items" id="table-section">
                                     <td>{{ item.id }}</td>
                                     <td>{{ item.nombre }}</td>
-                                    <td><i class="fa fa-edit"></i></td>
-                                    <td><i class="fa fa-trash" v-on:click='deleteItemConfirm(index, item.id)'></i>
-                                    </td>
+                                    <td><a href="#" v-on:click='editItemActionButton(index)'> <i
+                                            class="sl sl-icon-note"></i>
+                                        Editar </a></td>
+                                    <td><a href="#" v-on:click='deleteItemActionButton(index)'><i
+                                            class="sl sl-icon-close"></i> Eliminar</a></td>
                                 </tr>
                                 </tbody>
+
+
                             </table>
-                            <div class="spinner">
-                                <div class="cube1"></div>
-                                <div class="cube2"></div>
-                            </div>
+
+
+
                         </div>
                         <!-- Section / End -->
+
 
                     </div>
                 </div>
@@ -324,67 +369,23 @@
 <!-- My Scripts
 ================================================== -->
 <style>
-    .spinner {
-        margin: 100px auto;
-        width: 40px;
-        height: 40px;
-        position: relative;
-    }
 
-    .cube1, .cube2 {
-        background-color: #f91942;
-        width: 15px;
-        height: 15px;
-        position: absolute;
+
+    #spinner {
+        /*http://samherbert.net/svg-loaders/*/
+        background-image: url('/img/spinner.svg');
+        position: fixed;
         top: 0;
         left: 0;
-
-        -webkit-animation: sk-cubemove 1.8s infinite ease-in-out;
-        animation: sk-cubemove 1.8s infinite ease-in-out;
+        right: 0;
+        bottom: 0;
+        background-repeat: no-repeat;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 999;
+        background-position: center;
     }
 
-    .cube2 {
-        -webkit-animation-delay: -0.9s;
-        animation-delay: -0.9s;
-    }
 
-    @-webkit-keyframes sk-cubemove {
-        25% {
-            -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5)
-        }
-        50% {
-            -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg)
-        }
-        75% {
-            -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5)
-        }
-        100% {
-            -webkit-transform: rotate(-360deg)
-        }
-    }
-
-    @keyframes sk-cubemove {
-        25% {
-            transform: translateX(42px) rotate(-90deg) scale(0.5);
-            -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
-        }
-        50% {
-            transform: translateX(42px) translateY(42px) rotate(-179deg);
-            -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
-        }
-        50.1% {
-            transform: translateX(42px) translateY(42px) rotate(-180deg);
-            -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
-        }
-        75% {
-            transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
-            -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
-        }
-        100% {
-            transform: rotate(-360deg);
-            -webkit-transform: rotate(-360deg);
-        }
-    }
 
 
 </style>
