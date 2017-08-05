@@ -25,15 +25,19 @@ public class VacunaService {
         return vacunaRespository.findAll();
     }
 
-    public void createVacuna(Vacuna entity) throws Exception {
-        vacunaRespository.save(entity);
+    public Vacuna createVacuna(Vacuna entity) throws Exception {
+        return vacunaRespository.save(entity);
     }
 
     public void deleteVacuna(Long id) throws Exception {
         vacunaRespository.delete(id);
     }
 
-    public void editVacuna(Vacuna entity) throws Exception {
-        throw new UnsupportedOperationException();
+    public Vacuna editVacuna(Vacuna entity) throws Exception {
+        return vacunaRespository.save(entity);
+    }
+
+    public Vacuna getVacuna(Long id) throws Exception {
+        return vacunaRespository.findOne(id);
     }
 }

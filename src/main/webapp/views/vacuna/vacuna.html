@@ -1,130 +1,397 @@
 <!DOCTYPE html>
-<html lang="en">
-
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-        <title>Pupi</title>
-
-        <!-- CSS  -->
-        <link href="../../css/material-icons.css" rel="stylesheet">
-        <link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link href="../../css/stylePupi.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link href="../../css/jquery.toast.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
 
-    </head>
+<!-- Basic Page Needs
+================================================== -->
+<title>Vacuna</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <body>
-        <header>
-            <nav class="grey lighten-1" role="navigation">
-                <div class="nav-wrapper container">
-                    <a id="logo-container" href="/index.html" class="brand-logo logo"><img src="/img/vector.svg" style="height: 55px" alt="Pupi" /></a>
+<!-- CSS
+================================================== -->
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
 
-                    <ul class="right hide-on-med-and-down">
-                        <li><a href="/views/perro/perro.html">Perros</a></li>
-                        <li><a href="/views/cuidadores/cuidadores.html">Cuidadores</a></li>
-                        <li><a href="/views/vacuna/vacuna.html">Vacunas</a></li>
-                        <li><a href="/views/raza/raza.html">Razas</a></li>
-                        <li><a href="/views/cuidadores/cuidadores-buscar.html">Buscar Cuidadores</a></li>
-                    </ul>
+</head>
 
-                    <ul id="nav-mobile" class="side-nav">
-                        <li><a href="/views/perro/perro.html">Perros</a></li>
-                        <li><a href="/views/cuidadores/cuidadores.html">Cuidadores</a></li>
-                        <li><a href="/views/vacuna/vacuna.html">Vacunas</a></li>
-                        <li><a href="/views/raza/raza.html">Razas</a></li>
-                        <li><a href="/views/cuidadores/cuidadores-buscar.html">Buscar Cuidadores</a></li>
-                    </ul>
+<body xmlns:v-on="http://www.w3.org/1999/xhtml">
 
-                    <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-                </div>
-            </nav>
-        </header>
-        <main>
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Header Container
+    ================================================== -->
+    <header id="header-container" class="fixed fullwidth dashboard">
+
+        <!-- Header -->
+        <div id="header" class="not-sticky">
             <div class="container">
-                <div class="section">
 
-                    <div class="center-align">
-                        <h3>Vacunas</h3>
+                <!-- Left Side Content -->
+                <div class="left-side">
+
+                    <!-- Logo -->
+                    <div id="logo">
+                        <a href="index.html"><img src="/assets/images/logo.png" alt=""></a>
+                        <a href="index.html" class="dashboard-logo"><img src="/assets/images/logo2.png" alt=""></a>
                     </div>
 
+                    <!-- Mobile Navigation -->
+                    <div class="menu-responsive">
+                        <i class="fa fa-reorder menu-trigger"></i>
+                    </div>
 
-                    <div class="row" id="nuevaVacuna">
-                        <form class="col s12">
+                    <!-- Main Navigation -->
+                    <nav id="navigation" class="style-1">
+                        <ul id="responsive">
+
+                            <li><a href="#">Home</a>
+                                <ul>
+                                    <li><a href="index.html">Home 1</a></li>
+                                    <li><a href="index-2.html">Home 2</a></li>
+                                    <li><a href="index-3.html">Home 3</a></li>
+                                    <li><a href="index-4.html">Home 4</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a href="#">Listings</a>
+                                <ul>
+                                    <li><a href="#">List Layout</a>
+                                        <ul>
+                                            <li><a href="listings-list-with-sidebar.html">With Sidebar</a></li>
+                                            <li><a href="listings-list-full-width.html">Full Width</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Grid Layout</a>
+                                        <ul>
+                                            <li><a href="listings-grid-with-sidebar-1.html">With Sidebar 1</a></li>
+                                            <li><a href="listings-grid-with-sidebar-2.html">With Sidebar 2</a></li>
+                                            <li><a href="listings-grid-full-width.html">Full Width</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Half Screen Map</a>
+                                        <ul>
+                                            <li><a href="listings-half-screen-map-list.html">List Layout</a></li>
+                                            <li><a href="listings-half-screen-map-grid-1.html">Grid Layout 1</a></li>
+                                            <li><a href="listings-half-screen-map-grid-2.html">Grid Layout 2</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="listings-single-page.html">Single Listing</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a class="current" href="#">User Panel</a>
+                                <ul>
+                                    <li><a href="dashboard.html">Dashboard</a></li>
+                                    <li><a href="dashboard-messages.html">Messages</a></li>
+                                    <li><a href="dashboard-my-listings.html">My Listings</a></li>
+                                    <li><a href="dashboard-reviews.html">Reviews</a></li>
+                                    <li><a href="dashboard-bookmarks.html">Bookmarks</a></li>
+                                    <li><a href="dashboard-add-listing.html">Add Listing</a></li>
+                                    <li><a href="dashboard-my-profile.html">My Profile</a></li>
+                                    <li><a href="dashboard-invoice.html">Invoice</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a href="#">Pages</a>
+                                <ul>
+                                    <li><a href="pages-blog.html">Blog</a>
+                                        <ul>
+                                            <li><a href="pages-blog.html">Blog</a></li>
+                                            <li><a href="pages-blog-post.html">Blog Post</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="pages-contact.html">Contact</a></li>
+                                    <li><a href="pages-elements.html">Elements</a></li>
+                                    <li><a href="pages-pricing-tables.html">Pricing Tables</a></li>
+                                    <li><a href="pages-typography.html">Typography</a></li>
+                                    <li><a href="pages-404.html">404 Page</a></li>
+                                    <li><a href="pages-icons.html">Icons</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+                    <div class="clearfix"></div>
+                    <!-- Main Navigation / End -->
+
+                </div>
+                <!-- Left Side Content / End -->
+
+                <!-- Right Side Content / End -->
+                <div class="right-side">
+                    <!-- Header Widget -->
+                    <div class="header-widget">
+
+                        <!-- User Menu -->
+                        <div class="user-menu">
+                            <div class="user-name"><span><img src="/assets/images/dashboard-avatar.jpg" alt=""></span>Tom
+                                Perrin
+                            </div>
+                            <ul>
+                                <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
+                                <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a>
+                                </li>
+                                <li><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a>
+                                </li>
+                                <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
+                            </ul>
+                        </div>
+
+                        <a href="dashboard-add-listing.html" class="button border with-icon">Add Listing <i
+                                class="sl sl-icon-plus"></i></a>
+                    </div>
+                    <!-- Header Widget / End -->
+                </div>
+                <!-- Right Side Content / End -->
+
+            </div>
+        </div>
+        <!-- Header / End -->
+
+    </header>
+    <div class="clearfix"></div>
+    <!-- Header Container / End -->
+
+
+    <!-- Dashboard -->
+    <div id="dashboard">
+
+        <!-- Navigation
+        ================================================== -->
+
+        <!-- Responsive Navigation Trigger -->
+        <a href="#" class="dashboard-responsive-nav-trigger"><i class="fa fa-reorder"></i> Dashboard Navigation</a>
+
+        <div class="dashboard-nav">
+            <div class="dashboard-nav-inner">
+
+                <ul data-submenu-title="Main">
+                    <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
+                    <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages <span
+                            class="nav-tag messages">2</span></a></li>
+                </ul>
+
+                <ul data-submenu-title="Listings">
+                    <li><a><i class="sl sl-icon-layers"></i> My Listings</a>
+                        <ul>
+                            <li><a href="dashboard-my-listings.html">Active <span class="nav-tag green">6</span></a>
+                            </li>
+                            <li><a href="dashboard-my-listings.html">Pending <span class="nav-tag yellow">1</span></a>
+                            </li>
+                            <li><a href="dashboard-my-listings.html">Expired <span class="nav-tag red">2</span></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="dashboard-reviews.html"><i class="sl sl-icon-star"></i> Reviews</a></li>
+                    <li><a href="dashboard-bookmarks.html"><i class="sl sl-icon-heart"></i> Bookmarks</a></li>
+                    <li class="active"><a href="dashboard-add-listing.html"><i class="sl sl-icon-plus"></i> Add Listing</a>
+                    </li>
+                </ul>
+
+                <ul data-submenu-title="Account">
+                    <li><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
+                    <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
+                </ul>
+
+            </div>
+        </div>
+        <!-- Navigation / End -->
+
+
+        <!-- Content
+        ================================================== -->
+        <div class="dashboard-content">
+
+            <!-- Titlebar -->
+            <div id="titlebar">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Administrar Vacunas</h2>
+                        <!-- Breadcrumbs -->
+                        <nav id="breadcrumbs">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Dashboard</a></li>
+                                <li>Add Listing</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row" id="appVue">
+                <div id="spinner"></div>
+                <div class="col-lg-12">
+                    <div id="add-listing">
+                        <!-- Section -->
+                        <div class="add-listing-section">
+
+                            <!-- Headline -->
+                            <div class="add-listing-headline">
+                                <h3><i class="sl sl-icon-doc"></i> Vacunas </h3>
+                            </div>
+
+                            <!-- Form -->
                             <div class="row">
 
-                                <div class="input-field col s12">
-                                    <input id="nombre" type="text" class="validate" required>
-                                    <label for="nombre">Nombre</label>
+                                <div v-if="formPost">
+                                    <form v-on:submit='postItemAjax()'>
+                                        <div class="col-md-10 col-sm-12">
+                                            <div>
+                                                <input type="text" v-model="item.nombre" placeholder="Vacuna"
+                                                       required="required">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-12">
+                                            <div>
+                                                <button type="submit" class="button medium border"><i
+                                                        class="sl sl-icon-plus"></i> Nueva Vacuna
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div v-else>
+
+                                    <form v-on:submit='editItemAjax()'>
+                                        <div class="col-md-2 col-sm-12">
+
+                                            <div>
+                                                <input type="number" class="disabled" v-model="item.id" placeholder="Id"
+                                                       required="required" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+
+                                            <div>
+                                                <input type="text" v-model="item.nombre" placeholder="Vacuna"
+                                                       required="required">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-12">
+                                            <div>
+                                                <button type="submit" class="button medium border"><i
+                                                        class="sl sl-icon-note"></i> Editar Vacuna
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-sm-12">
+                                            <div>
+                                                <a href="#" class="button medium border"
+                                                   v-on:click='editItemButtonUndo'><i
+                                                        class="sl sl-icon-action-undo"></i> Volver a Nueva</a>
+                                            </div>
+                                        </div>
+
+                                    </form>
                                 </div>
 
-                                <div class="input-field col s12 center">
-                                    <button id="guardarVacuna" onclick="postVacuna()" class="btn waves-effect waves-light green"
-                                            type="submit">
-                                        Guardar<i class="material-icons right">send</i>
-                                        <button id="editarVacuna" onclick="putVacuna()"
-                                                class="btn waves-effect waves-light yellow"
-                                                type="submit">
-                                            Editar<i class="material-icons right">send</i>
-                                        </button>
-                                </div>
 
                             </div>
-                        </form>
-                    </div>
-                    <div class="row" id="listaVacunas">
-                    </div>
-                    <!-- MODAL ELIMINAR-->
-                    <div id="modalEliminar" class="modal">
-                        <div class="modal-content">
-                            <h4>Alerta!</h4>
-                            <p>¿Está seguro que desea eliminar la vacuna?</p>
+
+
+                            <!-- Section -->
+                            </br>
+
+
+                            <table class="table basic-table table-bordered table-hovers" id="tableList">
+                                <thead>
+                                <tr>
+                                    <th>Vacuna</th>
+                                    <th>Editar</th>
+                                    <th>Eliminar</th>
+                                </tr>
+                                </thead>
+
+
+                                <tbody id="table-items">
+
+
+                                <tr v-for="(item, index) in items" id="table-section">
+                                    <td>{{ item.nombre }}</td>
+                                    <td><a href="#" v-on:click='editItemActionButton(index)'> <i
+                                            class="sl sl-icon-note"></i>
+                                        Editar </a></td>
+                                    <td><a href="#" v-on:click='deleteItemActionButton(index)'><i
+                                            class="sl sl-icon-close"></i> Eliminar</a></td>
+                                </tr>
+                                </tbody>
+
+
+                            </table>
+
+
+
                         </div>
-                        <div class="modal-footer">
-                            <a href="#!" id="cancelarEliminar"
-                               class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-                            <a href="#!" id="aceptarEliminar" onclick="deleteVacuna()"
-                               class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
-                        </div>
+                        <!-- Section / End -->
+
+
                     </div>
                 </div>
+
+
             </div>
-        </main>
-        <footer class="page-footer orange">
-            <div class="container">
-                <div class="row">
-                    <div class="col l6 s12">
-                        <h5 class="white-text">Footer Content</h5>
-                        <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer
-                            content.</p>
-                    </div>
-                    <div class="col l4 offset-l2 s12">
-                        <h5 class="white-text">Links</h5>
-                        <ul>
-                            <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-copyright">
-                <div class="container">
-                    © 2014 Copyright Text
-                    <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-                </div>
-            </div>
-        </footer>
 
 
-        <!--  Scripts-->
-        <script src="../../js/jquery-2.1.1.min.js"></script>
-        <script src="../../js/jquery.toast.min.js"></script>
-        <script src="../../js/materialize.js "></script>
-        <script src="../../js/init.js "></script>
-        <script src="js/vacuna.model.js"></script>
-        <script src="js/vacuna.service.js"></script>
-        <script src="js/vacuna.view.js"></script>
+        </div>
+        <!-- Content / End -->
 
-    </body>
 
+    </div>
+    <!-- Dashboard / End -->
+
+
+</div>
+<!-- Wrapper / End -->
+
+
+<!-- Scripts
+================================================== -->
+<script type="text/javascript" src="/assets/scripts/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jpanelmenu.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/chosen.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/slick.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/rangeslider.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/magnific-popup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/waypoints.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/counterup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/custom.js"></script>
+
+
+<!-- My Scripts
+================================================== -->
+<style>
+
+
+    #spinner {
+        /*http://samherbert.net/svg-loaders/*/
+        background-image: url('/img/spinner.svg');
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-repeat: no-repeat;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 999;
+        background-position: center;
+    }
+
+
+
+
+</style>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/js/vue.min.js"></script>
+<link rel="stylesheet" href="/css/sweetalert.css" />
+<script src="/js/sweetalert.min.js"></script>
+<script src="js/vacuna.js"></script>
+
+</body>
 </html>
