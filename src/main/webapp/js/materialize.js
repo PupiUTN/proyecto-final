@@ -5196,7 +5196,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                 $ELEMENT.addClass( CLASSES.active )
                 aria( ELEMENT, 'expanded', true )
 
-                // * A Firefox bug, when `html` has `overflow:hidden`, results in
+                // * A Firefox bug, when `html` has `overflow:hidden`, items in
                 //   killing transitions :(. So add the “opened” state on the next tick.
                 //   Bug: https://bugzilla.mozilla.org/show_bug.cgi?id=625289
                 setTimeout( function() {
@@ -5314,7 +5314,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                 $ELEMENT.removeClass( CLASSES.active )
                 aria( ELEMENT, 'expanded', false )
 
-                // * A Firefox bug, when `html` has `overflow:hidden`, results in
+                // * A Firefox bug, when `html` has `overflow:hidden`, items in
                 //   killing transitions :(. So remove the “opened” state on the next tick.
                 //   Bug: https://bugzilla.mozilla.org/show_bug.cgi?id=625289
                 setTimeout( function() {
