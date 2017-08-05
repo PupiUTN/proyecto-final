@@ -26,22 +26,24 @@ public class RazaController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void createRaza(@RequestBody Raza entity) throws Exception {
-        razaService.createRaza(entity);
+    public Raza createRaza(@RequestBody Raza entity) throws Exception {
+        return razaService.createRaza(entity);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Raza getRaza(@PathParam("id") Long id) throws Exception {
+    public Raza getRaza(@PathVariable ("id") Long id) throws Exception {
         return razaService.getRaza(id);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public void deleteRaza(@RequestParam("id") Long id) throws Exception {
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    public void deleteRaza(@PathVariable("id") Long id) throws Exception {
         razaService.deleteRaza(id);
     }
 
-    @RequestMapping(method = RequestMethod.PUT )
-    public void editRaza(@RequestBody Raza entity) throws Exception {
-        razaService.editRaza(entity);
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    public Raza editRaza(@PathVariable("id") Long id,@RequestBody Raza entity) throws Exception {
+        entity.setId(id);
+        return razaService.editRaza(entity);
     }
+
 }
