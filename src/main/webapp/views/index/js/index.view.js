@@ -50,15 +50,10 @@ function cuidadorSelected()
 {
     var id = 1;  // probando que me salga;
 
-    var url = "/api/cuidadores/" + id;
-
-    $.getJSON(url, function (datos) {
-          (datos);
 
 
 
-    });
-    window.location = '/views/cuidadores/perfilCuidador.html?';
+    window.location = '/views/cuidadores/perfilCuidador.html?id=' + id;
 
 
 
