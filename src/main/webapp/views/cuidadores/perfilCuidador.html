@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<head>
+<head xmlns:v-on="http://www.w3.org/1999/xhtml">
 
 <!-- Basic Page Needs
 ================================================== -->
@@ -13,8 +13,7 @@
 	<link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
 </head>
 
-<body>
-
+<body xmlns:v-on="http://www.w3.org/1999/xhtml" >
 <!-- Wrapper -->
 <div id="wrapper">
 
@@ -31,7 +30,7 @@
 				
 				<!-- Logo -->
 				<div id="logo">
-					<a href="../index/index.html"><img src="images/logo.png" alt=""></a>
+					<a href="./index/index.html"><img src="/assets/images/logo.png" alt=""></a>
 				</div>
 
 				<!-- Mobile Navigation -->
@@ -225,7 +224,7 @@
 <div class="clearfix"></div>
 <!-- Header Container / End -->
 
-
+	<div class="row" id="appVue">
 <!-- Slider
 ================================================== -->
 <div class="listing-slider mfp-gallery-container margin-bottom-0">
@@ -245,11 +244,18 @@
 			<!-- Titlebar -->
 			<div id="titlebar" class="listing-titlebar">
 				<div class="listing-titlebar-title">
-					<h2> Gabriel Lorenzatti <span class="listing-tag">Cuidador</span></h2>
+
+					<h2 id="nombre"> {{item.nombre}} <span class="listing-tag">Cuidador</span></h2>
+
+					<input type="hidden" value="" name="test">
 					<span>
 						<a href="#listing-location" class="listing-address">
 							<i class="fa fa-map-marker"></i>
 							Cordoba, Argentina
+						</a>
+						<a  class="listing-item">
+							<i class="fa fa-map-marker"></i>
+							Cantidad maxima de perros: {{item.cantidadMaxDePerros}}
 						</a>
 					</span>
 					<div class="star-rating" data-rating="5">
@@ -707,27 +713,34 @@
 
 </div>
 <!-- Wrapper / End -->
-
+</div>
 
 <!-- Scripts
 ================================================== -->
-<script type="text/javascript" src="scripts/jquery-2.2.0.min.js"></script>
-<script type="text/javascript" src="scripts/jpanelmenu.min.js"></script>
-<script type="text/javascript" src="scripts/chosen.min.js"></script>
-<script type="text/javascript" src="scripts/slick.min.js"></script>
-<script type="text/javascript" src="scripts/rangeslider.min.js"></script>
-<script type="text/javascript" src="scripts/magnific-popup.min.js"></script>
-<script type="text/javascript" src="scripts/waypoints.min.js"></script>
-<script type="text/javascript" src="scripts/counterup.min.js"></script>
-<script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
-<script type="text/javascript" src="scripts/tooltips.min.js"></script>
-<script type="text/javascript" src="scripts/custom.js"></script>
+<script type="text/javascript" src="/assets/scripts/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jpanelmenu.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/chosen.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/slick.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/rangeslider.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/magnific-popup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/waypoints.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/counterup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/custom.js"></script>
 
 <!-- Maps -->
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
 <script type="text/javascript" src="scripts/infobox.min.js"></script>
 <script type="text/javascript" src="scripts/markerclusterer.js"></script>
-<script type="text/javascript" src="scripts/maps.js"></script>	
+<script type="text/javascript" src="scripts/maps.js"></script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/js/vue.min.js"></script>
+<link rel="stylesheet" href="/css/sweetalert.css"> </link>
+<script src="/js/sweetalert.min.js"></script>
+<script src="js/cuidadores-perfil/perfilCuidador.js"></script>
+<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js."></script>
 
 
 
@@ -789,12 +802,7 @@ var $clocks = $('.td-input');
 <!-- Style Switcher / End -->
 
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="/js/vue.min.js"></script>
-<link rel="stylesheet" href="/css/sweetalert.css"> </link>
-<script src="/js/sweetalert.min.js"></script>
-<script src="js/cuidadores-perfil/perfilCuidador.js"></script>
-<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js."></script>
+
 
 </body>
 </html>

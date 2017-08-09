@@ -6,7 +6,12 @@ let vm = new Vue({
         item: {
             index: '',
             id: '',
-            nombre: ''
+            nombre: '',
+            email:'',
+            telefono:'',
+            direccion:'',
+            cantidadMaxDePerros:'',
+            listaImagenes:''
         },
         items: [],
         cuidador: {},
@@ -15,23 +20,22 @@ let vm = new Vue({
     }
         ,
     mounted() {
-        q =this.getParameterByName('id');
-        this.getItemsAjax(this.url);
+        IdCuidador =this.getParameterByName('id');
+        this.getItemsAjax(this.url,IdCuidador);
+
 
 
 
     },
     methods: {
-        toggleLoader() {
-            $('#spinner').toggle();
-        },
-        getItemsAjax() {
-            var id = this.$route.params.id;
 
-            axios.get(this.url + '/' + id)
+        getItemsAjax() {
+              axios.get(this.url )
+
+
                 .then((response) => {
-                    this.cuidador = response.data;
-                    this.toggleLoader();
+                    this.item = response.data[0];
+                        this.cuidador = this.item.nombre;
                 })
                 .catch(error => {
                         console.log(error);
