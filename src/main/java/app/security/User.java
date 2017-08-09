@@ -1,5 +1,4 @@
-package app.models.entities;
-
+package app.security;
 
 
 import javax.persistence.*;
@@ -17,8 +16,12 @@ public class User {
 
     private String password;
 
+    @Column(nullable = false)
+    private String role;
+
     public User() {
     }
+
 
     public Long getId() {
         return id;
@@ -42,5 +45,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
