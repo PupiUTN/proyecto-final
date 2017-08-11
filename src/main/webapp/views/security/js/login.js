@@ -1,6 +1,5 @@
-let vm = new Vue({
-    el: '#appVue',
-    data: {
+function getDefaultData() {
+    return {
         url: "/api/me",
         entryPoint: "/login",
         exitPoint: "/logout",
@@ -19,7 +18,12 @@ let vm = new Vue({
             password: ''
         },
         isAuthenticated: false
-    },
+    }
+}
+
+let vm = new Vue({
+    el: '#appVue',
+    data: getDefaultData(),
     mounted() {
         this.getUserProfile();
     },
@@ -56,14 +60,18 @@ let vm = new Vue({
             axios.post(this.exitPoint)
                 .then((response) => {
                     console.log("logout exitoso");
-                    this.isAuthenticated= false;
+                    this.reset();
                 })
                 .catch(error => {
                         console.log(error);
                     }
                 );
         },
-
+        reset ( keep ) {
+            var def = getDefaultData();
+            def[keep] = this[keep];
+            Object.assign(this.$data, def);
+        }
     }
 });
 
