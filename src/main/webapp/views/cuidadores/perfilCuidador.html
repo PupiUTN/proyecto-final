@@ -229,7 +229,7 @@
 ================================================== -->
 <div class="listing-slider mfp-gallery-container margin-bottom-0">
 	<img id="myImg" class="item mfp-gallery"  >
-	/assets/images/mujer-jugando-con-su-lindo-perro-woman-playing-with-her-pet-dog.jpg
+
 	<!--<a href="http://1.bp.blogspot.com/-r4mZo-LPA7k/UIXH4vm7duI/AAAAAAABMTU/AYN3Co5TssA/s1600/mujer-jugando-con-su-lindo-perro-woman-playing-with-her-pet-dog.jpg" data-background-image="http://1.bp.blogspot.com/-r4mZo-LPA7k/UIXH4vm7duI/AAAAAAABMTU/AYN3Co5TssA/s1600/mujer-jugando-con-su-lindo-perro-woman-playing-with-her-pet-dog.jpg" class="item mfp-gallery" ></a>-->
 	<img src="/assets/images/mujer-jugando-con-su-lindo-perro-woman-playing-with-her-pet-dog.jpg" data-background-image="/assets/images/mujer-jugando-con-su-lindo-perro-woman-playing-with-her-pet-dog.jpg" class="item mfp-gallery" >
 	<a href="https://www.tiendanimal.es/articulos/wp-content/uploads/2016/04/a-que-jugar-con-perros-en-casa-los-dias-de-lluvia.jpg" data-background-image="https://www.tiendanimal.es/articulos/wp-content/uploads/2016/04/a-que-jugar-con-perros-en-casa-los-dias-de-lluvia.jpg" class="item mfp-gallery" ></a>
@@ -551,7 +551,7 @@
 
 					<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
 					<div class="col-lg-6 col-md-12">
-						<input type="text" id="booking-date" data-lang="en" data-large-mode="true"   data-min-year="2017" data-max-year="2020">
+						<input type="text" v-model="fechaReservaDesde" placeholder="Desde" data-format=" d-M-Y" id="booking-date" data-lang="en" data-large-mode="true"   data-min-year="2017" data-max-year="2020">
 					</div>
 
 
@@ -568,7 +568,7 @@
 					</div>
 					<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
 					<div class="col-lg-6 col-md-12">
-						<input type="text" id="booking-date2" data-lang="en" data-large-mode="true" data-min-year="2017" data-max-year="2020">
+						<input  type="text"  v-model="fechaReservaHasta" placeholder="Hasta" style="text-align: center; font-size: 16px;" data-format=" d-M-Y" id="booking-date2" data-lang="en" data-large-mode="true" data-min-year="2017" data-max-year="2020">
 					</div>
 
 

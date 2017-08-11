@@ -18,14 +18,18 @@ let vm = new Vue({
         items: [],
         cuidador: {},
         formPost: true,
-          urlImagen:''
+          urlImagen:'',
+        fechaReservaDesde: '',
+        fechaReservaHasta:''
+
     }
         ,
     mounted() {
         IdCuidador =this.getParameterByName('id');
         this.getItemsAjax(this.url,IdCuidador);
-
-
+        //  var fecha = new Date();
+        // this.fechaReservaDesde= fecha.toLocaleDateString();
+        // this.fechaReservaHasta= fecha.toLocaleDateString() ;
 
     },
     methods: {
