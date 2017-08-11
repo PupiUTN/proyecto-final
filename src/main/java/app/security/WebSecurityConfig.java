@@ -25,13 +25,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
     @Autowired
-    private MySavedRequestAwareAuthenticationSuccessHandler
-            authenticationSuccessHandler;
+    private AjaxAuthenticationSuccessHandler
+            ajaxAuthenticationSuccessHandler;
+
+
+    @Autowired
+    private AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler;
 
     /**
      * http://www.baeldung.com/securing-a-restful-web-service-with-spring-security
-     *
-     * **/
+     **/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 //        http
@@ -60,10 +63,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .successHandler(authenticationSuccessHandler)
+                .successHandler(ajaxAuthenticationSuccessHandler)
                 .failureHandler(new SimpleUrlAuthenticationFailureHandler())
                 .and()
                 .logout()
+                .logoutSuccessHandler(ajaxLogoutSuccessHandler)
         ;
     }
 
@@ -93,11 +97,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public MySavedRequestAwareAuthenticationSuccessHandler mySuccessHandler(){
-        return new MySavedRequestAwareAuthenticationSuccessHandler();
+    public AjaxAuthenticationSuccessHandler mySuccessHandler() {
+        return new AjaxAuthenticationSuccessHandler();
     }
+
     @Bean
-    public SimpleUrlAuthenticationFailureHandler myFailureHandler(){
+    public AjaxLogoutSuccessHandler mySuccessHandlerLogout() {
+        return new AjaxLogoutSuccessHandler();
+    }
+
+    @Bean
+    public SimpleUrlAuthenticationFailureHandler myFailureHandler() {
         return new SimpleUrlAuthenticationFailureHandler();
     }
 }

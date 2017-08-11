@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 
 @Entity
-public class User {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,6 +15,8 @@ public class User {
     private String username;
 
     private String password;
+
+    private String profileImageUrl;
 
     @Column(nullable = false)
     private String role;
@@ -53,5 +55,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 }

@@ -3,12 +3,16 @@ let vm = new Vue({
     data: {
         url: "/api/me",
         entryPoint: "/login",
-        user: {
-            username: '',
-            password: '',
+        exitPoint: "/logout",
+        myUserPrincipal: {
             authorities: [
                 {authority: ''}
-            ]
+            ],
+            user: {
+                profileImageUrl: '',
+                username: '',
+                password: '',
+            }
         },
         credentials: {
             username: '',
@@ -24,8 +28,12 @@ let vm = new Vue({
             axios.get(this.url)
                 .then((response) => {
                     console.log(response.data);
+                    this.myUserPrincipal = response.data;
                     this.isAuthenticated = true;
-                    this.user = response.data;
+                    var magnificPopup = $.magnificPopup.instance;
+                    // save instance in magnificPopup variable
+                    magnificPopup.close();
+                    // Close popup that is currently opened
                 })
                 .catch(error => {
                         console.log(error);
@@ -38,6 +46,17 @@ let vm = new Vue({
                     console.log("login exitoso");
                     console.log(response.data);
                     this.getUserProfile();
+                })
+                .catch(error => {
+                        console.log(error);
+                    }
+                );
+        },
+        logout() {
+            axios.post(this.exitPoint)
+                .then((response) => {
+                    console.log("logout exitoso");
+                    this.isAuthenticated= false;
                 })
                 .catch(error => {
                         console.log(error);
