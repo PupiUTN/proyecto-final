@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+
+    <!-- Basic Page Needs
+    ================================================== -->
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+
+</head>
+<body>
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <div id="appVue">
+
+        <div v-if="isAuthenticated">
+            <p>Hola <b>{{ user.username }}</b>, su password es <b> {{ user.password }}</b></p>
+
+        </div>
+        <div v-else>
+            <p>Usuario no identificado</p>
+        </div>
+
+        <!-- Sign In Popup -->
+        <div id="sign-in-dialog" class="">
+
+            <div class="small-dialog-header">
+                <h3>Sign In</h3>
+            </div>
+
+            <!--Tabs -->
+            <div class="sign-in-form style-1">
+
+                <ul class="tabs-nav">
+                    <li class=""><a href="#tab1">Log In</a></li>
+                </ul>
+
+                <div class="tabs-container alt">
+
+                    <!-- Login -->
+                    <div class="tab-content" id="tab1" style="display: none;">
+                        <form class="login" v-on:submit.prevent='login()'>
+
+                            <p class="form-row form-row-wide">
+                                <label for="username">Username:
+                                    <i class="im im-icon-Male"></i>
+                                    <input type="text" class="input-text" v-model="credentials.username" id="username"
+                                           value=""/>
+                                </label>
+                            </p>
+
+                            <p class="form-row form-row-wide">
+                                <label for="password">Password:
+                                    <i class="im im-icon-Lock-2"></i>
+                                    <input class="input-text" type="password" v-model="credentials.password"
+                                           id="password"/>
+                                </label>
+                                <span class="lost_password">
+										<a href="#">Lost Your Password?</a>
+									</span>
+                            </p>
+
+                            <div class="form-row">
+                                <button class="button border margin-top-5">
+                                    Login
+                                </button>
+
+                                <div class="checkboxes margin-top-10">
+                                    <input id="remember-me" type="checkbox" name="check">
+                                    <label for="remember-me">Remember Me</label>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <!-- Sign In Popup / End -->
+    </div>
+
+</div>
+
+
+<!-- Scripts
+================================================== -->
+<script type="text/javascript" src="/assets/scripts/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jpanelmenu.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/chosen.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/slick.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/rangeslider.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/magnific-popup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/waypoints.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/counterup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/custom.js"></script>
+
+
+<!-- My Scripts
+================================================== -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/js/vue.min.js"></script>
+<script src="/js/sweetalert.min.js"></script>
+<script src="js/login.js"></script>
+
+
+</body>
+</html>
