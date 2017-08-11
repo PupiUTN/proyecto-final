@@ -236,7 +236,7 @@
                             <div class="row">
 
                                 <div v-if="formPost">
-                                    <form v-on:submit='postItemAjax()'>
+                                    <form v-on:submit='postItem()'>
                                         <div class="col-md-10 col-sm-12">
                                             <div>
                                                 <input type="text" v-model="item.nombre" placeholder="Raza"
@@ -256,7 +256,7 @@
                                 </div>
                                 <div v-else>
 
-                                    <form v-on:submit='editItemAjax()'>
+                                    <form v-on:submit='editItem()'>
                                         <div class="col-md-2 col-sm-12">
 
                                             <div>
@@ -389,9 +389,9 @@
 
 
 </style>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="/js/vue.min.js"></script>
-<link rel="stylesheet" href="/css/sweetalert.css"></link>
+<script src="/js/axios.min.js"></script>
+<script src="/js/vue.js"></script>
+<link rel="stylesheet" href="/css/sweetalert.css">
 <script src="/js/sweetalert.min.js"></script>
 <script src="js/raza.js"></script>
 
