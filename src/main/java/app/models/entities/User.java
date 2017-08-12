@@ -1,7 +1,12 @@
-package app.security;
+package app.models.entities;
 
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -14,9 +19,21 @@ public class User{
     @Column(nullable = false, unique = true)
     private String username;
 
+    @NotNull
+    @NotEmpty
+    private String profileImageUrl;
+
+    @NotNull
+    @NotEmpty
     private String password;
 
-    private String profileImageUrl;
+    @Transient
+    private String matchingPassword;
+
+    @NotNull
+    @NotEmpty
+    @Email
+    private String email;
 
     @Column(nullable = false)
     private String role;
@@ -63,5 +80,27 @@ public class User{
 
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
+    }
+
+    public String getMatchingPassword() {
+        return matchingPassword;
+    }
+
+    public void setMatchingPassword(String matchingPassword) {
+        this.matchingPassword = matchingPassword;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+    @AssertTrue(message="passVerify field should be equal than pass field")
+    private boolean isValid() {
+        return this.password.equals(this.matchingPassword);
     }
 }
