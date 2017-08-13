@@ -38,13 +38,7 @@ function geolocate() {
     }
 }
 
-let vm = new Vue({
 
-
-
-
-
-});
 
 function cuidadorSelected()
 {

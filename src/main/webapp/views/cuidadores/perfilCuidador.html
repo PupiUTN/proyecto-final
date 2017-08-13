@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<head xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head xmlns:v-on="http://www.w3.org/1999/xhtml" >
 
 <!-- Basic Page Needs
 ================================================== -->
@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
 </head>
 
-<body xmlns:v-on="http://www.w3.org/1999/xhtml" >
+<body xmlns:v-bind="http://www.w3.org/1999/xhtml" >
 <!-- Wrapper -->
 <div id="wrapper">
 
@@ -227,15 +227,15 @@
 	<div class="row" id="appVue">
 <!-- Slider
 ================================================== -->
-<div class="listing-slider mfp-gallery-container margin-bottom-0">
-	<img id="myImg" class="item mfp-gallery"  >
+		<div class="listing-slider mfp-gallery-container margin-bottom-0"  id="ContenedorImagen" >
 
-	<!--<a href="http://1.bp.blogspot.com/-r4mZo-LPA7k/UIXH4vm7duI/AAAAAAABMTU/AYN3Co5TssA/s1600/mujer-jugando-con-su-lindo-perro-woman-playing-with-her-pet-dog.jpg" data-background-image="http://1.bp.blogspot.com/-r4mZo-LPA7k/UIXH4vm7duI/AAAAAAABMTU/AYN3Co5TssA/s1600/mujer-jugando-con-su-lindo-perro-woman-playing-with-her-pet-dog.jpg" class="item mfp-gallery" ></a>-->
-	<img src="/assets/images/mujer-jugando-con-su-lindo-perro-woman-playing-with-her-pet-dog.jpg" data-background-image="/assets/images/mujer-jugando-con-su-lindo-perro-woman-playing-with-her-pet-dog.jpg" class="item mfp-gallery" >
-	<a href="https://www.tiendanimal.es/articulos/wp-content/uploads/2016/04/a-que-jugar-con-perros-en-casa-los-dias-de-lluvia.jpg" data-background-image="https://www.tiendanimal.es/articulos/wp-content/uploads/2016/04/a-que-jugar-con-perros-en-casa-los-dias-de-lluvia.jpg" class="item mfp-gallery" ></a>
-	<a href="https://st2.depositphotos.com/3384371/5345/i/950/depositphotos_53456393-stock-photo-two-dogs-playing-in-a.jpg" data-background-image="https://st2.depositphotos.com/3384371/5345/i/950/depositphotos_53456393-stock-photo-two-dogs-playing-in-a.jpg" class="item mfp-gallery" title="Title 2"></a>
-	<a href="https://previews.123rf.com/images/stockbroker/stockbroker1408/stockbroker140803135/31065576-Hombre-mirando-papeleo-y-jugando-con-el-perro-mascota-en-casa-Foto-de-archivo.jpg" data-background-image="https://previews.123rf.com/images/stockbroker/stockbroker1408/stockbroker140803135/31065576-Hombre-mirando-papeleo-y-jugando-con-el-perro-mascota-en-casa-Foto-de-archivo.jpg" class="item mfp-gallery" ></a>
-</div>
+			<img  id="myImg0"    class="item mfp-gallery"/>
+			<img id="myImg1"    class="item mfp-gallery"/>
+			<img  id="myImg2"    class="item mfp-gallery"/>
+			<img  id="myImg3"    class="item mfp-gallery"/>
+
+
+		</div>
 
 
 <!-- Content
@@ -259,7 +259,7 @@
 
 							<a href="#listing-location" class="listing-address">
 							<i class="fa fa-map-marker"></i>
-						     Cordoba, Argentina
+
               				{{item.direccion.ciudad}}
 						</a>
 						<br>
@@ -322,7 +322,7 @@
 							<li>
 								<h5>Por dia</h5>
 								<p>servicio por dia</p>
-								<span>$100</span>
+								<span>$ {{item.precio}}</span>
 							</li>
 
 							<li>
@@ -331,32 +331,6 @@
 								<span>$2000</span>
 							</li>
 
-							<!--<li>-->
-								<!--<h5>Chicken Burger</h5>-->
-								<!--<p>Cheese, chicken fillet, avocado, bacon, tomatoes, basil</p>-->
-								<!--<span>$6</span>-->
-							<!--</li>-->
-						<!--</ul>-->
-
-						<!--&lt;!&ndash; Food List &ndash;&gt;-->
-						<!--<h4>Drinks</h4>-->
-						<!--<ul>-->
-							<!--<li>-->
-								<!--<h5>Frozen Shake</h5>-->
-								<!--<span>$4</span>-->
-							<!--</li>-->
-							<!--<li>-->
-								<!--<h5>Orange Juice</h5>-->
-								<!--<span>$4</span>-->
-							<!--</li>-->
-							<!--<li>-->
-								<!--<h5>Beer</h5>-->
-								<!--<span>$4</span>-->
-							<!--</li>-->
-							<!--<li>-->
-								<!--<h5>Water</h5>-->
-								<!--<span>Free</span>-->
-							<!--</li>-->
 						</ul>
 
 					</div>
@@ -371,7 +345,7 @@
 				<h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Donde estoy</h3>
 
 				<div id="singleListingMap-container">
-					<div id="singleListingMap" data-latitude="40.70437865245596" data-longitude="-73.98674011230469" data-map-icon="im im-icon-Hamburger"></div>
+					<div id="singleListingMap"  data-map-icon="im im-icon-Hamburger"></div>
 					<a href="#" id="streetView">Street View</a>
 				</div>
 			</div>
@@ -463,75 +437,6 @@
 			</div>
 
 
-			<!-- Add Review Box -->
-	<!--		<div id="add-review" class="add-review-box">
-
-				&lt;!&ndash; Add Review &ndash;&gt;
-				<h3 class="listing-desc-headline margin-bottom-20">Add Review</h3>
-
-				<span class="leave-rating-title">Your rating for this listing</span>
-
-				&lt;!&ndash; Rating / Upload Button &ndash;&gt;
-				<div class="row">
-					<div class="col-md-6">
-						&lt;!&ndash; Leave Rating &ndash;&gt;
-						<div class="clearfix"></div>
-						<div class="leave-rating margin-bottom-30">
-							<input type="radio" name="rating" id="rating-1" value="1"/>
-							<label for="rating-1" class="fa fa-star"></label>
-							<input type="radio" name="rating" id="rating-2" value="2"/>
-							<label for="rating-2" class="fa fa-star"></label>
-							<input type="radio" name="rating" id="rating-3" value="3"/>
-							<label for="rating-3" class="fa fa-star"></label>
-							<input type="radio" name="rating" id="rating-4" value="4"/>
-							<label for="rating-4" class="fa fa-star"></label>
-							<input type="radio" name="rating" id="rating-5" value="5"/>
-							<label for="rating-5" class="fa fa-star"></label>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-
-					<div class="col-md-6">
-						&lt;!&ndash; Uplaod Photos &ndash;&gt;
-						<div class="add-review-photos margin-bottom-30">
-							<div class="photoUpload">
-							    <span><i class="sl sl-icon-arrow-up-circle"></i> Upload Photos</span>
-							    <input type="file" class="upload" />
-							</div>
-						</div>
-					</div>
-				</div>
-
-				&lt;!&ndash; Review Comment &ndash;&gt;
-				<form id="add-comment" class="add-comment">
-					<fieldset>
-
-						<div class="row">
-							<div class="col-md-6">
-								<label>Name:</label>
-								<input type="text" value=""/>
-							</div>
-
-							<div class="col-md-6">
-								<label>Email:</label>
-								<input type="text" value=""/>
-							</div>
-						</div>
-
-						<div>
-							<label>Review:</label>
-							<textarea cols="40" rows="3"></textarea>
-						</div>
-
-					</fieldset>
-
-					<button class="button">Submit Review</button>
-					<div class="clearfix"></div>
-				</form>
-
-			</div>-->
-			<!-- Add Review Box / End -->
-
 
 		</div>
 
@@ -551,14 +456,10 @@
 
 					<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
 					<div class="col-lg-6 col-md-12">
-						<input type="text" v-model="fechaReservaDesde" placeholder="Desde" data-format=" d-M-Y" id="booking-date" data-lang="en" data-large-mode="true"   data-min-year="2017" data-max-year="2020">
+						<input type="text" v-model="fechaReservaDesde"  data-format=" d/m/Y" id="booking-date" data-lang="es" data-init-set="false"
+							   data-large-mode="true" data-large-default="true" data-min-year="2017"
+							   data-max-year="2020" data-lock="from">
 					</div>
-
-
-					<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
-					<!--<div class="col-lg-6 col-md-12">-->
-						<!--<input type="text" id="booking-time" value="9:00 am">-->
-					<!--</div>-->
 
 				</div>
 				<div class="row with-forms  margin-top-0">
@@ -568,14 +469,13 @@
 					</div>
 					<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
 					<div class="col-lg-6 col-md-12">
-						<input  type="text"  v-model="fechaReservaHasta" placeholder="Hasta" style="text-align: center; font-size: 16px;" data-format=" d-M-Y" id="booking-date2" data-lang="en" data-large-mode="true" data-min-year="2017" data-max-year="2020">
+						
+						<input type="text" v-model="fechaReservaHasta"   style="text-align: center; font-size: 16px; font-weight: 600"  data-format=" d/m/Y" id="booking-date2" data-lang="es"
+							   data-init-set="false"
+							   data-large-mode="true" data-large-default="true" data-min-year="2017"
+							   data-max-year="2020" data-lock="from">
 					</div>
 
-
-					<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
-					<!--<div class="col-lg-6 col-md-12">-->
-						<!--<input type="text" id="booking-time2" value="9:00 am">-->
-					<!--</div>-->
 
 				</div>
 				<!-- progress button animation handled via custom.js -->
@@ -587,17 +487,7 @@
 			<!-- Contact -->
 			<div class="boxed-widget margin-top-35">
 				<h3><i class="sl sl-icon-pin"></i> Contacto</h3>
-				<!--<ul class="listing-details-sidebar">-->
-					<!--<li><i class="sl sl-icon-phone"></i> (123) 123-456</li>-->
-					<!--<li><i class="sl sl-icon-globe"></i> <a href="#">http://example.com</a></li>-->
-					<!--<li><i class="fa fa-envelope-o"></i> <a href="#">info@example.com</a></li>-->
-				<!--</ul>-->
 
-				<!--<ul class="listing-details-sidebar social-profiles">-->
-					<!--<li><a href="#" class="facebook-profile"><i class="fa fa-facebook-square"></i> Facebook</a></li>-->
-					<!--<li><a href="#" class="twitter-profile"><i class="fa fa-twitter"></i> Twitter</a></li>-->
-					<!--&lt;!&ndash; <li><a href="#" class="gplus-profile"><i class="fa fa-google-plus"></i> Google Plus</a></li> &ndash;&gt;-->
-				<!--</ul>-->
 
 				<!-- Reply to review popup -->
 				<div id="small-dialog" class="zoom-anim-dialog mfp-hide">
@@ -621,13 +511,6 @@
 				<h3><i class="sl sl-icon-clock"></i> Horarios de reserva </h3>
 				<ul>
 					<li>Recuerda que los horarios de reserva para dejar tu  y retirar tu mascota son a partir de las 9,  hasta las 14
-						<!--<span>9 AM - 10 AM</span>--> </li>
-					<!--<li>Tuesday <span>9 AM - 5 PM</span></li>-->
-					<!--<li>Wednesday <span>9 AM - 5 PM</span></li>-->
-					<!--<li>Thursday <span>9 AM - 5 PM</span></li>-->
-					<!--<li>Friday <span>9 AM - 5 PM</span></li>-->
-					<!--<li>Saturday <span>9 AM - 3 PM</span></li>-->
-					<!--<li>Sunday <span>Closed</span></li>-->
 				</ul>
 			</div>
 			<!-- Opening Hours / End -->
@@ -735,10 +618,9 @@
 <script type="text/javascript" src="/assets/scripts/custom.js"></script>
 
 <!-- Maps -->
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
-<script type="text/javascript" src="../../assets/scripts/infobox.min.js"></script>
-<script type="text/javascript" src="../../assets/scripts/markerclusterer.js"></script>
-<script type="text/javascript" src="../../assets/scripts/maps.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"
+		async defer></script>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/js/vue.min.js"></script>
