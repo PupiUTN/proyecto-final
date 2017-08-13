@@ -84,7 +84,7 @@
 								<li><a href="dashboard-my-listings.html">My Listings</a></li>
 								<li><a href="dashboard-reviews.html">Reviews</a></li>
 								<li><a href="dashboard-bookmarks.html">Bookmarks</a></li>
-								<li><a href="dashboard-add-listing.html">Add Listing</a></li>
+								<!--<li><a href="dashboard-add-listing.html">Add Listing</a></li>-->
 								<li><a href="dashboard-my-profile.html">My Profile</a></li>
 								<li><a href="dashboard-invoice.html">Invoice</a></li>
 							</ul>
@@ -119,7 +119,7 @@
 			<div class="right-side">
 				<div class="header-widget">
 					<a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i> Sign In</a>
-					<a href="dashboard-add-listing.html" class="button border with-icon">Add Listing <i class="sl sl-icon-plus"></i></a>
+					<!--<a href="dashboard-add-listing.html" class="button border with-icon">Add Listing <i class="sl sl-icon-plus"></i></a>-->
 				</div>
 			</div>
 			<!-- Right Side Content / End -->
@@ -227,12 +227,17 @@
 	<div class="row" id="appVue">
 <!-- Slider
 ================================================== -->
-		<div class="listing-slider mfp-gallery-container margin-bottom-0"  id="ContenedorImagen" >
+		<div   class="listing-slider mfp-gallery-container margin-bottom-0"  id="ContenedorImagen" >
 
-			<img  id="myImg0"    class="item mfp-gallery"/>
-			<img id="myImg1"    class="item mfp-gallery"/>
-			<img  id="myImg2"    class="item mfp-gallery"/>
-			<img  id="myImg3"    class="item mfp-gallery"/>
+			<img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg0" />
+
+			<img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg1" />
+
+			<img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg2" />
+
+			<img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg3" />
+
+
 
 
 		</div>
@@ -290,7 +295,7 @@
 				<!-- Description -->
 
 				<p>
-					<label>{{item.descripcion}}</label>
+					<label>{{item.descripcio}}</label>
 
 					  <!--Soy el chico ideal para tu compañia, nada me agradara mas que poder jugar contigo y con tu dueña ( si esta buena )-->
 				</p>
@@ -346,7 +351,7 @@
 
 				<div id="singleListingMap-container">
 					<div id="singleListingMap"  data-map-icon="im im-icon-Hamburger"></div>
-					<a href="#" id="streetView">Street View</a>
+
 				</div>
 			</div>
 				
@@ -366,7 +371,7 @@
 								<div class="comment-by">Fede Backhaus<span class="date">June 2017</span>
 									<div class="star-rating" data-rating="5"></div>
 								</div>
-								<p>Eres la mejor persona que conoci en mi vida, era por ti, te escogeré siempre </p>
+								<p>Eres la mejor persona que conoci en mi vida, hurra  por ti, te escogeré siempre </p>
 								
 								<div class="review-images mfp-gallery-container">
 									<a href="images/review-image-01.jpg" class="mfp-gallery"><img src="images/review-image-01.jpg" alt=""></a>
@@ -469,7 +474,7 @@
 					</div>
 					<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
 					<div class="col-lg-6 col-md-12">
-						
+
 						<input type="text" v-model="fechaReservaHasta"   style="text-align: center; font-size: 16px; font-weight: 600"  data-format=" d/m/Y" id="booking-date2" data-lang="es"
 							   data-init-set="false"
 							   data-large-mode="true" data-large-default="true" data-min-year="2017"

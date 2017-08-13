@@ -12,7 +12,7 @@ let vm = new Vue({
             direccion:'',
             cantidadMaxDePerros:'',
             listaImagenes:'',
-            descripcion:'',
+            descripcio:'',
              precio:''
 
         },
@@ -31,11 +31,7 @@ let vm = new Vue({
         this.getItemsAjax(this.url,IdCuidador);
          var fecha = new Date();
           this.fechaReservaDesde= fecha.toLocaleDateString();
-      //  this.fechaReservaHasta= fecha.setDate(fecha.getDate() +1);
         this.fechaReservaHasta= fecha.toLocaleDateString();
-
-        this.loadImages(this.item.listaImagenes);
-
 
     },
     methods: {
@@ -45,8 +41,7 @@ let vm = new Vue({
                 .then((response) => {
                     this.item = response.data;
                         this.cuidador = this.item.nombre;
-                    this.item.descripcion= "  Soy un amante de los perros por lo cual puedo cuidar a tu mascota de la mejor manera alir a correr con ellos, jugar y cuidarlos Mis servicios son cuidarlos en el dia y pasearlos, quédate tranquil@ porque tu mascota se divertirá me gustar jugar y estará a salvo. mi zona es Barrio Jardin" +
-                        ", muy cerca de ciudad universitaria y el centro, puedo  en cualquier horario";
+
                     this.loadImages(this.item.listaImagenes);
                     this.geolocateCuidador(this.item.direccion);
 
@@ -90,11 +85,8 @@ let vm = new Vue({
 
         loadImages(imagenes) {
 
-
-
             var img = 0;
             var id = "";
-            var myBodyId = document.getElementById("ContenedorImagen");
             if(imagenes.length > 0){
 
             for (value in imagenes){
@@ -105,17 +97,17 @@ let vm = new Vue({
             }
 
             }
-            if( img < 4)
-            { var  resta = 4-img;
-                  var i = resta;
-                while (i > 0) {
-                    id = "myImg" + (4-i);
-                    document.getElementById(id).src = "/assets/images/logo.png";
-                        i--;
-                }
-
-
-            }
+            // if( img < 4)
+            // { var  resta = 4-img;
+            //       var i = resta;
+            //     while (i > 0) {
+            //         id = "myImg" + (4-i);
+            //         document.getElementById(id).src = "/assets/images/logo.png";
+            //             i--;
+            //     }
+            //
+            //
+            // }
         }
 
     }
