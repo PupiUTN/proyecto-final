@@ -3,14 +3,18 @@ let vm = new Vue({
     data: {
         route: '',
         url: "",
-        direccion: '',
+        address: '',
         street_number: '',
         locality: '',
         administrative_area_level_1: '',
         postal_code: '',
         country: '',
         genero: '',
-        formPost: true
+        image: '/assets/images/dashboard-avatar.jpg',
+        formPost: true,
+        uploadedFiles: [],
+        uploadError: null,
+        currentStatus: null
     },
     mounted() {
         this.autocompleteAddress();
@@ -41,6 +45,35 @@ let vm = new Vue({
                     }
                 }
             });
+        },
+        filesChange(fileList) {
+            // handle file changes
+            const formData = new FormData();
+
+            if (!fileList.length) return;
+            // append the files to FormData
+            Array
+                .from(Array(fileList.length).keys())
+                .map(x => {
+                    formData.append('file', fileList[x]);
+                });
+
+            // save it
+            this.upload(formData);
+        },
+        upload(formData) {
+            console.log("UPLOAD");
+            axios.post('/api/file/', formData)
+                .then((response) => {
+                    this.toggleLoader();
+                    console.log(response);
+                    this.image = response.data;
+                })
+                .catch(error => {
+                    console.log("ERROR AXIOS");
+                        console.log(error);
+                    }
+                );
         }
     }
 });

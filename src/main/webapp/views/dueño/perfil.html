@@ -218,17 +218,18 @@
                     <div class="dashboard-list-box margin-top-0">
                         <h4 class="gray">Profile Details</h4>
                         <div class="dashboard-list-box-static">
-
+                            <form id="imageForm" enctype="multipart/form-data">
                             <!-- Avatar -->
                             <div class="edit-profile-photo">
-                                <img src="/assets/images/user-avatar.jpg" alt="">
+                                <img :src="image" alt="">
                                 <div class="change-photo-btn">
                                     <div class="photoUpload">
                                         <span><i class="fa fa-upload"></i> Upload Photo</span>
-                                        <input type="file" class="upload" />
+                                        <input type="file" id="imageFile" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
                                     </div>
                                 </div>
                             </div>
+                            </form>
 
                             <!-- Details -->
                             <div class="my-profile">
@@ -281,7 +282,7 @@
 
                             <div class="my-profile">
                                 <label class="margin-top-0">Dirección</label>
-                                <input ref="autocomplete" type="text" placeholder="Ingrese su dirección">
+                                <input v-model="address" ref="autocomplete" type="text" placeholder="Ingrese su dirección">
 
                                 <label>Calle</label>
                                 <input type="text" v-model="route">
@@ -369,6 +370,7 @@
 <script type="text/javascript" src="/assets/scripts/custom.js"></script>
 <script src="/js/vue.js"></script>
 <script src="perfil.js"></script>
+<script src="/js/axios.min.js"></script>
 <link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
 <script src="/assets/scripts/datedropper.js"></script>
 <script>$('#booking-date').dateDropper()</script>
