@@ -396,17 +396,20 @@
 			<div class="row fs-listings">
 				
 				<!-- Listing Item -->
-				<div class="col-lg-6 col-md-12">
+				<div v-for="item in items" id="list-item" class="col-lg-6 col-md-12">
 					<a href="listings-single-page.html" class="listing-item-container" data-marker-id="1">
 						<div class="listing-item">
-							<img src="images/listing-item-01.jpg" alt="">
 
-							<div class="listing-badge now-open">Now Open</div>
+
+                            <img src="/file_upload/403f2a87-1ad8-4bbe-9946-4374f6a85c26.jpg" alt="">
+                            <!--<img src="{{item.listaImagenes[1].url}}" alt="">-->
+
+							<div class="listing-badge now-open">Destacado</div>
 							
 							<div class="listing-item-content">
-								<span class="tag">Eat & Drink</span>
-								<h3>Tom's Restaurant</h3>
-								<span>964 School Street, New York</span>
+								<span class="tag">{{item.listaImagenes[1].url}}</span>
+								<h3>{{item.nombre}}</h3>
+								<span>{{item.direccion.calle}}</span>
 							</div>
 							<span class="like-icon"></span>
 						</div>
