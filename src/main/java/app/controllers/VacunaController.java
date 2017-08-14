@@ -45,7 +45,7 @@ public class VacunaController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Vacuna getRaza(@PathVariable ("id") Long id) throws Exception {
+    public Vacuna getVacuna(@PathVariable ("id") Long id) throws Exception {
         return vacunaService.getVacuna(id);
     }
 }

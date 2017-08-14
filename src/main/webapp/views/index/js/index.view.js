@@ -1,14 +1,15 @@
 
 var autocomplete;
-
+var placeID;
 function initDate() {
     $('#booking-date-from').dateDropper();
     $('#booking-date-to').dateDropper();
 }
 initDate();
+var input;
 function initAutocomplete() {
     //https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
-    var input = document.getElementById('location');
+    input = document.getElementById('location');
     var options = {
         types: ['(cities)'],
         componentRestrictions: {country: "ar"}
@@ -19,6 +20,28 @@ function initAutocomplete() {
 
 }
 initAutocomplete();
+
+autocomplete.addListener('place_changed', onPlaceChanged);
+
+// When the user selects a city, get the place details for the city and
+// zoom the map in on the city.
+function onPlaceChanged() {
+    var place = autocomplete.getPlace();
+    if (place.geometry) {
+        console.log("econtre")
+        var place = autocomplete.getPlace();
+        placeID = place.place_id;
+        console.log(placeID);
+        sessionStorage.setItem('place',input.value);
+        sessionStorage.setItem('placeID',placeID);
+
+    } else {
+        document.getElementById('location').value = '';
+        // Debe mejorar con un toast
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+    }
+}
 
 function geolocate() {
     if (navigator.geolocation) {
@@ -37,4 +60,5 @@ function geolocate() {
         });
     }
 }
+
 

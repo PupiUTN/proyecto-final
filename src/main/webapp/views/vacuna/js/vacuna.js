@@ -32,6 +32,7 @@ let vm = new Vue({
         postItemAjax() {
             this.toggleLoader();
             var payload = jQuery.extend(true, {}, this.item);
+            console.log(payload);
             axios.post(this.url, payload)
                 .then((response) => {
                     this.toggleLoader();
