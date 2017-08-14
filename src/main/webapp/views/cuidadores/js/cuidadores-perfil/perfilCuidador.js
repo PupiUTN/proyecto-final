@@ -27,11 +27,13 @@ let vm = new Vue({
         ,
     mounted() {
 
+
         IdCuidador =this.getParameterByName('id');
         this.getItemsAjax(this.url,IdCuidador);
          var fecha = new Date();
           this.fechaReservaDesde= fecha.toLocaleDateString();
         this.fechaReservaHasta= fecha.toLocaleDateString();
+
 
     },
     methods: {
@@ -92,22 +94,26 @@ let vm = new Vue({
             for (value in imagenes){
 
                   id = "myImg" + value;
-                 document.getElementById(id).src=imagenes[value].url ;
+
+
+               // $('#ContenedorImagen').slick('slickAdd','<img  src=' + imagenes[value].url + ' class=" item mfp-gallery" />');
+                $('#ContenedorImagen').slick('slickAdd','<a href=' + imagenes[value].url + ' style="background-image: url(' + imagenes[value].url + ')" class=" item mfp-gallery" />');
                 img ++;
             }
 
             }
-            // if( img < 4)
-            // { var  resta = 4-img;
-            //       var i = resta;
-            //     while (i > 0) {
-            //         id = "myImg" + (4-i);
-            //         document.getElementById(id).src = "/assets/images/logo.png";
-            //             i--;
-            //     }
-            //
-            //
-            // }
+             if( img < 4)
+             { var  resta = 4-img;
+                   var i = resta;
+                 while (i > 0) {
+                     id = "myImg" + (4-i);
+                   //  document.getElementById(id).src = "/assets/images/logo.png";
+                     $('#ContenedorImagen').slick('slickAdd','<img src="/assets/images/logo.png" class=" item mfp-gallery" />');
+                         i--;
+                 }
+
+
+             }
         }
 
     }
