@@ -16,20 +16,16 @@ let vm = new Vue({
              precio:''
 
         },
-        items: [],
-        cuidador: {},
-        formPost: true,
-          urlImagen:'',
         fechaReservaDesde: '',
-        fechaReservaHasta:''
-
+        fechaReservaHasta:'',
+        idCuidador: 0,
     }
         ,
     mounted() {
 
 
-        IdCuidador =this.getParameterByName('id');
-        this.getItemsAjax(this.url,IdCuidador);
+        this.idCuidador =this.getParameterByName('id');
+        this.getItemsAjax(this.url,this.idCuidador);
          var fecha = new Date();
           this.fechaReservaDesde= fecha.toLocaleDateString();
         this.fechaReservaHasta= fecha.toLocaleDateString();
@@ -37,16 +33,16 @@ let vm = new Vue({
 
     },
     methods: {
-
+        toggleLoader() {
+            $('#spinner').toggle();
+        },
         getItemsAjax() {
-              axios.get(this.url +"/"+ IdCuidador )
+              axios.get(this.url +"/"+ this.idCuidador )
                 .then((response) => {
                     this.item = response.data;
-                        this.cuidador = this.item.nombre;
-
                     this.loadImages(this.item.listaImagenes);
                     this.geolocateCuidador(this.item.direccion);
-
+                    $('#spinner').toggle();
 
                 })
                 .catch(error => {
@@ -94,7 +90,6 @@ let vm = new Vue({
             for (value in imagenes){
 
                   id = "myImg" + value;
-
 
                // $('#ContenedorImagen').slick('slickAdd','<img  src=' + imagenes[value].url + ' class=" item mfp-gallery" />');
                 $('#ContenedorImagen').slick('slickAdd','<a href=' + imagenes[value].url + ' style="background-image: url(' + imagenes[value].url + ')" class=" item mfp-gallery" />');

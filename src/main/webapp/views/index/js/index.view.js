@@ -37,18 +37,3 @@ function geolocate() {
         });
     }
 }
-
-
-
-function cuidadorSelected()
-{
-    var id = 1;  // probando que me salga;
-
-
-
-
-    window.location = '/views/cuidadores/perfilCuidador.html?id=' + id;
-
-
-
-}
