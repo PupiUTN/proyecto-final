@@ -32,7 +32,7 @@
 				
 				<!-- Logo -->
 				<div id="logo">
-					<a href="index.html"><img src="/assets/images/logo.png" alt=""></a>
+					<a href="/"><img src="/assets/images/logo.png" alt=""></a>
 				</div>
 
 				<!-- Mobile Navigation -->
@@ -400,21 +400,19 @@
 					<a href="listings-single-page.html" class="listing-item-container" data-marker-id="1">
 						<div class="listing-item">
 
-
-                            <img src="/file_upload/403f2a87-1ad8-4bbe-9946-4374f6a85c26.jpg" alt="">
-                            <!--<img src="{{item.listaImagenes[1].url}}" alt="">-->
+                            <img  :src="item.listaImagenes[0].url"  alt="">
 
 							<div class="listing-badge now-open">Destacado</div>
 							
 							<div class="listing-item-content">
-								<span class="tag">{{item.listaImagenes[1].url}}</span>
+								<span class="tag">Cuidador</span>
 								<h3>{{item.nombre}}</h3>
 								<span>{{item.direccion.calle}}</span>
 							</div>
 							<span class="like-icon"></span>
 						</div>
-						<div class="star-rating" data-rating="3.5">
-							<div class="rating-counter">(12 reviews)</div>
+						<div class="star-rating" data-rating="1">
+							<div class="rating-counter">(120 reviews)</div>
 						</div>
 					</a>
 				</div>

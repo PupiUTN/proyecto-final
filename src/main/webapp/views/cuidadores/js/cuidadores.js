@@ -9,16 +9,20 @@ let vm = new Vue({
         //     id: '',
         //     nombre: ''
         // },
-         items: [],
-         formPost: true,
+        items: [],
+        formPost: true,
+        place:null,
+        map:null,
+
     },
     mounted() {
         this.initDate();
+        this.initMap();
         this.initAutocomplete();
         this.getCuidadores();
-
     },
     methods: {
+
         toggleLoader() {
             $('#spinner').toggle();
         },
@@ -37,15 +41,15 @@ let vm = new Vue({
             // Create the autocomplete object, restricting the search to geographical
             // location types
             autocomplete = new google.maps.places.Autocomplete(input, options);
-            let place;
-            //D
+            //PlaceHolder de la busqueda anterior, cambia al cambiar ciudad
             autocomplete.addListener('place_changed', () => {
                 input.placeholder='Ciudad';
-                place = autocomplete.getPlace();
-                if (place.geometry) {
+                this.place = autocomplete.getPlace();
+                if (this.place.geometry) {
                     console.log("econtre");
-                    let placeID = place.place_id;
-                    console.log(placeID);
+                    let placeID = this.place.place_id;
+                    console.log(this.place);
+
 
                 } else {
                     document.getElementById('location').value = '';
@@ -55,20 +59,30 @@ let vm = new Vue({
                 }
 
             });
-            //el placeholder de ciudad es la ciudad que le pasa el index
-             place=sessionStorage.getItem('place');
-            if(place!=null){
 
-                input.placeholder=place;
-            }
+        },
+        initMap() {
+            var argentina = {lat: -37.0230271, lng: -64.6175935};
+            this.map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 5,
+                center:argentina,
+            });
         },
         getCuidadores() {
+
             placeID=sessionStorage.getItem('placeID');
             if(placeID!=null){
-            axios.get(this.url+'/?ciudadPlaceId='+placeID)
+                //el placeholder de ciudad es la ciudad que le pasa el index
+                let busqueda=sessionStorage.getItem('busqueda');
+                var input = document.getElementById('location');
+                input.placeholder=busqueda;
+                this.place=JSON.parse( sessionStorage.getItem('place'));
+                this.map.setCenter(this.place.geometry.location);
+                this.map.setZoom(12);
+
+                axios.get(this.url+'/?ciudadPlaceId='+placeID)
                 .then((response) => {
                     this.items = response.data;
-                    console.log(JSON.stringify(this.items));
                     this.encontrados=this.items.length;
                     if(this.items.length===1){
                         this.encontrados+=' Resultado Encontrado';
@@ -87,6 +101,7 @@ let vm = new Vue({
                 this.toggleLoader();
             }
         },
+
 
 
 

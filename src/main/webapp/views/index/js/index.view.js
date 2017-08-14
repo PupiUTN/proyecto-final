@@ -28,12 +28,9 @@ autocomplete.addListener('place_changed', onPlaceChanged);
 function onPlaceChanged() {
     var place = autocomplete.getPlace();
     if (place.geometry) {
-        console.log("econtre")
-        var place = autocomplete.getPlace();
-        placeID = place.place_id;
-        console.log(placeID);
-        sessionStorage.setItem('place',input.value);
-        sessionStorage.setItem('placeID',placeID);
+        sessionStorage.setItem('busqueda',input.value);
+        sessionStorage.setItem('place',JSON.stringify(place));
+        console.log(place.geometry.location.lat());
 
     } else {
         document.getElementById('location').value = '';
