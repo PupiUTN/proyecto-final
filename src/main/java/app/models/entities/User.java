@@ -5,7 +5,6 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 
 
@@ -99,8 +98,7 @@ public class User{
     }
 
 
-    @AssertTrue(message="passVerify field should be equal than pass field")
-    private boolean isValid() {
+    public boolean passwordMatchingValidation() {
         return this.password.equals(this.matchingPassword);
     }
 }

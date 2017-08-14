@@ -37,30 +37,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      **/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .csrf().disable()
-//                .authorizeRequests()
-//                    .antMatchers("/api/razas/**").hasRole("ADMIN")
-//                    .antMatchers("/api/**").authenticated()
-//                    .anyRequest().permitAll()
-//                    .and()
-//                .httpBasic()
-//                    .and()
-//                .logout()
-//                    .logoutUrl("/logout")
-//                    .logoutSuccessUrl("/")
-//                    .invalidateHttpSession(true)
-//        ;
-
         http
                 .csrf().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/user/registration/**").permitAll()
-                .antMatchers("/api/razas/**").hasRole("ADMIN")
-                .antMatchers("/api/**").authenticated()
+//                .antMatchers("/api/user/registration/**").permitAll()
+//                .antMatchers("/api/razas/**").hasRole("ADMIN")
+//                .antMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

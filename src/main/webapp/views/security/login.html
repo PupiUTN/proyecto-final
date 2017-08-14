@@ -53,8 +53,8 @@
                         <div v-show="isAuthenticated">
                             <!-- User Menu -->
                             <div class="user-menu">
-                                <div class="user-name"><span><img v-bind:src="myUserPrincipal.user.profileImageUrl" alt="profileImageUrl"></span>
-                                    {{ myUserPrincipal.user.username }}
+                                <div class="user-name"><span><img v-bind:src="user.profileImageUrl" alt="profileImageUrl"></span>
+                                    {{ user.username }}
                                 </div>
                                 <ul>
                                     <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
@@ -140,12 +140,12 @@
                                         <!-- Register -->
                                         <div class="tab-content" id="tab2" style="display: none;">
 
-                                            <form method="post" class="register">
+                                            <form class="register"  v-on:submit.prevent='register()'>
 
                                                 <p class="form-row form-row-wide">
                                                     <label for="username2">Username:
                                                         <i class="im im-icon-Male"></i>
-                                                        <input type="text" class="input-text" name="username" id="username2"
+                                                        <input type="text" class="input-text" v-model="user.username" id="username2"
                                                                value=""/>
                                                     </label>
                                                 </p>
@@ -153,21 +153,21 @@
                                                 <p class="form-row form-row-wide">
                                                     <label for="email2">Email Address:
                                                         <i class="im im-icon-Mail"></i>
-                                                        <input type="text" class="input-text" name="email" id="email2" value=""/>
+                                                        <input type="text" class="input-text" v-model="user.email" id="email2" value=""/>
                                                     </label>
                                                 </p>
 
                                                 <p class="form-row form-row-wide">
                                                     <label for="password1">Password:
                                                         <i class="im im-icon-Lock-2"></i>
-                                                        <input class="input-text" type="password" name="password1" id="password1"/>
+                                                        <input class="input-text" type="password" v-model="user.password" id="password1"/>
                                                     </label>
                                                 </p>
 
                                                 <p class="form-row form-row-wide">
                                                     <label for="password2">Repeat Password:
                                                         <i class="im im-icon-Lock-2"></i>
-                                                        <input class="input-text" type="password" name="password2" id="password2"/>
+                                                        <input class="input-text" type="password" v-model="user.matchingPassword" id="password2"/>
                                                     </label>
                                                 </p>
 

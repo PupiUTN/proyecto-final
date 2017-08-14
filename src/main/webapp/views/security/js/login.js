@@ -1,23 +1,21 @@
 function getDefaultData() {
     return {
-        url: "/api/me",
-        entryPoint: "/login",
-        exitPoint: "/logout",
-        myUserPrincipal: {
-            authorities: [
-                {authority: ''}
-            ],
-            user: {
-                profileImageUrl: '',
-                username: '',
-                password: '',
-            }
-        },
+        meUrl: "/api/user/me",
+        entryUrl: "/login",
+        exitUrl: "/logout",
+        registrationUrl: "/api/user/registration",
         credentials: {
             username: '',
             password: ''
         },
-        isAuthenticated: false
+        isAuthenticated: false,
+        user: {
+            profileImageUrl: '/img/no-avatar.png',
+            username: '',
+            password: '',
+            matchingPassword: '',
+            email: '',
+        }
     }
 }
 
@@ -29,10 +27,10 @@ let vm = new Vue({
     },
     methods: {
         getUserProfile() {
-            axios.get(this.url)
+            axios.get(this.meUrl)
                 .then((response) => {
                     console.log(response.data);
-                    this.myUserPrincipal = response.data;
+                    this.user = response.data.principal.user;
                     this.isAuthenticated = true;
                     var magnificPopup = $.magnificPopup.instance;
                     // save instance in magnificPopup variable
@@ -40,12 +38,18 @@ let vm = new Vue({
                     // Close popup that is currently opened
                 })
                 .catch(error => {
-                        console.log(error);
+                        if (error.response.status == 401) {
+                            console.log("usuario no logeado");
+
+                        } else {
+                            console.log(error);
+                        }
+
                     }
                 );
         },
         login() {
-            axios.post(this.entryPoint, jQuery.param(this.credentials))
+            axios.post(this.entryUrl, jQuery.param(this.credentials))
                 .then((response) => {
                     console.log("login exitoso");
                     console.log(response.data);
@@ -57,20 +61,38 @@ let vm = new Vue({
                 );
         },
         logout() {
-            axios.post(this.exitPoint)
+            axios.post(this.exitUrl)
                 .then((response) => {
                     console.log("logout exitoso");
-                    this.reset();
+                    this.resetVueJsData();
                 })
                 .catch(error => {
                         console.log(error);
                     }
                 );
         },
-        reset ( keep ) {
+        register() {
+            axios.post(this.registrationUrl, this.user)
+                .then((response) => {
+                    console.log("registro exitoso");
+                    var magnificPopup = $.magnificPopup.instance;
+                    // save instance in magnificPopup variable
+                    magnificPopup.close();
+                    // Close popup that is currently opened
+                    this.resetVueJsData();
+                })
+                .catch(error => {
+                        console.log(error);
+                    }
+                );
+        },
+        resetVueJsData(keep) {
             var def = getDefaultData();
             def[keep] = this[keep];
             Object.assign(this.$data, def);
+        },
+        passwordMatchingValidation(){
+
         }
     }
 });
