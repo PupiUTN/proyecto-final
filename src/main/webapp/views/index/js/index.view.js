@@ -22,19 +22,20 @@ initAutocomplete();
 
 function geolocate() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var lat = position.coords.latitude;
-            var long = position.coords.longitude;
-            //https://developers.google.com/maps/documentation/geocoding/start
-            $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true', function (data) {
-                var cityStatCountry = data.results[1].formatted_address;
-                document.getElementById('location').value = cityStatCountry;
-                var place = data.results[1];
-                autocomplete.set("place", place);
-            });
-
-
+        navigator.geolocation.watchPosition(successCallback,errorCallback,{maximumAge:60000, timeout:5000, enableHighAccuracy:true});
+    }
+    function successCallback(position) {
+        var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+        //https://developers.google.com/maps/documentation/geocoding/start
+        $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true', function (data) {
+            var cityStatCountry = data.results[1].formatted_address;
+            document.getElementById('location').value = cityStatCountry;
+            var place = data.results[1];
+            autocomplete.set("place", place);
         });
     }
+    function errorCallback(error) {
+        alert('ERROR(' + error.code + '): ' + error.message);
+    }
 }
-

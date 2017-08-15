@@ -21,7 +21,24 @@ function getDefaultData() {
 
 let vm = new Vue({
     el: '#appVue',
-    data: getDefaultData(),
+    data: {
+        meUrl: "/api/user/me",
+        entryUrl: "/login",
+        exitUrl: "/logout",
+        registrationUrl: "/api/user/registration",
+        credentials: {
+            username: '',
+            password: ''
+        },
+        isAuthenticated: false,
+        user: {
+            profileImageUrl: '/img/no-avatar.png',
+            username: '',
+            password: '',
+            matchingPassword: '',
+            email: '',
+        }
+    },
     mounted() {
         this.getUserProfile();
     },
@@ -86,13 +103,20 @@ let vm = new Vue({
                     }
                 );
         },
-        resetVueJsData(keep) {
-            var def = getDefaultData();
-            def[keep] = this[keep];
-            Object.assign(this.$data, def);
-        },
-        passwordMatchingValidation(){
-
+        resetVueJsData() {
+            Object.assign(this.$data, getDefaultData())
+        }
+    },
+    computed: {
+        matchingPassword()
+        {
+            var confirm_password = document.getElementById("password2");
+            if (this.user.matchingPassword !== this.user.password && this.user.matchingPassword !== '') {
+                confirm_password.setCustomValidity("Passwords Don't Match");
+                return true;
+            }
+            confirm_password.setCustomValidity("");
+            return false;
         }
     }
 });

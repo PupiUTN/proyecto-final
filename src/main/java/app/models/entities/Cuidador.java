@@ -23,6 +23,8 @@ public class Cuidador implements Serializable {
     private int cantidadMaxDePerros;
     @OneToMany(cascade = CascadeType.ALL) // guarda las imagen
     private List<Imagen> listaImagenes;
+    private String descripcion;
+    private  float precio;
 
     public Cuidador() {
     }
@@ -82,6 +84,22 @@ public class Cuidador implements Serializable {
     public void setListaImagenes(List<Imagen> listaImagenes) {
         this.listaImagenes = listaImagenes;
     }
+
+    public String getDescripcio() {
+        return descripcion;
+    }
+
+    public void SetDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public void SetPrecio(float precio) { this.precio = precio;}
+
+
 
 
     @Override
