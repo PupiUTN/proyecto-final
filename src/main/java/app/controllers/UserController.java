@@ -54,4 +54,10 @@ public class UserController {
         User user = userService.getUser(id);
         return user;
     }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    public User editUser(@PathVariable("id") Long id,@RequestBody User entity) throws Exception {
+        entity.setId(id);
+        return userService.editUser(entity);
+    }
 }

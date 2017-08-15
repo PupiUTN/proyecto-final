@@ -2,22 +2,19 @@ let vm = new Vue({
     el: '#appVue',
     data: {
         user: {},
-        address: {},
-        route: '',
-        userId: '5',
+        userId: '11',
         url: "/api/user/",
         direccion: {},
-        street_number: '',
-        locality: '',
-        administrative_area_level_1: '',
-        postal_code: '',
-        country: '',
-        genero: '',
-        image: '/assets/images/dashboard-avatar.jpg',
         formPost: true,
         uploadedFiles: [],
         uploadError: null,
-        currentStatus: null
+        currentStatus: null,
+        street_number: '',
+        route: '',
+        locality: '',
+        administrative_area_level_1: '',
+        country: '',
+        postal_code: ''
     },
     mounted() {
         this.autocompleteAddress();
@@ -48,6 +45,13 @@ let vm = new Vue({
                         vm.$set(vm, addressType.toString(),val.toString());
                     }
                 }
+                // vm.$set(vm.direccion, 'calle',this.route.toString());
+                vm.direccion.calle = vm.route;
+                vm.direccion.numero = vm.street_number;
+                vm.direccion.ciudad = vm.locality;
+                vm.direccion.provincia = vm.administrative_area_level_1;
+                vm.direccion.pais = vm.country;
+                vm.direccion.codigoPostal = vm.postal_code;
             });
         },
         filesChange(fileList) {
@@ -71,7 +75,7 @@ let vm = new Vue({
                 .then((response) => {
                     this.toggleLoader();
                     console.log(response);
-                    this.image = response.data;
+                    this.user.profileImageUrl = response.data;
                 })
                 .catch(error => {
                     console.log("ERROR AXIOS");
@@ -83,6 +87,7 @@ let vm = new Vue({
             axios.get(this.url + this.userId)
                 .then((response) => {
                     this.user = response.data;
+                    this.direccion = response.data.direccion;
                     this.toggleLoader();
                 })
                 .catch(error => {
@@ -91,6 +96,22 @@ let vm = new Vue({
                     }
                 );
         },
+        editUserInfo() {
+            this.user.direccion = this.direccion;
+            var payload = jQuery.extend(true, {}, this.user);
+            axios.put(this.url + this.user.id, payload)
+                .then((response) => {
+                    this.toggleLoader();
+                    sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
+                    console.log(response);
+                })
+                .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error, ver consola", "error");
+
+                    }
+                );
+        }
     }
 });
 

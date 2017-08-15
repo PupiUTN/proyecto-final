@@ -46,4 +46,8 @@ public class UserService{
     public User getUser(Long id) throws Exception {
         return repository.findOne(id);
     }
+
+    public User editUser(User entity) throws Exception {
+        return repository.save(entity);
+    }
 }

@@ -15,7 +15,7 @@
 
 </head>
 
-<body>
+<body xmlns:v-on="http://www.w3.org/1999/xhtml">
 
 <!-- Wrapper -->
 <div id="wrapper">
@@ -221,7 +221,7 @@
                             <form id="imageForm" enctype="multipart/form-data">
                             <!-- Avatar -->
                             <div class="edit-profile-photo">
-                                <img :src="image" alt="">
+                                <img :src="user.profileImageUrl" alt="">
                                 <div class="change-photo-btn">
                                     <div class="photoUpload">
                                         <span><i class="fa fa-upload"></i> Upload Photo</span>
@@ -268,7 +268,7 @@
                                 <input v-model="user.googlePlusAccount" placeholder="https://www.google.com/" type="text">
                             </div>
 
-                            <button class="button margin-top-15">Guardar Cambios</button>
+                            <button v-on:click='editUserInfo' class="button margin-top-15">Guardar Cambios</button>
 
                         </div>
                     </div>
@@ -300,9 +300,9 @@
                                 <input type="text" v-model="direccion.codigoPostal">
 
                                 <label>País</label>
-                                <input type="text" v-model="country">
+                                <input type="text" v-model="direccion.pais">
 
-                                <button class="button margin-top-15">Registrar Dirección</button>
+                                <button v-on:click='editUserInfo' class="button margin-top-15">Actualizar Dirección</button>
                             </div>
 
                         </div>
@@ -370,6 +370,7 @@
 <script type="text/javascript" src="/assets/scripts/custom.js"></script>
 <script src="/js/vue.js"></script>
 <script src="/js/axios.min.js"></script>
+<link rel="stylesheet" href="/css/sweetalert.css" />
 <script src="/js/sweetalert.min.js"></script>
 <script src="perfil.js"></script>
 <link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
