@@ -9,6 +9,7 @@ let vm = new Vue({
         },
         items: [],
         formPost: true,
+
     },
     mounted() {
 
