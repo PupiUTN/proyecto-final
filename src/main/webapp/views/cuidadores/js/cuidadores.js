@@ -149,7 +149,7 @@ let vm = new Vue({
                     var id = item.id;
                     var contentString =
                         '<div id="bodyContent">'+
-                        '<a href="/views/cuidadores/cuidador-perfil.html?id='+ id +'">'+
+                        '<a href="/views/cuidadores/cuidadores-perfil.html?id='+ id +'">'+
                         '<h4>'+item.nombre+'</h4></a> '+
                         '</div>';
                     var infowindow = new google.maps.InfoWindow({

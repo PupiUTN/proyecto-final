@@ -402,7 +402,7 @@
 				<div v-for="(item,n) in items" :id="item.id" class="col-lg-6 col-md-12">
 
 
-					<a :href="'/views/cuidadores/cuidador-perfil.html?id='+item.id" class="listing-item-container" :data-marker-id=n+1>
+					<a :href="'/views/cuidadores/cuidadores-perfil.html?id='+item.id" class="listing-item-container" :data-marker-id=n+1>
 						<div class="listing-item">
 
                             <img  :src="item.listaImagenes[0].url"  alt="">
@@ -519,8 +519,8 @@
 
 
 </style>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="/js/vue.min.js"></script>
+<script src="/js/axios.min.js"></script>
+<script src="/js/vue.js"></script>
 <link rel="stylesheet" href="/css/sweetalert.css"></link>
 <script src="/js/sweetalert.min.js"></script>
 
