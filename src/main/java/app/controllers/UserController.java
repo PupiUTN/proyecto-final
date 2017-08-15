@@ -12,10 +12,7 @@ import app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -52,4 +49,15 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public User getUser(@PathVariable("id") Long id) throws Exception {
+        User user = userService.getUser(id);
+        return user;
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    public User editUser(@PathVariable("id") Long id,@RequestBody User entity) throws Exception {
+        entity.setId(id);
+        return userService.editUser(entity);
+    }
 }
