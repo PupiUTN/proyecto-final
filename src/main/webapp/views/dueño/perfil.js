@@ -1,10 +1,12 @@
 let vm = new Vue({
     el: '#appVue',
     data: {
+        user: {},
+        address: {},
         route: '',
-        userId: '1',
-        url: "/api/me/",
-        address: '',
+        userId: '5',
+        url: "/api/user/",
+        direccion: {},
         street_number: '',
         locality: '',
         administrative_area_level_1: '',
@@ -80,7 +82,7 @@ let vm = new Vue({
         getUserInfo() {
             axios.get(this.url + this.userId)
                 .then((response) => {
-                    this.items = response.data;
+                    this.user = response.data;
                     this.toggleLoader();
                 })
                 .catch(error => {

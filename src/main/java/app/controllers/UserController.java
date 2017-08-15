@@ -51,6 +51,7 @@ public class UserController {
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public User getUser(@PathVariable("id") Long id) throws Exception {
-        return userService.getUser(id);
+        User user = userService.getUser(id);
+        return user;
     }
 }

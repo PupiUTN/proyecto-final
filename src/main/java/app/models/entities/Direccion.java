@@ -25,7 +25,8 @@ public class Direccion implements Serializable {
     private String placeId; // ChIJrz5WfeKeMpQR7ONDwyCZifY
     private Double latitud; // -31.388186
     private Double longitud;// -64.275706
-
+    private String codigoPostal;
+    private String pais;
 
     /**
      * https://developers.google.com/places/web-service/details
@@ -130,5 +131,21 @@ public class Direccion implements Serializable {
 
     public void setLongitud(Double longitud) {
         this.longitud = longitud;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 }

@@ -235,17 +235,17 @@
                             <div class="my-profile">
 
                                 <label>Nombre y Apellido</label>
-                                <input value="" type="text">
+                                <input v-model="user.fullName" value="" type="text">
 
                                 <label>Fecha de Nacimiento</label>
-                                <input type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to">
+                                <input v-model="user.birthday" type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to">
                                 <!--<input type="text" id="booking-date-from" placeholder="Fecha Desde" data-lang="es"-->
                                        <!--data-init-set="false"-->
                                        <!--data-large-mode="true" data-large-default="true" data-min-year="2017"-->
                                        <!--data-max-year="2020" data-lock="from">-->
 
                                 <label>Genero</label>
-                                <select v-model="genero">
+                                <select v-model="user.gender">
                                     <option disabled value="">Seleccionar Genero</option>
                                     <option>Masculino</option>
                                     <option>Femenino</option>
@@ -253,19 +253,19 @@
 
 
                                 <label>Telefono</label>
-                                <input value="" type="text">
+                                <input v-model="user.phone" value="" type="text">
 
                                 <label>Email</label>
-                                <input value="" type="text">
+                                <input v-model="user.email" value="" type="text">
 
                                 <label><i class="fa fa-twitter"></i> Twitter</label>
-                                <input placeholder="https://www.twitter.com/" type="text">
+                                <input v-model="user.twitterAccount" placeholder="https://www.twitter.com/" type="text">
 
                                 <label><i class="fa fa-facebook-square"></i> Facebook</label>
-                                <input placeholder="https://www.facebook.com/" type="text">
+                                <input v-model="user.facebookAccount" placeholder="https://www.facebook.com/" type="text">
 
                                 <label><i class="fa fa-google-plus"></i> Google+</label>
-                                <input placeholder="https://www.google.com/" type="text">
+                                <input v-model="user.googlePlusAccount" placeholder="https://www.google.com/" type="text">
                             </div>
 
                             <button class="button margin-top-15">Guardar Cambios</button>
@@ -282,22 +282,22 @@
 
                             <div class="my-profile">
                                 <label class="margin-top-0">Dirección</label>
-                                <input v-model="address" ref="autocomplete" type="text" placeholder="Ingrese su dirección">
+                                <input v-model="direccion.direccionLinea1" ref="autocomplete" type="text" placeholder="Ingrese su dirección">
 
                                 <label>Calle</label>
-                                <input type="text" v-model="route">
+                                <input type="text" v-model="direccion.calle">
 
                                 <label>Altura</label>
-                                <input type="text" v-model="street_number">
+                                <input type="text" v-model="direccion.numero">
 
                                 <label>Ciudad</label>
-                                <input type="text" v-model="locality">
+                                <input type="text" v-model="direccion.ciudad">
 
                                 <label>Provincia</label>
-                                <input type="text" v-model="administrative_area_level_1">
+                                <input type="text" v-model="direccion.provincia">
 
                                 <label>Código Postal</label>
-                                <input type="text" v-model="postal_code">
+                                <input type="text" v-model="direccion.codigoPostal">
 
                                 <label>País</label>
                                 <input type="text" v-model="country">
