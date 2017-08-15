@@ -2,7 +2,8 @@ let vm = new Vue({
     el: '#appVue',
     data: {
         route: '',
-        url: "",
+        userId: '1',
+        url: "/api/me/",
         address: '',
         street_number: '',
         locality: '',
@@ -18,6 +19,7 @@ let vm = new Vue({
     },
     mounted() {
         this.autocompleteAddress();
+        this.getUserInfo();
     },
     methods: {
         toggleLoader() {
@@ -74,7 +76,19 @@ let vm = new Vue({
                         console.log(error);
                     }
                 );
-        }
+        },
+        getUserInfo() {
+            axios.get(this.url + this.userId)
+                .then((response) => {
+                    this.items = response.data;
+                    this.toggleLoader();
+                })
+                .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error, ver consola", "error");
+                    }
+                );
+        },
     }
 });
 

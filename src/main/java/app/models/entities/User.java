@@ -38,6 +38,23 @@ public class User{
     @Column(nullable = false)
     private String role;
 
+    private String fullName;
+
+    private String birthday;
+
+    private String gender;
+
+    private String phone;
+
+    private String twitterAccount;
+
+    private String facebookAccount;
+
+    private String googlePlusAccount;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Direccion direccion;
+
     public User() {
     }
 
@@ -98,6 +115,69 @@ public class User{
         this.email = email;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getTwitterAccount() {
+        return twitterAccount;
+    }
+
+    public void setTwitterAccount(String twitterAccount) {
+        this.twitterAccount = twitterAccount;
+    }
+
+    public String getFacebookAccount() {
+        return facebookAccount;
+    }
+
+    public void setFacebookAccount(String facebookAccount) {
+        this.facebookAccount = facebookAccount;
+    }
+
+    public String getGooglePlusAccount() {
+        return googlePlusAccount;
+    }
+
+    public void setGooglePlusAccount(String googlePlusAccount) {
+        this.googlePlusAccount = googlePlusAccount;
+    }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
+    }
 
     @AssertTrue(message="passVerify field should be equal than pass field")
     private boolean isValid() {

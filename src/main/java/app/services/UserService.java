@@ -2,6 +2,7 @@ package app.services;
 
 
 import app.exception.EmailExistsException;
+import app.models.entities.Raza;
 import app.models.entities.User;
 import app.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,9 @@ public class UserService{
             return true;
         }
         return false;
+    }
+
+    public User getUser(Long id) throws Exception {
+        return repository.findOne(id);
     }
 }
