@@ -6,16 +6,17 @@
 package app.controllers;
 
 import app.exception.EmailExistsException;
+import app.exception.PasswordDoesNotMatchException;
 import app.models.entities.User;
 import app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 
 
 @RestController
@@ -26,21 +27,30 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * http://www.baeldung.com/get-user-in-spring-security
+     * */
     @RequestMapping(method = RequestMethod.GET, value = "/me")
-    public UserDetails getProfile(Authentication authentication) throws Exception {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return userDetails;
+    public ResponseEntity getProfile(HttpServletRequest request) throws Exception {
+        Principal principal = request.getUserPrincipal();
+        if (principal == null)         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+        return new ResponseEntity(principal,HttpStatus.OK);
     }
 
 
+    /**
+     * http://www.baeldung.com/registration-with-spring-mvc-and-spring-security
+     * http://www.baeldung.com/spring-security-registration-password-encoding-bcrypt
+     * */
     @RequestMapping(method = RequestMethod.POST,value = "/registration")
-    public ResponseEntity registerUserAccount(@RequestBody @Valid User user) throws EmailExistsException {
+    public ResponseEntity registerUserAccount(@RequestBody @Valid User user) throws EmailExistsException, PasswordDoesNotMatchException {
         userService.registerNewUserAccount(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public User getUser(@PathVariable ("id") Long id) throws Exception {
+    public User getUser(@PathVariable("id") Long id) throws Exception {
         return userService.getUser(id);
     }
 }
