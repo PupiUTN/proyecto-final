@@ -1,8 +1,8 @@
 spring:
  datasource:
-    url: ${JDBC_DATABASE_URL}
-    username: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE_PASSWORD}
+    url: 'jdbc:mysql://130.211.214.126:3306/pupi?useSSL=false'
+    username: 'user'
+    password: 'user'
     testWhileIdle: true
     validationQuery: SELECT 1
  jpa:

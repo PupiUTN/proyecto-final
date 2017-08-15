@@ -19,6 +19,7 @@
 
 <!-- Wrapper -->
 <div id="wrapper">
+    <div  id="appVue">
 
     <!-- Header Container
     ================================================== -->
@@ -126,7 +127,7 @@
 
                         <!-- User Menu -->
                         <div class="user-menu">
-                            <div class="user-name"><span><img src="/assets/images/dashboard-avatar.jpg" alt=""></span>Tom Perrin</div>
+                            <div class="user-name"><span><img :src="user.profileImageUrl" alt="">{{user.username}}</span></div>
                             <ul>
                                 <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
                                 <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>
@@ -134,8 +135,6 @@
                                 <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
                             </ul>
                         </div>
-
-                        <a href="dashboard-add-listing.html" class="button border with-icon">Add Listing <i class="sl sl-icon-plus"></i></a>
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -211,7 +210,7 @@
                 </div>
             </div>
 
-            <div id="appVue" class="row">
+            <div class="row">
 
                 <!-- Profile -->
                 <div class="col-lg-6 col-md-12">
@@ -348,7 +347,7 @@
     </div>
     <!-- Dashboard / End -->
 
-
+    </div>
 </div>
 <!-- Wrapper / End -->
 
