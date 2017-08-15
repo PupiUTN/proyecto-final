@@ -86,7 +86,7 @@ let vm = new Vue({
                         } else {
                             this.encontrados += ' Resultados Encontrados';
                         }
-
+                        this.mostrarEnMapa();
                         this.toggleLoader();
 
                     })
@@ -109,6 +109,7 @@ let vm = new Vue({
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         },
+        //al presionar el boton buscar, recarga la pagina con los datos nuevos
         buscar() {
             if (this.placeID != null) {
                 console.log(this.placeID);
@@ -124,7 +125,51 @@ let vm = new Vue({
 
 
             }
-        }
+        },
+        //añade los marcadores al mapa
+        mostrarEnMapa(){
+            if(this.items!=null&&this.items.length>0){
+                var bounds = new google.maps.LatLngBounds();
+                for(item of this.items) {
+                    var marker = new google.maps.Circle({
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0.35,
+                        map: this.map,
+                        center: new google.maps.LatLng(item.direccion.latitud, item.direccion.longitud),
+                        radius: 300,
+                    });
+
+                    //extend the bounds to include each marker's position
+                    bounds.extend(marker.center);
+                    marker.addListener('click', function() {
+                    });
+                    var id = item.id;
+                    var contentString =
+                        '<div id="bodyContent">'+
+                        '<a href="/views/cuidadores/cuidador-perfil.html?id='+ id +'">'+
+                        '<h4>'+item.nombre+'</h4></a> '+
+                        '</div>';
+                    var infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+
+                    });
+                    marker.addListener('click', function() {
+
+                        infowindow.open(map, marker);
+                        infowindow.setPosition(new google.maps.LatLng(item.direccion.latitud, item.direccion.longitud));
+
+                    });
+
+                }
+
+                //now fit the map to the newly inclusive bounds
+                this.map.fitBounds(bounds);
+
+            }
+        },
     }
 
 

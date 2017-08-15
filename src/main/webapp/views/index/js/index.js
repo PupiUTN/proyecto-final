@@ -67,7 +67,7 @@ let vm= new Vue({
         buscar() {
             if (this.placeID != null) {
                 console.log(this.placeID);
-                window.location.href="http://localhost:8080/views/cuidadores/lista-cuidadores.html?placeName="+this.placeName+
+                window.location="/views/cuidadores/lista-cuidadores.html?placeName="+this.placeName+
                 "&placeID="+this.placeID+
                 "&lat="+this.placeLocation.lat()+
                 "&lng="+this.placeLocation.lng();
