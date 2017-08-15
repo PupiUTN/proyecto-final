@@ -2,7 +2,6 @@ let vm = new Vue({
     el: '#appVue',
     data: {
         user: {},
-        userId: '11',
         url: "/api/user/",
         direccion: {},
         formPost: true,
@@ -84,17 +83,14 @@ let vm = new Vue({
                 );
         },
         getUserInfo() {
-            axios.get(this.url + this.userId)
-                .then((response) => {
-                    this.user = response.data;
-                    this.direccion = response.data.direccion;
-                    this.toggleLoader();
+            axios.get(this.url + "me")
+                .then((sessionInfo) => {
+                this.isUserLoggedIn(sessionInfo);
                 })
                 .catch(error => {
-                        console.log(error);
-                        sweetAlert("Oops...", "Error, ver consola", "error");
-                    }
-                );
+                    console.log(error);
+                    sweetAlert("Oops...", "Error, ver consola", "error");
+                });
         },
         editUserInfo() {
             this.user.direccion = this.direccion;
@@ -111,6 +107,17 @@ let vm = new Vue({
 
                     }
                 );
+        },
+        isUserLoggedIn(sessionInfo) {
+            if(sessionInfo.status === 200) {
+                this.direccion = sessionInfo.data.principal.user.direccion;
+                console.log(sessionInfo.data.principal.user.profileImageUrl);
+                this.user = sessionInfo.data.principal.user;
+            }
+            else {
+                console.log(sessionInfo.status + "|" + sessionInfo.statusText);
+                sweetAlert("Oops...", "Necesitas estar logueado para acceder a este contenido", "error");
+            }
         }
     }
 });
