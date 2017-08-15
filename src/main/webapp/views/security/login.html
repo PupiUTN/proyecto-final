@@ -53,14 +53,17 @@
                         <div v-show="isAuthenticated">
                             <!-- User Menu -->
                             <div class="user-menu">
-                                <div class="user-name"><span><img v-bind:src="user.profileImageUrl" alt="profileImageUrl"></span>
+                                <div class="user-name"><span><img v-bind:src="user.profileImageUrl"
+                                                                  alt="profileImageUrl"></span>
                                     {{ user.username }}
                                 </div>
                                 <ul>
                                     <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
-                                    <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a>
+                                    <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i>
+                                        Messages</a>
                                     </li>
-                                    <li><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a>
+                                    <li><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My
+                                        Profile</a>
                                     </li>
                                     <li><a v-on:click="logout()"><i class="sl sl-icon-power"></i> Logout</a></li>
                                 </ul>
@@ -75,7 +78,8 @@
                             <!-- Right Side Content / End -->
                             <div class="right-side">
                                 <div class="header-widget">
-                                    <a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i>
+                                    <a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i
+                                            class="sl sl-icon-login"></i>
                                         Sign In</a>
                                 </div>
                             </div>
@@ -105,17 +109,19 @@
                                                 <p class="form-row form-row-wide">
                                                     <label for="username">Username:
                                                         <i class="im im-icon-Male"></i>
-                                                        <input type="text" class="input-text" v-model="credentials.username"
+                                                        <input type="text" class="input-text"
+                                                               v-model="credentials.username"
                                                                id="username"
-                                                               value=""/>
+                                                               value="" required/>
                                                     </label>
                                                 </p>
 
                                                 <p class="form-row form-row-wide">
                                                     <label for="password">Password:
                                                         <i class="im im-icon-Lock-2"></i>
-                                                        <input class="input-text" type="password" v-model="credentials.password"
-                                                               id="password"/>
+                                                        <input class="input-text" type="password"
+                                                               v-model="credentials.password"
+                                                               id="password" required/>
                                                     </label>
                                                     <span class="lost_password">
 										<a href="#">Lost Your Password?</a>
@@ -140,38 +146,47 @@
                                         <!-- Register -->
                                         <div class="tab-content" id="tab2" style="display: none;">
 
-                                            <form class="register"  v-on:submit.prevent='register()'>
+                                            <form class="register" v-on:submit.prevent='register()'>
 
                                                 <p class="form-row form-row-wide">
                                                     <label for="username2">Username:
                                                         <i class="im im-icon-Male"></i>
-                                                        <input type="text" class="input-text" v-model="user.username" id="username2"
-                                                               value=""/>
+                                                        <input type="text" class="input-text" v-model="user.username"
+                                                               id="username2"
+                                                               value="" required/>
                                                     </label>
                                                 </p>
 
                                                 <p class="form-row form-row-wide">
                                                     <label for="email2">Email Address:
                                                         <i class="im im-icon-Mail"></i>
-                                                        <input type="text" class="input-text" v-model="user.email" id="email2" value=""/>
+                                                        <input type="email" class="input-text" v-model="user.email"
+                                                               id="email2" value="" required/>
                                                     </label>
                                                 </p>
 
                                                 <p class="form-row form-row-wide">
                                                     <label for="password1">Password:
                                                         <i class="im im-icon-Lock-2"></i>
-                                                        <input class="input-text" type="password" v-model="user.password" id="password1"/>
+                                                        <input class="input-text" type="password"
+                                                               v-model="user.password" id="password1" required/>
                                                     </label>
                                                 </p>
 
                                                 <p class="form-row form-row-wide">
                                                     <label for="password2">Repeat Password:
                                                         <i class="im im-icon-Lock-2"></i>
-                                                        <input class="input-text" type="password" v-model="user.matchingPassword" id="password2"/>
+                                                        <input class="input-text" type="password"
+                                                               v-model="user.matchingPassword" id="password2"/>
                                                     </label>
+
                                                 </p>
 
-                                                <input type="submit" class="button border fw margin-top-10" name="register"
+                                                <div class="notification warning" v-show="matchingPassword">
+                                                    <p><span>Warning!</span> Password does not match.</p>
+                                                </div>
+                                                <input type="submit" class="button border fw margin-top-10"
+                                                       name="register"
                                                        value="Register"/>
 
                                             </form>
@@ -222,7 +237,7 @@
 
 <!-- My Scripts
 ================================================== -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/js/axios.min.js"></script>
 <script src="/js/vue.min.js"></script>
 <script src="/js/sweetalert.min.js"></script>
 <script src="js/login.js"></script>
