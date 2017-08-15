@@ -1,16 +1,17 @@
 <!DOCTYPE html>
+<head>
 
+    <!-- Basic Page Needs
+    ================================================== -->
+    <title>Perfil</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<!-- Basic Page Needs
-================================================== -->
-<title>Vacuna</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-<!-- CSS
-================================================== -->
-<link rel="stylesheet" href="/assets/css/style.css">
-<link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"></script>
 
 </head>
 
@@ -18,6 +19,7 @@
 
 <!-- Wrapper -->
 <div id="wrapper">
+    <div  id="appVue">
 
     <!-- Header Container
     ================================================== -->
@@ -32,8 +34,8 @@
 
                     <!-- Logo -->
                     <div id="logo">
-                        <a href="index.html"><img src="/assets/images/logo.png" alt=""></a>
-                        <a href="index.html" class="dashboard-logo"><img src="/assets/images/logo2.png" alt=""></a>
+                        <a href="/views/index/index.html"><img src="/assets/images/logo.png" alt=""></a>
+                        <a href="/views/index/index.html" class="dashboard-logo"><img src="/assets/images/logo2.png" alt=""></a>
                     </div>
 
                     <!-- Mobile Navigation -->
@@ -125,21 +127,14 @@
 
                         <!-- User Menu -->
                         <div class="user-menu">
-                            <div class="user-name"><span><img src="/assets/images/dashboard-avatar.jpg" alt=""></span>Tom
-                                Perrin
-                            </div>
+                            <div class="user-name"><span><img :src="user.profileImageUrl" alt="">{{user.username}}</span></div>
                             <ul>
                                 <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
-                                <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a>
-                                </li>
-                                <li><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a>
-                                </li>
+                                <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>
+                                <li><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
                                 <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
                             </ul>
                         </div>
-
-                        <a href="dashboard-add-listing.html" class="button border with-icon">Add Listing <i
-                                class="sl sl-icon-plus"></i></a>
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -168,28 +163,24 @@
 
                 <ul data-submenu-title="Main">
                     <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
-                    <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages <span
-                            class="nav-tag messages">2</span></a></li>
+                    <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages <span class="nav-tag messages">2</span></a></li>
                 </ul>
 
                 <ul data-submenu-title="Listings">
                     <li><a><i class="sl sl-icon-layers"></i> My Listings</a>
                         <ul>
-                            <li><a href="dashboard-my-listings.html">Active <span class="nav-tag green">6</span></a>
-                            </li>
-                            <li><a href="dashboard-my-listings.html">Pending <span class="nav-tag yellow">1</span></a>
-                            </li>
+                            <li><a href="dashboard-my-listings.html">Active <span class="nav-tag green">6</span></a></li>
+                            <li><a href="dashboard-my-listings.html">Pending <span class="nav-tag yellow">1</span></a></li>
                             <li><a href="dashboard-my-listings.html">Expired <span class="nav-tag red">2</span></a></li>
                         </ul>
                     </li>
                     <li><a href="dashboard-reviews.html"><i class="sl sl-icon-star"></i> Reviews</a></li>
                     <li><a href="dashboard-bookmarks.html"><i class="sl sl-icon-heart"></i> Bookmarks</a></li>
-                    <li class="active"><a href="dashboard-add-listing.html"><i class="sl sl-icon-plus"></i> Add Listing</a>
-                    </li>
+                    <li><a href="dashboard-add-listing.html"><i class="sl sl-icon-plus"></i> Add Listing</a></li>
                 </ul>
 
                 <ul data-submenu-title="Account">
-                    <li><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
+                    <li class="active"><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
                     <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
                 </ul>
 
@@ -206,136 +197,148 @@
             <div id="titlebar">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Administrar Vacunas</h2>
+                        <h2>My Profile</h2>
                         <!-- Breadcrumbs -->
                         <nav id="breadcrumbs">
                             <ul>
                                 <li><a href="#">Home</a></li>
                                 <li><a href="#">Dashboard</a></li>
-                                <li>Add Listing</li>
+                                <li>My Profile</li>
                             </ul>
                         </nav>
                     </div>
                 </div>
             </div>
 
+            <div class="row">
 
-            <div class="row" id="appVue">
-                <div id="spinner"></div>
-                <div class="col-lg-12">
-                    <div id="add-listing">
-                        <!-- Section -->
-                        <div class="add-listing-section">
+                <!-- Profile -->
+                <div class="col-lg-6 col-md-12">
+                    <div class="dashboard-list-box margin-top-0">
+                        <h4 class="gray">Profile Details</h4>
+                        <div class="dashboard-list-box-static">
+                            <form id="imageForm" enctype="multipart/form-data">
+                            <!-- Avatar -->
+                            <div class="edit-profile-photo">
+                                <img :src="user.profileImageUrl" alt="">
+                                <div class="change-photo-btn">
+                                    <div class="photoUpload">
+                                        <span><i class="fa fa-upload"></i> Upload Photo</span>
+                                        <input type="file" id="imageFile" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
 
-                            <!-- Headline -->
-                            <div class="add-listing-headline">
-                                <h3><i class="sl sl-icon-doc"></i> Vacunas </h3>
+                            <!-- Details -->
+                            <div class="my-profile">
+
+                                <label>Nombre y Apellido</label>
+                                <input v-model="user.fullName" value="" type="text">
+
+                                <label>Fecha de Nacimiento</label>
+                                <input v-model="user.birthday" type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to">
+                                <!--<input type="text" id="booking-date-from" placeholder="Fecha Desde" data-lang="es"-->
+                                       <!--data-init-set="false"-->
+                                       <!--data-large-mode="true" data-large-default="true" data-min-year="2017"-->
+                                       <!--data-max-year="2020" data-lock="from">-->
+
+                                <label>Genero</label>
+                                <select v-model="user.gender">
+                                    <option disabled value="">Seleccionar Genero</option>
+                                    <option>Masculino</option>
+                                    <option>Femenino</option>
+                                </select>
+
+
+                                <label>Telefono</label>
+                                <input v-model="user.phone" value="" type="text">
+
+                                <label>Email</label>
+                                <input v-model="user.email" value="" type="text">
+
+                                <label><i class="fa fa-twitter"></i> Twitter</label>
+                                <input v-model="user.twitterAccount" placeholder="https://www.twitter.com/" type="text">
+
+                                <label><i class="fa fa-facebook-square"></i> Facebook</label>
+                                <input v-model="user.facebookAccount" placeholder="https://www.facebook.com/" type="text">
+
+                                <label><i class="fa fa-google-plus"></i> Google+</label>
+                                <input v-model="user.googlePlusAccount" placeholder="https://www.google.com/" type="text">
                             </div>
 
-                            <!-- Form -->
-                            <div class="row">
-
-                                <div v-if="formPost">
-                                    <form v-on:submit='postItem()'>
-                                        <div class="col-md-10 col-sm-12">
-                                            <div>
-                                                <input type="text" v-model="item.nombre" placeholder="Vacuna"
-                                                       required="required">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-2 col-sm-12">
-                                            <div>
-                                                <button type="submit" class="button medium border"><i
-                                                        class="sl sl-icon-plus"></i> Nueva Vacuna
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </form>
-                                </div>
-                                <div v-else>
-
-                                    <form v-on:submit='editItem()'>
-                                        <div class="col-md-2 col-sm-12">
-
-                                            <div>
-                                                <input type="number" class="disabled" v-model="item.id" placeholder="Id"
-                                                       required="required" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12">
-
-                                            <div>
-                                                <input type="text" v-model="item.nombre" placeholder="Vacuna"
-                                                       required="required">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-2 col-sm-12">
-                                            <div>
-                                                <button type="submit" class="button medium border"><i
-                                                        class="sl sl-icon-note"></i> Editar Vacuna
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2 col-sm-12">
-                                            <div>
-                                                <a href="#" class="button medium border"
-                                                   v-on:click='editItemButtonUndo'><i
-                                                        class="sl sl-icon-action-undo"></i> Volver a Nueva</a>
-                                            </div>
-                                        </div>
-
-                                    </form>
-                                </div>
-
-
-                            </div>
-
-
-                            <!-- Section -->
-                            </br>
-
-
-                            <table class="table basic-table table-bordered table-hovers" id="tableList">
-                                <thead>
-                                <tr>
-                                    <th>Vacuna</th>
-                                    <th>Editar</th>
-                                    <th>Eliminar</th>
-                                </tr>
-                                </thead>
-
-
-                                <tbody id="table-items">
-
-
-                                <tr v-for="(item, index) in items" id="table-section">
-                                    <td>{{ item.nombre }}</td>
-                                    <td><a href="#" v-on:click='editItemActionButton(index)'> <i
-                                            class="sl sl-icon-note"></i>
-                                        Editar </a></td>
-                                    <td><a href="#" v-on:click='deleteItemActionButton(index)'><i
-                                            class="sl sl-icon-close"></i> Eliminar</a></td>
-                                </tr>
-                                </tbody>
-
-
-                            </table>
-
-
+                            <button v-on:click='editUserInfo' class="button margin-top-15">Guardar Cambios</button>
 
                         </div>
-                        <!-- Section / End -->
+                    </div>
+                </div>
 
+                <!-- Ubicación -->
+                <div class="col-lg-6 col-md-12">
+                    <div class="dashboard-list-box margin-top-0">
+                        <h4 class="gray">Ubicación</h4>
+                        <div class="dashboard-list-box-static">
 
+                            <div class="my-profile">
+                                <label class="margin-top-0">Dirección</label>
+                                <input v-model="direccion.direccionLinea1" ref="autocomplete" type="text" placeholder="Ingrese su dirección">
+
+                                <label>Calle</label>
+                                <input type="text" v-model="direccion.calle">
+
+                                <label>Altura</label>
+                                <input type="text" v-model="direccion.numero">
+
+                                <label>Ciudad</label>
+                                <input type="text" v-model="direccion.ciudad">
+
+                                <label>Provincia</label>
+                                <input type="text" v-model="direccion.provincia">
+
+                                <label>Código Postal</label>
+                                <input type="text" v-model="direccion.codigoPostal">
+
+                                <label>País</label>
+                                <input type="text" v-model="direccion.pais">
+
+                                <button v-on:click='editUserInfo' class="button margin-top-15">Actualizar Dirección</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Change Password -->
+                <div class="col-lg-6 col-md-12">
+                    <div class="dashboard-list-box margin-top-0">
+                        <h4 class="gray">Change Password</h4>
+                        <div class="dashboard-list-box-static">
+
+                            <!-- Change Password -->
+                            <div class="my-profile">
+                                <label class="margin-top-0">Current Password</label>
+                                <input type="password">
+
+                                <label>New Password</label>
+                                <input type="password">
+
+                                <label>Confirm New Password</label>
+                                <input type="password">
+
+                                <button class="button margin-top-15">Change Password</button>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
 
 
-            </div>
+                <!-- Copyrights -->
+                <div class="col-md-12">
+                    <div class="copyrights">© 2017 Listeo. All Rights Reserved.</div>
+                </div>
 
+            </div>
 
         </div>
         <!-- Content / End -->
@@ -344,13 +347,15 @@
     </div>
     <!-- Dashboard / End -->
 
-
+    </div>
 </div>
 <!-- Wrapper / End -->
 
 
 <!-- Scripts
 ================================================== -->
+<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+
 <script type="text/javascript" src="/assets/scripts/jquery-2.2.0.min.js"></script>
 <script type="text/javascript" src="/assets/scripts/jpanelmenu.min.js"></script>
 <script type="text/javascript" src="/assets/scripts/chosen.min.js"></script>
@@ -362,36 +367,14 @@
 <script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
 <script type="text/javascript" src="/assets/scripts/custom.js"></script>
-
-
-<!-- My Scripts
-================================================== -->
-<style>
-
-
-    #spinner {
-        /*http://samherbert.net/svg-loaders/*/
-        background-image: url('/img/spinner.svg');
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-repeat: no-repeat;
-        background-color: rgba(0, 0, 0, 0.3);
-        z-index: 999;
-        background-position: center;
-    }
-
-
-
-
-</style>
-<script src="/js/axios.min.js"></script>
 <script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
 <link rel="stylesheet" href="/css/sweetalert.css" />
 <script src="/js/sweetalert.min.js"></script>
-<script src="js/vacuna.js"></script>
+<script src="perfil.js"></script>
+<link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
+<script src="/assets/scripts/datedropper.js"></script>
+<script>$('#booking-date').dateDropper()</script>
 
 </body>
 </html>

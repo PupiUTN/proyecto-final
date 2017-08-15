@@ -9,16 +9,17 @@ let vm = new Vue({
         },
         items: [],
         formPost: true,
+
     },
     mounted() {
 
-        this.getItemsAjax(this.url);
+        this.getItems(this.url);
     },
     methods: {
         toggleLoader() {
             $('#spinner').toggle();
         },
-        getItemsAjax() {
+        getItems() {
             axios.get(this.url)
                 .then((response) => {
                     this.items = response.data;
@@ -30,7 +31,7 @@ let vm = new Vue({
                     }
                 );
         },
-        postItemAjax() {
+        postItem() {
             this.toggleLoader();
             var payload = jQuery.extend(true, {}, this.item);
             axios.post(this.url, payload)
@@ -48,7 +49,7 @@ let vm = new Vue({
                     }
                 );
         },
-        editItemAjax() {
+        editItem() {
             this.toggleLoader();
             var payload = jQuery.extend(true, {}, this.item);
             axios.put(this.url + '/' + this.item.id, payload)
@@ -73,7 +74,7 @@ let vm = new Vue({
             this.item.nombre = this.items[index].nombre;
 
         },
-        deleteItemAjax(index) {
+        deleteItem(index) {
             this.toggleLoader();
             var id = this.items[index].id;
             axios.delete(this.url + '/' + id)
@@ -103,7 +104,7 @@ let vm = new Vue({
                     showLoaderOnConfirm: true,
                 },
                 function () {
-                    vm.deleteItemAjax(index, id)
+                    vm.deleteItem(index, id)
                 });
         },
         editItemButtonUndo() {
