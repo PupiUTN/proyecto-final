@@ -103,21 +103,19 @@ let vm = new Vue({
                     }
                 );
         },
-        resetVueJsData(keep) {
-            // var def = getDefaultData();
-            // def[keep] = this[keep];
-            // Object.assign(this.$data, def);
-            Object.assign(this.$data, this.$options.data())
+        resetVueJsData() {
+            Object.assign(this.$data, getDefaultData())
         }
     },
     computed: {
         matchingPassword()
         {
+            var confirm_password = document.getElementById("password2");
             if (this.user.matchingPassword !== this.user.password && this.user.matchingPassword !== '') {
-                var confirm_password = document.getElementById("password2");
                 confirm_password.setCustomValidity("Passwords Don't Match");
                 return true;
             }
+            confirm_password.setCustomValidity("");
             return false;
         }
     }
