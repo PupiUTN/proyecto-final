@@ -177,7 +177,8 @@
 
 
                                 <div class="main-search-input-item location">
-                                    <input type="text" id="location" placeholder="Ciudad" value=""/>
+                                    <input type="text" v-model="location" id="location" placeholder="Ciudad"/>
+
                                     <a href="#" id="geo-location" onclick="geolocate()">
                                         <i class="fa fa-dot-circle-o"></i></a>
                                 </div>

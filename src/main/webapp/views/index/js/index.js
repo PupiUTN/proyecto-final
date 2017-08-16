@@ -5,6 +5,7 @@ let vm= new Vue({
         placeID:null,
         placeLocation:null,
         placeName:null,
+        location:'',
 
     },
     mounted(){
@@ -40,7 +41,10 @@ let vm= new Vue({
 
 
                 } else {
-                    document.getElementById('location').value = '';
+                    this.placeID = null;
+                    this.placeLocation= null;
+                    this.placeName= null;
+                    this.location = '';
                     sweetAlert("Oops...", "No se encuentra la ciudad", "error");
 
                 }
@@ -55,9 +59,9 @@ let vm= new Vue({
                     //https://developers.google.com/maps/documentation/geocoding/start
                     $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true', function (data) {
                         var cityStatCountry = data.results[1].formatted_address;
-                        document.getElementById('location').placeholder = cityStatCountry;
-                        //var place = data.results[1];
-                        //autocomplete.set("place", place);
+                        this.location = cityStatCountry;
+                        var place = data.results[1];
+                        autocomplete.set("place", place);
                     });
 
 
@@ -74,7 +78,7 @@ let vm= new Vue({
             } else {
                 sweetAlert("Oops...", "Ingrese una ciudad válida", "error");
                 //no se ejecuta en orden... ver mas adelante
-                document.getElementById('location').value='';
+                this.location='';
 
             }
         }
