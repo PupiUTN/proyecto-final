@@ -25,7 +25,7 @@ let vm = new Vue({
 
 
         this.idCuidador =this.getParameterByName('id');
-        this.getItemsAjax(this.url,this.idCuidador);
+        this.getItems(this.url,this.idCuidador);
          var fecha = new Date();
           this.fechaReservaDesde= fecha.toLocaleDateString();
         this.fechaReservaHasta= fecha.toLocaleDateString();
@@ -36,7 +36,7 @@ let vm = new Vue({
         toggleLoader() {
             $('#spinner').toggle();
         },
-        getItemsAjax() {
+        getItems() {
               axios.get(this.url +"/"+ this.idCuidador )
                 .then((response) => {
                     this.item = response.data;
