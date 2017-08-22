@@ -144,21 +144,20 @@ let vm = new Vue({
 
                     //extend the bounds to include each marker's position
                     var id = item.id;
-                    var contentString =
+                    var content =
                         '<div id="bodyContent">'+
                         '<a href="/views/cuidadores/cuidadores-perfil.html?id='+ id +'">'+
                         '<h4>'+item.nombre+'</h4></a> '+
                         '</div>';
-                    var infowindow = new google.maps.InfoWindow({
-                        content: contentString,
+                    var infowindow = new google.maps.InfoWindow();
+                    google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+                        return function() {
+                            infowindow.setContent(content);
+                            infowindow.setPosition(marker.getCenter());
+                            infowindow.open(this.map,marker);
 
-                    });
-                    marker.addListener('click', function() {
-
-                        infowindow.open(map, marker);
-                        infowindow.setPosition(new google.maps.LatLng(item.direccion.latitud, item.direccion.longitud));
-
-                    });
+                        };
+                    })(marker,content,infowindow));
                     bounds.extend(marker.center);
 
                 }
