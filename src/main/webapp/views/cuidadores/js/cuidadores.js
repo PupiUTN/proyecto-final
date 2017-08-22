@@ -143,9 +143,6 @@ let vm = new Vue({
                     });
 
                     //extend the bounds to include each marker's position
-                    bounds.extend(marker.center);
-                    marker.addListener('click', function() {
-                    });
                     var id = item.id;
                     var contentString =
                         '<div id="bodyContent">'+
@@ -162,6 +159,7 @@ let vm = new Vue({
                         infowindow.setPosition(new google.maps.LatLng(item.direccion.latitud, item.direccion.longitud));
 
                     });
+                    bounds.extend(marker.center);
 
                 }
 
