@@ -254,7 +254,6 @@ Vue.component('my-login', {
         matchingPassword() {
             if (!this.isMounted)
                 return;
-            console.log(this.$refs.password2);
             var confirm_password = this.$refs.password2;
             if (this.user.matchingPassword !== this.user.password && this.user.matchingPassword !== '') {
                 confirm_password.setCustomValidity("Passwords Don't Match");
