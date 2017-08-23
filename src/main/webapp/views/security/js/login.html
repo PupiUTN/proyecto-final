@@ -1,36 +1,11 @@
-function getDefaultData() {
-    return {
-        meUrl: "/api/user/me",
-        entryUrl: "/login",
-        exitUrl: "/logout",
-        registrationUrl: "/api/user/registration",
-        credentials: {
-            username: '',
-            password: ''
-        },
-        isAuthenticated: false,
-        user: {
-            profileImageUrl: '/img/no-avatar.png',
-            username: '',
-            password: '',
-            matchingPassword: '',
-            email: '',
-        },
-        isMounted: false
-    }
-};
-
-
-// register
-Vue.component('my-login', {
-    template:
-        `
+<template>
     <!-- Header Widget -->
     <div class="header-widget">
         <div v-show="isAuthenticated">
             <!-- User Menu -->
             <div class="user-menu">
-                <div class="user-name"><span><img v-bind:src="user.profileImageUrl" alt="profileImageUrl"></span>
+                <div class="user-name"><span><img v-bind:src="user.profileImageUrl"
+                                                  alt="profileImageUrl"></span>
                     {{ user.username }}
                 </div>
                 <ul>
@@ -153,8 +128,7 @@ Vue.component('my-login', {
                                     <label for="password2">Repeat Password:
                                         <i class="im im-icon-Lock-2"></i>
                                         <input class="input-text" type="password"
-                                               v-model="user.matchingPassword" 
-                                               ref="password2" required/>
+                                               v-model="user.matchingPassword" id="password2"/>
                                     </label>
 
                                 </p>
@@ -173,95 +147,9 @@ Vue.component('my-login', {
                 </div>
             </div>
             <!-- Sign In Popup / End -->
+
         </div>
 
     </div>
     <!-- Header Widget / End -->
-`,
-    data: function () {
-        return getDefaultData();
-    },
-    mounted() {
-        this.isMounted = true;
-        this.getUserProfile();
-    },
-    methods: {
-        getUserProfile() {
-            axios.get(this.meUrl)
-                .then((response) => {
-                    console.log(response.data);
-                    this.user = response.data.principal.user;
-                    this.isAuthenticated = true;
-                    var magnificPopup = $.magnificPopup.instance;
-                    // save instance in magnificPopup variable
-                    magnificPopup.close();
-                    // Close popup that is currently opened
-                })
-                .catch(error => {
-                        if (error.response.status == 401) {
-                            console.log("usuario no logeado");
-
-                        } else {
-                            console.log(error);
-                        }
-
-                    }
-                );
-        },
-        login() {
-            axios.post(this.entryUrl, jQuery.param(this.credentials))
-                .then((response) => {
-                    console.log("login exitoso");
-                    console.log(response.data);
-                    this.getUserProfile();
-                })
-                .catch(error => {
-                        console.log(error);
-                    }
-                );
-        },
-        logout() {
-            axios.post(this.exitUrl)
-                .then((response) => {
-                    console.log("logout exitoso");
-                    this.resetVueJsData();
-                })
-                .catch(error => {
-                        console.log(error);
-                    }
-                );
-        },
-        register() {
-            axios.post(this.registrationUrl, this.user)
-                .then((response) => {
-                    console.log("registro exitoso");
-                    var magnificPopup = $.magnificPopup.instance;
-                    // save instance in magnificPopup variable
-                    magnificPopup.close();
-                    // Close popup that is currently opened
-                    this.resetVueJsData();
-                })
-                .catch(error => {
-                        console.log(error);
-                    }
-                );
-        },
-        resetVueJsData() {
-            Object.assign(this.$data, getDefaultData())
-        }
-    },
-    computed: {
-        matchingPassword() {
-            if (!this.isMounted)
-                return;
-            console.log(this.$refs.password2);
-            var confirm_password = this.$refs.password2;
-            if (this.user.matchingPassword !== this.user.password && this.user.matchingPassword !== '') {
-                confirm_password.setCustomValidity("Passwords Don't Match");
-                return true;
-            }
-            confirm_password.setCustomValidity("");
-            return false;
-        }
-    }
-});
+</template>
