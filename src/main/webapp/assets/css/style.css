@@ -152,6 +152,22 @@ input[type="submit"] {
   width: auto;
 }
 
+.zoomIt{
+	display:block!important;
+	-webkit-transition:-webkit-transform 0.5s ease-out;
+	-moz-transition:-moz-transform 0.5s ease-out;
+	-o-transition:-o-transform 0.5s ease-out;
+	-ms-transition:-ms-transform 0.5s ease-out;
+	transition:transform 0.5s ease-out;
+}
+.zoomIt:hover{
+	-moz-transform: scale(2.2);
+	-webkit-transform: scale(2.2);
+	-o-transform: scale(2.2);
+	-ms-transform: scale(2.2);
+	transform: scale(2.2)
+}
+
 input[type="checkbox"] { display: inline; }
 
 input[type="radio"] {
@@ -1000,7 +1016,8 @@ body #jPanelMenu-menu li li li a:before {
 	height: 100%;
 	width: 100%;
 	display: block;
-	background: linear-gradient(to right, rgba(255,255,255,0.99) 20%, rgba(255,255,255,0.7) 70%, rgba(255,255,255,0) 95%);
+	/*background: linear-gradient(to right, rgba(255,255,255,0.99) 20%, rgba(255,255,255,0.7) 70%, rgba(255,255,255,0) 95%);*/
+	background: linear-gradient(to right, rgba(255,255,255,0.99) 5%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,0) 95%)
 }
 
 .main-search-container h2 {
