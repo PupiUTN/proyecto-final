@@ -30,7 +30,7 @@ Vue.component('my-login', {
         <div v-show="isAuthenticated">
             <!-- User Menu -->
             <div class="user-menu">
-                <div class="user-name"><span><img v-bind:src="user.profileImageUrl" alt="profileImageUrl"></span>
+                <div class="user-name"><span><img v-bind:src="user.profileImageUrl" alt=""></span>
                     {{ user.username }}
                 </div>
                 <ul>
@@ -45,8 +45,8 @@ Vue.component('my-login', {
                 </ul>
             </div>
 
-            <a href="dashboard-add-listing.html" class="button border with-icon">Add Listing <i
-                    class="sl sl-icon-plus"></i></a>
+            <!--<a href="dashboard-add-listing.html" class="button border with-icon">Add Listing <i
+                    class="sl sl-icon-plus"></i></a>-->
 
         </div>
         <div v-show="!isAuthenticated">
