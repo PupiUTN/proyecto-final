@@ -14,242 +14,75 @@
 </head>
 
 <body xmlns:v-bind="http://www.w3.org/1999/xhtml">
-<!-- Wrapper -->
 <div id="appVue">
 
-    <!-- Header Container
-    ================================================== -->
-    <header id="header-container">
+    <!-- Wrapper -->
+    <div id="wrapper">
 
-        <!-- Header -->
-        <div id="header" class="not-sticky">
-            <div class="container">
+        <!-- Header Container
+        ================================================== -->
+        <header id="header-container">
 
-                <!-- Left Side Content -->
-                <div class="left-side">
+            <!-- Header -->
+            <div id="header" class="not-sticky">
+                <div class="container">
 
-                    <!-- Logo -->
-                    <div id="logo">
-                        <a href="../index/index.html"><img src="/assets/images/logo.png" alt=""></a>
-                    </div>
+                    <!-- Left Side Content -->
+                    <div class="left-side">
 
-                    <!-- Mobile Navigation -->
-                    <div class="menu-responsive">
-                        <i class="fa fa-reorder menu-trigger"></i>
-                    </div>
-
-                    <!-- Main Navigation -->
-                    <nav id="navigation" class="style-1">
-                        <ul id="responsive">
-
-                            <li><a href="#">Home</a>
-                                <ul>
-                                    <li><a href="../index/index.html">Home 1</a></li>
-                                    <li><a href="../index/index.html">Home 2</a></li>
-                                    <li><a href="../index/index.html">Home 3</a></li>
-                                    <li><a href="../index/index.html">Home 4</a></li>
-                                </ul>
-                            </li>
-
-                            <li><a class="current" href="#">Listings</a>
-                                <ul>
-                                    <li><a href="#">List Layout</a>
-                                        <ul>
-                                            <li><a href="../index/index.html">With Sidebar</a></li>
-                                            <li><a href="../index/index.html">Full Width</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Grid Layout</a>
-                                        <ul>
-                                            <li><a href="../index/index.html">With Sidebar 1</a></li>
-                                            <li><a href="../index/index.html">With Sidebar 2</a></li>
-                                            <li><a href="../index/index.html">Full Width</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Half Screen Map</a>
-                                        <ul>
-                                            <li><a href="../index/index.html">List Layout</a></li>
-                                            <li><a href="../index/index.html">Grid Layout 1</a></li>
-                                            <li><a href="../index/index.html">Grid Layout 2</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="../index/index.html">Single Listing</a></li>
-                                </ul>
-                            </li>
-
-                            <li><a href="#">User Panel</a>
-                                <ul>
-                                    <li><a href="../index/index.html">Dashboard</a></li>
-                                    <li><a href="../index/index.html">Messages</a></li>
-                                    <li><a href="../index/index.html">My Listings</a></li>
-                                    <li><a href="../index/index.html">Reviews</a></li>
-                                    <li><a href="../index/index.html">Bookmarks</a></li>
-                                    <!--<li><a href="dashboard-add-listing.html">Add Listing</a></li>-->
-                                    <li><a href="../index/index.html">My Profile</a></li>
-                                    <li><a href="../index/index.html">Invoice</a></li>
-                                </ul>
-                            </li>
-
-                            <li><a href="#">Pages</a>
-                                <ul>
-                                    <li><a href="../index/index.html">Blog</a>
-                                        <ul>
-                                            <li><a href="../index/index.html">Blog</a></li>
-                                            <li><a href="../index/index.html">Blog Post</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="../index/index.html">Contact</a></li>
-                                    <li><a href="../index/index.html">Elements</a></li>
-                                    <li><a href="../index/index.html">Pricing Tables</a></li>
-                                    <li><a href="../index/index.html">Typography</a></li>
-                                    <li><a href="../index/index.html">404 Page</a></li>
-                                    <li><a href="../index/index.html">Icons</a></li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </nav>
-                    <div class="clearfix"></div>
-                    <!-- Main Navigation / End -->
-
-                </div>
-                <!-- Left Side Content / End -->
-
-                <!-- Right Side Content / End -->
-                <div class="right-side">
-                    <div class="header-widget">
-                        <a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i>
-                            Sign In</a>
-                        <!--<a href="dashboard-add-listing.html" class="button border with-icon">Add Listing <i class="sl sl-icon-plus"></i></a>-->
-                    </div>
-                </div>
-                <!-- Right Side Content / End -->
-
-                <!-- Sign In Popup -->
-                <div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
-
-                    <div class="small-dialog-header">
-                        <h3>Sign In</h3>
-                    </div>
-
-                    <!--Tabs -->
-                    <div class="sign-in-form style-1">
-
-                        <ul class="tabs-nav">
-                            <li class=""><a href="#tab1">Log In</a></li>
-                            <li><a href="#tab2">Register</a></li>
-                        </ul>
-
-                        <div class="tabs-container alt">
-
-                            <!-- Login -->
-                            <div class="tab-content" id="tab1" style="display: none;">
-                                <form method="post" class="login">
-
-                                    <p class="form-row form-row-wide">
-                                        <label for="username">Username:
-                                            <i class="im im-icon-Male"></i>
-                                            <input type="text" class="input-text" name="username" id="username"
-                                                   value=""/>
-                                        </label>
-                                    </p>
-
-                                    <p class="form-row form-row-wide">
-                                        <label for="password">Password:
-                                            <i class="im im-icon-Lock-2"></i>
-                                            <input class="input-text" type="password" name="password" id="password"/>
-                                        </label>
-                                        <span class="lost_password">
-										<a href="#">Lost Your Password?</a>
-									</span>
-                                    </p>
-
-                                    <div class="form-row">
-                                        <input type="submit" class="button border margin-top-5" name="login"
-                                               value="Login"/>
-                                        <div class="checkboxes margin-top-10">
-                                            <input id="remember-me" type="checkbox" name="check">
-                                            <label for="remember-me">Remember Me</label>
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </div>
-
-                            <!-- Register -->
-                            <div class="tab-content" id="tab2" style="display: none;">
-
-                                <form method="post" class="register">
-
-                                    <p class="form-row form-row-wide">
-                                        <label for="username2">Username:
-                                            <i class="im im-icon-Male"></i>
-                                            <input type="text" class="input-text" name="username" id="username2"
-                                                   value=""/>
-                                        </label>
-                                    </p>
-
-                                    <p class="form-row form-row-wide">
-                                        <label for="email2">Email Address:
-                                            <i class="im im-icon-Mail"></i>
-                                            <input type="text" class="input-text" name="email" id="email2" value=""/>
-                                        </label>
-                                    </p>
-
-                                    <p class="form-row form-row-wide">
-                                        <label for="password1">Password:
-                                            <i class="im im-icon-Lock-2"></i>
-                                            <input class="input-text" type="password" name="password1" id="password1"/>
-                                        </label>
-                                    </p>
-
-                                    <p class="form-row form-row-wide">
-                                        <label for="password2">Repeat Password:
-                                            <i class="im im-icon-Lock-2"></i>
-                                            <input class="input-text" type="password" name="password2" id="password2"/>
-                                        </label>
-                                    </p>
-
-                                    <input type="submit" class="button border fw margin-top-10" name="register"
-                                           value="Register"/>
-
-                                </form>
-                            </div>
-
+                        <!-- Logo -->
+                        <div id="logo">
+                            <a href="../index/index.html"><img src="/assets/images/logo.png" alt=""></a>
                         </div>
-                    </div>
-                </div>
-                <!-- Sign In Popup / End -->
 
+                        <!-- Mobile Navigation -->
+                        <div class="menu-responsive">
+                            <i class="fa fa-reorder menu-trigger"></i>
+                        </div>
+
+                        <!-- Main Navigation -->
+                        <div class="clearfix"></div>
+                        <!-- Main Navigation / End -->
+
+                    </div>
+                    <!-- Left Side Content / End -->
+
+                    <!-- Right Side Content / End -->
+                    <my-login></my-login>
+                    <!-- Right Side Content / End -->
+
+
+                </div>
             </div>
-        </div>
-        <!-- Header / End -->
+            <!-- Header / End -->
 
-    </header>
-    <div class="clearfix"></div>
-    <!-- Header Container / End -->
+        </header>
+        <div class="clearfix"></div>
+        <!-- Header Container / End -->
 
 
-    <div id="spinner"></div>
+        <div id="spinner"></div>
 
-    <!-- Content
-    ================================================== -->
-    <div class="container">
-        <div class="row sticky-wrapper">
-            <div class="col-lg-8 col-md-8 padding-right-30">
+        <!-- Content
+        ================================================== -->
+        <div class="container">
+            <div class="row">
 
-                <!-- Titlebar -->
-                <div id="titlebar" class="listing-titlebar">
-                    <div class="listing-titlebar-title">
+                <!--cuidador resume-->
+                <div class="col-lg-6 col-md-12 col-lg-offset-3 ">
 
-                        <h2 id="nombre"> {{item.nombre}} <span class="listing-tag">Cuidador</span></h2>
+                    <!-- Titlebar -->
+                    <div id="titlebar" class="listing-titlebar padding-bottom-35 padding-top-35 padding-left-35">
+                        <div class="listing-titlebar-title">
 
-                        <div class="card-image col s3 ">
+                            <h2 id="nombre"> {{item.nombre}} <span class="listing-tag">Cuidador</span></h2>
 
-                        </div>
+                            <div class="card-image col s3 ">
 
-                        <input type="hidden" value="" name="test">
-                        <span>
+                            </div>
+
+                            <input type="hidden" value="" name="test">
+                            <span>
 
 							<a href="#listing-location" class="listing-address">
 							<i class="fa fa-map-marker"></i>
@@ -261,168 +94,119 @@
 							Cantidad maxima de perros: {{item.cantidadMaxDePerros}}
 
 					</span>
-                        <div class="star-rating" data-rating="5">
-                            <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
+                            <div class="star-rating" data-rating="5">
+                                <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
+                <!-- Fechas -->
+                <div class="col-lg-6 col-md-12 col-lg-offset-3">
 
-                <!-- Listing Nav -->
-                <div id="listing-nav" class="listing-nav-container">
-                    <ul class="listing-nav">
-                        <li><a href="#listing-overview" class="active">Sobre mi </a></li>
-                        <li><a href="#listing-pricing-list">Precios</a></li>
-                        <li><a href="#listing-location">Donde estoy </a></li>
-                        <li><a href="#listing-reviews">Reviews</a></li>
-                        <!--<li><a href="#add-review">Agrega una  Review</a></li>-->
-                    </ul>
-                </div>
+                    <!-- Book Now -->
+                    <div class="boxed-widget">
+                        <h3><i class="fa fa-calendar-check-o "></i> Fechas de Reserva </h3>
+                        <div class="row with-forms  margin-top-0">
 
-                <!-- Overview -->
-                <div id="listing-overview" class="listing-section">
+                            <div class="col-lg-6 col-md-12">
+                                <label style=" margin-top: 12px;">Entrada </label>
+                            </div>
 
-                    <!-- Description -->
+                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+                            <div class="col-lg-6 col-md-12">
+                                <input type="text" v-model="fechaReservaDesde" data-format=" d/m/Y" id="booking-date"
+                                       data-lang="es" data-init-set="false"
+                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
+                                       data-max-year="2020" data-lock="from">
+                            </div>
 
-                    <p>
-                        <label>{{item.descripcio}}</label>
-
-                        <!--Soy el chico ideal para tu compañia, nada me agradara mas que poder jugar contigo y con tu dueña ( si esta buena )-->
-                    </p>
-
-                    <!-- Amenities -->
-                    <h3 class="listing-desc-headline">Servicios y Restricciones</h3>
-                    <ul class="listing-features checkboxes margin-top-0">
-                        <!--<li> {{item.nombre}}</li>-->
-                        <li>Espacio al Aire libre</li>
-                        <li> Tengo Perros residentes</li>
-                        <li>Administrar medicinas</li>
-                        <li>No tengo niños en casa</li>
-                        <li>Administrar inyecciones</li>
-                        <li> Las mascotas no pueden subirse a camas</li>
-                    </ul>
-                </div>
-
-
-            </div>
-
-
-            <!-- Sidebar
-            ================================================== -->
-            <div class="col-lg-4 col-md-4 margin-top-75 sticky" style="position:relative;">
-
-                <!-- Book Now -->
-                <div class="boxed-widget">
-                    <h3><i class="fa fa-calendar-check-o "></i> Fechas de Reserva </h3>
-                    <div class="row with-forms  margin-top-0">
-
-                        <div class="col-lg-6 col-md-12">
-                            <label style=" margin-top: 12px;">Entrada </label>
                         </div>
+                        <div class="row with-forms  margin-top-0">
 
-                        <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-                        <div class="col-lg-6 col-md-12">
-                            <input type="text" v-model="fechaReservaDesde" data-format=" d/m/Y" id="booking-date"
-                                   data-lang="es" data-init-set="false"
-                                   data-large-mode="true" data-large-default="true" data-min-year="2017"
-                                   data-max-year="2020" data-lock="from">
+                            <div class="col-lg-6 col-md-12">
+                                <label style=" margin-top: 12px;">Salida </label>
+                            </div>
+                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+                            <div class="col-lg-6 col-md-12">
+
+                                <input type="text" v-model="fechaReservaHasta"
+                                       style="text-align: center; font-size: 16px; font-weight: 600"
+                                       data-format=" d/m/Y" id="booking-date2" data-lang="es"
+                                       data-init-set="false"
+                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
+                                       data-max-year="2020" data-lock="from">
+                            </div>
+
+
                         </div>
 
                     </div>
-                    <div class="row with-forms  margin-top-0">
+                    <!-- Book Now / End -->
 
-                        <div class="col-lg-6 col-md-12">
-                            <label style=" margin-top: 12px;">Salida </label>
+
+                </div>
+                <!-- perros-->
+                <div class="col-lg-6 col-md-12 col-lg-offset-3">
+
+                    <!-- Book Now -->
+                    <div class="boxed-widget">
+                        <h3><i class="fa  fa-heart-o"></i> Perros </h3>
+                        <div class="row with-forms  margin-top-0">
+
+                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+                            <div class="col-lg-12 col-md-12">
+
+                                <div class="checkboxes in-row margin-top-0">
+
+                                    <input id="check-a" type="checkbox" name="check">
+                                    <label for="check-a">Borges</label>
+
+                                    <input id="check-b" type="checkbox" name="check">
+                                    <label for="check-b">Firulai</label>
+
+                                </div>
+                            </div>
+
                         </div>
-                        <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-                        <div class="col-lg-6 col-md-12">
-
-                            <input type="text" v-model="fechaReservaHasta"
-                                   style="text-align: center; font-size: 16px; font-weight: 600"
-                                   data-format=" d/m/Y" id="booking-date2" data-lang="es"
-                                   data-init-set="false"
-                                   data-large-mode="true" data-large-default="true" data-min-year="2017"
-                                   data-max-year="2020" data-lock="from">
-                        </div>
-
 
                     </div>
+                    <!-- Book Now / End -->
+
+                </div>
+                <!--mensaje-->
+                <div class="col-lg-6 col-md-12 col-lg-offset-3">
+
+                    <!-- Book Now -->
+                    <div class="boxed-widget">
+                        <h3><i class="fa  fa-pencil-square-o "></i> Mensaje </h3>
+                        <div class="row with-forms  margin-top-0">
+
+                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+                            <div class="col-lg-12 col-md-12">
+                                <textarea name="summary" spellcheck="true"></textarea>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- Book Now / End -->
+
+                </div>
+
+
+                <div class="col-lg-6 col-lg-offset-3 padding-bottom-30">
                     <!-- progress button animation handled via custom.js -->
-                    <button class="progress-button button fullwidth margin-top-5"><span>Reservá ahora </span>
+                    <button class="progress-button button fullwidth margin-top-5">
+                        <span>Confirmar Solicitud de Reserva</span>
                     </button>
                 </div>
-                <!-- Book Now / End -->
 
-
-            </div>
-            <!-- Sidebar / End -->
-
-        </div>
-    </div>
-
-
-    <!-- Footer
-    ================================================== -->
-    <div id="footer" class="margin-top-15">
-        <!-- Main -->
-        <div class="container">
-            <div class="row">
-                <div class="col-md-5 col-sm-6">
-                    <img class="footer-logo" src="/assets/images/logo.png" alt="">
-                    <br><br>
-                    <p> Olvidate de la perrera! Pupi es el principal servicio en línea que conecta a los dueños de
-                        mascotas con más de 20,000 cuidadores de confianza en toda Argentina, haciendo que tu y tu
-                        amigo peludo tengan toda la tranquilidad que merecen.</p>
-                </div>
-
-                <div class="col-md-4 col-sm-6 ">
-                    <h4>Helpful Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Login</a></li>
-                        <li><a href="#">Hazte Cuidador</a></li>
-                        <li><a href="#">Mi Cuenta</a></li>
-                        <li><a href="#">Terminos y condiciones de uso </a></li>
-                    </ul>
-
-                    <div class="clearfix"></div>
-                </div>
-
-                <div class="col-md-3  col-sm-12">
-                    <h4>Contactanos</h4>
-                    <div class="text-widget">
-                        <span>12345 evasio garrone</span> <br>
-                        Phone: <span>(351) 123-456 </span><br>
-                        E-Mail:<span> <a href="#">pupi@gmail.com</a> </span><br>
-                    </div>
-
-                    <ul class="social-icons margin-top-20">
-                        <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-                        <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
-                        <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
-                        <li><a class="vimeo" href="#"><i class="icon-vimeo"></i></a></li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <!-- Copyright -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="copyrights">© 2017 pupi. Todos los derechos reservados.</div>
-                </div>
             </div>
 
         </div>
-
+        <!-- Wrapper / End -->
     </div>
-    <!-- Footer / End -->
-
-
-    <!-- Back To Top Button -->
-    <div id="backtotop"><a href="#"></a></div>
-
-
-    <!-- Wrapper / End -->
 </div>
 
 <!-- Scripts
@@ -448,6 +232,7 @@
 <script src="/js/vue.js"></script>
 <link rel="stylesheet" href="/css/sweetalert.css"/>
 <script src="/js/sweetalert.min.js"></script>
+<script type="text/javascript" src="/views/security/js/login.js"></script>
 <script src="js/reserva.js"></script>
 
 
