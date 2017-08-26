@@ -7,7 +7,7 @@ package app.controllers;
 
 import app.exception.EmailExistsException;
 import app.exception.PasswordDoesNotMatchException;
-import app.models.entities.Owner;
+import app.models.entities.User;
 import app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +20,8 @@ import java.security.Principal;
 
 
 @RestController
-@RequestMapping(value = "/api/owner/")
-public class OwnerController {
+@RequestMapping(value = "/api/user/")
+public class UserController {
 
 
     @Autowired
@@ -43,19 +43,19 @@ public class OwnerController {
      * http://www.baeldung.com/spring-security-registration-password-encoding-bcrypt
      */
     @RequestMapping(method = RequestMethod.POST, value = "/registration")
-    public ResponseEntity registerUserAccount(@RequestBody @Valid Owner owner) throws EmailExistsException, PasswordDoesNotMatchException {
-        userService.registerNewUserAccount(owner);
+    public ResponseEntity registerUserAccount(@RequestBody @Valid User user) throws EmailExistsException, PasswordDoesNotMatchException {
+        userService.registerNewUserAccount(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Owner getUser(@PathVariable("id") Long id) throws Exception {
-        Owner owner = userService.getUser(id);
-        return owner;
+    public User getUser(@PathVariable("id") Long id) throws Exception {
+        User user = userService.getUser(id);
+        return user;
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public Owner editUser(@PathVariable("id") Long id, @RequestBody Owner entity) throws Exception {
+    public User editUser(@PathVariable("id") Long id, @RequestBody User entity) throws Exception {
         entity.setId(id);
         return userService.editUser(entity);
     }

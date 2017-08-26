@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 
 @Entity
-public class Owner implements Serializable{
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +21,11 @@ public class Owner implements Serializable{
     @Email
     @Column(nullable = false, unique = true)
     private String email;
+
+    @NotNull
+    @NotEmpty
+    @Column(nullable = false, unique = true)
+    private String username;
 
     @NotNull
     @NotEmpty
@@ -49,7 +54,7 @@ public class Owner implements Serializable{
     @ManyToOne
     private Direccion direccion;
 
-    public Owner() {
+    public User() {
     }
 
 
@@ -145,5 +150,13 @@ public class Owner implements Serializable{
 
     public boolean passwordMatchingValidation() {
         return this.password.equals(this.matchingPassword);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

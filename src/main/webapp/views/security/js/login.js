@@ -1,9 +1,9 @@
 function getDefaultData() {
     return {
-        meUrl: "/api/owner/me",
+        meUrl: "/api/user/me",
         entryUrl: "/login",
         exitUrl: "/logout",
-        registrationUrl: "/api/owner/registration",
+        registrationUrl: "/api/user/registration",
         credentials: {
             username: '', //email (porque el endpoint de spring security es asi)
             password: ''
@@ -182,7 +182,7 @@ Vue.component('my-login', {
             axios.get(this.meUrl)
                 .then((response) => {
                     console.log(response.data);
-                    this.user = response.data.principal.owner;
+                    this.user = response.data.principal.user;
                     this.isAuthenticated = true;
                     var magnificPopup = $.magnificPopup.instance;
                     // save instance in magnificPopup variable

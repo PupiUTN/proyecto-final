@@ -1,6 +1,6 @@
 package app.security;
 
-import app.models.entities.Owner;
+import app.models.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,26 +9,26 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class MyUserPrincipal implements UserDetails {
-    private Owner owner;
+    private User user;
 
-    public MyUserPrincipal(Owner owner) {
-        this.owner = owner;
+    public MyUserPrincipal(User user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(owner.getRole()));
+        authorities.add(new SimpleGrantedAuthority(user.getRole()));
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return owner.getPassword();
+        return user.getPassword();
     }
 
     @Override
-    public String getUsername() {return owner.getEmail();}
+    public String getUsername() {return user.getEmail();}
 
     @Override
     public boolean isAccountNonExpired() {
@@ -50,11 +50,11 @@ public class MyUserPrincipal implements UserDetails {
         return true;
     }
 
-    public Owner getOwner() {
-        return owner;
+    public User getUser() {
+        return user;
     }
 
-    public void setOwner(Owner owner) {
-        this.owner = owner;
+    public void setUser(User user) {
+        this.user = user;
     }
 }
