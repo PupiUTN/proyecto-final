@@ -15,16 +15,17 @@ public class Cuidador implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nombre;
-    private String email;
-    private long telefono;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Direccion direccion;
     private int cantidadMaxDePerros;
-    @OneToMany(cascade = CascadeType.ALL) // guarda las imagen
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Imagen> listaImagenes;
     private String descripcion;
-    private  float precio;
+    private float precioPorNoche;
+    @OneToOne(cascade = CascadeType.ALL)
+    private User user;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Servicio> listaServicios;
+
 
     public Cuidador() {
     }
@@ -37,37 +38,6 @@ public class Cuidador implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public long getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(long telefono) {
-        this.telefono = telefono;
-    }
-
-    public Direccion getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
-    }
 
     public int getCantidadMaxDePerros() {
         return cantidadMaxDePerros;
@@ -93,33 +63,39 @@ public class Cuidador implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public float getPrecio() {
-        return precio;
+    public float getPrecioPorNoche() {
+        return precioPorNoche;
     }
 
-    public void SetPrecio(float precio) { this.precio = precio;}
-
-
-
-
-    @Override
-    public String toString() {
-        return "Cuidador{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", email='" + email + '\'' +
-                ", telefono=" + telefono +
-                ", direccion=" + direccion +
-                ", cantidadMaxDePerros=" + cantidadMaxDePerros +
-                ", listaImagenes=" + listaImagenes +
-                '}';
+    public void SetPrecio(float precio) {
+        this.precioPorNoche = precio;
     }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setPrecioPorNoche(float precioPorNoche) {
+        this.precioPorNoche = precioPorNoche;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 
     @Override
     public boolean equals(Object o) {
         Cuidador oCuidador = (Cuidador) o;
-        if (this.nombre != oCuidador.nombre) return false;
-        if (this.telefono != oCuidador.telefono) return false;
+        if (this.id != oCuidador.id) return false;
         return true;
     }
 }

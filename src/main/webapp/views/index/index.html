@@ -19,10 +19,10 @@
 
 </head>
 
-<body>
+<body >
 
 <!-- Wrapper -->
-<div id="wrapper">
+<div id="appVue">
 
 
         <!-- Header Container
@@ -38,7 +38,7 @@
 
                         <!-- Logo -->
                         <div id="logo">
-                            <a href="/views/index/index.html"><img src="/assets/images/logo.png" alt=""></a>
+                            <a href="index.html"><img src="/assets/images/logo.png" alt=""></a>
                         </div>
 
                         <div class="clearfix"></div>
@@ -49,124 +49,25 @@
 
 
                     <!-- Right Side Content / End -->
-                    <div class="right-side">
-                        <div class="header-widget">
-                            <a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i>
-                                Inicia Sesión</a>
-                        </div>
-                    </div>
-                    <!-- Right Side Content / End -->
-
-                    <!-- Sign In Popup -->
-                    <div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
-
-                        <div class="small-dialog-header">
-                            <h3>Sign In</h3>
-                        </div>
-
-                        <!--Tabs -->
-                        <div class="sign-in-form style-1">
-
-                            <ul class="tabs-nav">
-                                <li class=""><a href="#tab1">Log In</a></li>
-                                <li><a href="#tab2">Register</a></li>
-                            </ul>
-
-                            <div class="tabs-container alt">
-
-                                <!-- Login -->
-                                <div class="tab-content" id="tab1" style="display: none;">
-                                    <form method="post" class="login">
-
-                                        <p class="form-row form-row-wide">
-                                            <label for="username">Username:
-                                                <i class="im im-icon-Male"></i>
-                                                <input type="text" class="input-text" name="username" id="username"
-                                                       value=""/>
-                                            </label>
-                                        </p>
-
-                                        <p class="form-row form-row-wide">
-                                            <label for="password">Password:
-                                                <i class="im im-icon-Lock-2"></i>
-                                                <input class="input-text" type="password" name="password" id="password"/>
-                                            </label>
-                                            <span class="lost_password">
-                                                <a href="#">Lost Your Password?</a>
-                                            </span>
-                                        </p>
-
-                                        <div class="form-row">
-                                            <input type="submit" class="button border margin-top-5" name="login"
-                                                   value="Login"/>
-                                            <div class="checkboxes margin-top-10">
-                                                <input id="remember-me" type="checkbox" name="check">
-                                                <label for="remember-me">Remember Me</label>
-                                            </div>
-                                        </div>
-
-                                    </form>
-                                </div>
-
-                                <!-- Register -->
-                                <div class="tab-content" id="tab2" style="display: none;">
-
-                                    <form method="post" class="register">
-
-                                        <p class="form-row form-row-wide">
-                                            <label for="username2">Username:
-                                                <i class="im im-icon-Male"></i>
-                                                <input type="text" class="input-text" name="username" id="username2"
-                                                       value=""/>
-                                            </label>
-                                        </p>
-
-                                        <p class="form-row form-row-wide">
-                                            <label for="email2">Email Address:
-                                                <i class="im im-icon-Mail"></i>
-                                                <input type="text" class="input-text" name="email" id="email2" value=""/>
-                                            </label>
-                                        </p>
-
-                                        <p class="form-row form-row-wide">
-                                            <label for="password1">Password:
-                                                <i class="im im-icon-Lock-2"></i>
-                                                <input class="input-text" type="password" name="password1" id="password1"/>
-                                            </label>
-                                        </p>
-
-                                        <p class="form-row form-row-wide">
-                                            <label for="password2">Repeat Password:
-                                                <i class="im im-icon-Lock-2"></i>
-                                                <input class="input-text" type="password" name="password2" id="password2"/>
-                                            </label>
-                                        </p>
-
-                                        <input type="submit" class="button border fw margin-top-10" name="register"
-                                               value="Register"/>
-
-                                    </form>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Sign In Popup / End -->
+                    <my-login></my-login>
 
                 </div>
-            </div>
-            <!-- Header / End -->
+                <!-- Right Side Content / End -->
 
-        </header>
+            </div>
+
+<!-- Header / End -->
+
+            </header>
         <div class="clearfix"></div>
         <!-- Header Container / End -->
 
 
         <!-- Banner /file_upload/8ac40210-e64c-40bb-90c5-9e5ad627c1fe.jpg
     ================================================== -->
-        <div class="main-search-container"    data-background-image="/img/perrofeliz.jpg">
-            <div class="main-search-inner" id="appVue">
 
+        <div class="main-search-container"    data-background-image="/img/perrofeliz.jpg">
+            <div class="main-search-inner" >
                 <div class="container" >
                     <div class="row">
                         <div class="col-md-12">
@@ -498,8 +399,8 @@
 <!-- Maps -->
 <script type="text/javascript"
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"></script>
+<script type="text/javascript" src="/views/security/js/login.js"></script>
 <script type="text/javascript" src="/views/index/js/index.js"></script>
-
 
 
 
