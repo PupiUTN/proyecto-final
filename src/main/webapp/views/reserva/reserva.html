@@ -48,7 +48,7 @@
                     <!-- Left Side Content / End -->
 
                     <!-- Right Side Content / End -->
-                    <my-login></my-login>
+                    <my-login v-on:is-authenticated="isAuthenticatedMethod" ref="mylogin"></my-login>
                     <!-- Right Side Content / End -->
 
 
@@ -75,7 +75,7 @@
                     <div id="titlebar" class="listing-titlebar padding-bottom-35 padding-top-35 padding-left-35">
                         <div class="listing-titlebar-title">
 
-                            <h2 id="nombre"> {{item.nombre}} <span class="listing-tag">Cuidador</span></h2>
+                            <h2 id="nombre"> {{cuidador.nombre}} <span class="listing-tag">Cuidador</span></h2>
 
                             <div class="card-image col s3 ">
 
@@ -87,11 +87,11 @@
 							<a href="#listing-location" class="listing-address">
 							<i class="fa fa-map-marker"></i>
 
-              				{{item.direccion.ciudad}}
+              				{{cuidador.direccion.ciudad}}
 						</a>
 						<br>
 							<i class="fa fa-paw"></i>
-							Cantidad maxima de perros: {{item.cantidadMaxDePerros}}
+							Cantidad maxima de perros: {{cuidador.cantidadMaxDePerros}}
 
 					</span>
                             <div class="star-rating" data-rating="5">
