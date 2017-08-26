@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-public class Owner {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,6 +20,11 @@ public class Owner {
     @Email
     @Column(nullable = false, unique = true)
     private String email;
+
+    @NotNull
+    @NotEmpty
+    @Column(nullable = false, unique = true)
+    private String username;
 
     @NotNull
     @NotEmpty
@@ -48,7 +53,7 @@ public class Owner {
     @OneToOne(cascade = CascadeType.ALL)
     private Direccion direccion;
 
-    public Owner() {
+    public User() {
     }
 
 
@@ -144,5 +149,13 @@ public class Owner {
 
     public boolean passwordMatchingValidation() {
         return this.password.equals(this.matchingPassword);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

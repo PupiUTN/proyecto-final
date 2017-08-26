@@ -21,7 +21,7 @@ public class Cuidador implements Serializable {
     private String descripcion;
     private float precioPorNoche;
     @OneToOne(cascade = CascadeType.ALL)
-    private Owner owner;
+    private User user;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Servicio> listaServicios;
@@ -83,12 +83,12 @@ public class Cuidador implements Serializable {
         this.precioPorNoche = precioPorNoche;
     }
 
-    public Owner getOwner() {
-        return owner;
+    public User getUser() {
+        return user;
     }
 
-    public void setOwner(Owner owner) {
-        this.owner = owner;
+    public void setUser(User user) {
+        this.user = user;
     }
 
 

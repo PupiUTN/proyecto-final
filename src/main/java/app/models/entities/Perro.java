@@ -18,7 +18,7 @@ public class Perro implements Serializable {
     private Long id;
     @NotNull
     @ManyToOne
-    private Owner owner;
+    private User user;
     @NotNull
     private String nombre;
     @ManyToOne
@@ -91,12 +91,12 @@ public class Perro implements Serializable {
         this.comentario = comentario;
     }
 
-    public Owner getOwner() {
-        return owner;
+    public User getUser() {
+        return user;
     }
 
-    public void setOwner(Owner owner) {
-        this.owner = owner;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
