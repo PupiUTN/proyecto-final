@@ -79,6 +79,7 @@ let vm = new Vue({
                             this.placeID = place.place_id;
                             this.placeLocation= place.geometry.location;
                             this.placeName= input.value;
+                            input.placeholder = place.name;
                     });
 
 
