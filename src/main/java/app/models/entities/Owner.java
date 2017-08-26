@@ -6,10 +6,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 
 @Entity
-public class Owner {
+public class Owner implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,7 +46,7 @@ public class Owner {
     private String phone;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Direccion direccion;
 
     public Owner() {
