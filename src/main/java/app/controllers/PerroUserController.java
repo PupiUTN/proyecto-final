@@ -22,7 +22,7 @@ public class PerroUserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void createPerro(@RequestBody Perro entity) throws Exception {
+    public void createPerro(@PathVariable("idUser") Long id,@RequestBody Perro entity) throws Exception {
         perroService.createPerro(entity);
     }
 
