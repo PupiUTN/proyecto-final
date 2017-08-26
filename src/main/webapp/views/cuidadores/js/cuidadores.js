@@ -10,6 +10,7 @@ let vm = new Vue({
         placeID:null,
         placeLocation:null,
         placeName:null,
+        location:'',
 
     },
     mounted() {
@@ -17,6 +18,8 @@ let vm = new Vue({
         this.initMap();
         this.initAutocomplete();
         this.getCuidadores();
+        this.geolocate();
+
     },
     methods: {
 
@@ -58,6 +61,29 @@ let vm = new Vue({
 
             });
 
+        },
+        geolocate() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var input = document.getElementById('location');
+                    var lat = position.coords.latitude;
+                    var long = position.coords.longitude;
+                    //https://developers.google.com/maps/documentation/geocoding/start
+                    $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true', function (data) {
+                        var cityStatCountry = data.results[1].formatted_address;
+                        this.location = cityStatCountry;
+                        var place = data.results[1];
+                        input.placeholder = 'Ciudad';
+                        let place = autocomplete.getPlace();
+                        if (place.geometry) {
+                            this.placeID = place.place_id;
+                            this.placeLocation= place.geometry.location;
+                            this.placeName= input.value;
+                    });
+
+
+                });
+            };
         },
         initMap() {
             var argentina = {lat: -37.0230271, lng: -64.6175935};
