@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 
 @Entity
@@ -50,7 +51,7 @@ public class User {
     private String phone;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Direccion direccion;
 
     public User() {

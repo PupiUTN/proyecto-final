@@ -3,90 +3,82 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="606.0" y="477.0">app.models.entities.Tamaño</node>
-    <node x="992.0" y="501.0">app.models.entities.Raza</node>
-    <node x="343.0" y="1021.0">app.models.entities.Reserva</node>
-    <node x="74.02272727272731" y="760.0">app.models.entities.Cuidador</node>
-    <node x="361.5" y="1294.0">app.models.entities.Calificacion</node>
-    <node x="562.5" y="748.0">app.models.entities.Perro</node>
-    <node x="0.0" y="501.0">app.models.entities.Servicio</node>
-    <node x="804.0" y="501.0">app.models.entities.Vacuna</node>
-    <node x="188.0" y="501.0">app.models.entities.Imagen</node>
-    <node x="352.0" y="0.0">app.models.entities.Direccion</node>
-    <node x="341.59433962264154" y="380.2452830188679">app.models.entities.Owner</node>
+    <node x="482.9630681818182" y="144.0">app.models.entities.Raza</node>
+    <node x="858.9630681818182" y="120.0">app.models.entities.Tamaño</node>
+    <node x="411.8068181818182" y="878.0">app.models.entities.Reserva</node>
+    <node x="1.5" y="509.0">app.models.entities.Cuidador</node>
+    <node x="430.3068181818182" y="1103.0">app.models.entities.Calificacion</node>
+    <node x="717.7130681818182" y="521.0">app.models.entities.Perro</node>
+    <node x="279.5" y="437.0">app.models.entities.User</node>
+    <node x="1056.9630681818182" y="144.0">app.models.entities.Dueño</node>
+    <node x="0.0" y="144.0">app.models.entities.Imagen</node>
+    <node x="670.9630681818182" y="144.0">app.models.entities.Vacuna</node>
+    <node x="232.7169811320755" y="-20.726415094339586">app.models.entities.Direccion</node>
   </nodes>
   <notes />
   <edges>
+    <edge source="app.models.entities.User" target="app.models.entities.Direccion">
+      <point x="-62.25" y="-195.5" />
+      <point x="341.75" y="417.0" />
+      <point x="376.25" y="417.0" />
+      <point x="27.75" y="183.5" />
+    </edge>
     <edge source="app.models.entities.Perro" target="app.models.entities.Raza">
-      <point x="106.0" y="-111.5" />
-      <point x="801.0" y="728.0" />
-      <point x="1076.0" y="728.0" />
-      <point x="0.0" y="39.5" />
+      <point x="-115.9375" y="-111.5" />
+      <point x="734.2755681818182" y="417.0" />
+      <point x="524.9630681818182" y="417.0" />
+      <point x="-42.0" y="39.5" />
     </edge>
     <edge source="app.models.entities.Perro" target="app.models.entities.Tamaño">
-      <point x="0.0" y="-111.5" />
-      <point x="0.0" y="63.5" />
-    </edge>
-    <edge source="app.models.entities.Cuidador" target="app.models.entities.Servicio">
-      <point x="-86.0" y="-99.5" />
-      <point x="117.02272727272731" y="728.0" />
-      <point x="84.0" y="728.0" />
-      <point x="0.0" y="39.5" />
-    </edge>
-    <edge source="app.models.entities.Perro" target="app.models.entities.Imagen">
-      <point x="-106.0" y="-111.5" />
-      <point x="589.0" y="718.0" />
-      <point x="287.0" y="718.0" />
-      <point x="33.0" y="39.5" />
-    </edge>
-    <edge source="app.models.entities.Owner" target="app.models.entities.Direccion">
-      <point x="0.0" y="-147.5" />
-      <point x="0.0" y="171.5" />
+      <point x="16.5625" y="-111.5" />
+      <point x="866.7755681818182" y="387.0" />
+      <point x="903.4630681818182" y="387.0" />
+      <point x="-44.5" y="63.5" />
     </edge>
     <edge source="app.models.entities.Calificacion" target="app.models.entities.Reserva">
-      <point x="0.0" y="-63.5" />
-      <point x="0.0" y="111.5" />
-    </edge>
-    <edge source="app.models.entities.Perro" target="app.models.entities.Owner">
-      <point x="-53.0" y="-111.5" />
-      <point x="642.0" y="708.0" />
-      <point x="524.5" y="708.0" />
-      <point x="61.5" y="147.5" />
+      <point x="-48.25" y="-63.5" />
+      <point x="478.5568181818182" y="1078.0" />
+      <point x="469.3068181818182" y="1078.0" />
+      <point x="-57.5" y="87.5" />
     </edge>
     <edge source="app.models.entities.Reserva" target="app.models.entities.Cuidador">
-      <point x="-57.5" y="-111.5" />
-      <point x="400.5" y="996.0" />
-      <point x="203.0227272727273" y="996.0" />
-      <point x="0.0" y="99.5" />
+      <point x="-86.25" y="-87.5" />
+      <point x="440.5568181818182" y="858.0" />
+      <point x="66.0" y="858.0" />
+      <point x="-64.5" y="123.5" />
     </edge>
     <edge source="app.models.entities.Reserva" target="app.models.entities.Perro">
-      <point x="57.5" y="-111.5" />
-      <point x="515.5" y="996.0" />
-      <point x="695.0" y="996.0" />
-      <point x="0.0" y="111.5" />
+      <point x="86.25" y="-87.5" />
+      <point x="613.0568181818182" y="858.0" />
+      <point x="916.4630681818182" y="858.0" />
+      <point x="66.25" y="111.5" />
     </edge>
     <edge source="app.models.entities.Cuidador" target="app.models.entities.Imagen">
-      <point x="0.0" y="-99.5" />
-      <point x="203.0227272727273" y="728.0" />
-      <point x="221.0" y="728.0" />
+      <point x="-96.75" y="-123.5" />
       <point x="-33.0" y="39.5" />
     </edge>
     <edge source="app.models.entities.Perro" target="app.models.entities.Vacuna">
-      <point x="53.0" y="-111.5" />
-      <point x="748.0" y="718.0" />
-      <point x="888.0" y="718.0" />
-      <point x="0.0" y="39.5" />
+      <point x="-49.6875" y="-111.5" />
+      <point x="800.5255681818182" y="397.0" />
+      <point x="712.9630681818182" y="397.0" />
+      <point x="-42.0" y="39.5" />
     </edge>
-    <edge source="app.models.entities.Cuidador" target="app.models.entities.Owner">
-      <point x="86.0" y="-99.5" />
-      <point x="289.0227272727273" y="728.0" />
-      <point x="401.5" y="728.0" />
-      <point x="-61.5" y="147.5" />
+    <edge source="app.models.entities.Perro" target="app.models.entities.Dueño">
+      <point x="82.8125" y="-111.5" />
+      <point x="933.0255681818182" y="407.0" />
+      <point x="1098.9630681818182" y="407.0" />
+      <point x="-42.0" y="39.5" />
+    </edge>
+    <edge source="app.models.entities.Cuidador" target="app.models.entities.Direccion">
+      <point x="32.25" y="-123.5" />
+      <point x="162.75" y="407.0" />
+      <point x="265.25" y="407.0" />
+      <point x="-83.25" y="183.5" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.6272189349112426" x="590.9669811320755" y="517.5801886792453" />
+  <settings layout="Hierarchic Group" zoom="0.6272189349112426" x="609.6367924528303" y="522.3443396226415" />
   <SelectedNodes>
-    <node>app.models.entities.Owner</node>
+    <node>app.models.entities.Direccion</node>
   </SelectedNodes>
   <Categories>
     <Category>Fields</Category>
