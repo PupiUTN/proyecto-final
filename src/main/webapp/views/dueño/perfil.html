@@ -125,13 +125,13 @@
                     <!-- Header Widget -->
                     <div class="header-widget">
 
-                        <!-- User Menu -->
-                        <div class="user-menu">
-                            <div class="user-name"><span><img :src="user.profileImageUrl" alt="">{{user.username}}</span></div>
+                        <!-- Owner Menu -->
+                        <div class="owner-menu">
+                            <div class="owner-name"><span><img :src="user.profileImageUrl" alt="">{{user.username}}</span></div>
                             <ul>
                                 <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
                                 <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>
-                                <li><a href="/views/dueño/perfil.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
+                                <li><a href="/views/dueño/perfil.html"><i class="sl sl-icon-owner"></i> My Profile</a></li>
                                 <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
                             </ul>
                         </div>
@@ -180,7 +180,7 @@
                 </ul>
 
                 <ul data-submenu-title="Account">
-                    <li class="active"><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
+                    <li class="active"><a href="dashboard-my-profile.html"><i class="sl sl-icon-owner"></i> My Profile</a></li>
                     <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
                 </ul>
 
@@ -220,7 +220,7 @@
                             <form id="imageForm" enctype="multipart/form-data">
                             <!-- Avatar -->
                             <div class="edit-profile-photo">
-                                <img :src="user.profileImageUrl" alt="">
+                                <img :src="owner.profileImageUrl" alt="">
                                 <div class="change-photo-btn">
                                     <div class="photoUpload">
                                         <span><i class="fa fa-upload"></i> Upload Photo</span>
@@ -234,17 +234,17 @@
                             <div class="my-profile">
 
                                 <label>Nombre y Apellido</label>
-                                <input v-model="user.fullName" value="" type="text">
+                                <input v-model="owner.fullName" value="" type="text">
 
                                 <label>Fecha de Nacimiento</label>
-                                <input v-model="user.birthday" type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to">
+                                <input v-model="owner.birthday" type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to">
                                 <!--<input type="text" id="booking-date-from" placeholder="Fecha Desde" data-lang="es"-->
                                        <!--data-init-set="false"-->
                                        <!--data-large-mode="true" data-large-default="true" data-min-year="2017"-->
                                        <!--data-max-year="2020" data-lock="from">-->
 
                                 <label>Genero</label>
-                                <select v-model="user.gender">
+                                <select v-model="owner.gender">
                                     <option disabled value="">Seleccionar Genero</option>
                                     <option>Masculino</option>
                                     <option>Femenino</option>
@@ -252,19 +252,19 @@
 
 
                                 <label>Telefono</label>
-                                <input v-model="user.phone" value="" type="text">
+                                <input v-model="owner.phone" value="" type="text">
 
                                 <label>Email</label>
-                                <input v-model="user.email" value="" type="text">
+                                <input v-model="owner.email" value="" type="text">
 
                                 <label><i class="fa fa-twitter"></i> Twitter</label>
-                                <input v-model="user.twitterAccount" placeholder="https://www.twitter.com/" type="text">
+                                <input v-model="owner.twitterAccount" placeholder="https://www.twitter.com/" type="text">
 
                                 <label><i class="fa fa-facebook-square"></i> Facebook</label>
-                                <input v-model="user.facebookAccount" placeholder="https://www.facebook.com/" type="text">
+                                <input v-model="owner.facebookAccount" placeholder="https://www.facebook.com/" type="text">
 
                                 <label><i class="fa fa-google-plus"></i> Google+</label>
-                                <input v-model="user.googlePlusAccount" placeholder="https://www.google.com/" type="text">
+                                <input v-model="owner.googlePlusAccount" placeholder="https://www.google.com/" type="text">
                             </div>
 
                             <button v-on:click='editUserInfo' class="button margin-top-15">Guardar Cambios</button>

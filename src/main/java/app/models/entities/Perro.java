@@ -6,6 +6,7 @@
 package app.models.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,22 +16,24 @@ public class Perro implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nombre;
-
+    @NotNull
     @ManyToOne
+    private User user;
+    @NotNull
+    private String nombre;
+    @ManyToOne
+    @NotNull
     private Raza raza;
     @ManyToOne
+    @NotNull
     private Tamaño tamaño;
-    @ManyToOne
-    private Dueño dueño;
-    @ManyToMany
+    @OneToMany
+    @NotNull
     private List<Vacuna> vacunacionList;
-    private String fotoRuta;
+    @NotNull
+    private Imagen fotoPerfil;
     private String comentario;
-    //para jpa, necesito constructor vacio y todos los setters y getters de cada atributo
 
-    public Perro() {
-    }
 
     public Long getId() {
         return id;
@@ -72,12 +75,12 @@ public class Perro implements Serializable {
         this.vacunacionList = vacunacionList;
     }
 
-    public String getFotoRuta() {
-        return fotoRuta;
+    public Imagen getFotoPerfil() {
+        return fotoPerfil;
     }
 
-    public void setFotoRuta(String fotoRuta) {
-        this.fotoRuta = fotoRuta;
+    public void setFotoPerfil(Imagen fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
 
     public String getComentario() {
@@ -88,19 +91,24 @@ public class Perro implements Serializable {
         this.comentario = comentario;
     }
 
-    public Dueño getDueño() {
-        return dueño;
+    public User getUser() {
+        return user;
     }
 
-    public void setDueño(Dueño dueño) {
-        this.dueño = dueño;
+    public void setUser(User user) {
+        this.user = user;
     }
-    
 
     @Override
     public String toString() {
-        return "Perro{" + "id=" + id + ", nombre=" + nombre + ", raza=" + raza + ", tamaño=" + tamaño + ", vacunacionList=" + vacunacionList + ", fotoRuta=" + fotoRuta + ", comentario=" + comentario + '}';
+        return "Perro{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", raza=" + raza +
+                ", tamaño=" + tamaño +
+                ", vacunacionList=" + vacunacionList +
+                ", fotoPerfil=" + fotoPerfil +
+                ", comentario='" + comentario + '\'' +
+                '}';
     }
-    
-
 }

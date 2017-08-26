@@ -1,5 +1,6 @@
 package app.services;
 
+import app.models.entities.User;
 import app.models.entities.Perro;
 import app.persistence.PerroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,9 @@ public class PerroService {
         perroRepository.save(entity);
     }
 
-    public List<Perro> getPerros() throws Exception {
-        return perroRepository.findAll();
+    public List<Perro> getPerrosByUserId(Long id) throws Exception {
+        User user = new User();
+        user.setId(id);
+        return perroRepository.findAllByUser(user);
     }
 }
