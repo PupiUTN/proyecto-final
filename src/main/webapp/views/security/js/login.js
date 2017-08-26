@@ -1,20 +1,19 @@
 function getDefaultData() {
     return {
-        meUrl: "/api/user/me",
+        meUrl: "/api/owner/me",
         entryUrl: "/login",
         exitUrl: "/logout",
-        registrationUrl: "/api/user/registration",
+        registrationUrl: "/api/owner/registration",
         credentials: {
-            username: '',
+            username: '', //email (porque el endpoint de spring security es asi)
             password: ''
         },
         isAuthenticated: null,
         user: {
             profileImageUrl: '/img/no-avatar.png',
-            username: '',
+            email: '',
             password: '',
             matchingPassword: '',
-            email: '',
         },
         isMounted: false
     }
@@ -31,7 +30,7 @@ Vue.component('my-login', {
             <!-- User Menu -->
             <div class="user-menu">
                 <div class="user-name"><span><img v-bind:src="user.profileImageUrl" alt=""></span>
-                    {{ user.username }}
+                    {{ user.email }}
                 </div>
                 <ul>
                     <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
@@ -83,11 +82,11 @@ Vue.component('my-login', {
                             <form class="login" v-on:submit.prevent='login()'>
 
                                 <p class="form-row form-row-wide">
-                                    <label for="username">Username:
+                                    <label for="email">Email:
                                         <i class="im im-icon-Male"></i>
                                         <input type="text" class="input-text"
                                                v-model="credentials.username"
-                                               id="username"
+                                               id="email"
                                                value="" required/>
                                     </label>
                                 </p>
@@ -124,14 +123,7 @@ Vue.component('my-login', {
 
                             <form class="register" v-on:submit.prevent='register()'>
 
-                                <p class="form-row form-row-wide">
-                                    <label for="username2">Username:
-                                        <i class="im im-icon-Male"></i>
-                                        <input type="text" class="input-text" v-model="user.username"
-                                               id="username2"
-                                               value="" required/>
-                                    </label>
-                                </p>
+                               
 
                                 <p class="form-row form-row-wide">
                                     <label for="email2">Email Address:
@@ -190,7 +182,7 @@ Vue.component('my-login', {
             axios.get(this.meUrl)
                 .then((response) => {
                     console.log(response.data);
-                    this.user = response.data.principal.user;
+                    this.user = response.data.principal.owner;
                     this.isAuthenticated = true;
                     var magnificPopup = $.magnificPopup.instance;
                     // save instance in magnificPopup variable

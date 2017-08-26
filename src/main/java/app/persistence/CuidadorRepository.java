@@ -1,7 +1,6 @@
 package app.persistence;
 
 import app.models.entities.Cuidador;
-import app.models.entities.Direccion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +12,7 @@ import java.util.List;
  */
 public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
 
-    @Query("select c from Cuidador c where c.direccion.ciudadPlaceId = :#{#ciudadPlaceId}")
+    @Query("select c from Cuidador c where c.owner.direccion.ciudadPlaceId = :#{#ciudadPlaceId}")
     List<Cuidador> findAllbyCiudadPlaceId (@Param("ciudadPlaceId")String ciudadPlaceId);
 
 }

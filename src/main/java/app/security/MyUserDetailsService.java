@@ -1,7 +1,7 @@
 package app.security;
 
-import app.models.entities.User;
-import app.persistence.UserRepository;
+import app.models.entities.Owner;
+import app.persistence.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,15 +12,15 @@ import org.springframework.stereotype.Service;
 public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private OwnerRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
 //        http://www.baeldung.com/spring-security-authentication-with-a-database
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
+        Owner owner = userRepository.findByEmail(username);
+        if (owner == null) {
             throw new UsernameNotFoundException(username);
         }
-        return new MyUserPrincipal(user);
+        return new MyUserPrincipal(owner);
     }
 }
