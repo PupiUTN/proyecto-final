@@ -6,6 +6,8 @@ let vm= new Vue({
         placeLocation:null,
         placeName:null,
         location:'',
+        fechaReservaDesde: '',
+        fechaReservaHasta:'',
 
     },
     mounted(){
@@ -71,6 +73,8 @@ let vm= new Vue({
         buscar() {
             if (this.placeID != null) {
                 console.log(this.placeID);
+                console.log(this.fechaReservaDesde);
+                console.log(this.fechaReservaHasta);
                 window.location="/views/cuidadores/lista-cuidadores.html?placeName="+this.placeName+
                 "&placeID="+this.placeID+
                 "&lat="+this.placeLocation.lat()+
