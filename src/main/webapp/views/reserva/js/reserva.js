@@ -66,8 +66,8 @@ let vm = new Vue({
 
 
         },
-        getPerros(ownerId) {
-            axios.get("/api/owner"+ownerId+"/perros")
+        getPerros(userId) {
+            axios.get("/api/user"+userId+"/perros")
                 .then((response) => {
                     this.cuidador = response.data;
                     $('#spinner').toggle();

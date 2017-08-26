@@ -28,7 +28,7 @@ public class PerroOwnerController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Perro> getPerros(@PathVariable("idOwner") Long id) throws Exception {
-        return perroService.getPerrosByOwnerId(id);
+        return perroService.getPerrosByUserId(id);
     }
 
 }
