@@ -74,17 +74,15 @@ let vm = new Vue({
                         this.location = cityStatCountry;
                         var place = data.results[1];
                         input.placeholder = 'Ciudad';
-                        let place = autocomplete.getPlace();
                         if (place.geometry) {
                             this.placeID = place.place_id;
-                            this.placeLocation= place.geometry.location;
-                            this.placeName= input.value;
+                            this.placeLocation = place.geometry.location;
+                            this.placeName = input.value;
                             input.placeholder = place.name;
+                        }
                     });
-
-
                 });
-            };
+            }
         },
         initMap() {
             var argentina = {lat: -37.0230271, lng: -64.6175935};
