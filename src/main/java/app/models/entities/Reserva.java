@@ -6,6 +6,7 @@
 package app.models.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,19 +18,30 @@ public class Reserva implements Serializable {
     private Long id;
 
     @Temporal(TemporalType.DATE)
+    @NotNull
     private Date fechaTransaccion;
     @ManyToOne
+    @NotNull
     private Cuidador cuidador;
     @ManyToOne
+    @NotNull
     private Perro perro;
 
     @Temporal(TemporalType.DATE)
+    @NotNull
     private Date fechaInicio;
 
     @Temporal(TemporalType.DATE)
+    @NotNull
     private Date fechaFin;
 
-    //para jpa, necesito constructor vacio y todos los stegest y getters de cada atributo
+    @NotNull
+    private float precioTotal;
+
+    @NotNull
+    private int status;
+
+
     public Reserva() {
     }
 
@@ -57,7 +69,6 @@ public class Reserva implements Serializable {
         this.cuidador = cuidador;
     }
 
-    
 
     public Perro getPerro() {
         return perro;
@@ -82,6 +93,20 @@ public class Reserva implements Serializable {
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
-    
-    
+
+    public float getPrecioTotal() {
+        return precioTotal;
+    }
+
+    public void setPrecioTotal(float precioTotal) {
+        this.precioTotal = precioTotal;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 }

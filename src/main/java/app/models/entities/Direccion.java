@@ -6,6 +6,7 @@
 package app.models.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -13,19 +14,30 @@ public class Direccion implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     private Long id;
+    @NotNull
     private String direccionLinea1; // Evasio Garrone 7018, Córdoba, Argentina (Autocompletar de google)
     private String direccionLinea2; // Apartamento, unidad, edificio, piso, etc.
+    @NotNull
     private Integer numero; // 7018
+    @NotNull
     private String calle; // Evasio Garrone
+    @NotNull
     private String ciudad; // Córdoba
+    @NotNull
     private String ciudadPlaceId; // ChIJaVuPR1-YMpQRkrBmU5pPorA <-- Busqueda
-    private String departamento; // Capital
+    @NotNull
     private String provincia; // Cordoba
+    @NotNull
     private String placeId; // ChIJrz5WfeKeMpQR7ONDwyCZifY
+    @NotNull
     private Double latitud; // -31.388186
+    @NotNull
     private Double longitud;// -64.275706
+    @NotNull
     private String codigoPostal;
+    @NotNull
     private String pais;
 
     /**
@@ -90,14 +102,6 @@ public class Direccion implements Serializable {
 
     public void setCiudadPlaceId(String ciudadPlaceId) {
         this.ciudadPlaceId = ciudadPlaceId;
-    }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
     }
 
     public String getProvincia() {

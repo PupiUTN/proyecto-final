@@ -3,8 +3,8 @@ package app.services;
 
 import app.exception.EmailExistsException;
 import app.exception.PasswordDoesNotMatchException;
-import app.models.entities.User;
-import app.persistence.UserRepository;
+import app.models.entities.Owner;
+import app.persistence.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,41 +13,41 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService{
     @Autowired
-    private UserRepository repository;
+    private OwnerRepository repository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Transactional
-    public User registerNewUserAccount(User user)
+    public Owner registerNewUserAccount(Owner owner)
             throws EmailExistsException, PasswordDoesNotMatchException {
 
-        if (!user.passwordMatchingValidation()) {
+        if (!owner.passwordMatchingValidation()) {
             throw new PasswordDoesNotMatchException(
                     "Password does not match");
         }
-        if (emailExist(user.getEmail())) {
+        if (emailExist(owner.getEmail())) {
             throw new EmailExistsException(
-                    "There is an account with that email address:"  + user.getEmail());
+                    "There is an account with that email address:"  + owner.getEmail());
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("ROLE_USER");
-        return repository.save(user);
+        owner.setPassword(passwordEncoder.encode(owner.getPassword()));
+        owner.setRole("ROLE_USER");
+        return repository.save(owner);
     }
 
     private boolean emailExist(String email) {
-        User user = repository.findByEmail(email);
-        if (user != null) {
+        Owner owner = repository.findByEmail(email);
+        if (owner != null) {
             return true;
         }
         return false;
     }
 
-    public User getUser(Long id) throws Exception {
+    public Owner getUser(Long id) throws Exception {
         return repository.findOne(id);
     }
 
-    public User editUser(User entity) throws Exception {
+    public Owner editUser(Owner entity) throws Exception {
         return repository.save(entity);
     }
 }

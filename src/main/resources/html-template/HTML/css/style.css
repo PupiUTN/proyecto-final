@@ -17,7 +17,7 @@
 		# Sticky Header
 		# Back to top
 		# Navigation
-		# User Menu
+		# Owner Menu
 		# jPanel mobile menu
 		# Main Search Container
 		# Range Slider
@@ -50,7 +50,7 @@
 		# Social Icons
 		# Custom Checkboxes
 
-	04. Dashboard ........................... User panel styles
+	04. Dashboard ........................... Owner panel styles
 		# Dashboard Navigation
 		# Dashboard Titlebar
 		# Dashboard Stats Boxes
@@ -707,7 +707,7 @@ body #navigation ul ul {
 
 
 /* ---------------------------------- */
-/* User Menu
+/* Owner Menu
 ------------------------------------- */
 .user-menu {
 	position: relative;
