@@ -38,7 +38,7 @@
 
                         <!-- Logo -->
                         <div id="logo">
-                            <a href="index.html"><img src="/assets/images/logo.png" alt=""></a>
+                            <a href="/views/index/index.html"><img src="/assets/images/logo.png" alt=""></a>
                         </div>
 
                         <div class="clearfix"></div>
@@ -171,7 +171,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h2> Tú mascota es nuestra mascota</h2>
-                            <h4>Porque tu mejor amigo no merece estar solo en casa</h4>
+                            <h4>Porque tú mejor amigo no merece estar solo en casa</h4>
 
                             <div class="main-search-input" >
 
@@ -184,13 +184,13 @@
                                 </div>
 
                                 <div class="main-search-input-item">
-                                    <input type="text" id="booking-date-from" placeholder="Fecha Desde" data-lang="es"
+                                    <input type="text" id="booking-date-from" v-model="fechaReservaDesde"  placeholder="Fecha Desde" data-lang="es"
                                            data-init-set="false"
                                            data-large-mode="true" data-large-default="true" data-min-year="2017"
                                            data-max-year="2020" data-lock="from">
                                 </div>
                                 <div class="main-search-input-item">
-                                    <input type="text" id="booking-date-to" placeholder="Fecha Hasta" data-lang="es"
+                                    <input type="text" id="booking-date-to" v-model="fechaReservaHasta" placeholder="Fecha Hasta" data-lang="es"
                                            data-init-set="false"
                                            data-large-mode="true" data-large-default="true" data-min-year="2017"
                                            data-max-year="2020" data-lock="from">
@@ -256,94 +256,94 @@
     </div>
     <!-- Info Section / End -->
         <!-- Categories Carousel -->
-        <div class="fullwidth-carousel-container margin-top-25">
-            <div class="fullwidth-slick-carousel category-carousel">
+        <!--<div class="fullwidth-carousel-container margin-top-25">-->
+            <!--<div class="fullwidth-slick-carousel category-carousel">-->
 
-                <!-- Item -->
-                <div class="fw-carousel-item">
+                <!--&lt;!&ndash; Item &ndash;&gt;-->
+                <!--<div class="fw-carousel-item">-->
 
-                    <!-- this (first) box will be hidden under 1680px resolution -->
-                    <div class="category-box-container half">
-                        <a href="listings-half-screen-map-grid-1.html" class="category-box"
-                           data-background-image="/assets/images/category-box-01.jpg">
-                            <div class="category-box-content">
-                                <h3>Hotels</h3>
-                                <span>64 listings</span>
-                            </div>
-                            <span class="category-box-btn">Browse</span>
-                        </a>
-                    </div>
+                    <!--&lt;!&ndash; this (first) box will be hidden under 1680px resolution &ndash;&gt;-->
+                    <!--<div class="category-box-container half">-->
+                        <!--<a href="listings-half-screen-map-grid-1.html" class="category-box"-->
+                           <!--data-background-image="/assets/images/category-box-01.jpg">-->
+                            <!--<div class="category-box-content">-->
+                                <!--<h3>Hotels</h3>-->
+                                <!--<span>64 listings</span>-->
+                            <!--</div>-->
+                            <!--<span class="category-box-btn">Browse</span>-->
+                        <!--</a>-->
+                    <!--</div>-->
 
-                    <div class="category-box-container half">
-                        <a href="listings-half-screen-map-grid-1.html" class="category-box"
-                           data-background-image="/assets/images/category-box-02.jpg">
-                            <div class="category-box-content">
-                                <h3>Shops</h3>
-                                <span>14 listings</span>
-                            </div>
-                            <span class="category-box-btn">Browse</span>
-                        </a>
-                    </div>
-                </div>
+                    <!--<div class="category-box-container half">-->
+                        <!--<a href="listings-half-screen-map-grid-1.html" class="category-box"-->
+                           <!--data-background-image="/assets/images/category-box-02.jpg">-->
+                            <!--<div class="category-box-content">-->
+                                <!--<h3>Shops</h3>-->
+                                <!--<span>14 listings</span>-->
+                            <!--</div>-->
+                            <!--<span class="category-box-btn">Browse</span>-->
+                        <!--</a>-->
+                    <!--</div>-->
+                <!--</div>-->
 
-                <!-- Item -->
-                <div class="fw-carousel-item">
-                    <div class="category-box-container">
-                        <a href="listings-half-screen-map-grid-1.html" class="category-box"
-                           data-background-image="/assets/images/category-box-03.jpg">
-                            <div class="category-box-content">
-                                <h3>Events</h3>
-                                <span>67 listings</span>
-                            </div>
-                            <span class="category-box-btn">Browse</span>
-                        </a>
-                    </div>
-                </div>
+                <!--&lt;!&ndash; Item &ndash;&gt;-->
+                <!--<div class="fw-carousel-item">-->
+                    <!--<div class="category-box-container">-->
+                        <!--<a href="listings-half-screen-map-grid-1.html" class="category-box"-->
+                           <!--data-background-image="/assets/images/category-box-03.jpg">-->
+                            <!--<div class="category-box-content">-->
+                                <!--<h3>Events</h3>-->
+                                <!--<span>67 listings</span>-->
+                            <!--</div>-->
+                            <!--<span class="category-box-btn">Browse</span>-->
+                        <!--</a>-->
+                    <!--</div>-->
+                <!--</div>-->
 
-                <!-- Item -->
-                <div class="fw-carousel-item">
-                    <div class="category-box-container">
-                        <a href="listings-half-screen-map-grid-1.html" class="category-box"
-                           data-background-image="/assets/images/category-box-04.jpg">
-                            <div class="category-box-content">
-                                <h3>Fitness</h3>
-                                <span>27 listings</span>
-                            </div>
-                            <span class="category-box-btn">Browse</span>
-                        </a>
-                    </div>
-                </div>
+                <!--&lt;!&ndash; Item &ndash;&gt;-->
+                <!--<div class="fw-carousel-item">-->
+                    <!--<div class="category-box-container">-->
+                        <!--<a href="listings-half-screen-map-grid-1.html" class="category-box"-->
+                           <!--data-background-image="/assets/images/category-box-04.jpg">-->
+                            <!--<div class="category-box-content">-->
+                                <!--<h3>Fitness</h3>-->
+                                <!--<span>27 listings</span>-->
+                            <!--</div>-->
+                            <!--<span class="category-box-btn">Browse</span>-->
+                        <!--</a>-->
+                    <!--</div>-->
+                <!--</div>-->
 
-                <!-- Item -->
-                <div class="fw-carousel-item">
-                    <div class="category-box-container">
-                        <a href="listings-half-screen-map-list.html" class="category-box"
-                           data-background-image="/assets/images/category-box-05.jpg">
-                            <div class="category-box-content">
-                                <h3>Nightlife</h3>
-                                <span>22 listings</span>
-                            </div>
-                            <span class="category-box-btn">Browse</span>
-                        </a>
-                    </div>
-                </div>
+                <!--&lt;!&ndash; Item &ndash;&gt;-->
+                <!--<div class="fw-carousel-item">-->
+                    <!--<div class="category-box-container">-->
+                        <!--<a href="listings-half-screen-map-list.html" class="category-box"-->
+                           <!--data-background-image="/assets/images/category-box-05.jpg">-->
+                            <!--<div class="category-box-content">-->
+                                <!--<h3>Nightlife</h3>-->
+                                <!--<span>22 listings</span>-->
+                            <!--</div>-->
+                            <!--<span class="category-box-btn">Browse</span>-->
+                        <!--</a>-->
+                    <!--</div>-->
+                <!--</div>-->
 
-                <!-- Item -->
-                <div class="fw-carousel-item">
-                    <div class="category-box-container">
-                        <a href="listings-half-screen-map-list.html" class="category-box"
-                           data-background-image="/assets/images/category-box-06.jpg">
-                            <div class="category-box-content">
-                                <h3>Eat & Drink</h3>
-                                <span>130 listings</span>
-                            </div>
-                            <span class="category-box-btn">Browse</span>
-                        </a>
-                    </div>
-                </div>
+                <!--&lt;!&ndash; Item &ndash;&gt;-->
+                <!--<div class="fw-carousel-item">-->
+                    <!--<div class="category-box-container">-->
+                        <!--<a href="listings-half-screen-map-list.html" class="category-box"-->
+                           <!--data-background-image="/assets/images/category-box-06.jpg">-->
+                            <!--<div class="category-box-content">-->
+                                <!--<h3>Eat & Drink</h3>-->
+                                <!--<span>130 listings</span>-->
+                            <!--</div>-->
+                            <!--<span class="category-box-btn">Browse</span>-->
+                        <!--</a>-->
+                    <!--</div>-->
+                <!--</div>-->
 
-            </div>
-        </div>
+            <!--</div>-->
+        <!--</div>-->
         <!-- Categories Carousel / End -->
 
 
@@ -365,9 +365,9 @@
 
                             <!-- Listing Item -->
                             <div class="carousel-item">
-                                <a href="listings-single-page.html" class="listing-item-container">
+                                <a href="/views/index/AcercaDePupi.html" class="listing-item-container">
                                     <div class="listing-item">
-                                        <img src="/img/background11.jpg" alt="">
+                                        <img  src="/img/background11.jpg" alt="">
 
 
 
@@ -415,7 +415,7 @@
                                         </div>
                                         <div class="listing-item-content">
 
-                                            <h3  class='zoomIt' style="line-height: 200px; margin-left: 80px;" >Puto el que lee</h3>
+                                            <h3  class='zoomIt' style="line-height: 200px; margin-left: 160px;" >Pupi</h3>
 
                                         </div>
 
@@ -426,66 +426,10 @@
                             <!-- Listing Item / End -->
 
                             <!-- Listing Item -->
-                            <div class="carousel-item">
-                                <a href="listings-single-page.html" class="listing-item-container">
-                                    <div class="listing-item">
-                                        <img src="/assets/images/listing-item-04.jpg" alt="">
 
-                                        <div class="listing-badge now-open">Now Open</div>
-
-                                        <div class="listing-item-content">
-                                            <span class="tag">Eat & Drink</span>
-                                            <h3>Burger House</h3>
-                                            <span>2726 Shinn Street, New York</span>
-                                        </div>
-                                        <span class="like-icon"></span>
-                                    </div>
-                                    <div class="star-rating" data-rating="5.0">
-                                        <div class="rating-counter">(31 reviews)</div>
-                                    </div>
-                                </a>
-                            </div>
                             <!-- Listing Item / End -->
 
-                            <!-- Listing Item -->
-                            <div class="carousel-item">
-                                <a href="listings-single-page.html" class="listing-item-container">
-                                    <div class="listing-item">
-                                        <img src="/assets/images/listing-item-05.jpg" alt="">
-                                        <div class="listing-item-content">
-                                            <span class="tag">Other</span>
-                                            <h3>Airport</h3>
-                                            <span>1512 Duncan Avenue, New York</span>
-                                        </div>
-                                        <span class="like-icon"></span>
-                                    </div>
-                                    <div class="star-rating" data-rating="3.5">
-                                        <div class="rating-counter">(46 reviews)</div>
-                                    </div>
-                                </a>
-                            </div>
-                            <!-- Listing Item / End -->
 
-                            <!-- Listing Item -->
-                            <div class="carousel-item">
-                                <a href="listings-single-page.html" class="listing-item-container">
-                                    <div class="listing-item">
-                                        <img src="/assets/images/listing-item-06.jpg" alt="">
-
-                                        <div class="listing-badge now-closed">Now Closed</div>
-
-                                        <div class="listing-item-content">
-                                            <span class="tag">Eat & Drink</span>
-                                            <h3>Think Coffee</h3>
-                                            <span>215 Terry Lane, New York</span>
-                                        </div>
-                                        <span class="like-icon"></span>
-                                    </div>
-                                    <div class="star-rating" data-rating="4.5">
-                                        <div class="rating-counter">(15 reviews)</div>
-                                    </div>
-                                </a>
-                            </div>
                             <!-- Listing Item / End -->
                         </div>
 
