@@ -8,7 +8,7 @@ function getDefaultData() {
             username: '', //email (porque el endpoint de spring security es asi)
             password: ''
         },
-        isAuthenticated: false,
+        isAuthenticated: null,
         user: {
             profileImageUrl: '/img/no-avatar.png',
             email: '',
@@ -191,6 +191,8 @@ Vue.component('my-login', {
                 })
                 .catch(error => {
                         if (error.response.status == 401) {
+                            this.isAuthenticated = false;
+
                             console.log("usuario no logeado");
 
                         } else {
@@ -199,6 +201,8 @@ Vue.component('my-login', {
 
                     }
                 );
+
+
         },
         login() {
             axios.post(this.entryUrl, jQuery.param(this.credentials))
@@ -240,6 +244,17 @@ Vue.component('my-login', {
         },
         resetVueJsData() {
             Object.assign(this.$data, getDefaultData())
+        },
+        openLoginPopUp() {
+            var magnificPopup = $.magnificPopup.instance;
+            // save instance in magnificPopup variable
+            magnificPopup.open({
+                items: {
+                    src: '#sign-in-dialog',
+                },
+                type: 'inline',
+                modal: true
+            });
         }
     },
     computed: {
@@ -254,5 +269,11 @@ Vue.component('my-login', {
             confirm_password.setCustomValidity("");
             return false;
         }
+    },
+    watch: {
+        'isAuthenticated': function () {
+            this.$emit('is-authenticated', this.isAuthenticated);
+        }
     }
 });
+

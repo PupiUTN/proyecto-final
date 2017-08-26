@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
 
-    @Query("select c from Cuidador c where c.owner.direccion.ciudadPlaceId = :#{#ciudadPlaceId}")
+    @Query("select c from Cuidador c where c.user.direccion.ciudadPlaceId = :#{#ciudadPlaceId}")
     List<Cuidador> findAllbyCiudadPlaceId (@Param("ciudadPlaceId")String ciudadPlaceId);
 
 }
