@@ -19,7 +19,7 @@ public class Tamaño implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
-    private char nombre;
+    private String nombre;
     @NotNull
     private int valorMinimo;
     @NotNull
@@ -37,11 +37,11 @@ public class Tamaño implements Serializable {
         this.id = id;
     }
 
-    public char getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(char nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
