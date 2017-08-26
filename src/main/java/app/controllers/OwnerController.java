@@ -21,7 +21,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping(value = "/api/owner/")
-public class UserController {
+public class OwnerController {
 
 
     @Autowired
