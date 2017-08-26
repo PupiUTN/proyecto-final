@@ -13,21 +13,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/owner/{idOwner}/perros")
-public class PerroOwnerController {
+@RequestMapping(value = "/api/user/{idUser}/perros")
+public class PerroUserController {
     @Autowired
     PerroService perroService;
 
-    public PerroOwnerController() {
+    public PerroUserController() {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void createPerro(@PathVariable("idOwner") Long id,@RequestBody Perro entity) throws Exception {
+    public void createPerro(@PathVariable("idUser") Long id,@RequestBody Perro entity) throws Exception {
         perroService.createPerro(entity);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Perro> getPerros(@PathVariable("idOwner") Long id) throws Exception {
+    public List<Perro> getPerros(@PathVariable("idUser") Long id) throws Exception {
         return perroService.getPerrosByUserId(id);
     }
 
