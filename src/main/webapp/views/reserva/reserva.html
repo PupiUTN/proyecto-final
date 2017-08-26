@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<head xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+    <!-- Basic Page Needs
+    ================================================== -->
+    <title>Listeo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+</head>
+
+<body xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<div id="appVue">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Header Container
+        ================================================== -->
+        <header id="header-container">
+
+            <!-- Header -->
+            <div id="header" class="not-sticky">
+                <div class="container">
+
+                    <!-- Left Side Content -->
+                    <div class="left-side">
+
+                        <!-- Logo -->
+                        <div id="logo">
+                            <a href="../index/index.html"><img src="/assets/images/logo.png" alt=""></a>
+                        </div>
+
+                        <!-- Mobile Navigation -->
+                        <div class="menu-responsive">
+                            <i class="fa fa-reorder menu-trigger"></i>
+                        </div>
+
+                        <!-- Main Navigation -->
+                        <div class="clearfix"></div>
+                        <!-- Main Navigation / End -->
+
+                    </div>
+                    <!-- Left Side Content / End -->
+
+                    <!-- Right Side Content / End -->
+                    <my-login></my-login>
+                    <!-- Right Side Content / End -->
+
+
+                </div>
+            </div>
+            <!-- Header / End -->
+
+        </header>
+        <div class="clearfix"></div>
+        <!-- Header Container / End -->
+
+
+        <div id="spinner"></div>
+
+        <!-- Content
+        ================================================== -->
+        <div class="container">
+            <div class="row">
+
+                <!--cuidador resume-->
+                <div class="col-lg-6 col-md-12 col-lg-offset-3 ">
+
+                    <!-- Titlebar -->
+                    <div id="titlebar" class="listing-titlebar padding-bottom-35 padding-top-35 padding-left-35">
+                        <div class="listing-titlebar-title">
+
+                            <h2 id="nombre"> {{item.nombre}} <span class="listing-tag">Cuidador</span></h2>
+
+                            <div class="card-image col s3 ">
+
+                            </div>
+
+                            <input type="hidden" value="" name="test">
+                            <span>
+
+							<a href="#listing-location" class="listing-address">
+							<i class="fa fa-map-marker"></i>
+
+              				{{item.direccion.ciudad}}
+						</a>
+						<br>
+							<i class="fa fa-paw"></i>
+							Cantidad maxima de perros: {{item.cantidadMaxDePerros}}
+
+					</span>
+                            <div class="star-rating" data-rating="5">
+                                <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Fechas -->
+                <div class="col-lg-6 col-md-12 col-lg-offset-3">
+
+                    <!-- Book Now -->
+                    <div class="boxed-widget">
+                        <h3><i class="fa fa-calendar-check-o "></i> Fechas de Reserva </h3>
+                        <div class="row with-forms  margin-top-0">
+
+                            <div class="col-lg-6 col-md-12">
+                                <label style=" margin-top: 12px;">Entrada </label>
+                            </div>
+
+                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+                            <div class="col-lg-6 col-md-12">
+                                <input type="text" v-model="fechaReservaDesde" data-format=" d/m/Y" id="booking-date"
+                                       data-lang="es" data-init-set="false"
+                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
+                                       data-max-year="2020" data-lock="from">
+                            </div>
+
+                        </div>
+                        <div class="row with-forms  margin-top-0">
+
+                            <div class="col-lg-6 col-md-12">
+                                <label style=" margin-top: 12px;">Salida </label>
+                            </div>
+                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+                            <div class="col-lg-6 col-md-12">
+
+                                <input type="text" v-model="fechaReservaHasta"
+                                       style="text-align: center; font-size: 16px; font-weight: 600"
+                                       data-format=" d/m/Y" id="booking-date2" data-lang="es"
+                                       data-init-set="false"
+                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
+                                       data-max-year="2020" data-lock="from">
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <!-- Book Now / End -->
+
+
+                </div>
+                <!-- perros-->
+                <div class="col-lg-6 col-md-12 col-lg-offset-3">
+
+                    <!-- Book Now -->
+                    <div class="boxed-widget">
+                        <h3><i class="fa  fa-heart-o"></i>Mis Perros </h3>
+                        <div class="row with-forms  margin-top-0">
+
+                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+                            <div class="col-lg-12 col-md-12">
+
+                                <div class="checkboxes in-row margin-top-0">
+
+                                    <input id="check-a" type="checkbox" name="check">
+                                    <label for="check-a">Borges</label>
+
+                                    <input id="check-b" type="checkbox" name="check">
+                                    <label for="check-b">Firulai</label>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- Book Now / End -->
+
+                </div>
+                <!--mensaje-->
+                <div class="col-lg-6 col-md-12 col-lg-offset-3">
+
+                    <!-- Book Now -->
+                    <div class="boxed-widget">
+                        <h3><i class="fa  fa-pencil-square-o "></i> Mensaje </h3>
+                        <div class="row with-forms  margin-top-0">
+
+                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+                            <div class="col-lg-12 col-md-12">
+                                <textarea name="summary" spellcheck="true"></textarea>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- Book Now / End -->
+
+                </div>
+
+
+                <div class="col-lg-6 col-lg-offset-3 padding-bottom-30">
+                    <!-- progress button animation handled via custom.js -->
+                    <button class="progress-button button fullwidth margin-top-5">
+                        <span>Confirmar Solicitud de Reserva</span>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Wrapper / End -->
+    </div>
+</div>
+
+<!-- Scripts
+================================================== -->
+<script type="text/javascript" src="/assets/scripts/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jpanelmenu.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/chosen.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/slick.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/rangeslider.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/magnific-popup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/waypoints.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/counterup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/custom.js"></script>
+
+<!-- Maps -->
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"
+        async defer></script>
+
+<script src="/js/axios.min.js"></script>
+<script src="/js/vue.js"></script>
+<link rel="stylesheet" href="/css/sweetalert.css"/>
+<script src="/js/sweetalert.min.js"></script>
+<script type="text/javascript" src="/views/security/js/login.js"></script>
+<script src="js/reserva.js"></script>
+
+
+<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+<link href="../../assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
+<script src="../../assets/scripts/datedropper.js"></script>
+<script>$('#booking-date').dateDropper();</script>
+<script>$('#booking-date2').dateDropper();</script>
+
+<style>
+
+
+    #spinner {
+        /*http://samherbert.net/svg-loaders/*/
+        background-image: url('/img/spinner.svg');
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-repeat: no-repeat;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 999;
+        background-position: center;
+    }
+
+
+</style>
+
+
+</body>
+</html>
