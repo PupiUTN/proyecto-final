@@ -7,7 +7,7 @@ package app.controllers;
 
 import app.exception.EmailExistsException;
 import app.exception.PasswordDoesNotMatchException;
-import app.models.entities.User;
+import app.models.entities.Owner;
 import app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +20,8 @@ import java.security.Principal;
 
 
 @RestController
-@RequestMapping(value = "/api/user/")
-public class UserController {
+@RequestMapping(value = "/api/owner/")
+public class OwnerController {
 
 
     @Autowired
@@ -29,34 +29,33 @@ public class UserController {
 
     /**
      * http://www.baeldung.com/get-user-in-spring-security
-     * */
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/me")
     public ResponseEntity getProfile(HttpServletRequest request) throws Exception {
         Principal principal = request.getUserPrincipal();
-        if (principal == null)         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-
-        return new ResponseEntity(principal,HttpStatus.OK);
+        if (principal == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity(principal, HttpStatus.OK);
     }
 
 
     /**
      * http://www.baeldung.com/registration-with-spring-mvc-and-spring-security
      * http://www.baeldung.com/spring-security-registration-password-encoding-bcrypt
-     * */
-    @RequestMapping(method = RequestMethod.POST,value = "/registration")
-    public ResponseEntity registerUserAccount(@RequestBody @Valid User user) throws EmailExistsException, PasswordDoesNotMatchException {
-        userService.registerNewUserAccount(user);
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/registration")
+    public ResponseEntity registerUserAccount(@RequestBody @Valid Owner owner) throws EmailExistsException, PasswordDoesNotMatchException {
+        userService.registerNewUserAccount(owner);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public User getUser(@PathVariable("id") Long id) throws Exception {
-        User user = userService.getUser(id);
-        return user;
+    public Owner getUser(@PathVariable("id") Long id) throws Exception {
+        Owner owner = userService.getUser(id);
+        return owner;
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public User editUser(@PathVariable("id") Long id,@RequestBody User entity) throws Exception {
+    public Owner editUser(@PathVariable("id") Long id, @RequestBody Owner entity) throws Exception {
         entity.setId(id);
         return userService.editUser(entity);
     }

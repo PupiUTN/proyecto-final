@@ -8,19 +8,17 @@ package app.controllers;
 import app.models.entities.Perro;
 import app.services.PerroService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/perros")
-public class PerroController {
+@RequestMapping(value = "/api/user/{idUser}/perros")
+public class PerroUserController {
     @Autowired
     PerroService perroService;
 
-    public PerroController() {
+    public PerroUserController() {
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -29,8 +27,8 @@ public class PerroController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Perro> getPerros() throws Exception {
-        return perroService.getPerros();
+    public List<Perro> getPerros(@PathVariable("idUser") Long id) throws Exception {
+        return perroService.getPerrosByUserId(id);
     }
 
 }
