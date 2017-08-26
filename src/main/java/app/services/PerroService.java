@@ -25,7 +25,7 @@ public class PerroService {
         perroRepository.save(entity);
     }
 
-    public List<Perro> getPerrosByUserId(Long id) throws Exception {
+    public List<Perro> getPerrosByOwnerId(Long id) throws Exception {
         Owner owner = new Owner();
         owner.setId(id);
         return perroRepository.findAllByOwner(owner);

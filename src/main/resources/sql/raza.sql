@@ -1,4 +1,4 @@
-insert into Raza (ID, NOMBRE) values
+insert into raza (ID, NOMBRE) values
 (1, 'Alano'),
 (2, 'Alaskan Malamute '),
 (3, 'American Staffordshire Terrier '),

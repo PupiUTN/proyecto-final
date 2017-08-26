@@ -1,7 +1,7 @@
 let vm = new Vue({
     el: '#appVue',
     data: {
-        url: "/api/cuidadores",
+        urlCuidador: "/api/cuidadores",
         cuidador: {
             id: '',
             nombre: 'X',
@@ -12,7 +12,7 @@ let vm = new Vue({
         perros: [
             {
                 id: '',
-                name: '',
+                nombre: '',
             }
         ],
         fechaReservaDesde: '',
@@ -29,7 +29,7 @@ let vm = new Vue({
             $('#spinner').toggle();
         },
         getItems() {
-            axios.get(this.url + "/" + this.idCuidador)
+            axios.get(this.urlCuidador + "/" + this.idCuidador)
                 .then((response) => {
                     this.cuidador = response.data;
                     $('#spinner').toggle();
@@ -59,15 +59,15 @@ let vm = new Vue({
         },
         loadReservaContent() {
             this.idCuidador = this.getParameterByName('id');
-            this.getItems(this.url, this.idCuidador);
+            this.getItems(this.urlCuidador, this.idCuidador);
             var fecha = new Date();
             this.fechaReservaDesde = fecha.toLocaleDateString();
             this.fechaReservaHasta = fecha.toLocaleDateString();
 
 
         },
-        getPerros() {
-            axios.get(this.url + "/" + this.idCuidador)
+        getPerros(ownerId) {
+            axios.get("/api/owner"+ownerId+"/perros")
                 .then((response) => {
                     this.cuidador = response.data;
                     $('#spinner').toggle();
