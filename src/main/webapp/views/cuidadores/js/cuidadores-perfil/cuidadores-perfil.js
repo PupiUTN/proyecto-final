@@ -44,7 +44,7 @@ let vm = new Vue({
                     this.item = response.data;
                     this.item.ciudad =this.item.user.direccion.ciudad;
                     document.getElementById("imagenAvatar").src = this.item.user.profileImageUrl;
-                    this.loadServicios(this.item.listaServicios)
+                 
                     this.loadImages(this.item.listaImagenes);
                     this.loadTamaño(this.item.tamaño);
                     this.geolocateCuidador(this.item.user.direccion);
@@ -124,22 +124,22 @@ let vm = new Vue({
         loadTamaño(param)
         {
                  if(param.id === 1)
-                 {document.getElementById("imgTamañoPerro").src = "/img/perro_miniatura.png";
+                 {document.getElementById("imgTamañoPerro").src = "/img/perro_miniatura.jpg";
                  }else
                  {
                      if(param.id === 2)
-                     {document.getElementById("imgTamañoPerro").src = "/img/perro_pequeña.png";
+                     {document.getElementById("imgTamañoPerro").src = "/img/perro_pequeña.jpg";
 
                      }
                      else
                      {  if(param.id === 3)
-                        {  document.getElementById("imgTamañoPerro").src = "/img/perro_mediano.png";
+                        {  document.getElementById("imgTamañoPerro").src = "/img/perro_mediano.jpg";
 
                         }
                         else
                         {
                             if(param.id ===4 )
-                            {document.getElementById("imgTamañoPerro").src = "/img/perro_grande.png";
+                            {document.getElementById("imgTamañoPerro").src = "/img/perro_grande.jpg";
 
                             }
                             else
@@ -152,22 +152,8 @@ let vm = new Vue({
                  }
 
             this.item.tamaño = param.valorMinimo+ " a " + param.valorMaximo + " "+ "KG.";
-        },
-
-        loadServicios(servicios)
-        {  var x = {Id: 1, Nombre: "Baño diaro "};
-
-            servicios[0] = x;
-             x = {Id: 2, Nombre: "Administración de medicamentos"};
-
-            servicios[1] = x;
-
-            x = {Id: 2, Nombre: "Recoger y Entegrar a domicilio"};
-
-            servicios[2] = x;
-            this.item.listaServicios = servicios;
-
         }
+
 
     }
 });
