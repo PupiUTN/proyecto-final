@@ -5,16 +5,15 @@ function getDefaultData() {
         exitUrl: "/logout",
         registrationUrl: "/api/user/registration",
         credentials: {
-            username: '',
+            username: '', //email (porque el endpoint de spring security es asi)
             password: ''
         },
-        isAuthenticated: false,
+        isAuthenticated: null,
         user: {
             profileImageUrl: '/img/no-avatar.png',
-            username: '',
+            email: '',
             password: '',
             matchingPassword: '',
-            email: '',
         },
         isMounted: false
     }
@@ -30,8 +29,8 @@ Vue.component('my-login', {
         <div v-show="isAuthenticated">
             <!-- User Menu -->
             <div class="user-menu">
-                <div class="user-name"><span><img v-bind:src="user.profileImageUrl" alt="profileImageUrl"></span>
-                    {{ user.username }}
+                <div class="user-name"><span><img v-bind:src="user.profileImageUrl" alt=""></span>
+                    {{ user.email }}
                 </div>
                 <ul>
                     <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
@@ -48,8 +47,8 @@ Vue.component('my-login', {
                 </ul>
             </div>
 
-            <a href="dashboard-add-listing.html" class="button border with-icon">Add Listing <i
-                    class="sl sl-icon-plus"></i></a>
+            <!--<a href="dashboard-add-listing.html" class="button border with-icon">Add Listing <i
+                    class="sl sl-icon-plus"></i></a>-->
 
         </div>
         <div v-show="!isAuthenticated">
@@ -86,11 +85,11 @@ Vue.component('my-login', {
                             <form class="login" v-on:submit.prevent='login()'>
 
                                 <p class="form-row form-row-wide">
-                                    <label for="username">Username:
+                                    <label for="email">Email:
                                         <i class="im im-icon-Male"></i>
                                         <input type="text" class="input-text"
                                                v-model="credentials.username"
-                                               id="username"
+                                               id="email"
                                                value="" required/>
                                     </label>
                                 </p>
@@ -127,14 +126,7 @@ Vue.component('my-login', {
 
                             <form class="register" v-on:submit.prevent='register()'>
 
-                                <p class="form-row form-row-wide">
-                                    <label for="username2">Username:
-                                        <i class="im im-icon-Male"></i>
-                                        <input type="text" class="input-text" v-model="user.username"
-                                               id="username2"
-                                               value="" required/>
-                                    </label>
-                                </p>
+                               
 
                                 <p class="form-row form-row-wide">
                                     <label for="email2">Email Address:
@@ -202,6 +194,8 @@ Vue.component('my-login', {
                 })
                 .catch(error => {
                         if (error.response.status == 401) {
+                            this.isAuthenticated = false;
+
                             console.log("usuario no logeado");
 
                         } else {
@@ -210,6 +204,8 @@ Vue.component('my-login', {
 
                     }
                 );
+
+
         },
         login() {
             axios.post(this.entryUrl, jQuery.param(this.credentials))
@@ -251,6 +247,17 @@ Vue.component('my-login', {
         },
         resetVueJsData() {
             Object.assign(this.$data, getDefaultData())
+        },
+        openLoginPopUp() {
+            var magnificPopup = $.magnificPopup.instance;
+            // save instance in magnificPopup variable
+            magnificPopup.open({
+                items: {
+                    src: '#sign-in-dialog',
+                },
+                type: 'inline',
+                modal: true
+            });
         }
     },
     computed: {
@@ -265,5 +272,11 @@ Vue.component('my-login', {
             confirm_password.setCustomValidity("");
             return false;
         }
+    },
+    watch: {
+        'isAuthenticated': function () {
+            this.$emit('is-authenticated', this.isAuthenticated);
+        }
     }
 });
+

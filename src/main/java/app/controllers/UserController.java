@@ -29,21 +29,20 @@ public class UserController {
 
     /**
      * http://www.baeldung.com/get-user-in-spring-security
-     * */
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/me")
     public ResponseEntity getProfile(HttpServletRequest request) throws Exception {
         Principal principal = request.getUserPrincipal();
-        if (principal == null)         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-
-        return new ResponseEntity(principal,HttpStatus.OK);
+        if (principal == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity(principal, HttpStatus.OK);
     }
 
 
     /**
      * http://www.baeldung.com/registration-with-spring-mvc-and-spring-security
      * http://www.baeldung.com/spring-security-registration-password-encoding-bcrypt
-     * */
-    @RequestMapping(method = RequestMethod.POST,value = "/registration")
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/registration")
     public ResponseEntity registerUserAccount(@RequestBody @Valid User user) throws EmailExistsException, PasswordDoesNotMatchException {
         userService.registerNewUserAccount(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -56,7 +55,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public User editUser(@PathVariable("id") Long id,@RequestBody User entity) throws Exception {
+    public User editUser(@PathVariable("id") Long id, @RequestBody User entity) throws Exception {
         entity.setId(id);
         return userService.editUser(entity);
     }

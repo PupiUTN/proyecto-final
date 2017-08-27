@@ -10,11 +10,9 @@ import app.services.CuidadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.PathVariable;
-
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -54,15 +52,7 @@ public class CuidadorController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createCuidador(@RequestBody Cuidador entity) {
-        if (StringUtils.isEmpty(entity.getNombre()))
-            return new ResponseEntity<>("El nombre es requerido", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
-        if (StringUtils.isEmpty(entity.getEmail()))
-            return new ResponseEntity<>("El email es requerido", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
-        if (entity.getTelefono() == 0l)
-            return new ResponseEntity<>("El telefono es requerido", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
-        if (entity.getListaImagenes() != null) if (entity.getListaImagenes().size() > 4)
-            return new ResponseEntity<>("El maximo de imagenes es 4", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+    public ResponseEntity createCuidador(@RequestBody @Valid Cuidador entity) {
         cuidadorService.createCuidador(entity);
         return new ResponseEntity<>(entity, HttpStatus.OK);
     }

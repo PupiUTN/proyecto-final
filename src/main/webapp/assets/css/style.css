@@ -17,7 +17,7 @@
 		# Sticky Header
 		# Back to top
 		# Navigation
-		# User Menu
+		# Owner Menu
 		# jPanel mobile menu
 		# Main Search Container
 		# Range Slider
@@ -50,7 +50,7 @@
 		# Social Icons
 		# Custom Checkboxes
 
-	04. Dashboard ........................... User panel styles
+	04. Dashboard ........................... Owner panel styles
 		# Dashboard Navigation
 		# Dashboard Titlebar
 		# Dashboard Stats Boxes
@@ -150,6 +150,22 @@ input[type="submit"] {
   border: none;
   padding: 11px 18px;
   width: auto;
+}
+
+.zoomIt{
+	display:block!important;
+	-webkit-transition:-webkit-transform 0.5s ease-out;
+	-moz-transition:-moz-transform 0.5s ease-out;
+	-o-transition:-o-transform 0.5s ease-out;
+	-ms-transition:-ms-transform 0.5s ease-out;
+	transition:transform 0.5s ease-out;
+}
+.zoomIt:hover{
+	-moz-transform: scale(2.2);
+	-webkit-transform: scale(2.2);
+	-o-transform: scale(2.2);
+	-ms-transform: scale(2.2);
+	transform: scale(2.2)
 }
 
 input[type="checkbox"] { display: inline; }
@@ -707,7 +723,7 @@ body #navigation ul ul {
 
 
 /* ---------------------------------- */
-/* User Menu
+/* Owner Menu
 ------------------------------------- */
 .user-menu {
 	position: relative;
@@ -990,7 +1006,7 @@ body #jPanelMenu-menu li li li a:before {
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: 50%;
-	height: 620px;
+	height: 740px;
 	z-index: 9;
 }
 
@@ -1000,7 +1016,8 @@ body #jPanelMenu-menu li li li a:before {
 	height: 100%;
 	width: 100%;
 	display: block;
-	background: linear-gradient(to right, rgba(255,255,255,0.99) 20%, rgba(255,255,255,0.7) 70%, rgba(255,255,255,0) 95%);
+	/*background: linear-gradient(to right, rgba(255,255,255,0.99) 20%, rgba(255,255,255,0.7) 70%, rgba(255,255,255,0) 95%);*/
+	background: linear-gradient(to right, rgba(255,255,255,0.99) 5%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,0) 95%)
 }
 
 .main-search-container h2 {
@@ -3210,11 +3227,28 @@ body .comment-content p { padding: 5px 0; font-size: 15px; }
 	position: absolute;
 	left: 0px;
 }
-
 .avatar img {
 	max-width: 80px;
 	border-radius: 50%;
 }
+avatar2 {
+	display: inline-block;
+	float: left;
+	padding: 0 20px 0 0;
+	position: absolute;
+	left: 0px;
+}
+
+
+
+.avatar2 img {
+	max-width: 300px;
+	border-radius: 50%;
+}
+
+
+
+
 
 .comment-by {
 	width: 100%;
