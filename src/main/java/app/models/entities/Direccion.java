@@ -14,7 +14,6 @@ public class Direccion implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
     private Long id;
     @NotNull
     private String direccionLinea1; // Evasio Garrone 7018, Córdoba, Argentina (Autocompletar de google)
