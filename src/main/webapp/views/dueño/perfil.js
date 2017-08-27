@@ -51,6 +51,10 @@ let vm = new Vue({
                 vm.direccion.provincia = vm.administrative_area_level_1;
                 vm.direccion.pais = vm.country;
                 vm.direccion.codigoPostal = vm.postal_code;
+                vm.direccion.ciudadPlaceId = place.place_id;
+                vm.direccion.placeId = place.id;
+                vm.direccion.latitud = place.geometry.location.lat();
+                vm.direccion.longitud = place.geometry.location.lng();
             });
         },
         filesChange(fileList) {
@@ -69,11 +73,9 @@ let vm = new Vue({
             this.upload(formData);
         },
         upload(formData) {
-            console.log("UPLOAD");
             axios.post('/api/file/', formData)
                 .then((response) => {
                     this.toggleLoader();
-                    console.log(response);
                     this.user.profileImageUrl = response.data;
                 })
                 .catch(error => {
@@ -110,8 +112,12 @@ let vm = new Vue({
         },
         isUserLoggedIn(sessionInfo) {
             if(sessionInfo.status === 200) {
-                this.direccion = sessionInfo.data.principal.user.direccion;
-                console.log(sessionInfo.data.principal.user.profileImageUrl);
+                let address = sessionInfo.data.principal.user.direccion;
+                if(!address) {
+                    address = {};
+                    address.direccionLinea1 = "";
+                }
+                this.direccion = address;
                 this.user = sessionInfo.data.principal.user;
             }
             else {
