@@ -18,6 +18,7 @@
 
 <!-- Wrapper -->
 <div id="wrapper">
+    <div  id="appVue">
 
     <!-- Header Container
     ================================================== -->
@@ -119,10 +120,7 @@
 
                 <!-- Right Side Content / End -->
                 <div class="right-side">
-                    <div class="header-widget">
-                        <a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i> Sign In</a>
-                        <a href="dashboard-add-listing.html" class="button border with-icon">Add Listing <i class="sl sl-icon-plus"></i></a>
-                    </div>
+                    <my-login></my-login>
                 </div>
                 <!-- Right Side Content / End -->
 
@@ -260,23 +258,23 @@
                 <div class="row">
 
                     <!-- Listing Item -->
-                    <div class="col-lg-12 col-md-12">
+                    <div v-for="dog in dogs" :id="dog.id" class="col-lg-6 col-md-12">
                         <div class="listing-item-container list-layout">
                             <a href="listings-single-page.html" class="listing-item">
 
                                 <!-- Image -->
                                 <div class="listing-item-image">
-                                    <img src="/assets/images/listing-item-01.jpg" alt="">
-                                    <span class="tag">Eat & Drink</span>
+                                    <img :src="dog.foto_perfil" alt="">
+                                    <span class="tag"> {{dog.raza.nombre}} </span>
                                 </div>
 
                                 <!-- Content -->
                                 <div class="listing-item-content">
-                                    <div class="listing-badge now-open">Now Open</div>
+                                    <div class="listing-badge now-open"> {{dog.tamaño.nombre}} </div>
 
                                     <div class="listing-item-inner">
-                                        <h3>Tom's Restaurant</h3>
-                                        <span>964 School Street, New York</span>
+                                        <h3>{{dog.nombre}}</h3>
+                                        <span>{{dog.comentario}}</span>
                                         <div class="star-rating" data-rating="3.5">
                                             <div class="rating-counter">(12 reviews)</div>
                                         </div>
@@ -288,159 +286,6 @@
                         </div>
                     </div>
                     <!-- Listing Item / End -->
-
-                    <!-- Listing Item -->
-                    <div class="col-lg-12 col-md-12">
-                        <div class="listing-item-container list-layout">
-                            <a href="listings-single-page.html" class="listing-item">
-
-                                <!-- Image -->
-                                <div class="listing-item-image">
-                                    <img src="/assets/images/listing-item-02.jpg" alt="">
-                                    <span class="tag">Events</span>
-                                </div>
-
-                                <!-- Content -->
-                                <div class="listing-item-content">
-
-                                    <div class="listing-item-inner">
-                                        <h3>Sticky Band</h3>
-                                        <span>Bishop Avenue, New York</span>
-                                        <div class="star-rating" data-rating="5.0">
-                                            <div class="rating-counter">(23 reviews)</div>
-                                        </div>
-                                    </div>
-
-                                    <span class="like-icon"></span>
-
-                                    <div class="listing-item-details">Friday, August 10</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Listing Item / End -->
-
-                    <!-- Listing Item -->
-                    <div class="col-lg-12 col-md-12">
-                        <div class="listing-item-container list-layout">
-                            <a href="listings-single-page.html" class="listing-item">
-
-                                <!-- Image -->
-                                <div class="listing-item-image">
-                                    <img src="/assets/images/listing-item-03.jpg" alt="">
-                                    <span class="tag">Hotels</span>
-                                </div>
-
-                                <!-- Content -->
-                                <div class="listing-item-content">
-
-                                    <div class="listing-item-inner">
-                                        <h3>Hotel Govendor</h3>
-                                        <span>778 Country Street, New York</span>
-                                        <div class="star-rating" data-rating="2.0">
-                                            <div class="rating-counter">(17 reviews)</div>
-                                        </div>
-                                    </div>
-
-                                    <span class="like-icon"></span>
-
-                                    <div class="listing-item-details">Starting from $59 per night</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Listing Item / End -->
-
-                    <!-- Listing Item -->
-                    <div class="col-lg-12 col-md-12">
-                        <div class="listing-item-container list-layout">
-                            <a href="listings-single-page.html" class="listing-item">
-
-                                <!-- Image -->
-                                <div class="listing-item-image">
-                                    <img src="/assets/images/listing-item-04.jpg" alt="">
-                                    <span class="tag">Eat & Drink</span>
-                                </div>
-
-                                <!-- Content -->
-                                <div class="listing-item-content">
-                                    <div class="listing-badge now-open">Now Open</div>
-
-                                    <div class="listing-item-inner">
-                                        <h3>Burger House</h3>
-                                        <span>2726 Shinn Street, New York</span>
-                                        <div class="star-rating" data-rating="5.0">
-                                            <div class="rating-counter">(31 reviews)</div>
-                                        </div>
-                                    </div>
-
-                                    <span class="like-icon"></span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Listing Item / End -->
-
-                    <!-- Listing Item -->
-                    <div class="col-lg-12 col-md-12">
-                        <div class="listing-item-container list-layout">
-                            <a href="listings-single-page.html" class="listing-item">
-
-                                <!-- Image -->
-                                <div class="listing-item-image">
-                                    <img src="/assets/images/listing-item-05.jpg" alt="">
-                                    <span class="tag">Other</span>
-                                </div>
-
-                                <!-- Content -->
-                                <div class="listing-item-content">
-
-                                    <div class="listing-item-inner">
-                                        <h3>Airport</h3>
-                                        <span>1512 Duncan Avenue, New York</span>
-                                        <div class="star-rating" data-rating="3.5">
-                                            <div class="rating-counter">(46 reviews)</div>
-                                        </div>
-                                    </div>
-
-                                    <span class="like-icon"></span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Listing Item / End -->
-
-                    <!-- Listing Item -->
-                    <div class="col-lg-12 col-md-12">
-                        <div class="listing-item-container list-layout">
-                            <a href="listings-single-page.html" class="listing-item">
-
-                                <!-- Image -->
-                                <div class="listing-item-image">
-                                    <img src="/assets/images/listing-item-06.jpg" alt="">
-                                    <span class="tag">Eat & Drink</span>
-                                </div>
-
-                                <!-- Content -->
-                                <div class="listing-item-content">
-                                    <div class="listing-badge now-closed">Now Closed</div>
-
-                                    <div class="listing-item-inner">
-                                        <h3>Think Coffee</h3>
-                                        <span>215 Terry Lane, New York</span>
-                                        <div class="star-rating" data-rating="5.0">
-                                            <div class="rating-counter">(31 reviews)</div>
-                                        </div>
-                                    </div>
-
-                                    <span class="like-icon"></span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Listing Item / End -->
-
-                </div>
 
                 <!-- Pagination -->
                 <div class="clearfix"></div>
@@ -535,7 +380,7 @@
     <!-- Back To Top Button -->
     <div id="backtotop"><a href="#"></a></div>
 
-
+</div>
 </div>
 <!-- Wrapper / End -->
 

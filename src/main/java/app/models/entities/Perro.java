@@ -31,7 +31,8 @@ public class Perro implements Serializable {
     @NotNull
     private List<Vacuna> vacunacionList;
     @NotNull
-    private Imagen fotoPerfil;
+    private String fotoPerfil;
+
     private String comentario;
 
 
@@ -75,11 +76,11 @@ public class Perro implements Serializable {
         this.vacunacionList = vacunacionList;
     }
 
-    public Imagen getFotoPerfil() {
+    public String getFotoPerfil() {
         return fotoPerfil;
     }
 
-    public void setFotoPerfil(Imagen fotoPerfil) {
+    public void setFotoPerfil(String fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
     }
 

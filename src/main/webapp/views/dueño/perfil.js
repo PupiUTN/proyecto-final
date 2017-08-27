@@ -37,6 +37,7 @@ let vm = new Vue({
                 {types: ['geocode']});
             autocomplete.addListener('place_changed', function() {
                 var place = autocomplete.getPlace();
+                console.log(place);
                 for (var i = 0; i < place.address_components.length; i++) {
                     var addressType = place.address_components[i].types[0];
                     if (componentForm[addressType]) {
@@ -51,6 +52,10 @@ let vm = new Vue({
                 vm.direccion.provincia = vm.administrative_area_level_1;
                 vm.direccion.pais = vm.country;
                 vm.direccion.codigoPostal = vm.postal_code;
+                vm.direccion.ciudadPlaceId = place.place_id;
+                vm.direccion.placeId = place.id;
+                vm.direccion.latitud = place.geometry.location.lat();
+                vm.direccion.longitud = place.geometry.location.lng();
             });
         },
         filesChange(fileList) {
@@ -110,7 +115,16 @@ let vm = new Vue({
         },
         isUserLoggedIn(sessionInfo) {
             if(sessionInfo.status === 200) {
-                this.direccion = sessionInfo.data.principal.user.direccion;
+                let address = sessionInfo.data.principal.user.direccion;
+                console.log(address);
+                if(!address) {
+                    address = {};
+                    console.log("ENTRA EN EL IF");
+                    address.direccionLinea1 = "";
+                }
+                console.log("ESTA ES LA DIRECCION");
+                console.log(address.direccionLinea1);
+                this.direccion = address;
                 console.log(sessionInfo.data.principal.user.profileImageUrl);
                 this.user = sessionInfo.data.principal.user;
             }

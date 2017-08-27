@@ -51,7 +51,7 @@ public class User {
     private String phone;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Direccion direccion;
 
     public User() {
