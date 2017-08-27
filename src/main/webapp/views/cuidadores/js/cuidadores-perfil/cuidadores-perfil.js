@@ -6,15 +6,17 @@ let vm = new Vue({
         item: {
             index: '',
             id: '',
-            nombre: '',
-            email:'',
             telefono:'',
             direccion:'',
             cantidadMaxDePerros:'',
             listaImagenes:'',
-            descripcio:'',
-             precio:''
-
+            descripcion:'',
+             precio:'',
+            ciudad:'',
+             user:'',
+            profile_image_url:'',
+            tamaño:'',
+            listaServicios:''
         },
         fechaReservaDesde: '',
         fechaReservaHasta:'',
@@ -33,21 +35,27 @@ let vm = new Vue({
 
     },
     methods: {
-        toggleLoader() {
-            $('#spinner').toggle();
-        },
+         toggleLoader() {
+             $('#spinner').toggle();
+         },
         getItems() {
               axios.get(this.url +"/"+ this.idCuidador )
                 .then((response) => {
                     this.item = response.data;
+                    this.item.ciudad =this.item.user.direccion.ciudad;
+                    document.getElementById("imagenAvatar").src = this.item.user.profileImageUrl;
+                    this.loadServicios(this.item.listaServicios)
                     this.loadImages(this.item.listaImagenes);
-                    this.geolocateCuidador(this.item.direccion);
-                    $('#spinner').toggle();
+                    this.loadTamaño(this.item.tamaño);
+                    this.geolocateCuidador(this.item.user.direccion);
+
+                   $('#spinner').toggle();
 
                 })
                 .catch(error => {
                         console.log(error);
-                        sweetAlert("Oops...", "Error, de Cuidador ", "guau guau");
+                        sweetAlert("Oops...", "Error  ", "error");
+
                     }
                 );
         },
@@ -63,9 +71,10 @@ let vm = new Vue({
         geolocateCuidador(direccion) {
             var lat =  direccion.latitud;
             var long = direccion.longitud;
-            var myLatLng = {lat: lat, lng: long};
+            //var myLatLng = {lat: lat, lng: long};
+            var latlng = new google.maps.LatLng(lat, long);
            var map = new google.maps.Map(document.getElementById('singleListingMap'), {
-                center: myLatLng,
+                center: latlng,
                 zoom: 15
             });
             var cityCircle = new google.maps.Circle({
@@ -75,13 +84,14 @@ let vm = new Vue({
                 fillColor: '#FF0000',
                 fillOpacity: 0.35,
                 map: map,
-                center: myLatLng,
+                center: latlng,
                 radius: Math.sqrt(2) * 100
             });
 
         },
 
         loadImages(imagenes) {
+
 
             var img = 0;
             var id = "";
@@ -109,6 +119,54 @@ let vm = new Vue({
 
 
              }
+        },
+
+        loadTamaño(param)
+        {
+                 if(param.id === 1)
+                 {document.getElementById("imgTamañoPerro").src = "/img/perro_miniatura.png";
+                 }else
+                 {
+                     if(param.id === 2)
+                     {document.getElementById("imgTamañoPerro").src = "/img/perro_pequeña.png";
+
+                     }
+                     else
+                     {  if(param.id === 3)
+                        {  document.getElementById("imgTamañoPerro").src = "/img/perro_mediano.png";
+
+                        }
+                        else
+                        {
+                            if(param.id ===4 )
+                            {document.getElementById("imgTamañoPerro").src = "/img/perro_grande.png";
+
+                            }
+                            else
+                            { document.getElementById("imgTamañoPerro").src = '/img/perro_gigante.jpg';
+                            }
+                        }
+
+                     }
+
+                 }
+
+            this.item.tamaño = param.valorMinimo+ " a " + param.valorMaximo + " "+ "KG.";
+        },
+
+        loadServicios(servicios)
+        {  var x = {Id: 1, Nombre: "Baño diaro "};
+
+            servicios[0] = x;
+             x = {Id: 2, Nombre: "Administración de medicamentos"};
+
+            servicios[1] = x;
+
+            x = {Id: 2, Nombre: "Recoger y Entegrar a domicilio"};
+
+            servicios[2] = x;
+            this.item.listaServicios = servicios;
+
         }
 
     }

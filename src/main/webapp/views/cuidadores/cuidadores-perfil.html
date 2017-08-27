@@ -15,216 +15,47 @@
 
 <body xmlns:v-bind="http://www.w3.org/1999/xhtml" >
 <!-- Wrapper -->
-<div id="wrapper">
-
+<div id="Wrapper">
+<div  id="appVue">
 <!-- Header Container
 ================================================== -->
-<header id="header-container">
+	<header id="header-container" style="background-color: whitesmoke">
 
-	<!-- Header -->
-	<div id="header" class="not-sticky">
-		<div class="container">
-			
-			<!-- Left Side Content -->
-			<div class="left-side">
-				
-				<!-- Logo -->
-				<div id="logo">
-					<a href="../index/index.html"><img src="/assets/images/logo.png" alt=""></a>
-				</div>
+		<!-- Header -->
+		<div id="header">
+			<div class="container">
 
-				<!-- Mobile Navigation -->
-				<div class="menu-responsive">
-					<i class="fa fa-reorder menu-trigger"></i>
-				</div>
+				<!-- Left Side Content -->
+				<div class="left-side">
 
-				<!-- Main Navigation -->
-				<nav id="navigation" class="style-1">
-					<ul id="responsive">
-
-						<li><a href="#">Home</a>
-							<ul>
-								<li><a href="../index/index.html">Home 1</a></li>
-								<li><a href="../index/index.html">Home 2</a></li>
-								<li><a href="../index/index.html">Home 3</a></li>
-								<li><a href="../index/index.html">Home 4</a></li>
-							</ul>
-						</li>
-
-						<li><a class="current" href="#">Listings</a>
-							<ul>
-								<li><a href="#">List Layout</a>
-									<ul>
-										<li><a href="../index/index.html">With Sidebar</a></li>
-										<li><a href="../index/index.html">Full Width</a></li>
-									</ul>
-								</li>
-								<li><a href="#">Grid Layout</a>
-									<ul>
-										<li><a href="../index/index.html">With Sidebar 1</a></li>
-										<li><a href="../index/index.html">With Sidebar 2</a></li>
-										<li><a href="../index/index.html">Full Width</a></li>
-									</ul>
-								</li>
-								<li><a href="#">Half Screen Map</a>
-									<ul>
-										<li><a href="../index/index.html">List Layout</a></li>
-										<li><a href="../index/index.html">Grid Layout 1</a></li>
-										<li><a href="../index/index.html">Grid Layout 2</a></li>
-									</ul>
-								</li>
-								<li><a href="../index/index.html">Single Listing</a></li>
-							</ul>
-						</li>
-
-						<li><a href="#">User Panel</a>
-							<ul>
-								<li><a href="../index/index.html">Dashboard</a></li>
-								<li><a href="../index/index.html">Messages</a></li>
-								<li><a href="../index/index.html">My Listings</a></li>
-								<li><a href="../index/index.html">Reviews</a></li>
-								<li><a href="../index/index.html">Bookmarks</a></li>
-								<!--<li><a href="dashboard-add-listing.html">Add Listing</a></li>-->
-								<li><a href="../index/index.html">My Profile</a></li>
-								<li><a href="../index/index.html">Invoice</a></li>
-							</ul>
-						</li>
-
-						<li><a href="#">Pages</a>
-							<ul>
-								<li><a href="../index/index.html">Blog</a>
-									<ul>
-										<li><a href="../index/index.html">Blog</a></li>
-										<li><a href="../index/index.html">Blog Post</a></li>
-									</ul>
-								</li>
-								<li><a href="../index/index.html">Contact</a></li>
-								<li><a href="../index/index.html">Elements</a></li>
-								<li><a href="../index/index.html">Pricing Tables</a></li>
-								<li><a href="../index/index.html">Typography</a></li>
-								<li><a href="../index/index.html">404 Page</a></li>
-								<li><a href="../index/index.html">Icons</a></li>
-							</ul>
-						</li>
-						
-					</ul>
-				</nav>
-				<div class="clearfix"></div>
-				<!-- Main Navigation / End -->
-				
-			</div>
-			<!-- Left Side Content / End -->
-
-			<!-- Right Side Content / End -->
-			<div class="right-side">
-				<div class="header-widget">
-					<a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i> Sign In</a>
-					<!--<a href="dashboard-add-listing.html" class="button border with-icon">Add Listing <i class="sl sl-icon-plus"></i></a>-->
-				</div>
-			</div>
-			<!-- Right Side Content / End -->
-
-			<!-- Sign In Popup -->
-			<div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
-
-				<div class="small-dialog-header">
-					<h3>Sign In</h3>
-				</div>
-
-				<!--Tabs -->
-				<div class="sign-in-form style-1">
-
-					<ul class="tabs-nav">
-						<li class=""><a href="#tab1">Log In</a></li>
-						<li><a href="#tab2">Register</a></li>
-					</ul>
-
-					<div class="tabs-container alt">
-
-						<!-- Login -->
-						<div class="tab-content" id="tab1" style="display: none;">
-							<form method="post" class="login">
-
-								<p class="form-row form-row-wide">
-									<label for="username">Username:
-										<i class="im im-icon-Male"></i>
-										<input type="text" class="input-text" name="username" id="username" value="" />
-									</label>
-								</p>
-
-								<p class="form-row form-row-wide">
-									<label for="password">Password:
-										<i class="im im-icon-Lock-2"></i>
-										<input class="input-text" type="password" name="password" id="password"/>
-									</label>
-									<span class="lost_password">
-										<a href="#" >Lost Your Password?</a>
-									</span>
-								</p>
-
-								<div class="form-row">
-									<input type="submit" class="button border margin-top-5" name="login" value="Login" />
-									<div class="checkboxes margin-top-10">
-										<input id="remember-me" type="checkbox" name="check">
-										<label for="remember-me">Remember Me</label>
-									</div>
-								</div>
-								
-							</form>
-						</div>
-
-						<!-- Register -->
-						<div class="tab-content" id="tab2" style="display: none;">
-
-							<form method="post" class="register">
-								
-							<p class="form-row form-row-wide">
-								<label for="username2">Username:
-									<i class="im im-icon-Male"></i>
-									<input type="text" class="input-text" name="username" id="username2" value="" />
-								</label>
-							</p>
-								
-							<p class="form-row form-row-wide">
-								<label for="email2">Email Address:
-									<i class="im im-icon-Mail"></i>
-									<input type="text" class="input-text" name="email" id="email2" value="" />
-								</label>
-							</p>
-
-							<p class="form-row form-row-wide">
-								<label for="password1">Password:
-									<i class="im im-icon-Lock-2"></i>
-									<input class="input-text" type="password" name="password1" id="password1"/>
-								</label>
-							</p>
-
-							<p class="form-row form-row-wide">
-								<label for="password2">Repeat Password:
-									<i class="im im-icon-Lock-2"></i>
-									<input class="input-text" type="password" name="password2" id="password2"/>
-								</label>
-							</p>
-
-							<input type="submit" class="button border fw margin-top-10" name="register" value="Register" />
-	
-							</form>
-						</div>
-
+					<!-- Logo -->
+					<div id="logo">
+						<a href="/views/index/index.html"><img src="/assets/images/logo.png" alt=""></a>
 					</div>
+
+					<div class="clearfix"></div>
+					<!-- Main Navigation / End -->
+
 				</div>
+				<!-- Left Side Content / End -->
+
+
+				<!-- Right Side Content / End -->
+				<my-login></my-login>
+
 			</div>
-			<!-- Sign In Popup / End -->
+			<!-- Right Side Content / End -->
 
 		</div>
-	</div>
-	<!-- Header / End -->
 
-</header>
+		<!-- Header / End -->
+
+	</header>
 <div class="clearfix"></div>
 <!-- Header Container / End -->
 
-	<div class="row" id="appVue">
+	 <div class="row" >
+
 		<div id="spinner"></div>
 <!-- Slider
 ================================================== -->
@@ -252,12 +83,13 @@
 
 			<!-- Titlebar -->
 			<div id="titlebar" class="listing-titlebar">
+				<div class="avatar" ><img id="imagenAvatar" src="/img/logo.png" alt="" />
+				</div>
 				<div class="listing-titlebar-title">
 
-					<div class="avatar" ><img src="/img/Fede.jpeg" alt="" />
-					</div>
 
-					<h2 id="nombre"> {{item.nombre}} <span class="listing-tag">Cuidador</span></h2>
+
+					<h2     style="margin-left: 100px;" id="nombre"> {{item.user.fullName}} <span class="listing-tag">Cuidador</span></h2>
 
 					<div class="card-image col s3 ">
 
@@ -266,11 +98,12 @@
 					<input type="hidden" value="" name="test">
 					<span>
 
-							<a href="#listing-location" class="listing-address">
+							<a style=" margin-left: 100px;" href="#listing-location" class="listing-address">
 							<i class="fa fa-map-marker"></i>
 
-              				{{item.direccion.ciudad}}
+              				{{item.ciudad}}
 						</a>
+						<br>
 						<br>
 							<i class="fa fa-paw"></i>
 							Cantidad maxima de perros: {{item.cantidadMaxDePerros}}
@@ -299,21 +132,21 @@
 				<!-- Description -->
 
 				<p>
-					<label>{{item.descripcio}}</label>
+					<label>{{item.descripcion}}</label>
 
 					  <!--Soy el chico ideal para tu compañia, nada me agradara mas que poder jugar contigo y con tu dueña ( si esta buena )-->
 				</p>
 
 				<!-- Amenities -->
 				<h3 class="listing-desc-headline">Servicios y Restricciones</h3>
-				<ul  class="listing-features checkboxes margin-top-0">
-					<!--<li> {{item.nombre}}</li>-->
-					<li>Espacio al Aire libre</li>
-					<li> Tengo Perros residentes</li>
-					<li>Administrar medicinas </li>
-					<li>No tengo niños en casa</li>
-					<li>Administrar inyecciones</li>
-					<li> Las mascotas no pueden subirse a camas</li>
+				<ul v-for =" servicio in item.listaServicios" class="listing-features checkboxes margin-top-0" style="">
+					<li style="width: 790px;"> {{servicio.Nombre}}</li>
+					<!--<li>Espacio al Aire libre</li>-->
+					<!--<li> Tengo Perros residentes</li>-->
+					<!--<li>Administrar medicinas </li>-->
+					<!--<li>No tengo niños en casa</li>-->
+					<!--<li>Administrar inyecciones</li>-->
+					<!--<li> Las mascotas no pueden subirse a camas</li>-->
 				</ul>
 			</div>
 
@@ -331,14 +164,14 @@
 							<li>
 								<h5>Por dia</h5>
 								<p>servicio por dia</p>
-								<span>$ {{item.precio}}</span>
+								<span>$ {{item.precioPorNoche}}</span>
 							</li>
 
-							<li>
-								<h5>Por  mes</h5>
-								<p>servicio por mes</p>
-								<span>$2000</span>
-							</li>
+							<!--<li>-->
+								<!--<h5>Por  mes</h5>-->
+								<!--<p>servicio por mes</p>-->
+								<!--<span>$2000</span>-->
+							<!--</li>-->
 
 						</ul>
 
@@ -493,6 +326,22 @@
 			<!-- Book Now / End -->
 
 
+			<div class="boxed-widget opening-hours margin-top-35">
+
+				<h3><i class="im im-icon-Dog"></i>  Preferencias  de tamaños </h3>
+				<div  class="col-lg-6 col-md-5" style="width: 80px;">
+					<label style=" margin-top: 12px; width: 60px;">Hasta</label>
+				</div>
+
+
+				<div class="col-lg-6 col-md-12">
+					<img  id="imgTamañoPerro" alt="" >
+					<label style=" margin-left: 30px;"> {{item.tamaño}} </label>
+				</div>
+
+
+			</div>
+
 			<!-- Contact -->
 			<div class="boxed-widget margin-top-35">
 				<h3><i class="sl sl-icon-pin"></i> Contacto</h3>
@@ -515,13 +364,7 @@
 			
 
 			<!-- Opening Hours -->
-			<div class="boxed-widget opening-hours margin-top-35">
 
-				<h3><i class="sl sl-icon-clock"></i> Horarios de reserva </h3>
-				<ul>
-					<li>Recuerda que los horarios de reserva para dejar tu  y retirar tu mascota son a partir de las 9,  hasta las 14
-				</ul>
-			</div>
 			<!-- Opening Hours / End -->
 
 
@@ -611,6 +454,7 @@
 </div>
 <!-- Wrapper / End -->
 </div>
+</div>
 
 <!-- Scripts
 ================================================== -->
@@ -628,14 +472,16 @@
 
 <!-- Maps -->
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"
-		async defer></script>
 
-<script src="/js/axios.min.js"></script>
 <script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
 <link rel="stylesheet" href="/css/sweetalert.css" />
 <script src="/js/sweetalert.min.js"></script>
+<script type="text/javascript" src="/views/security/js/login.js"></script>
 <script src="js/cuidadores-perfil/cuidadores-perfil.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"></script>
+
 <!--<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js."></script>-->
 
 
@@ -648,24 +494,7 @@
 <!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
 <script src="../../assets/scripts/timedropper.js"></script>
 <link rel="stylesheet" type="text/css" href="../../assets/css/plugins/timedropper.css">
-<script>
-this.$('#booking-time').timeDropper({
-	setCurrentTime: false,
-	meridians: true,
-	primaryColor: "#f91942",
-	borderColor: "#f91942",
-	minutesInterval: '15'
-});
 
-this.$('#booking-time2').timeDropper({
-    setCurrentTime: false,
-    meridians: true,
-    primaryColor: "#f91942",
-    borderColor: "#f91942",
-    minutesInterval: '15'
-});
-
-</script>
 
 <style>
 
