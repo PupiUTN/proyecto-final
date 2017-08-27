@@ -5,6 +5,8 @@
  */
 package app.models.entities;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -27,12 +29,13 @@ public class Perro implements Serializable {
     @ManyToOne
     @NotNull
     private Tamaño tamaño;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Vacuna> listaVacunas;
     @NotNull
-    private List<Vacuna> vacunacionList;
-    @NotNull
+    @NotEmpty
     private String fotoPerfil;
-
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Imagen> listaImagenes;
     private String comentario;
 
 
@@ -68,13 +71,6 @@ public class Perro implements Serializable {
         this.tamaño = tamaño;
     }
 
-    public List<Vacuna> getVacunacionList() {
-        return vacunacionList;
-    }
-
-    public void setVacunacionList(List<Vacuna> vacunacionList) {
-        this.vacunacionList = vacunacionList;
-    }
 
     public String getFotoPerfil() {
         return fotoPerfil;
@@ -100,16 +96,19 @@ public class Perro implements Serializable {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        return "Perro{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", raza=" + raza +
-                ", tamaño=" + tamaño +
-                ", vacunacionList=" + vacunacionList +
-                ", fotoPerfil=" + fotoPerfil +
-                ", comentario='" + comentario + '\'' +
-                '}';
+    public List<Vacuna> getListaVacunas() {
+        return listaVacunas;
+    }
+
+    public void setListaVacunas(List<Vacuna> listaVacunas) {
+        this.listaVacunas = listaVacunas;
+    }
+
+    public List<Imagen> getListaImagenes() {
+        return listaImagenes;
+    }
+
+    public void setListaImagenes(List<Imagen> listaImagenes) {
+        this.listaImagenes = listaImagenes;
     }
 }

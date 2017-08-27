@@ -12,6 +12,7 @@ function getDefaultData() {
         user: {
             profileImageUrl: '/img/no-avatar.png',
             email: '',
+            username: '',
             password: '',
             matchingPassword: '',
         },
@@ -86,7 +87,7 @@ Vue.component('my-login', {
 
                                 <p class="form-row form-row-wide">
                                     <label for="email">Email:
-                                        <i class="im im-icon-Male"></i>
+                                        <i class="im im-icon-Email"></i>
                                         <input type="text" class="input-text"
                                                v-model="credentials.username"
                                                id="email"
@@ -128,6 +129,14 @@ Vue.component('my-login', {
 
                                
 
+                                <p class="form-row form-row-wide">
+                                    <label for="email2">Username:
+                                        <i class="im im-icon-Male"></i>
+                                        <input type="username" class="input-text" v-model="user.username"
+                                               id="username" value="" required/>
+                                    </label>
+                                </p>
+                                
                                 <p class="form-row form-row-wide">
                                     <label for="email2">Email Address:
                                         <i class="im im-icon-Mail"></i>
