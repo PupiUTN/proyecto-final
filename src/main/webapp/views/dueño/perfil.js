@@ -37,7 +37,6 @@ let vm = new Vue({
                 {types: ['geocode']});
             autocomplete.addListener('place_changed', function() {
                 var place = autocomplete.getPlace();
-                console.log(place);
                 for (var i = 0; i < place.address_components.length; i++) {
                     var addressType = place.address_components[i].types[0];
                     if (componentForm[addressType]) {
@@ -74,11 +73,9 @@ let vm = new Vue({
             this.upload(formData);
         },
         upload(formData) {
-            console.log("UPLOAD");
             axios.post('/api/file/', formData)
                 .then((response) => {
                     this.toggleLoader();
-                    console.log(response);
                     this.user.profileImageUrl = response.data;
                 })
                 .catch(error => {
@@ -116,16 +113,11 @@ let vm = new Vue({
         isUserLoggedIn(sessionInfo) {
             if(sessionInfo.status === 200) {
                 let address = sessionInfo.data.principal.user.direccion;
-                console.log(address);
                 if(!address) {
                     address = {};
-                    console.log("ENTRA EN EL IF");
                     address.direccionLinea1 = "";
                 }
-                console.log("ESTA ES LA DIRECCION");
-                console.log(address.direccionLinea1);
                 this.direccion = address;
-                console.log(sessionInfo.data.principal.user.profileImageUrl);
                 this.user = sessionInfo.data.principal.user;
             }
             else {
