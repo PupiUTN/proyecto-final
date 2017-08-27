@@ -2,13 +2,21 @@ let vm = new Vue({
     el: '#appVue',
     data: {
         urlCuidador: "/api/cuidadores",
-        cuidador: {
-            id: '',
-            nombre: 'X',
-            email: '',
-            direccion: 'X',
-            cantidadMaxDePerros: 'X'
-        },
+        cuidador:
+            {
+                id: null,
+                cantidadMaxDePerros: null,
+                precioPorNoche: 100.0,
+                user: {
+                    id: null,
+                    email: "",
+                    fullName: "",
+                    direccion: {
+                        ciudad: "",
+                    }
+                },
+            }
+        ,
         perros: [
             {
                 id: '',
@@ -20,8 +28,7 @@ let vm = new Vue({
         idCuidador: 0,
         isAuthenticated: false,
     }
-    ,
-    mounted() {
+    ,mounted(){
 
     },
     methods: {
@@ -32,8 +39,6 @@ let vm = new Vue({
             axios.get(this.urlCuidador + "/" + this.idCuidador)
                 .then((response) => {
                     this.cuidador = response.data;
-                    $('#spinner').toggle();
-
                 })
                 .catch(error => {
                         console.log(error);
@@ -49,6 +54,7 @@ let vm = new Vue({
         },
 
         isAuthenticatedMethod(isAuthenticated) {
+            // TRIGGER MOUNTED METHOD
             this.isAuthenticated = isAuthenticated;
             if (!this.isAuthenticated) {
                 var childMylogin = this.$refs.mylogin;
@@ -63,19 +69,21 @@ let vm = new Vue({
             var fecha = new Date();
             this.fechaReservaDesde = fecha.toLocaleDateString();
             this.fechaReservaHasta = fecha.toLocaleDateString();
-
+            this.getPerros();
 
         },
-        getPerros(userId) {
-            axios.get("/api/user"+userId+"/perros")
-                .then((response) => {
-                    this.cuidador = response.data;
-                    $('#spinner').toggle();
+        getPerros() {
+            var childMylogin = this.$refs.mylogin;
 
+            var userId = childMylogin.user.id;
+            axios.get("/api/user/" + userId + "/perros")
+                .then((response) => {
+                    this.perros = response.data;
+                    this.toggleLoader();
                 })
                 .catch(error => {
                         console.log(error);
-                        sweetAlert("Oops...", "Error, de Cuidador ", "guau guau");
+                        sweetAlert("Oops...", "Error, de get perros ", "guau guau");
                     }
                 );
         }
