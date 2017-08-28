@@ -45,6 +45,22 @@ let vm = new Vue({
 
     },
     methods: {
+        isAuthenticatedMethod(isAuthenticated) {
+            // TRIGGER MOUNTED METHOD
+            this.isAuthenticated = isAuthenticated;
+            if (!this.isAuthenticated) {
+                var childMylogin = this.$refs.mylogin;
+                childMylogin.openLoginPopUp();
+            } else {
+                this.loadReservaContent();
+            }
+        },
+        loadReservaContent() {
+            this.getDateFromUrl();
+            this.idCuidador = this.getParameterByName('id');
+            this.getItems(this.urlCuidador, this.idCuidador);
+            this.getPerros();
+        },
         toggleLoader() {
             $('#spinner').toggle();
         },
@@ -64,22 +80,6 @@ let vm = new Vue({
             var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
                 results = regex.exec(location.search);
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-        },
-
-        isAuthenticatedMethod(isAuthenticated) {
-            // TRIGGER MOUNTED METHOD
-            this.isAuthenticated = isAuthenticated;
-            if (!this.isAuthenticated) {
-                var childMylogin = this.$refs.mylogin;
-                childMylogin.openLoginPopUp();
-            } else {
-                this.loadReservaContent();
-            }
-        },
-        loadReservaContent() {
-            this.idCuidador = this.getParameterByName('id');
-            this.getItems(this.urlCuidador, this.idCuidador);
-            this.getPerros();
         },
         getPerros() {
             var childMylogin = this.$refs.mylogin;
@@ -155,23 +155,20 @@ let vm = new Vue({
                 var dateString = $('#booking-date2').val(); //the getDate method
                 vm.reserva.fechaFin = dateString;
             });
+        },
+        getDateFromUrl(){
+            var dateStringFrom = this.getParameterByName('dateFrom');
+            $('#booking-date').val(dateStringFrom); //the getDate method
+            vm.reserva.fechaInicio = dateStringFrom;
+
+
+            var dateStringTo = this.getParameterByName('dateTo');
+            $('#booking-date2').val(dateStringTo); //the getDate method
+            vm.reserva.fechaFin = dateStringTo;
         }
 
 
-    },
-    computed: {
-        formValidation() {
-            if (!this.isMounted)
-                return;
-            var confirm_password = this.$refs.bookingDate;
-            if (this.reserva.fechaInicio !== '') {
-                confirm_password.setCustomValidity("Passwords Don't Match");
-                return true;
-            }
-            confirm_password.setCustomValidity("");
-            return false;
-        }
-    },
+    }
 });
 
 
