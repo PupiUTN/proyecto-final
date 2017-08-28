@@ -115,10 +115,11 @@
 
                             <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
                             <div class="col-lg-6 col-md-12">
-                                <input type="text" v-model="fechaReservaDesde" data-format=" d/m/Y" id="booking-date"
+                                <input type="text" v-model="reserva.fechaInicio"
+                                       data-format=" Y-m-d" id="booking-date"
                                        data-lang="es" data-init-set="false"
                                        data-large-mode="true" data-large-default="true" data-min-year="2017"
-                                       data-max-year="2020" data-lock="from">
+                                       data-max-year="2020" data-lock="from"/>
                             </div>
 
                         </div>
@@ -130,12 +131,12 @@
                             <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
                             <div class="col-lg-6 col-md-12">
 
-                                <input type="text" v-model="fechaReservaHasta"
+                                <input type="text" v-model="reserva.fechaFin"
                                        style="text-align: center; font-size: 16px; font-weight: 600"
-                                       data-format=" d/m/Y" id="booking-date2" data-lang="es"
+                                       data-format=" Y-m-d" id="booking-date2" data-lang="es"
                                        data-init-set="false"
                                        data-large-mode="true" data-large-default="true" data-min-year="2017"
-                                       data-max-year="2020" data-lock="from">
+                                       data-max-year="2020" data-lock="from"/>
                             </div>
 
 
@@ -160,7 +161,9 @@
                                 <div class="checkboxes in-row margin-top-0">
 
                                     <template v-for="perro in perros">
-                                        <input v-bind:id="'perro_' +perro.id"  type="checkbox" name="perro_check" v-bind:value="perro.id">
+                                        <input v-bind:id="'perro_' +perro.id" type="checkbox" name="perro_check"
+                                               v-bind:value="perro.id"
+                                               v-model="checkboxPerros">
                                         <label v-bind:for="'perro_' +perro.id">{{perro.nombre}}</label>
                                     </template>
                                 </div>
@@ -195,7 +198,7 @@
 
                 <div class="col-lg-6 col-lg-offset-3 padding-bottom-30">
                     <!-- progress button animation handled via custom.js -->
-                    <button class="progress-button button fullwidth margin-top-5">
+                    <button class="progress-button button fullwidth margin-top-5" v-on:click="postReserva">
                         <span>Confirmar Solicitud de Reserva</span>
                     </button>
                 </div>
@@ -222,15 +225,10 @@
 <script type="text/javascript" src="/assets/scripts/custom.js"></script>
 
 <!-- Maps -->
+
 <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
 <link href="../../assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
 <script src="../../assets/scripts/datedropper.js"></script>
-<script>$('#booking-date').dateDropper();</script>
-<script>$('#booking-date2').dateDropper();</script>
-
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"
-        async defer></script>
 
 <script src="/js/axios.min.js"></script>
 <script src="/js/vue.js"></script>
@@ -239,8 +237,7 @@
 <script type="text/javascript" src="/views/security/js/login.js"></script>
 <script src="js/reserva.js"></script>
 
-
-<style>
+ <style>
 
 
     #spinner {

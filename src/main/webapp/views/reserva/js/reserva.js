@@ -23,12 +23,24 @@ let vm = new Vue({
                 nombre: '',
             }
         ],
-        fechaReservaDesde: '',
-        fechaReservaHasta: '',
-        idCuidador: 0,
         isAuthenticated: false,
+        reserva: {
+            cuidador: {
+                id: null
+            },
+            perro: {
+                id: null
+            },
+            fechaInicio: "",
+            fechaFin: "",
+            precioTotal: 1,
+            status: 0
+        },
+        checkboxPerros:[]
     }
-    ,mounted(){
+    , mounted() {
+
+        this.bindDatePickerWithVue();
 
     },
     methods: {
@@ -42,7 +54,7 @@ let vm = new Vue({
                 })
                 .catch(error => {
                         console.log(error);
-                        sweetAlert("Oops...", "Error, de Cuidador ", "guau guau");
+                        sweetAlert("Oops...", "Error, de Cuidador ", "errorx");
                     }
                 );
         },
@@ -66,11 +78,7 @@ let vm = new Vue({
         loadReservaContent() {
             this.idCuidador = this.getParameterByName('id');
             this.getItems(this.urlCuidador, this.idCuidador);
-            var fecha = new Date();
-            this.fechaReservaDesde = fecha.toLocaleDateString();
-            this.fechaReservaHasta = fecha.toLocaleDateString();
             this.getPerros();
-
         },
         getPerros() {
             var childMylogin = this.$refs.mylogin;
@@ -83,11 +91,50 @@ let vm = new Vue({
                 })
                 .catch(error => {
                         console.log(error);
-                        sweetAlert("Oops...", "Error, de get perros ", "guau guau");
+                        sweetAlert("Oops...", "Error, ver consola", "error");
                     }
                 );
+        },
+        postReserva() {
+            this.reserva.perro.id = this.checkboxPerros[0];
+            this.reserva.cuidador.id = this.cuidador.id;
+
+            var childMylogin = this.$refs.mylogin;
+            var userId = childMylogin.user.id;
+            axios.post("/api/user/" + userId + "/reservas", this.reserva)
+                .then((response) => {
+                    sweetAlert("Guardado!", "Nueva reserva creada exitosamente.", "success");
+
+                })
+                .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error, ver consola", "error");
+
+                    }
+                );
+        },
+        bindDatePickerWithVue() {
+
+            // https://stackoverflow.com/questions/41200729/vue-js-and-jquery-datepicker-timepicker-two-way-binding
+            $('#booking-date').dateDropper();
+            $('#booking-date').change(function () {
+                console.log("date picker selected");
+                // var dateObjetc = $('#booking-date').datepicker("getDate");
+                //Java format: 2017-08-27
+                var dateString = $('#booking-date').val(); //the getDate method
+                vm.reserva.fechaInicio = dateString;
+            });
+
+            $('#booking-date2').dateDropper();
+            $('#booking-date2').change(function () {
+                console.log("date picker selected");
+                var dateString = $('#booking-date2').val(); //the getDate method
+                vm.reserva.fechaFin = dateString;
+            });
         }
+
 
     }
 });
+
 
