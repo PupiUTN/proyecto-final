@@ -44,7 +44,7 @@ let vm = new Vue({
                     this.item = response.data;
                     this.item.ciudad =this.item.user.direccion.ciudad;
                     document.getElementById("imagenAvatar").src = this.item.user.profileImageUrl;
-                 
+
                     this.loadImages(this.item.listaImagenes);
                     this.loadTamaño(this.item.tamaño);
                     this.geolocateCuidador(this.item.user.direccion);
