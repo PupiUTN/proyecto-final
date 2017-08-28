@@ -3,20 +3,23 @@ let vm= new Vue({
     data:{
         autocomplete:null,
         placeID:null,
-        placeLocation:null,
+        placeLat:null,
+        placeLng:null,
         placeName:null,
         location:'',
-        fechaReservaDesde: '',
-        fechaReservaHasta:'',
+        geoPlace:null,
 
     },
     mounted(){
         this.initDate();
         this.initAutocomplete();
-        //this.geolocate();
+        this.initGeolocate();
 
     },
     methods:{
+        toggleLoader() {
+            $('#spinner').toggle();
+        },
         initDate() {
             $('#booking-date-from').dateDropper();
             $('#booking-date-to').dateDropper();
@@ -44,7 +47,8 @@ let vm= new Vue({
 
                 } else {
                     this.placeID = null;
-                    this.placeLocation= null;
+                    this.placeLat=null;
+                    this.placeLng=null;
                     this.placeName= null;
                     this.location = '';
                     sweetAlert("Oops...", "No se encuentra la ciudad", "error");
@@ -53,32 +57,44 @@ let vm= new Vue({
 
         })
         },
-        geolocate() {
+        initGeolocate() {
+
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
-                    var lat = position.coords.latitude;
-                    var long = position.coords.longitude;
+                    let lat = position.coords.latitude;
+                    let long = position.coords.longitude;
                     //https://developers.google.com/maps/documentation/geocoding/start
-                    $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true', function (data) {
-                        var cityStatCountry = data.results[1].formatted_address;
-                        this.location = cityStatCountry;
-                        var place = data.results[1];
-                        autocomplete.set("place", place);
-                    });
-
-
+                    axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true')
+                        .then((data) => {
+                            var city = data.data.results[1];
+                            if (city.geometry) {
+                                vm.geoPlace = city;
+                                vm.toggleLoader();
+                            }
+                        });
                 });
-            };
+            }
+            ;
+        },
+        geolocate: function () {
+            if (this.geoPlace != null) {
+                let input = document.getElementById('location');
+                this.placeID = this.geoPlace.place_id;
+                this.placeLat = this.geoPlace.geometry.location.lat;
+                this.placeLng = this.geoPlace.geometry.location.lng;
+                this.placeName = this.geoPlace.formatted_address;
+                input.placeholder = this.placeName;
+            } else {
+                sweetAlert("Oops...", "Debe activar la geolocalizacion", "error");
+            }
+
         },
         buscar() {
             if (this.placeID != null) {
-                console.log(this.placeID);
-                console.log(this.fechaReservaDesde);
-                console.log(this.fechaReservaHasta);
-                window.location="/views/cuidadores/lista-cuidadores.html?placeName="+this.placeName+
-                "&placeID="+this.placeID+
-                "&lat="+this.placeLocation.lat()+
-                "&lng="+this.placeLocation.lng();
+                window.location.href = "http://localhost:8080/views/cuidadores/lista-cuidadores.html?placeName=" + this.placeName +
+                    "&placeID=" + this.placeID +
+                    "&lat=" + this.placeLat +
+                    "&lng=" + this.placeLng;
             } else {
                 sweetAlert("Oops...", "Ingrese una ciudad válida", "error");
                 //no se ejecuta en orden... ver mas adelante

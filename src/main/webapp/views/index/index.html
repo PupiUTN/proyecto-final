@@ -78,18 +78,18 @@
                                 <div class="main-search-input-item location">
                                     <input type="text" v-model="location" id="location" placeholder="Ciudad"/>
 
-                                    <a href="#" id="geo-location" onclick="geolocate()">
+                                    <a href="#" id="geo-location" v-on:click='geolocate'>
                                         <i class="fa fa-dot-circle-o"></i></a>
                                 </div>
 
                                 <div class="main-search-input-item">
-                                    <input type="text" id="booking-date-from" v-model="fechaReservaDesde"  placeholder="Fecha Desde" data-lang="es"
+                                    <input type="text" id="booking-date-from"  placeholder="Fecha Desde" data-lang="es"
                                            data-init-set="false"
                                            data-large-mode="true" data-large-default="true" data-min-year="2017"
                                            data-max-year="2020" data-lock="from">
                                 </div>
                                 <div class="main-search-input-item">
-                                    <input type="text" id="booking-date-to" v-model="fechaReservaHasta" placeholder="Fecha Hasta" data-lang="es"
+                                    <input type="text" id="booking-date-to" placeholder="Fecha Hasta" data-lang="es"
                                            data-init-set="false"
                                            data-large-mode="true" data-large-default="true" data-min-year="2017"
                                            data-max-year="2020" data-lock="from">
@@ -113,7 +113,7 @@
 
     <!-- Info Section -->
     <div class="container" >
-
+        <div id="spinner"></div>
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h2 class="headline centered margin-top-80">
