@@ -58,10 +58,6 @@ public class Cuidador implements Serializable {
         this.listaImagenes = listaImagenes;
     }
 
-    public String getDescripcio() {
-        return descripcion;
-    }
-
     public void SetDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
