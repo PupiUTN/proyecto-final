@@ -2,7 +2,7 @@ let vm = new Vue({
     el: '#appVue',
     data: {
         user: {},
-        dogs: {},
+        dogs: [],
         url: "/api/user/"
     },
     mounted() {
@@ -35,7 +35,7 @@ let vm = new Vue({
         getUserDogs() {
             axios.get(this.url + this.user.id + "/perros")
                 .then((response) => {
-                    this.dogs = response;
+                    this.dogs = response.data;
                 })
                 .catch(error => {
                     console.log(error);

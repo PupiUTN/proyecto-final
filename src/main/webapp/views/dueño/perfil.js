@@ -34,7 +34,7 @@ let vm = new Vue({
             };
             var autocomplete = new google.maps.places.Autocomplete(
                 /** @type {!HTMLInputElement} */(this.$refs.autocomplete),
-                {types: ['geocode']});
+                {types: ['geocode'], componentRestrictions: {country: "ar"}});
             autocomplete.addListener('place_changed', function() {
                 var place = autocomplete.getPlace();
                 for (var i = 0; i < place.address_components.length; i++) {

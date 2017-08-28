@@ -13,7 +13,6 @@ import java.util.List;
  */
 @Service
 public class PerroService {
-
     PerroRepository perroRepository;
 
     @Autowired
@@ -21,8 +20,8 @@ public class PerroService {
         this.perroRepository = perroRepository;
     }
 
-    public void createPerro(Perro entity) throws Exception {
-        perroRepository.save(entity);
+    public Perro createPerro(Perro entity) throws Exception {
+        return perroRepository.save(entity);
     }
 
     public List<Perro> getPerrosByUserId(Long id) throws Exception {

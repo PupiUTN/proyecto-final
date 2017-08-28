@@ -10,6 +10,7 @@ import app.services.PerroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,8 +23,8 @@ public class PerroUserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void createPerro(@PathVariable("idUser") Long id,@RequestBody Perro entity) throws Exception {
-        perroService.createPerro(entity);
+    public Perro createPerro(@PathVariable("idUser") Long id, @RequestBody @Valid Perro entity) throws Exception {
+        return perroService.createPerro(entity);
     }
 
     @RequestMapping(method = RequestMethod.GET)

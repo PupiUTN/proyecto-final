@@ -19,7 +19,7 @@ public class Perro implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
     @NotNull
     private String nombre;
@@ -37,6 +37,10 @@ public class Perro implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Imagen> listaImagenes;
     private String comentario;
+    @NotNull
+    private String sexo;
+    @NotNull
+    private String birthday;
 
 
     public Long getId() {
@@ -110,5 +114,21 @@ public class Perro implements Serializable {
 
     public void setListaImagenes(List<Imagen> listaImagenes) {
         this.listaImagenes = listaImagenes;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 }
