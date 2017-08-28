@@ -11,11 +11,12 @@ let vm = new Vue({
         placeLat:null,
         placeLng:null,
         placeName:null,
+        geoPlace:null,
 
 
     },
     mounted() {
-        //this.initGeolocate();
+        this.initGeolocate();
         this.initDate();
         this.initMap();
         this.initAutocomplete();
@@ -63,28 +64,36 @@ let vm = new Vue({
             });
 
         },
-        geolocate() {
+        initGeolocate(){
+
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
-                    let input = document.getElementById('location');
                     let lat = position.coords.latitude;
                     let long = position.coords.longitude;
                     //https://developers.google.com/maps/documentation/geocoding/start
                     axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true')
                         .then((data) => {
-                        var city=data.data.results[1];
-                        if (city.geometry) {
-                            vm.placeID = city.place_id;
-                            vm.placeLat = city.geometry.location.lat;
-                            vm.placeLng = city.geometry.location.lng;
-                            vm.placeName = city.formatted_address;
-                            input.placeholder=vm.placeName;
-                        }
-                    });
-                    console.log(this.placeID);
+                            var city=data.data.results[1];
+                            if (city.geometry) {
+                                vm.geoPlace=city;
+                                console.log(city);
+                            }
+                        });
                 });
             };
-            console.log(this.placeID);
+        },
+        geolocate: function () {
+            if (this.geoPlace != null) {
+                let input = document.getElementById('location');
+                this.placeID = this.geoPlace.place_id;
+                this.placeLat = this.geoPlace.geometry.location.lat;
+                this.placeLng = this.geoPlace.geometry.location.lng;
+                this.placeName = this.geoPlace.formatted_address;
+                input.placeholder = this.placeName;
+            } else {
+                sweetAlert("Oops...", "Debe activar la geolocalizacion", "error");
+            }
+
         },
         initMap() {
             var argentina = {lat: -37.0230271, lng: -64.6175935};
