@@ -2,7 +2,7 @@ let vm = new Vue({
     el: '#appVue',
     data: {
         autocomplete:null,
-        url: "/api/cuidadores/search",
+        url: "/api/cuidadores/search/",
         encontrados:'',
         items: [],
         formPost: true,
@@ -76,7 +76,6 @@ let vm = new Vue({
                             var city=data.data.results[1];
                             if (city.geometry) {
                                 vm.geoPlace=city;
-                                console.log(city);
                             }
                         });
                 });
@@ -105,6 +104,7 @@ let vm = new Vue({
         getCuidadores() {
             var input = document.getElementById('location');
             this.placeID = this.getParameterByName('placeID');
+
             if (this.placeID != null) {
                 //el placeholder de ciudad es la ciudad que le pasa el index
                 input.placeholder = this.getParameterByName('placeName');
@@ -115,11 +115,14 @@ let vm = new Vue({
                 var centro = new google.maps.LatLng(this.placeLat,this.placeLng);
                 this.map.setCenter(centro);
 
-                this
-                this.map.setZoom(12);
 
-                axios.get(this.url + '/?ciudadPlaceId=' + this.placeID)
+                this.map.setZoom(12);
+                let consulta=this.url + '?ciudadPlaceId=' + this.placeID;
+                console.log(consulta);
+                axios.get(consulta)
                     .then((response) => {
+                        console.log(this.placeID);
+                        console.log(response.data);
                         this.items = response.data;
                         this.encontrados = this.items.length;
                         if (this.items.length === 1) {
@@ -178,7 +181,7 @@ let vm = new Vue({
                         fillColor: '#FF0000',
                         fillOpacity: 0.35,
                         map: this.map,
-                        center: new google.maps.LatLng(item.direccion.latitud, item.direccion.longitud),
+                        center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
                         radius: 300,
                     });
 
@@ -187,7 +190,7 @@ let vm = new Vue({
                     var content =
                         '<div id="bodyContent">'+
                         '<a href="/views/cuidadores/cuidadores-perfil.html?id='+ id +'">'+
-                        '<h4>'+item.nombre+'</h4></a> '+
+                        '<h4>'+item.user.fullName+'</h4></a> '+
                         '</div>';
                     var infowindow = new google.maps.InfoWindow();
                     google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){

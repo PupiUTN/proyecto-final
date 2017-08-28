@@ -23,7 +23,7 @@ public class Cuidador implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Servicio> listaServicios;
 
 
