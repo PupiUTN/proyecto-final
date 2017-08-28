@@ -14,76 +14,75 @@
 </head>
 
 <body xmlns:v-bind="http://www.w3.org/1999/xhtml">
-<div id="appVue">
 
-    <!-- Wrapper -->
-    <div id="wrapper">
+<!-- Wrapper -->
+<div id="wrapper">
 
-        <!-- Header Container
-        ================================================== -->
-        <header id="header-container">
+    <!-- Header Container
+    ================================================== -->
+    <header id="header-container">
 
-            <!-- Header -->
-            <div id="header" class="not-sticky">
-                <div class="container">
+        <!-- Header -->
+        <div id="header" class="not-sticky">
+            <div class="container">
 
-                    <!-- Left Side Content -->
-                    <div class="left-side">
+                <!-- Left Side Content -->
+                <div class="left-side">
 
-                        <!-- Logo -->
-                        <div id="logo">
-                            <a href="../index/index.html"><img src="/assets/images/logo.png" alt=""></a>
-                        </div>
-
-                        <!-- Mobile Navigation -->
-                        <div class="menu-responsive">
-                            <i class="fa fa-reorder menu-trigger"></i>
-                        </div>
-
-                        <!-- Main Navigation -->
-                        <div class="clearfix"></div>
-                        <!-- Main Navigation / End -->
-
+                    <!-- Logo -->
+                    <div id="logo">
+                        <a href="../index/index.html"><img src="/assets/images/logo.png" alt=""></a>
                     </div>
-                    <!-- Left Side Content / End -->
 
-                    <!-- Right Side Content / End -->
-                    <my-login v-on:is-authenticated="isAuthenticatedMethod" ref="mylogin"></my-login>
-                    <!-- Right Side Content / End -->
+                    <!-- Mobile Navigation -->
+                    <div class="menu-responsive">
+                        <i class="fa fa-reorder menu-trigger"></i>
+                    </div>
 
+                    <!-- Main Navigation -->
+                    <div class="clearfix"></div>
+                    <!-- Main Navigation / End -->
 
                 </div>
+                <!-- Left Side Content / End -->
+
+                <!-- Right Side Content / End -->
+                <my-login v-on:is-authenticated="isAuthenticatedMethod" ref="mylogin"></my-login>
+                <!-- Right Side Content / End -->
+
+
             </div>
-            <!-- Header / End -->
+        </div>
+        <!-- Header / End -->
 
-        </header>
-        <div class="clearfix"></div>
-        <!-- Header Container / End -->
+    </header>
+    <div class="clearfix"></div>
+    <!-- Header Container / End -->
 
 
-        <div id="spinner"></div>
+    <div id="spinner"></div>
 
-        <!-- Content
-        ================================================== -->
-        <div class="container">
-            <form v-on:submit.prevent="postReserva">
-                <div class="form-group">
-                    <!--cuidador resume-->
-                    <div class="col-lg-6 col-md-12 col-lg-offset-3 ">
+    <!-- Content
+    ================================================== -->
+    <div class="container">
+        <form v-on:submit.prevent="postReserva">
+            <div class="form-group">
+                <!--cuidador resume-->
+                <div class="col-lg-6 col-md-12 col-lg-offset-3 ">
 
-                        <!-- Titlebar -->
-                        <div id="titlebar" class="listing-titlebar padding-bottom-35 padding-top-35 padding-left-35">
-                            <div class="listing-titlebar-title">
+                    <!-- Titlebar -->
+                    <div id="titlebar" class="listing-titlebar padding-bottom-35 padding-top-35 padding-left-35">
+                        <div class="listing-titlebar-title">
 
-                                <h2 id="nombre"> {{cuidador.user.fullName}} <span class="listing-tag">Cuidador</span>
-                                </h2>
+                            <h2 id="nombre"> {{cuidador.user.fullName}} <span class="listing-tag">Cuidador</span>
+                            </h2>
 
-                                <div class="card-image col s3 ">
+                            <div class="card-image col s3 ">
 
-                                </div>
+                            </div>
 
-                                <input type="hidden" value="" name="test">
-                                <span>
+                            <input type="hidden" value="" name="test">
+                            <span>
 
 							<a href="#listing-location" class="listing-address">
 							<i class="fa fa-map-marker"></i>
@@ -95,121 +94,120 @@
 							Cantidad maxima de perros: {{cuidador.cantidadMaxDePerros}}
 
 					</span>
-                                <div class="star-rating" data-rating="5">
-                                    <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
-                                </div>
+                            <div class="star-rating" data-rating="5">
+                                <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
                             </div>
                         </div>
-
-                    </div>
-                    <!-- Fechas -->
-                    <div class="col-lg-6 col-md-12 col-lg-offset-3">
-
-                        <!-- Book Now -->
-                        <div class="boxed-widget">
-                            <h3><i class="fa fa-calendar-check-o "></i> Fechas de Reserva </h3>
-                            <div class="row with-forms  margin-top-0">
-
-                                <div class="col-lg-6 col-md-12">
-                                    <label style=" margin-top: 12px;">Entrada </label>
-                                </div>
-
-                                <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-                                <div id="booking-date-col" class="col-lg-6 col-md-12 form-group">
-                                    <input type="text" v-model="reserva.fechaInicio"
-                                           data-format=" Y-m-d" id="booking-date"
-                                           data-lang="es" data-init-set="false"
-                                           data-large-mode="true" data-large-default="true" data-min-year="2017"
-                                           data-max-year="2020" data-lock="from"
-                                           class="required" ref="bookingDate"/>
-                                </div>
-
-                            </div>
-                            <div class="row with-forms  margin-top-0">
-
-                                <div class="col-lg-6 col-md-12">
-                                    <label style=" margin-top: 12px;">Salida </label>
-                                </div>
-                                <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-                                <div class="col-lg-6 col-md-12">
-
-                                    <input type="text" v-model="reserva.fechaFin"
-                                           style="text-align: center; font-size: 16px; font-weight: 600"
-                                           data-format=" Y-m-d" id="booking-date2" data-lang="es"
-                                           data-init-set="false"
-                                           data-large-mode="true" data-large-default="true" data-min-year="2017"
-                                           data-max-year="2020" data-lock="from"
-                                           class="required"/>
-                                </div>
-
-
-                            </div>
-
-                        </div>
-                        <!-- Book Now / End -->
-
-
-                    </div>
-                    <!-- perros-->
-                    <div class="col-lg-6 col-md-12 col-lg-offset-3">
-
-                        <!-- Book Now -->
-                        <div class="boxed-widget">
-                            <h3><i class="fa  fa-heart-o"></i>Mis Perros </h3>
-                            <div class="row with-forms  margin-top-0">
-
-                                <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="checkboxes in-row margin-top-0">
-                                        <template v-for="perro in perros">
-                                            <input v-bind:id="'perro_' +perro.id" type="checkbox" name="check"
-                                                   v-bind:value="perro.id"
-                                                   v-model="checkboxPerros">
-                                            <label v-bind:for="'perro_' +perro.id">{{perro.nombre}}</label>
-                                        </template>
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <!-- Book Now / End -->
-
-                    </div>
-                    <!--mensaje-->
-                    <div class="col-lg-6 col-md-12 col-lg-offset-3">
-
-                        <!-- Book Now -->
-                        <div class="boxed-widget">
-                            <h3><i class="fa  fa-pencil-square-o "></i> Mensaje </h3>
-                            <div class="row with-forms  margin-top-0">
-
-                                <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-                                <div class="col-lg-12 col-md-12">
-                                    <textarea name="summary" spellcheck="true" required></textarea>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <!-- Book Now / End -->
-
-                    </div>
-
-
-                    <div class="col-lg-6 col-lg-offset-3 padding-bottom-30">
-                        <!-- progress button animation handled via custom.js -->
-                        <button class="progress-button button fullwidth margin-top-5">
-                            <span>Confirmar Solicitud de Reserva</span>
-                        </button>
                     </div>
 
                 </div>
-            </form>
-        </div>
-        <!-- Wrapper / End -->
+                <!-- Fechas -->
+                <div class="col-lg-6 col-md-12 col-lg-offset-3">
+
+                    <!-- Book Now -->
+                    <div class="boxed-widget">
+                        <h3><i class="fa fa-calendar-check-o "></i> Fechas de Reserva </h3>
+                        <div class="row with-forms  margin-top-0">
+
+                            <div class="col-lg-6 col-md-12">
+                                <label style=" margin-top: 12px;">Entrada </label>
+                            </div>
+
+                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+                            <div id="booking-date-col" class="col-lg-6 col-md-12 form-group">
+                                <input type="text" v-model="reserva.fechaInicio"
+                                       data-format=" Y-m-d" id="booking-date"
+                                       data-lang="es" data-init-set="false"
+                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
+                                       data-max-year="2020" data-lock="from"
+                                       class="required" ref="bookingDate"/>
+                            </div>
+
+                        </div>
+                        <div class="row with-forms  margin-top-0">
+
+                            <div class="col-lg-6 col-md-12">
+                                <label style=" margin-top: 12px;">Salida </label>
+                            </div>
+                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+                            <div class="col-lg-6 col-md-12">
+
+                                <input type="text" v-model="reserva.fechaFin"
+                                       style="text-align: center; font-size: 16px; font-weight: 600"
+                                       data-format=" Y-m-d" id="booking-date2" data-lang="es"
+                                       data-init-set="false"
+                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
+                                       data-max-year="2020" data-lock="from"
+                                       class="required"/>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <!-- Book Now / End -->
+
+
+                </div>
+                <!-- perros-->
+                <div class="col-lg-6 col-md-12 col-lg-offset-3">
+
+                    <!-- Book Now -->
+                    <div class="boxed-widget">
+                        <h3><i class="fa  fa-heart-o"></i>Mis Perros </h3>
+                        <div class="row with-forms  margin-top-0">
+
+                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+                            <div class="col-lg-12 col-md-12">
+                                <div class="checkboxes in-row margin-top-0">
+                                    <template v-for="perro in perros">
+                                        <input v-bind:id="'perro_' +perro.id" type="checkbox" name="check"
+                                               v-bind:value="perro.id"
+                                               v-model="checkboxPerros">
+                                        <label v-bind:for="'perro_' +perro.id">{{perro.nombre}}</label>
+                                    </template>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- Book Now / End -->
+
+                </div>
+                <!--mensaje-->
+                <div class="col-lg-6 col-md-12 col-lg-offset-3">
+
+                    <!-- Book Now -->
+                    <div class="boxed-widget">
+                        <h3><i class="fa  fa-pencil-square-o "></i> Mensaje </h3>
+                        <div class="row with-forms  margin-top-0">
+
+                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+                            <div class="col-lg-12 col-md-12">
+                                <textarea name="summary" spellcheck="true" required></textarea>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- Book Now / End -->
+
+                </div>
+
+
+                <div class="col-lg-6 col-lg-offset-3 padding-bottom-30">
+                    <!-- progress button animation handled via custom.js -->
+                    <button class="progress-button button fullwidth margin-top-5">
+                        <span>Confirmar Solicitud de Reserva</span>
+                    </button>
+                </div>
+
+            </div>
+        </form>
     </div>
+    <!-- Wrapper / End -->
 </div>
 
 <!-- Scripts
