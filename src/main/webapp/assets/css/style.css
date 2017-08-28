@@ -12081,7 +12081,7 @@ img.mfp-img {
 	    height: 30px;
 	}
 
-	.avatar { display: none; }
+	.avatar { /*display: none; */}
 	.comment-content { padding: 0 ;}
 
 	.small-dialog-header h3 {
@@ -12162,7 +12162,7 @@ img.mfp-img {
 	#posts-nav li a::before { display: none;}
 	#posts-nav li.next-post {text-align: left; margin-bottom: 30px;}	.comments ul li ul { margin: 0;  }
 
-	.avatar img {  max-width: 60px;  }
+	.avatar img {  max-width: 90px;  }
 	.comment-content {   padding: 0 0 0 85px; }
 	.comments ul li ul li::before { top: 25px; }
 	.comment-content {
