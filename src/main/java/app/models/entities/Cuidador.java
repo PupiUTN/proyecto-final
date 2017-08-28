@@ -26,6 +26,9 @@ public class Cuidador implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Servicio> listaServicios;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private  Tamaño tamaño;
+
 
     public Cuidador() {
     }
@@ -53,10 +56,6 @@ public class Cuidador implements Serializable {
 
     public void setListaImagenes(List<Imagen> listaImagenes) {
         this.listaImagenes = listaImagenes;
-    }
-
-    public String getDescripcio() {
-        return descripcion;
     }
 
     public void SetDescripcion(String descripcion) {
@@ -89,6 +88,22 @@ public class Cuidador implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Servicio> getListaServicios() {
+        return listaServicios;
+    }
+
+    public void setListaServicios(List<Servicio> listaServicios) {
+        this.listaServicios = listaServicios;
+    }
+
+    public Tamaño getTamaño() {
+        return tamaño;
+    }
+
+    public void setTamaño(Tamaño tamaño) {
+        this.tamaño = tamaño;
     }
 
 
