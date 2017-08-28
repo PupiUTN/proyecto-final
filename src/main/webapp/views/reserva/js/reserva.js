@@ -31,12 +31,13 @@ let vm = new Vue({
             perro: {
                 id: null
             },
-            fechaInicio: "",
-            fechaFin: "",
+            fechaInicio: '',
+            fechaFin: '',
             precioTotal: 1,
             status: 0
         },
-        checkboxPerros:[]
+        checkboxPerros: [],
+        isMounted: false
     }
     , mounted() {
 
@@ -99,17 +100,40 @@ let vm = new Vue({
             this.reserva.perro.id = this.checkboxPerros[0];
             this.reserva.cuidador.id = this.cuidador.id;
 
+
+            if (this.reserva.fechaInicio == '') {
+                console.log("fecha inicio vacia");
+                return;
+            }
+            if (this.reserva.fechaFin == '') {
+                console.log("fecha fin vacia");
+                return;
+            }
+            if (this.reserva.perro.id == null) {
+                console.log("seleccionar perro");
+                return;
+            }
+
+
             var childMylogin = this.$refs.mylogin;
             var userId = childMylogin.user.id;
             axios.post("/api/user/" + userId + "/reservas", this.reserva)
                 .then((response) => {
-                    sweetAlert("Guardado!", "Nueva reserva creada exitosamente.", "success");
+                    sweetAlert({
+                            title: "Guardado",
+                            text: "Nueva reserva creada exitosamente.",
+                            type: "success",
+                            timer: 2000,
+                        },
+                        function () {
+                            console.log("redirect");
+                            document.location.href="/";
+                        });
 
                 })
                 .catch(error => {
                         console.log(error);
                         sweetAlert("Oops...", "Error, ver consola", "error");
-
                     }
                 );
         },
@@ -134,7 +158,20 @@ let vm = new Vue({
         }
 
 
-    }
+    },
+    computed: {
+        formValidation() {
+            if (!this.isMounted)
+                return;
+            var confirm_password = this.$refs.bookingDate;
+            if (this.reserva.fechaInicio !== '') {
+                confirm_password.setCustomValidity("Passwords Don't Match");
+                return true;
+            }
+            confirm_password.setCustomValidity("");
+            return false;
+        }
+    },
 });
 
 
