@@ -8,17 +8,18 @@ let vm = new Vue({
         formPost: true,
         map:null,
         placeID:null,
-        placeLocation:null,
+        placeLat:null,
+        placeLng:null,
         placeName:null,
-        location:'',
+
 
     },
     mounted() {
+        //this.initGeolocate();
         this.initDate();
         this.initMap();
         this.initAutocomplete();
         this.getCuidadores();
-        this.geolocate();
 
     },
     methods: {
@@ -46,10 +47,10 @@ let vm = new Vue({
                 input.placeholder = 'Ciudad';
                 let place = autocomplete.getPlace();
                 if (place.geometry) {
-                    this.placeID = place.place_id;
-                    this.placeLocation= place.geometry.location;
-                    this.placeName= input.value;
-
+                    vm.placeID = place.place_id;
+                    vm.placeLat=place.geometry.location.lat();
+                    vm.placeLng=place.geometry.location.lng();
+                    vm.placeName= input.value;
 
 
                 } else {
@@ -65,24 +66,25 @@ let vm = new Vue({
         geolocate() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
-                    var input = document.getElementById('location');
-                    var lat = position.coords.latitude;
-                    var long = position.coords.longitude;
+                    let input = document.getElementById('location');
+                    let lat = position.coords.latitude;
+                    let long = position.coords.longitude;
                     //https://developers.google.com/maps/documentation/geocoding/start
-                    $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true', function (data) {
-                        var cityStatCountry = data.results[1].formatted_address;
-                        this.location = cityStatCountry;
-                        var place = data.results[1];
-                        input.placeholder = 'Ciudad';
-                        if (place.geometry) {
-                            this.placeID = place.place_id;
-                            this.placeLocation = place.geometry.location;
-                            this.placeName = input.value;
-                            input.placeholder = place.name;
+                    axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true')
+                        .then((data) => {
+                        var city=data.data.results[1];
+                        if (city.geometry) {
+                            vm.placeID = city.place_id;
+                            vm.placeLat = city.geometry.location.lat;
+                            vm.placeLng = city.geometry.location.lng;
+                            vm.placeName = city.formatted_address;
+                            input.placeholder=vm.placeName;
                         }
                     });
+                    console.log(this.placeID);
                 });
-            }
+            };
+            console.log(this.placeID);
         },
         initMap() {
             var argentina = {lat: -37.0230271, lng: -64.6175935};
@@ -93,16 +95,21 @@ let vm = new Vue({
         },
         getCuidadores() {
             var input = document.getElementById('location');
-            var placeID = this.getParameterByName('placeID');
-            if (placeID != null) {
+            this.placeID = this.getParameterByName('placeID');
+            if (this.placeID != null) {
                 //el placeholder de ciudad es la ciudad que le pasa el index
                 input.placeholder = this.getParameterByName('placeName');
+                this.placeName=input.placeholder;
                 //crea un objeto como los pueda leer google maps
-                var centro = new google.maps.LatLng(this.getParameterByName('lat'), this.getParameterByName('lng'))
+                this.placeLat=this.getParameterByName('lat');
+                this.placeLng=this.getParameterByName('lng');
+                var centro = new google.maps.LatLng(this.placeLat,this.placeLng);
                 this.map.setCenter(centro);
+
+                this
                 this.map.setZoom(12);
 
-                axios.get(this.url + '/?ciudadPlaceId=' + placeID)
+                axios.get(this.url + '/?ciudadPlaceId=' + this.placeID)
                     .then((response) => {
                         this.items = response.data;
                         this.encontrados = this.items.length;
@@ -137,11 +144,10 @@ let vm = new Vue({
         //al presionar el boton buscar, recarga la pagina con los datos nuevos
         buscar() {
             if (this.placeID != null) {
-                console.log(this.placeID);
                 window.location.href = "http://localhost:8080/views/cuidadores/lista-cuidadores.html?placeName=" + this.placeName +
                     "&placeID=" + this.placeID +
-                    "&lat=" + this.placeLocation.lat() +
-                    "&lng=" + this.placeLocation.lng();
+                    "&lat=" + this.placeLat +
+                    "&lng=" + this.placeLng;
             } else {
                 sweetAlert("Oops...", "Ingrese una ciudad válida", "error");
                 //no se ejecuta en orden... ver mas adelante
