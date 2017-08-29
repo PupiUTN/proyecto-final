@@ -239,43 +239,76 @@ let vm = new Vue({
         //añade los marcadores al mapa
         mostrarEnMapa(){
             if(this.items!=null&&this.items.length>0){
-                var bounds = new google.maps.LatLngBounds();
-                for(item of this.items) {
-                    var marker = new google.maps.Circle({
-                        strokeColor: '#FF0000',
-                        strokeOpacity: 0.8,
-                        strokeWeight: 2,
-                        fillColor: '#FF0000',
-                        fillOpacity: 0.35,
-                        map: this.map,
-                        center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
-                        radius: 300,
-                    });
+                if(this.items.length>1){
+                    var bounds = new google.maps.LatLngBounds();
+                    for(item of this.items) {
+                        var marker = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: this.map,
+                            center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
+                            radius: 300,
+                        });
 
-                    //extend the bounds to include each marker's position
-                    var id = item.id;
-                    var content =
-                        '<div id="bodyContent">'+
-                        '<a href="/views/cuidadores/cuidadores-perfil.html?id='+ id +'">'+
-                        '<h4>'+item.user.fullName+'</h4></a> '+
-                        '</div>';
-                    var infowindow = new google.maps.InfoWindow();
-                    google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
-                        return function() {
-                            infowindow.setContent(content);
-                            infowindow.setPosition(marker.getCenter());
-                            infowindow.open(this.map,marker);
+                        //extend the bounds to include each marker's position
+                        var id = item.id;
+                        var content =
+                            '<div id="bodyContent">'+
+                            '<a href="/views/cuidadores/cuidadores-perfil.html?id='+ id +'">'+
+                            '<h4>'+item.user.fullName+'</h4></a> '+
+                            '</div>';
+                        var infowindow = new google.maps.InfoWindow();
+                        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+                            return function() {
+                                infowindow.setContent(content);
+                                infowindow.setPosition(marker.getCenter());
+                                infowindow.open(this.map,marker);
 
-                        };
-                    })(marker,content,infowindow));
-                    bounds.extend(marker.center);
+                            };
+                        })(marker,content,infowindow));
+                        bounds.extend(marker.center);
 
+                    }
+
+                    //now fit the map to the newly inclusive bounds
+                    this.map.fitBounds(bounds);
+
+                }else {
+                    for (item of this.items) {
+                        var marker = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: this.map,
+                            center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
+                            radius: 300,
+                        });
+
+                        //extend the bounds to include each marker's position
+                        var id = item.id;
+                        var content =
+                            '<div id="bodyContent">' +
+                            '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
+                            '<h4>' + item.user.fullName + '</h4></a> ' +
+                            '</div>';
+                        var infowindow = new google.maps.InfoWindow();
+                        google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
+                            return function () {
+                                infowindow.setContent(content);
+                                infowindow.setPosition(marker.getCenter());
+                                infowindow.open(this.map, marker);
+
+                            };
+                        })(marker, content, infowindow));
+                    }
+                }
                 }
 
-                //now fit the map to the newly inclusive bounds
-                this.map.fitBounds(bounds);
-
-            }
         },
     }
 
