@@ -70,6 +70,9 @@ let vm = new Vue({
                 vm.perro.listaVacunas.push(vacuna);
             });
             console.log(vm.perro);
+            if(this.perro.birthday === undefined) {
+                this.perro.birthday = "10-10-2016";
+            }
             axios.post(this.url + this.user.id + "/perros", vm.perro)
                 .then((response) => {
                     this.toggleLoader();
