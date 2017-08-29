@@ -17,8 +17,8 @@ public class Reserva implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Temporal(TemporalType.DATE)
-    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
     private Date fechaTransaccion;
     @ManyToOne
     @NotNull
@@ -35,11 +35,10 @@ public class Reserva implements Serializable {
     @NotNull
     private Date fechaFin;
 
-    @NotNull
     private float precioTotal;
 
     @NotNull
-    private int status;
+    private int status; //0: Pendiente, 1:Aceptada por Cuidador, 2: Aceptada por User
 
 
     public Reserva() {
