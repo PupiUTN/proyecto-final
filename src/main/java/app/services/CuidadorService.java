@@ -6,6 +6,7 @@ import app.persistence.CuidadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,5 +46,9 @@ public class CuidadorService {
 
     public List<Cuidador> getCuidadoresPorCiudadPlaceId(String ciudadPlaceId) {
         return cuidadorRepository.findAllbyCiudadPlaceId(ciudadPlaceId);
+    }
+    public List<Cuidador> getCuidadoresPorCiudadYFecha(String ciudadPlaceId, Date from, Date to) {
+
+        return cuidadorRepository.findAllbyCiudadYFecha(ciudadPlaceId, from, to);
     }
 }

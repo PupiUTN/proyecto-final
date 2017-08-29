@@ -22,10 +22,8 @@ public class Cuidador implements Serializable {
     private float precioPorNoche;
     @OneToOne
     private User user;
-
     @OneToMany
     private List<Servicio> listaServicios;
-
     @OneToOne
     private  Tamaño tamaño;
 
