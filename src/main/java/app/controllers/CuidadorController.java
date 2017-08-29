@@ -39,7 +39,7 @@ public class CuidadorController {
     public List<Cuidador> getCuidadoresPorDireccionYFechasReseva(
             @RequestParam(value = "ciudadPlaceId", required = false) String ciudadPlaceId,
             @RequestParam(value = "from", required = false) Date from,
-            @RequestParam(value = "from", required = false) Date to) throws Exception {
+            @RequestParam(value = "to", required = false) Date to) throws Exception {
 
         if(from==null&& to==null){
             return cuidadorService.getCuidadoresPorCiudadPlaceId(ciudadPlaceId);

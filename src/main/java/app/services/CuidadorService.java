@@ -48,6 +48,7 @@ public class CuidadorService {
         return cuidadorRepository.findAllbyCiudadPlaceId(ciudadPlaceId);
     }
     public List<Cuidador> getCuidadoresPorCiudadYFecha(String ciudadPlaceId, Date from, Date to) {
-        return cuidadorRepository.findAllbyCiudadYFecha(ciudadPlaceId, from, to);
+
+        return cuidadorRepository.findAllbyCiudadYFecha(ciudadPlaceId);
     }
 }

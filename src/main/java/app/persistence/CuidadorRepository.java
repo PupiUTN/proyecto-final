@@ -18,12 +18,11 @@ public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
     @Query("select c from Cuidador c where c.user.direccion.ciudadPlaceId = :#{#ciudadPlaceId}")
     List<Cuidador> findAllbyCiudadPlaceId (@Param("ciudadPlaceId")String ciudadPlaceId);
 
-    @Query("select DISTINCT c from Reserva r JOIN r.cuidador c " +
+    @Query("select DISTINCT c from Cuidador c " +
             " where c.user.direccion.ciudadPlaceId = :#{#ciudadPlaceId} " +
-            "AND r.fechaInicio not BETWEEN :#{#from} " +
-            "AND :#{#to}")
-    List<Cuidador> findAllbyCiudadYFecha(@Param("ciudadPlaceId")String ciudadPlaceId,
-                                         @Param("from")Date from,
-                                         @Param("to")Date to);
+
+            "OR r.id is null")
+    List<Cuidador> findAllbyCiudadYFecha(@Param("ciudadPlaceId")String ciudadPlaceId
+                                         );
 
 }

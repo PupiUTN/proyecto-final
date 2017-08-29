@@ -123,8 +123,8 @@ let vm = new Vue({
                 if(this.dateFrom!=null){
                     this.dateTo=this.getParameterByName('to');
                     if(this.dateTo>=this.dateFrom){
-                        consulta+='?from='+this.dateFrom+
-                            '?to='+this.dateTo;
+                        consulta+='&from='+this.dateFrom+
+                            '&to='+this.dateTo;
                         axios.get(consulta)
                             .then((response) => {
                                 console.log(this.placeID);
