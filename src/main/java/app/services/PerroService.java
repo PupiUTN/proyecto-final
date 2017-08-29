@@ -29,4 +29,8 @@ public class PerroService {
         user.setId(id);
         return perroRepository.findAllByUser(user);
     }
+
+    public Perro getPerro(Long perroId) throws  Exception {
+        return perroRepository.findOne(perroId);
+    }
 }

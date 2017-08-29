@@ -19,7 +19,7 @@ public class Perro implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
     @NotNull
     private String nombre;
@@ -29,7 +29,7 @@ public class Perro implements Serializable {
     @ManyToOne
     @NotNull
     private Tamaño tamaño;
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Vacuna> listaVacunas;
     @NotNull
     @NotEmpty

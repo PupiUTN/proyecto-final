@@ -3,7 +3,7 @@
 
     <!-- Basic Page Needs
     ================================================== -->
-    <title>Mis Perros</title>
+    <title>Nuevo Perro</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -11,6 +11,7 @@
     ================================================== -->
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"></script>
 
 </head>
 
@@ -18,14 +19,14 @@
 
 <!-- Wrapper -->
 <div id="wrapper">
-    <div id="appVue">
+    <div  id="appVue">
 
         <!-- Header Container
         ================================================== -->
-        <header id="header-container">
+        <header id="header-container" class="fixed fullwidth dashboard">
 
             <!-- Header -->
-            <div id="header">
+            <div id="header" class="not-sticky">
                 <div class="container">
 
                     <!-- Left Side Content -->
@@ -34,6 +35,7 @@
                         <!-- Logo -->
                         <div id="logo">
                             <a href="/views/index/index.html"><img src="/assets/images/logo.png" alt=""></a>
+                            <a href="/views/index/index.html" class="dashboard-logo"><img src="/assets/images/logo2.png" alt=""></a>
                         </div>
 
                         <!-- Mobile Navigation -->
@@ -54,7 +56,7 @@
                                     </ul>
                                 </li>
 
-                                <li><a class="current" href="#">Listings</a>
+                                <li><a href="#">Listings</a>
                                     <ul>
                                         <li><a href="#">List Layout</a>
                                             <ul>
@@ -72,17 +74,15 @@
                                         <li><a href="#">Half Screen Map</a>
                                             <ul>
                                                 <li><a href="listings-half-screen-map-list.html">List Layout</a></li>
-                                                <li><a href="listings-half-screen-map-grid-1.html">Grid Layout 1</a>
-                                                </li>
-                                                <li><a href="listings-half-screen-map-grid-2.html">Grid Layout 2</a>
-                                                </li>
+                                                <li><a href="listings-half-screen-map-grid-1.html">Grid Layout 1</a></li>
+                                                <li><a href="listings-half-screen-map-grid-2.html">Grid Layout 2</a></li>
                                             </ul>
                                         </li>
                                         <li><a href="listings-single-page.html">Single Listing</a></li>
                                     </ul>
                                 </li>
 
-                                <li><a href="#">User Panel</a>
+                                <li><a class="current" href="#">User Panel</a>
                                     <ul>
                                         <li><a href="dashboard.html">Dashboard</a></li>
                                         <li><a href="dashboard-messages.html">Messages</a></li>
@@ -126,7 +126,6 @@
                     </div>
                     <!-- Right Side Content / End -->
 
-
                 </div>
             </div>
             <!-- Header / End -->
@@ -136,159 +135,150 @@
         <!-- Header Container / End -->
 
 
-        <!-- Titlebar
-        ================================================== -->
-        <div id="titlebar" class="gradient">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
+        <!-- Dashboard -->
+        <div id="dashboard">
 
-                        <h2>Mis Perros</h2><span>Agrega a tus mejores amigos</span>
+            <!-- Navigation
+            ================================================== -->
 
-                        <!-- Breadcrumbs -->
-                        <nav id="breadcrumbs">
+            <!-- Responsive Navigation Trigger -->
+            <a href="#" class="dashboard-responsive-nav-trigger"><i class="fa fa-reorder"></i> Dashboard Navigation</a>
+
+            <div class="dashboard-nav">
+                <div class="dashboard-nav-inner">
+
+                    <ul data-submenu-title="Main">
+                        <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
+                        <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages <span class="nav-tag messages">2</span></a></li>
+                    </ul>
+
+                    <ul data-submenu-title="Listings">
+                        <li><a><i class="sl sl-icon-layers"></i> My Listings</a>
                             <ul>
-                                <a href="/views/perros/registrar-perro.html" class="button border with-icon">Añadir
-                                    Perro <i class="sl sl-icon-plus"></i></a>
+                                <li><a href="dashboard-my-listings.html">Active <span class="nav-tag green">6</span></a></li>
+                                <li><a href="dashboard-my-listings.html">Pending <span class="nav-tag yellow">1</span></a></li>
+                                <li><a href="dashboard-my-listings.html">Expired <span class="nav-tag red">2</span></a></li>
                             </ul>
-                        </nav>
+                        </li>
+                        <li><a href="dashboard-reviews.html"><i class="sl sl-icon-star"></i> Reviews</a></li>
+                        <li><a href="dashboard-bookmarks.html"><i class="sl sl-icon-heart"></i> Bookmarks</a></li>
+                        <li><a href="dashboard-add-listing.html"><i class="sl sl-icon-plus"></i> Add Listing</a></li>
+                    </ul>
 
-                    </div>
+                    <ul data-submenu-title="Account">
+                        <li class="active"><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
+                        <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
+                    </ul>
+
                 </div>
             </div>
-        </div>
+            <!-- Navigation / End -->
 
 
-        <!-- Content
-        ================================================== -->
-        <div class="container">
-            <div class="row">
-                <div id="spinner"></div>
+            <!-- Content
+            ================================================== -->
+            <div class="dashboard-content">
 
-                <div class="col-lg-12 col-md-12 padding-right-30">
-
+                <!-- Titlebar -->
+                <div id="titlebar">
                     <div class="row">
+                        <div class="col-md-12">
+                            <h2>Nuevo Perro</h2>
+                            <!-- Breadcrumbs -->
+                            <nav id="breadcrumbs">
+                                <ul>
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">Dashboard</a></li>
+                                    <li>My Profile</li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
 
-                        <!-- Listing Item -->
-                        <div v-show="dogs.length > 0" v-for="dog in dogs" :id="dog.id" class="col-lg-6 col-md-12">
-                            <div class="listing-item-container list-layout">
-                                <a href="#" class="listing-item">
+                <div class="row">
 
-                                    <!-- Image -->
-                                    <div class="listing-item-image">
-                                        <img :src="dog.fotoPerfil" alt="">
-                                        <span class="tag"> {{dog.raza.nombre}} </span>
-                                    </div>
-
-                                    <!-- Content -->
-                                    <div class="listing-item-content">
-                                        <div class="listing-badge now-open"> {{dog.tamaño.nombre}}</div>
-
-                                        <div class="listing-item-inner">
-                                            <h3>{{dog.nombre}}</h3>
-                                            <span>{{dog.comentario}}</span>
-                                            <div class="star-rating" data-rating="3.5">
-                                                <div class="rating-counter">(12 reviews)</div>
+                    <!-- Profile -->
+                    <div class="col-lg-12 col-md-12">
+                        <div class="dashboard-list-box margin-top-0">
+                            <h4 class="gray">Profile Details</h4>
+                            <div class="dashboard-list-box-static">
+                                <form id="imageForm" enctype="multipart/form-data">
+                                    <!-- Avatar -->
+                                    <div class="edit-profile-photo">
+                                        <img :src="perro.fotoPerfil" alt="">
+                                        <div class="change-photo-btn">
+                                            <div class="photoUpload">
+                                                <span><i class="fa fa-upload"></i> Subir Foto</span>
+                                                <input type="file" id="imageFile" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
                                             </div>
                                         </div>
-
-                                        <!--<span class="like-icon"></span>-->
                                     </div>
-                                </a>
+                                </form>
+
+                                <!-- Details -->
+                                <div class="my-profile">
+
+                                    <label>Nombre</label>
+                                    <input v-model="perro.nombre" value="" type="text">
+
+                                    <label>Fecha de Nacimiento</label>
+                                    <input v-model="perro.birthday" type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to">
+
+                                    <label>Sexo</label>
+                                    <select v-model="perro.sexo">
+                                        <option disabled value="">Seleccionar Sexo</option>
+                                        <option>Macho</option>
+                                        <option>Hembra</option>
+                                    </select>
+
+
+                                    <label>Raza</label>
+                                    <select v-model="raza.id">
+                                        <option disabled value="">Seleccionar Raza</option>
+                                        <option v-for="raza in razas" :value="raza.id">
+                                            {{ raza.nombre }}
+                                        </option>
+                                    </select>
+
+                                    <label>Vacunas</label>
+                                    <div class="checkboxes in-row margin-bottom-20">
+                                        <div v-for="vacuna in vacunas">
+                                        <input :id="vacuna.id" type="checkbox" :value="vacuna.id" v-model="listaVacunas">
+                                        <label :for="vacuna.id">{{vacuna.nombre}}</label>
+                                        </div>
+                                    </div>
+
+                                    <label>Tamaño</label>
+                                    <select v-model="tamaño.id">
+                                        <option disabled value="">Seleccionar Tamaño</option>
+                                        <option v-for="tamaño in sizes" :value="tamaño.id">
+                                            {{tamaño.nombre}} - Entre {{tamaño.valorMinimo}} y {{tamaño.valorMaximo}} kg
+                                        </option>
+                                    </select>
+
+
+                                </div>
+
+                                <button v-on:click='saveDog()' class="button margin-top-15">Guardar</button>
+
                             </div>
                         </div>
-
-                        <div v-show="dogs.length == 0">
-                            <h3>{{message}}</h3>
-                        </div>
-                        <!-- Listing Item / End -->
-
-                        <!-- Pagination -->
-                        <!--<div class="clearfix"></div>-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-md-12">-->
-                                <!--&lt;!&ndash; Pagination &ndash;&gt;-->
-                                <!--<div class="pagination-container margin-top-20 margin-bottom-40">-->
-                                    <!--<nav class="pagination">-->
-                                        <!--<ul>-->
-                                            <!--<li><a href="#" class="current-page">1</a></li>-->
-                                            <!--<li><a href="#">2</a></li>-->
-                                            <!--<li><a href="#">3</a></li>-->
-                                            <!--<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>-->
-                                        <!--</ul>-->
-                                    <!--</nav>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!-- Pagination / End -->
-
                     </div>
 
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Footer
-        ================================================== -->
-        <div id="footer" class="margin-top-15">
-            <!-- Main -->
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-5 col-sm-6">
-                        <img class="footer-logo" src="/assets/images/logo.png" alt="">
-                        <br><br>
-                        <p> Olvidate de la perrera! Pupi es el principal servicio en línea que conecta a los dueños de
-                            mascotas con más de 20,000 cuidadores de confianza en toda Argentina, haciendo que tu y tu
-                            amigo peludo tengan toda la tranquilidad que merecen.</p>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6 ">
-                        <h4>Helpful Links</h4>
-                        <ul class="footer-links">
-                            <li><a href="#">Login</a></li>
-                            <li><a href="#">Hazte Cuidador</a></li>
-                            <li><a href="#">Mi Cuenta</a></li>
-                            <li><a href="#">Terminos y condiciones de uso </a></li>
-                        </ul>
-
-                        <div class="clearfix"></div>
-                    </div>
-
-                    <div class="col-md-3  col-sm-12">
-                        <h4>Contactanos</h4>
-                        <div class="text-widget">
-                            <span>12345 evasio garrone</span> <br>
-                            Phone: <span>(351) 123-456 </span><br>
-                            E-Mail:<span> <a href="#">pupi@gmail.com</a> </span><br>
-                        </div>
-
-                        <ul class="social-icons margin-top-20">
-                            <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-                            <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
-                            <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
-                            <li><a class="vimeo" href="#"><i class="icon-vimeo"></i></a></li>
-                        </ul>
-
-                    </div>
-
-                </div>
-
-                <!-- Copyright -->
-                <div class="row">
+                    <!-- Copyrights -->
                     <div class="col-md-12">
-                        <div class="copyrights">© 2017 pupi. Todos los derechos reservados.</div>
+                        <div class="copyrights">© 2017 Listeo. All Rights Reserved.</div>
                     </div>
+
                 </div>
 
             </div>
+            <!-- Content / End -->
+
 
         </div>
-        <!-- Footer / End -->
-
-
-        <!-- Back To Top Button -->
-        <div id="backtotop"><a href="#"></a></div>
+        <!-- Dashboard / End -->
 
     </div>
 </div>
@@ -297,6 +287,8 @@
 
 <!-- Scripts
 ================================================== -->
+<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+
 <script type="text/javascript" src="/assets/scripts/jquery-2.2.0.min.js"></script>
 <script type="text/javascript" src="/assets/scripts/jpanelmenu.min.js"></script>
 <script type="text/javascript" src="/assets/scripts/chosen.min.js"></script>
@@ -310,13 +302,12 @@
 <script type="text/javascript" src="/assets/scripts/custom.js"></script>
 <script src="/js/vue.js"></script>
 <script src="/js/axios.min.js"></script>
-<link rel="stylesheet" href="/css/sweetalert.css"/>
+<link rel="stylesheet" href="/css/sweetalert.css" />
 <script src="/js/sweetalert.min.js"></script>
 <script type="text/javascript" src="/views/security/js/login.js"></script>
-<script src="perros.js"></script>
 <link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
 <script src="/assets/scripts/datedropper.js"></script>
-<script>$('#booking-date').dateDropper()</script>
+<script src="registrar-perro.js"></script>
 <style>
     #spinner {
         /*http://samherbert.net/svg-loaders/*/

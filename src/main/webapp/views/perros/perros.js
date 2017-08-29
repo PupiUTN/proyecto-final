@@ -3,7 +3,8 @@ let vm = new Vue({
     data: {
         user: {},
         dogs: [],
-        url: "/api/user/"
+        url: "/api/user/",
+        message: ""
     },
     mounted() {
         this.getUserInfo();
@@ -36,6 +37,10 @@ let vm = new Vue({
             axios.get(this.url + this.user.id + "/perros")
                 .then((response) => {
                     this.dogs = response.data;
+                    if(this.dogs.length === 0) {
+                        this.message="Actualmente no tenés ningún perro registrado. Agrega el primero!";
+                    }
+                    this.toggleLoader();
                 })
                 .catch(error => {
                     console.log(error);

@@ -32,4 +32,9 @@ public class PerroUserController {
         return perroService.getPerrosByUserId(id);
     }
 
+    @RequestMapping(value = "/{perroId}", method = RequestMethod.GET)
+    public Perro getPerro(@PathVariable("idUser") Long userId, @PathVariable("perroId") Long perroId) throws Exception {
+        return perroService.getPerro(perroId);
+    }
+
 }
