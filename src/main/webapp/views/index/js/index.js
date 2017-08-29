@@ -1,21 +1,23 @@
-let vm= new Vue({
-    el:'#appVue',
-    data:{
-        autocomplete:null,
-        placeID:null,
-        placeLat:null,
-        placeLng:null,
-        placeName:null,
-        location:'',
-        geoPlace:null,
-        dateFrom:null,
-        dateTo:null,
+let vm = new Vue({
+    el: '#appVue',
+    data: {
+        autocomplete: null,
+        placeID: null,
+        placeLat: null,
+        placeLng: null,
+        placeName: null,
+        location: '',
+        geoPlace: null,
+        dateFrom: null,
+        dateTo: null,
 
     },
-    mounted(){
+    mounted() {
         this.initDate();
         this.initAutocomplete();
        // this.initGeolocate();
+
+        this.toggleLoader();
 
     },
     methods: {
@@ -28,7 +30,6 @@ let vm= new Vue({
         },
         initAutocomplete() {
             //https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
-            this.toggleLoader();
             input = document.getElementById('location');
             var options = {
                 types: ['(cities)'],
@@ -89,12 +90,8 @@ let vm= new Vue({
                                 vm.toggleLoader();
                             }
                         });
-                    console.log("fin get current");
                 });
-            }
-            console.log("afuera if");
-            $('#spinner').hide()
-            ;
+            };
         },
         geolocate2 () {
             if (this.geoPlace != null) {
