@@ -62,7 +62,9 @@ let vm= new Vue({
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
                     let lat = position.coords.latitude;
+                    lat=lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
                     let long = position.coords.longitude;
+                    long = long.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
                     //https://developers.google.com/maps/documentation/geocoding/start
                     axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true')
                         .then((data) => {
