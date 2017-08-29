@@ -15,9 +15,9 @@ let vm = new Vue({
     mounted() {
         this.initDate();
         this.initAutocomplete();
-        this.toggleLoader();
+       // this.initGeolocate();
 
-        // this.initGeolocate();
+        this.toggleLoader();
 
     },
     methods: {
@@ -44,7 +44,8 @@ let vm = new Vue({
                 if (place.geometry) {
 
                     this.placeID = place.place_id;
-                    this.placeLocation = place.geometry.location;
+                    this.placeLat=place.geometry.location.lat();
+                    this.placeLng=place.geometry.location.lng();
                     this.placeName = input.value;
 
 
@@ -60,32 +61,37 @@ let vm = new Vue({
 
             })
         },
-        initGeolocate() {
-
+        geolocate() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
+                    console.log("entra a get current position")
                     vm.toggleLoader();
                     let lat = position.coords.latitude;
-                    //trunca el valor a 5 decimales
+                    //trunca el valor a 3 decimales
                     this.placeLat = lat.toString().match(/^-?\d+(?:\.\d{0,3})?/)[0];
                     let long = position.coords.longitude;
                     this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,3})?/)[0];
                     //https://developers.google.com/maps/documentation/geocoding/start
                     axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.placeLat + ',' + this.placeLng + '&sensor=true')
                         .then((data) => {
-                            console.log(data.data)
+                            console.log("Entra al axios");
                             var city = data.data.results[1];
                             if (city.geometry) {
                                 vm.geoPlace = city;
+                                let input = document.getElementById('location');
+                                vm.placeID = vm.geoPlace.place_id;
+                                vm.placeLat = vm.geoPlace.geometry.location.lat;
+                                vm.placeLng = vm.geoPlace.geometry.location.lng;
+                                vm.placeName = vm.geoPlace.formatted_address;
+                                input.placeholder = vm.placeName;
+                                input.value='';
+                                vm.toggleLoader();
                             }
-                            vm.toggleLoader();
-                            vm.geolocate();
                         });
                 });
-            }
-            ;
+            };
         },
-        geolocate: function () {
+        geolocate2 () {
             if (this.geoPlace != null) {
                 let input = document.getElementById('location');
                 this.placeID = this.geoPlace.place_id;

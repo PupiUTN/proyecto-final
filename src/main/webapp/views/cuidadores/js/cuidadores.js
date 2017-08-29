@@ -18,7 +18,7 @@ let vm = new Vue({
 
     },
     mounted() {
-        this.initGeolocate();
+        //this.initGeolocate();
         this.initDate();
         this.initMap();
         this.initAutocomplete();
@@ -66,16 +66,15 @@ let vm = new Vue({
             });
 
         },
-        initGeolocate() {
-
+        geolocate() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
                     vm.toggleLoader();
                     let lat = position.coords.latitude;
                     //trunca el valor a 5 decimales
-                    this.placeLat = lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+                    this.placeLat = lat.toString().match(/^-?\d+(?:\.\d{0,3})?/)[0];
                     let long = position.coords.longitude;
-                    this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+                    this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,3})?/)[0];
                     //https://developers.google.com/maps/documentation/geocoding/start
                     axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.placeLat + ',' + this.placeLng + '&sensor=true')
                         .then((data) => {
@@ -83,6 +82,13 @@ let vm = new Vue({
                             var city = data.data.results[1];
                             if (city.geometry) {
                                 vm.geoPlace = city;
+                                let input = document.getElementById('location');
+                                vm.placeID = vm.geoPlace.place_id;
+                                vm.placeLat = vm.geoPlace.geometry.location.lat;
+                                vm.placeLng = vm.geoPlace.geometry.location.lng;
+                                vm.placeName = vm.geoPlace.formatted_address;
+                                input.placeholder = vm.placeName;
+                                input.value='';
                                 vm.toggleLoader();
                             }
                         });
@@ -90,7 +96,7 @@ let vm = new Vue({
             }
             ;
         },
-        geolocate: function () {
+        geolocate2 () {
             if (this.geoPlace != null) {
                 let input = document.getElementById('location');
                 this.placeID = this.geoPlace.place_id;
@@ -233,43 +239,76 @@ let vm = new Vue({
         //añade los marcadores al mapa
         mostrarEnMapa(){
             if(this.items!=null&&this.items.length>0){
-                var bounds = new google.maps.LatLngBounds();
-                for(item of this.items) {
-                    var marker = new google.maps.Circle({
-                        strokeColor: '#FF0000',
-                        strokeOpacity: 0.8,
-                        strokeWeight: 2,
-                        fillColor: '#FF0000',
-                        fillOpacity: 0.35,
-                        map: this.map,
-                        center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
-                        radius: 300,
-                    });
+                if(this.items.length>1){
+                    var bounds = new google.maps.LatLngBounds();
+                    for(item of this.items) {
+                        var marker = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: this.map,
+                            center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
+                            radius: 300,
+                        });
 
-                    //extend the bounds to include each marker's position
-                    var id = item.id;
-                    var content =
-                        '<div id="bodyContent">'+
-                        '<a href="/views/cuidadores/cuidadores-perfil.html?id='+ id +'">'+
-                        '<h4>'+item.user.fullName+'</h4></a> '+
-                        '</div>';
-                    var infowindow = new google.maps.InfoWindow();
-                    google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
-                        return function() {
-                            infowindow.setContent(content);
-                            infowindow.setPosition(marker.getCenter());
-                            infowindow.open(this.map,marker);
+                        //extend the bounds to include each marker's position
+                        var id = item.id;
+                        var content =
+                            '<div id="bodyContent">'+
+                            '<a href="/views/cuidadores/cuidadores-perfil.html?id='+ id +'">'+
+                            '<h4>'+item.user.fullName+'</h4></a> '+
+                            '</div>';
+                        var infowindow = new google.maps.InfoWindow();
+                        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+                            return function() {
+                                infowindow.setContent(content);
+                                infowindow.setPosition(marker.getCenter());
+                                infowindow.open(this.map,marker);
 
-                        };
-                    })(marker,content,infowindow));
-                    bounds.extend(marker.center);
+                            };
+                        })(marker,content,infowindow));
+                        bounds.extend(marker.center);
 
+                    }
+
+                    //now fit the map to the newly inclusive bounds
+                    this.map.fitBounds(bounds);
+
+                }else {
+                    for (item of this.items) {
+                        var marker = new google.maps.Circle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',
+                            fillOpacity: 0.35,
+                            map: this.map,
+                            center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
+                            radius: 300,
+                        });
+
+                        //extend the bounds to include each marker's position
+                        var id = item.id;
+                        var content =
+                            '<div id="bodyContent">' +
+                            '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
+                            '<h4>' + item.user.fullName + '</h4></a> ' +
+                            '</div>';
+                        var infowindow = new google.maps.InfoWindow();
+                        google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
+                            return function () {
+                                infowindow.setContent(content);
+                                infowindow.setPosition(marker.getCenter());
+                                infowindow.open(this.map, marker);
+
+                            };
+                        })(marker, content, infowindow));
+                    }
+                }
                 }
 
-                //now fit the map to the newly inclusive bounds
-                this.map.fitBounds(bounds);
-
-            }
         },
     }
 
