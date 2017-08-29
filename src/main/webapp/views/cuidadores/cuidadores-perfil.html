@@ -56,7 +56,7 @@
 <div class="clearfix"></div>
 <!-- Header Container / End -->
 
-	 <div class="row" >
+	 <!--<div class="row" >-->
 
 		<div id="spinner"></div>
 <!-- Slider
@@ -291,7 +291,7 @@
 
 					<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
 					<div class="col-lg-6 col-md-12">
-						<input type="text" v-model="fechaReservaDesde"  data-format=" d/m/Y" id="booking-date" data-lang="es" data-init-set="false"
+						<input type="text" v-model="fechaReservaDesde"  data-format=" Y-m-d" id="booking-date" data-lang="es" data-init-set="false"
 							   data-large-mode="true" data-large-default="true" data-min-year="2017"
 							   data-max-year="2020" data-lock="from">
 					</div>
@@ -305,7 +305,7 @@
 					<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
 					<div class="col-lg-6 col-md-12">
 
-						<input type="text" v-model="fechaReservaHasta"   style="text-align: center; font-size: 16px; font-weight: 600"  data-format=" d/m/Y" id="booking-date2" data-lang="es"
+						<input type="text" v-model="fechaReservaHasta"   style="text-align: center; font-size: 16px; font-weight: 600"  data-format="Y-m-d" id="booking-date2" data-lang="es"
 							   data-init-set="false"
 							   data-large-mode="true" data-large-default="true" data-min-year="2017"
 							   data-max-year="2020" data-lock="from">
@@ -314,7 +314,7 @@
 
 				</div>
 				<!-- progress button animation handled via custom.js -->
-				<button class="progress-button button fullwidth margin-top-5"><span>Reservá ahora </span></button>
+				<button class="progress-button button fullwidth margin-top-5" v-on:click="hrerReserva"><span>Reservá ahora </span></button>
 			</div>
 			<!-- Book Now / End -->
 
@@ -439,7 +439,7 @@
 <div id="backtotop"><a href="#"></a></div>
 
 
-</div>
+<!--</div>-->
 <!-- Wrapper / End -->
 </div>
 </div>
@@ -460,6 +460,9 @@
 
 <!-- Maps -->
 
+<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+<link href="../../assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
+<script src="../../assets/scripts/datedropper.js"></script>
 
 <script src="/js/vue.js"></script>
 <script src="/js/axios.min.js"></script>
@@ -474,14 +477,6 @@
 
 
 
-<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-<link href="../../assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
-<script src="../../assets/scripts/datedropper.js"></script>
-<script>$('#booking-date').dateDropper();</script>
-<script>$('#booking-date2').dateDropper();</script>
-<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
-<script src="../../assets/scripts/timedropper.js"></script>
-<link rel="stylesheet" type="text/css" href="../../assets/css/plugins/timedropper.css">
 
 
 <style>

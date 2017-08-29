@@ -33,12 +33,12 @@ let vm = new Vue({
         },
         postItem() {
             this.toggleLoader();
-            var payload = jQuery.extend(true, {}, this.item);
+            var payload = jQuery.extend(true, {}, this.item); //copio el objeto a mandar porque despues lo edito
             axios.post(this.url, payload)
                 .then((response) => {
                     this.toggleLoader();
                     console.log(response);
-                    this.items.push(response.data);
+                    this.items.push(response.data); //agrego la respuesta asi no refresco la pagina
                     this.item.nombre = '';
                     sweetAlert("Guardado!", "Nueva raza creada exitosamente.", "success");
 

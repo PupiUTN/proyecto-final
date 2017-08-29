@@ -10,6 +10,7 @@ function getDefaultData() {
         },
         isAuthenticated: null,
         user: {
+            id: null,
             profileImageUrl: '/img/no-avatar.png',
             email: '',
             username: '',
