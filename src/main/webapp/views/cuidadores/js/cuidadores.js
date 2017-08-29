@@ -18,7 +18,7 @@ let vm = new Vue({
 
     },
     mounted() {
-        this.initGeolocate();
+        //this.initGeolocate();
         this.initDate();
         this.initMap();
         this.initAutocomplete();
@@ -66,16 +66,15 @@ let vm = new Vue({
             });
 
         },
-        initGeolocate() {
-
+        geolocate() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
                     vm.toggleLoader();
                     let lat = position.coords.latitude;
                     //trunca el valor a 5 decimales
-                    this.placeLat = lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+                    this.placeLat = lat.toString().match(/^-?\d+(?:\.\d{0,3})?/)[0];
                     let long = position.coords.longitude;
-                    this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+                    this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,3})?/)[0];
                     //https://developers.google.com/maps/documentation/geocoding/start
                     axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.placeLat + ',' + this.placeLng + '&sensor=true')
                         .then((data) => {
@@ -83,6 +82,12 @@ let vm = new Vue({
                             var city = data.data.results[1];
                             if (city.geometry) {
                                 vm.geoPlace = city;
+                                let input = document.getElementById('location');
+                                vm.placeID = vm.geoPlace.place_id;
+                                vm.placeLat = vm.geoPlace.geometry.location.lat;
+                                vm.placeLng = vm.geoPlace.geometry.location.lng;
+                                vm.placeName = vm.geoPlace.formatted_address;
+                                input.placeholder = vm.placeName;
                                 vm.toggleLoader();
                             }
                         });
@@ -90,7 +95,7 @@ let vm = new Vue({
             }
             ;
         },
-        geolocate: function () {
+        geolocate2 () {
             if (this.geoPlace != null) {
                 let input = document.getElementById('location');
                 this.placeID = this.geoPlace.place_id;

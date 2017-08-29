@@ -15,7 +15,7 @@ let vm= new Vue({
     mounted(){
         this.initDate();
         this.initAutocomplete();
-        this.initGeolocate();
+       // this.initGeolocate();
 
     },
     methods: {
@@ -28,6 +28,7 @@ let vm= new Vue({
         },
         initAutocomplete() {
             //https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
+            this.toggleLoader();
             input = document.getElementById('location');
             var options = {
                 types: ['(cities)'],
@@ -42,7 +43,8 @@ let vm= new Vue({
                 if (place.geometry) {
 
                     this.placeID = place.place_id;
-                    this.placeLocation = place.geometry.location;
+                    this.placeLat=place.geometry.location.lat();
+                    this.placeLng=place.geometry.location.lng();
                     this.placeName = input.value;
 
 
@@ -58,32 +60,43 @@ let vm= new Vue({
 
             })
         },
-        initGeolocate() {
-
+        geolocate() {
+            this.toggleLoader();
             if (navigator.geolocation) {
+                console.log("entra al primer if");
+                //vm.toggleLoader();
                 navigator.geolocation.getCurrentPosition(function (position) {
+                    console.log("entra a get current position")
                     vm.toggleLoader();
                     let lat = position.coords.latitude;
-                    //trunca el valor a 5 decimales
-                    this.placeLat = lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+                    //trunca el valor a 3 decimales
+                    this.placeLat = lat.toString().match(/^-?\d+(?:\.\d{0,3})?/)[0];
                     let long = position.coords.longitude;
-                    this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+                    this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,3})?/)[0];
                     //https://developers.google.com/maps/documentation/geocoding/start
                     axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.placeLat + ',' + this.placeLng + '&sensor=true')
                         .then((data) => {
-                            console.log(data.data)
+                            console.log("Entra al axios");
                             var city = data.data.results[1];
                             if (city.geometry) {
                                 vm.geoPlace = city;
+                                let input = document.getElementById('location');
+                                vm.placeID = vm.geoPlace.place_id;
+                                vm.placeLat = vm.geoPlace.geometry.location.lat;
+                                vm.placeLng = vm.geoPlace.geometry.location.lng;
+                                vm.placeName = vm.geoPlace.formatted_address;
+                                input.placeholder = vm.placeName;
                                 vm.toggleLoader();
                             }
                         });
+                    console.log("fin get current");
                 });
-                this.toggleLoader();
             }
+            console.log("afuera if");
+            $('#spinner').hide()
             ;
         },
-        geolocate: function () {
+        geolocate2 () {
             if (this.geoPlace != null) {
                 let input = document.getElementById('location');
                 this.placeID = this.geoPlace.place_id;
