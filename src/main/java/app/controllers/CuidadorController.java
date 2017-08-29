@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -27,18 +28,30 @@ public class CuidadorController {
         return cuidadorService.getCuidadores();
     }
 
+//    @RequestMapping(value = "/search/", method = RequestMethod.GET)
+//    public List<Cuidador> getCuidadoresPorDireccion(
+//            @RequestParam(value = "ciudadPlaceId", required = false) String ciudadPlaceId) throws Exception {
+//
+//        return cuidadorService.getCuidadoresPorCiudadPlaceId(ciudadPlaceId);
+//
+//    }
     @RequestMapping(value = "/search/", method = RequestMethod.GET)
-    public List<Cuidador> getCuidadoresPorDireccion(
-            @RequestParam(value = "ciudadPlaceId", required = false) String ciudadPlaceId) throws Exception {
+    public List<Cuidador> getCuidadoresPorDireccionYFechasReseva(
+            @RequestParam(value = "ciudadPlaceId", required = false) String ciudadPlaceId,
+            @RequestParam(value = "from", required = false) Date from,
+            @RequestParam(value = "from", required = false) Date to) throws Exception {
 
-        return cuidadorService.getCuidadoresPorCiudadPlaceId(ciudadPlaceId);
+        if(from==null&& to==null){
+            return cuidadorService.getCuidadoresPorCiudadPlaceId(ciudadPlaceId);
+        }
+        return cuidadorService.getCuidadoresPorCiudadYFecha(ciudadPlaceId,from,to);
 
     }
 
-    @RequestMapping(value = "/localidades/{id}", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/localidades/{id}", method = RequestMethod.GET)
     public List<Cuidador> getCuidadoresPorLocalidad(@PathVariable("id") Long id) {
         return cuidadorService.getCuidadoresPorLocalidad(id);
-    }
+    }*/
 
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)

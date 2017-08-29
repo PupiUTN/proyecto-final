@@ -21,10 +21,10 @@
 <div id="appVue">
     <!-- Header Container
 ================================================== -->
-    <header id="header-container">
+    <header id="header-container" class="fixed fullwidth">
 
         <!-- Header -->
-        <div id="header">
+        <div id="header" class="not-sticky">
             <div class="container">
 
                 <!-- Left Side Content -->
@@ -32,18 +32,21 @@
 
                     <!-- Logo -->
                     <div id="logo">
-                        <a href="/"><img src="/assets/images/logo.png" alt=""></a>
+                        <a href="/views/index/index.html"><img src="/assets/images/logo.png" alt=""></a>
                     </div>
+                    <div class="clearfix"></div>
 
                 </div>
                 <!-- Left Side Content / End -->
 
-
                 <!-- Right Side Content / End -->
                 <div class="right-side">
-                    <my-login></my-login>
+                    <div class="header-widget">
+                        <my-login></my-login>
+                    </div>
                 </div>
                 <!-- Right Side Content / End -->
+
 
             </div>
         </div>
@@ -70,40 +73,72 @@
 
 							<!-- Row With Forms -->
 							<div class="row with-forms">
+                                <!-- Main Search Input -->
+                                <div class="col-fs-6">
+                                    <div class="input-with-icon location">
 
-								<!-- Main Search Input -->
-								<div class="main-search-input" >
+                                        <input id="location" placeholder="Ciudad"/>
+
+                                        <a href="#" id="geo-location" v-on:click='geolocate'>
+                                            <i class="fa fa-dot-circle-o"></i></a>
+                                    </div>
+                                </div>
+                                <!-- Main Search Input -->
+                                <div class="col-fs-6">
+                                    <div class="input">
+                                        <input type="text" id="dateFrom" v-model="dateFrom" placeholder="Fecha Desde" data-lang="es"
+                                               data-init-set="false"
+                                               data-large-mode="true" data-large-default="true" data-min-year="2017"
+                                               data-max-year="2020" data-lock="from">
+                                    </div>
+                                </div>
+                                <!-- Main Search Input -->
+                                <div class="col-fs-6">
+                                    <div class="input">
+
+                                        <input type="text" id="dateTo" v-model="dateTo" placeholder="Fecha Hasta" data-lang="es"
+                                               data-init-set="false"
+                                               data-large-mode="true" data-large-default="true" data-min-year="2017"
+                                               data-max-year="2020" data-lock="from">
+                                    </div>
+                                </div>
+                                <button class="button col-fs-12" v-on:click='buscar'>
+                                    Buscar
+                                </button>
+
+								<!-- Main Search Input
+                                <div class="main-search-input" >
 
 
-									<div class="main-search-input-item location">
-										<input id="location" placeholder="Ciudad"/>
+                                    <div class="main-search-input-item location">
+                                        <input type="text" v-model="location" id="location" placeholder="Ciudad"/>
 
-										<a href="#" id="geo-location" v-on:click='geolocate'>
-											<i class="fa fa-dot-circle-o"></i></a>
-									</div>
+                                        <a href="#" id="geo-location" v-on:click='geolocate'>
+                                            <i class="fa fa-dot-circle-o"></i></a>
+                                    </div>
 
-									<div class="main-search-input-item">
-										<input type="text" id="booking-date-from" placeholder="Fecha Desde" data-lang="es"
-											   data-init-set="false"
-											   data-large-mode="true" data-large-default="true" data-min-year="2017"
-											   data-max-year="2020" data-lock="from">
-									</div>
-									<div class="main-search-input-item">
-										<input type="text" id="booking-date-to" placeholder="Fecha Hasta" data-lang="es"
-											   data-init-set="false"
-											   data-large-mode="true" data-large-default="true" data-min-year="2017"
-											   data-max-year="2020" data-lock="from">
+                                    <div class="main-search-input-item">
+                                        <input type="text" id="booking-date-from"  placeholder="Fecha Desde" data-lang="es"
+                                               data-init-set="false"
+                                               data-large-mode="true" data-large-default="true" data-min-year="2017"
+                                               data-max-year="2020" data-lock="from">
+                                    </div>
+                                    <div class="main-search-input-item">
+                                        <input type="text" id="booking-date-to" placeholder="Fecha Hasta" data-lang="es"
+                                               data-init-set="false"
+                                               data-large-mode="true" data-large-default="true" data-min-year="2017"
+                                               data-max-year="2020" data-lock="from">
 
-									</div>
+                                    </div>
 
-									<!--<button class="button" onclick="window.location.href='listings-half-screen-map.html'">-->
-									<!--Buscar-->
-									<!--</button>-->
-									<button class="button" v-on:click='buscar'>
-										Buscar
-									</button>
+                                    <!--<button class="button" onclick="window.location.href='listings-half-screen-map.html'">
+                                    <!--Buscar
+                                    <!--</button>
+                                    <button class="button" v-on:click='buscar'>
+                                        Buscar
+                                    </button>
 
-								</div>
+                                </div>
 								<!-- Filters
 								<div class="col-fs-12">
 

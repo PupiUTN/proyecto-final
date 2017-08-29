@@ -66,6 +66,7 @@ let vm= new Vue({
                     //https://developers.google.com/maps/documentation/geocoding/start
                     axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true')
                         .then((data) => {
+                        console.log(data.data)
                             var city = data.data.results[1];
                             if (city.geometry) {
                                 vm.geoPlace = city;

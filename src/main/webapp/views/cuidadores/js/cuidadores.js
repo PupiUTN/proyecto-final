@@ -12,6 +12,8 @@ let vm = new Vue({
         placeLng:null,
         placeName:null,
         geoPlace:null,
+        dateFrom:null,
+        dateTo:null,
 
 
     },
@@ -29,8 +31,8 @@ let vm = new Vue({
             $('#spinner').toggle();
         },
         initDate() {
-            $('#booking-date-from').dateDropper();
-            $('#booking-date-to').dateDropper();
+            $('#dateFrom').dateDropper();
+            $('#dateTo').dateDropper();
         },
         initAutocomplete() {
             //https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
@@ -114,31 +116,61 @@ let vm = new Vue({
                 this.placeLng=this.getParameterByName('lng');
                 var centro = new google.maps.LatLng(this.placeLat,this.placeLng);
                 this.map.setCenter(centro);
-
-
                 this.map.setZoom(12);
+                this.dateFrom=this.getParameterByName('from');
                 let consulta=this.url + '?ciudadPlaceId=' + this.placeID;
-                console.log(consulta);
-                axios.get(consulta)
-                    .then((response) => {
-                        console.log(this.placeID);
-                        console.log(response.data);
-                        this.items = response.data;
-                        this.encontrados = this.items.length;
-                        if (this.items.length === 1) {
-                            this.encontrados += ' Resultado Encontrado';
-                        } else {
-                            this.encontrados += ' Resultados Encontrados';
-                        }
-                        this.mostrarEnMapa();
-                        this.toggleLoader();
+                console.log(this.dateFrom);
+                if(this.dateFrom!=null){
+                    this.dateTo=this.getParameterByName('to');
+                    if(this.dateTo>=this.dateFrom){
+                        consulta+='?from='+this.dateFrom+
+                            '?to='+this.dateTo;
+                        axios.get(consulta)
+                            .then((response) => {
+                                console.log(this.placeID);
+                                console.log(response.data);
+                                this.items = response.data;
+                                this.encontrados = this.items.length;
+                                if (this.items.length === 1) {
+                                    this.encontrados += ' Resultado Encontrado';
+                                } else {
+                                    this.encontrados += ' Resultados Encontrados';
+                                }
+                                this.mostrarEnMapa();
+                                this.toggleLoader();
 
-                    })
-                    .catch(error => {
+                            })
+                            .catch(error => {
+                                    console.log(error);
+                                    sweetAlert("Oops...", "Error, ver consola", "error");
+                                }
+                            );
+                    }else{
+                        sweetAlert("Oops...", "No seas hacker", "error");
+                    }
+                }else{
+
+                    axios.get(consulta)
+                        .then((response) => {
+                            console.log(this.placeID);
+                            console.log(response.data);
+                            this.items = response.data;
+                            this.encontrados = this.items.length;
+                            if (this.items.length === 1) {
+                                this.encontrados += ' Resultado Encontrado';
+                            } else {
+                                this.encontrados += ' Resultados Encontrados';
+                            }
+                            this.mostrarEnMapa();
+                            this.toggleLoader();
+
+                        })
+                        .catch(error => {
                             console.log(error);
                             sweetAlert("Oops...", "Error, ver consola", "error");
                         }
-                    );
+                        );
+                }
             } else {
                 this.toggleLoader();
             }
@@ -156,10 +188,32 @@ let vm = new Vue({
         //al presionar el boton buscar, recarga la pagina con los datos nuevos
         buscar() {
             if (this.placeID != null) {
-                window.location.href = "http://localhost:8080/views/cuidadores/lista-cuidadores.html?placeName=" + this.placeName +
+                let href= "http://localhost:8080/views/cuidadores/lista-cuidadores.html?placeName=" + this.placeName +
                     "&placeID=" + this.placeID +
                     "&lat=" + this.placeLat +
                     "&lng=" + this.placeLng;
+                //con el datapicker los datos no se "bindean" en el dom...
+                this.dateFrom= document.getElementById("dateFrom").value;
+                this.dateTo = document.getElementById("dateTo").value;
+                console.log(this.dateFrom);
+                console.log(this.dateTo);
+                if(this.dateFrom!=''){
+                    if(this.dateTo!=''){
+                    if(this.dateTo>=this.dateFrom){
+                        href+="&from=" + this.dateFrom +
+                            "&to="+this.dateTo;
+                    }else{
+                        sweetAlert("Oops...", "La fecha hasta debe ser mayor a la desde", "error");
+                        this.dateTo='';
+                        return;
+
+                    }
+                }else{
+                        sweetAlert("Oops...", "Debe ingresar una fecha hasta", "error");
+                        return;
+                    }
+                }
+                window.location.href = href;
             } else {
                 sweetAlert("Oops...", "Ingrese una ciudad válida", "error");
                 //no se ejecuta en orden... ver mas adelante
