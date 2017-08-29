@@ -21,9 +21,11 @@ public class Cuidador implements Serializable {
     private String descripcion;
     private float precioPorNoche;
     @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private User user;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<Servicio> listaServicios;
 
     @OneToOne(cascade = CascadeType.ALL)

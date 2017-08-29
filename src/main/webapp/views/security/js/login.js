@@ -39,8 +39,11 @@ Vue.component('my-login', {
                     <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i>
                         Messages</a>
                     </li>
-                    <li><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My
-                        Profile</a>
+                    <li><a href="/views/dueño/perfil.html"><i class="sl sl-icon-user"></i> Mi
+                        Perfil</a>
+                    </li>
+                    <li><a href="/views/perros/perros.html"><i class="im im-icon-Dog"></i> Mis 
+                    Perros</a>
                     </li>
                     <li><a v-on:click="logout()"><i class="sl sl-icon-power"></i> Logout</a></li>
                 </ul>
