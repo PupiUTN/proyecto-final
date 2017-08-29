@@ -126,7 +126,7 @@ let vm = new Vue({
                 document.getElementById("imgTamañoPerro").src = "/img/perro_miniatura.jpg";
             } else {
                 if (param.id === 2) {
-                    document.getElementById("imgTamañoPerro").src = "/img/perro_pequeña.jpg";
+                    document.getElementById("imgTamañoPerro").src = "/img/perro_pequeño.jpg";
 
                 }
                 else {
