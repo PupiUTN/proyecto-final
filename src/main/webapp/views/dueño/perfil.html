@@ -122,21 +122,7 @@
 
                 <!-- Right Side Content / End -->
                 <div class="right-side">
-                    <!-- Header Widget -->
-                    <div class="header-widget">
-
-                        <!-- Owner Menu -->
-                        <div class="owner-menu">
-                            <div class="owner-name"><span><img :src="user.profileImageUrl" alt="">{{user.username}}</span></div>
-                            <ul>
-                                <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
-                                <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>
-                                <li><a href="/views/dueño/perfil.html"><i class="sl sl-icon-owner"></i> My Profile</a></li>
-                                <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Header Widget / End -->
+                   <my-login></my-login>
                 </div>
                 <!-- Right Side Content / End -->
 
@@ -180,7 +166,7 @@
                 </ul>
 
                 <ul data-submenu-title="Account">
-                    <li class="active"><a href="dashboard-my-profile.html"><i class="sl sl-icon-owner"></i> My Profile</a></li>
+                    <li class="active"><a href="dashboard-my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
                     <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
                 </ul>
 
@@ -197,7 +183,7 @@
             <div id="titlebar">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>My Profile</h2>
+                        <h2>Mi Perfil</h2>
                         <!-- Breadcrumbs -->
                         <nav id="breadcrumbs">
                             <ul>
@@ -223,7 +209,7 @@
                                 <img :src="user.profileImageUrl" alt="">
                                 <div class="change-photo-btn">
                                     <div class="photoUpload">
-                                        <span><i class="fa fa-upload"></i> Upload Photo</span>
+                                        <span><i class="fa fa-upload"></i> Subir Foto</span>
                                         <input type="file" id="imageFile" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
                                     </div>
                                 </div>
@@ -257,52 +243,20 @@
                                 <label>Email</label>
                                 <input v-model="user.email" value="" type="text">
 
-                                <label><i class="fa fa-twitter"></i> Twitter</label>
-                                <input v-model="user.twitterAccount" placeholder="https://www.twitter.com/" type="text">
-
-                                <label><i class="fa fa-facebook-square"></i> Facebook</label>
-                                <input v-model="user.facebookAccount" placeholder="https://www.facebook.com/" type="text">
-
-                                <label><i class="fa fa-google-plus"></i> Google+</label>
-                                <input v-model="user.googlePlusAccount" placeholder="https://www.google.com/" type="text">
-                            </div>
-
-                            <button v-on:click='editUserInfo' class="button margin-top-15">Guardar Cambios</button>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Ubicación -->
-                <div class="col-lg-6 col-md-12">
-                    <div class="dashboard-list-box margin-top-0">
-                        <h4 class="gray">Ubicación</h4>
-                        <div class="dashboard-list-box-static">
-
-                            <div class="my-profile">
                                 <label class="margin-top-0">Dirección</label>
                                 <input v-model="direccion.direccionLinea1" ref="autocomplete" type="text" placeholder="Ingrese su dirección">
 
-                                <label>Calle</label>
-                                <input type="text" v-model="direccion.calle">
+                                <!--<label><i class="fa fa-twitter"></i> Twitter</label>-->
+                                <!--<input v-model="user.twitterAccount" placeholder="https://www.twitter.com/" type="text">-->
 
-                                <label>Altura</label>
-                                <input type="text" v-model="direccion.numero">
+                                <!--<label><i class="fa fa-facebook-square"></i> Facebook</label>-->
+                                <!--<input v-model="user.facebookAccount" placeholder="https://www.facebook.com/" type="text">-->
 
-                                <label>Ciudad</label>
-                                <input type="text" v-model="direccion.ciudad">
-
-                                <label>Provincia</label>
-                                <input type="text" v-model="direccion.provincia">
-
-                                <label>Código Postal</label>
-                                <input type="text" v-model="direccion.codigoPostal">
-
-                                <label>País</label>
-                                <input type="text" v-model="direccion.pais">
-
-                                <button v-on:click='editUserInfo' class="button margin-top-15">Actualizar Dirección</button>
+                                <!--<label><i class="fa fa-google-plus"></i> Google+</label>-->
+                                <!--<input v-model="user.googlePlusAccount" placeholder="https://www.google.com/" type="text">-->
                             </div>
+
+                            <button v-on:click='editUserInfo' class="button margin-top-15">Guardar</button>
 
                         </div>
                     </div>
@@ -311,25 +265,28 @@
                 <!-- Change Password -->
                 <div class="col-lg-6 col-md-12">
                     <div class="dashboard-list-box margin-top-0">
-                        <h4 class="gray">Change Password</h4>
+                        <h4 class="gray">Cambiar Contraseña</h4>
                         <div class="dashboard-list-box-static">
 
                             <!-- Change Password -->
                             <div class="my-profile">
-                                <label class="margin-top-0">Current Password</label>
+                                <label class="margin-top-0">Contraseña Actual</label>
                                 <input type="password">
 
-                                <label>New Password</label>
+                                <label>Nueva Contraseña</label>
                                 <input type="password">
 
-                                <label>Confirm New Password</label>
+                                <label>Confirmar Nueva Contraseña</label>
                                 <input type="password">
 
-                                <button class="button margin-top-15">Change Password</button>
+                                <button class="button margin-top-15">Cambiar</button>
                             </div>
 
                         </div>
                     </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <button class="button margin-top-15">Mis Perros</button>
                 </div>
 
 
@@ -371,6 +328,7 @@
 <script src="/js/axios.min.js"></script>
 <link rel="stylesheet" href="/css/sweetalert.css" />
 <script src="/js/sweetalert.min.js"></script>
+<script type="text/javascript" src="/views/security/js/login.js"></script>
 <script src="perfil.js"></script>
 <link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
 <script src="/assets/scripts/datedropper.js"></script>

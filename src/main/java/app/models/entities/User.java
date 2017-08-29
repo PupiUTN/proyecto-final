@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 
 @Entity
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -51,7 +51,7 @@ public class User {
     private String phone;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Direccion direccion;
 
     public User() {

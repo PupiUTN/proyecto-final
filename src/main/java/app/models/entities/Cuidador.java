@@ -20,13 +20,13 @@ public class Cuidador implements Serializable {
     private List<Imagen> listaImagenes;
     private String descripcion;
     private float precioPorNoche;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<Servicio> listaServicios;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private  Tamaño tamaño;
 
 
