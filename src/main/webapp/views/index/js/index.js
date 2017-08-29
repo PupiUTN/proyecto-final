@@ -1,21 +1,23 @@
-let vm= new Vue({
-    el:'#appVue',
-    data:{
-        autocomplete:null,
-        placeID:null,
-        placeLat:null,
-        placeLng:null,
-        placeName:null,
-        location:'',
-        geoPlace:null,
-        dateFrom:null,
-        dateTo:null,
+let vm = new Vue({
+    el: '#appVue',
+    data: {
+        autocomplete: null,
+        placeID: null,
+        placeLat: null,
+        placeLng: null,
+        placeName: null,
+        location: '',
+        geoPlace: null,
+        dateFrom: null,
+        dateTo: null,
 
     },
-    mounted(){
+    mounted() {
         this.initDate();
         this.initAutocomplete();
-        this.initGeolocate();
+        this.toggleLoader();
+
+        // this.initGeolocate();
 
     },
     methods: {
@@ -65,9 +67,9 @@ let vm= new Vue({
                     vm.toggleLoader();
                     let lat = position.coords.latitude;
                     //trunca el valor a 5 decimales
-                    this.placeLat = lat.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+                    this.placeLat = lat.toString().match(/^-?\d+(?:\.\d{0,3})?/)[0];
                     let long = position.coords.longitude;
-                    this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,5})?/)[0];
+                    this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,3})?/)[0];
                     //https://developers.google.com/maps/documentation/geocoding/start
                     axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.placeLat + ',' + this.placeLng + '&sensor=true')
                         .then((data) => {
@@ -75,11 +77,11 @@ let vm= new Vue({
                             var city = data.data.results[1];
                             if (city.geometry) {
                                 vm.geoPlace = city;
-                                vm.toggleLoader();
                             }
+                            vm.toggleLoader();
+                            vm.geolocate();
                         });
                 });
-                this.toggleLoader();
             }
             ;
         },
