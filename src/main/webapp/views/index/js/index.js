@@ -62,10 +62,7 @@ let vm = new Vue({
             })
         },
         geolocate() {
-            this.toggleLoader();
             if (navigator.geolocation) {
-                console.log("entra al primer if");
-                //vm.toggleLoader();
                 navigator.geolocation.getCurrentPosition(function (position) {
                     console.log("entra a get current position")
                     vm.toggleLoader();
@@ -87,6 +84,7 @@ let vm = new Vue({
                                 vm.placeLng = vm.geoPlace.geometry.location.lng;
                                 vm.placeName = vm.geoPlace.formatted_address;
                                 input.placeholder = vm.placeName;
+                                input.value='';
                                 vm.toggleLoader();
                             }
                         });

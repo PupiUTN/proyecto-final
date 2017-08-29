@@ -88,6 +88,7 @@ let vm = new Vue({
                                 vm.placeLng = vm.geoPlace.geometry.location.lng;
                                 vm.placeName = vm.geoPlace.formatted_address;
                                 input.placeholder = vm.placeName;
+                                input.value='';
                                 vm.toggleLoader();
                             }
                         });
