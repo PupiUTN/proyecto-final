@@ -88,6 +88,18 @@ let vm = new Vue({
             axios.get("/api/user/" + userId + "/perros")
                 .then((response) => {
                     this.perros = response.data;
+                    if(this.perros.length == 0){
+                        sweetAlert({
+                                title: "Reserva",
+                                text: "Para reservar necesita agregar al menos un perro",
+                                type: "info",
+                                timer: 2000,
+                            },
+                            function () {
+                                console.log("redirect");
+                                document.location.href="/views/perros/perros.html";
+                            });
+                    }
                     this.toggleLoader();
                 })
                 .catch(error => {
@@ -103,13 +115,18 @@ let vm = new Vue({
 
             if (this.reserva.fechaInicio == '') {
                 console.log("fecha inicio vacia");
+                sweetAlert("Campo Vacio", "Completar Fecha Inicio", "info");
+
                 return;
             }
             if (this.reserva.fechaFin == '') {
+                sweetAlert("Campo Vacio", "Completar Fecha Fin", "info");
+
                 console.log("fecha fin vacia");
                 return;
             }
             if (this.reserva.perro.id == null) {
+                sweetAlert("Campo Vacio", "Selecionar perro", "info");
                 console.log("seleccionar perro");
                 return;
             }
