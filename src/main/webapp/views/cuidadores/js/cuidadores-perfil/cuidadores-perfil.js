@@ -123,7 +123,7 @@ let vm = new Vue({
 
         loadTamaño(param) {
             if (param.id === 1) {
-                document.getElementById("imgTamañoPerro").src = "/img/perro_miniatura.jpg";
+                document.getElementById("imgTamañoPerro").src = "/img/perro_miniatura.png";
             } else {
                 if (param.id === 2) {
                     document.getElementById("imgTamañoPerro").src = "/img/perro_pequeño.jpg";
