@@ -2,6 +2,7 @@ package app.services;
 
 import app.models.entities.Cuidador;
 import app.models.entities.Direccion;
+import app.models.entities.Servicio;
 import app.persistence.CuidadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,4 +52,11 @@ public class CuidadorService {
 
         return cuidadorRepository.findAllbyCiudadYFecha(ciudadPlaceId, from, to);
     }
+
+    public List<Servicio> getListaServicios() {
+
+        return cuidadorRepository.getServicios();
+    }
+
+
 }

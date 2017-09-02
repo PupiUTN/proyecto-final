@@ -6,6 +6,7 @@
 package app.controllers;
 
 import app.models.entities.Cuidador;
+import app.models.entities.Servicio;
 import app.services.CuidadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,6 +69,14 @@ public class CuidadorController {
     public ResponseEntity createCuidador(@RequestBody @Valid Cuidador entity) {
         cuidadorService.createCuidador(entity);
         return new ResponseEntity<>(entity, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/searchServicios/", method = RequestMethod.GET)
+    public List<Servicio> getServicios() throws Exception {
+
+
+        return cuidadorService.getListaServicios();
+
     }
 
 }

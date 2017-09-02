@@ -3,6 +3,7 @@ package app.persistence;
 import app.models.entities.Cuidador;
 import app.models.entities.Reserva;
 
+import app.models.entities.Servicio;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -35,5 +36,11 @@ public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
     List<Cuidador> findAllbyCiudadYFecha(@Param("ciudadPlaceId")String ciudadPlaceId,
                                          @Param("from")Date from,
                                          @Param("to")Date to);
+
+
+
+    @Query("select c from Servicio c ")
+    List<Servicio> getServicios();
+
 
 }
