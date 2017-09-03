@@ -233,6 +233,7 @@ Vue.component('my-login', {
             axios.post(this.exitUrl)
                 .then((response) => {
                     console.log("logout exitoso");
+                    document.location.href="/";
                     this.resetVueJsData();
                 })
                 .catch(error => {
@@ -244,6 +245,7 @@ Vue.component('my-login', {
             axios.post(this.registrationUrl, this.user)
                 .then((response) => {
                     console.log("registro exitoso");
+                    sweetAlert("Exito", "Registro exitoso.", "success");
                     var magnificPopup = $.magnificPopup.instance;
                     // save instance in magnificPopup variable
                     magnificPopup.close();

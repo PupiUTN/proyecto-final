@@ -93,7 +93,6 @@ let vm = new Vue({
                                 title: "Reserva",
                                 text: "Para reservar necesita agregar al menos un perro",
                                 type: "info",
-                                timer: 2000,
                             },
                             function () {
                                 console.log("redirect");
@@ -140,7 +139,6 @@ let vm = new Vue({
                             title: "Guardado",
                             text: "Nueva reserva creada exitosamente.",
                             type: "success",
-                            timer: 2000,
                         },
                         function () {
                             console.log("redirect");
