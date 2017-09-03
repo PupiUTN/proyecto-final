@@ -43,4 +43,7 @@ public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
     List<Servicio> getServicios();
 
 
+
+    @Query("select c from Cuidador c " + "where user_id  = :#{#id} " )
+     Cuidador findcuidadorXUser(@Param("id")long id);
 }

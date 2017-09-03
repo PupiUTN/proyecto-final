@@ -59,4 +59,8 @@ public class CuidadorService {
     }
 
 
+    public Cuidador cuidadorXUser(Long id)
+    {
+        return cuidadorRepository.findcuidadorXUser(id);
+    }
 }

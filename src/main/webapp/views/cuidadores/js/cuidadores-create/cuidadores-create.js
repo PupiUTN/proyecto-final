@@ -14,17 +14,61 @@ let vm = new Vue({
         administrative_area_level_1: '',
         country: '',
         postal_code: '',
-        listaServicios: []
+        listaServicios: [],
+        precioNeto: '',
+        porcentaje:'',
+        precioFinal:'',
+        cuidador:'',
+        tamaño:'',
+        cantidadMaxDePerros:'',
+        descripcion:''
+
+    },
+
+    watch: {
+        precioNeto: function(val, oldVal){
+
+          this.precioFinal = (val * 1.20 ).toFixed(2);
+
+    },
+        formPost :function(val, oldVal){
+
+
+            if (this.formPost === false )
+            {
+                var x ;
+                this.cuidador.listaServicios.forEach(function(item) {
+                    document.getElementById(item.nombre).checked = true;
+
+                });
+
+
+            }
+
+        },
+
     },
     mounted() {
-        this.selector_cantidad();
         this.BuscarServicios();
-        this.autocompleteAddress();
-        this.getUserInfo();
+        this.porcentaje = 20;
+        this.selector_cantidad();
+        this.inicializarServicios()
+
+
     },
     methods: {
         toggleLoader() {
             $('#spinner').toggle();
+        },
+        isAuthenticatedMethod(isAuthenticated) {
+            // TRIGGER MOUNTED METHOD
+            this.isAuthenticated = isAuthenticated;
+            if (!this.isAuthenticated) {
+                var childMylogin = this.$refs.mylogin;
+                childMylogin.openLoginPopUp();
+            } else {
+                this.getUserInfo();
+            }
         },
         BuscarServicios()
         {
@@ -32,6 +76,8 @@ let vm = new Vue({
             axios.get("/api/cuidadores/searchServicios/")
                 .then((data) => {
                     this.listaServicios = data.data;
+
+
                 })
                 .catch(error => {
                     console.log(error);
@@ -50,40 +96,7 @@ let vm = new Vue({
              $('#selector_cantidad').html(select);
 
          },
-        autocompleteAddress() {
-            var componentForm = {
-                street_number: 'short_name',
-                route: 'long_name',
-                locality: 'long_name',
-                administrative_area_level_1: 'short_name',
-                country: 'long_name',
-                postal_code: 'short_name'
-            };
-            var autocomplete = new google.maps.places.Autocomplete(
-                /** @type {!HTMLInputElement} */(this.$refs.autocomplete),
-                {types: ['geocode'], componentRestrictions: {country: "ar"}});
-            autocomplete.addListener('place_changed', function() {
-                var place = autocomplete.getPlace();
-                for (var i = 0; i < place.address_components.length; i++) {
-                    var addressType = place.address_components[i].types[0];
-                    if (componentForm[addressType]) {
-                        var val = place.address_components[i][componentForm[addressType]];
-                        vm.$set(vm, addressType.toString(),val.toString());
-                    }
-                }
-                // vm.$set(vm.direccion, 'calle',this.route.toString());
-                vm.direccion.calle = vm.route;
-                vm.direccion.numero = vm.street_number;
-                vm.direccion.ciudad = vm.locality;
-                vm.direccion.provincia = vm.administrative_area_level_1;
-                vm.direccion.pais = vm.country;
-                vm.direccion.codigoPostal = vm.postal_code;
-                vm.direccion.ciudadPlaceId = place.place_id;
-                vm.direccion.placeId = place.id;
-                vm.direccion.latitud = place.geometry.location.lat();
-                vm.direccion.longitud = place.geometry.location.lng();
-            });
-        },
+
         filesChange(fileList) {
             // handle file changes
             const formData = new FormData();
@@ -114,17 +127,38 @@ let vm = new Vue({
         getUserInfo() {
             axios.get(this.url + "me")
                 .then((sessionInfo) => {
-                    this.isUserLoggedIn(sessionInfo);
+                    this.isUserCuidador(sessionInfo);
                 })
                 .catch(error => {
                     console.log(error);
-                    sweetAlert("Oops...", "Error, ver consola", "error");
+                    sweetAlert("Oops...", "Error, necesitas estar logueado", "error");
+                    window.location.replace("http://localhost:8080/views/index/index.html");
                 });
         },
-        editUserInfo() {
-            this.user.direccion = this.direccion;
-            var payload = jQuery.extend(true, {}, this.user);
-            axios.put(this.url + this.user.id, payload)
+
+        isUserCuidador(sessionInfo) {
+             var urlCiudador = "/api/cuidadores" ;
+          //  + '?id='
+            axios.get(urlCiudador+ "/" + sessionInfo.data.principal.user.id)
+                .then((data) => {
+
+                    this.cuidador = data.data;
+                    this.precioNeto = this.cuidador.precioPorNoche - (( this.cuidador.precioPorNoche * 20)/100);
+                    this.formPost = false;
+                    this.tamaño = this.cuidador.tamaño.id;
+                    this.cantidadMaxDePerros = this.cuidador.cantidadMaxDePerros
+                    this.descripcion = this.cuidador.descripcion
+
+                })
+                .catch(error => {
+                    this.formPost = true;
+                    // me redirije a lo de jorge
+                });
+        },
+        editCuidador() {
+            var urlCiudador = "/api/cuidadores/";
+            var payload = jQuery.extend(true, {}, this.cuidador);
+            axios.put(urlCiudador + this.cuidador.id, payload)
                 .then((response) => {
                     this.toggleLoader();
                     sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
@@ -137,20 +171,10 @@ let vm = new Vue({
                     }
                 );
         },
-        isUserLoggedIn(sessionInfo) {
-            if(sessionInfo.status === 200) {
-                let address = sessionInfo.data.principal.user.direccion;
-                if(!address) {
-                    address = {};
-                    address.direccionLinea1 = "";
-                }
-                this.direccion = address;
-                this.user = sessionInfo.data.principal.user;
-            }
-            else {
-                console.log(sessionInfo.status + "|" + sessionInfo.statusText);
-                sweetAlert("Oops...", "Necesitas estar logueado para acceder a este contenido", "error");
-            }
+        inicializarServicios()
+        {
+
+
         }
     }
 });

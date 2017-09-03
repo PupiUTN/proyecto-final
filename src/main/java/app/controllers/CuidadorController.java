@@ -74,9 +74,16 @@ public class CuidadorController {
     @RequestMapping(value = "/searchServicios/", method = RequestMethod.GET)
     public List<Servicio> getServicios() throws Exception {
 
-
         return cuidadorService.getListaServicios();
 
+    }
+
+
+    @RequestMapping(value = "/SearchCuidadorxUser/", method = RequestMethod.GET)
+    public int getCuidadorxUsuario(@RequestParam(value = "id", required = false) String id )throws Exception {
+
+        //  return cuidadorService.cuidadorXUser(id);
+  return  2;
     }
 
 }
