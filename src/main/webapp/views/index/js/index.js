@@ -106,7 +106,7 @@ let vm = new Vue({
         },
         buscar() {
             if (this.placeID != null) {
-                let href = "http://localhost:8080/views/cuidadores/lista-cuidadores.html?placeName=" + this.placeName +
+                let href = "/views/cuidadores/lista-cuidadores.html?placeName=" + this.placeName +
                     "&placeID=" + this.placeID +
                     "&lat=" + this.placeLat +
                     "&lng=" + this.placeLng;
