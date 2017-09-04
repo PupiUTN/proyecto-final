@@ -8,13 +8,11 @@ let vm = new Vue({
         uploadedFiles: [],
         uploadError: null,
         currentStatus: null,
-        street_number: '',
-        route: '',
-        locality: '',
-        administrative_area_level_1: '',
-        country: '',
-        postal_code: '',
         listaServicios: [],
+        imagen1:'',
+        imagen2:'',
+        imagen3:'',
+        imagen4:'',
         precioNeto: '',
         porcentaje:'',
         precioFinal:'',
@@ -143,11 +141,15 @@ let vm = new Vue({
                 .then((data) => {
 
                     this.cuidador = data.data;
-                    this.precioNeto = this.cuidador.precioPorNoche - (( this.cuidador.precioPorNoche * 20)/100);
+                    this.precioNeto = (this.cuidador.precioPorNoche /1.20).toFixed(2);
                     this.formPost = false;
                     this.tamaño = this.cuidador.tamaño.id;
-                    this.cantidadMaxDePerros = this.cuidador.cantidadMaxDePerros
+                    this.cantidadMaxDePerros = this.cuidador.cantidadMaxDePerros;
                     this.descripcion = this.cuidador.descripcion
+                    this.imagen1 = this.cuidador.listaImagenes[0].url;
+                    this.imagen2 = this.cuidador.listaImagenes[1].url;
+                    this.imagen3 = this.cuidador.listaImagenes[2].url;
+                    this.imagen4 = this.cuidador.listaImagenes[3].url;
 
                 })
                 .catch(error => {
@@ -156,6 +158,21 @@ let vm = new Vue({
                 });
         },
         editCuidador() {
+              var serv = null;
+              var listaAux = [];
+            this.listaServicios.forEach(function(item) {
+                    serv = {id: item.id, nombre: item.nombre};
+                 if( document.getElementById(serv.nombre).checked === true )
+                listaAux.push(serv);
+
+            });
+             this.cuidador.listaServicios = listaAux;
+            this.cuidador.precioPorNoche = this.precioFinal;
+            this.cuidador.cantidadMaxDePerros =   this.cantidadMaxDePerros;
+            this.cuidador.descripcion =  this.descripcion;
+            //this.cuidador.tamaño.id = this.tamaño;
+
+
             var urlCiudador = "/api/cuidadores/";
             var payload = jQuery.extend(true, {}, this.cuidador);
             axios.put(urlCiudador + this.cuidador.id, payload)

@@ -199,63 +199,29 @@
 
             <div class="row">
 
-                <!-- Profile -->
-                <div class="col-lg-6 col-md-12">
+
+                <div class="col-lg-6 col-md-12" >
                     <div class="dashboard-list-box margin-top-0">
-                        <h4 class="gray"> Mis Fotos  </h4>
+                        <h4 class="gray"> Precios </h4>
                         <div class="dashboard-list-box-static">
-                            <form id="imageForm" enctype="multipart/form-data">
-                            <!-- Avatar -->
-                            <div class="edit-profile-photo">
-                                <img :src="user.profileImageUrl" alt="">
-                                <div class="change-photo-btn">
-                                    <div class="photoUpload">
-                                        <span><i class="fa fa-upload"></i> Subir Foto</span>
-                                        <input type="file" id="imageFile1" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
-                                    </div>
-                                </div>
+                            Recuerda que Pupi cobra una comision del 20% del total de la tarifa que estableces en cada servicio.
+                            <!-- Change Password -->
+                            <div class="my-profile">
+
+                                <label>Mi precio Final </label>
+                                <input v-model="precioNeto"  style=" text-align: right" id="precioNeto" type="number">
+
+                                <label>Porcentaje Pupi  </label>
+                                <input v-model="porcentaje" id="porcentaje"  style=" text-align: right" type="number" readonly>
+
+                                <label>Mi precio Final </label>
+                                <input v-model="precioFinal" id="precioFinal"  style=" text-align: right" value="" type="number">
+
                             </div>
-
-
-                                <div class="edit-profile-photo">
-                                    <img :src="user.profileImageUrl" alt="">
-                                    <div class="change-photo-btn">
-                                        <div class="photoUpload">
-                                            <span><i class="fa fa-upload"></i> Subir Foto</span>
-                                            <input type="file" id="imageFile2" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="edit-profile-photo">
-                                    <img :src="user.profileImageUrl" alt="">
-                                    <div class="change-photo-btn">
-                                        <div class="photoUpload">
-                                            <span><i class="fa fa-upload"></i> Subir Foto</span>
-                                            <input type="file" id="imageFile3" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="edit-profile-photo">
-                                    <img :src="user.profileImageUrl" alt="">
-                                    <div class="change-photo-btn">
-                                        <div class="photoUpload">
-                                            <span><i class="fa fa-upload"></i> Subir Foto</span>
-                                            <input type="file" id="imageFile4" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </form>
-
-
-                            <!--<button v-on:click='editUserInfo' class="button margin-top-15">Guardar</button>-->
 
                         </div>
                     </div>
                 </div>
-
 
                 <div class="col-lg-6 col-md-12">
                     <div class="dashboard-list-box margin-top-0">
@@ -281,15 +247,14 @@
                             <!-- Change Password -->
                             <div class="my-profile">
                                 <label class="margin-top-0">Mi descripcion</label>
-                               <textarea v-model="descripcion" rows="4" cols="50" maxlength="1000">
+                                <textarea v-model="descripcion" rows="4" cols="50" maxlength="1000">
                                </textarea>
                             </div>
 
                         </div>
                     </div>
                 </div>
-                    <br>
-                <br>
+
                 <div class="col-lg-6 col-md-12" style=" top: 50px;">
                     <div class="dashboard-list-box margin-top-0">
                         <h4 class="gray"> Servicios que ofreces </h4>
@@ -300,8 +265,8 @@
                                 <div class="checkboxes in-row margin-bottom-30">
                                     <ul v-for =" servicio in listaServicios" >
                                         <li>
-                                        <input :id="servicio.nombre" type="checkbox" name="check">
-                                        <label :for="servicio.nombre">{{servicio.nombre}}</label>
+                                            <input :id="servicio.nombre" type="checkbox" name="check">
+                                            <label :for="servicio.nombre">{{servicio.nombre}}</label>
                                         </li>
 
                                     </ul>
@@ -313,30 +278,68 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <br>
-                <div class="col-lg-6 col-md-12" style=" top: 100px;">
+
+                <!-- Profile -->
+                <div class="col-lg-6 col-md-12" style= "top: 50px;" >
                     <div class="dashboard-list-box margin-top-0">
-                        <h4 class="gray"> Precios </h4>
+                        <h4 class="gray"> Mis Fotos  </h4>
                         <div class="dashboard-list-box-static">
-                            Recuerda que Pupi cobra una comision del 20% del total de la tarifa que estableces en cada servicio.
-                            <!-- Change Password -->
-                            <div class="my-profile">
-
-                                <label>Mi precio Final </label>
-                                <input v-model="precioNeto"  style=" text-align: right" id="precioNeto" type="number">
-
-                                <label>Porcentaje Pupi  </label>
-                                <input v-model="porcentaje" id="porcentaje"  style=" text-align: right" type="number" readonly>
-
-                                <label>Mi precio Final </label>
-                                <input v-model="precioFinal" id="precioFinal"  style=" text-align: right" value="" type="number">
-
+                            <form id="imageForm" enctype="multipart/form-data">
+                            <!-- Avatar -->
+                            <div class="edit-profile-photo">
+                                <img :src="imagen1" alt="">
+                                <div class="change-photo-btn">
+                                    <div class="photoUpload">
+                                        <span><i class="fa fa-upload"></i> Subir Foto</span>
+                                        <input type="file" id="imageFile1" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+                                    </div>
+                                </div>
                             </div>
+
+
+                                <div class="edit-profile-photo">
+                                    <img :src="imagen2" alt="">
+                                    <div class="change-photo-btn">
+                                        <div class="photoUpload">
+                                            <span><i class="fa fa-upload"></i> Subir Foto</span>
+                                            <input type="file" id="imageFile2" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="edit-profile-photo">
+                                    <img :src="imagen3" alt="">
+                                    <div class="change-photo-btn">
+                                        <div class="photoUpload">
+                                            <span><i class="fa fa-upload"></i> Subir Foto</span>
+                                            <input type="file" id="imageFile3" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="edit-profile-photo">
+                                    <img :src="imagen4" alt="">
+                                    <div class="change-photo-btn">
+                                        <div class="photoUpload">
+                                            <span><i class="fa fa-upload"></i> Subir Foto</span>
+                                            <input type="file" id="imageFile4" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+
+
+                            <!--<button v-on:click='editUserInfo' class="button margin-top-15">Guardar</button>-->
 
                         </div>
                     </div>
                 </div>
+
+
+
+                    <br>
+                <br>
 
 
                 <!-- Copyrights -->
