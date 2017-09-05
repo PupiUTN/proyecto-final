@@ -71,6 +71,12 @@ public class CuidadorController {
         return new ResponseEntity<>(entity, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    public @ResponseBody Cuidador editCuidador(@PathVariable("id") Long id, @RequestBody Cuidador entity) throws Exception {
+        entity.setId(id);
+        return cuidadorService.editCuidador(entity);
+    }
+
     @RequestMapping(value = "/searchServicios/", method = RequestMethod.GET)
     public List<Servicio> getServicios() throws Exception {
 
@@ -80,10 +86,10 @@ public class CuidadorController {
 
 
     @RequestMapping(value = "/SearchCuidadorxUser/", method = RequestMethod.GET)
-    public int getCuidadorxUsuario(@RequestParam(value = "id", required = false) String id )throws Exception {
+    public Cuidador getCuidadorxUsuario(@RequestParam(value = "id", required = false) long id )throws Exception {
 
-        //  return cuidadorService.cuidadorXUser(id);
-  return  2;
+          return cuidadorService.cuidadorXUser(id);
+  //  return  2;
     }
 
 }

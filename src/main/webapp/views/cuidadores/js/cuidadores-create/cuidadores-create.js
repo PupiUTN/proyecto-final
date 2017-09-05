@@ -9,10 +9,6 @@ let vm = new Vue({
         uploadError: null,
         currentStatus: null,
         listaServicios: [],
-        imagen1:'',
-        imagen2:'',
-        imagen3:'',
-        imagen4:'',
         precioNeto: '',
         porcentaje:'',
         precioFinal:'',
@@ -47,10 +43,10 @@ let vm = new Vue({
 
     },
     mounted() {
+
         this.BuscarServicios();
         this.porcentaje = 20;
         this.selector_cantidad();
-        this.inicializarServicios()
 
 
     },
@@ -95,7 +91,7 @@ let vm = new Vue({
 
          },
 
-        filesChange(fileList) {
+        filesChange(fileList,position) {
             // handle file changes
             const formData = new FormData();
 
@@ -108,13 +104,15 @@ let vm = new Vue({
                 });
 
             // save it
-            this.upload(formData);
+            this.upload(formData,position);
         },
-        upload(formData) {
+        upload(formData,position) {
             axios.post('/api/file/', formData)
                 .then((response) => {
-                    this.toggleLoader();
-                    this.user.profileImageUrl = response.data;
+
+
+                    this.cuidador.listaImagenes[position].url= response.data;
+                    this.inicializarImagenes();
                 })
                 .catch(error => {
                         console.log("ERROR AXIOS");
@@ -135,9 +133,12 @@ let vm = new Vue({
         },
 
         isUserCuidador(sessionInfo) {
-             var urlCiudador = "/api/cuidadores" ;
+           //  var urlCiudador = "/api/cuidadores" ;
           //  + '?id='
-            axios.get(urlCiudador+ "/" + sessionInfo.data.principal.user.id)
+           // axios.get(urlCiudador+ "/" + sessionInfo.data.principal.user.id)
+           var  url= "/api/cuidadores/SearchCuidadorxUser/";
+            let consulta= url + '?id=' + sessionInfo.data.principal.user.id;
+            axios.get(consulta)
                 .then((data) => {
 
                     this.cuidador = data.data;
@@ -146,18 +147,23 @@ let vm = new Vue({
                     this.tamaño = this.cuidador.tamaño.id;
                     this.cantidadMaxDePerros = this.cuidador.cantidadMaxDePerros;
                     this.descripcion = this.cuidador.descripcion
-                    this.imagen1 = this.cuidador.listaImagenes[0].url;
-                    this.imagen2 = this.cuidador.listaImagenes[1].url;
-                    this.imagen3 = this.cuidador.listaImagenes[2].url;
-                    this.imagen4 = this.cuidador.listaImagenes[3].url;
+                    this.inicializarImagenes();
+                    $('#spinner').toggle();
 
                 })
                 .catch(error => {
                     this.formPost = true;
+                    $('#spinner').toggle();
                     // me redirije a lo de jorge
                 });
         },
         editCuidador() {
+             if (this.cuidador.listaImagenes.length < 4)
+             {
+                 sweetAlert("Oops...", "Error, Se deben cargar 4 imagenes ", "error");
+                   return ;
+             }
+
               var serv = null;
               var listaAux = [];
             this.listaServicios.forEach(function(item) {
@@ -170,26 +176,38 @@ let vm = new Vue({
             this.cuidador.precioPorNoche = this.precioFinal;
             this.cuidador.cantidadMaxDePerros =   this.cantidadMaxDePerros;
             this.cuidador.descripcion =  this.descripcion;
-            //this.cuidador.tamaño.id = this.tamaño;
+             var tam = { id: this.tamaño};
+            this.cuidador.tamaño= tam;
 
 
             var urlCiudador = "/api/cuidadores/";
             var payload = jQuery.extend(true, {}, this.cuidador);
+            $('#spinner').toggle();
             axios.put(urlCiudador + this.cuidador.id, payload)
                 .then((response) => {
-                    this.toggleLoader();
+
                     sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
                     console.log(response);
+                  //  window.location = "http://localhost:8080/views/cuidadores/cuidadores-perfil.html?id="+ this.cuidador.id ;
+                    $('#spinner').toggle();
                 })
                 .catch(error => {
                         console.log(error);
-                        sweetAlert("Oops...", "Error, ver consola", "error");
+                        sweetAlert("Oops...", "Error, No se pudo guardar mi descripcion", "error");
 
                     }
                 );
         },
-        inicializarServicios()
+        inicializarImagenes()
         {
+                var i = 1;
+                var x = "imagen";
+            this.cuidador.listaImagenes.forEach(function(item) {
+                x = ( x +i).trim();
+                document.getElementById(x).src = item.url;
+                    i++;
+                x = "imagen";
+            });
 
 
         }

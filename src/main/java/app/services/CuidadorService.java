@@ -45,6 +45,11 @@ public class CuidadorService {
         cuidadorRepository.save(entity);
     }
 
+
+    public Cuidador editCuidador(Cuidador entity) throws Exception {
+        return cuidadorRepository.save(entity);
+    }
+
     public List<Cuidador> getCuidadoresPorCiudadPlaceId(String ciudadPlaceId) {
         return cuidadorRepository.findAllbyCiudadPlaceId(ciudadPlaceId);
     }
