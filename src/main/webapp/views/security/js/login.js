@@ -235,6 +235,8 @@ Vue.component('my-login', {
                 .then((response) => {
                     console.log("logout exitoso");
                     this.resetVueJsData();
+
+
                 })
                 .catch(error => {
                         console.log(error);

@@ -82,9 +82,13 @@ let vm = new Vue({
          {
 
              var select = '';
+             select += '<option val='  + ' > Seleccione Cantidad </option>';
              for (i=1;i<=20;i++){
+
                  select += '<option val=' + i + '>' + i + '</option>';
              }
+
+
              $('#selector_cantidad').html(select);
 
          },

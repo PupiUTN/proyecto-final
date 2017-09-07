@@ -180,9 +180,7 @@
         <!-- Content
         ================================================== -->
         <div class="dashboard-content" >
-            <form class="registered"  action="cuidadores-create.html" v-on:Submit.prevent='editCuidador'>
-            <!-- Titlebar -->
-              <div id="titlebar">
+            <div id="titlebar">
                 <div class="row">
                     <div class="col-md-12">
                         <h2>Mi Descripción</h2>
@@ -197,6 +195,10 @@
                     </div>
                 </div>
             </div>
+
+            <form   method="post" class="editCuidador" v-on:submit.prevent='editCuidador()'>
+            <!-- Titlebar -->
+
 
             <!--<div class="row">-->
 
@@ -224,14 +226,16 @@
                     </div>
                 </div>
 
+
+
                 <div class="col-lg-6 col-md-12">
                     <div class="dashboard-list-box margin-top-0">
                         <h4 class="gray"> 	<i class="fa fa-paw"></i> Descripcion </h4>
                         <div class="dashboard-list-box-static">
 
                             <label for="selector_tamaño">Tamaño maximo permitido de perro</label>
-                            <select required="required" id='selector_tamaño' v-model="tamaño" >
-                                <!--<option disabled value="">Seleccionar Cantidad</option>-->
+                            <select required id='selector_tamaño' v-model="tamaño" >
+                                <option  value="">Seleccionar Cantidad</option>
                                 <option  value="1"> Miniatura-0 a 5 kg</option>
                                 <option  value="2">Pequeño-5 a 10 kg</option>
                                 <option  value="3">Mediano-10 a 25 kg</option>
@@ -239,9 +243,9 @@
                                 <option value="5">Gigante-45 a 100 kg</option>
                             </select>
 
-                            <label>Cantidad máxima de perros</label>
-                            <select required="required" id='selector_cantidad' v-model="cantidadMaxDePerros" >
-                                <!--<option disabled value="">Seleccionar Cantidad</option>-->
+                            <label for="selector_cantidad">Cantidad máxima de perros</label>
+                            <select required id='selector_cantidad' v-model="cantidadMaxDePerros" >
+                                <!--<option  value="">Seleccionar Cantidad</option>-->
                             </select>
 
 
@@ -285,7 +289,7 @@
                     <div class="dashboard-list-box margin-top-0">
                         <h4 class="gray"> 	<i class="fa fa-paw"></i> Mis Fotos  </h4>
                         <div class="dashboard-list-box-static">
-                            <form id="imageForm" enctype="multipart/form-data">
+                         <!--   <form id="imageForm" enctype="multipart/form-data">-->
                             <!-- Avatar -->
                             <div class="edit-profile-photo">
                                 <img  id="imagen1" alt="">
@@ -328,30 +332,20 @@
                                     </div>
                                 </div>
 
-                            </form>
+                            <!--</form>-->
 
 
-                            <!--<button v-on:click='editUserInfo' class="button margin-top-15">Guardar</button>-->
 
                         </div>
                     </div>
+
                 </div>
-
-                <!--<button type="submit"  v-on:click='editCuidador' style=" height: 60px; width: 150px; position: relative;" class="button margin-top-15">Guardar</button>-->
-                <input type="submit"  value="Submit"  style=" height: 60px; width: 150px; position: relative;" class="button margin-top-15">Guardar</input>-
-
-                <!-- Copyrights -->
-
-            <!--</div>-->
+                <input type="submit" value="Guardar" name="editCuidador" style=" height: 60px; width: 150px; position: relative;" class="button margin-top-15"/>
 
             </form>
 
         </div>
-        <!-- Content / End -->
 
-        <!--<div class="col-md-12">-->
-            <!--&lt;!&ndash;<div class="copyrights">© 2017 Pupi. All Rights Reserved.</div>&ndash;&gt;-->
-        <!--</div>-->
 
     </div>
     <!-- Dashboard / End -->
