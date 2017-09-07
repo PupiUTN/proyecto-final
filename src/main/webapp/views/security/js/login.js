@@ -200,6 +200,7 @@ Vue.component('my-login', {
                     var magnificPopup = $.magnificPopup.instance;
                     // save instance in magnificPopup variable
                     magnificPopup.close();
+
                     // Close popup that is currently opened
                 })
                 .catch(error => {

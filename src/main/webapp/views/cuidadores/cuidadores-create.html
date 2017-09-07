@@ -3,7 +3,7 @@
 
     <!-- Basic Page Needs
     ================================================== -->
-    <title>Mi descripcion</title>
+    <title>Mi descripción</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -138,7 +138,7 @@
 
 
     <!-- Dashboard -->
-    <div id="dashboard">
+    <div id="dashboard" style="position: relative;">
 
         <!-- Navigation
         ================================================== -->
@@ -179,10 +179,10 @@
 
         <!-- Content
         ================================================== -->
-        <div class="dashboard-content">
-            <form>
+        <div class="dashboard-content" >
+            <form class="registered"  action="cuidadores-create.html" v-on:Submit.prevent='editCuidador'>
             <!-- Titlebar -->
-            <div id="titlebar">
+              <div id="titlebar">
                 <div class="row">
                     <div class="col-md-12">
                         <h2>Mi Descripción</h2>
@@ -198,18 +198,18 @@
                 </div>
             </div>
 
-            <div class="row">
+            <!--<div class="row">-->
 
 
                 <div class="col-lg-6 col-md-12" >
                     <div class="dashboard-list-box margin-top-0">
-                        <h4 class="gray"> Precios </h4>
+                        <h4 class="gray"> 	<i class="fa fa-paw"></i>	 Precios </h4>
                         <div class="dashboard-list-box-static"      style="height: 515px; ">
-                            Recuerda que Pupi cobra una comision del 20% del total de la tarifa que estableces en cada servicio.
+                            Recuerda que Pupi cobra una comisión del 20% del total de la tarifa que estableces en cada servicio.
                             <!-- Change Password -->
                             <div class="my-profile">
 
-                                <label>Mi precio Final </label>
+                                <label>Mi precio  </label>
                                 <input v-model="precioNeto"  style=" text-align: right" id="precioNeto" type="number" required>
 
                                 <label>Porcentaje Pupi  </label>
@@ -226,12 +226,12 @@
 
                 <div class="col-lg-6 col-md-12">
                     <div class="dashboard-list-box margin-top-0">
-                        <h4 class="gray"> Descripcion </h4>
+                        <h4 class="gray"> 	<i class="fa fa-paw"></i> Descripcion </h4>
                         <div class="dashboard-list-box-static">
 
-                            <label>Tamaño maximo permitido de perro</label>
-                            <select id='selector_tamaño' v-model="tamaño" required>
-                                <option disabled value="">Seleccionar Cantidad</option>
+                            <label for="selector_tamaño">Tamaño maximo permitido de perro</label>
+                            <select required="required" id='selector_tamaño' v-model="tamaño" >
+                                <!--<option disabled value="">Seleccionar Cantidad</option>-->
                                 <option  value="1"> Miniatura-0 a 5 kg</option>
                                 <option  value="2">Pequeño-5 a 10 kg</option>
                                 <option  value="3">Mediano-10 a 25 kg</option>
@@ -240,8 +240,8 @@
                             </select>
 
                             <label>Cantidad máxima de perros</label>
-                            <select id='selector_cantidad' v-model="cantidadMaxDePerros" required>
-                                <option disabled value="">Seleccionar Cantidad</option>
+                            <select required="required" id='selector_cantidad' v-model="cantidadMaxDePerros" >
+                                <!--<option disabled value="">Seleccionar Cantidad</option>-->
                             </select>
 
 
@@ -258,7 +258,7 @@
 
                 <div class="col-lg-6 col-md-12" style=" top: 50px;">
                     <div class="dashboard-list-box margin-top-0">
-                        <h4 class="gray"> Servicios que ofreces </h4>
+                        <h4 class="gray"> 	<i class="fa fa-paw"></i> Servicios que ofreces </h4>
                         <div class="dashboard-list-box-static">
 
                             <!-- Change Password -->
@@ -281,9 +281,9 @@
                 </div>
 
                 <!-- Profile -->
-                <div class="col-lg-6 col-md-12" style= "top: 50px;" >
+                <div class="col-lg-6 col-md-12" style= "top: 50px; height: 1000px;" >
                     <div class="dashboard-list-box margin-top-0">
-                        <h4 class="gray"> Mis Fotos  </h4>
+                        <h4 class="gray"> 	<i class="fa fa-paw"></i> Mis Fotos  </h4>
                         <div class="dashboard-list-box-static">
                             <form id="imageForm" enctype="multipart/form-data">
                             <!-- Avatar -->
@@ -337,25 +337,21 @@
                     </div>
                 </div>
 
-
-
-                    <br>
-                <br>
-
+                <!--<button type="submit"  v-on:click='editCuidador' style=" height: 60px; width: 150px; position: relative;" class="button margin-top-15">Guardar</button>-->
+                <input type="submit"  value="Submit"  style=" height: 60px; width: 150px; position: relative;" class="button margin-top-15">Guardar</input>-
 
                 <!-- Copyrights -->
 
-            </div>
-                <button v-on:click='editCuidador' class="button margin-top-15">Guardar</button>
+            <!--</div>-->
 
             </form>
 
         </div>
         <!-- Content / End -->
 
-        <div class="col-md-12">
-            <div class="copyrights">© 2017 Pupi. All Rights Reserved.</div>
-        </div>
+        <!--<div class="col-md-12">-->
+            <!--&lt;!&ndash;<div class="copyrights">© 2017 Pupi. All Rights Reserved.</div>&ndash;&gt;-->
+        <!--</div>-->
 
     </div>
     <!-- Dashboard / End -->

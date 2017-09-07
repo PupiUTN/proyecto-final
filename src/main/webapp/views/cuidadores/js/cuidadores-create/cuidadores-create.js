@@ -3,11 +3,7 @@ let vm = new Vue({
     data: {
         user: {},
         url: "/api/user/",
-        direccion: {},
         formPost: true,
-        uploadedFiles: [],
-        uploadError: null,
-        currentStatus: null,
         listaServicios: [],
         precioNeto: '',
         porcentaje:'',
@@ -61,7 +57,9 @@ let vm = new Vue({
                 var childMylogin = this.$refs.mylogin;
                 childMylogin.openLoginPopUp();
             } else {
+
                 this.getUserInfo();
+
             }
         },
         BuscarServicios()
@@ -110,8 +108,9 @@ let vm = new Vue({
             axios.post('/api/file/', formData)
                 .then((response) => {
 
+                    var url = response.data;
+                this.cuidador.listaImagenes[position].url = url;
 
-                    this.cuidador.listaImagenes[position].url= response.data;
                     this.inicializarImagenes();
                 })
                 .catch(error => {
@@ -138,13 +137,18 @@ let vm = new Vue({
            // axios.get(urlCiudador+ "/" + sessionInfo.data.principal.user.id)
            var  url= "/api/cuidadores/SearchCuidadorxUser/";
             let consulta= url + '?id=' + sessionInfo.data.principal.user.id;
+
             axios.get(consulta)
                 .then((data) => {
 
                     this.cuidador = data.data;
                     this.precioNeto = (this.cuidador.precioPorNoche /1.20).toFixed(2);
                     this.formPost = false;
-                    this.tamaño = this.cuidador.tamaño.id;
+                    if(this.cuidador.tamaño !== null){
+
+                        this.tamaño = this.cuidador.tamaño.id;
+                    }
+
                     this.cantidadMaxDePerros = this.cuidador.cantidadMaxDePerros;
                     this.descripcion = this.cuidador.descripcion
                     this.inicializarImagenes();
@@ -158,7 +162,7 @@ let vm = new Vue({
                 });
         },
         editCuidador() {
-             if (this.cuidador.listaImagenes.length < 4)
+             if (this.validarCantidadImagenes())
              {
                  sweetAlert("Oops...", "Error, Se deben cargar 4 imagenes ", "error");
                    return ;
@@ -199,7 +203,8 @@ let vm = new Vue({
                 );
         },
         inicializarImagenes()
-        {
+        {    if(this.cuidador.listaImagenes.length > 0)
+                 {
                 var i = 1;
                 var x = "imagen";
             this.cuidador.listaImagenes.forEach(function(item) {
@@ -208,6 +213,32 @@ let vm = new Vue({
                     i++;
                 x = "imagen";
             });
+
+                 }
+                 else {
+
+                var img = "";
+                for (i = 0; i < 4; i++) {
+                    img = {id: 0, url: ""};
+                this.cuidador.listaImagenes.push(img);
+                    document.getElementById("imagen1").src = "";
+                    document.getElementById("imagen2").src = "";
+                    document.getElementById("imagen3").src = "";
+                    document.getElementById("imagen4").src = "";
+                         }
+                        }
+
+        },
+        validarCantidadImagenes()
+        {
+            this.cuidador.listaImagenes.forEach(function(item) {
+
+                if( item.url === "")
+                    return false;
+
+            });
+
+            return true;
 
 
         }
