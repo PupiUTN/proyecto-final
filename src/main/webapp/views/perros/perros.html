@@ -3,7 +3,7 @@
 
     <!-- Basic Page Needs
     ================================================== -->
-    <title>Mis Perros</title>
+    <title>Listeo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -12,285 +12,17 @@
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
 
+    <!-- MY CSS
+    ================================================== -->
+    <link rel="stylesheet" href="/views/index/css/index.css">
+
 </head>
 
-<body xmlns:v-on="http://www.w3.org/1999/xhtml">
+<body>
 
 <!-- Wrapper -->
 <div id="wrapper">
-    <div id="appVue">
-
-        <!-- Header Container
-        ================================================== -->
-        <header id="header-container">
-
-            <!-- Header -->
-            <div id="header">
-                <div class="container">
-
-                    <!-- Left Side Content -->
-                    <div class="left-side">
-
-                        <!-- Logo -->
-                        <div id="logo">
-                            <a href="/views/index/index.html"><img src="/assets/images/logo.png" alt=""></a>
-                        </div>
-
-                        <!-- Mobile Navigation -->
-                        <div class="menu-responsive">
-                            <i class="fa fa-reorder menu-trigger"></i>
-                        </div>
-
-                        <!-- Main Navigation -->
-                        <nav id="navigation" class="style-1">
-                            <ul id="responsive">
-
-                                <li><a href="#">Home</a>
-                                    <ul>
-                                        <li><a href="index.html">Home 1</a></li>
-                                        <li><a href="index-2.html">Home 2</a></li>
-                                        <li><a href="index-3.html">Home 3</a></li>
-                                        <li><a href="index-4.html">Home 4</a></li>
-                                    </ul>
-                                </li>
-
-                                <li><a class="current" href="#">Listings</a>
-                                    <ul>
-                                        <li><a href="#">List Layout</a>
-                                            <ul>
-                                                <li><a href="listings-list-with-sidebar.html">With Sidebar</a></li>
-                                                <li><a href="listings-list-full-width.html">Full Width</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Grid Layout</a>
-                                            <ul>
-                                                <li><a href="listings-grid-with-sidebar-1.html">With Sidebar 1</a></li>
-                                                <li><a href="listings-grid-with-sidebar-2.html">With Sidebar 2</a></li>
-                                                <li><a href="listings-grid-full-width.html">Full Width</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Half Screen Map</a>
-                                            <ul>
-                                                <li><a href="listings-half-screen-map-list.html">List Layout</a></li>
-                                                <li><a href="listings-half-screen-map-grid-1.html">Grid Layout 1</a>
-                                                </li>
-                                                <li><a href="listings-half-screen-map-grid-2.html">Grid Layout 2</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="listings-single-page.html">Single Listing</a></li>
-                                    </ul>
-                                </li>
-
-                                <li><a href="#">User Panel</a>
-                                    <ul>
-                                        <li><a href="dashboard.html">Dashboard</a></li>
-                                        <li><a href="dashboard-messages.html">Messages</a></li>
-                                        <li><a href="dashboard-my-listings.html">My Listings</a></li>
-                                        <li><a href="dashboard-reviews.html">Reviews</a></li>
-                                        <li><a href="dashboard-bookmarks.html">Bookmarks</a></li>
-                                        <li><a href="dashboard-add-listing.html">Add Listing</a></li>
-                                        <li><a href="dashboard-my-profile.html">My Profile</a></li>
-                                        <li><a href="dashboard-invoice.html">Invoice</a></li>
-                                    </ul>
-                                </li>
-
-                                <li><a href="#">Pages</a>
-                                    <ul>
-                                        <li><a href="pages-blog.html">Blog</a>
-                                            <ul>
-                                                <li><a href="pages-blog.html">Blog</a></li>
-                                                <li><a href="pages-blog-post.html">Blog Post</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="pages-contact.html">Contact</a></li>
-                                        <li><a href="pages-elements.html">Elements</a></li>
-                                        <li><a href="pages-pricing-tables.html">Pricing Tables</a></li>
-                                        <li><a href="pages-typography.html">Typography</a></li>
-                                        <li><a href="pages-404.html">404 Page</a></li>
-                                        <li><a href="pages-icons.html">Icons</a></li>
-                                    </ul>
-                                </li>
-
-                            </ul>
-                        </nav>
-                        <div class="clearfix"></div>
-                        <!-- Main Navigation / End -->
-
-                    </div>
-                    <!-- Left Side Content / End -->
-
-                    <!-- Right Side Content / End -->
-                    <div class="right-side">
-                        <my-login></my-login>
-                    </div>
-                    <!-- Right Side Content / End -->
-
-
-                </div>
-            </div>
-            <!-- Header / End -->
-
-        </header>
-        <div class="clearfix"></div>
-        <!-- Header Container / End -->
-
-
-        <!-- Titlebar
-        ================================================== -->
-        <div id="titlebar" class="gradient">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-
-                        <h2>Mis Perros</h2><span>Agrega a tus mejores amigos</span>
-
-                        <!-- Breadcrumbs -->
-                        <nav id="breadcrumbs">
-                            <ul>
-                                <a href="/views/perros/registrar-perro.html" class="button border with-icon">Añadir
-                                    Perro <i class="sl sl-icon-plus"></i></a>
-                            </ul>
-                        </nav>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Content
-        ================================================== -->
-        <div class="container">
-            <div class="row">
-                <div id="spinner"></div>
-
-                <div class="col-lg-12 col-md-12 padding-right-30">
-
-                    <div class="row">
-
-                        <!-- Listing Item -->
-                        <div v-show="dogs.length > 0" v-for="dog in dogs" :id="dog.id" class="col-lg-6 col-md-12">
-                            <div class="listing-item-container list-layout">
-                                <a href="#" class="listing-item">
-
-                                    <!-- Image -->
-                                    <div class="listing-item-image">
-                                        <img :src="dog.fotoPerfil" alt="">
-                                        <span class="tag"> {{dog.raza.nombre}} </span>
-                                    </div>
-
-                                    <!-- Content -->
-                                    <div class="listing-item-content">
-                                        <div class="listing-badge now-open"> {{dog.tamaño.nombre}}</div>
-
-                                        <div class="listing-item-inner">
-                                            <h3>{{dog.nombre}}</h3>
-                                            <span>{{dog.comentario}}</span>
-                                            <div class="star-rating" data-rating="3.5">
-                                                <div class="rating-counter">(12 reviews)</div>
-                                            </div>
-                                        </div>
-
-                                        <!--<span class="like-icon"></span>-->
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div v-show="dogs.length == 0">
-                            <h3>{{message}}</h3>
-                        </div>
-                        <!-- Listing Item / End -->
-
-                        <!-- Pagination -->
-                        <!--<div class="clearfix"></div>-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-md-12">-->
-                                <!--&lt;!&ndash; Pagination &ndash;&gt;-->
-                                <!--<div class="pagination-container margin-top-20 margin-bottom-40">-->
-                                    <!--<nav class="pagination">-->
-                                        <!--<ul>-->
-                                            <!--<li><a href="#" class="current-page">1</a></li>-->
-                                            <!--<li><a href="#">2</a></li>-->
-                                            <!--<li><a href="#">3</a></li>-->
-                                            <!--<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>-->
-                                        <!--</ul>-->
-                                    <!--</nav>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!-- Pagination / End -->
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Footer
-        ================================================== -->
-        <div id="footer" class="margin-top-15">
-            <!-- Main -->
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-5 col-sm-6">
-                        <img class="footer-logo" src="/assets/images/logo.png" alt="">
-                        <br><br>
-                        <p> Olvidate de la perrera! Pupi es el principal servicio en línea que conecta a los dueños de
-                            mascotas con más de 20,000 cuidadores de confianza en toda Argentina, haciendo que tu y tu
-                            amigo peludo tengan toda la tranquilidad que merecen.</p>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6 ">
-                        <h4>Helpful Links</h4>
-                        <ul class="footer-links">
-                            <li><a href="#">Login</a></li>
-                            <li><a href="#">Hazte Cuidador</a></li>
-                            <li><a href="#">Mi Cuenta</a></li>
-                            <li><a href="#">Terminos y condiciones de uso </a></li>
-                        </ul>
-
-                        <div class="clearfix"></div>
-                    </div>
-
-                    <div class="col-md-3  col-sm-12">
-                        <h4>Contactanos</h4>
-                        <div class="text-widget">
-                            <span>12345 evasio garrone</span> <br>
-                            Phone: <span>(351) 123-456 </span><br>
-                            E-Mail:<span> <a href="#">pupi@gmail.com</a> </span><br>
-                        </div>
-
-                        <ul class="social-icons margin-top-20">
-                            <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-                            <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
-                            <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
-                            <li><a class="vimeo" href="#"><i class="icon-vimeo"></i></a></li>
-                        </ul>
-
-                    </div>
-
-                </div>
-
-                <!-- Copyright -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="copyrights">© 2017 pupi. Todos los derechos reservados.</div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-        <!-- Footer / End -->
-
-
-        <!-- Back To Top Button -->
-        <div id="backtotop"><a href="#"></a></div>
-
-    </div>
+    <my-dashboard current-view="my-perros-list"></my-dashboard>
 </div>
 <!-- Wrapper / End -->
 
@@ -308,15 +40,29 @@
 <script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
 <script type="text/javascript" src="/assets/scripts/custom.js"></script>
+
+<link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
+<script src="/assets/scripts/datedropper.js"></script>
 <script src="/js/vue.js"></script>
 <script src="/js/axios.min.js"></script>
 <link rel="stylesheet" href="/css/sweetalert.css"/>
 <script src="/js/sweetalert.min.js"></script>
-<script type="text/javascript" src="/views/security/js/login.js"></script>
-<script src="perros.js"></script>
-<link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
-<script src="/assets/scripts/datedropper.js"></script>
-<script>$('#booking-date').dateDropper()</script>
+<script type="text/javascript" src="/views/security/js/vue-login.js"></script>
+<script type="text/javascript" src="/views/dashboard/js/vue-header.js"></script>
+<script type="text/javascript" src="/views/dashboard/js/vue-sidebar.js"></script>
+<!--own-->
+<script src="js/vue-perros-list.js"></script>
+
+
+<!--INIT-->
+<script type="text/javascript" src="/views/dashboard/js/vue-dashboard.js"></script>
+
+<script>
+    let vm = new Vue({
+        el: '#wrapper'
+    });
+</script>
+
 <style>
     #spinner {
         /*http://samherbert.net/svg-loaders/*/

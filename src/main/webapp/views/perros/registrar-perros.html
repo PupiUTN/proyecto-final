@@ -22,7 +22,7 @@
 
 <!-- Wrapper -->
 <div id="wrapper">
-    <my-dashboard current-view="my-profile"></my-dashboard>
+    <my-dashboard current-view="my-perros-registrar"></my-dashboard>
 </div>
 <!-- Wrapper / End -->
 
@@ -51,8 +51,7 @@
 <script type="text/javascript" src="/views/dashboard/js/vue-header.js"></script>
 <script type="text/javascript" src="/views/dashboard/js/vue-sidebar.js"></script>
 <!--own-->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"></script>
-<script src="js/vue-profile.js"></script>
+<script src="js/vue-perros-registrar.js"></script>
 
 
 <!--INIT-->
@@ -64,6 +63,21 @@
     });
 </script>
 
+<style>
+    #spinner {
+        /*http://samherbert.net/svg-loaders/*/
+        background-image: url('/img/spinner.svg');
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-repeat: no-repeat;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 999;
+        background-position: center;
+    }
+</style>
 
 </body>
 </html>

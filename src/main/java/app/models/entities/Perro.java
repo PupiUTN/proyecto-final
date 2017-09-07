@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Perro implements Serializable {
@@ -23,19 +23,19 @@ public class Perro implements Serializable {
     private User user;
     @NotNull
     private String nombre;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
     private Raza raza;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
     private Tamaño tamaño;
-    @ManyToMany
-    private List<Vacuna> listaVacunas;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Vacuna> listaVacunas;
     @NotNull
     @NotEmpty
     private String fotoPerfil;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Imagen> listaImagenes;
+    @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    private Set<Imagen> listaImagenes;
     private String comentario;
     @NotNull
     private String sexo;
@@ -100,19 +100,20 @@ public class Perro implements Serializable {
         this.user = user;
     }
 
-    public List<Vacuna> getListaVacunas() {
+
+    public Set<Vacuna> getListaVacunas() {
         return listaVacunas;
     }
 
-    public void setListaVacunas(List<Vacuna> listaVacunas) {
+    public void setListaVacunas(Set<Vacuna> listaVacunas) {
         this.listaVacunas = listaVacunas;
     }
 
-    public List<Imagen> getListaImagenes() {
+    public Set<Imagen> getListaImagenes() {
         return listaImagenes;
     }
 
-    public void setListaImagenes(List<Imagen> listaImagenes) {
+    public void setListaImagenes(Set<Imagen> listaImagenes) {
         this.listaImagenes = listaImagenes;
     }
 
