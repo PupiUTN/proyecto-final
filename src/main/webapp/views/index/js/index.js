@@ -1,5 +1,5 @@
 let vm = new Vue({
-    el: '#appVue',
+    el: '#wrapper',
     data: {
         autocomplete: null,
         placeID: null,
