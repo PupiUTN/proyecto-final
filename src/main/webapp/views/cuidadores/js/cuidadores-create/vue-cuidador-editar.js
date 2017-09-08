@@ -163,7 +163,7 @@ Vue.component('my-cuidador-edit', {
                     </div>
 
                 </div>
-                <input type="submit" value="Guardar" name="editCuidador" style=" height: 60px; width: 150px; position: relative;" class="button margin-top-15"/>
+                <input type="submit" value="Guardar" name="editCuidador" style=" height: 60px; width: 150px; position: relative;" class="button margin-top-20"/>
 
             </form>
 </div>
