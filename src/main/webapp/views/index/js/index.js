@@ -68,9 +68,9 @@ let vm = new Vue({
                     vm.toggleLoader();
                     let lat = position.coords.latitude;
                     //trunca el valor a 3 decimales
-                    this.placeLat = lat.toString().match(/^-?\d+(?:\.\d{0,3})?/)[0];
+                    this.placeLat = lat.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
                     let long = position.coords.longitude;
-                    this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,3})?/)[0];
+                    this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
                     //https://developers.google.com/maps/documentation/geocoding/start
                     axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.placeLat + ',' + this.placeLng + '&sensor=true')
                         .then((data) => {
@@ -106,7 +106,7 @@ let vm = new Vue({
         },
         buscar() {
             if (this.placeID != null) {
-                let href = "http://localhost:8080/views/cuidadores/lista-cuidadores.html?placeName=" + this.placeName +
+                let href = "/views/cuidadores/lista-cuidadores.html?placeName=" + this.placeName +
                     "&placeID=" + this.placeID +
                     "&lat=" + this.placeLat +
                     "&lng=" + this.placeLng;
