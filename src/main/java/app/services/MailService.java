@@ -14,6 +14,7 @@ public class MailService {
     public void sendEmail() {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo("fbackhaus94@gmail.com");
+        message.setFrom("reservas@pupi.com.ar");
         message.setSubject("Prueba Pupi");
         message.setText("HOLIS");
         emailSender.send(message);

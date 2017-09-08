@@ -14,8 +14,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
  mail:
-   host: smtp.gmail.com
-   port: 587
+   host: email-smtp.us-east-1.amazonaws.com
+   port: 465
+   protocol: smtps
    username: ${PUPI_MAIL_USERNAME}
    password: ${PUPI_MAIL_PASSWORD}
    properties.mail.smtp:
@@ -23,5 +24,4 @@ spring:
                     starttls.enable: true
 
 server:
-  port: 8080
-
+  port: 5000
