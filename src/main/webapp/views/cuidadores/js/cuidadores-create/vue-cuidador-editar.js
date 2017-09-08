@@ -213,6 +213,7 @@ Vue.component('my-cuidador-edit', {
         this.BuscarServicios();
         this.porcentaje = 20;
         this.selector_cantidad();
+        this.getUserInfo();
 
 
     },
@@ -220,18 +221,18 @@ Vue.component('my-cuidador-edit', {
         toggleLoader() {
             $('#spinner').toggle();
         },
-        isAuthenticatedMethod(isAuthenticated) {
-            // TRIGGER MOUNTED METHOD
-            this.isAuthenticated = isAuthenticated;
-            if (!this.isAuthenticated) {
-                var childMylogin = this.$refs.mylogin;
-                childMylogin.openLoginPopUp();
-            } else {
-
-                this.getUserInfo();
-
-            }
-        },
+        // isAuthenticatedMethod(isAuthenticated) {
+        //     // TRIGGER MOUNTED METHOD
+        //     this.isAuthenticated = isAuthenticated;
+        //     if (!this.isAuthenticated) {
+        //         var childMylogin = this.$refs.mylogin;
+        //         childMylogin.openLoginPopUp();
+        //     } else {
+        //
+        //         this.getUserInfo();
+        //
+        //     }
+        // },
         BuscarServicios()
         {
 
@@ -252,7 +253,7 @@ Vue.component('my-cuidador-edit', {
         {
 
             var select = '';
-            select += '<option val='  + ' > Seleccione Cantidad </option>';
+
             for (i=1;i<=20;i++){
 
                 select += '<option val=' + i + '>' + i + '</option>';
@@ -260,6 +261,11 @@ Vue.component('my-cuidador-edit', {
 
 
             $('#selector_cantidad').html(select);
+            var x = document.getElementById("selector_cantidad");
+            var option = document.createElement("option");
+            option.text = "Seleccionar cantidad";
+            option.value ="";
+            x.add(option, x[0]);
 
         },
 
@@ -300,8 +306,8 @@ Vue.component('my-cuidador-edit', {
                 })
                 .catch(error => {
                     console.log(error);
-                    sweetAlert("Oops...", "Error, necesitas estar logueado", "error");
-                    window.location.replace("http://localhost:8080/views/index/index.html");
+                    //sweetAlert("Oops...", "Error, necesitas estar logueado", "error");
+                    document.location.href="/";
                 });
         },
 
@@ -333,6 +339,7 @@ Vue.component('my-cuidador-edit', {
                     this.formPost = true;
                     $('#spinner').toggle();
                     // me redirije a lo de jorge
+                    document.location.href="/";
                 });
         },
         editCuidador() {
@@ -395,27 +402,25 @@ Vue.component('my-cuidador-edit', {
             for (i = 0; i < 4; i++) {
                 img = {id: 0, url: ""};
                 this.cuidador.listaImagenes.push(img);
-                document.getElementById("imagen1").src = "";
-                document.getElementById("imagen2").src = "";
-                document.getElementById("imagen3").src = "";
-                document.getElementById("imagen4").src = "";
+
             }
         }
 
         },
         validarCantidadImagenes()
         {
-            this.cuidador.listaImagenes.forEach(function(item) {
+            var flag = false;
+            this.cuidador.listaImagenes.forEach(function (item) {
 
-                if( item.url === "")
-                    return false;
+                if (item.url === "")
+                    flag = true;
 
             });
 
-            return true;
-
+            return flag;
 
         }
+
     }
 });
 

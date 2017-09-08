@@ -53,7 +53,7 @@ public class CuidadorController {
     public List<Cuidador> getCuidadoresPorLocalidad(@PathVariable("id") Long id) {
         return cuidadorService.getCuidadoresPorLocalidad(id);
     }*/
-
+    
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Cuidador getCuidador(@PathVariable("id") Long id) {
@@ -89,7 +89,7 @@ public class CuidadorController {
     public Cuidador getCuidadorxUsuario(@RequestParam(value = "id", required = false) long id )throws Exception {
 
           return cuidadorService.cuidadorXUser(id);
-  //  return  2;
+
     }
 
 }
