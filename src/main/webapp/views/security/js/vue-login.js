@@ -1,28 +1,4 @@
-function getDefaultData() {
-    return {
-        meUrl: "/api/user/me",
-        entryUrl: "/login",
-        exitUrl: "/logout",
-        registrationUrl: "/api/user/registration",
-        credentials: {
-            username: '', //email (porque el endpoint de spring security es asi)
-            password: ''
-        },
-        isAuthenticated: null,
-        user: {
-            id: null,
-            profileImageUrl: '/img/no-avatar.png',
-            email: '',
-            username: '',
-            password: '',
-            matchingPassword: '',
-        },
-        isMounted: false
-    }
-};
 
-
-// register
 let myLogin = Vue.component('my-login', {
     template:
         `
@@ -90,7 +66,7 @@ let myLogin = Vue.component('my-login', {
                         <p class="form-row form-row-wide">
                             <label for="email">Email:
                                 <i class="im im-icon-Email"></i>
-                                <input type="text" class="input-text"
+                                <input type="email" class="input-text"
                                        v-model="credentials.username"
                                        id="email"
                                        value="" required/>
@@ -104,20 +80,14 @@ let myLogin = Vue.component('my-login', {
                                        v-model="credentials.password"
                                        id="password" required/>
                             </label>
-                            <span class="lost_password">
-                                <a href="#">Lost Your Password?</a>
-                            </span>
                         </p>
-
+                        <div class="notification error" v-show="loginError">
+                            <p><span>Error!</span> Email o contrasena invalido.</p>
+                        </div>
                         <div class="form-row">
-                            <button class="button border margin-top-5">
-                                Login
+                            <button class="button margin-top-5" >
+                               <i class="fa fa-spinner fa-spin" v-show="loginLoading"></i>  Iniciar Sesion
                             </button>
-
-                            <div class="checkboxes margin-top-10">
-                                <input id="remember-me" type="checkbox" name="check">
-                                <label for="remember-me">Remember Me</label>
-                            </div>
                         </div>
 
                     </form>
@@ -125,52 +95,7 @@ let myLogin = Vue.component('my-login', {
                 </div>
 
                 <!-- Register -->
-                <div class="tab-content" id="tab2" style="display: none;">
-
-                    <form class="register" v-on:submit.prevent='register()'>
-                        <p class="form-row form-row-wide">
-                            <label for="email2">Username:
-                                <i class="im im-icon-Male"></i>
-                                <input type="username" class="input-text" v-model="user.username"
-                                       id="username" value="" required/>
-                            </label>
-                        </p>
-                        
-                        <p class="form-row form-row-wide">
-                            <label for="email2">Email Address:
-                                <i class="im im-icon-Mail"></i>
-                                <input type="email" class="input-text" v-model="user.email"
-                                       id="email2" value="" required/>
-                            </label>
-                        </p>
-
-                        <p class="form-row form-row-wide">
-                            <label for="password1">Password:
-                                <i class="im im-icon-Lock-2"></i>
-                                <input class="input-text" type="password"
-                                       v-model="user.password" id="password1" required/>
-                            </label>
-                        </p>
-
-                        <p class="form-row form-row-wide">
-                            <label for="password2">Repeat Password:
-                                <i class="im im-icon-Lock-2"></i>
-                                <input class="input-text" type="password"
-                                       v-model="user.matchingPassword" 
-                                       ref="password2" required/>
-                            </label>
-
-                        </p>
-
-                        <div class="notification warning" v-show="matchingPassword">
-                            <p><span>Warning!</span> Password does not match.</p>
-                        </div>
-                        <input type="submit" class="button border fw margin-top-10"
-                               name="register"
-                               value="Register"/>
-
-                    </form>
-                </div>
+                <my-register></my-register>
 
             </div>
         </div>
@@ -182,7 +107,26 @@ let myLogin = Vue.component('my-login', {
 <!-- Header Widget / End -->
 `,
     data: function () {
-        return getDefaultData();
+        return {
+            meUrl: "/api/user/me",
+            entryUrl: "/login",
+            exitUrl: "/logout",
+            credentials: {
+                username: '', //email (porque el endpoint de spring security es asi)
+                password: ''
+            },
+            user: {
+                id: null,
+                profileImageUrl: '/img/no-avatar.png',
+                email: '',
+                username: '',
+                password: '',
+                matchingPassword: '',
+            },
+            isAuthenticated: null,
+            loginError: false,
+            loginLoading: false
+        };
     },
     mounted() {
         this.isMounted = true;
@@ -203,7 +147,6 @@ let myLogin = Vue.component('my-login', {
                 .catch(error => {
                         if (error.response.status == 401) {
                             this.isAuthenticated = false;
-
                             console.log("usuario no logeado");
 
                         } else {
@@ -216,6 +159,7 @@ let myLogin = Vue.component('my-login', {
 
         },
         login() {
+            this.loginLoading = true;
             axios.post(this.entryUrl, jQuery.param(this.credentials))
                 .then((response) => {
                     console.log("login exitoso");
@@ -224,6 +168,8 @@ let myLogin = Vue.component('my-login', {
                 })
                 .catch(error => {
                         console.log(error);
+                        this.loginError = true;
+                        this.loginLoading = false;
                     }
                 );
         },
@@ -239,24 +185,29 @@ let myLogin = Vue.component('my-login', {
                     }
                 );
         },
-        register() {
-            axios.post(this.registrationUrl, this.user)
-                .then((response) => {
-                    console.log("registro exitoso");
-                    sweetAlert("Exito", "Registro exitoso.", "success");
-                    var magnificPopup = $.magnificPopup.instance;
-                    // save instance in magnificPopup variable
-                    magnificPopup.close();
-                    // Close popup that is currently opened
-                    this.resetVueJsData();
-                })
-                .catch(error => {
-                        console.log(error);
-                    }
-                );
-        },
         resetVueJsData() {
-            Object.assign(this.$data, getDefaultData())
+            var defaultData = {
+                meUrl: "/api/user/me",
+                entryUrl: "/login",
+                exitUrl: "/logout",
+                credentials: {
+                    username: '', //email (porque el endpoint de spring security es asi)
+                    password: ''
+                },
+                user: {
+                    id: null,
+                    profileImageUrl: '/img/no-avatar.png',
+                    email: '',
+                    username: '',
+                    password: '',
+                    matchingPassword: '',
+                },
+                isAuthenticated: null,
+                loginError: false,
+                loginLoading: false
+            };
+
+            Object.assign(this.$data,defaultData)
         },
         openLoginPopUp() {
             var magnificPopup = $.magnificPopup.instance;
@@ -268,19 +219,6 @@ let myLogin = Vue.component('my-login', {
                 type: 'inline',
                 modal: true
             });
-        }
-    },
-    computed: {
-        matchingPassword() {
-            if (!this.isMounted)
-                return;
-            var confirm_password = this.$refs.password2;
-            if (this.user.matchingPassword !== this.user.password && this.user.matchingPassword !== '') {
-                confirm_password.setCustomValidity("Passwords Don't Match");
-                return true;
-            }
-            confirm_password.setCustomValidity("");
-            return false;
         }
     },
     watch: {
