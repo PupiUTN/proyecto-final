@@ -67,7 +67,7 @@ Vue.component('my-cuidador-edit', {
                             </select>
 
                             <label for="selector_cantidad">Cantidad máxima de perros</label>
-                            <select required id='selector_cantidad' v-model="cantidadMaxDePerros" >
+                            <select required id='selector_cantidad' v-model="cuidador.cantidadMaxDePerros" >
                                 <!--<option  value="">Seleccionar Cantidad</option>-->
                             </select>
 
@@ -75,7 +75,7 @@ Vue.component('my-cuidador-edit', {
                             <!-- Change Password -->
                             <div class="my-profile">
                                 <label class="margin-top-0">Mi descripcion</label>
-                                <textarea v-model="descripcion" rows="4" cols="50" maxlength="1000" required>
+                                <textarea v-model="cuidador.descripcion"  rows="4" cols="50" maxlength="1000"  placeholder="Descripcion" required>
                                </textarea>
                             </div>
 
@@ -172,31 +172,49 @@ Vue.component('my-cuidador-edit', {
         return {
             user: {},
             url: "/api/user/",
-            formPost: true,
+           formPost: true,
             listaServicios: [],
             precioNeto: '',
             porcentaje:'',
-            precioFinal:'',
-            cuidador:'',
+         //   precioFinal:'',
+            cuidador:
+                {
+                    descripcion:'',
+                    cantidadMaxDePerros:'',
+
+
+                },
             tamaño:'',
             cantidadMaxDePerros:'',
             descripcion:''
-        }
+
+    }
 
     },
 
-    watch: {
-        precioNeto: function(val, oldVal){
-
-            this.precioFinal = (val * 1.20 ).toFixed(2);
-
+    computed: {
+         precioFinal:{
+        //
+        //     return( this.precioNeto * 1.20 ).toFixed(2);
+        //
+        // }
+        get: function () {
+            return( this.precioNeto * 1.20 ).toFixed(2);
         },
+        set: function (newVal) {
+            this.cuidador.precioPorNoche = newVal;
+        }
+        },
+
+
+    },
+    watch: {
         formPost :function(val, oldVal){
 
 
             if (this.formPost === false )
             {
-                var x ;
+
                 this.cuidador.listaServicios.forEach(function(item) {
                     document.getElementById(item.nombre).checked = true;
 
@@ -207,7 +225,7 @@ Vue.component('my-cuidador-edit', {
 
         },
 
-    },
+        },
     mounted() {
 
         this.BuscarServicios();
@@ -216,10 +234,12 @@ Vue.component('my-cuidador-edit', {
         this.getUserInfo();
 
 
+
     },
     methods: {
         toggleLoader() {
-            $('#spinner').toggle();
+           // $('#spinner').toggle();
+            document.getElementById("spinner").toggle();
         },
         // isAuthenticatedMethod(isAuthenticated) {
         //     // TRIGGER MOUNTED METHOD
@@ -236,11 +256,12 @@ Vue.component('my-cuidador-edit', {
         BuscarServicios()
         {
 
-            axios.get("/api/cuidadores/searchServicios/")
+          //  axios.get("/api/cuidadores/searchServicios/")
+            axios.get("/api/servicios/")
                 .then((data) => {
                     this.listaServicios = data.data;
 
-
+                   // document.getElementById(this.listaServicios[0].nombre).checked = true;
                 })
                 .catch(error => {
                     console.log(error);
@@ -251,21 +272,37 @@ Vue.component('my-cuidador-edit', {
         },
         selector_cantidad()
         {
-
+            var x = document.getElementById("selector_cantidad");
             var select = '';
+            var option =  null;
+            for (i=0;i<=20;i++){
 
-            for (i=1;i<=20;i++){
+               if( i === 0)
+               {
+                   option = document.createElement("option");
+                   option.text = "Seleccionar cantidad";
+                   option.value ="";
+                   x.add(option, x[i]);
+               }
+               else
+               {
 
-                select += '<option val=' + i + '>' + i + '</option>';
+                   option = document.createElement("option");
+                   option.text = i;
+                   option.value =i;
+                   x.add(option, x[i]);
+               }
+
+             //   select += '<option val=' + i + '>' + i + '</option>';
             }
 
 
-            $('#selector_cantidad').html(select);
-            var x = document.getElementById("selector_cantidad");
-            var option = document.createElement("option");
-            option.text = "Seleccionar cantidad";
-            option.value ="";
-            x.add(option, x[0]);
+           // $('#selector_cantidad').html(select);
+
+
+
+
+
 
         },
 
@@ -302,12 +339,13 @@ Vue.component('my-cuidador-edit', {
         getUserInfo() {
             axios.get(this.url + "me")
                 .then((sessionInfo) => {
+
                     this.isUserCuidador(sessionInfo);
                 })
                 .catch(error => {
                     console.log(error);
                     //sweetAlert("Oops...", "Error, necesitas estar logueado", "error");
-                    document.location.href="/";
+                   // document.location.href="/";
                 });
         },
 
@@ -315,7 +353,7 @@ Vue.component('my-cuidador-edit', {
             //  var urlCiudador = "/api/cuidadores" ;
             //  + '?id='
             // axios.get(urlCiudador+ "/" + sessionInfo.data.principal.user.id)
-            var  url= "/api/cuidadores/SearchCuidadorxUser/";
+            var  url= "/api/cuidadores/user/";
             let consulta= url + '?id=' + sessionInfo.data.principal.user.id;
 
             axios.get(consulta)
@@ -323,23 +361,31 @@ Vue.component('my-cuidador-edit', {
 
                     this.cuidador = data.data;
                     this.precioNeto = (this.cuidador.precioPorNoche /1.20).toFixed(2);
-                    this.formPost = false;
+
+
+                   // this.formPost = false;
                     if(this.cuidador.tamaño !== null){
 
                         this.tamaño = this.cuidador.tamaño.id;
                     }
 
                     this.cantidadMaxDePerros = this.cuidador.cantidadMaxDePerros;
-                    this.descripcion = this.cuidador.descripcion
+                    this.descripcion = this.cuidador.descripcion;
                     this.inicializarImagenes();
-                    $('#spinner').toggle();
+
+                    this.formPost = false;
+
+
+
+                   // document.getElementById("spinner").toggle()
+                   $('#spinner').toggle();
 
                 })
                 .catch(error => {
-                    this.formPost = true;
-                    $('#spinner').toggle();
+                  //  this.formPost = true;
+                   document.getElementById("spinner").toggle();
                     // me redirije a lo de jorge
-                    document.location.href="/";
+                   // document.location.href="/";
                 });
         },
         editCuidador() {
@@ -359,22 +405,22 @@ Vue.component('my-cuidador-edit', {
             });
             this.cuidador.listaServicios = listaAux;
             this.cuidador.precioPorNoche = this.precioFinal;
-            this.cuidador.cantidadMaxDePerros =   this.cantidadMaxDePerros;
-            this.cuidador.descripcion =  this.descripcion;
+            //this.cuidador.cantidadMaxDePerros =   this.cantidadMaxDePerros;
+           // this.cuidador.descripcion =  this.descripcion;
             var tam = { id: this.tamaño};
             this.cuidador.tamaño= tam;
 
 
             var urlCiudador = "/api/cuidadores/";
             var payload = jQuery.extend(true, {}, this.cuidador);
-            $('#spinner').toggle();
+            document.getElementById("spinner").toggle();
             axios.put(urlCiudador + this.cuidador.id, payload)
                 .then((response) => {
-
-                    sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
+                    document.getElementById("spinner").toggle();
+                    sweetAlert("Editado!", "despcripción editada exitosamente.", "success");
                     console.log(response);
                     //  window.location = "http://localhost:8080/views/cuidadores/cuidadores-perfil.html?id="+ this.cuidador.id ;
-                    $('#spinner').toggle();
+
                 })
                 .catch(error => {
                         console.log(error);
@@ -419,7 +465,8 @@ Vue.component('my-cuidador-edit', {
 
             return flag;
 
-        }
+        },
+
 
     }
 });

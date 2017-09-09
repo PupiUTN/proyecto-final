@@ -85,7 +85,7 @@ public class CuidadorController {
     }
 
 
-    @RequestMapping(value = "/SearchCuidadorxUser/", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/", method = RequestMethod.GET)
     public Cuidador getCuidadorxUsuario(@RequestParam(value = "id", required = false) long id )throws Exception {
 
           return cuidadorService.cuidadorXUser(id);
