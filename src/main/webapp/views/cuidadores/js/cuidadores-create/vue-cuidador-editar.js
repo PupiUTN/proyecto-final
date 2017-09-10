@@ -90,10 +90,10 @@ Vue.component('my-cuidador-edit', {
 
                             <!-- Change Password -->
                             <div class="my-profile">
-                                <div class="checkboxes in-row margin-bottom-30">
+                                <div id="listaServicios" class="checkboxes in-row margin-bottom-30">
                                     <ul v-for =" servicio in listaServicios" >
                                         <li>
-                                            <input :id="servicio.nombre" type="checkbox" name="check">
+                                            <input :id="servicio.nombre" type="checkbox" v-model="formPost" name="check">
                                             <label :for="servicio.nombre">{{servicio.nombre}}</label>
                                         </li>
 
@@ -172,7 +172,7 @@ Vue.component('my-cuidador-edit', {
         return {
             user: {},
             url: "/api/user/",
-           formPost: true,
+         //  formPost: true,
             listaServicios: [],
             precioNeto: '',
             porcentaje:'',
@@ -205,27 +205,43 @@ Vue.component('my-cuidador-edit', {
             this.cuidador.precioPorNoche = newVal;
         }
         },
+        formPost: {
+            get: function () {
+                    if( this.cuidador.listaServicios !== undefined){
+
+                this.cuidador.listaServicios.forEach(function(item) {
+                    document.getElementById(item.nombre).checked = true;
+
+                });
+                    }
+
+
+            },
+            set: function (newVal) {
+
+            }
+        },
 
 
     },
-    watch: {
+   /* watch: {
         formPost :function(val, oldVal){
 
 
             if (this.formPost === false )
             {
 
-                this.cuidador.listaServicios.forEach(function(item) {
-                    document.getElementById(item.nombre).checked = true;
-
-                });
+                // this.cuidador.listaServicios.forEach(function(item) {
+                //     document.getElementById(item.nombre).checked = true;
+                //
+                // });
 
 
             }
 
         },
 
-        },
+        },*/
     mounted() {
 
         this.BuscarServicios();
@@ -260,6 +276,7 @@ Vue.component('my-cuidador-edit', {
             axios.get("/api/servicios/")
                 .then((data) => {
                     this.listaServicios = data.data;
+
 
                    // document.getElementById(this.listaServicios[0].nombre).checked = true;
                 })
@@ -373,12 +390,13 @@ Vue.component('my-cuidador-edit', {
                     this.descripcion = this.cuidador.descripcion;
                     this.inicializarImagenes();
 
-                    this.formPost = false;
+
 
 
 
                    // document.getElementById("spinner").toggle()
                    $('#spinner').toggle();
+                   // this.formPost = false;
 
                 })
                 .catch(error => {
@@ -466,8 +484,16 @@ Vue.component('my-cuidador-edit', {
             return flag;
 
         },
+        inicilializarServicios ()
+        {
+                     this.cuidador.listaServicios.forEach(function(item) {
+                         document.getElementById(item.nombre).checked = true;
+
+                     });
 
 
+
+        }
     }
 });
 
