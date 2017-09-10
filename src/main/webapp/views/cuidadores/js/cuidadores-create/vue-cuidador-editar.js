@@ -93,7 +93,7 @@ Vue.component('my-cuidador-edit', {
                                 <div id="listaServicios" class="checkboxes in-row margin-bottom-30">
                                     <ul v-for =" servicio in listaServicios" >
                                         <li>
-                                            <input :id="servicio.nombre" type="checkbox" v-model="formPost" name="check">
+                                            <input :id="servicio.nombre" type="checkbox" :checked="inicilializarServicios(servicio.nombre)" name="check">
                                             <label :for="servicio.nombre">{{servicio.nombre}}</label>
                                         </li>
 
@@ -181,8 +181,7 @@ Vue.component('my-cuidador-edit', {
                 {
                     descripcion:'',
                     cantidadMaxDePerros:'',
-
-
+                    listaServicios: [],
                 },
             tamaño:'',
             cantidadMaxDePerros:'',
@@ -205,43 +204,7 @@ Vue.component('my-cuidador-edit', {
             this.cuidador.precioPorNoche = newVal;
         }
         },
-        formPost: {
-            get: function () {
-                    if( this.cuidador.listaServicios !== undefined){
-
-                this.cuidador.listaServicios.forEach(function(item) {
-                    document.getElementById(item.nombre).checked = true;
-
-                });
-                    }
-
-
-            },
-            set: function (newVal) {
-
-            }
-        },
-
-
     },
-   /* watch: {
-        formPost :function(val, oldVal){
-
-
-            if (this.formPost === false )
-            {
-
-                // this.cuidador.listaServicios.forEach(function(item) {
-                //     document.getElementById(item.nombre).checked = true;
-                //
-                // });
-
-
-            }
-
-        },
-
-        },*/
     mounted() {
 
         this.BuscarServicios();
@@ -277,8 +240,6 @@ Vue.component('my-cuidador-edit', {
                 .then((data) => {
                     this.listaServicios = data.data;
 
-
-                   // document.getElementById(this.listaServicios[0].nombre).checked = true;
                 })
                 .catch(error => {
                     console.log(error);
@@ -312,14 +273,6 @@ Vue.component('my-cuidador-edit', {
 
              //   select += '<option val=' + i + '>' + i + '</option>';
             }
-
-
-           // $('#selector_cantidad').html(select);
-
-
-
-
-
 
         },
 
@@ -390,11 +343,6 @@ Vue.component('my-cuidador-edit', {
                     this.descripcion = this.cuidador.descripcion;
                     this.inicializarImagenes();
 
-
-
-
-
-                   // document.getElementById("spinner").toggle()
                    $('#spinner').toggle();
                    // this.formPost = false;
 
@@ -403,7 +351,7 @@ Vue.component('my-cuidador-edit', {
                   //  this.formPost = true;
                    document.getElementById("spinner").toggle();
                     // me redirije a lo de jorge
-                   // document.location.href="/";
+                    document.location.href="/";
                 });
         },
         editCuidador() {
@@ -423,18 +371,16 @@ Vue.component('my-cuidador-edit', {
             });
             this.cuidador.listaServicios = listaAux;
             this.cuidador.precioPorNoche = this.precioFinal;
-            //this.cuidador.cantidadMaxDePerros =   this.cantidadMaxDePerros;
-           // this.cuidador.descripcion =  this.descripcion;
             var tam = { id: this.tamaño};
             this.cuidador.tamaño= tam;
 
 
             var urlCiudador = "/api/cuidadores/";
             var payload = jQuery.extend(true, {}, this.cuidador);
-            document.getElementById("spinner").toggle();
+            $('#spinner').toggle();
             axios.put(urlCiudador + this.cuidador.id, payload)
                 .then((response) => {
-                    document.getElementById("spinner").toggle();
+                    $('#spinner').toggle();
                     sweetAlert("Editado!", "despcripción editada exitosamente.", "success");
                     console.log(response);
                     //  window.location = "http://localhost:8080/views/cuidadores/cuidadores-perfil.html?id="+ this.cuidador.id ;
@@ -484,14 +430,18 @@ Vue.component('my-cuidador-edit', {
             return flag;
 
         },
-        inicilializarServicios ()
-        {
+        inicilializarServicios (nombre)
+        { var flag = false;
+
                      this.cuidador.listaServicios.forEach(function(item) {
-                         document.getElementById(item.nombre).checked = true;
+
+                         if(item.nombre === nombre)
+                         //document.getElementById(item.nombre).checked = true;
+                         flag =  true;
 
                      });
 
-
+                   return flag;
 
         }
     }
