@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<head>
+
+    <!-- Basic Page Needs
+    ================================================== -->
+    <title>Listeo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+
+    <!-- MY CSS
+    ================================================== -->
+    <link rel="stylesheet" href="/views/index/css/index.css">
+
+</head>
+
+<body>
+
+<!-- Wrapper -->
+<div id="wrapper">
+    <my-dashboard current-view="my-perros-list"></my-dashboard>
+</div>
+<!-- Wrapper / End -->
+
+
+<!-- Scripts
+================================================== -->
+<script type="text/javascript" src="/assets/scripts/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jpanelmenu.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/chosen.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/slick.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/rangeslider.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/magnific-popup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/waypoints.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/counterup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/custom.js"></script>
+
+<link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
+<script src="/assets/scripts/datedropper.js"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<link rel="stylesheet" href="/css/sweetalert.css"/>
+<script src="/js/sweetalert.min.js"></script>
+<script type="text/javascript" src="/views/security/js/vue-login.js"></script>
+<script type="text/javascript" src="/views/dashboard/js/vue-header.js"></script>
+<script type="text/javascript" src="/views/dashboard/js/vue-sidebar.js"></script>
+<!--own-->
+<script src="js/vue-perros-list.js"></script>
+
+
+<!--INIT-->
+<script type="text/javascript" src="/views/dashboard/js/vue-dashboard.js"></script>
+
+<script>
+    let vm = new Vue({
+        el: '#wrapper'
+    });
+</script>
+
+<style>
+    #spinner {
+        /*http://samherbert.net/svg-loaders/*/
+        background-image: url('/img/spinner.svg');
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-repeat: no-repeat;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 999;
+        background-position: center;
+    }
+</style>
+
+</body>
+</html>
