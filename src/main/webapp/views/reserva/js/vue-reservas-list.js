@@ -1,114 +1,105 @@
-Vue.component('my-perros-list', {
+Vue.component('my-reservas-list', {
     template: `
 <div>       
         <div id="spinner"></div>
-        <!-- Titlebar -->
+
+		<!-- Titlebar -->
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
-					<h2>Mis Perros</h2><span>Agrega a tus mejores amigos</span>
-
-                        <!-- Breadcrumbs -->
-                        <nav id="breadcrumbs">
-                            <ul>
-                                <a href="/views/perros/registrar-perros.html" class="button border with-icon">Añadir
-                                    Perro <i class="sl sl-icon-plus"></i></a>
-                            </ul>
-                        </nav>
+					<h2>Mis Reservas</h2>
 				</div>
 			</div>
 		</div>
-      
-        <div class="row">
-            
-        
-            <div class="col-lg-12 col-md-12 padding-right-30">
-        
-                <div class="row">
-        
-                    <!-- Listing Item -->
-                    <div v-show="dogs.length > 0" v-for="dog in dogs" :id="dog.id" class="col-lg-6 col-md-12">
-                        <div class="listing-item-container list-layout">
-                            <a href="#" class="listing-item">
-        
-                                <!-- Image -->
-                                <div class="listing-item-image">
-                                    <img :src="dog.fotoPerfil" alt="">
-                                    <span class="tag"> {{dog.raza.nombre}} </span>
-                                </div>
-        
-                                <!-- Content -->
-                                <div class="listing-item-content">
-                                    <div class="listing-badge now-open"> {{dog.tamaño.nombre}}</div>
-        
-                                    <div class="listing-item-inner">
-                                        <h3>{{dog.nombre}}</h3>
-                                        <span>{{dog.comentario}}</span>
-                                        <div class="star-rating" data-rating="3.5">
-                                            <div class="rating-counter">(12 reviews)</div>
+
+		<div class="row">
+			
+			<!-- Listings -->
+			<div class="col-lg-12 col-md-12">
+			    <div class="messages-container margin-top-0">
+
+					
+					<div class="messages-inbox">
+				    <h3>{{ mensaje}}</h3>
+					<ul>
+                        <li v-for="(reserva, index) in reservas">
+                            <a>
+                                <div class="message-avatar"><img :src="reserva.cuidador.user.profileImageUrl"alt=""></div>
+
+                                <div class="message-by">
+                                    
+                                    <div class="row">
+                                        <div class="col-xs-8">
+                                            <div class="message-by-headline">
+                                                <a :href="cuidadorProfileUrl + reserva.cuidador.id" style="all: unset"><h5>{{ reserva.cuidador.user.fullName }} </h5></a>
+                                                
+                                            </div>
+                                            <p>Hello, I want to talk about your great listing! Morbi velit eros, sagittis in facilisis non, rhoncus posuere ultricies...</p>
+                                            <p><b>Perro: </b> {{ reserva.perro.nombre}}</p>
                                         </div>
+                                        <div class="col-xs-4">
+                                            <span class=" pull-right"><b>Desde</b> {{ reserva.fechaFin }} <b>Hasta</b> {{ reserva.fechaFin }}</span>
+                                            <button class="button border pull-right" >
+                                               Pagar
+                                            </button>
+                                        </div>
+
                                     </div>
-        
-                                    <!--<span class="like-icon"></span>-->
                                 </div>
                             </a>
-                        </div>
-                    </div>
-        
-                    <div v-show="dogs.length == 0">
-                        <h3>{{message}}</h3>
-                    </div>
-                    <!-- Listing Item / End -->
-                </div>
-        
-            </div>
-        </div>
+                                
+                        </li>
+					 </ul>
+				</div>
+				</div>
+			</div>
+		</div>
 </div>    
     `,
     data:
         function () {
             return {
-                user: {},
-                dogs: [],
-                url: "/api/user/",
-                message: ""
+                reservas: [
+                    {
+                        id: null,
+                        cuidador: {
+                            user: {
+                                fullName: '',
+                                profileImageUrl: null,
+                                direccion: {
+                                    calle: '',
+                                    ciudad: '',
+                                }
+                            }
+                        },
+                        perro: {},
+                        fechaInicio: "",
+                        fechaFin: "",
+                        precioTotal: 1,
+                        status: 0
+                    }
+                ],
+                url: '/api/user/me/reservas?status=',
+                mensaje: null,
+                cuidadorProfileUrl: '/views/cuidadores/cuidadores-perfil.html?id=',
+                status: null,
+
             }
         },
     mounted() {
-        this.getUserInfo();
+        this.status = this.getParameterByName('status');
+        this.getUserReservas();
     },
     methods: {
         toggleLoader() {
-            $('#spinner').toggle();
+            $('#spinner').hide();
         },
-        getUserInfo() {
-            axios.get("/api/user/me")
-                .then((sessionInfo) => {
-                    this.isUserLoggedIn(sessionInfo);
-                })
-                .catch(error => {
-                    console.log(error);
-                    sweetAlert("Oops...", "Error, ver consola", "error");
-                    console.log("redirect");
-                    document.location.href="/";
-                });
-        },
-        isUserLoggedIn(sessionInfo) {
-            if (sessionInfo.status === 200) {
-                this.user = sessionInfo.data.principal.user;
-                this.getUserDogs();
-            }
-            else {
-                console.log(sessionInfo.status + "|" + sessionInfo.statusText);
-                sweetAlert("Oops...", "Necesitas estar logueado para acceder a este contenido", "error");
-            }
-        },
-        getUserDogs() {
-            axios.get(this.url + this.user.id + "/perros")
+        getUserReservas() {
+            axios.get(this.url + this.status)
                 .then((response) => {
-                    this.dogs = response.data;
-                    if (this.dogs.length === 0) {
-                        this.message = "Actualmente no tenés ningún perro registrado. Agrega el primero!";
+                    this.reservas = response.data;
+                    if (this.reservas.length === 0) {
+                        this.message = "Actualmente no tenés ninguna reserva. Busca tu cuidador ideal!";
                     }
                     this.toggleLoader();
                 })
@@ -116,7 +107,47 @@ Vue.component('my-perros-list', {
                     console.log(error);
                     sweetAlert("Oops...", "Error, ver consola", "error");
                 });
-        }
+        },
+        cancelarReserva(index) {
+            this.toggleLoader();
+            var id = this.reservas[index].id;
+            axios.put(this.url + '/' + id + '/cancelarUsuario')
+                .then((response) => {
+                    this.toggleLoader();
+                    sweetAlert("Cancelada", "Tu reserva a sido cancelada", "success");
+                    Vue.delete(this.reservas, index);
+                })
+                .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error, ver consola", "error");
+
+                    }
+                );
+        },
+        cancelarReservaActionButton(index) {
+            var reserva = this.reservas[index];
+            sweetAlert({
+                    title: "Confirmar accion",
+                    text: "Quiere eliminar su reserva con " + reserva.cuidador.user.fullName + " ?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Si, cancelar reserva",
+                    closeOnConfirm: false,
+                    cancelButtonText: "Atras",
+                    showLoaderOnConfirm: true,
+                },
+                function () {
+                    console.log(vm);
+                    vm.$refs.myReservasList.$refs.currentView.cancelarReserva(index)
+                });
+        },
+        getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        },
     }
 });
 

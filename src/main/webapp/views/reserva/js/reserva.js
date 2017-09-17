@@ -33,14 +33,12 @@ let vm = new Vue({
             },
             fechaInicio: '',
             fechaFin: '',
-            precioTotal: 1,
-            status: 0
+            precioTotal: 1
         },
         checkboxPerros: [],
         isMounted: false
     }
     , mounted() {
-
         this.bindDatePickerWithVue();
 
     },
@@ -131,9 +129,7 @@ let vm = new Vue({
             }
 
 
-            var childMylogin = this.$refs.mylogin;
-            var userId = childMylogin.user.id;
-            axios.post("/api/user/" + userId + "/reservas", this.reserva)
+            axios.post("/api/user/me/reservas", this.reserva)
                 .then((response) => {
                     sweetAlert({
                             title: "Guardado",

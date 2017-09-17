@@ -9,6 +9,13 @@ let mySidebar = Vue.component('my-sidebar', {
 
                 <ul data-submenu-title="Secciones">
                     <li><a href="/views/perros/perros.html"><i class="im im-icon-Dog"></i> Mis Perros</a></li>
+                    <li><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>
+					<ul>
+						<li><a href="/views/reserva/mis-reservas.html?status=CONFIRMATION_PENDING">Pendientes <span class="nav-tag green">6</span></a></li>
+						<li><a href="/views/reserva/mis-reservas.html">Concretadas <span class="nav-tag yellow">1</span></a></li>
+						<li><a href="/views/reserva/mis-reservas.html">Canceladas <span class="nav-tag red">2</span></a></li>
+					</ul>	
+				</li>
                 </ul>
 
                 <ul data-submenu-title="Cuenta">
