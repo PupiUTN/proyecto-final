@@ -33,14 +33,13 @@ let vm = new Vue({
             },
             fechaInicio: '',
             fechaFin: '',
-            precioTotal: 1,
-            status: 0
+            precioTotal: null,
+            mensaje:''
         },
         checkboxPerros: [],
         isMounted: false
     }
     , mounted() {
-
         this.bindDatePickerWithVue();
 
     },
@@ -111,6 +110,12 @@ let vm = new Vue({
             this.reserva.perro.id = this.checkboxPerros[0];
             this.reserva.cuidador.id = this.cuidador.id;
 
+            if (this.reserva.fechaInicio === this.reserva.fechaFin) {
+                console.log("Fecha inicio igual a fecha fin");
+                sweetAlert("Campo Vacio", "Fecha inicio igual a fecha fin", "info");
+
+                return;
+            }
 
             if (this.reserva.fechaInicio == '') {
                 console.log("fecha inicio vacia");
@@ -130,10 +135,8 @@ let vm = new Vue({
                 return;
             }
 
-
-            var childMylogin = this.$refs.mylogin;
-            var userId = childMylogin.user.id;
-            axios.post("/api/user/" + userId + "/reservas", this.reserva)
+            this.reserva.precioTotal = this.precioTotal;
+            axios.post("/api/user/me/reservas", this.reserva)
                 .then((response) => {
                     sweetAlert({
                             title: "Guardado",
@@ -183,6 +186,17 @@ let vm = new Vue({
         }
 
 
+    },
+    computed: {
+        precioTotal(){
+            var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+            var firstDate = new Date(this.reserva.fechaInicio);
+            var secondDate = new Date(this.reserva.fechaFin);
+
+            var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+
+            return diffDays * this.cuidador.precioPorNoche;
+        }
     }
 });
 

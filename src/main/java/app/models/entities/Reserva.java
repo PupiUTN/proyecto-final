@@ -38,7 +38,10 @@ public class Reserva implements Serializable {
     private float precioTotal;
 
     @NotNull
-    private int status; //0: Pendiente, 1:Aceptada por Cuidador, 2: Aceptada por User
+    private String status;
+
+    @NotNull
+    private String mensaje;
 
 
     public Reserva() {
@@ -101,11 +104,20 @@ public class Reserva implements Serializable {
         this.precioTotal = precioTotal;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
+    }
+
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 }

@@ -2,125 +2,95 @@ Vue.component('become-cuidador', {
     template:
            `
 <div>
-                <!-- Titlebar -->
-             <div id="titlebar">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>Solicitud de Cuidador</h2>
-                        
-                   
+ <div id="titlebar">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Solicitud de Cuidador</h2>
+        </div>
+    </div>
+</div>
+    <div class="row">
+    <div class="col-md-12" >
+        <div class="dashboard-list-box margin-top-0">
+            <h4 class="gray"> 	<i class="fa fa-paw"></i> Legal </h4>
+            <div class="dashboard-list-box-static"  > 
+            <ul>
+                <li><i class="fa fa-paw"></i>
+                Recuerda que PUPI solo aprueba a aquellas personas que tienen su perfil completo. Por favor, verifica
+                que tus datos estén cargados y sean correctos 
+                <a href="/views/dueño/perfil.html"><span style="color:blue"> aquí</span></a>.
+                </li>
+                <li><i class="fa fa-paw"></i>
+                Agrega una descripción
+                sobre tí para que te conozcamos más. Luego será usada para que los demás puedan conocerte mejor.
+                Recomendamos que incluyas tu experiencia con perros, tu disponibilidad para ellos y que nos cuentes
+                todo ese amor que le tienes!
+                </li>
+                <li><i class="fa fa-paw"></i>
+                Además, PUPI requiere el DNI o cédula y foto (de ambos lados) para validar de que eres una persona de confianza.
+                Queremos asegurarnos de que nuestros perros sean cuidados por personas que los aman. 
+                </li>
+                <li><i class="fa fa-paw"></i>
+                PUPI puede aceptar o rechazar tu solicitud. En ambos casos, te llegará un mail explicando más acerca 
+                de la decisión.
+                </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="row">
+      <form id="altaCuidadorForm" v-on:submit.prevent='enviarAltaCuidador()' enctype="multipart/form-data">
+    <div class="col-lg-6 col-md-12 margin-top-20 ">
+        <div class="dashboard-list-box margin-top-0">
+            <h4 class="gray"> 	<i class="fa fa-paw"></i> Descripción </h4>
+        </div>
+            <div class="dashboard-list-box-static" >   
+                <label class="margin-top-0">Por favor, realiza una descripción sobre tí. Recuerda
+                que debe ser lo más clara posible, así PUPI y otros usuarios puedan saber más acerca de tí.</label>
+                 <textarea v-model="cuidador.descripcion"  rows="6" cols="50" maxlength="1000"  placeholder="Descripcion"
+                    style="height: " required>
+                 </textarea>
+            </div>
+    </div>
+    <div class="col-lg-6 col-md-12 margin-top-20 " >
+        <div class="dashboard-list-box margin-top-0">
+            <h4 class="gray"> 	<i class="fa fa-paw"></i> DNI o Cédula  </h4>
+            <div class="dashboard-list-box-static" >
+            <div class="col-lg-6 col-md-12">
+                <label class="margin-top-0">Anverso</label>
+                <div class="edit-profile-photo">
+                    <img :src="dniAnverso.url" alt="">
+                    <div class="change-photo-btn">
+                        <div class="photoUpload">
+                            <span><i class="fa fa-upload"></i> Subir Foto</span>
+                            <input type="file" id="imageFile" @change="filesChange($event.target.files,0)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <div class="col-lg-6 col-md-12">
+                <label class="margin-top-0">Reverso</label>
+                <div class="edit-profile-photo">
+                    <img :src="dniReverso.url" alt="">
+                    <div class="change-photo-btn">
+                        <div class="photoUpload">
+                            <span><i class="fa fa-upload"></i> Subir Foto</span>
+                            <input type="file" id="imageFile" @change="filesChange($event.target.files, 1)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+                        </div>
                     </div>
                 </div>
             </div>
-
-             <!-- Titlebar -->
-
-                <div class="row">
-                <div class="col-md-12" >
-                    <div class="dashboard-list-box margin-top-0">
-                        <h4 class="gray"> 	<i class="fa fa-paw"></i> Legal </h4>
-                        <div class="dashboard-list-box-static"  >
-                        
-                        <ul>
-                            <li><i class="fa fa-paw"></i>
-                            Recuerda que PUPI solo aprueba a aquellas personas que tienen su perfil completo. Por favor, verifica
-                            que tus datos estén cargados y sean correctos 
-                            <a href="/views/dueño/perfil.html"><span style="color:blue"> aquí</span></a>.
-                            </li>
-                            <li><i class="fa fa-paw"></i>
-                            Agrega una descripción
-                            sobre tí para que te conozcamos más. Luego será usada para que los demás puedan conocerte mejor.
-                            Recomendamos que incluyas tu experiencia con perros, tu disponibilidad para ellos y que nos cuentes
-                            todo ese amor que le tienes!
-                            </li>
-                            <li><i class="fa fa-paw"></i>
-                            Además, PUPI requiere el DNI o cédula y foto (de ambos lados) para validar de que eres una persona de confianza.
-                            Queremos asegurarnos de que nuestros perros sean cuidados por personas que los aman. 
-                            </li>
-                            <li><i class="fa fa-paw"></i>
-                            PUPI puede aceptar o rechazar tu solicitud. En ambos casos, te llegará un mail explicando más acerca 
-                            de la decisión.
-                            </li>
-                            </ul>
-                            
-                            
-                            <br/>
-                            
-
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div class="row ">
-                  <form id="altaCuidadorForm" v-on:submit.prevent='enviarAltaCuidador()' enctype="multipart/form-data">
-                <div class="col-lg-6 col-md-12 margin-top-20 ">
-                    <div class="dashboard-list-box margin-top-0">
-                        <h4 class="gray"> 	<i class="fa fa-paw"></i> Descripción </h4>
-                    </div>
-                        <div class="dashboard-list-box-static" >
-                            
-                                <label class="margin-top-0">Por favor, realiza una descripción sobre tí. Recuerda
-                         que debe ser lo más clara posible, así PUPI y otros usuarios puedan saber más acerca de tí.</label>
-                                <textarea v-model="cuidador.descripcion"  rows="6" cols="50" maxlength="1000"  placeholder="Descripcion"
-                                style="height: " required>
-                               </textarea>
-                            
-
-                        </div>
-                    
-                </div>
-
-                <!-- Profile -->
-                 
-                <div class="col-lg-6 col-md-12 margin-top-20 " >
-                    <div class="dashboard-list-box margin-top-0">
-                        <h4 class="gray"> 	<i class="fa fa-paw"></i> DNI o Cédula  </h4>
-                        <div class="dashboard-list-box-static" >
-                       
-                        <div class="col-lg-6 col-md-12">
-                            <label class="margin-top-0">Anverso</label>
-                 
-                            <div class="edit-profile-photo">
-                                <img :src="dniAnverso.url" alt="">
-                                <div class="change-photo-btn">
-                                    <div class="photoUpload">
-                                        <span><i class="fa fa-upload"></i> Subir Foto</span>
-                                        <input type="file" id="imageFile" @change="filesChange($event.target.files,0)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                               
-                               
-                               
-                        <div class="col-lg-6 col-md-12">
-                            <label class="margin-top-0">Reverso</label>
-                            
-                            <div class="edit-profile-photo">
-                                <img :src="dniReverso.url" alt="">
-                                <div class="change-photo-btn">
-                                    <div class="photoUpload">
-                                        <span><i class="fa fa-upload"></i> Subir Foto</span>
-                                        <input type="file" id="imageFile" @change="filesChange($event.target.files, 1)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                         
-                         <label>Número</label>
-                           <input v-model="cuidador.dni" value="" type="number" max="99999999" required>
-                          
-
-
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-s-3" style="margin-left: 2%;">
-                <input type="submit" value="Enviar" name="enviarAltaCuidador" style=" height: 60px; width: 150px; position: relative;" class="button"/>
-                </div>    
-            </form>
+             <label>Número</label>
+               <input v-model="cuidador.dni" value="" type="number" max="99999999" required>
             </div>
+        </div>
+    </div>
+    <div class="col-s-3" style="margin-left: 2%;">
+    <input type="submit" value="Enviar" name="enviarAltaCuidador" style=" height: 60px; width: 150px; position: relative;" class="button"/>
+    </div>    
+</form>
+</div>
               
 </div>
     `,
@@ -141,10 +111,6 @@ Vue.component('become-cuidador', {
 
     },
     mounted() {
-
-       // this.BuscarServicios();
-       // this.porcentaje = 20;
-       // this.selector_cantidad();
         this.getUserInfo();
 
 
