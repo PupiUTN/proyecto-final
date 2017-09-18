@@ -315,7 +315,7 @@ Vue.component('my-cuidador-edit', {
                 .catch(error => {
                     console.log(error);
                     //sweetAlert("Oops...", "Error, necesitas estar logueado", "error");
-                   // document.location.href="/";
+                    document.location.href="/";
                 });
         },
 

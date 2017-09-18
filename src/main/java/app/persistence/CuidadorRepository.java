@@ -28,6 +28,7 @@ public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
             "OR r is null")*/
    @Query("select c from Cuidador c " +
            "where c.user.direccion.ciudadPlaceId = :#{#ciudadPlaceId} " +
+           "AND c.estado like'approved'" +
            "AND not exists ( " +
            "select 1 from Reserva r " +
            "where r.cuidador = c and " +

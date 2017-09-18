@@ -48,7 +48,7 @@ Vue.component('become-cuidador', {
             <div class="dashboard-list-box-static" >   
                 <label class="margin-top-0">Por favor, realiza una descripción sobre tí. Recuerda
                 que debe ser lo más clara posible, así PUPI y otros usuarios puedan saber más acerca de tí.</label>
-                 <textarea v-model="cuidador.descripcion"  rows="6" cols="50" maxlength="1000"  placeholder="Descripcion"
+                 <textarea v-model="cuidador.descripcion" v-bind:readonly="isReadOnly" rows="6" cols="50" maxlength="1000"  placeholder="Descripcion"
                     style="height: " required>
                  </textarea>
             </div>
@@ -61,10 +61,10 @@ Vue.component('become-cuidador', {
                 <label class="margin-top-0">Anverso</label>
                 <div class="edit-profile-photo">
                     <img :src="dniAnverso.url" alt="">
-                    <div class="change-photo-btn">
+                    <div class="change-photo-btn" id="dniReverso">
                         <div class="photoUpload">
                             <span><i class="fa fa-upload"></i> Subir Foto</span>
-                            <input type="file" id="imageFile" @change="filesChange($event.target.files,0)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+                            <input type="file"  :disabled="isReadOnly"  @change="filesChange($event.target.files,0)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
                         </div>
                     </div>
                 </div>
@@ -73,22 +73,24 @@ Vue.component('become-cuidador', {
                 <label class="margin-top-0">Reverso</label>
                 <div class="edit-profile-photo">
                     <img :src="dniReverso.url" alt="">
-                    <div class="change-photo-btn">
+                    <div class="change-photo-btn" id="dniAnverso">
                         <div class="photoUpload">
                             <span><i class="fa fa-upload"></i> Subir Foto</span>
-                            <input type="file" id="imageFile" @change="filesChange($event.target.files, 1)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+                            <input type="file" :disabled="isReadOnly"  @change="filesChange($event.target.files, 1)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
                         </div>
                     </div>
                 </div>
             </div>
              <label>Número</label>
-               <input v-model="cuidador.dni" value="" type="number" max="99999999" required>
+               <input v-model="cuidador.dni"  :disabled="isReadOnly" value="" type="number" max="99999999" required>
             </div>
         </div>
     </div>
+    <div class="row">
     <div class="col-s-3" style="margin-left: 2%;">
-    <input type="submit" value="Enviar" name="enviarAltaCuidador" style=" height: 60px; width: 150px; position: relative;" class="button"/>
+    <input type="submit" :disabled="isReadOnly" value="Enviar" name="enviarAltaCuidador" style=" height: 60px; width: 150px; position: relative;" class="button"/>
     </div>    
+    </div>
 </form>
 </div>
               
@@ -96,6 +98,8 @@ Vue.component('become-cuidador', {
     `,
     data: function () {
         return {
+            isReadOnly:false,
+
             url: "/api/user/",
             dniAnverso:{
                 url:"/assets/images/nodni.png"
@@ -106,14 +110,13 @@ Vue.component('become-cuidador', {
             cuidador:{
                 estado:"pending",
             },
+            user:{},
 
         }
 
     },
     mounted() {
         this.getUserInfo();
-
-
 
     },
     methods: {
@@ -138,6 +141,8 @@ Vue.component('become-cuidador', {
             this.upload(formData,position);
         },
         upload(formData,position) {
+            if(!this.isReadOnly){
+
             axios.post('/api/file/', formData)
                 .then((response) => {
 
@@ -155,6 +160,7 @@ Vue.component('become-cuidador', {
                         console.log(error);
                     }
                 );
+            }
         },
         getUserInfo() {
             axios.get(this.url + "me")
@@ -162,43 +168,48 @@ Vue.component('become-cuidador', {
                     this.isUserCuidador(sessionInfo);
                 })
                 .catch(error => {
-                    console.log(error);
-                    //sweetAlert("Oops...", "Error, necesitas estar logueado", "error");
+                    //console.log(error);
                      document.location.href="/";
                 });
         },
 
         isUserCuidador(sessionInfo) {
-            //  var urlCiudador = "/api/cuidadores" ;
-            //  + '?id='
-            // axios.get(urlCiudador+ "/" + sessionInfo.data.principal.user.id)
+            var  url= "/api/cuidadores/user/";
             this.user=sessionInfo.data.principal.user;
+            let consulta= url + '?id=' + this.user.id;
+            if(this.user.role=='CUIDADOR_USER'){
+                document.location.href="/views/cuidadores/cuidadores-editar.html";
+            }
+            this.solicitudExistente();
+
+        },
+        solicitudExistente(){
             var  url= "/api/cuidadores/user/";
             let consulta= url + '?id=' + this.user.id;
-            //console.log(sessionInfo)
+
             axios.get(consulta)
                 .then((data) => {
-                console.log(data);
-                    //si ya sos cuidador;
                     if(data.data!=""){
-                       document.location.href="/views/cuidadores/cuidadores-editar.html";
-                    }else{
-                        if(data.data.estado=="approved"){
-                            document.location.href="/views/cuidadores/cuidadores-editar.html";
-                        }
+                        this.cuidador = data.data;
+                        this.isReadOnly=true;
+                        this.inicializarImagenes();
+
                     }
                     $('#spinner').toggle();
                     // this.formPost = false;
 
                 })
-                /*.catch(error => {
+                .catch(error => {
                     //  this.formPost = true;
                     // document.getElementById("spinner").toggle();
                     // me redirije a lo de jorge
-                    document.location.href="/views/cuidadores/alta-cuidador.html";
-                });*/
+                   console.log(error);
+                });
+
         },
         enviarAltaCuidador() {
+            if(!this.isReadOnly){
+
             if (this.validarCantidadImagenes())
             {
                 sweetAlert("Oops...", "Error, Se deben cargar ambas imagenes del dni", "error");
@@ -225,6 +236,11 @@ Vue.component('become-cuidador', {
                         sweetAlert("Oops...", "Error, ver consola", "error");
                     }
                 );
+            }
+        },
+        inicializarImagenes() {
+            this.dniAnverso.url=this.cuidador.dniImagenes[0].url;
+            this.dniReverso.url=this.cuidador.dniImagenes[1].url;
         },
         validarCantidadImagenes()
         {
