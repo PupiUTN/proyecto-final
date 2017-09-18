@@ -13,7 +13,7 @@ let mySidebar = Vue.component('my-sidebar', {
 
                 <ul data-submenu-title="Cuenta">
                     <li><a href="/views/due%C3%B1o/perfil.html"><i class="sl sl-icon-user"></i> Mi Perfil</a></li>
-                     <li><a href="/views/cuidadores/cuidadores-editar.html"><i class="sl sl-icon-book-open"></i> Mi Descripcion</a></li>
+                     <li><a href="/views/cuidadores/cuidadores-editar.html"><i class="sl sl-icon-book-open"></i> Cuidador</a></li>
                 </ul>
 
             </div>
