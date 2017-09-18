@@ -151,7 +151,7 @@ let vm = new Vue({
             this.item.tamaño = param.valorMinimo + " a " + param.valorMaximo + " " + "KG.";
         },
         hrerReserva() {
-            var url = '/views/reserva/reserva.html?id=' + this.idCuidador + '&dateFrom=' + this.fechaReservaDesde + '&dateTo=' + this.fechaReservaHasta;
+            var url = '/views/reserva/generar-reserva.html?id=' + this.idCuidador + '&dateFrom=' + this.fechaReservaDesde + '&dateTo=' + this.fechaReservaHasta;
             document.location.href = url;
 
         },

@@ -17,7 +17,9 @@ function getDefaultData() {
             password: '',
             matchingPassword: '',
         },
-        isMounted: false
+        isMounted: false,
+        loginError: false,
+        loginLoading: false
     }
 };
 
@@ -90,7 +92,7 @@ let myLogin = Vue.component('my-login', {
                         <p class="form-row form-row-wide">
                             <label for="email">Email:
                                 <i class="im im-icon-Email"></i>
-                                <input type="text" class="input-text"
+                                <input type="email" class="input-text"
                                        v-model="credentials.username"
                                        id="email"
                                        value="" required/>
@@ -104,20 +106,14 @@ let myLogin = Vue.component('my-login', {
                                        v-model="credentials.password"
                                        id="password" required/>
                             </label>
-                            <span class="lost_password">
-                                <a href="#">Lost Your Password?</a>
-                            </span>
                         </p>
-
+                         <div class="notification error" v-show="loginError">
+                             <p><span>Error!</span> Email o contrasena invalido.</p>
+                         </div>
                         <div class="form-row">
                             <button class="button border margin-top-5">
-                                Login
+                              <i class="fa fa-spinner fa-spin" v-show="loginLoading"></i>  Iniciar Sesion
                             </button>
-
-                            <div class="checkboxes margin-top-10">
-                                <input id="remember-me" type="checkbox" name="check">
-                                <label for="remember-me">Remember Me</label>
-                            </div>
                         </div>
 
                     </form>
@@ -216,6 +212,8 @@ let myLogin = Vue.component('my-login', {
 
         },
         login() {
+
+            this.loginLoading = true;
             axios.post(this.entryUrl, jQuery.param(this.credentials))
                 .then((response) => {
                     console.log("login exitoso");
@@ -223,6 +221,8 @@ let myLogin = Vue.component('my-login', {
                     this.getUserProfile();
                 })
                 .catch(error => {
+                    this.loginLoading = false;
+                    this.loginError = true;
                         console.log(error);
                     }
                 );

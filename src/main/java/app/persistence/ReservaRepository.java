@@ -7,11 +7,14 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-/**
- * Created by people on 16/07/17.
- */
 public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
     @Query("select r from Reserva r where r.perro.user.id = :#{#userId}")
     List<Reserva> findAllByUser(@Param("userId")long userId);
+
+    @Query("select r from Reserva r where r.perro.user.id = :#{#userId} and r.status =:#{#statusId}")
+    List<Reserva> findAllByUserAndStatus(@Param("userId")long userId, @Param("statusId")String status);
+
+    @Query("select r from Reserva r where r.perro.user.id = :#{#userId} and r.id = :#{#id}")
+    Reserva findByUserIdAnId(@Param("userId")long userId, @Param("id")long id);
 }
