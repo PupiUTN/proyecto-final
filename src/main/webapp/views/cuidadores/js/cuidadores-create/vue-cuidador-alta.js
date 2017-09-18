@@ -39,8 +39,8 @@ Vue.component('become-cuidador', {
         </div>
     </div>
     </div>
+    <form id="altaCuidadorForm" v-on:submit.prevent='enviarAltaCuidador()' enctype="multipart/form-data">
     <div class="row">
-      <form id="altaCuidadorForm" v-on:submit.prevent='enviarAltaCuidador()' enctype="multipart/form-data">
     <div class="col-lg-6 col-md-12 margin-top-20 ">
         <div class="dashboard-list-box margin-top-0">
             <h4 class="gray"> 	<i class="fa fa-paw"></i> Descripción </h4>
@@ -86,13 +86,13 @@ Vue.component('become-cuidador', {
             </div>
         </div>
     </div>
+    </div> 
     <div class="row">
     <div class="col-s-3" style="margin-left: 2%;">
     <input type="submit" :disabled="isReadOnly" value="Enviar" name="enviarAltaCuidador" style=" height: 60px; width: 150px; position: relative;" class="button"/>
-    </div>    
+    </div>
     </div>
 </form>
-</div>
               
 </div>
     `,
@@ -176,8 +176,8 @@ Vue.component('become-cuidador', {
         isUserCuidador(sessionInfo) {
             var  url= "/api/cuidadores/user/";
             this.user=sessionInfo.data.principal.user;
-            let consulta= url + '?id=' + this.user.id;
-            if(this.user.role=='CUIDADOR_USER'){
+            console.log(this.user)
+            if(this.user.role=='ROLE_CUIDADOR'){
                 document.location.href="/views/cuidadores/cuidadores-editar.html";
             }
             this.solicitudExistente();
