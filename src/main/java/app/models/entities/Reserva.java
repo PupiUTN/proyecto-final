@@ -40,6 +40,9 @@ public class Reserva implements Serializable {
     @NotNull
     private String status;
 
+    @NotNull
+    private String mensaje;
+
 
     public Reserva() {
     }
@@ -107,5 +110,14 @@ public class Reserva implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 }

@@ -36,7 +36,7 @@ public class ReservaService {
         if (reserva.getStatus() == "foo"){
             throw new IllegalArgumentException();
         }
-        reserva.setStatus("CANCEL");
+        reserva.setStatus("CANCEL_BY_USER");
         reservaRepository.save(reserva);
     }
 }
