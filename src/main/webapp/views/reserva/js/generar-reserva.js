@@ -2,21 +2,6 @@ let vm = new Vue({
     el: '#wrapper',
     data: {
         urlCuidador: "/api/cuidadores",
-        cuidador:
-            {
-                id: null,
-                cantidadMaxDePerros: null,
-                precioPorNoche: 100.0,
-                user: {
-                    id: null,
-                    email: "",
-                    fullName: "",
-                    direccion: {
-                        ciudad: "",
-                    }
-                },
-            }
-        ,
         perros: [
             {
                 id: '',
@@ -25,16 +10,27 @@ let vm = new Vue({
         ],
         isAuthenticated: false,
         reserva: {
-            cuidador: {
-                id: null
-            },
+            cuidador:
+                {
+                    id: null,
+                    cantidadMaxDePerros: null,
+                    precioPorNoche: 100.0,
+                    user: {
+                        id: null,
+                        email: "",
+                        fullName: "",
+                        direccion: {
+                            ciudad: "",
+                        }
+                    },
+                },
             perro: {
                 id: null
             },
             fechaInicio: '',
             fechaFin: '',
             precioTotal: null,
-            mensaje:''
+            mensaje: ''
         },
         checkboxPerros: [],
         isMounted: false
@@ -57,16 +53,16 @@ let vm = new Vue({
         loadReservaContent() {
             this.getDateFromUrl();
             this.idCuidador = this.getParameterByName('id');
-            this.getItems(this.urlCuidador, this.idCuidador);
+            this.getCuidador();
             this.getPerros();
         },
         toggleLoader() {
             $('#spinner').toggle();
         },
-        getItems() {
+        getCuidador() {
             axios.get(this.urlCuidador + "/" + this.idCuidador)
                 .then((response) => {
-                    this.cuidador = response.data;
+                    this.reserva.cuidador = response.data;
                 })
                 .catch(error => {
                         console.log(error);
@@ -87,7 +83,7 @@ let vm = new Vue({
             axios.get("/api/user/" + userId + "/perros")
                 .then((response) => {
                     this.perros = response.data;
-                    if(this.perros.length == 0){
+                    if (this.perros.length == 0) {
                         sweetAlert({
                                 title: "Reserva",
                                 text: "Para reservar necesita agregar al menos un perro",
@@ -95,7 +91,7 @@ let vm = new Vue({
                             },
                             function () {
                                 console.log("redirect");
-                                document.location.href="/views/perros/perros.html";
+                                document.location.href = "/views/perros/perros.html";
                             });
                     }
                     this.toggleLoader();
@@ -108,7 +104,6 @@ let vm = new Vue({
         },
         postReserva() {
             this.reserva.perro.id = this.checkboxPerros[0];
-            this.reserva.cuidador.id = this.cuidador.id;
 
             if (this.reserva.fechaInicio === this.reserva.fechaFin) {
                 console.log("Fecha inicio igual a fecha fin");
@@ -145,7 +140,7 @@ let vm = new Vue({
                         },
                         function () {
                             console.log("redirect");
-                            document.location.href="/";
+                            document.location.href = "/views/reserva/mis-reservas-user.html?status=CONFIRMATION_PENDING";
                         });
 
                 })
@@ -174,7 +169,7 @@ let vm = new Vue({
                 vm.reserva.fechaFin = dateString;
             });
         },
-        getDateFromUrl(){
+        getDateFromUrl() {
             var dateStringFrom = this.getParameterByName('dateFrom');
             $('#booking-date').val(dateStringFrom); //the getDate method
             vm.reserva.fechaInicio = dateStringFrom;
@@ -188,14 +183,14 @@ let vm = new Vue({
 
     },
     computed: {
-        precioTotal(){
-            var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+        precioTotal() {
+            var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
             var firstDate = new Date(this.reserva.fechaInicio);
             var secondDate = new Date(this.reserva.fechaFin);
 
-            var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+            var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
 
-            return diffDays * this.cuidador.precioPorNoche;
+            return diffDays * this.reserva.cuidador.precioPorNoche;
         }
     }
 });
