@@ -12,6 +12,7 @@ import app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,13 +31,12 @@ public class UserController {
     /**
      * http://www.baeldung.com/get-user-in-spring-security
      */
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET, value = "/me")
     public ResponseEntity getProfile(HttpServletRequest request) throws Exception {
         Principal principal = request.getUserPrincipal();
-        if (principal == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         return new ResponseEntity(principal, HttpStatus.OK);
     }
-
 
     /**
      * http://www.baeldung.com/registration-with-spring-mvc-and-spring-security
@@ -54,6 +54,7 @@ public class UserController {
         return user;
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_CUIDADOR')")
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public User editUser(@PathVariable("id") Long id, @RequestBody User entity) throws Exception {
         entity.setId(id);
