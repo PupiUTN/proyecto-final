@@ -30,14 +30,14 @@ public class ReservaUserController {
         this.reservaService = reservaService;
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST)
     public Reserva post(@RequestBody Reserva entity) throws Exception {
         //TODO setear info del cuidador asi nadie puede meter info que no es.
         return reservaService.save(entity);
 
     }
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public List<Reserva> get(@RequestParam("status") String status) throws Exception {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();;
@@ -47,7 +47,7 @@ public class ReservaUserController {
     }
 
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.PUT, value ="{reservaId}/cancelarUsuario")
     public ResponseEntity cancelarCausaUsuario(@PathVariable Long reservaId) throws Exception {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();;
