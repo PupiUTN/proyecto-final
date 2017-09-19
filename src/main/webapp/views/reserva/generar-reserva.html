@@ -72,30 +72,27 @@
 
                     <!-- Titlebar -->
                     <div id="titlebar" class="listing-titlebar padding-bottom-35 padding-top-35 padding-left-35">
-                        <div class="listing-titlebar-title">
+                            <div class="listing-titlebar-title">
 
-                            <h2 id="nombre"> {{cuidador.user.fullName}} <span class="listing-tag">Cuidador</span>
-                            </h2>
+                                <h2 id="nombre"> {{ reserva.cuidador.user.fullName}} <span
+                                        class="listing-tag">Cuidador</span>
+                                </h2>
 
                             <div class="card-image col s3 ">
 
                             </div>
-
-                            <input type="hidden" value="" name="test">
                             <span>
 
-							<a href="#listing-location" class="listing-address">
-							<i class="fa fa-map-marker"></i>
-
-              				{{cuidador.user.direccion.ciudad}}
-						</a>
+							<a class="listing-address">
+							    <i class="fa fa-map-marker"></i> {{ reserva.cuidador.user.direccion.ciudad}}
+						    </a>
 						<br>
 							<i class="fa fa-paw"></i>
-							Cantidad maxima de perros: {{cuidador.cantidadMaxDePerros}}
+							Cantidad maxima de perros: {{ reserva.cuidador.cantidadMaxDePerros}}
 
 					</span>
                             <div class="star-rating" data-rating="5">
-                                <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
+                                <div class="rating-counter"><a href="">(31 reviews)</a></div>
                             </div>
                         </div>
                     </div>
@@ -186,7 +183,8 @@
 
                             <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
                             <div class="col-lg-12 col-md-12">
-                                <textarea v-model="reserva.mensaje" name="summary" spellcheck="true" required></textarea>
+                                <textarea v-model="reserva.mensaje" name="summary" spellcheck="true"
+                                          required></textarea>
                             </div>
 
                         </div>

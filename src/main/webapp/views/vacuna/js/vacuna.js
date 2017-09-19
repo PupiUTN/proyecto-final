@@ -11,13 +11,13 @@ let vm = new Vue({
         formPost: true,
     },
     mounted() {
-        this.getItems(this.url);
+        this.getCuidador(this.url);
     },
     methods: {
         toggleLoader() {
             $('#spinner').toggle();
         },
-        getItems() {
+        getCuidador() {
             axios.get(this.url)
                 .then((response) => {
                     this.items = response.data;
