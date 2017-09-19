@@ -34,7 +34,7 @@ Vue.component('my-reservas-user-list', {
                                                 <a :href="cuidadorProfileUrl + reserva.cuidador.id" style="all: unset"><h5>{{ reserva.cuidador.user.fullName }} </h5></a>  
                                             </div>
                                             <p><i> {{ reserva.mensaje}} </i></p>
-                                            <p><b>Perro: </b> {{ reserva.perro.nombre}}</p>
+                                            <p ><b>Perro: </b> {{ reserva.perro.nombre}}</p>
                                         </div>
                                         <div class="col-xs-12 col-md-1">
                                             <p><b>Desde</b> </br>{{ reserva.fechaFin }}</p>

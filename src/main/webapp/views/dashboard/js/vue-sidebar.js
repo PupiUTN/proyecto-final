@@ -24,9 +24,9 @@ let mySidebar = Vue.component('my-sidebar', {
                      <li><a href="/views/cuidadores/cuidadores-editar.html"><i class="sl sl-icon-book-open"></i> Mi Descripcion</a></li>
                      <li><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>
 					 <ul>
-						<li><a href="#">Pendientes <span class="nav-tag green">6</span></a></li>
-						<li><a href="#">Concretadas <span class="nav-tag yellow">1</span></a></li>
-						<li><a href="#">Canceladas <span class="nav-tag red">2</span></a></li>
+						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=CONFIRMATION_PENDING">Pendientes <span class="nav-tag green">6</span></a></li>
+						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=ACCEPTED">Concretadas <span class="nav-tag yellow">1</span></a></li>
+						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=CANCEL">Canceladas <span class="nav-tag red">2</span></a></li>
 					 </ul>	
 					 </li>
                 </ul>
