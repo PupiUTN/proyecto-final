@@ -39,4 +39,29 @@ public class ReservaService {
         reserva.setStatus("CANCEL_BY_USER");
         reservaRepository.save(reserva);
     }
+
+    public List<Reserva> getReservasByCuidadorIdAndStatus(Long id, String status) {
+        return reservaRepository.findAllByCuidadorAndStatus(id,status);
+    }
+
+    public void cancelar(Long reservaId, Long userId) {
+        Reserva reserva = reservaRepository.findByCuidadorIdAnId(userId, reservaId);
+        if (reserva.getStatus() == "foo"){
+            throw new IllegalArgumentException();
+        }
+        reserva.setStatus("CANCEL");
+        reservaRepository.save(reserva);
+    }
+
+
+    public void confirmar(Long reservaId, Long userId) {
+        Reserva reserva = reservaRepository.findByCuidadorIdAnId(userId, reservaId);
+        if (reserva.getStatus() == "foo"){
+            throw new IllegalArgumentException();
+        }
+        reserva.setStatus("ACCEPTED");
+        reservaRepository.save(reserva);
+    }
+
+
 }
