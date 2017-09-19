@@ -315,7 +315,7 @@ Vue.component('my-cuidador-edit', {
                 .catch(error => {
                     console.log(error);
                     //sweetAlert("Oops...", "Error, necesitas estar logueado", "error");
-                   // document.location.href="/";
+                    document.location.href="/";
                 });
         },
 
@@ -349,9 +349,9 @@ Vue.component('my-cuidador-edit', {
                 })
                 .catch(error => {
                   //  this.formPost = true;
-                   document.getElementById("spinner").toggle();
+                  // document.getElementById("spinner").toggle();
                     // me redirije a lo de jorge
-                    document.location.href="/";
+                    document.location.href="/views/cuidadores/alta-cuidador.html";
                 });
         },
         editCuidador() {

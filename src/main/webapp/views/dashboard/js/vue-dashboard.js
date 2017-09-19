@@ -1,4 +1,4 @@
-let myDashboard = Vue.component('my-dashboard', {
+Vue.component('my-dashboard', {
     template: `
 <span>
     <my-header></my-header>

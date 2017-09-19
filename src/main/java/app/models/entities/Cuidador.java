@@ -26,6 +26,13 @@ public class Cuidador implements Serializable {
     private List<Servicio> listaServicios;
     @OneToOne
     private  Tamaño tamaño;
+    //pending, approved, rejected, down
+    private String estado;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Imagen> dniImagenes;
+
+    private int dni;
+
 
 
     public Cuidador() {
@@ -104,6 +111,29 @@ public class Cuidador implements Serializable {
         this.tamaño = tamaño;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public List<Imagen> getDniImagenes() {
+        return dniImagenes;
+    }
+
+    public void setDniImagenes(List<Imagen> dniImagenes) {
+        this.dniImagenes = dniImagenes;
+    }
+
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
 
     @Override
     public boolean equals(Object o) {
