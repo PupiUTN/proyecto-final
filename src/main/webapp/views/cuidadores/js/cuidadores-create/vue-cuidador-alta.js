@@ -1,6 +1,5 @@
 Vue.component('become-cuidador', {
-    template:
-           `
+    template: `
 <div>
  <div id="titlebar">
     <div class="row">
@@ -11,6 +10,9 @@ Vue.component('become-cuidador', {
 </div>
     <div class="row">
     <div class="col-md-12" >
+        <div class="notification warning" v-show="isReadOnly">
+            <p><span> Atencion!</span> Su solicitud esta en proceso.</p>
+        </div>
         <div class="dashboard-list-box margin-top-0">
             <h4 class="gray"> 	<i class="fa fa-paw"></i> Legal </h4>
             <div class="dashboard-list-box-static"  > 
@@ -98,19 +100,19 @@ Vue.component('become-cuidador', {
     `,
     data: function () {
         return {
-            isReadOnly:false,
+            isReadOnly: false,
 
             url: "/api/user/",
-            dniAnverso:{
-                url:"/assets/images/nodni.png"
+            dniAnverso: {
+                url: "/assets/images/nodni.png"
             },
-            dniReverso:{
-                url:"/assets/images/nodni.png"
+            dniReverso: {
+                url: "/assets/images/nodni.png"
             },
-            cuidador:{
-                estado:"pending",
+            cuidador: {
+                estado: "pending",
             },
-            user:{},
+            user: {},
 
         }
 
@@ -125,7 +127,7 @@ Vue.component('become-cuidador', {
             document.getElementById("spinner").toggle();
         },
 
-        filesChange(fileList,position) {
+        filesChange(fileList, position) {
             // handle file changes
             const formData = new FormData();
 
@@ -138,28 +140,28 @@ Vue.component('become-cuidador', {
                 });
 
             // save it
-            this.upload(formData,position);
+            this.upload(formData, position);
         },
-        upload(formData,position) {
-            if(!this.isReadOnly){
+        upload(formData, position) {
+            if (!this.isReadOnly) {
 
-            axios.post('/api/file/', formData)
-                .then((response) => {
+                axios.post('/api/file/', formData)
+                    .then((response) => {
 
-                    var url = response.data;
-                    console.log(url);
-                    if(position==0){
-                        this.dniAnverso.url = url;
+                        var url = response.data;
+                        console.log(url);
+                        if (position == 0) {
+                            this.dniAnverso.url = url;
 
-                    }else{
-                        this.dniReverso.url = url;
-                    }
-                })
-                .catch(error => {
-                        console.log("ERROR AXIOS");
-                        console.log(error);
-                    }
-                );
+                        } else {
+                            this.dniReverso.url = url;
+                        }
+                    })
+                    .catch(error => {
+                            console.log("ERROR AXIOS");
+                            console.log(error);
+                        }
+                    );
             }
         },
         getUserInfo() {
@@ -169,29 +171,35 @@ Vue.component('become-cuidador', {
                 })
                 .catch(error => {
                     //console.log(error);
-                     document.location.href="/";
+                    document.location.href = "/";
                 });
         },
 
         isUserCuidador(sessionInfo) {
-            var  url= "/api/cuidadores/user/";
-            this.user=sessionInfo.data.principal.user;
+            this.user = sessionInfo.data.principal.user;
             console.log(this.user)
-            if(this.user.role=='ROLE_CUIDADOR'){
-                document.location.href="/views/cuidadores/cuidadores-editar.html";
+            if (this.user.role == 'ROLE_CUIDADOR') {
+                sweetAlert({
+                        title: "Felicidades!!",
+                        text: "Su solicitud a sido aprobada. Ahora puede armar su perfil como cuidador",
+                        type: "info",
+                    },
+                    function () {
+                        document.location.href = "/views/cuidadores/cuidadores-editar.html";
+                    });
             }
             this.solicitudExistente();
 
         },
-        solicitudExistente(){
-            var  url= "/api/cuidadores/user/";
-            let consulta= url + '?id=' + this.user.id;
+        solicitudExistente() {
+            var url = "/api/cuidadores/user/";
+            let consulta = url + '?id=' + this.user.id;
 
             axios.get(consulta)
                 .then((data) => {
-                    if(data.data!=""){
+                    if (data.data != "") {
                         this.cuidador = data.data;
-                        this.isReadOnly=true;
+                        this.isReadOnly = true;
                         this.inicializarImagenes();
 
                     }
@@ -203,48 +211,46 @@ Vue.component('become-cuidador', {
                     //  this.formPost = true;
                     // document.getElementById("spinner").toggle();
                     // me redirije a lo de jorge
-                   console.log(error);
+                    console.log(error);
                 });
 
         },
         enviarAltaCuidador() {
-            if(!this.isReadOnly){
+            if (!this.isReadOnly) {
 
-            if (this.validarCantidadImagenes())
-            {
-                sweetAlert("Oops...", "Error, Se deben cargar ambas imagenes del dni", "error");
-                return ;
-            }
-            this.cuidador.dniImagenes=[this.dniAnverso,this.dniReverso];
-            this.cuidador.user=this.user;
-            console.log(this.cuidador);
-            var urlCuidador = "/api/cuidadores/";
-            axios.post(urlCuidador, this.cuidador)
-                .then((response) => {
-                    console.log(response);
-                    swal({
-                            title: "Enviada!",
-                            text: "Solicitud generada exitosamente",
-                            type: "success"
-                        },
-                        function () {
-                            window.location.href = "/views/cuidadores/cuidadores-editar.html";
-                        });
-                })
-                .catch(error => {
-                        console.log(error);
-                        sweetAlert("Oops...", "Error, ver consola", "error");
-                    }
-                );
+                if (this.validarCantidadImagenes()) {
+                    sweetAlert("Oops...", "Error, Se deben cargar ambas imagenes del dni", "error");
+                    return;
+                }
+                this.cuidador.dniImagenes = [this.dniAnverso, this.dniReverso];
+                this.cuidador.user = this.user;
+                console.log(this.cuidador);
+                var urlCuidador = "/api/cuidadores/";
+                axios.post(urlCuidador, this.cuidador)
+                    .then((response) => {
+                        console.log(response);
+                        swal({
+                                title: "Enviada!",
+                                text: "Solicitud generada exitosamente",
+                                type: "success"
+                            },
+                            function () {
+                                window.location.href = "/";
+                            });
+                    })
+                    .catch(error => {
+                            console.log(error);
+                            sweetAlert("Oops...", "Error, ver consola", "error");
+                        }
+                    );
             }
         },
         inicializarImagenes() {
-            this.dniAnverso.url=this.cuidador.dniImagenes[0].url;
-            this.dniReverso.url=this.cuidador.dniImagenes[1].url;
+            this.dniAnverso.url = this.cuidador.dniImagenes[0].url;
+            this.dniReverso.url = this.cuidador.dniImagenes[1].url;
         },
-        validarCantidadImagenes()
-        {
-            if(this.dniAnverso.url=="/assets/images/nodni.png" || this.dniReverso.url=="/assets/images/nodni.png"){
+        validarCantidadImagenes() {
+            if (this.dniAnverso.url == "/assets/images/nodni.png" || this.dniReverso.url == "/assets/images/nodni.png") {
                 return true;
             }
 
