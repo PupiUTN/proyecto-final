@@ -7,6 +7,7 @@ package app.controllers;
 
 import app.models.entities.Reserva;
 import app.security.MyUserPrincipal;
+import app.services.MailService;
 import app.services.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,20 +25,22 @@ public class ReservaUserController {
 
 
     private final ReservaService reservaService;
-
+    private final MailService mailService;
     @Autowired
-    public ReservaUserController(ReservaService reservaService) {
+    public ReservaUserController(ReservaService reservaService, MailService mailService) {
         this.reservaService = reservaService;
+        this.mailService = mailService;
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST)
     public Reserva post(@RequestBody Reserva entity) throws Exception {
         //TODO setear info del cuidador asi nadie puede meter info que no es.
+        mailService.sendEmail(entity.getCuidador().getUser().getEmail(), "Nueva Solicitud de Reserva - Pupi");
         return reservaService.save(entity);
 
     }
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public List<Reserva> get(@RequestParam("status") String status) throws Exception {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();;
@@ -47,7 +50,7 @@ public class ReservaUserController {
     }
 
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.PUT, value ="{reservaId}/cancelarUsuario")
     public ResponseEntity cancelarCausaUsuario(@PathVariable Long reservaId) throws Exception {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();;

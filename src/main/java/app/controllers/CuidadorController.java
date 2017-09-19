@@ -29,13 +29,6 @@ public class CuidadorController {
         return cuidadorService.getCuidadores();
     }
 
-//    @RequestMapping(value = "/search/", method = RequestMethod.GET)
-//    public List<Cuidador> getCuidadoresPorDireccion(
-//            @RequestParam(value = "ciudadPlaceId", required = false) String ciudadPlaceId) throws Exception {
-//
-//        return cuidadorService.getCuidadoresPorCiudadPlaceId(ciudadPlaceId);
-//
-//    }
     @RequestMapping(value = "/search/", method = RequestMethod.GET)
     public List<Cuidador> getCuidadoresPorDireccionYFechasReseva(
             @RequestParam(value = "ciudadPlaceId", required = false) String ciudadPlaceId,
@@ -48,12 +41,6 @@ public class CuidadorController {
         return cuidadorService.getCuidadoresPorCiudadYFecha(ciudadPlaceId,from,to);
 
     }
-
-   /* @RequestMapping(value = "/localidades/{id}", method = RequestMethod.GET)
-    public List<Cuidador> getCuidadoresPorLocalidad(@PathVariable("id") Long id) {
-        return cuidadorService.getCuidadoresPorLocalidad(id);
-    }*/
-
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Cuidador getCuidador(@PathVariable("id") Long id) {

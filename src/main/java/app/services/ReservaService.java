@@ -11,10 +11,12 @@ import java.util.List;
 public class ReservaService {
 
     private final ReservaRepository reservaRepository;
+    private final MailService mailService;
 
     @Autowired
-    public ReservaService(ReservaRepository reservaRepository) {
+    public ReservaService(ReservaRepository reservaRepository, MailService mailService) {
         this.reservaRepository = reservaRepository;
+        this.mailService = mailService;
     }
 
     public List<Reserva> getReservasByUserId(Long id) {
@@ -38,6 +40,8 @@ public class ReservaService {
         }
         reserva.setStatus("CANCEL_BY_USER");
         reservaRepository.save(reserva);
+        mailService.sendEmail(reserva.getCuidador().getUser().getEmail(), "Cancelacion Solicitud de Reserva - Pupi");
+
     }
 
     public List<Reserva> getReservasByCuidadorIdAndStatus(Long id, String status) {

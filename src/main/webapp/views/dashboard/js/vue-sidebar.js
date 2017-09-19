@@ -20,6 +20,7 @@ let mySidebar = Vue.component('my-sidebar', {
 				</li>
                 </ul>
                 <ul data-submenu-title="Cuidador">
+                    <li><a href="/views/cuidadores/alta-cuidador.html"><i class="sl sl-icon-user"></i> Solicitud</a></li>
                      <li><a href="/views/cuidadores/cuidadores-editar.html"><i class="sl sl-icon-book-open"></i> Mi Descripcion</a></li>
                      <li><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>
 					 <ul>
