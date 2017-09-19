@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RestController
 public class HelloController {
 
-    @Autowired
-    MailService mailService;
-    
     @GetMapping("api/hello")
     public String index() {
         return "Greetings from Spring Boot!";
@@ -20,7 +17,7 @@ public class HelloController {
 
     @PostMapping("api/email")
     public void sendEmail() {
-        mailService.sendEmail();
+        MailService.sendEmail("fbackhaus94@gmail.com", "prueba");
     }
     
 }
