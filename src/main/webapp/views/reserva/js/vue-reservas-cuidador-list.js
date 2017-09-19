@@ -1,86 +1,81 @@
 Vue.component('my-reservas-cuidador-list', {
     template: `
 <div>       
-        <div id="spinner"></div>
+<div id="spinner"></div>
+<!-- Titlebar -->
+<div id="titlebar">
+    <div class="row">
+        <div class="col-md-12">
+             <div  v-if="status === 'CONFIRMATION_PENDING'">
+                    <h2>Quieren reservar Conmigo</h2>                
+             </div>
+              <div  v-if="status === 'CANCEL'">
+                    <h2>reservas rechazadas</h2>                
+             </div>
+              <div  v-if="status === 'ACCEPTED'">
+                    <h2> Mis reservas Confirmadas</h2>                
+             </div>
+            
+        </div>
+    </div>
+</div>
+<div class="row">
+    <!-- Listings -->
+    <div class="col-lg-12 col-md-12">
+        <div class="messages-container margin-top-0">
+            <div class="messages-inbox">
+            <h3>{{ mensaje}}</h3>
+            <ul>
+                <li v-for="(reserva, index) in reservas" style="margin-bottom: 5px;">
+                    <a v-bind:style="listColor">
+                        <div style=" top: 70px;" class="message-avatar"><img :src="reserva.perro.user.profileImageUrl" alt=""></div>
 
-		<!-- Titlebar -->
-		<div id="titlebar">
-			<div class="row">
-				<div class="col-md-12">
-					 <div  v-if="status === 'CONFIRMATION_PENDING'">
-                            <h2>Quieren reservar Conmigo</h2>                
-                     </div>
-                      <div  v-if="status === 'CANCEL'">
-                            <h2>reservas rechazadas</h2>                
-                     </div>
-                      <div  v-if="status === 'ACCEPTED'">
-                            <h2> Mis reservas Confirmadas</h2>                
-                     </div>
-					
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			
-			<!-- Listings -->
-			<div class="col-lg-12 col-md-12">
-			    <div class="messages-container margin-top-0">
-
-					
-					<div class="messages-inbox">
-				    <h3>{{ mensaje}}</h3>
-					<ul>
-                        <li v-for="(reserva, index) in reservas" style="margin-bottom: 5px;">
-                            <a v-bind:style="listColor">
-                                <div style=" top: 70px;" class="message-avatar"><img :src="reserva.perro.user.profileImageUrl" alt=""></div>
-
-                                <div class="message-by">
-                                    
-                                    <div class="row">
-                                        <div  v-bind:class="listClass">
-                                            <div class="message-by-headline">
-                                                <a href="www.pupi.com.ar" style="all: unset"><h5>{{ reserva.perro.user.fullName }} </h5></a>  
-                                            </div>
-                                            <div class="col-xs-12 col-md-10">                                        
-                                            <p><i> {{ reserva.mensaje}} </i></p>   
-                                         <p ><b>Perro: </b> {{ reserva.perro.nombre}}</p>  
-                                          </div>
-                                        
-                                           </div>
-                                        <div class="col-xs-12 col-md-1">
-                                            <p><b>Desde</b> </br>{{ reserva.fechaFin }}</p>
-                                        </div>
-                                        <div class="col-xs-12 col-md-1">
-                                            <p><b> Hasta </b> </br> {{ reserva.fechaFin }}</p>
-                                                
-                                         </div>
-                                  
-                                            <div class="col-xs-12 col-md-3" v-if="reserva.status === 'CONFIRMATION_PENDING'">
-                                            <a v-on:click="confirmarReservaButton(index)"  style="color: blue; border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Confirmar</a>
-                                        </div>
-                                       
-
-                                        <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
-                                            <a v-on:click="cancelarReservaActionButton(index)"  style="  margin-top: 10px;" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>                        
-                                        </div>
-                                    
-                                     <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
-                                            <a  style="  margin-top: 10px; color: blue;  border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver</a>
-                                            
-                                        </div>
-                                    </div>    
-                                   
-                                 </div>       
-                              
-                            </a>
+                        <div class="message-by">
+                            
+                            <div class="row">
+                                <div  v-bind:class="listClass">
+                                    <div class="message-by-headline">
+                                        <a href="www.pupi.com.ar" style="all: unset"><h5>{{ reserva.perro.user.fullName }} </h5></a>  
+                                    </div>
+                                    <div class="col-xs-12 col-md-10">                                        
+                                    <p><i> {{ reserva.mensaje}} </i></p>   
+                                 <p ><b>Perro: </b> {{ reserva.perro.nombre}}</p>  
+                                  </div>
                                 
-                        </li>
-					 </ul>
-					</div>
-				</div>
-			</div>
-		</div>
+                                   </div>
+                                <div class="col-xs-12 col-md-1">
+                                    <p><b>Desde</b> </br>{{ reserva.fechaFin }}</p>
+                                </div>
+                                <div class="col-xs-12 col-md-1">
+                                    <p><b> Hasta </b> </br> {{ reserva.fechaFin }}</p>
+                                        
+                                 </div>
+                          
+                                    <div class="col-xs-12 col-md-3" v-if="reserva.status === 'CONFIRMATION_PENDING'">
+                                    <a v-on:click="confirmarReservaButton(index)"  style="color: blue; border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Confirmar</a>
+                                </div>
+                               
+
+                                <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
+                                    <a v-on:click="cancelarReservaActionButton(index)"  style="  margin-top: 10px;" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>                        
+                                </div>
+                            
+                             <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
+                                    <a  style="  margin-top: 10px; color: blue;  border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver</a>
+                                    
+                                </div>
+                            </div>    
+                           
+                         </div>       
+                      
+                    </a>
+                        
+                </li>
+             </ul>
+            </div>
+        </div>
+    </div>
+</div>
 </div>   
     `,
     data:
@@ -163,7 +158,7 @@ Vue.component('my-reservas-cuidador-list', {
             axios.put( '/api/cuidador/me/reservas/' + id + '/confirmarReserva')
                 .then((response) => {
                     this.toggleLoader();
-                    sweetAlert("Cancelada", "Tu reserva a sido Confirmada, Felicitaaciones tienes un nuevo Huesped", "success");
+                    sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped page te confirmaremos la reserva.", "success");
                     Vue.delete(this.reservas, index);
                 })
                 .catch(error => {
@@ -248,6 +243,3 @@ Vue.component('my-reservas-cuidador-list', {
 
     }
 });
-/**
- * Created by gabriellorenzatti on 18/9/17.
- */
