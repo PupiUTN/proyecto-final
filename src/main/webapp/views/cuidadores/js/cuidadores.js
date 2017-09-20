@@ -28,7 +28,7 @@ let vm = new Vue({
     methods: {
 
         toggleLoader() {
-            Pace.restart;
+            Pace.start;
         },
         initDate() {
             $('#dateFrom').dateDropper();

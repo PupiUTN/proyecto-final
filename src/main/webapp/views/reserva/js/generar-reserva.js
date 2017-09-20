@@ -57,7 +57,7 @@ let vm = new Vue({
             this.getPerros();
         },
         toggleLoader() {
-            Pace.restart;
+            Pace.start;
         },
         getCuidador() {
             axios.get(this.urlCuidador + "/" + this.idCuidador)

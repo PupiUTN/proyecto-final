@@ -96,7 +96,7 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
     },
     methods: {
         toggleLoader() {
-            Pace.restart;
+            Pace.start;
         },
         upload(formData) {
             axios.post('/api/file/', formData)

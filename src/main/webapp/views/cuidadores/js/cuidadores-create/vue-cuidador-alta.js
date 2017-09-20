@@ -123,7 +123,7 @@ Vue.component('become-cuidador', {
     },
     methods: {
         toggleLoader() {
-            Pace.restart;
+            Pace.start;
         },
 
         filesChange(fileList, position) {
@@ -202,7 +202,7 @@ Vue.component('become-cuidador', {
                         this.inicializarImagenes();
 
                     }
-                    Pace.restart;
+                    Pace.start;
                     // this.formPost = false;
 
                 })

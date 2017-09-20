@@ -79,7 +79,7 @@ Vue.component('my-perros-list', {
     },
     methods: {
         toggleLoader() {
-            Pace.restart;
+            Pace.start;
         },
         getUserInfo() {
             axios.get("/api/user/me")

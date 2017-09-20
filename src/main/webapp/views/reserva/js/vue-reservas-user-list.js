@@ -100,7 +100,7 @@ Vue.component('my-reservas-user-list', {
     },
     methods: {
         toggleLoader() {
-            Pace.restart;
+            Pace.start;
         },
         getUserReservas() {
             axios.get('/api/user/me/reservas?status=' + this.status)

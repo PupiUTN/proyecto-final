@@ -36,7 +36,7 @@ let vm = new Vue({
     },
     methods: {
         toggleLoader() {
-            Pace.restart;
+            Pace.start;
         },
         getCuidador() {
             axios.get(this.url + "/" + this.idCuidador)
@@ -49,7 +49,7 @@ let vm = new Vue({
                     this.loadTamaño(this.item.tamaño);
                     this.geolocateCuidador(this.item.user.direccion);
 
-                    Pace.restart;
+                    Pace.start;
 
                 })
                 .catch(error => {

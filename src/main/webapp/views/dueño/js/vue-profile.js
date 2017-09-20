@@ -93,7 +93,7 @@ Vue.component('my-profile', {
     },
     methods: {
         toggleLoader() {
-            Pace.restart;
+            Pace.start;
         },
         autocompleteAddress() {
             var componentForm = {

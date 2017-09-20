@@ -120,7 +120,7 @@ Vue.component('my-reservas-cuidador-list', {
     },
     methods: {
         toggleLoader() {
-            Pace.restart;
+            Pace.start;
         },
         getCuidadorReservas() {
             axios.get('/api/cuidador/me/reservas?status=' + this.status)
