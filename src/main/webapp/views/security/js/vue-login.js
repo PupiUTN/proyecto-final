@@ -186,8 +186,6 @@ let myLogin = Vue.component('my-login', {
     },
     methods: {
         getUserProfile() {
-            var myInterceptor = axios.interceptors.response.use(function () {/*...*/});
-            axios.interceptors.response.eject(myInterceptor);
             axios.get(this.meUrl)
                 .then((response) => {
                     console.log(response.data);
