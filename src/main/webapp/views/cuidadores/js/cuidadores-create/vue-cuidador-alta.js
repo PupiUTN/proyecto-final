@@ -122,11 +122,6 @@ Vue.component('become-cuidador', {
 
     },
     methods: {
-        toggleLoader() {
-            //$('#spinner').toggle();
-            document.getElementById("spinner").toggle();
-        },
-
         filesChange(fileList, position) {
             // handle file changes
             const formData = new FormData();
@@ -203,7 +198,7 @@ Vue.component('become-cuidador', {
                         this.inicializarImagenes();
 
                     }
-                    $('#spinner').toggle();
+
                     // this.formPost = false;
 
                 })

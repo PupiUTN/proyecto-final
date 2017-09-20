@@ -1,7 +1,7 @@
 Vue.component('my-perros-list', {
     template: `
 <div>       
-        <div id="spinner"></div>
+        
         <!-- Titlebar -->
 		<div id="titlebar">
 			<div class="row">
@@ -78,9 +78,7 @@ Vue.component('my-perros-list', {
         this.getUserInfo();
     },
     methods: {
-        toggleLoader() {
-            $('#spinner').toggle();
-        },
+
         getUserInfo() {
             axios.get("/api/user/me")
                 .then((sessionInfo) => {
@@ -90,7 +88,7 @@ Vue.component('my-perros-list', {
                     console.log(error);
                     sweetAlert("Oops...", "Error, ver consola", "error");
                     console.log("redirect");
-                    document.location.href="/";
+                    document.location.href = "/";
                 });
         },
         isUserLoggedIn(sessionInfo) {
@@ -110,7 +108,7 @@ Vue.component('my-perros-list', {
                     if (this.dogs.length === 0) {
                         this.message = "Actualmente no tenés ningún perro registrado. Agrega el primero!";
                     }
-                    this.toggleLoader();
+
                 })
                 .catch(error => {
                     console.log(error);

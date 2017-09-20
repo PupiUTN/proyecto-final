@@ -15,6 +15,9 @@
     <!-- MY CSS
     ================================================== -->
     <link rel="stylesheet" href="/views/index/css/index.css">
+    <script src="/js/pace.min.js"></script>
+    <link href="/css/pace-theme.css" rel="stylesheet"/>
+
 </head>
 
 <body>
@@ -22,11 +25,9 @@
 
 <!-- Wrapper -->
 <div id="wrapper">
-    <div id="spinner"></div>
     <my-dashboard current-view="become-cuidador"></my-dashboard>
 </div>
 <!-- Wrapper / End -->
-
 
 
 <!-- Scripts
@@ -46,7 +47,7 @@
 <link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
 <script src="/assets/scripts/datedropper.js"></script>
 <script src="/js/vue.js"></script>
-<script src="/js/axios.min.js"></script>
+<script src="/js/axios.min.js"></script> <script src="/js/axios.interceptor.js"></script>
 <link rel="stylesheet" href="/css/sweetalert.css"/>
 <script src="/js/sweetalert.min.js"></script>
 <script type="text/javascript" src="/views/security/js/vue-login.js"></script>
@@ -65,27 +66,7 @@
         el: '#wrapper'
     });
 </script>
-<style>
 
-
-    #spinner {
-        /*http://samherbert.net/svg-loaders/*/
-        background-image: url('/img/spinner.svg');
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-repeat: no-repeat;
-        background-color: rgba(0, 0, 0, 0.3);
-        z-index: 999;
-        background-position: center;
-    }
-
-
-
-
-</style>
 
 </body>
 </html>

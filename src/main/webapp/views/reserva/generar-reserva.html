@@ -11,6 +11,8 @@
     ================================================== -->
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+    <script src="/js/pace.min.js"></script>
+    <link href="/css/pace-theme.css" rel="stylesheet"/>
 </head>
 
 <body xmlns:v-bind="http://www.w3.org/1999/xhtml">
@@ -60,7 +62,7 @@
     <!-- Header Container / End -->
 
 
-    <div id="spinner"></div>
+
 
     <!-- Content
     ================================================== -->
@@ -72,11 +74,11 @@
 
                     <!-- Titlebar -->
                     <div id="titlebar" class="listing-titlebar padding-bottom-35 padding-top-35 padding-left-35">
-                            <div class="listing-titlebar-title">
+                        <div class="listing-titlebar-title">
 
-                                <h2 id="nombre"> {{ reserva.cuidador.user.fullName}} <span
-                                        class="listing-tag">Cuidador</span>
-                                </h2>
+                            <h2 id="nombre"> {{ reserva.cuidador.user.fullName}} <span
+                                    class="listing-tag">Cuidador</span>
+                            </h2>
 
                             <div class="card-image col s3 ">
 
@@ -228,32 +230,12 @@
 <link href="../../assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
 <script src="../../assets/scripts/datedropper.js"></script>
 
-<script src="/js/axios.min.js"></script>
+<script src="/js/axios.min.js"></script> <script src="/js/axios.interceptor.js"></script>
 <script src="/js/vue.js"></script>
 <link rel="stylesheet" href="/css/sweetalert.css"/>
 <script src="/js/sweetalert.min.js"></script>
 <script type="text/javascript" src="/views/security/js/vue-login.js"></script>
 <script src="js/generar-reserva.js"></script>
-
-<style>
-
-
-    #spinner {
-        /*http://samherbert.net/svg-loaders/*/
-        background-image: url('/img/spinner.svg');
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-repeat: no-repeat;
-        background-color: rgba(0, 0, 0, 0.3);
-        z-index: 999;
-        background-position: center;
-    }
-
-
-</style>
 
 
 </body>

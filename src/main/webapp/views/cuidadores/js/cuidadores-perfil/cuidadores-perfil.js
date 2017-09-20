@@ -35,9 +35,7 @@ let vm = new Vue({
 
     },
     methods: {
-        toggleLoader() {
-            $('#spinner').toggle();
-        },
+
         getCuidador() {
             axios.get(this.url + "/" + this.idCuidador)
                 .then((response) => {
@@ -49,7 +47,7 @@ let vm = new Vue({
                     this.loadTamaño(this.item.tamaño);
                     this.geolocateCuidador(this.item.user.direccion);
 
-                    $('#spinner').toggle();
+
 
                 })
                 .catch(error => {

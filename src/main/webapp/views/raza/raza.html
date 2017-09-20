@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 
 <head>
-<!-- Basic Page Needs
-================================================== -->
-<title>Raza</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Basic Page Needs
+    ================================================== -->
+    <title>Raza</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<!-- CSS
-================================================== -->
-<link rel="stylesheet" href="/assets/css/style.css">
-<link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+    <script src="/js/pace.min.js"></script>
+    <link href="/css/pace-theme.css" rel="stylesheet"/>
 
 </head>
 
@@ -221,7 +223,7 @@
 
 
             <div class="row" id="appVue">
-                <div id="spinner"></div>
+
                 <div class="col-lg-12">
                     <div id="add-listing">
                         <!-- Section -->
@@ -327,7 +329,6 @@
                             </table>
 
 
-
                         </div>
                         <!-- Section / End -->
 
@@ -368,28 +369,7 @@
 
 <!-- My Scripts
 ================================================== -->
-<style>
-
-
-    #spinner {
-        /*http://samherbert.net/svg-loaders/*/
-        background-image: url('/img/spinner.svg');
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-repeat: no-repeat;
-        background-color: rgba(0, 0, 0, 0.3);
-        z-index: 999;
-        background-position: center;
-    }
-
-
-
-
-</style>
-<script src="/js/axios.min.js"></script>
+<script src="/js/axios.min.js"></script> <script src="/js/axios.interceptor.js"></script>
 <script src="/js/vue.js"></script>
 <link rel="stylesheet" href="/css/sweetalert.css">
 <script src="/js/sweetalert.min.js"></script>
