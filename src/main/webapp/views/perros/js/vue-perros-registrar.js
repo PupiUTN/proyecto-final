@@ -1,4 +1,4 @@
-let myPerrosRegistrar =Vue.component('my-perros-registrar', {
+let myPerrosRegistrar = Vue.component('my-perros-registrar', {
     template: `
 <div>
     <div id="spinner"></div>
@@ -133,7 +133,7 @@ let myPerrosRegistrar =Vue.component('my-perros-registrar', {
                     console.log(error);
                     sweetAlert("Oops...", "Error, ver consola", "error");
                     console.log("redirect");
-                    document.location.href="/";
+                    document.location.href = "/";
 
                 });
         },

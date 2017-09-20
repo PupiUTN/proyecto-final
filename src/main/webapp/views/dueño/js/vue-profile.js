@@ -108,7 +108,8 @@ Vue.component('my-profile', {
             var autocomplete = new google.maps.places.Autocomplete(
                 /** @type {!HTMLInputElement} */(this.$refs.autocomplete),
 
-                {types: ['geocode'],
+                {
+                    types: ['geocode'],
                     componentRestrictions: {country: "ar"}
                 });
             autocomplete.addListener('place_changed', function () {

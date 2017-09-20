@@ -15,7 +15,7 @@ let vm = new Vue({
     mounted() {
         this.initDate();
         this.initAutocomplete();
-       // this.initGeolocate();
+        // this.initGeolocate();
 
         this.toggleLoader();
 
@@ -44,8 +44,8 @@ let vm = new Vue({
                 if (place.geometry) {
 
                     this.placeID = place.place_id;
-                    this.placeLat=place.geometry.location.lat();
-                    this.placeLng=place.geometry.location.lng();
+                    this.placeLat = place.geometry.location.lat();
+                    this.placeLng = place.geometry.location.lng();
                     this.placeName = input.value;
 
 
@@ -84,14 +84,15 @@ let vm = new Vue({
                                 vm.placeLng = vm.geoPlace.geometry.location.lng;
                                 vm.placeName = vm.geoPlace.formatted_address;
                                 input.placeholder = vm.placeName;
-                                input.value='';
+                                input.value = '';
                                 vm.toggleLoader();
                             }
                         });
                 });
-            };
+            }
+            ;
         },
-        geolocate2 () {
+        geolocate2() {
             if (this.geoPlace != null) {
                 let input = document.getElementById('location');
                 this.placeID = this.geoPlace.place_id;

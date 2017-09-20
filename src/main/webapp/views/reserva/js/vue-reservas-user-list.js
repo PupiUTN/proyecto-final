@@ -119,7 +119,7 @@ Vue.component('my-reservas-user-list', {
         cancelarReserva(index) {
             this.toggleLoader();
             var id = this.reservas[index].id;
-            axios.put( '/api/user/me/reservas/' + id + '/cancelarUsuario')
+            axios.put('/api/user/me/reservas/' + id + '/cancelarUsuario')
                 .then((response) => {
                     this.toggleLoader();
                     sweetAlert("Cancelada", "Tu reserva a sido cancelada", "success");
@@ -157,29 +157,29 @@ Vue.component('my-reservas-user-list', {
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         },
     },
-    computed:{
-        tipoDeReservas: function(){
-            if(this.status == 'CONFIRMATION_PENDING'){
+    computed: {
+        tipoDeReservas: function () {
+            if (this.status == 'CONFIRMATION_PENDING') {
                 return 'pendientes'
             }
-            if(this.status == 'CANCEL_BY_USER'){
+            if (this.status == 'CANCEL_BY_USER') {
                 return 'canceladas'
             }
             return 'Error'
         },
         listClass: function () {
-            if(this.status == 'CONFIRMATION_PENDING'){
+            if (this.status == 'CONFIRMATION_PENDING') {
                 return 'col-xs-12 col-md-7'
             }
-            if(this.status == 'CANCEL_BY_USER'){
+            if (this.status == 'CANCEL_BY_USER') {
                 return 'col-xs-12 col-md-10'
             }
         },
         listColor: function () {
-            if(this.status == 'CONFIRMATION_PENDING'){
+            if (this.status == 'CONFIRMATION_PENDING') {
                 return 'background: rgba(0, 169, 72, 0.15);'
             }
-            if(this.status == 'CANCEL_BY_USER'){
+            if (this.status == 'CANCEL_BY_USER') {
                 return 'background: rgba(243, 12, 12, 0.15);'
             }
         }

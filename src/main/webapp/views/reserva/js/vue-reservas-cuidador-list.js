@@ -87,15 +87,15 @@ Vue.component('my-reservas-cuidador-list', {
                         perro: {
                             user: {
                                 fullName: '',
-                                profileImageUrl:'',
+                                profileImageUrl: '',
                                 direccion: {
                                     ciudad: '',
                                 },
 
                             },
-                            fotoPerfil:'' ,
-                            nombre:'',
-                            birthday:'',
+                            fotoPerfil: '',
+                            nombre: '',
+                            birthday: '',
                             raza: {}
 
                         },
@@ -103,12 +103,12 @@ Vue.component('my-reservas-cuidador-list', {
                         fechaFin: "",
                         precioTotal: 1,
                         status: 0,
-                        mensaje:'',
+                        mensaje: '',
 
 
                     }
                 ],
-                mensaje:'',
+                mensaje: '',
                 perroProfileUrl: '',
                 status: null,
 
@@ -139,7 +139,7 @@ Vue.component('my-reservas-cuidador-list', {
         cancelarReserva(index) {
             this.toggleLoader();
             var id = this.reservas[index].id;
-            axios.put( '/api/cuidador/me/reservas/' + id + '/cancelarReserva')
+            axios.put('/api/cuidador/me/reservas/' + id + '/cancelarReserva')
                 .then((response) => {
                     this.toggleLoader();
                     sweetAlert("Cancelada", "Tu reserva a sido cancelada", "success");
@@ -155,7 +155,7 @@ Vue.component('my-reservas-cuidador-list', {
         ConfirmarReserva(index) {
             this.toggleLoader();
             var id = this.reservas[index].id;
-            axios.put( '/api/cuidador/me/reservas/' + id + '/confirmarReserva')
+            axios.put('/api/cuidador/me/reservas/' + id + '/confirmarReserva')
                 .then((response) => {
                     this.toggleLoader();
                     sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped page te confirmaremos la reserva.", "success");
@@ -190,7 +190,7 @@ Vue.component('my-reservas-cuidador-list', {
             var reserva = this.reservas[index];
             sweetAlert({
                     title: "Confirmar accion",
-                    text: "Quieres rechazar su reserva con " +reserva.perro.user.fullName  + " ?",
+                    text: "Quieres rechazar su reserva con " + reserva.perro.user.fullName + " ?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -211,32 +211,32 @@ Vue.component('my-reservas-cuidador-list', {
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         },
     },
-    computed:{
-        tipoDeReservas: function(){
-            if(this.status == 'CONFIRMATION_PENDING'){
+    computed: {
+        tipoDeReservas: function () {
+            if (this.status == 'CONFIRMATION_PENDING') {
                 return 'pendientes'
             }
-            if(this.status == 'CANCEL'){
+            if (this.status == 'CANCEL') {
                 return 'canceladas'
             }
             return 'Error'
         },
         listClass: function () {
-            if(this.status == 'CONFIRMATION_PENDING'){
+            if (this.status == 'CONFIRMATION_PENDING') {
                 return 'col-xs-12 col-md-7'
             }
-            if(this.status == 'CANCEL'){
+            if (this.status == 'CANCEL') {
                 return 'col-xs-12 col-md-10'
             }
         },
         listColor: function () {
-            if(this.status == 'CONFIRMATION_PENDING'){
+            if (this.status == 'CONFIRMATION_PENDING') {
                 return 'background: rgba(0, 169, 72, 0.15);'
             }
-            if(this.status == 'CANCEL'){
+            if (this.status == 'CANCEL') {
                 return 'background: rgba(243, 12, 12, 0.15);'
             }
-            if(this.status == 'ACCEPTED'){
+            if (this.status == 'ACCEPTED') {
                 return 'background: rgba(255,255,0,0.3);'
             }
         }

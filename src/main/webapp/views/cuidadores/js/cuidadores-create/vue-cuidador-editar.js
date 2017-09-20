@@ -172,37 +172,37 @@ Vue.component('my-cuidador-edit', {
         return {
             user: {},
             url: "/api/user/",
-         //  formPost: true,
+            //  formPost: true,
             listaServicios: [],
             precioNeto: '',
-            porcentaje:'',
-         //   precioFinal:'',
+            porcentaje: '',
+            //   precioFinal:'',
             cuidador:
                 {
-                    descripcion:'',
-                    cantidadMaxDePerros:'',
+                    descripcion: '',
+                    cantidadMaxDePerros: '',
                     listaServicios: [],
                 },
-            tamaño:'',
-            cantidadMaxDePerros:'',
-            descripcion:''
+            tamaño: '',
+            cantidadMaxDePerros: '',
+            descripcion: ''
 
-    }
+        }
 
     },
 
     computed: {
-         precioFinal:{
-        //
-        //     return( this.precioNeto * 1.20 ).toFixed(2);
-        //
-        // }
-        get: function () {
-            return( this.precioNeto * 1.20 ).toFixed(2);
-        },
-        set: function (newVal) {
-            this.cuidador.precioPorNoche = newVal;
-        }
+        precioFinal: {
+            //
+            //     return( this.precioNeto * 1.20 ).toFixed(2);
+            //
+            // }
+            get: function () {
+                return ( this.precioNeto * 1.20 ).toFixed(2);
+            },
+            set: function (newVal) {
+                this.cuidador.precioPorNoche = newVal;
+            }
         },
     },
     mounted() {
@@ -213,11 +213,10 @@ Vue.component('my-cuidador-edit', {
         this.getUserInfo();
 
 
-
     },
     methods: {
         toggleLoader() {
-           // $('#spinner').toggle();
+            // $('#spinner').toggle();
             document.getElementById("spinner").toggle();
         },
         // isAuthenticatedMethod(isAuthenticated) {
@@ -232,10 +231,9 @@ Vue.component('my-cuidador-edit', {
         //
         //     }
         // },
-        BuscarServicios()
-        {
+        BuscarServicios() {
 
-          //  axios.get("/api/cuidadores/searchServicios/")
+            //  axios.get("/api/cuidadores/searchServicios/")
             axios.get("/api/servicios/")
                 .then((data) => {
                     this.listaServicios = data.data;
@@ -248,35 +246,32 @@ Vue.component('my-cuidador-edit', {
 
 
         },
-        selector_cantidad()
-        {
+        selector_cantidad() {
             var x = document.getElementById("selector_cantidad");
             var select = '';
-            var option =  null;
-            for (i=0;i<=20;i++){
+            var option = null;
+            for (i = 0; i <= 20; i++) {
 
-               if( i === 0)
-               {
-                   option = document.createElement("option");
-                   option.text = "Seleccionar cantidad";
-                   option.value ="";
-                   x.add(option, x[i]);
-               }
-               else
-               {
+                if (i === 0) {
+                    option = document.createElement("option");
+                    option.text = "Seleccionar cantidad";
+                    option.value = "";
+                    x.add(option, x[i]);
+                }
+                else {
 
-                   option = document.createElement("option");
-                   option.text = i;
-                   option.value =i;
-                   x.add(option, x[i]);
-               }
+                    option = document.createElement("option");
+                    option.text = i;
+                    option.value = i;
+                    x.add(option, x[i]);
+                }
 
-             //   select += '<option val=' + i + '>' + i + '</option>';
+                //   select += '<option val=' + i + '>' + i + '</option>';
             }
 
         },
 
-        filesChange(fileList,position) {
+        filesChange(fileList, position) {
             // handle file changes
             const formData = new FormData();
 
@@ -289,9 +284,9 @@ Vue.component('my-cuidador-edit', {
                 });
 
             // save it
-            this.upload(formData,position);
+            this.upload(formData, position);
         },
-        upload(formData,position) {
+        upload(formData, position) {
             axios.post('/api/file/', formData)
                 .then((response) => {
 
@@ -315,7 +310,7 @@ Vue.component('my-cuidador-edit', {
                 .catch(error => {
                     console.log(error);
                     //sweetAlert("Oops...", "Error, necesitas estar logueado", "error");
-                    document.location.href="/";
+                    document.location.href = "/";
                 });
         },
 
@@ -323,18 +318,18 @@ Vue.component('my-cuidador-edit', {
             //  var urlCiudador = "/api/cuidadores" ;
             //  + '?id='
             // axios.get(urlCiudador+ "/" + sessionInfo.data.principal.user.id)
-            var  url= "/api/cuidadores/user/";
-            let consulta= url + '?id=' + sessionInfo.data.principal.user.id;
+            var url = "/api/cuidadores/user/";
+            let consulta = url + '?id=' + sessionInfo.data.principal.user.id;
 
             axios.get(consulta)
                 .then((data) => {
 
                     this.cuidador = data.data;
-                    this.precioNeto = (this.cuidador.precioPorNoche /1.20).toFixed(2);
+                    this.precioNeto = (this.cuidador.precioPorNoche / 1.20).toFixed(2);
 
 
-                   // this.formPost = false;
-                    if(this.cuidador.tamaño !== null){
+                    // this.formPost = false;
+                    if (this.cuidador.tamaño !== null) {
 
                         this.tamaño = this.cuidador.tamaño.id;
                     }
@@ -343,36 +338,35 @@ Vue.component('my-cuidador-edit', {
                     this.descripcion = this.cuidador.descripcion;
                     this.inicializarImagenes();
 
-                   $('#spinner').toggle();
-                   // this.formPost = false;
+                    $('#spinner').toggle();
+                    // this.formPost = false;
 
                 })
                 .catch(error => {
-                  //  this.formPost = true;
-                  // document.getElementById("spinner").toggle();
+                    //  this.formPost = true;
+                    // document.getElementById("spinner").toggle();
                     // me redirije a lo de jorge
-                    document.location.href="/views/cuidadores/alta-cuidador.html";
+                    document.location.href = "/views/cuidadores/alta-cuidador.html";
                 });
         },
         editCuidador() {
-            if (this.validarCantidadImagenes())
-            {
+            if (this.validarCantidadImagenes()) {
                 sweetAlert("Oops...", "Error, Se deben cargar 4 imagenes ", "error");
-                return ;
+                return;
             }
 
             var serv = null;
             var listaAux = [];
-            this.listaServicios.forEach(function(item) {
+            this.listaServicios.forEach(function (item) {
                 serv = {id: item.id, nombre: item.nombre};
-                if( document.getElementById(serv.nombre).checked === true )
+                if (document.getElementById(serv.nombre).checked === true)
                     listaAux.push(serv);
 
             });
             this.cuidador.listaServicios = listaAux;
             this.cuidador.precioPorNoche = this.precioFinal;
-            var tam = { id: this.tamaño};
-            this.cuidador.tamaño= tam;
+            var tam = {id: this.tamaño};
+            this.cuidador.tamaño = tam;
 
 
             var urlCiudador = "/api/cuidadores/";
@@ -393,32 +387,30 @@ Vue.component('my-cuidador-edit', {
                     }
                 );
         },
-        inicializarImagenes()
-        {    if(this.cuidador.listaImagenes.length > 0)
-        {
-            var i = 1;
-            var x = "imagen";
-            this.cuidador.listaImagenes.forEach(function(item) {
-                x = ( x +i).trim();
-                document.getElementById(x).src = item.url;
-                i++;
-                x = "imagen";
-            });
-
-        }
-        else {
-
-            var img = "";
-            for (i = 0; i < 4; i++) {
-                img = {id: 0, url: ""};
-                this.cuidador.listaImagenes.push(img);
+        inicializarImagenes() {
+            if (this.cuidador.listaImagenes.length > 0) {
+                var i = 1;
+                var x = "imagen";
+                this.cuidador.listaImagenes.forEach(function (item) {
+                    x = ( x + i).trim();
+                    document.getElementById(x).src = item.url;
+                    i++;
+                    x = "imagen";
+                });
 
             }
-        }
+            else {
+
+                var img = "";
+                for (i = 0; i < 4; i++) {
+                    img = {id: 0, url: ""};
+                    this.cuidador.listaImagenes.push(img);
+
+                }
+            }
 
         },
-        validarCantidadImagenes()
-        {
+        validarCantidadImagenes() {
             var flag = false;
             this.cuidador.listaImagenes.forEach(function (item) {
 
@@ -430,18 +422,18 @@ Vue.component('my-cuidador-edit', {
             return flag;
 
         },
-        inicilializarServicios (nombre)
-        { var flag = false;
+        inicilializarServicios(nombre) {
+            var flag = false;
 
-                     this.cuidador.listaServicios.forEach(function(item) {
+            this.cuidador.listaServicios.forEach(function (item) {
 
-                         if(item.nombre === nombre)
-                         //document.getElementById(item.nombre).checked = true;
-                         flag =  true;
+                if (item.nombre === nombre)
+                //document.getElementById(item.nombre).checked = true;
+                    flag = true;
 
-                     });
+            });
 
-                   return flag;
+            return flag;
 
         }
     }

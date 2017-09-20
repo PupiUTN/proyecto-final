@@ -221,8 +221,8 @@ let myLogin = Vue.component('my-login', {
                     this.getUserProfile();
                 })
                 .catch(error => {
-                    this.loginLoading = false;
-                    this.loginError = true;
+                        this.loginLoading = false;
+                        this.loginError = true;
                         console.log(error);
                     }
                 );

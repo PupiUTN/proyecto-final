@@ -90,7 +90,7 @@ Vue.component('my-perros-list', {
                     console.log(error);
                     sweetAlert("Oops...", "Error, ver consola", "error");
                     console.log("redirect");
-                    document.location.href="/";
+                    document.location.href = "/";
                 });
         },
         isUserLoggedIn(sessionInfo) {

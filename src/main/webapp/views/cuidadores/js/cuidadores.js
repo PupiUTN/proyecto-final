@@ -1,19 +1,19 @@
 let vm = new Vue({
     el: '#appVue',
     data: {
-        autocomplete:null,
+        autocomplete: null,
         url: "/api/cuidadores/search/",
-        encontrados:'',
+        encontrados: '',
         items: [],
         formPost: true,
-        map:null,
-        placeID:null,
-        placeLat:null,
-        placeLng:null,
-        placeName:null,
-        geoPlace:null,
-        dateFrom:null,
-        dateTo:null,
+        map: null,
+        placeID: null,
+        placeLat: null,
+        placeLng: null,
+        placeName: null,
+        geoPlace: null,
+        dateFrom: null,
+        dateTo: null,
 
 
     },
@@ -51,9 +51,9 @@ let vm = new Vue({
                 let place = autocomplete.getPlace();
                 if (place.geometry) {
                     vm.placeID = place.place_id;
-                    vm.placeLat=place.geometry.location.lat();
-                    vm.placeLng=place.geometry.location.lng();
-                    vm.placeName= input.value;
+                    vm.placeLat = place.geometry.location.lat();
+                    vm.placeLng = place.geometry.location.lng();
+                    vm.placeName = input.value;
 
 
                 } else {
@@ -88,7 +88,7 @@ let vm = new Vue({
                                 vm.placeLng = vm.geoPlace.geometry.location.lng;
                                 vm.placeName = vm.geoPlace.formatted_address;
                                 input.placeholder = vm.placeName;
-                                input.value='';
+                                input.value = '';
                                 vm.toggleLoader();
                             }
                         });
@@ -96,7 +96,7 @@ let vm = new Vue({
             }
             ;
         },
-        geolocate2 () {
+        geolocate2() {
             if (this.geoPlace != null) {
                 let input = document.getElementById('location');
                 this.placeID = this.geoPlace.place_id;
@@ -123,21 +123,21 @@ let vm = new Vue({
             if (this.placeID != null) {
                 //el placeholder de ciudad es la ciudad que le pasa el index
                 input.placeholder = this.getParameterByName('placeName');
-                this.placeName=input.placeholder;
+                this.placeName = input.placeholder;
                 //crea un objeto como los pueda leer google maps
-                this.placeLat=this.getParameterByName('lat');
-                this.placeLng=this.getParameterByName('lng');
-                var centro = new google.maps.LatLng(this.placeLat,this.placeLng);
+                this.placeLat = this.getParameterByName('lat');
+                this.placeLng = this.getParameterByName('lng');
+                var centro = new google.maps.LatLng(this.placeLat, this.placeLng);
                 this.map.setCenter(centro);
                 this.map.setZoom(12);
-                this.dateFrom=this.getParameterByName('from');
-                let consulta=this.url + '?ciudadPlaceId=' + this.placeID;
+                this.dateFrom = this.getParameterByName('from');
+                let consulta = this.url + '?ciudadPlaceId=' + this.placeID;
                 console.log(this.dateFrom);
-                if(this.dateFrom!=null){
-                    this.dateTo=this.getParameterByName('to');
-                    if(this.dateTo>=this.dateFrom){
-                        consulta+='&from='+this.dateFrom+
-                            '&to='+this.dateTo;
+                if (this.dateFrom != null) {
+                    this.dateTo = this.getParameterByName('to');
+                    if (this.dateTo >= this.dateFrom) {
+                        consulta += '&from=' + this.dateFrom +
+                            '&to=' + this.dateTo;
                         axios.get(consulta)
                             .then((response) => {
                                 console.log(this.placeID);
@@ -158,10 +158,10 @@ let vm = new Vue({
                                     sweetAlert("Oops...", "Error, ver consola", "error");
                                 }
                             );
-                    }else{
+                    } else {
                         sweetAlert("Oops...", "No seas hacker", "error");
                     }
-                }else{
+                } else {
 
                     axios.get(consulta)
                         .then((response) => {
@@ -179,9 +179,9 @@ let vm = new Vue({
 
                         })
                         .catch(error => {
-                            console.log(error);
-                            sweetAlert("Oops...", "Error, ver consola", "error");
-                        }
+                                console.log(error);
+                                sweetAlert("Oops...", "Error, ver consola", "error");
+                            }
                         );
                 }
             } else {
@@ -201,27 +201,27 @@ let vm = new Vue({
         //al presionar el boton buscar, recarga la pagina con los datos nuevos
         buscar() {
             if (this.placeID != null) {
-                let href= "/views/cuidadores/lista-cuidadores.html?placeName=" + this.placeName +
+                let href = "/views/cuidadores/lista-cuidadores.html?placeName=" + this.placeName +
                     "&placeID=" + this.placeID +
                     "&lat=" + this.placeLat +
                     "&lng=" + this.placeLng;
                 //con el datapicker los datos no se "bindean" en el dom...
-                this.dateFrom= document.getElementById("dateFrom").value;
+                this.dateFrom = document.getElementById("dateFrom").value;
                 this.dateTo = document.getElementById("dateTo").value;
                 console.log(this.dateFrom);
                 console.log(this.dateTo);
-                if(this.dateFrom!=''){
-                    if(this.dateTo!=''){
-                    if(this.dateTo>=this.dateFrom){
-                        href+="&from=" + this.dateFrom +
-                            "&to="+this.dateTo;
-                    }else{
-                        sweetAlert("Oops...", "La fecha hasta debe ser mayor a la desde", "error");
-                        this.dateTo='';
-                        return;
+                if (this.dateFrom != '') {
+                    if (this.dateTo != '') {
+                        if (this.dateTo >= this.dateFrom) {
+                            href += "&from=" + this.dateFrom +
+                                "&to=" + this.dateTo;
+                        } else {
+                            sweetAlert("Oops...", "La fecha hasta debe ser mayor a la desde", "error");
+                            this.dateTo = '';
+                            return;
 
-                    }
-                }else{
+                        }
+                    } else {
                         sweetAlert("Oops...", "Debe ingresar una fecha hasta", "error");
                         return;
                     }
@@ -237,11 +237,11 @@ let vm = new Vue({
             }
         },
         //añade los marcadores al mapa
-        mostrarEnMapa(){
-            if(this.items!=null&&this.items.length>0){
-                if(this.items.length>1){
+        mostrarEnMapa() {
+            if (this.items != null && this.items.length > 0) {
+                if (this.items.length > 1) {
                     var bounds = new google.maps.LatLngBounds();
-                    for(item of this.items) {
+                    for (item of this.items) {
                         var marker = new google.maps.Circle({
                             strokeColor: '#FF0000',
                             strokeOpacity: 0.8,
@@ -256,19 +256,19 @@ let vm = new Vue({
                         //extend the bounds to include each marker's position
                         var id = item.id;
                         var content =
-                            '<div id="bodyContent">'+
-                            '<a href="/views/cuidadores/cuidadores-perfil.html?id='+ id +'">'+
-                            '<h4>'+item.user.fullName+'</h4></a> '+
+                            '<div id="bodyContent">' +
+                            '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
+                            '<h4>' + item.user.fullName + '</h4></a> ' +
                             '</div>';
                         var infowindow = new google.maps.InfoWindow();
-                        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
-                            return function() {
+                        google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
+                            return function () {
                                 infowindow.setContent(content);
                                 infowindow.setPosition(marker.getCenter());
-                                infowindow.open(this.map,marker);
+                                infowindow.open(this.map, marker);
 
                             };
-                        })(marker,content,infowindow));
+                        })(marker, content, infowindow));
                         bounds.extend(marker.center);
 
                     }
@@ -276,7 +276,7 @@ let vm = new Vue({
                     //now fit the map to the newly inclusive bounds
                     this.map.fitBounds(bounds);
 
-                }else {
+                } else {
                     for (item of this.items) {
                         var marker = new google.maps.Circle({
                             strokeColor: '#FF0000',
@@ -307,12 +307,10 @@ let vm = new Vue({
                         })(marker, content, infowindow));
                     }
                 }
-                }
+            }
 
         },
     }
-
-
 
 
 });

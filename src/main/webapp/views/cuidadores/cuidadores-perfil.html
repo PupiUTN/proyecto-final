@@ -1,104 +1,105 @@
 <!DOCTYPE html>
-<head xmlns:v-on="http://www.w3.org/1999/xhtml" >
+<head xmlns:v-on="http://www.w3.org/1999/xhtml">
 
-<!-- Basic Page Needs
-================================================== -->
-<title>Listeo</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Basic Page Needs
+    ================================================== -->
+    <title>Listeo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<!-- CSS
-================================================== -->
-	<link rel="stylesheet" href="/assets/css/style.css">
-	<link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+    <script src="/js/pace.min.js"></script>
+    <link href="/css/pace-theme.css" rel="stylesheet"/>
+
 </head>
 
-<body xmlns:v-bind="http://www.w3.org/1999/xhtml" >
+<body xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <!-- Wrapper -->
 <div id="Wrapper">
-<div  id="appVue">
-<!-- Header Container
-================================================== -->
-	<header id="header-container" style="background-color: whitesmoke">
+    <div id="appVue">
+        <!-- Header Container
+        ================================================== -->
+        <header id="header-container" style="background-color: whitesmoke">
 
-		<!-- Header -->
-		<div id="header">
-			<div class="container">
+            <!-- Header -->
+            <div id="header">
+                <div class="container">
 
-				<!-- Left Side Content -->
-				<div class="left-side">
+                    <!-- Left Side Content -->
+                    <div class="left-side">
 
-					<!-- Logo -->
-					<div id="logo">
-						<a href="/views/index/index.html"><img src="/assets/images/logo.png" alt=""></a>
-					</div>
+                        <!-- Logo -->
+                        <div id="logo">
+                            <a href="/views/index/index.html"><img src="/assets/images/logo.png" alt=""></a>
+                        </div>
 
-					<div class="clearfix"></div>
-					<!-- Main Navigation / End -->
+                        <div class="clearfix"></div>
+                        <!-- Main Navigation / End -->
 
-				</div>
-				<!-- Left Side Content / End -->
-
-
-				<!-- Right Side Content / End -->
-				<div class="right-side">
-				<my-login></my-login>
-			</div>
-
-			</div>
-			<!-- Right Side Content / End -->
-
-		</div>
-
-		<!-- Header / End -->
-
-	</header>
-<div class="clearfix"></div>
-<!-- Header Container / End -->
-
-	 <!--<div class="row" >-->
-
-		<div id="spinner"></div>
-<!-- Slider
-================================================== -->
-		<div   class="listing-slider mfp-gallery-container margin-bottom-0"  id="ContenedorImagen" >
-
-			<!--<img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg0" />
-
-			<img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg1" />
-
-			<img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg2" />
-
-			<img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg3" />-->
+                    </div>
+                    <!-- Left Side Content / End -->
 
 
+                    <!-- Right Side Content / End -->
+                    <div class="right-side">
+                        <my-login></my-login>
+                    </div>
+
+                </div>
+                <!-- Right Side Content / End -->
+
+            </div>
+
+            <!-- Header / End -->
+
+        </header>
+        <div class="clearfix"></div>
+        <!-- Header Container / End -->
+
+        <!--<div class="row" >-->
+
+        <div id="spinner"></div>
+        <!-- Slider
+        ================================================== -->
+        <div class="listing-slider mfp-gallery-container margin-bottom-0" id="ContenedorImagen">
+
+            <!--<img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg0" />
+
+            <img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg1" />
+
+            <img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg2" />
+
+            <img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg3" />-->
 
 
-		</div>
+        </div>
 
 
-<!-- Content
-================================================== -->
-<div class="container">
-	<div class="row sticky-wrapper">
-		<div class="col-lg-8 col-md-8 padding-right-30">
+        <!-- Content
+        ================================================== -->
+        <div class="container">
+            <div class="row sticky-wrapper">
+                <div class="col-lg-8 col-md-8 padding-right-30">
 
-			<!-- Titlebar -->
-			<div id="titlebar" class="listing-titlebar">
-				<div class="avatar" ><img id="imagenAvatar" src="/img/logo.png" alt="" />
-				</div>
-				<div class="listing-titlebar-title">
+                    <!-- Titlebar -->
+                    <div id="titlebar" class="listing-titlebar">
+                        <div class="avatar"><img id="imagenAvatar" src="/img/logo.png" alt=""/>
+                        </div>
+                        <div class="listing-titlebar-title">
 
 
+                            <h2 style="margin-left: 100px;" id="nombre"> {{item.user.fullName}} <span
+                                    class="listing-tag">Cuidador</span></h2>
 
-					<h2     style="margin-left: 100px;" id="nombre"> {{item.user.fullName}} <span class="listing-tag">Cuidador</span></h2>
+                            <div class="card-image col s3 ">
 
-					<div class="card-image col s3 ">
+                            </div>
 
-					</div>
-
-					<input type="hidden" value="" name="test">
-					<span>
+                            <input type="hidden" value="" name="test">
+                            <span>
 
 							<a style=" margin-left: 100px;" href="#listing-location" class="listing-address">
 							<i class="fa fa-map-marker"></i>
@@ -111,337 +112,362 @@
 							Cantidad maxima de perros: {{item.cantidadMaxDePerros}}
 
 					</span>
-					<div class="star-rating" data-rating="5">
-						<div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
-					</div>
-				</div>
-			</div>
+                            <div class="star-rating" data-rating="5">
+                                <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
+                            </div>
+                        </div>
+                    </div>
 
-			<!-- Listing Nav -->
-			<div id="listing-nav" class="listing-nav-container">
-				<ul class="listing-nav">
-					<li><a href="#listing-overview" class="active">Sobre mi </a></li>
-					<li><a href="#listing-pricing-list">Precios</a></li>
-					<li><a href="#listing-location">Donde estoy </a></li>
-					<li><a href="#listing-reviews">Reviews</a></li>
-					<!--<li><a href="#add-review">Agrega una  Review</a></li>-->
-				</ul>
-			</div>
-			
-			<!-- Overview -->
-			<div id="listing-overview" class="listing-section">
+                    <!-- Listing Nav -->
+                    <div id="listing-nav" class="listing-nav-container">
+                        <ul class="listing-nav">
+                            <li><a href="#listing-overview" class="active">Sobre mi </a></li>
+                            <li><a href="#listing-pricing-list">Precios</a></li>
+                            <li><a href="#listing-location">Donde estoy </a></li>
+                            <li><a href="#listing-reviews">Reviews</a></li>
+                            <!--<li><a href="#add-review">Agrega una  Review</a></li>-->
+                        </ul>
+                    </div>
 
-				<!-- Description -->
+                    <!-- Overview -->
+                    <div id="listing-overview" class="listing-section">
 
-				<p>
-					<label>{{item.descripcion}}</label>
+                        <!-- Description -->
 
-					  <!--Soy el chico ideal para tu compañia, nada me agradara mas que poder jugar contigo y con tu dueña ( si esta buena )-->
-				</p>
+                        <p>
+                            <label>{{item.descripcion}}</label>
 
-				<!-- Amenities -->
-				<h3 class="listing-desc-headline">Servicios y Restricciones</h3>
-				<ul v-for =" servicio in item.listaServicios" class="listing-features checkboxes margin-top-0" style="">
-					<li style="width: 790px;"> {{servicio.nombre}}</li>
+                            <!--Soy el chico ideal para tu compañia, nada me agradara mas que poder jugar contigo y con tu dueña ( si esta buena )-->
+                        </p>
 
-				</ul>
-			</div>
+                        <!-- Amenities -->
+                        <h3 class="listing-desc-headline">Servicios y Restricciones</h3>
+                        <ul v-for=" servicio in item.listaServicios" class="listing-features checkboxes margin-top-0"
+                            style="">
+                            <li style="width: 790px;"> {{servicio.nombre}}</li>
 
-
-			<!-- Food Menu -->
-			<div id="listing-pricing-list" class="listing-section">
-				<h3 class="listing-desc-headline margin-top-70 margin-bottom-30">Precios</h3>
-
-				<div class="show-more">
-					<div class="pricing-list-container">
-						
-						<!-- Food List -->
-						<h4>Estadía</h4>
-						<ul>
-							<li>
-								<h5>Por día</h5>
-								<p>servicio por día</p>
-								<span style="color: forestgreen; font-size: x-large;"> <b>$ {{item.precioPorNoche}}</b></span>
-							</li>
+                        </ul>
+                    </div>
 
 
+                    <!-- Food Menu -->
+                    <div id="listing-pricing-list" class="listing-section">
+                        <h3 class="listing-desc-headline margin-top-70 margin-bottom-30">Precios</h3>
 
-						</ul>
+                        <div class="show-more">
+                            <div class="pricing-list-container">
 
-					</div>
-				</div>
-				<!--<a href="#" class="show-more-button" data-more-title="Show More" data-less-title="Show Less"><i class="fa fa-angle-down"></i></a>-->
-			</div>
-			<!-- Food Menu / End -->
-
-		
-			<!-- Location -->
-			<div id="listing-location" class="listing-section">
-				<h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Donde estoy</h3>
-
-				<div id="singleListingMap-container">
-					<div id="singleListingMap"  data-map-icon="im im-icon-Hamburger"></div>
-
-				</div>
-			</div>
-				
-			<!-- Reviews -->
-			<div id="listing-reviews" class="listing-section">
-				<h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Reviews <span>(12)</span></h3>
-
-				<div class="clearfix"></div>
-
-				<!-- Reviews -->
-				<section class="comments listing-reviews">
-
-					<ul>
-						<li>
-							<div class="avatar"><img src="../../assets/images/review-image-01.jpg" alt="" /></div>
-							<div class="comment-content"><div class="arrow-comment"></div>
-								<div class="comment-by">Fede Backhaus<span class="date">June 2017</span>
-									<div class="star-rating" data-rating="5"></div>
-								</div>
-								<p>Eres la mejor persona que conoci en mi vida, hurra  por ti, te escogeré siempre </p>
-								
-								<div class="review-images mfp-gallery-container">
-									<a href="../../assets/images/review-image-01.jpg"  class="mfp-gallery"><img src="../../assets/images/review-image-01.jpg" alt=""></a>
-								</div>
-								<a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review <span>12</span></a>
-							</div>
-						</li>
-
-						<li>
-							<div class="avatar"><img src="../../assets/images/review-image-01.jpg"  alt="" /> </div>
-							<div class="comment-content"><div class="arrow-comment"></div>
-								<div class="comment-by">John Doe<span class="date">May 2017</span>
-									<div class="star-rating" data-rating="4"></div>
-								</div>
-								<p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris.</p>
-								<a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review <span>2</span></a>
-							</div>
-						</li>
-
-						<li>
-							<div class="avatar"><img src="../../assets/images/review-image-01.jpg"  alt="" /></div>
-							<div class="comment-content"><div class="arrow-comment"></div>
-								<div class="comment-by">Kathy Brown<span class="date">June 2017</span>
-									<div class="star-rating" data-rating="5"></div>
-								</div>
-								<p>Morbi velit eros, sagittis in facilisis non, rhoncus et erat. Nam posuere tristique sem, eu ultricies tortor imperdiet vitae. Curabitur lacinia neque non metus</p>
-								
-								<div class="review-images mfp-gallery-container">
-									<a href="../../assets/images/review-image-02.jpg" class="mfp-gallery"><img src="../../assets/images/review-image-02.jpg" alt=""></a>
-									<a href="../../assets/images/review-image-03.jpg" class="mfp-gallery"><img src="../../assets/images/review-image-03.jpg" alt=""></a>
-								</div>
-								<a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review <span>4</span></a>
-							</div>
-						</li>
-
-						<li>
-							<div class="avatar"><img src=../../assets/images/review-image-01.jpg alt="" /> </div>
-							<div class="comment-content"><div class="arrow-comment"></div>
-								<div class="comment-by">John Doe<span class="date">May 2017</span>
-									<div class="star-rating" data-rating="5"></div>
-								</div>
-								<p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris.</p>
-								<a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review</a>
-							</div>
-
-						</li>
-					 </ul>
-				</section>
-
-				<!-- Pagination -->
-				<div class="clearfix"></div>
-				<div class="row">
-					<div class="col-md-12">
-						<!-- Pagination -->
-						<div class="pagination-container margin-top-30">
-							<nav class="pagination">
-								<ul>
-									<li><a href="#" class="current-page">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
-								</ul>
-							</nav>
-						</div>
-					</div>
-				</div>
-				<div class="clearfix"></div>
-				<!-- Pagination / End -->
-			</div>
+                                <!-- Food List -->
+                                <h4>Estadía</h4>
+                                <ul>
+                                    <li>
+                                        <h5>Por día</h5>
+                                        <p>servicio por día</p>
+                                        <span style="color: forestgreen; font-size: x-large;"> <b>$ {{item.precioPorNoche}}</b></span>
+                                    </li>
 
 
+                                </ul>
 
-		</div>
-
-
-		<!-- Sidebar
-		================================================== -->
-		<div class="col-lg-4 col-md-4 margin-top-75 sticky" style="position:relative;">
-
-			<!-- Book Now -->
-			<div class="boxed-widget">
-				<h3><i class="fa fa-calendar-check-o "></i> Fechas de Reserva </h3>
-				<div class="row with-forms  margin-top-0">
-
-					<div class="col-lg-6 col-md-12">
-						<label style=" margin-top: 12px;">Entrada </label>
-					</div>
-
-					<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-					<div class="col-lg-6 col-md-12">
-						<input type="text" v-model="fechaReservaDesde"  data-format=" Y-m-d" id="booking-date" data-lang="es" data-init-set="false"
-							   data-large-mode="true" data-large-default="true" data-min-year="2017"
-							   data-max-year="2020" data-lock="from">
-					</div>
-
-				</div>
-				<div class="row with-forms  margin-top-0">
-
-					<div class="col-lg-6 col-md-12">
-						<label style=" margin-top: 12px;">Salida </label>
-					</div>
-					<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-					<div class="col-lg-6 col-md-12">
-
-						<input type="text" v-model="fechaReservaHasta"   style="text-align: center; font-size: 16px; font-weight: 600"  data-format="Y-m-d" id="booking-date2" data-lang="es"
-							   data-init-set="false"
-							   data-large-mode="true" data-large-default="true" data-min-year="2017"
-							   data-max-year="2020" data-lock="from">
-					</div>
+                            </div>
+                        </div>
+                        <!--<a href="#" class="show-more-button" data-more-title="Show More" data-less-title="Show Less"><i class="fa fa-angle-down"></i></a>-->
+                    </div>
+                    <!-- Food Menu / End -->
 
 
-				</div>
-				<!-- progress button animation handled via custom.js -->
-				<button class="progress-button button fullwidth margin-top-5" v-on:click="hrerReserva"><span>Reservá ahora </span></button>
-			</div>
-			<!-- Book Now / End -->
+                    <!-- Location -->
+                    <div id="listing-location" class="listing-section">
+                        <h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Donde estoy</h3>
+
+                        <div id="singleListingMap-container">
+                            <div id="singleListingMap" data-map-icon="im im-icon-Hamburger"></div>
+
+                        </div>
+                    </div>
+
+                    <!-- Reviews -->
+                    <div id="listing-reviews" class="listing-section">
+                        <h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Reviews <span>(12)</span></h3>
+
+                        <div class="clearfix"></div>
+
+                        <!-- Reviews -->
+                        <section class="comments listing-reviews">
+
+                            <ul>
+                                <li>
+                                    <div class="avatar"><img src="../../assets/images/review-image-01.jpg" alt=""/>
+                                    </div>
+                                    <div class="comment-content">
+                                        <div class="arrow-comment"></div>
+                                        <div class="comment-by">Fede Backhaus<span class="date">June 2017</span>
+                                            <div class="star-rating" data-rating="5"></div>
+                                        </div>
+                                        <p>Eres la mejor persona que conoci en mi vida, hurra por ti, te escogeré
+                                            siempre </p>
+
+                                        <div class="review-images mfp-gallery-container">
+                                            <a href="../../assets/images/review-image-01.jpg" class="mfp-gallery"><img
+                                                    src="../../assets/images/review-image-01.jpg" alt=""></a>
+                                        </div>
+                                        <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review
+                                            <span>12</span></a>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="avatar"><img src="../../assets/images/review-image-01.jpg" alt=""/>
+                                    </div>
+                                    <div class="comment-content">
+                                        <div class="arrow-comment"></div>
+                                        <div class="comment-by">John Doe<span class="date">May 2017</span>
+                                            <div class="star-rating" data-rating="4"></div>
+                                        </div>
+                                        <p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim.
+                                            Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc
+                                            tellus sollicitudin mauris.</p>
+                                        <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review
+                                            <span>2</span></a>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="avatar"><img src="../../assets/images/review-image-01.jpg" alt=""/>
+                                    </div>
+                                    <div class="comment-content">
+                                        <div class="arrow-comment"></div>
+                                        <div class="comment-by">Kathy Brown<span class="date">June 2017</span>
+                                            <div class="star-rating" data-rating="5"></div>
+                                        </div>
+                                        <p>Morbi velit eros, sagittis in facilisis non, rhoncus et erat. Nam posuere
+                                            tristique sem, eu ultricies tortor imperdiet vitae. Curabitur lacinia neque
+                                            non metus</p>
+
+                                        <div class="review-images mfp-gallery-container">
+                                            <a href="../../assets/images/review-image-02.jpg" class="mfp-gallery"><img
+                                                    src="../../assets/images/review-image-02.jpg" alt=""></a>
+                                            <a href="../../assets/images/review-image-03.jpg" class="mfp-gallery"><img
+                                                    src="../../assets/images/review-image-03.jpg" alt=""></a>
+                                        </div>
+                                        <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review
+                                            <span>4</span></a>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="avatar"><img src=../../assets/images/review-image-01.jpg alt=""/></div>
+                                    <div class="comment-content">
+                                        <div class="arrow-comment"></div>
+                                        <div class="comment-by">John Doe<span class="date">May 2017</span>
+                                            <div class="star-rating" data-rating="5"></div>
+                                        </div>
+                                        <p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim.
+                                            Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc
+                                            tellus sollicitudin mauris.</p>
+                                        <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful
+                                            Review</a>
+                                    </div>
+
+                                </li>
+                            </ul>
+                        </section>
+
+                        <!-- Pagination -->
+                        <div class="clearfix"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- Pagination -->
+                                <div class="pagination-container margin-top-30">
+                                    <nav class="pagination">
+                                        <ul>
+                                            <li><a href="#" class="current-page">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <!-- Pagination / End -->
+                    </div>
 
 
-			<div class="boxed-widget opening-hours margin-top-35">
-
-				<h3><i class="im im-icon-Dog"></i>  Preferencias  de tamaños </h3>
-				<div  class="col-lg-6 col-md-5" style="width: 80px;">
-					<label style=" margin-top: 12px; width: 60px;">Hasta</label>
-				</div>
+                </div>
 
 
-				<div class="col-lg-6 col-md-12">
-					<img  id="imgTamañoPerro" alt="" >
-					<label style=" margin-left: 30px;"> {{item.tamaño}} </label>
-				</div>
+                <!-- Sidebar
+                ================================================== -->
+                <div class="col-lg-4 col-md-4 margin-top-75 sticky" style="position:relative;">
+
+                    <!-- Book Now -->
+                    <div class="boxed-widget">
+                        <h3><i class="fa fa-calendar-check-o "></i> Fechas de Reserva </h3>
+                        <div class="row with-forms  margin-top-0">
+
+                            <div class="col-lg-6 col-md-12">
+                                <label style=" margin-top: 12px;">Entrada </label>
+                            </div>
+
+                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+                            <div class="col-lg-6 col-md-12">
+                                <input type="text" v-model="fechaReservaDesde" data-format=" Y-m-d" id="booking-date"
+                                       data-lang="es" data-init-set="false"
+                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
+                                       data-max-year="2020" data-lock="from">
+                            </div>
+
+                        </div>
+                        <div class="row with-forms  margin-top-0">
+
+                            <div class="col-lg-6 col-md-12">
+                                <label style=" margin-top: 12px;">Salida </label>
+                            </div>
+                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+                            <div class="col-lg-6 col-md-12">
+
+                                <input type="text" v-model="fechaReservaHasta"
+                                       style="text-align: center; font-size: 16px; font-weight: 600" data-format="Y-m-d"
+                                       id="booking-date2" data-lang="es"
+                                       data-init-set="false"
+                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
+                                       data-max-year="2020" data-lock="from">
+                            </div>
 
 
-			</div>
-
-			<!-- Contact -->
-			<div class="boxed-widget margin-top-35">
-				<h3><i class="sl sl-icon-pin"></i> Contacto</h3>
-
-
-				<!-- Reply to review popup -->
-				<div id="small-dialog" class="zoom-anim-dialog mfp-hide">
-					<div class="small-dialog-header">
-						<h3>Enviar Pregunta</h3>
-					</div>
-					<div class="message-reply margin-top-0">
-						<textarea cols="40" rows="3" placeholder="Tu pregunta"> </textarea>
-						<button class="button">Enviar</button>
-					</div>
-				</div>
-
-				<a href="#small-dialog" class="send-message-to-owner button popup-with-zoom-anim"><i class="sl sl-icon-envelope-open"></i> Envia tu Pregunta </a>
-			</div>
-			<!-- Contact / End-->
-			
+                        </div>
+                        <!-- progress button animation handled via custom.js -->
+                        <button class="progress-button button fullwidth margin-top-5" v-on:click="hrerReserva"><span>Reservá ahora </span>
+                        </button>
+                    </div>
+                    <!-- Book Now / End -->
 
 
-			<!-- Share / Like -->
-			<div class="listing-share margin-top-40 margin-bottom-40 no-border">
+                    <div class="boxed-widget opening-hours margin-top-35">
+
+                        <h3><i class="im im-icon-Dog"></i> Preferencias de tamaños </h3>
+                        <div class="col-lg-6 col-md-5" style="width: 80px;">
+                            <label style=" margin-top: 12px; width: 60px;">Hasta</label>
+                        </div>
 
 
-					<!-- Share Buttons -->
-					<ul class="share-buttons margin-top-40 margin-bottom-0">
-						<li><a class="fb-share" href="#"><i class="fa fa-facebook"></i> Share</a></li>
-						<li><a class="twitter-share" href="#"><i class="fa fa-twitter"></i> Tweet</a></li>
-						<li><a class="gplus-share" href="#"><i class="fa fa-google-plus"></i> Share</a></li>
-						<!-- <li><a class="pinterest-share" href="#"><i class="fa fa-pinterest-p"></i> Pin</a></li> -->
-					</ul>
-					<div class="clearfix"></div>
-			</div>
-
-		</div>
-		<!-- Sidebar / End -->
-
-	</div>
-</div>
+                        <div class="col-lg-6 col-md-12">
+                            <img id="imgTamañoPerro" alt="">
+                            <label style=" margin-left: 30px;"> {{item.tamaño}} </label>
+                        </div>
 
 
+                    </div>
 
-		<!-- Footer
+                    <!-- Contact -->
+                    <div class="boxed-widget margin-top-35">
+                        <h3><i class="sl sl-icon-pin"></i> Contacto</h3>
+
+
+                        <!-- Reply to review popup -->
+                        <div id="small-dialog" class="zoom-anim-dialog mfp-hide">
+                            <div class="small-dialog-header">
+                                <h3>Enviar Pregunta</h3>
+                            </div>
+                            <div class="message-reply margin-top-0">
+                                <textarea cols="40" rows="3" placeholder="Tu pregunta"> </textarea>
+                                <button class="button">Enviar</button>
+                            </div>
+                        </div>
+
+                        <a href="#small-dialog" class="send-message-to-owner button popup-with-zoom-anim"><i
+                                class="sl sl-icon-envelope-open"></i> Envia tu Pregunta </a>
+                    </div>
+                    <!-- Contact / End-->
+
+
+                    <!-- Share / Like -->
+                    <div class="listing-share margin-top-40 margin-bottom-40 no-border">
+
+
+                        <!-- Share Buttons -->
+                        <ul class="share-buttons margin-top-40 margin-bottom-0">
+                            <li><a class="fb-share" href="#"><i class="fa fa-facebook"></i> Share</a></li>
+                            <li><a class="twitter-share" href="#"><i class="fa fa-twitter"></i> Tweet</a></li>
+                            <li><a class="gplus-share" href="#"><i class="fa fa-google-plus"></i> Share</a></li>
+                            <!-- <li><a class="pinterest-share" href="#"><i class="fa fa-pinterest-p"></i> Pin</a></li> -->
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                </div>
+                <!-- Sidebar / End -->
+
+            </div>
+        </div>
+
+
+        <!-- Footer
         ================================================== -->
-		<div id="footer" class="margin-top-15">
-			<!-- Main -->
-			<div class="container">
-				<div class="row">
-					<div class="col-md-5 col-sm-6">
-						<img class="footer-logo" src="/assets/images/logo.png" alt="">
-						<br><br>
-						<p> Olvidate de la perrera! Pupi es el principal servicio en línea que conecta a los dueños de mascotas con más de 20,000 cuidadores de confianza en toda Argentina, haciendo que tu y tu amigo peludo tengan toda la tranquilidad que merecen.</p>
-					</div>
+        <div id="footer" class="margin-top-15">
+            <!-- Main -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 col-sm-6">
+                        <img class="footer-logo" src="/assets/images/logo.png" alt="">
+                        <br><br>
+                        <p> Olvidate de la perrera! Pupi es el principal servicio en línea que conecta a los dueños de
+                            mascotas con más de 20,000 cuidadores de confianza en toda Argentina, haciendo que tu y tu
+                            amigo peludo tengan toda la tranquilidad que merecen.</p>
+                    </div>
 
-					<div class="col-md-4 col-sm-6 ">
-						<h4>Helpful Links</h4>
-						<ul class="footer-links">
-							<li><a href="#">Login</a></li>
-							<li><a href="#">Hazte Cuidador</a></li>
-							<li><a href="#">Mi Cuenta</a></li>
-							<li><a href="#">Terminos y condiciones de uso </a></li>
-						</ul>
+                    <div class="col-md-4 col-sm-6 ">
+                        <h4>Helpful Links</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Login</a></li>
+                            <li><a href="#">Hazte Cuidador</a></li>
+                            <li><a href="#">Mi Cuenta</a></li>
+                            <li><a href="#">Terminos y condiciones de uso </a></li>
+                        </ul>
 
-						<div class="clearfix"></div>
-					</div>
+                        <div class="clearfix"></div>
+                    </div>
 
-					<div class="col-md-3  col-sm-12">
-						<h4>Contactanos</h4>
-						<div class="text-widget">
-							<span>12345 evasio garrone</span> <br>
-							Phone: <span>(351) 123-456 </span><br>
-							E-Mail:<span> <a href="#">pupi@gmail.com</a> </span><br>
-						</div>
+                    <div class="col-md-3  col-sm-12">
+                        <h4>Contactanos</h4>
+                        <div class="text-widget">
+                            <span>12345 evasio garrone</span> <br>
+                            Phone: <span>(351) 123-456 </span><br>
+                            E-Mail:<span> <a href="#">pupi@gmail.com</a> </span><br>
+                        </div>
 
-						<ul class="social-icons margin-top-20">
-							<li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-							<li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
-							<li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
-							<li><a class="vimeo" href="#"><i class="icon-vimeo"></i></a></li>
-						</ul>
+                        <ul class="social-icons margin-top-20">
+                            <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
+                            <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
+                            <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
+                            <li><a class="vimeo" href="#"><i class="icon-vimeo"></i></a></li>
+                        </ul>
 
-					</div>
+                    </div>
 
-				</div>
+                </div>
 
-				<!-- Copyright -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="copyrights">© 2017 pupi. Todos los derechos reservados.</div>
-					</div>
-				</div>
+                <!-- Copyright -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="copyrights">© 2017 pupi. Todos los derechos reservados.</div>
+                    </div>
+                </div>
 
-			</div>
+            </div>
 
-		</div>
-		<!-- Footer / End -->
-
-
-<!-- Back To Top Button -->
-<div id="backtotop"><a href="#"></a></div>
+        </div>
+        <!-- Footer / End -->
 
 
-<!--</div>-->
-<!-- Wrapper / End -->
-</div>
+        <!-- Back To Top Button -->
+        <div id="backtotop"><a href="#"></a></div>
+
+
+        <!--</div>-->
+        <!-- Wrapper / End -->
+    </div>
 </div>
 
 <!-- Scripts
@@ -466,7 +492,7 @@
 
 <script src="/js/vue.js"></script>
 <script src="/js/axios.min.js"></script>
-<link rel="stylesheet" href="/css/sweetalert.css" />
+<link rel="stylesheet" href="/css/sweetalert.css"/>
 <script src="/js/sweetalert.min.js"></script>
 <script type="text/javascript" src="/views/security/js/vue-login.js"></script>
 <script src="js/cuidadores-perfil/cuidadores-perfil.js"></script>
@@ -476,32 +502,25 @@
 <!--<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js."></script>-->
 
 
-
-
-
 <style>
 
 
-	#spinner {
-		/*http://samherbert.net/svg-loaders/*/
-		background-image: url('/img/spinner.svg');
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background-repeat: no-repeat;
-		background-color: rgba(0, 0, 0, 0.3);
-		z-index: 999;
-		background-position: center;
-	}
-
-
+    #spinner {
+        /*http://samherbert.net/svg-loaders/*/
+        background-image: url('/img/spinner.svg');
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-repeat: no-repeat;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 999;
+        background-position: center;
+    }
 
 
 </style>
-
-
 
 
 </body>

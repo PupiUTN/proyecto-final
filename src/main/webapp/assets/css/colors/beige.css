@@ -6,14 +6,14 @@ div.datedropper .pick-submit,
 div.datedropper .pick-lg-b .pick-sl:before,
 div.datedropper .pick-m,
 div.datedropper .pick-lg-h {
-  background-color: #bfa980 !important;
+    background-color: #bfa980 !important;
 }
 
 div.datedropper .pick-y.pick-jump,
 div.datedropper .pick li span,
 div.datedropper .pick-lg-b .pick-wke,
 div.datedropper .pick-btn {
-  color: #bfa980 !important;
+    color: #bfa980 !important;
 }
 
 .style-2 .trigger.active a,
@@ -50,7 +50,7 @@ a.button.border.white:hover,
 .icon-box-2 i,
 a.button.border,
 .style-2 .ui-accordion .ui-accordion-header:hover,
-.style-2 .trigger a:hover ,
+.style-2 .trigger a:hover,
 .plan.featured .listing-badges .featured,
 .list-4 li:before,
 .list-3 li:before,
@@ -68,7 +68,6 @@ a.button.border,
 .headline span i {
     color: #bfa980;
 }
-
 
 .category-small-box:hover,
 .pricing-list-container h4:after,
@@ -94,7 +93,7 @@ mark.color,
 .style-5 .tabs-nav li.active a,
 .dashboard-list-box .button.gray:hover,
 .change-photo-btn:hover,
-.dashboard-list-box  a.rate-review:hover,
+.dashboard-list-box a.rate-review:hover,
 input:checked + .slider,
 .add-pricing-submenu.button:hover,
 .add-pricing-list-item.button:hover,
@@ -110,9 +109,8 @@ input:checked + .slider,
     background-color: #bfa980;
 }
 
-
 .rangeslider__fill,
-span.blog-item-tag ,
+span.blog-item-tag,
 .testimonial-carousel .slick-slide.slick-active .testimonial-box,
 .listing-item-container.list-layout span.tag,
 .tip,
@@ -120,8 +118,9 @@ span.blog-item-tag ,
     background: #bfa980;
 }
 
-
-.rangeslider__handle { border-color: #bfa980; }
+.rangeslider__handle {
+    border-color: #bfa980;
+}
 
 .layout-switcher a.active {
     color: #bfa980;
@@ -133,12 +132,10 @@ span.blog-item-tag ,
     color: #bfa980;
 }
 
-
 .listing-slider .slick-next:hover,
 .listing-slider .slick-prev:hover {
     background-color: #bfa980;
 }
-
 
 .listing-nav-container.cloned .listing-nav li:first-child a.active,
 .listing-nav-container.cloned .listing-nav li:first-child a:hover,
@@ -154,7 +151,9 @@ span.blog-item-tag ,
     border-color: #bfa980;
 }
 
-.sidebar-textbox ul.contact-details li a { color: #bfa980; }
+.sidebar-textbox ul.contact-details li a {
+    color: #bfa980;
+}
 
 a.button.border {
     color: #bfa980;
@@ -180,17 +179,19 @@ a.button.border {
 
 .info-box {
     border-top: 2px solid #bfa980;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
     background-color: #bfa980;
     color: #bfa980;
 }
 
 .info-box.no-border {
-    background: linear-gradient(to bottom, rgba(255,255,255,0.96), rgba(255,255,255,0.93));
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.93));
     background-color: #bfa980;
 }
 
-.tabs-nav li a:hover { border-color: #bfa980; }
+.tabs-nav li a:hover {
+    border-color: #bfa980;
+}
 
 .tabs-nav li a:hover,
 .tabs-nav li.active a {
@@ -209,16 +210,27 @@ a.button.border {
     border-color: #bfa980;
 }
 
-.listing-item-container.compact .listing-item-content span.tag { background-color: #bfa980; }
+.listing-item-container.compact .listing-item-content span.tag {
+    background-color: #bfa980;
+}
 
 .dashboard-nav ul li.active,
-.dashboard-nav ul li:hover { border-color: #bfa980; }
+.dashboard-nav ul li:hover {
+    border-color: #bfa980;
+}
 
-.dashboard-list-box .comment-by-listing a:hover { color: #bfa980; }
+.dashboard-list-box .comment-by-listing a:hover {
+    color: #bfa980;
+}
 
-.opening-day:hover h5 { color: #bfa980 !important; }
+.opening-day:hover h5 {
+    color: #bfa980 !important;
+}
 
-.map-box h4 a:hover { color: #bfa980; }
+.map-box h4 a:hover {
+    color: #bfa980;
+}
+
 .infoBox-close:hover {
     background-color: #bfa980;
     -webkit-text-stroke: 1px #bfa980;
@@ -248,19 +260,21 @@ a.button.border {
 }
 
 .custom-zoom-in:hover:before,
-.custom-zoom-out:hover:before  { -webkit-text-stroke: 1px #bfa980;  }
+.custom-zoom-out:hover:before {
+    -webkit-text-stroke: 1px #bfa980;
+}
 
 .category-box-btn:hover {
     background-color: #bfa980;
     border-color: #bfa980;
-} 
+}
 
 .message-bubble.me .message-text {
     color: #bfa980;
-    background-color: rgba(191,169,128,0.05);
+    background-color: rgba(191, 169, 128, 0.05);
 }
 
 .message-bubble.me .message-text:before {
-    color: rgba(191,169,128,0.05);
+    color: rgba(191, 169, 128, 0.05);
 }
 
