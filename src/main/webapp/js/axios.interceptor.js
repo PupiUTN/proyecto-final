@@ -2,10 +2,13 @@
 axios.interceptors.request.use(function (config) {
     // Do something before request is sent
     $('.pace').show();
+    console.log("------ $('.pace').show();");
     return config;
 }, function (error) {
-    $('.pace').show();
     // Do something with request error
+    $('.pace').show();
+    console.log("------ error axios interceptors");
+    sweetAlert("Oops...", "Error, ver consola", "error");
     return Promise.reject(error);
 });
 
@@ -13,9 +16,12 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (response) {
     // Do something with response data
     $('.pace').hide();
+    console.log("------ $('.pace').hide();");
     return response;
 }, function (error) {
     // Do something with response error
     $('.pace').hide();
+    console.log("------ error axios interceptors");
+    sweetAlert("Oops...", "Error, ver consola", "error");
     return Promise.reject(error);
 });
