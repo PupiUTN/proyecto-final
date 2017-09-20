@@ -1,7 +1,7 @@
 Vue.component('my-perros-list', {
     template: `
 <div>       
-        <div id="spinner"></div>
+        
         <!-- Titlebar -->
 		<div id="titlebar">
 			<div class="row">
@@ -79,7 +79,7 @@ Vue.component('my-perros-list', {
     },
     methods: {
         toggleLoader() {
-            $('#spinner').toggle();
+            Pace.restart;
         },
         getUserInfo() {
             axios.get("/api/user/me")

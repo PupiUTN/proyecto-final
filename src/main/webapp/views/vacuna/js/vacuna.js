@@ -15,7 +15,7 @@ let vm = new Vue({
     },
     methods: {
         toggleLoader() {
-            $('#spinner').toggle();
+            Pace.restart;
         },
         getCuidador() {
             axios.get(this.url)

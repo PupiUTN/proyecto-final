@@ -22,7 +22,7 @@ let vm = new Vue({
     },
     methods: {
         toggleLoader() {
-            $('#spinner').toggle();
+            Pace.restart;
         },
         initDate() {
             $('#dateFrom').dateDropper();

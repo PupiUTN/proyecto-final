@@ -216,21 +216,9 @@ Vue.component('my-cuidador-edit', {
     },
     methods: {
         toggleLoader() {
-            // $('#spinner').toggle();
-            document.getElementById("spinner").toggle();
+            Pace.restart;
         },
-        // isAuthenticatedMethod(isAuthenticated) {
-        //     // TRIGGER MOUNTED METHOD
-        //     this.isAuthenticated = isAuthenticated;
-        //     if (!this.isAuthenticated) {
-        //         var childMylogin = this.$refs.mylogin;
-        //         childMylogin.openLoginPopUp();
-        //     } else {
-        //
-        //         this.getUserInfo();
-        //
-        //     }
-        // },
+
         BuscarServicios() {
 
             //  axios.get("/api/cuidadores/searchServicios/")
@@ -338,7 +326,7 @@ Vue.component('my-cuidador-edit', {
                     this.descripcion = this.cuidador.descripcion;
                     this.inicializarImagenes();
 
-                    $('#spinner').toggle();
+                    Pace.restart;
                     // this.formPost = false;
 
                 })
@@ -371,10 +359,10 @@ Vue.component('my-cuidador-edit', {
 
             var urlCiudador = "/api/cuidadores/";
             var payload = jQuery.extend(true, {}, this.cuidador);
-            $('#spinner').toggle();
+            Pace.restart;
             axios.put(urlCiudador + this.cuidador.id, payload)
                 .then((response) => {
-                    $('#spinner').toggle();
+                    Pace.restart;
                     sweetAlert("Editado!", "despcripción editada exitosamente.", "success");
                     console.log(response);
                     //  window.location = "http://localhost:8080/views/cuidadores/cuidadores-perfil.html?id="+ this.cuidador.id ;

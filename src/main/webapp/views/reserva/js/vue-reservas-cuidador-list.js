@@ -1,7 +1,7 @@
 Vue.component('my-reservas-cuidador-list', {
     template: `
 <div>       
-<div id="spinner"></div>
+
 <!-- Titlebar -->
 <div id="titlebar">
     <div class="row">
@@ -120,7 +120,7 @@ Vue.component('my-reservas-cuidador-list', {
     },
     methods: {
         toggleLoader() {
-            $('#spinner').hide();
+            Pace.restart;
         },
         getCuidadorReservas() {
             axios.get('/api/cuidador/me/reservas?status=' + this.status)
@@ -148,7 +148,6 @@ Vue.component('my-reservas-cuidador-list', {
                 .catch(error => {
                         console.log(error);
                         sweetAlert("Oops...", "Error, ver consola", "error");
-
                     }
                 );
         },

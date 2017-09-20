@@ -1,7 +1,7 @@
 let myPerrosRegistrar = Vue.component('my-perros-registrar', {
     template: `
 <div>
-    <div id="spinner"></div>
+    
     <!-- Titlebar -->
     <div id="titlebar">
         <div class="row">
@@ -96,7 +96,7 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
     },
     methods: {
         toggleLoader() {
-            $('#spinner').toggle();
+            Pace.restart;
         },
         upload(formData) {
             axios.post('/api/file/', formData)

@@ -1,7 +1,7 @@
 Vue.component('my-reservas-user-list', {
     template: `
 <div>       
-        <div id="spinner"></div>
+        
 
 		<!-- Titlebar -->
 		<div id="titlebar">
@@ -100,7 +100,7 @@ Vue.component('my-reservas-user-list', {
     },
     methods: {
         toggleLoader() {
-            $('#spinner').hide();
+            Pace.restart;
         },
         getUserReservas() {
             axios.get('/api/user/me/reservas?status=' + this.status)
