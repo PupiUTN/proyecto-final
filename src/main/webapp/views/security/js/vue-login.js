@@ -186,6 +186,8 @@ let myLogin = Vue.component('my-login', {
     },
     methods: {
         getUserProfile() {
+            var myInterceptor = axios.interceptors.response.use(function () {/*...*/});
+            axios.interceptors.response.eject(myInterceptor);
             axios.get(this.meUrl)
                 .then((response) => {
                     console.log(response.data);
@@ -199,9 +201,7 @@ let myLogin = Vue.component('my-login', {
                 .catch(error => {
                         if (error.response.status == 401) {
                             this.isAuthenticated = false;
-
                             console.log("usuario no logeado");
-
                         } else {
                             console.log(error);
                         }
