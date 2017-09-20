@@ -22,7 +22,7 @@ public class Cuidador implements Serializable {
     private float precioPorNoche;
     @OneToOne
     private User user;
-    @OneToMany
+    @ManyToMany
     private List<Servicio> listaServicios;
     @OneToOne
     private  Tamaño tamaño;
