@@ -119,9 +119,7 @@ Vue.component('my-reservas-cuidador-list', {
         this.getCuidadorReservas();
     },
     methods: {
-        toggleLoader() {
-            Pace.start;
-        },
+
         getCuidadorReservas() {
             axios.get('/api/cuidador/me/reservas?status=' + this.status)
                 .then((response) => {
@@ -129,7 +127,7 @@ Vue.component('my-reservas-cuidador-list', {
                     if (this.reservas.length === 0) {
                         this.message = "Actualmente no tenés ninguna reserva.";
                     }
-                    this.toggleLoader();
+
                 })
                 .catch(error => {
                     console.log(error);
@@ -137,11 +135,11 @@ Vue.component('my-reservas-cuidador-list', {
                 });
         },
         cancelarReserva(index) {
-            this.toggleLoader();
+
             var id = this.reservas[index].id;
             axios.put('/api/cuidador/me/reservas/' + id + '/cancelarReserva')
                 .then((response) => {
-                    this.toggleLoader();
+
                     sweetAlert("Cancelada", "Tu reserva a sido cancelada", "success");
                     Vue.delete(this.reservas, index);
                 })
@@ -152,11 +150,11 @@ Vue.component('my-reservas-cuidador-list', {
                 );
         },
         ConfirmarReserva(index) {
-            this.toggleLoader();
+
             var id = this.reservas[index].id;
             axios.put('/api/cuidador/me/reservas/' + id + '/confirmarReserva')
                 .then((response) => {
-                    this.toggleLoader();
+
                     sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped page te confirmaremos la reserva.", "success");
                     Vue.delete(this.reservas, index);
                 })

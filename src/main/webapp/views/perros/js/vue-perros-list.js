@@ -78,9 +78,7 @@ Vue.component('my-perros-list', {
         this.getUserInfo();
     },
     methods: {
-        toggleLoader() {
-            Pace.start;
-        },
+
         getUserInfo() {
             axios.get("/api/user/me")
                 .then((sessionInfo) => {
@@ -110,7 +108,7 @@ Vue.component('my-perros-list', {
                     if (this.dogs.length === 0) {
                         this.message = "Actualmente no tenés ningún perro registrado. Agrega el primero!";
                     }
-                    this.toggleLoader();
+
                 })
                 .catch(error => {
                     console.log(error);

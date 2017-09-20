@@ -17,13 +17,11 @@ let vm = new Vue({
         this.initAutocomplete();
         // this.initGeolocate();
 
-        this.toggleLoader();
+
 
     },
     methods: {
-        toggleLoader() {
-            Pace.start;
-        },
+
         initDate() {
             $('#dateFrom').dateDropper();
             $('#dateTo').dateDropper();

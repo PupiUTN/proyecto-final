@@ -27,9 +27,7 @@ let vm = new Vue({
     },
     methods: {
 
-        toggleLoader() {
-            Pace.start;
-        },
+
         initDate() {
             $('#dateFrom').dateDropper();
             $('#dateTo').dateDropper();
@@ -150,7 +148,7 @@ let vm = new Vue({
                                     this.encontrados += ' Resultados Encontrados';
                                 }
                                 this.mostrarEnMapa();
-                                this.toggleLoader();
+
 
                             })
                             .catch(error => {
@@ -175,7 +173,7 @@ let vm = new Vue({
                                 this.encontrados += ' Resultados Encontrados';
                             }
                             this.mostrarEnMapa();
-                            this.toggleLoader();
+
 
                         })
                         .catch(error => {
@@ -185,7 +183,7 @@ let vm = new Vue({
                         );
                 }
             } else {
-                this.toggleLoader();
+
             }
         },
         //obitene los parametros de la url... copiado de internet

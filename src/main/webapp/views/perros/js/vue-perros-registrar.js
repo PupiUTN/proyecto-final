@@ -95,9 +95,7 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
         this.bindDatePickerWithVue();
     },
     methods: {
-        toggleLoader() {
-            Pace.start;
-        },
+
         upload(formData) {
             axios.post('/api/file/', formData)
                 .then((response) => {
@@ -138,7 +136,7 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
                 });
         },
         saveDog() {
-            this.toggleLoader();
+
             this.perro.user = this.user;
             this.perro.listaVacunas = [];
             this.perro.tamaño = this.tamaño;
@@ -152,7 +150,7 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
             if (this.perro.birthday === undefined) {
                 this.perro.birthday = "10-10-2016";
             }
-            
+
             axios.post(this.url + this.user.id + "/perros", this.perro)
                 .then((response) => {
 
@@ -194,11 +192,11 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
         getRazas() {
             console.log("getRazas() ");
 
-            this.toggleLoader();
+
             axios.get("/api/razas")
                 .then((response) => {
                     this.razas = response.data;
-                    this.toggleLoader();
+
                 })
                 .catch(error => {
                         console.log(error);
@@ -208,11 +206,11 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
         },
         getVacunas() {
             console.log("getVacunas()");
-            this.toggleLoader();
+
             axios.get("/api/vacunas")
                 .then((response) => {
                     this.vacunas = response.data;
-                    this.toggleLoader();
+
                 })
                 .catch(error => {
                         console.log(error);
@@ -222,11 +220,11 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
         },
         getTamaños() {
             console.log("getTamaños()");
-            // this.toggleLoader();
+            //
             axios.get("/api/tamaños")
                 .then((response) => {
                     this.sizes = response.data;
-                    this.toggleLoader();
+
                 })
                 .catch(error => {
                         console.log(error);

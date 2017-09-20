@@ -99,9 +99,7 @@ Vue.component('my-reservas-user-list', {
         this.getUserReservas();
     },
     methods: {
-        toggleLoader() {
-            Pace.start;
-        },
+
         getUserReservas() {
             axios.get('/api/user/me/reservas?status=' + this.status)
                 .then((response) => {
@@ -109,7 +107,7 @@ Vue.component('my-reservas-user-list', {
                     if (this.reservas.length === 0) {
                         this.message = "Actualmente no tenés ninguna reserva. Busca tu cuidador ideal!";
                     }
-                    this.toggleLoader();
+
                 })
                 .catch(error => {
                     console.log(error);
@@ -117,11 +115,11 @@ Vue.component('my-reservas-user-list', {
                 });
         },
         cancelarReserva(index) {
-            this.toggleLoader();
+
             var id = this.reservas[index].id;
             axios.put('/api/user/me/reservas/' + id + '/cancelarUsuario')
                 .then((response) => {
-                    this.toggleLoader();
+
                     sweetAlert("Cancelada", "Tu reserva a sido cancelada", "success");
                     Vue.delete(this.reservas, index);
                 })

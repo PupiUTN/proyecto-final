@@ -16,14 +16,12 @@ let vm = new Vue({
         this.getCuidador(this.url);
     },
     methods: {
-        toggleLoader() {
-            Pace.start;
-        },
+
         getCuidador() {
             axios.get(this.url)
                 .then((response) => {
                     this.items = response.data;
-                    this.toggleLoader();
+
                 })
                 .catch(error => {
                         console.log(error);
@@ -32,11 +30,11 @@ let vm = new Vue({
                 );
         },
         postItem() {
-            this.toggleLoader();
+
             var payload = jQuery.extend(true, {}, this.item); //copio el objeto a mandar porque despues lo edito
             axios.post(this.url, payload)
                 .then((response) => {
-                    this.toggleLoader();
+
                     console.log(response);
                     this.items.push(response.data); //agrego la respuesta asi no refresco la pagina
                     this.item.nombre = '';
@@ -50,11 +48,11 @@ let vm = new Vue({
                 );
         },
         editItem() {
-            this.toggleLoader();
+
             var payload = jQuery.extend(true, {}, this.item);
             axios.put(this.url + '/' + this.item.id, payload)
                 .then((response) => {
-                    this.toggleLoader();
+
                     this.items[this.item.index] = response.data;
                     sweetAlert("Editado!", "Raza editada exitosamente.", "success");
                     this.editItemButtonUndo();
@@ -75,11 +73,11 @@ let vm = new Vue({
 
         },
         deleteItem(index) {
-            this.toggleLoader();
+
             var id = this.items[index].id;
             axios.delete(this.url + '/' + id)
                 .then((response) => {
-                    this.toggleLoader();
+
                     sweetAlert("Deleted!", "Your imaginary file has been deleted.", "success");
                     Vue.delete(this.items, index);
                 })

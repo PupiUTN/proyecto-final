@@ -92,9 +92,7 @@ Vue.component('my-profile', {
         this.getUserInfo();
     },
     methods: {
-        toggleLoader() {
-            Pace.start;
-        },
+
         autocompleteAddress() {
             var componentForm = {
                 street_number: 'short_name',
@@ -152,7 +150,7 @@ Vue.component('my-profile', {
         upload(formData) {
             axios.post('/api/file/', formData)
                 .then((response) => {
-                    this.toggleLoader();
+
                     this.user.profileImageUrl = response.data;
                 })
                 .catch(error => {
@@ -176,7 +174,7 @@ Vue.component('my-profile', {
             var payload = jQuery.extend(true, {}, this.user);
             axios.put(this.url + this.user.id, payload)
                 .then((response) => {
-                    this.toggleLoader();
+
                     sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
                     console.log(response);
                 })

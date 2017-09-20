@@ -56,9 +56,7 @@ let vm = new Vue({
             this.getCuidador();
             this.getPerros();
         },
-        toggleLoader() {
-            Pace.start;
-        },
+
         getCuidador() {
             axios.get(this.urlCuidador + "/" + this.idCuidador)
                 .then((response) => {
@@ -94,7 +92,7 @@ let vm = new Vue({
                                 document.location.href = "/views/perros/perros.html";
                             });
                     }
-                    this.toggleLoader();
+
                 })
                 .catch(error => {
                         console.log(error);
