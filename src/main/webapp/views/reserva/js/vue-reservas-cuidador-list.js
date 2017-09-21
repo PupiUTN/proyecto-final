@@ -61,7 +61,7 @@ Vue.component('my-reservas-cuidador-list', {
                                 </div>
                             
                              <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
-                                    <a  style="  margin-top: 10px; color: blue;  border-color: blue; " href=/views/reserva/detalle-reserva.html?id=index"   class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver</a>
+                                    <a  style="  margin-top: 10px; color: blue;  border-color: blue; " href="/views/reserva/detalle-reserva.html?id=index"   class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver</a>
                                     
                                 </div>
                             </div>    

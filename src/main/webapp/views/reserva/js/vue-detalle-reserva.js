@@ -1,57 +1,103 @@
 Vue.component('my-detalle-reserva', {
     template: `
 <div>       
+<div id="footer">
+    <h2 class="text-center"> Detalles de la Reserva</h2>
+    <br>
+	<!-- Header -->
+	<div class="row">
+	 <div class="col-md-1"></div>
+		<div class="col-md-3">
+		<img id="foto_perro"  :src="reserva.perro.user.profileImageUrl" alt="">
+		</div>
 
-<!-- Titlebar -->
-<div id="titlebar">
-    <div class="row">
+		<div class="col-md-6">	
+
+			<p id="details" style="margin-left: 50%;">
+				<strong>estado:</strong> {{reserva.status}} <br>
+					<strong>fecha:</strong>  {{reserva.fechaTransaccion}} <br>
+				
+			</p>
+			<p id="details" style="margin-left: 50%;">
+				<strong>Usuario:</strong> {{reserva.perro.user.fullName}} <br>
+				
+				
+			</p>
+		</div>
+	</div>
+
+
+	<!-- Client & Supplier -->
+	<div class="row">
+		<div class="col-md-12">
+		<strong>Mensaje:</strong>
+			<h2>{{reserva.mensaje}}</h2>
+			
+		</div>
         <div class="col-md-12">
-             <div  v-if="status === 'CONFIRMATION_PENDING'">
-                    <h2>Quieren reservar Conmigo</h2>                
-             </div>
-              <div  v-if="status === 'CANCEL'">
-                    <h2>reservas rechazadas</h2>                
-             </div>
-              <div  v-if="status === 'ACCEPTED'">
-                    <h2> Mis reservas Confirmadas</h2>                
-             </div>
-            
-        </div>
-    </div>
-</div>
-<div class="row">
-    <!-- Listings -->
-    <div class="col-lg-12 col-md-12">
-        <div class="messages-container margin-top-0">
-            <div class="messages-inbox">
-            <h3>{{ mensaje}}</h3>
-            <ul>
-                <li v-for="(reserva, index) in reservas" style="margin-bottom: 5px;">
-                    <a v-bind:style="listColor">
-                        <div style=" top: 70px;" class="message-avatar"><img :src="reserva.perro.user.profileImageUrl" alt=""></div>
+		 
+			
+		</div>
+		<div class="col-md-6">	
+			<strong class="margin-bottom-5">Fecha inicio</strong>
+			<p> {{reserva.fechaInicio}}
+			</p>
+		</div>
 
-                        <div class="message-by">
-                            
-                            <div class="row">
-                                <div  v-bind:class="listClass">
-                                    <div class="message-by-headline">
-                                        <a href="www.pupi.com.ar" style="all: unset"><h5>{{ reserva.perro.user.fullName }} </h5></a>  
-                                    </div>
-                                    <div class="col-xs-12 col-md-10">                                        
-                                    <p><i> {{ reserva.mensaje}} </i></p>   
-                                 <p ><b>Perro: </b> {{ reserva.perro.nombre}}</p>  
-                                  </div>
-                                
-                                   </div>
-                                <div class="col-xs-12 col-md-1">
-                                    <p><b>Desde</b> </br>{{ reserva.fechaFin }}</p>
-                                </div>
-                                <div class="col-xs-12 col-md-1">
-                                    <p><b> Hasta </b> </br> {{ reserva.fechaFin }}</p>
-                                        
-                                 </div>
-                          
-                                    <div class="col-xs-12 col-md-3" v-if="reserva.status === 'CONFIRMATION_PENDING'">
+		<div class="col-md-6">	
+			<strong class="margin-bottom-5">Fecha Fin</strong>
+			<p> {{reserva.fechaFin}}
+			</p>
+		</div>
+		<div class="col-md-4 ">	
+		<h3> Precio total: </h3> {{reserva.precioTotal}}
+			
+		</div>
+		
+	</div>
+
+		
+	</div>
+	<br>
+	<br>
+	
+
+  
+    <div id="footer">
+				<div class="dashboard-list-box margin-top-0">
+					<h4>Perros a cuidar</h4>
+					<ul>
+	       	<li>
+							<div class="list-box-listing">
+								<div class="list-box-listing-img"><a href="#"><img :src="reserva.perro.fotoPerfil" alt=""></a></div>
+								<div class="list-box-listing-content">
+									<div class="inner">
+										<h3>{{reserva.perro.nombre}}</h3>
+										<span>{{reserva.perro.raza.nombre}}</span><br>
+										<span>{{edadPerro}} años</span>
+										<div class="star-rating" data-rating="5.0">
+											<div class="rating-counter">(23 reviews)</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="buttons-to-right">
+								<a href="#" class="button gray"><i class="sl sl-icon-action-redo"></i> ver Perfil</a>
+							</div>
+						</li>
+	       
+	       
+	       
+	       
+	       
+	       
+	       
+	       
+
+		
+
+	
+             <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
                                     <a v-on:click="confirmarReservaButton(index)"  style="color: blue; border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Confirmar</a>
                                 </div>
                                
@@ -59,29 +105,25 @@ Vue.component('my-detalle-reserva', {
                                 <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
                                     <a v-on:click="cancelarReservaActionButton(index)"  style="  margin-top: 10px;" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>                        
                                 </div>
-                            
-                             <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
-                                    <a  style="  margin-top: 10px; color: blue;  border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver</a>
-                                    
-                                </div>
-                            </div>    
-                           
-                         </div>       
-                      
-                    </a>
-                        
-                </li>
-             </ul>
-            </div>
-        </div>
-    </div>
-</div>
+
+	<!-- Footer -->
+	<div class="row">
+		<div class="col-md-12">
+			<ul id="footer">
+				
+			</ul>
+		</div>
+	</div>
+		
+
+
 </div>   
     `,
     data:
         function () {
             return {
-                reservas: [
+                url:'',
+                reserva:
                     {
                         id: null,
                         perro: {
@@ -102,16 +144,16 @@ Vue.component('my-detalle-reserva', {
                         fechaInicio: "",
                         fechaFin: "",
                         precioTotal: 1,
-                        status: 0,
+                        status: '',
                         mensaje: '',
-
+                        transaccion:'',
 
                     }
-                ],
-                mensaje: '',
+                 ,
+                message: '',
                 perroProfileUrl: '',
                 id: null,
-
+                edadPerro:'',
             }
         },
     mounted() {
@@ -121,17 +163,16 @@ Vue.component('my-detalle-reserva', {
     methods: {
 
         getReserva() {
-            axios.get('/api/reservas?id=' + this.id)
+            axios.get('/api/cuidador/me/reservas/' + this.id)
                 .then((response) => {
-                this.reservas = response.data;
-            if (this.reservas.length === 0) {
-                this.message = "Actualmente no se encuentra la reserva.";
-            }
-
+                this.reserva = response.data;
+               // document.getElementById("foto_perro").src = this.reserva.perro.fotoPerfil;
+                    this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);
         })
         .catch(error => {
                 console.log(error);
-            sweetAlert("Oops...", "Error, ver consola", "error");
+            this.message = "Actualmente no se encuentra la reserva.";
+            sweetAlert("Oops...", "Actualmente no se encuentra la reserva.", "error");
         });
         },
         cancelarReserva(index) {
@@ -207,36 +248,40 @@ Vue.component('my-detalle-reserva', {
                 results = regex.exec(location.search);
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         },
+        calcularEdad(fecha) {
+            var hoy = new Date();
+            var cumpleanos = new Date(fecha);
+            var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+            var m = hoy.getMonth() - cumpleanos.getMonth();
+
+            if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                edad--;
+            }
+
+            return edad;
+        },
     },
+
+
     computed: {
         tipoDeReservas: function () {
-            if (this.status == 'CONFIRMATION_PENDING') {
+            if (this.reserva.status == 'CONFIRMATION_PENDING') {
                 return 'pendientes'
             }
-            if (this.status == 'CANCEL') {
+            if (this.reserva.status== 'CANCEL') {
                 return 'canceladas'
             }
             return 'Error'
         },
         listClass: function () {
-            if (this.status == 'CONFIRMATION_PENDING') {
+            if (this.reserva.status == 'CONFIRMATION_PENDING') {
                 return 'col-xs-12 col-md-7'
             }
-            if (this.status == 'CANCEL') {
+            if (this.reserva.status== 'CANCEL') {
                 return 'col-xs-12 col-md-10'
             }
         },
-        listColor: function () {
-            if (this.status == 'CONFIRMATION_PENDING') {
-                return 'background: rgba(0, 169, 72, 0.15);'
-            }
-            if (this.status == 'CANCEL') {
-                return 'background: rgba(243, 12, 12, 0.15);'
-            }
-            if (this.status == 'ACCEPTED') {
-                return 'background: rgba(255,255,0,0.3);'
-            }
-        }
+
 
     }
 });
