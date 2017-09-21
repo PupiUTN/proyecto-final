@@ -94,42 +94,28 @@ Vue.component('my-profile', {
     methods: {
 
         autocompleteAddress() {
-            var componentForm = {
-                street_number: 'short_name',
-                route: 'long_name',
-                locality: 'long_name',
-                administrative_area_level_1: 'short_name',
-                country: 'long_name',
-                postal_code: 'short_name'
-            };
             // TODO permitir solo calles
             var autocomplete = new google.maps.places.Autocomplete(
                 /** @type {!HTMLInputElement} */(this.$refs.autocomplete),
 
                 {
-                    types: ['geocode'],
+                    //types: ['geocode'],
                     componentRestrictions: {country: "ar"}
                 });
             autocomplete.addListener('place_changed', function () {
                 var place = autocomplete.getPlace();
+                console.log(place);
                 for (var i = 0; i < place.address_components.length; i++) {
                     var addressType = place.address_components[i].types[0];
-                    if (componentForm[addressType]) {
-                        var val = place.address_components[i][componentForm[addressType]];
-                        vm.$set(vm, addressType.toString(), val.toString());
+                    //no es lo mas lindo, pero sirve para saber si falta numero o donde esta
+                    //el error de la direccion
+                    if(addressType=='street_number'){
+                        vm.street_number=place.address_components[i].long_name;
+                        console.log('street_number '+ vm.street_number);
+                        continue;
                     }
                 }
-                // vm.$set(vm.direccion, 'calle',this.route.toString());
-                vm.direccion.calle = vm.route;
-                vm.direccion.numero = vm.street_number;
-                vm.direccion.ciudad = vm.locality;
-                vm.direccion.provincia = vm.administrative_area_level_1;
-                vm.direccion.pais = vm.country;
-                vm.direccion.codigoPostal = vm.postal_code;
-                vm.direccion.ciudadPlaceId = place.place_id;
-                vm.direccion.placeId = place.id;
-                vm.direccion.latitud = place.geometry.location.lat();
-                vm.direccion.longitud = place.geometry.location.lng();
+
             });
         },
         filesChange(fileList) {
