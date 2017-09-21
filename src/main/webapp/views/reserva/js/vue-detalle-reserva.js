@@ -1,4 +1,4 @@
-Vue.component('my-reservas-cuidador-list', {
+Vue.component('my-detalle-reserva', {
     template: `
 <div>       
 
@@ -61,7 +61,7 @@ Vue.component('my-reservas-cuidador-list', {
                                 </div>
                             
                              <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
-                                    <a  style="  margin-top: 10px; color: blue;  border-color: blue; " href=/views/reserva/detalle-reserva.html?id=index"   class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver</a>
+                                    <a  style="  margin-top: 10px; color: blue;  border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver</a>
                                     
                                 </div>
                             </div>    
@@ -110,29 +110,29 @@ Vue.component('my-reservas-cuidador-list', {
                 ],
                 mensaje: '',
                 perroProfileUrl: '',
-                status: null,
+                id: null,
 
             }
         },
     mounted() {
-        this.status = this.getParameterByName('status');
-        this.getCuidadorReservas();
+        this.id = this.getParameterByName('id');
+        this.getReserva();
     },
     methods: {
 
-        getCuidadorReservas() {
-            axios.get('/api/cuidador/me/reservas?status=' + this.status)
+        getReserva() {
+            axios.get('/api/reservas?id=' + this.id)
                 .then((response) => {
-                    this.reservas = response.data;
-                    if (this.reservas.length === 0) {
-                        this.message = "Actualmente no tenés ninguna reserva.";
-                    }
+                this.reservas = response.data;
+            if (this.reservas.length === 0) {
+                this.message = "Actualmente no se encuentra la reserva.";
+            }
 
-                })
-                .catch(error => {
-                    console.log(error);
-                    sweetAlert("Oops...", "Error, ver consola", "error");
-                });
+        })
+        .catch(error => {
+                console.log(error);
+            sweetAlert("Oops...", "Error, ver consola", "error");
+        });
         },
         cancelarReserva(index) {
 
@@ -140,14 +140,14 @@ Vue.component('my-reservas-cuidador-list', {
             axios.put('/api/cuidador/me/reservas/' + id + '/cancelarReserva')
                 .then((response) => {
 
-                    sweetAlert("Cancelada", "Tu reserva a sido cancelada", "success");
-                    Vue.delete(this.reservas, index);
-                })
-                .catch(error => {
-                        console.log(error);
-                        sweetAlert("Oops...", "Error, ver consola", "error");
-                    }
-                );
+                sweetAlert("Cancelada", "Tu reserva a sido cancelada", "success");
+            Vue.delete(this.reservas, index);
+        })
+        .catch(error => {
+                console.log(error);
+            sweetAlert("Oops...", "Error, ver consola", "error");
+        }
+        );
         },
         ConfirmarReserva(index) {
 
@@ -155,15 +155,15 @@ Vue.component('my-reservas-cuidador-list', {
             axios.put('/api/cuidador/me/reservas/' + id + '/confirmarReserva')
                 .then((response) => {
 
-                    sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped page te confirmaremos la reserva.", "success");
-                    Vue.delete(this.reservas, index);
-                })
-                .catch(error => {
-                        console.log(error);
-                        sweetAlert("Oops...", "Error, ver consola", "error");
+                sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped page te confirmaremos la reserva.", "success");
+            Vue.delete(this.reservas, index);
+        })
+        .catch(error => {
+                console.log(error);
+            sweetAlert("Oops...", "Error, ver consola", "error");
 
-                    }
-                );
+        }
+        );
         },
         confirmarReservaButton(index) {
             var reserva = this.reservas[index];
