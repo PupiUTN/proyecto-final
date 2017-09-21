@@ -1,7 +1,7 @@
 Vue.component('my-buscar-cuidadores', {
     template: `
 <form class="main-search-input" v-on:submit.prevent='buscar'>
-    <div class="main-search-input-item location">
+    <div class="main-search-input-item location" :style="inputSize">
         <vue-google-autocomplete
             id="location"
             classname=""
@@ -15,25 +15,35 @@ Vue.component('my-buscar-cuidadores', {
             <i class="fa fa-dot-circle-o"></i>
         </a>
     </div>
-    <div class="main-search-input-item">
-        <input type="text" v-model="dateFrom" id="dateFrom" placeholder="Fecha Desde"
+    <div class="main-search-input-item location">
+        <input type="text" v-model="dateFrom" id="dateFrom" placeholder="Desde"
                data-lang="es"
                data-init-set="false"
                data-large-mode="true" data-large-default="true" data-min-year="2017"
                data-max-year="2020" data-lock="from">
+              <a><i class="fa fa-calendar-check-o"></i></a>
     </div>
-    <div class="main-search-input-item">
-        <input type="text" v-model="dateTo" id="dateTo" placeholder="Fecha Hasta" data-lang="es"
+    <div class="main-search-input-item location">
+        <input type="text" v-model="dateTo" id="dateTo" placeholder="Hasta" data-lang="es"
                data-init-set="false"
                data-large-mode="true" data-large-default="true" data-min-year="2017"
                data-max-year="2020" data-lock="from">
+               <a><i class="fa fa-calendar-check-o"></i></a>
+
 
     </div>
     <button class="button" type="submit">
         Buscar
     </button>
 </form>
+
     `,
+    props: {
+        isIndex: {
+            type: Boolean,
+            default: true
+        }
+    },
     data:
         function () {
             return {
@@ -117,6 +127,14 @@ Vue.component('my-buscar-cuidadores', {
         initDate() {
             $('#dateFrom').dateDropper();
             $('#dateTo').dateDropper();
+        }
+    },
+    computed: {
+        inputSize() {
+            if (this.isIndex) {
+                return 'flex: 1';
+            }
+            return 'flex: 2';
         }
     }
 });
