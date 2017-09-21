@@ -19,6 +19,6 @@
     background-position: center;
 }
 
-.pace-inactive {
+.pace.pace-inactive .pace-progress {
     display: none;
 }
