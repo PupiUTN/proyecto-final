@@ -64,7 +64,7 @@ Vue.component('become-cuidador', {
                 <div class="col-lg-6 col-md-12">
                     <label class="margin-top-0">Anverso</label>
                     <div class="edit-profile-photo">
-                        <img :src="dniAnverso.url" alt="">
+                        <img :src="dniAnverso.url" alt="DNI" height="170">
                         <div class="change-photo-btn" id="dniReverso">
                             <div class="photoUpload">
                                 <span><i class="fa fa-upload"></i> Subir Foto</span>
@@ -76,7 +76,7 @@ Vue.component('become-cuidador', {
                 <div class="col-lg-6 col-md-12">
                     <label class="margin-top-0">Reverso</label>
                     <div class="edit-profile-photo">
-                        <img :src="dniReverso.url" alt="">
+                        <img :src="dniReverso.url" alt="DNI" height="170">
                         <div class="change-photo-btn" id="dniAnverso">
                             <div class="photoUpload">
                                 <span><i class="fa fa-upload"></i> Subir Foto</span>
