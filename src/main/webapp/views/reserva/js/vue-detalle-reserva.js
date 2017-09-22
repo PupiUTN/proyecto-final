@@ -69,7 +69,7 @@ Vue.component('my-detalle-reserva', {
 					<ul>
 	       	<li>
 							<div class="list-box-listing">
-								<div class="list-box-listing-img"><a href="#"><img :src="reserva.perro.fotoPerfil" alt=""></a></div>
+								<div class="list-box-listing-img"><a href="#"><img :src="reserva.perro.fotoPerfil" alt="" ></a></div>
 								<div class="list-box-listing-content">
 									<div class="inner">
 										<h3>{{reserva.perro.nombre}}</h3>
@@ -82,13 +82,62 @@ Vue.component('my-detalle-reserva', {
 								</div>
 							</div>
 							<div class="buttons-to-right">
-								<a href="#" class="button gray"><i class="sl sl-icon-action-redo"></i> ver Perfil</a>
+								<button id="show-modal" @click="showModal = true" class="button gray"><i class="sl sl-icon-action-redo"></i> ver Perfil</button>
+								 <modal style="z-index:5;" v-if="showModal" @close="showModal = false">
+                                    <h3 slot="header">{{reserva.perro.nombre}}</h3>
+                                    <img slot="body" class="col-md-3" :src="reserva.perro.fotoPerfil">
+                                    <div slot="body">
+                                    
+                                   <h2> {{reserva.perro.raza.nombre}} </h2>
+                                    <h2> tamaño de perro:</h2> <img  class="col-md-3" src="/img/perro_grande.jpg" alt="">
+                                    <h2>  edad:</h2> {{edadPerro}}
+                                    
+                                    ----------
+                                    <div id="listing-reviews" class="listing-section">
+    <h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Reviews <span>(12)</span></h3>
+
+    <div class="clearfix"></div>
+
+    <!-- Reviews -->
+    <section class="comments listing-reviews">
+
+        <ul>
+            <li>
+                <div class="avatar"><img src="../../assets/images/review-image-01.jpg" alt=""/>
+                </div>
+                <div class="comment-content">
+                    <div class="arrow-comment"></div>
+                    <div class="comment-by">Fede Backhaus<span class="date">June 2017</span>
+                        <div class="star-rating" data-rating="5"></div>
+                    </div>
+                    <p>Eres la mejor persona que conoci en mi vida, hurra por ti, te escogeré
+                        siempre </p>
+
+                    <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review
+                        <span>12</span></a>
+                </div>
+            </li>
+        </ul>
+    </section>
+</div>
+                                    
+                                    
+                                    
+                                    
+                                    -----------------
+                                    </div>
+                                    
+                                    </slot>
+                                   
+                            </modal>
 							</div>
 						</li>
 	       
 	       
 	       
-	       
+	         
+  <!-- use the modal component, pass in the prop -->
+ 
 	       
 	       
 	       
@@ -97,24 +146,15 @@ Vue.component('my-detalle-reserva', {
 		
 
 	
-             <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
+             <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'" style="z-index: -1;">
                                     <a v-on:click="confirmarReservaButton(index)"  style="color: blue; border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Confirmar</a>
                                 </div>
                                
 
-                                <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
+                                <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'" style="z-index: -1;">
                                     <a v-on:click="cancelarReservaActionButton(index)"  style="  margin-top: 10px;" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>                        
                                 </div>
 
-	<!-- Footer -->
-	<div class="row">
-		<div class="col-md-12">
-			<ul id="footer">
-				
-			</ul>
-		</div>
-	</div>
-		
 
 
 </div>   
@@ -154,6 +194,7 @@ Vue.component('my-detalle-reserva', {
                 perroProfileUrl: '',
                 id: null,
                 edadPerro:'',
+                showModal: false
             }
         },
     mounted() {
