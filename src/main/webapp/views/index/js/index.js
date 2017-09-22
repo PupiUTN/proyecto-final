@@ -88,19 +88,6 @@ let vm = new Vue({
             }
             ;
         },
-        geolocate2() {
-            if (this.geoPlace != null) {
-                let input = document.getElementById('location');
-                this.placeID = this.geoPlace.place_id;
-                this.placeLat = this.geoPlace.geometry.location.lat;
-                this.placeLng = this.geoPlace.geometry.location.lng;
-                this.placeName = this.geoPlace.formatted_address;
-                input.placeholder = this.placeName;
-            } else {
-                sweetAlert("Oops...", "Debe activar la geolocalizacion", "error");
-            }
-
-        },
         buscar() {
             if (this.placeID != null) {
                 let href = "/views/cuidadores/lista-cuidadores.html?placeName=" + this.placeName +

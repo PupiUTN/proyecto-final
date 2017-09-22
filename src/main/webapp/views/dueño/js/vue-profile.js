@@ -10,18 +10,17 @@ Vue.component('my-profile', {
                     </div>
                 </div>
             </div>
-
             <div class="row">
-
                 <!-- Profile -->
                 <div class="col-lg-6 col-md-12">
                     <div class="dashboard-list-box margin-top-0">
-                        <h4 class="gray">Profile Details</h4>
+                        <h4 class="gray">Informacion personal</h4>
                         <div class="dashboard-list-box-static">
+                            <div class="col-sm-offset-3">
                             <form id="imageForm" enctype="multipart/form-data">
                             <!-- Avatar -->
                             <div class="edit-profile-photo">
-                                <img :src="user.profileImageUrl" alt="">
+                                <img :src="user.profileImageUrl" alt="Foto de Perfil" height="240">
                                 <div class="change-photo-btn">
                                     <div class="photoUpload">
                                         <span><i class="fa fa-upload"></i> Subir Foto</span>
@@ -30,7 +29,7 @@ Vue.component('my-profile', {
                                 </div>
                             </div>
                             </form>
-
+                            </div>
                             <!-- Details -->
                             <div class="my-profile">
 
@@ -90,7 +89,7 @@ Vue.component('my-profile', {
     }
     ,
     mounted() {
-        $('#booking-date').dateDropper()
+        $('#booking-date').dateDropper();
         this.autocompleteAddress();
         this.getUserInfo();
     },
