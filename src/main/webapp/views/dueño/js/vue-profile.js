@@ -54,9 +54,12 @@ Vue.component('my-profile', {
 
                                 <label>Email</label>
                                 <input v-model="user.email" value="" type="text">
+                                
+                                <label class="margin-top-0">Dirección</label>
+                                <input v-model="direccion.provincia" ref="autocompleteProvincia" type="text" placeholder="Ingrese su provincia">
 
                                 <label class="margin-top-0">Dirección</label>
-                                <input v-model="direccion.direccionLinea1" ref="autocomplete" type="text" placeholder="Ingrese su dirección">
+                                <input v-model="direccion.direccionLinea1" ref="autocompleteCalle" v-bind:disabled="disabled" type="text" placeholder="Ingrese su dirección">
                             </div>
                             <!--    TODO onsubmit para validar el formulario-->
                             <button v-on:click='editUserInfo' class="button margin-top-15">Guardar</button>
@@ -81,7 +84,7 @@ Vue.component('my-profile', {
             locality: '',
             administrative_area_level_1: '',
             country: '',
-            postal_code: ''
+            disabled:true,
         }
 
     }
@@ -96,14 +99,15 @@ Vue.component('my-profile', {
         autocompleteAddress() {
             // TODO permitir solo calles
             var autocomplete = new google.maps.places.Autocomplete(
-                /** @type {!HTMLInputElement} */(this.$refs.autocomplete),
+                /** @type {!HTMLInputElement} */(this.$refs.autocompleteCalle),
 
                 {
-                    //types: ['geocode'],
+                    types: ['geocode'],
                     componentRestrictions: {country: "ar"}
                 });
             autocomplete.addListener('place_changed', function () {
                 var place = autocomplete.getPlace();
+                console.log("-------------------------");
                 console.log(place);
                 for (var i = 0; i < place.address_components.length; i++) {
                     var addressType = place.address_components[i].types[0];
