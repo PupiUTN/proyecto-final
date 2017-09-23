@@ -51,13 +51,13 @@ Vue.component('my-buscar-cuidadores', {
                 placeLat: null,
                 placeLng: null,
                 placeName: null,
-                location: '',
                 dateFrom: null,
                 dateTo: null,
             }
         },
     mounted() {
-        this.initDate();
+        this.bindUrlWithVue();
+        this.bindDatePickerWithVue();
     },
     methods: {
         geolocate() {
@@ -75,13 +75,13 @@ Vue.component('my-buscar-cuidadores', {
                         .then((data) => {
                             console.log("Entra al axios");
                             var city = data.data.results[1];
-                            this.placeID = city.place_id;
-                            this.placeLat = city.geometry.location.lat;
-                            this.placeLng = city.geometry.location.lng;
-                            this.placeName = city.formatted_address;
+                            vm.$refs.myBuscarCuidadores.placeID = city.place_id;
+                            vm.$refs.myBuscarCuidadores.placeLat = city.geometry.location.lat;
+                            vm.$refs.myBuscarCuidadores.placeLng = city.geometry.location.lng;
+                            vm.$refs.myBuscarCuidadores.placeName = city.formatted_address;
                             let input = document.getElementById('location');
-                            input.placeholder = this.placeName;
-                            input.value = '';
+                            input.placeholder = vm.$refs.myBuscarCuidadores.placeName;
+                            input.value = vm.$refs.myBuscarCuidadores.placeName;
 
                         });
                 });
@@ -124,9 +124,44 @@ Vue.component('my-buscar-cuidadores', {
             window.location.href = href;
 
         },
-        initDate() {
-            $('#dateFrom').dateDropper();
-            $('#dateTo').dateDropper();
+        bindDatePickerWithVue() {
+            // https://stackoverflow.com/questions/41200729/vue-js-and-jquery-datepicker-timepicker-two-way-binding
+            $('#dateFrom').dateDropper(this.dateFrom);
+            $('#dateFrom').change(function () {
+                console.log("date picker selected");
+                // var dateObjetc = $('#booking-date').datepicker("getDate");
+                //Java format: 2017-08-27
+                var dateString = $('#dateFrom').val(); //the getDate method
+                vm.$refs.myBuscarCuidadores.dateFrom = dateString;
+            });
+            $('#dateTo').dateDropper(this.dateTo);
+            $('#dateTo').change(function () {
+                console.log("date picker selected");
+                var dateString = $('#dateTo').val(); //the getDate method
+                vm.$refs.myBuscarCuidadores.dateTo = dateString;
+            });
+        },
+        //obitene los parametros de la url... copiado de internet
+        getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        },
+        bindUrlWithVue(){
+            this.dateFrom = this.getParameterByName('from');
+            this.dateTo = this.getParameterByName('to');
+            this.placeID = this.getParameterByName('placeID');
+            this.placeName = this.getParameterByName('placeName');
+            this.placeLat = this.getParameterByName('lat');
+            this.placeLng = this.getParameterByName('lng');
+            //
+            let input = document.getElementById('location');
+            input.placeholder = this.placeName;
+            input.value = this.placeName;
         }
     },
     computed: {

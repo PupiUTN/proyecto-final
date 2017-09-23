@@ -11,6 +11,7 @@ Vue.component('vue-google-autocomplete', {
         @blur="onBlur()"
         @change="onChange"
         @keypress="onKeyPress"
+        required
     />
 `,
     name: 'VueGoogleAutocomplete',
