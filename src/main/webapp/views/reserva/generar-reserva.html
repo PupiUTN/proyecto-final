@@ -22,43 +22,7 @@
 
     <!-- Header Container
     ================================================== -->
-    <header id="header-container">
-
-        <!-- Header -->
-        <div id="header" class="not-sticky">
-            <div class="container">
-
-                <!-- Left Side Content -->
-                <div class="left-side">
-
-                    <!-- Logo -->
-                    <div id="logo">
-                        <a href="../index/index.html"><img src="/assets/images/logo.png" alt=""></a>
-                    </div>
-
-                    <!-- Mobile Navigation -->
-                    <div class="menu-responsive">
-                        <i class="fa fa-reorder menu-trigger"></i>
-                    </div>
-
-                    <!-- Main Navigation -->
-                    <div class="clearfix"></div>
-                    <!-- Main Navigation / End -->
-
-                </div>
-                <!-- Left Side Content / End -->
-
-                <!-- Right Side Content / End -->
-                <my-login v-on:is-authenticated="isAuthenticatedMethod" ref="mylogin"></my-login>
-                <!-- Right Side Content / End -->
-
-
-            </div>
-        </div>
-        <!-- Header / End -->
-
-    </header>
-    <div class="clearfix"></div>
+    <my-navbar></my-navbar>
     <!-- Header Container / End -->
 
 
@@ -235,6 +199,8 @@
 <link rel="stylesheet" href="/css/sweetalert.css"/>
 <script src="/js/sweetalert.min.js"></script>
 <script type="text/javascript" src="/views/security/js/vue-login.js"></script>
+<link rel="stylesheet" href="/views/layout/vue-navbar.css">
+<script type="text/javascript" src="/views/layout/vue-navbar.js"></script>
 <script src="js/generar-reserva.js"></script>
 
 

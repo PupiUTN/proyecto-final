@@ -151,7 +151,7 @@ Vue.component('my-buscar-cuidadores', {
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         },
-        bindUrlWithVue(){
+        bindUrlWithVue() {
             this.dateFrom = this.getParameterByName('from');
             this.dateTo = this.getParameterByName('to');
             this.placeID = this.getParameterByName('placeID');
@@ -159,9 +159,11 @@ Vue.component('my-buscar-cuidadores', {
             this.placeLat = this.getParameterByName('lat');
             this.placeLng = this.getParameterByName('lng');
             //
-            let input = document.getElementById('location');
-            input.placeholder = this.placeName;
-            input.value = this.placeName;
+            if (this.placeName != undefined) {
+                let input = document.getElementById('location');
+                input.placeholder = this.placeName;
+                input.value = this.placeName;
+            }
         }
     },
     computed: {
