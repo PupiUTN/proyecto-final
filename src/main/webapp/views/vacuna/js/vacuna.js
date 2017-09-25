@@ -11,17 +11,15 @@ let vm = new Vue({
         formPost: true,
     },
     mounted() {
-        this.getItems(this.url);
+        this.getCuidador(this.url);
     },
     methods: {
-        toggleLoader() {
-            $('#spinner').toggle();
-        },
-        getItems() {
+
+        getCuidador() {
             axios.get(this.url)
                 .then((response) => {
                     this.items = response.data;
-                    this.toggleLoader();
+
                 })
                 .catch(error => {
                         console.log(error);
@@ -30,12 +28,12 @@ let vm = new Vue({
                 );
         },
         postItem() {
-            this.toggleLoader();
+
             var payload = jQuery.extend(true, {}, this.item);
             console.log(payload);
             axios.post(this.url, payload)
                 .then((response) => {
-                    this.toggleLoader();
+
                     console.log(response);
                     this.items.push(response.data);
                     this.item.nombre = '';
@@ -49,11 +47,11 @@ let vm = new Vue({
                 );
         },
         editItem() {
-            this.toggleLoader();
+
             var payload = jQuery.extend(true, {}, this.item);
             axios.put(this.url + '/' + this.item.id, payload)
                 .then((response) => {
-                    this.toggleLoader();
+
                     this.items[this.item.index] = response.data;
                     sweetAlert("Editado!", "Vacuna editada exitosamente.", "success");
                     this.editItemButtonUndo();
@@ -74,11 +72,11 @@ let vm = new Vue({
 
         },
         deleteItem(index) {
-            this.toggleLoader();
+
             var id = this.items[index].id;
             axios.delete(this.url + '/' + id)
                 .then((response) => {
-                    this.toggleLoader();
+
                     sweetAlert("Eliminada!", "Vacuna eliminada exitosamente.", "success");
                     Vue.delete(this.items, index);
                 })

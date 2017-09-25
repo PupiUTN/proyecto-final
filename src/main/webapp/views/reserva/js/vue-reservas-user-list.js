@@ -1,7 +1,7 @@
 Vue.component('my-reservas-user-list', {
     template: `
 <div>       
-        <div id="spinner"></div>
+        
 
 		<!-- Titlebar -->
 		<div id="titlebar">
@@ -34,7 +34,7 @@ Vue.component('my-reservas-user-list', {
                                                 <a :href="cuidadorProfileUrl + reserva.cuidador.id" style="all: unset"><h5>{{ reserva.cuidador.user.fullName }} </h5></a>  
                                             </div>
                                             <p><i> {{ reserva.mensaje}} </i></p>
-                                            <p><b>Perro: </b> {{ reserva.perro.nombre}}</p>
+                                            <p ><b>Perro: </b> {{ reserva.perro.nombre}}</p>
                                         </div>
                                         <div class="col-xs-12 col-md-1">
                                             <p><b>Desde</b> </br>{{ reserva.fechaFin }}</p>
@@ -99,9 +99,7 @@ Vue.component('my-reservas-user-list', {
         this.getUserReservas();
     },
     methods: {
-        toggleLoader() {
-            $('#spinner').hide();
-        },
+
         getUserReservas() {
             axios.get('/api/user/me/reservas?status=' + this.status)
                 .then((response) => {
@@ -109,7 +107,7 @@ Vue.component('my-reservas-user-list', {
                     if (this.reservas.length === 0) {
                         this.message = "Actualmente no tenés ninguna reserva. Busca tu cuidador ideal!";
                     }
-                    this.toggleLoader();
+
                 })
                 .catch(error => {
                     console.log(error);
@@ -117,11 +115,11 @@ Vue.component('my-reservas-user-list', {
                 });
         },
         cancelarReserva(index) {
-            this.toggleLoader();
+
             var id = this.reservas[index].id;
-            axios.put( '/api/user/me/reservas/' + id + '/cancelarUsuario')
+            axios.put('/api/user/me/reservas/' + id + '/cancelarUsuario')
                 .then((response) => {
-                    this.toggleLoader();
+
                     sweetAlert("Cancelada", "Tu reserva a sido cancelada", "success");
                     Vue.delete(this.reservas, index);
                 })
@@ -157,29 +155,29 @@ Vue.component('my-reservas-user-list', {
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         },
     },
-    computed:{
-        tipoDeReservas: function(){
-            if(this.status == 'CONFIRMATION_PENDING'){
+    computed: {
+        tipoDeReservas: function () {
+            if (this.status == 'CONFIRMATION_PENDING') {
                 return 'pendientes'
             }
-            if(this.status == 'CANCEL_BY_USER'){
+            if (this.status == 'CANCEL_BY_USER') {
                 return 'canceladas'
             }
             return 'Error'
         },
         listClass: function () {
-            if(this.status == 'CONFIRMATION_PENDING'){
+            if (this.status == 'CONFIRMATION_PENDING') {
                 return 'col-xs-12 col-md-7'
             }
-            if(this.status == 'CANCEL_BY_USER'){
+            if (this.status == 'CANCEL_BY_USER') {
                 return 'col-xs-12 col-md-10'
             }
         },
         listColor: function () {
-            if(this.status == 'CONFIRMATION_PENDING'){
+            if (this.status == 'CONFIRMATION_PENDING') {
                 return 'background: rgba(0, 169, 72, 0.15);'
             }
-            if(this.status == 'CANCEL_BY_USER'){
+            if (this.status == 'CANCEL_BY_USER') {
                 return 'background: rgba(243, 12, 12, 0.15);'
             }
         }

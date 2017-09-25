@@ -26,7 +26,7 @@ let vm = new Vue({
 
 
         this.idCuidador = this.getParameterByName('id');
-        this.getItems(this.url, this.idCuidador);
+        this.getCuidador(this.url, this.idCuidador);
         var today = new Date();
         today.toISOString().substring(0, 10);
         this.fechaReservaDesde = today.toISOString().substring(0, 10);
@@ -35,10 +35,8 @@ let vm = new Vue({
 
     },
     methods: {
-        toggleLoader() {
-            $('#spinner').toggle();
-        },
-        getItems() {
+
+        getCuidador() {
             axios.get(this.url + "/" + this.idCuidador)
                 .then((response) => {
                     this.item = response.data;
@@ -49,7 +47,7 @@ let vm = new Vue({
                     this.loadTamaño(this.item.tamaño);
                     this.geolocateCuidador(this.item.user.direccion);
 
-                    $('#spinner').toggle();
+
 
                 })
                 .catch(error => {

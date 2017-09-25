@@ -3,8 +3,8 @@
 <Context className="org.apache.catalina.core.StandardContext"
          cachingAllowed="false"
          charsetMapperClass="org.apache.catalina.util.CharsetMapper"
-         cookies="true" 
-         reloadable="false" 
+         cookies="true"
+         reloadable="false"
          wrapperClass="org.apache.catalina.core.StandardWrapper"
          antiJARLocking="true" path="/">
 </Context>

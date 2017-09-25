@@ -92,9 +92,7 @@ Vue.component('my-profile', {
         this.getUserInfo();
     },
     methods: {
-        toggleLoader() {
-            $('#spinner').toggle();
-        },
+
         autocompleteAddress() {
             var componentForm = {
                 street_number: 'short_name',
@@ -108,7 +106,8 @@ Vue.component('my-profile', {
             var autocomplete = new google.maps.places.Autocomplete(
                 /** @type {!HTMLInputElement} */(this.$refs.autocomplete),
 
-                {types: ['geocode'],
+                {
+                    types: ['geocode'],
                     componentRestrictions: {country: "ar"}
                 });
             autocomplete.addListener('place_changed', function () {
@@ -151,7 +150,7 @@ Vue.component('my-profile', {
         upload(formData) {
             axios.post('/api/file/', formData)
                 .then((response) => {
-                    this.toggleLoader();
+
                     this.user.profileImageUrl = response.data;
                 })
                 .catch(error => {
@@ -175,7 +174,7 @@ Vue.component('my-profile', {
             var payload = jQuery.extend(true, {}, this.user);
             axios.put(this.url + this.user.id, payload)
                 .then((response) => {
-                    this.toggleLoader();
+
                     sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
                     console.log(response);
                 })
