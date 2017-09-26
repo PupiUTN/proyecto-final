@@ -8,13 +8,13 @@ Vue.component('my-detalle-reserva', {
 	<!-- Header -->
 	<div class="row">
 	
-		<div class="col-md-2 col-lg-12 col-xs-12">
-		<div class="avatar"><img id="foto_user"  :src="reserva.perro.user.profileImageUrl" alt="" style="max-width: 200px;margin-left: 20px;margin-top: -50px;"></div>
-		
+		<div class="col-xs-12 col-md-2 col-sm-8 ">
+		<div class="col-xs-12 avatar"> <div class="col-xs-12"><img id="foto_user"  :src="reserva.perro.user.profileImageUrl" alt="" style="max-width: 200px;margin-left: 20px;margin-top: -50px;"></div>
+		</div>
 		</div>
 
-		<div class="col-md-4 col-lg-12" style="margin-top: -30px; ">	
-            <p id="details" style="margin-left: 50%;">
+		<div class="col-xs-12 col-md-5 ">	
+            <p id="details" class="margin-left: 50%;">
 				<strong>Usuario:</strong> {{reserva.perro.user.fullName}} <br>					
 			</p>
 			<p id="details" style="margin-left: 50%;">
@@ -29,11 +29,11 @@ Vue.component('my-detalle-reserva', {
 	<!-- Client & Supplier -->
 	<div class="row">
 	
-        <div class="col-md-6">
+        <div class="col-md-4">
 		 
 			
 		</div>
-		<div class="col-md-2">	
+		<div class="col-md-3" >	
 			<strong class="margin-bottom-5">Fecha inicio</strong>
 			<p> {{reserva.fechaInicio}}
 			</p>
@@ -44,15 +44,21 @@ Vue.component('my-detalle-reserva', {
 			<p> {{reserva.fechaFin}}
 			</p>
 		</div>
-		<div class="col-md-12 " style=" left: 40px;">	
-		<strong class="margin-bottom-5">Precio total: </strong> <label style=" color: green;font-size: 30px;margin-bottom: 20px;">{{reserva.precioTotal}} $</label>
-			
+		<div class="col-xs-12 col-md-12 ">	
+		<div class = "col-md-1"></div>
+		<strong class="  margin-bottom-5">Precio total: </strong> 
+		<br>
+		        <div class="col-md-3">
+		        <label class="col-md-4"></label>
+		<label style=" color: green;font-size: 30px;">{{reserva.precioTotal}} $</label>
+	             </div>
 		</div>
 		
-			<div class="col-md-12" style=" left: 25px;">
-		    <div class=" col col-md-12 col-lg-10"> <strong class="margin-bottom-5">Mensaje:</strong></div> 
-		     
-			<div class=" col col-md-10 col-lg-10">{{reserva.mensaje}}</div>
+			<div class="col-md-12" >
+		    <div class=" col col-md-1"></div>  <strong class="margin-bottom-5">Mensaje:</strong>
+		     <br>
+		    
+			<div class=" col col-md-10 col-xs-12"> <div class=" col-md-1"></div>{{reserva.mensaje}}</div>
 			
 		</div>
 	</div>
@@ -70,12 +76,12 @@ Vue.component('my-detalle-reserva', {
 
     <div class="col-md-2 col-lg-12 col-xs-12">
     <div class="zoom">
-          <div  class="avatar"><img id="foto_perro" class="zoom" :src="reserva.perro.fotoPerfil" alt="" style="max-width: 200px;margin-left: 20px;margin-top: -50px;"></div>
+          <div  class=" col-xs-12 avatar"><img id="foto_perro" class="zoom" :src="reserva.perro.fotoPerfil" alt="" style="max-width: 200px;margin-left: 20px;margin-top: -50px;"></div>
     </div>
     </div>
     
 <div class =" col-xs-12"> </div>
-    <div class="col-md-4 col-lg-12" style="margin-top: -30px; ">
+    <div class="col-md-4 col-lg-12" >
         <p id="details" style="margin-left: 50%;">
             <strong>Nombre:</strong> {{reserva.perro.nombre}} <br>
         </p>
@@ -115,7 +121,7 @@ Vue.component('my-detalle-reserva', {
     <h3 class="listing-desc-headline margin-top-20 margin-bottom-20">Reviews <span>(1)</span></h3>
 </div>
     <div class="clearfix"></div>
-     <div class = "col-md-1"> </div>
+     <div class = "col-1"> </div>
     <!-- Reviews -->
     <section class="comments listing-reviews" style=" margin-left: 40px;">
 
