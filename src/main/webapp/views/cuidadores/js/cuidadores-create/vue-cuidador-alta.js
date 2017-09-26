@@ -176,7 +176,7 @@ Vue.component('become-cuidador', {
 
         isUserCuidador(sessionInfo) {
             this.user = sessionInfo.data.principal.user;
-            console.log(this.user)
+            console.log(this.user);
             if (this.user.role == 'ROLE_CUIDADOR') {
                 sweetAlert({
                         title: "Felicidades!!",
