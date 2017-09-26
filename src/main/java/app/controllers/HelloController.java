@@ -14,10 +14,5 @@ public class HelloController {
     public String index() {
         return "Greetings from Spring Boot!";
     }
-
-    @PostMapping("api/email")
-    public void sendEmail() {
-        MailService.sendEmail("fbackhaus94@gmail.com", "prueba");
-    }
     
 }

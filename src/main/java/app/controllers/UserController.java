@@ -8,7 +8,9 @@ package app.controllers;
 import app.exception.EmailExistsException;
 import app.exception.PasswordDoesNotMatchException;
 import app.models.entities.User;
+import app.services.MailService;
 import app.services.UserService;
+import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +47,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "/registration")
     public ResponseEntity registerUserAccount(@RequestBody @Valid User user) throws EmailExistsException, PasswordDoesNotMatchException {
         userService.registerNewUserAccount(user);
+        MailService.sendEmail(user, MailType.WELCOME);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
