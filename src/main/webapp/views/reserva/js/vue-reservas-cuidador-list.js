@@ -60,8 +60,8 @@ Vue.component('my-reservas-cuidador-list', {
                                     <a v-on:click="cancelarReservaActionButton(index)"  style="  margin-top: 10px;" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>                        
                                 </div>
                             
-                             <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
-                                    <a  style="  margin-top: 10px; color: blue;  border-color: blue; " href="/views/reserva/detalle-reserva.html?id=index"   class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver</a>
+                             <div class="col-xs-12 col-md-3" >
+                                    <a  style="  margin-top: 10px; color: blue;  border-color: blue; "   v-on:click="verReserva(reserva.id)" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver</a>
                                     
                                 </div>
                             </div>    
@@ -118,7 +118,13 @@ Vue.component('my-reservas-cuidador-list', {
         this.status = this.getParameterByName('status');
         this.getCuidadorReservas();
     },
-    methods: {
+    methods:
+        { verReserva(index)
+        {
+
+
+            document.location.href ="/views/reserva/detalle-reserva.html?id= "+ index;
+        },
 
         getCuidadorReservas() {
             axios.get('/api/cuidador/me/reservas?status=' + this.status)

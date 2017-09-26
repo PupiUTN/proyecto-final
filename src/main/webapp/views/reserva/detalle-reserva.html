@@ -13,11 +13,14 @@
     <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
     <link rel="stylesheet" href="/assets/css/modal.css">
 
+
     <!-- MY CSS
     ================================================== -->
     <link rel="stylesheet" href="/views/index/css/index.css">
     <script src="/js/pace.min.js"></script>
     <link href="/css/pace-theme.css" rel="stylesheet"/>
+
+
 
 </head>
 
@@ -66,6 +69,34 @@
         el: '#wrapper'
     });
 </script>
+
+
+<style type="text/css" >
+    .zoom {
+        transition: 1.5s ease;
+        -moz-transition: 1.5s ease; /* Firefox */
+        -webkit-transition: 1.5s ease; /* Chrome - Safari */
+        -o-transition: 1.5s ease; /* Opera */
+        position: relative;
+        z-index: 1;
+
+    }
+
+    .zoom:hover {
+        transform: scale(2);
+        -moz-transform: scale(2); /* Firefox */
+        -webkit-transform: scale(2); /* Chrome - Safari */
+        -o-transform: scale(2); /* Opera */
+        -ms-transform: scale(2); /* IE9 */
+        position: relative;
+        z-index: 1;
+        width: 80%;
+        height: 80%;
+        margin-left: 600px;
+
+    }
+
+</style>
 
 </body>
 </html>
