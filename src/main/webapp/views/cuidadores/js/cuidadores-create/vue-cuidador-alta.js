@@ -50,7 +50,7 @@ Vue.component('become-cuidador', {
             <div class="dashboard-list-box-static" style="height:100%" >   
                 <label class="margin-top-0">Por favor, realiza una descripción sobre tí. Recuerda
                 que debe ser lo más clara posible, así PUPI y otros usuarios puedan saber más acerca de tí.</label>
-                 <textarea v-model="cuidador.descripcion" v-bind:readonly="isReadOnly" rows="6" cols="50" maxlength="1000"  placeholder="Descripcion"
+                 <textarea v-model="cuidador.descripcion" v-bind:readonly="isReadOnly" rows="6" cols="50" maxlength="150"  placeholder="Descripcion"
                     style="height: " required>
                  </textarea>
             </div>

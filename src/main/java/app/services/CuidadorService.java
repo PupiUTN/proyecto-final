@@ -68,4 +68,9 @@ public class CuidadorService {
     {
         return cuidadorRepository.findcuidadorXUser(id);
     }
+
+    public List<Cuidador> getSolicitudes() {
+
+        return cuidadorRepository.getSolicitudes();
+    }
 }

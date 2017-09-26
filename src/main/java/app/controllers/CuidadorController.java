@@ -70,7 +70,12 @@ public class CuidadorController {
         return cuidadorService.getListaServicios();
 
     }
+    @RequestMapping(value = "/solicitudes/", method = RequestMethod.GET)
+    public List<Cuidador> getSolicitudes()throws Exception {
 
+        return cuidadorService.getSolicitudes();
+
+    }
 
     @RequestMapping(value = "/user/", method = RequestMethod.GET)
     public Cuidador getCuidadorxUsuario(@RequestParam(value = "id", required = false) long id )throws Exception {
@@ -78,5 +83,7 @@ public class CuidadorController {
           return cuidadorService.cuidadorXUser(id);
 
     }
+
+
 
 }
