@@ -24,7 +24,7 @@ Vue.component('my-navbar', {
                 <!-- Left Side Content / End -->
                 
                 <!-- Right Side Content / End -->
-                <my-login></my-login>
+                <my-login v-on:is-authenticated="isAuthenticatedMethod" ref="mylogin"></my-login>
                 <!-- Right Side Content / End -->
             </div>
         </div>
@@ -34,5 +34,10 @@ Vue.component('my-navbar', {
     <div class="clearfix"></div>
     <!-- Header Container / End -->
 </div>
-    `
+    `,
+    methods: {
+        isAuthenticatedMethod(isAuthenticated) {
+            this.$emit('is-authenticated', isAuthenticated);
+        }
+    }
 });
