@@ -33,12 +33,10 @@ public class CuidadorController {
     public List<Cuidador> getCuidadoresPorDireccionYFechasReseva(
             @RequestParam(value = "ciudadPlaceId", required = false) String ciudadPlaceId,
             @RequestParam(value = "from", required = false) Date from,
-            @RequestParam(value = "to", required = false) Date to) throws Exception {
+            @RequestParam(value = "to", required = false) Date to,
+            @RequestParam(value = "status", defaultValue = "approved") String status) throws Exception {
 
-        if(from==null&& to==null){
-            return cuidadorService.getCuidadoresPorCiudadPlaceId(ciudadPlaceId);
-        }
-        return cuidadorService.getCuidadoresPorCiudadYFecha(ciudadPlaceId,from,to);
+        return cuidadorService.searhCuidadores(ciudadPlaceId, from, to, status);
 
     }
 
@@ -59,7 +57,8 @@ public class CuidadorController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public @ResponseBody Cuidador editCuidador(@PathVariable("id") Long id, @RequestBody Cuidador entity) throws Exception {
+    public @ResponseBody
+    Cuidador editCuidador(@PathVariable("id") Long id, @RequestBody Cuidador entity) throws Exception {
         entity.setId(id);
         return cuidadorService.editCuidador(entity);
     }
@@ -78,9 +77,9 @@ public class CuidadorController {
     }
 
     @RequestMapping(value = "/user/", method = RequestMethod.GET)
-    public Cuidador getCuidadorxUsuario(@RequestParam(value = "id", required = false) long id )throws Exception {
+    public Cuidador getCuidadorxUsuario(@RequestParam(value = "id", required = false) long id) throws Exception {
 
-          return cuidadorService.cuidadorXUser(id);
+        return cuidadorService.cuidadorXUser(id);
 
     }
 

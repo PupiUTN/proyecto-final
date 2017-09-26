@@ -30,6 +30,9 @@ let mySidebar = Vue.component('my-sidebar', {
 					 </ul>	
 					 </li>
                 </ul>
+                <ul data-submenu-title="Admin">
+                    <li><a href="/views/admin/moderar-cuidador.html"><i class="sl sl-icon-user"></i> Moderar Solicitud</a></li>
+                </ul>
 
             </div>
         </div>

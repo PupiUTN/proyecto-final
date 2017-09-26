@@ -50,13 +50,6 @@ public class CuidadorService {
         return cuidadorRepository.save(entity);
     }
 
-    public List<Cuidador> getCuidadoresPorCiudadPlaceId(String ciudadPlaceId) {
-        return cuidadorRepository.findAllbyCiudadPlaceId(ciudadPlaceId);
-    }
-    public List<Cuidador> getCuidadoresPorCiudadYFecha(String ciudadPlaceId, Date from, Date to) {
-
-        return cuidadorRepository.findAllbyCiudadYFecha(ciudadPlaceId, from, to);
-    }
 
     public List<Servicio> getListaServicios() {
 
@@ -69,8 +62,17 @@ public class CuidadorService {
         return cuidadorRepository.findcuidadorXUser(id);
     }
 
+
     public List<Cuidador> getSolicitudes() {
 
         return cuidadorRepository.getSolicitudes();
+    }
+
+    public List<Cuidador> searhCuidadores(String ciudadPlaceId, Date from, Date to, String status) {
+        if (from == null || to == null){
+            return cuidadorRepository.findAllbyCiudadPlaceIdAndStatus(ciudadPlaceId,status);
+        }
+        return cuidadorRepository.findAllbyCiudadYFecha(ciudadPlaceId,from,to,status);
+
     }
 }

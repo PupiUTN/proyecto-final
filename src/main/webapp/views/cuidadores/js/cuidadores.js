@@ -1,5 +1,5 @@
 let vm = new Vue({
-    el: '#appVue',
+    el: '#wrapper',
     data: {
         autocomplete: null,
         url: "/api/cuidadores/search/",
@@ -14,86 +14,13 @@ let vm = new Vue({
         geoPlace: null,
         dateFrom: null,
         dateTo: null,
-
-
     },
     mounted() {
-        //this.initGeolocate();
-        this.initDate();
         this.initMap();
-        this.initAutocomplete();
         this.getCuidadores();
 
     },
     methods: {
-
-
-        initDate() {
-            $('#dateFrom').dateDropper();
-            $('#dateTo').dateDropper();
-        },
-        initAutocomplete() {
-            //https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
-            var input = document.getElementById('location');
-            var options = {
-                types: ['(cities)'],
-                componentRestrictions: {country: "ar"}
-            };
-
-            // Create the autocomplete object, restricting the search to geographical
-            // location types
-            var autocomplete = new google.maps.places.Autocomplete(input, options);
-            //PlaceHolder de la busqueda anterior, cambia al cambiar ciudad
-            autocomplete.addListener('place_changed', () => {
-                input.placeholder = 'Ciudad';
-                let place = autocomplete.getPlace();
-                if (place.geometry) {
-                    vm.placeID = place.place_id;
-                    vm.placeLat = place.geometry.location.lat();
-                    vm.placeLng = place.geometry.location.lng();
-                    vm.placeName = input.value;
-
-
-                } else {
-                    document.getElementById('location').value = '';
-
-                    sweetAlert("Oops...", "No se encuentra la ciudad", "error");
-                    return;
-                }
-
-            });
-
-        },
-        geolocate() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    vm.toggleLoader();
-                    let lat = position.coords.latitude;
-                    //trunca el valor a 5 decimales
-                    this.placeLat = lat.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
-                    let long = position.coords.longitude;
-                    this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
-                    //https://developers.google.com/maps/documentation/geocoding/start
-                    axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.placeLat + ',' + this.placeLng + '&sensor=true')
-                        .then((data) => {
-                            console.log(data.data)
-                            var city = data.data.results[1];
-                            if (city.geometry) {
-                                vm.geoPlace = city;
-                                let input = document.getElementById('location');
-                                vm.placeID = vm.geoPlace.place_id;
-                                vm.placeLat = vm.geoPlace.geometry.location.lat;
-                                vm.placeLng = vm.geoPlace.geometry.location.lng;
-                                vm.placeName = vm.geoPlace.formatted_address;
-                                input.placeholder = vm.placeName;
-                                input.value = '';
-                                vm.toggleLoader();
-                            }
-                        });
-                });
-            }
-            ;
-        },
         initMap() {
             var argentina = {lat: -37.0230271, lng: -64.6175935};
             this.map = new google.maps.Map(document.getElementById('map'), {
@@ -102,13 +29,9 @@ let vm = new Vue({
             });
         },
         getCuidadores() {
-            var input = document.getElementById('location');
             this.placeID = this.getParameterByName('placeID');
 
             if (this.placeID != null) {
-                //el placeholder de ciudad es la ciudad que le pasa el index
-                input.placeholder = this.getParameterByName('placeName');
-                this.placeName = input.placeholder;
                 //crea un objeto como los pueda leer google maps
                 this.placeLat = this.getParameterByName('lat');
                 this.placeLng = this.getParameterByName('lng');
@@ -153,15 +76,12 @@ let vm = new Vue({
                             console.log(this.placeID);
                             console.log(response.data);
                             this.items = response.data;
-                            this.encontrados = this.items.length;
                             if (this.items.length === 1) {
-                                this.encontrados += ' Resultado Encontrado';
+                                this.encontrados == ' Resultado Encontrado';
                             } else {
-                                this.encontrados += ' Resultados Encontrados';
+                                this.encontrados == ' Resultados Encontrados';
                             }
                             this.mostrarEnMapa();
-
-
                         })
                         .catch(error => {
                                 console.log(error);
@@ -174,52 +94,14 @@ let vm = new Vue({
             }
         },
         //obitene los parametros de la url... copiado de internet
-        getParameterByName(name, url) {
-            if (!url) url = window.location.href;
+        getParameterByName(name) {
+            var url = window.location.href;
             name = name.replace(/[\[\]]/g, "\\$&");
             var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
                 results = regex.exec(url);
             if (!results) return null;
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
-        },
-        //al presionar el boton buscar, recarga la pagina con los datos nuevos
-        buscar() {
-            if (this.placeID != null) {
-                let href = "/views/cuidadores/lista-cuidadores.html?placeName=" + this.placeName +
-                    "&placeID=" + this.placeID +
-                    "&lat=" + this.placeLat +
-                    "&lng=" + this.placeLng;
-                //con el datapicker los datos no se "bindean" en el dom...
-                this.dateFrom = document.getElementById("dateFrom").value;
-                this.dateTo = document.getElementById("dateTo").value;
-                console.log(this.dateFrom);
-                console.log(this.dateTo);
-                if (this.dateFrom != '') {
-                    if (this.dateTo != '') {
-                        if (this.dateTo >= this.dateFrom) {
-                            href += "&from=" + this.dateFrom +
-                                "&to=" + this.dateTo;
-                        } else {
-                            sweetAlert("Oops...", "La fecha hasta debe ser mayor a la desde", "error");
-                            this.dateTo = '';
-                            return;
-
-                        }
-                    } else {
-                        sweetAlert("Oops...", "Debe ingresar una fecha hasta", "error");
-                        return;
-                    }
-                }
-                window.location.href = href;
-            } else {
-                sweetAlert("Oops...", "Ingrese una ciudad válida", "error");
-                //no se ejecuta en orden... ver mas adelante
-                document.getElementById('location').value = '';
-                document.getElementById('location').placeholder = 'Ciudad';
-
-
-            }
         },
         //añade los marcadores al mapa
         mostrarEnMapa() {
