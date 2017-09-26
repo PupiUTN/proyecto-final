@@ -48,8 +48,9 @@ Vue.component('my-detalle-reserva', {
 		<strong class="margin-bottom-5">Precio total: </strong> <label style=" color: green;font-size: 30px;margin-bottom: 20px;">{{reserva.precioTotal}} $</label>
 			
 		</div>
+		
 			<div class="col-md-12" style=" left: 25px;">
-		 <div class=" col col-md-12 col-lg-10"> <strong class="margin-bottom-5">Mensaje:</strong></div> 
+		    <div class=" col col-md-12 col-lg-10"> <strong class="margin-bottom-5">Mensaje:</strong></div> 
 		     
 			<div class=" col col-md-10 col-lg-10">{{reserva.mensaje}}</div>
 			
@@ -73,7 +74,7 @@ Vue.component('my-detalle-reserva', {
     </div>
     </div>
     
-
+<div class =" col-xs-12"> </div>
     <div class="col-md-4 col-lg-12" style="margin-top: -30px; ">
         <p id="details" style="margin-left: 50%;">
             <strong>Nombre:</strong> {{reserva.perro.nombre}} <br>
@@ -97,6 +98,15 @@ Vue.component('my-detalle-reserva', {
 
     </div>
    
+    <div class="col-md-12 " style=" left: 40px;">
+        <strong class="margin-bottom-5">Vacunas  : </strong> 
+        
+          <ul v-for=" vacuna in reserva.perro.listaVacunas" class="listing-features checkboxes margin-top-0"
+                            style="">
+                      <li> {{vacuna.nombre}}</li>
+                             </ul>
+    </div>
+		 
 </div>
         
    <!-- Reviews -->
@@ -195,7 +205,7 @@ Vue.component('my-detalle-reserva', {
                             raza: {},
                             sexo:'',
                             tamaño: {},
-
+                            listaVacunas:[],
                         },
                         fechaInicio: "",
                         fechaFin: "",
@@ -265,7 +275,7 @@ Vue.component('my-detalle-reserva', {
                 .then((response) => {
 
                 sweetAlert("Cancelada", "Tu reserva a sido cancelada", "success");
-                    document.location.href = "/";
+                    document.location.href = "/views/dashboard/dashboard.html";
         })
         .catch(error => {
                 console.log(error);
@@ -280,7 +290,7 @@ Vue.component('my-detalle-reserva', {
                 .then((response) => {
 
                 sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped page te confirmaremos la reserva.", "success");
-                    document.location.href = "/";
+                    document.location.href = "/views/dashboard/dashboard.html";
         })
         .catch(error => {
                 console.log(error);
@@ -289,11 +299,11 @@ Vue.component('my-detalle-reserva', {
         }
         );
         },
-        confirmarReservaButton(index) {
-            var reserva = this.reservas[index];
+        confirmarReservaButton() {
+
             sweetAlert({
                     title: "Confirmar accion",
-                    text: "Quiere confirmar su reserva con " + reserva.perro.user.fullName + " ?",
+                    text: "Quiere confirmar su reserva con " + this.reserva.perro.user.fullName + " ?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -303,15 +313,15 @@ Vue.component('my-detalle-reserva', {
                     showLoaderOnConfirm: true,
                 },
                 function () {
-                    console.log(vm);
-                    vm.$refs.myReservasCuidadorList.$refs.currentView.ConfirmarReserva(index)
+                    vm.$refs.myDetalleReserva.$refs.currentView.ConfirmarReserva();
+
                 });
         },
-        cancelarReservaActionButton(index) {
-            var reserva = this.reservas[index];
+        cancelarReservaActionButton() {
+
             sweetAlert({
                     title: "Confirmar accion",
-                    text: "Quieres rechazar su reserva con " + reserva.perro.user.fullName + " ?",
+                    text: "Quieres rechazar su reserva con " + this.reserva.perro.user.fullName + " ?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -321,8 +331,9 @@ Vue.component('my-detalle-reserva', {
                     showLoaderOnConfirm: true,
                 },
                 function () {
-                    console.log(vm);
-                    vm.$refs.myReservasCuidadorList.$refs.currentView.cancelarReserva(index)
+
+                  vm.$refs.myDetalleReserva.$refs.currentView.cancelarReserva();
+
                 });
         },
         getParameterByName(name) {
