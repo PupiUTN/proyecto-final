@@ -109,26 +109,71 @@ Vue.component('moderar-cuidador', {
         aceptarSolicitud(cuidador){
             var updateUrl="/api/cuidadores/";
             cuidador.estado="approved";
+            cuidador.user.role="ROLE_CUIDADOR";
             console.log(cuidador);
-            axios.put(updateUrl+cuidador.id, cuidador)
-                .then((data) => {
-                    console.log(data);
-                })
-                .catch(error => {
-                    console.log(error);
+            sweetAlert({
+                    title: "Atención!",
+                    text: "Está seguro de que desea aceptar al cuidador?",
+                    type: "info",
+                    showCancelButton: true,
+                    confirmButtonText: "Aprobar",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                },
+                function () {
+                    axios.put(updateUrl+cuidador.id, cuidador)
+                        .then((data) => {
+                            sweetAlert({
+                                    title: "Aprobado",
+                                    text: "El cuidador ha sido aprobado.",
+                                    type: "success",
+                                },
+                                function () {
+                                    location.reload();
+
+                                });
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
                 });
+
+
         },
         cancelarSolicitud(cuidador){
             var updateUrl="/api/cuidadores/";
             cuidador.estado="rejected";
             console.log(cuidador);
-            axios.put(updateUrl+cuidador.id, cuidador)
-                .then((data) => {
-                    location.reload();
-                })
-                .catch(error => {
-                    console.log(error);
+            sweetAlert({
+                    title: "Atención!",
+                    text: "Está seguro de que desea rechazar al cuidador?",
+                    type: "error",
+                    showCancelButton: true,
+                    confirmButtonColor: "#f91941",
+                    confirmButtonText: "Rechazar",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                },
+                function () {
+                    axios.put(updateUrl+cuidador.id, cuidador)
+                        .then((data) => {
+                            sweetAlert({
+                                    title: "Rechazado",
+                                    text: "El cuidador ha sido rechazado.",
+                                    type: "success",
+                                },
+                                function () {
+                                location.reload();
+
+                                });
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
                 });
+
         },
 
     }
