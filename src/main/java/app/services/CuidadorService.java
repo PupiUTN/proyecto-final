@@ -62,6 +62,12 @@ public class CuidadorService {
         return cuidadorRepository.findcuidadorXUser(id);
     }
 
+
+    public List<Cuidador> getSolicitudes() {
+
+        return cuidadorRepository.getSolicitudes();
+    }
+
     public List<Cuidador> searhCuidadores(String ciudadPlaceId, Date from, Date to, String status) {
         if (from == null || to == null){
             return cuidadorRepository.findAllbyCiudadPlaceIdAndStatus(ciudadPlaceId,status);

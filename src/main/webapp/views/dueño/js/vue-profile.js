@@ -10,18 +10,17 @@ Vue.component('my-profile', {
                     </div>
                 </div>
             </div>
-
             <div class="row">
-
                 <!-- Profile -->
                 <div class="col-lg-6 col-md-12">
                     <div class="dashboard-list-box margin-top-0">
-                        <h4 class="gray">Profile Details</h4>
+                        <h4 class="gray">Informacion personal</h4>
                         <div class="dashboard-list-box-static">
+                            <div class="col-sm-offset-3">
                             <form id="imageForm" enctype="multipart/form-data">
                             <!-- Avatar -->
                             <div class="edit-profile-photo">
-                                <img :src="user.profileImageUrl" alt="">
+                                <img :src="user.profileImageUrl" alt="Foto de Perfil" height="240">
                                 <div class="change-photo-btn">
                                     <div class="photoUpload">
                                         <span><i class="fa fa-upload"></i> Subir Foto</span>
@@ -30,7 +29,7 @@ Vue.component('my-profile', {
                                 </div>
                             </div>
                             </form>
-
+                            </div>
                             <!-- Details -->
                             <div class="my-profile">
 
@@ -54,9 +53,12 @@ Vue.component('my-profile', {
 
                                 <label>Email</label>
                                 <input v-model="user.email" value="" type="text">
+                                
+                                <label class="margin-top-0">Dirección</label>
+                                <input v-model="direccion.provincia" ref="autocompleteProvincia" type="text" placeholder="Ingrese su provincia">
 
                                 <label class="margin-top-0">Dirección</label>
-                                <input v-model="direccion.direccionLinea1" ref="autocomplete" type="text" placeholder="Ingrese su dirección">
+                                <input v-model="direccion.direccionLinea1" ref="autocompleteCalle" v-bind:disabled="disabled" type="text" placeholder="Ingrese su dirección">
                             </div>
                             <!--    TODO onsubmit para validar el formulario-->
                             <button v-on:click='editUserInfo' class="button margin-top-15">Guardar</button>
@@ -81,30 +83,22 @@ Vue.component('my-profile', {
             locality: '',
             administrative_area_level_1: '',
             country: '',
-            postal_code: ''
+            disabled:true,
         }
 
     }
     ,
     mounted() {
-        $('#booking-date').dateDropper()
+        $('#booking-date').dateDropper();
         this.autocompleteAddress();
         this.getUserInfo();
     },
     methods: {
 
         autocompleteAddress() {
-            var componentForm = {
-                street_number: 'short_name',
-                route: 'long_name',
-                locality: 'long_name',
-                administrative_area_level_1: 'short_name',
-                country: 'long_name',
-                postal_code: 'short_name'
-            };
             // TODO permitir solo calles
             var autocomplete = new google.maps.places.Autocomplete(
-                /** @type {!HTMLInputElement} */(this.$refs.autocomplete),
+                /** @type {!HTMLInputElement} */(this.$refs.autocompleteCalle),
 
                 {
                     types: ['geocode'],
@@ -112,24 +106,19 @@ Vue.component('my-profile', {
                 });
             autocomplete.addListener('place_changed', function () {
                 var place = autocomplete.getPlace();
+                console.log("-------------------------");
+                console.log(place);
                 for (var i = 0; i < place.address_components.length; i++) {
                     var addressType = place.address_components[i].types[0];
-                    if (componentForm[addressType]) {
-                        var val = place.address_components[i][componentForm[addressType]];
-                        vm.$set(vm, addressType.toString(), val.toString());
+                    //no es lo mas lindo, pero sirve para saber si falta numero o donde esta
+                    //el error de la direccion
+                    if(addressType=='street_number'){
+                        vm.street_number=place.address_components[i].long_name;
+                        console.log('street_number '+ vm.street_number);
+                        continue;
                     }
                 }
-                // vm.$set(vm.direccion, 'calle',this.route.toString());
-                vm.direccion.calle = vm.route;
-                vm.direccion.numero = vm.street_number;
-                vm.direccion.ciudad = vm.locality;
-                vm.direccion.provincia = vm.administrative_area_level_1;
-                vm.direccion.pais = vm.country;
-                vm.direccion.codigoPostal = vm.postal_code;
-                vm.direccion.ciudadPlaceId = place.place_id;
-                vm.direccion.placeId = place.id;
-                vm.direccion.latitud = place.geometry.location.lat();
-                vm.direccion.longitud = place.geometry.location.lng();
+
             });
         },
         filesChange(fileList) {

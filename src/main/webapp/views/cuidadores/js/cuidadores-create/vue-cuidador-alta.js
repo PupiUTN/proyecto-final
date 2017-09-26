@@ -42,56 +42,60 @@ Vue.component('become-cuidador', {
     </div>
     </div>
     <form id="altaCuidadorForm" v-on:submit.prevent='enviarAltaCuidador()' enctype="multipart/form-data">
-    <div class="row">
-    <div class="col-lg-6 col-md-12 margin-top-20 ">
+    <div class="row panelDiv">
+    <div class="col-lg-6 col-md-12 margin-top-20 margin-bottom-20 " style="height:80%">
         <div class="dashboard-list-box margin-top-0">
             <h4 class="gray"> 	<i class="fa fa-paw"></i> Descripción </h4>
         </div>
-            <div class="dashboard-list-box-static" >   
+            <div class="dashboard-list-box-static" style="height:100%" >   
                 <label class="margin-top-0">Por favor, realiza una descripción sobre tí. Recuerda
                 que debe ser lo más clara posible, así PUPI y otros usuarios puedan saber más acerca de tí.</label>
-                 <textarea v-model="cuidador.descripcion" v-bind:readonly="isReadOnly" rows="6" cols="50" maxlength="1000"  placeholder="Descripcion"
+                 <textarea v-model="cuidador.descripcion" v-bind:readonly="isReadOnly" rows="6" cols="50" maxlength="150"  placeholder="Descripcion"
                     style="height: " required>
                  </textarea>
             </div>
     </div>
-    <div class="col-lg-6 col-md-12 margin-top-20 " >
+    <div class="col-lg-6 col-md-12 margin-top-20 margin-bottom-20" style="height:80%" >
         <div class="dashboard-list-box margin-top-0">
             <h4 class="gray"> 	<i class="fa fa-paw"></i> DNI o Cédula  </h4>
-            <div class="dashboard-list-box-static" >
-            <div class="col-lg-6 col-md-12">
-                <label class="margin-top-0">Anverso</label>
-                <div class="edit-profile-photo">
-                    <img :src="dniAnverso.url" alt="">
-                    <div class="change-photo-btn" id="dniReverso">
-                        <div class="photoUpload">
-                            <span><i class="fa fa-upload"></i> Subir Foto</span>
-                            <input type="file"  :disabled="isReadOnly"  @change="filesChange($event.target.files,0)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+        </div>
+        <div class="dashboard-list-box-static" style="height:100%">
+            <div class="row" >
+                <div class="col-lg-6 col-md-12">
+                    <label class="margin-top-0">Anverso</label>
+                    <div class="edit-profile-photo">
+                        <img :src="dniAnverso.url" alt="DNI" height="170">
+                        <div class="change-photo-btn" id="dniReverso">
+                            <div class="photoUpload">
+                                <span><i class="fa fa-upload"></i> Subir Foto</span>
+                                <input type="file"  :disabled="isReadOnly"  @change="filesChange($event.target.files,0)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>  
-            <div class="col-lg-6 col-md-12">
-                <label class="margin-top-0">Reverso</label>
-                <div class="edit-profile-photo">
-                    <img :src="dniReverso.url" alt="">
-                    <div class="change-photo-btn" id="dniAnverso">
-                        <div class="photoUpload">
-                            <span><i class="fa fa-upload"></i> Subir Foto</span>
-                            <input type="file" :disabled="isReadOnly"  @change="filesChange($event.target.files, 1)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+                </div>  
+                <div class="col-lg-6 col-md-12">
+                    <label class="margin-top-0">Reverso</label>
+                    <div class="edit-profile-photo">
+                        <img :src="dniReverso.url" alt="DNI" height="170">
+                        <div class="change-photo-btn" id="dniAnverso">
+                            <div class="photoUpload">
+                                <span><i class="fa fa-upload"></i> Subir Foto</span>
+                                <input type="file" :disabled="isReadOnly"  @change="filesChange($event.target.files, 1)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-             <label>Número</label>
-               <input v-model="cuidador.dni"  :disabled="isReadOnly" value="" type="number" max="99999999" required>
+            <div class="row">
+                <label>Número</label>
+                <input v-model="cuidador.dni"  :disabled="isReadOnly" value="" type="number" max="99999999" required>
             </div>
         </div>
     </div>
     </div> 
     <div class="row">
     <div class="col-s-3" style="margin-left: 2%;">
-    <input type="submit" :disabled="isReadOnly" value="Enviar" name="enviarAltaCuidador" style=" height: 60px; width: 150px; position: relative;" class="button"/>
+    <input type="submit" :disabled="isReadOnly" value="Enviar" name="enviarAltaCuidador" style=" height: 60px; width: 150px; position: relative; " class="button margin-top-10"/>
     </div>
     </div>
 </form>
@@ -172,7 +176,7 @@ Vue.component('become-cuidador', {
 
         isUserCuidador(sessionInfo) {
             this.user = sessionInfo.data.principal.user;
-            console.log(this.user)
+            console.log(this.user);
             if (this.user.role == 'ROLE_CUIDADOR') {
                 sweetAlert({
                         title: "Felicidades!!",

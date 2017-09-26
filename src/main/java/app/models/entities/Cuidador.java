@@ -20,9 +20,9 @@ public class Cuidador implements Serializable {
     private List<Imagen> listaImagenes;
     private String descripcion;
     private float precioPorNoche;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
-    @OneToMany
+    @ManyToMany
     private List<Servicio> listaServicios;
     @OneToOne
     private  Tamaño tamaño;
@@ -140,5 +140,22 @@ public class Cuidador implements Serializable {
         Cuidador oCuidador = (Cuidador) o;
         if (this.id != oCuidador.id) return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Cuidador{" +
+                "id=" + id +
+                ", cantidadMaxDePerros=" + cantidadMaxDePerros +
+                ", listaImagenes=" + listaImagenes +
+                ", descripcion='" + descripcion + '\'' +
+                ", precioPorNoche=" + precioPorNoche +
+                ", user=" + user +
+                ", listaServicios=" + listaServicios +
+                ", tamaño=" + tamaño +
+                ", estado='" + estado + '\'' +
+                ", dniImagenes=" + dniImagenes +
+                ", dni=" + dni +
+                '}';
     }
 }
