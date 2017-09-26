@@ -2,6 +2,7 @@ package app.services;
 
 import app.models.entities.Reserva;
 import app.persistence.ReservaRepository;
+import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +12,10 @@ import java.util.List;
 public class ReservaService {
 
     private final ReservaRepository reservaRepository;
-    private final MailService mailService;
 
     @Autowired
-    public ReservaService(ReservaRepository reservaRepository, MailService mailService) {
+    public ReservaService(ReservaRepository reservaRepository) {
         this.reservaRepository = reservaRepository;
-        this.mailService = mailService;
     }
 
     public List<Reserva> getReservasByUserId(Long id) {
@@ -40,8 +39,7 @@ public class ReservaService {
         }
         reserva.setStatus("CANCEL_BY_USER");
         reservaRepository.save(reserva);
-        mailService.sendEmail(reserva.getCuidador().getUser().getEmail(), "Cancelacion Solicitud de Reserva - Pupi");
-
+        MailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_CANCELLATION);
     }
 
     public List<Reserva> getReservasByCuidadorIdAndStatus(Long id, String status) {
