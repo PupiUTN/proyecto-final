@@ -75,7 +75,7 @@ let vm = new Vue({
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         },
         getPerros() {
-            var childMylogin = this.$refs.mylogin;
+            var childMylogin = this.$refs.myNavbar.$refs.mylogin;
 
             var userId = childMylogin.user.id;
             axios.get("/api/user/" + userId + "/perros")
