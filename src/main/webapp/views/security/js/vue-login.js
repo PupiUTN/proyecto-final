@@ -59,7 +59,7 @@ let myLogin = Vue.component('my-login', {
 <div v-show="!isAuthenticated">
 
     <!-- Right Side Content / End -->
-    <div class="right-side">
+    <div class="right-side pull-right">
         <div class="header-widget">
             <a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i
                     class="sl sl-icon-login"></i>
