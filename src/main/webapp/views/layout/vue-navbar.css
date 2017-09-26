@@ -1,10 +1,10 @@
 /*jose*/
 .left-side {
-    width: 70%;
+    width: 80%;
 }
 
 .right-side {
-    width: 30%;
+    width: 20%;
 }
 
 /*jose*/
@@ -23,3 +23,7 @@ html, body {
     width: 100%;
 }
 
+.user-menu ul {
+    left: -100px;
+     width: auto;
+}

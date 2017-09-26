@@ -1,13 +1,13 @@
+// https://github.com/olefirenko/vue-google-autocomplete
 Vue.component('my-buscar-cuidadores', {
     template: `
 <form class="main-search-input" v-on:submit.prevent='buscar'>
     <div class="main-search-input-item location" :style="inputSize">
         <vue-google-autocomplete
             id="location"
-            classname=""
             placeholder="Ciudad"
             country="ar"
-            type="cities"
+            types="(cities)"
             v-on:placechanged="setPlaceId"
         >
         </vue-google-autocomplete>
@@ -80,7 +80,6 @@ Vue.component('my-buscar-cuidadores', {
                             vm.$refs.myBuscarCuidadores.placeLng = city.geometry.location.lng;
                             vm.$refs.myBuscarCuidadores.placeName = city.formatted_address;
                             let input = document.getElementById('location');
-                            input.placeholder = vm.$refs.myBuscarCuidadores.placeName;
                             input.value = vm.$refs.myBuscarCuidadores.placeName;
 
                         });

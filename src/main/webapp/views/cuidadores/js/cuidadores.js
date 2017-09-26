@@ -76,15 +76,12 @@ let vm = new Vue({
                             console.log(this.placeID);
                             console.log(response.data);
                             this.items = response.data;
-                            this.encontrados = this.items.length;
                             if (this.items.length === 1) {
-                                this.encontrados += ' Resultado Encontrado';
+                                this.encontrados == ' Resultado Encontrado';
                             } else {
-                                this.encontrados += ' Resultados Encontrados';
+                                this.encontrados == ' Resultados Encontrados';
                             }
                             this.mostrarEnMapa();
-
-
                         })
                         .catch(error => {
                                 console.log(error);
@@ -97,8 +94,8 @@ let vm = new Vue({
             }
         },
         //obitene los parametros de la url... copiado de internet
-        getParameterByName(name, url) {
-            if (!url) url = window.location.href;
+        getParameterByName(name) {
+            var url = window.location.href;
             name = name.replace(/[\[\]]/g, "\\$&");
             var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
                 results = regex.exec(url);
