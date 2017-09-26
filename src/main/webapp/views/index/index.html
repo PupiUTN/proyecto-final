@@ -14,7 +14,6 @@
 
     <!-- MY CSS
     ================================================== -->
-    <link rel="stylesheet" href="/views/index/css/index.css">
     <script src="/js/pace.min.js"></script>
     <link href="/css/pace-theme.css" rel="stylesheet"/>
 
@@ -28,40 +27,9 @@
 
 
     <!-- Header Container
-================================================== -->
-    <header id="header-container" style="background-color: whitesmoke">
-
-        <!-- Header -->
-        <div id="header">
-            <div class="container">
-
-                <!-- Left Side Content -->
-                <div class="left-side">
-
-                    <!-- Logo -->
-                    <div id="logo">
-                        <a href="/views/index/index.html"><img src="/assets/images/logo.png" alt=""></a>
-                    </div>
-
-                    <div class="clearfix"></div>
-                    <!-- Main Navigation / End -->
-
-                </div>
-                <!-- Left Side Content / End -->
-
-
-                <!-- Right Side Content / End -->
-
-                <my-login></my-login>
-                <!-- Right Side Content / End -->
-            </div>
-        </div>
-        <!-- Header / End -->
-
-    </header>
-    <div class="clearfix"></div>
+    ================================================== -->
+    <my-navbar></my-navbar>
     <!-- Header Container / End -->
-
 
     <!-- Banner /file_upload/8ac40210-e64c-40bb-90c5-9e5ad627c1fe.jpg
     ================================================== -->
@@ -73,39 +41,9 @@
                     <div class="col-md-12">
                         <h2> Tú mascota es nuestra mascota</h2>
                         <h4>Porque tú mejor amigo no merece estar solo en casa</h4>
+                        <my-buscar-cuidadores ref="myBuscarCuidadores"></my-buscar-cuidadores>
 
-                        <div class="main-search-input">
 
-
-                            <div class="main-search-input-item location">
-                                <input type="text" v-model="location" id="location" placeholder="Ciudad"/>
-                                <a href="#" id="geo-location" v-on:click='geolocate()'>
-                                    <i class="fa fa-dot-circle-o"></i></a>
-                            </div>
-
-                            <div class="main-search-input-item">
-                                <input type="text" v-model="dateFrom" id="dateFrom" placeholder="Fecha Desde"
-                                       data-lang="es"
-                                       data-init-set="false"
-                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
-                                       data-max-year="2020" data-lock="from">
-                            </div>
-                            <div class="main-search-input-item">
-                                <input type="text" v-model="dateTo" id="dateTo" placeholder="Fecha Hasta" data-lang="es"
-                                       data-init-set="false"
-                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
-                                       data-max-year="2020" data-lock="from">
-
-                            </div>
-
-                            <!--<button class="button" onclick="window.location.href='listings-half-screen-map.html'">-->
-                            <!--Buscar-->
-                            <!--</button>-->
-                            <button class="button" v-on:click='buscar'>
-                                Buscar
-                            </button>
-
-                        </div>
                     </div>
                 </div>
             </div>
@@ -346,8 +284,20 @@
 <!-- Maps -->
 <script type="text/javascript"
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"></script>
+
+
+<link rel="stylesheet" href="/views/layout/vue-navbar.css">
+<script type="text/javascript" src="/views/layout/vue-navbar.js"></script>
+
 <script type="text/javascript" src="/views/security/js/vue-login.js"></script>
-<script type="text/javascript" src="/views/index/js/index.js"></script>
+<script type="text/javascript" src="/views/buscar/vue-google-autocomplete.js"></script>
+<script type="text/javascript" src="/views/buscar/vue-buscar-cuidador.js"></script>
+
+<script>
+    let vm = new Vue({
+        el: '#wrapper',
+    });
+</script>
 
 
 </body>
