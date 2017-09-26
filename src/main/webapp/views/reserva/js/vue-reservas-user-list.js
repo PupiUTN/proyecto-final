@@ -22,8 +22,8 @@ Vue.component('my-reservas-user-list', {
 					<div class="messages-inbox">
 				    <h3>{{ mensaje}}</h3>
 					<ul>
-                        <li v-for="(reserva, index) in reservas">
-                            <a v-bind:style="listColor">
+                        <li v-for="(reserva, index) in reservas" v-bind:style="listColor">
+                            <a>
                                 <div class="message-avatar"><img :src="reserva.cuidador.listaImagenes[0].url"alt=""></div>
 
                                 <div class="message-by">
@@ -175,10 +175,10 @@ Vue.component('my-reservas-user-list', {
         },
         listColor: function () {
             if (this.status == 'CONFIRMATION_PENDING') {
-                return 'background: rgba(0, 169, 72, 0.15);'
+                return 'background: rgba(0, 169, 72, 0.15); margin-bottom: 10px;'
             }
             if (this.status == 'CANCEL_BY_USER') {
-                return 'background: rgba(243, 12, 12, 0.15);'
+                return 'background: rgba(243, 12, 12, 0.15); margin-bottom: 10px;'
             }
         }
 
