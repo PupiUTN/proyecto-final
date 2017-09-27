@@ -4,169 +4,197 @@ Vue.component('my-detalle-reserva', {
   <h1 > Detalles de la Reserva</h1>
 <div id="footer">
 
-    
-	<!-- Header -->
-	<div class="row">
-	
-		<div class="col-xs-12 col-md-2 col-sm-8 ">
-		<div class="col-xs-12 avatar"> <div class="col-xs-12"><img id="foto_user"  :src="reserva.perro.user.profileImageUrl" alt="" style="max-width: 200px;margin-left: 20px;margin-top: -50px;"></div>
-		</div>
-		</div>
+<!-- Header -->
+        <div class="row">
 
-		<div class="col-xs-12 col-md-5 ">	
-            <p id="details" class="margin-left: 50%;">
-				<strong>Usuario:</strong> {{reserva.perro.user.fullName}} <br>					
-			</p>
-			<p id="details" style="margin-left: 50%;">
-				<strong>Estado:</strong> {{reserva.status}} <br>
-					<strong>Fecha:</strong>  {{reserva.fechaTransaccion}} <br>				
-			</p>
-			
-		</div>
-	</div>
-<br>
+            <div class="col-xs-12 col-md-2 col-sm-8 ">
+                <div class="col-xs-12 avatar"> <div class="col-xs-12"><img id="foto_user"  :src="reserva.perro.user.profileImageUrl" alt="" style="max-width: 200px;margin-left: 20px;margin-top: -50px;"></div>
+                </div>
+            </div>
 
-	<!-- Client & Supplier -->
-	<div class="row">
-	
-        <div class="col-md-4">
-		 
-			
-		</div>
-		<div class="col-md-3" >	
-			<strong class="margin-bottom-5">Fecha inicio</strong>
-			<p> {{reserva.fechaInicio}}
-			</p>
-		</div>
+            <div class="col-xs-12 col-md-8 ">
+                <div class= col-md-6></div>
+                <p id="details" >
+                    <strong>Usuario:</strong> {{reserva.perro.user.fullName}} <br>
+                </p>
+                <div class= col-md-6></div>
+                <p id="details" >
+                    <strong>Estado:</strong> {{reserva.status}} <br>
+                <div class= col-md-6></div>
+                <strong>Fecha:</strong>  {{reserva.fechaTransaccion}} <br>
+                </p>
 
-		<div class="col-md-2">	
-			<strong class="margin-bottom-5">Fecha Fin</strong>
-			<p> {{reserva.fechaFin}}
-			</p>
-		</div>
-		<div class="col-xs-12 col-md-12 ">	
-		<div class = "col-md-1"></div>
-		<strong class="  margin-bottom-5">Precio total: </strong> 
-		<br>
-		        <div class="col-md-3">
-		        <label class="col-md-4"></label>
-		<label style=" color: green;font-size: 30px;">{{reserva.precioTotal}} $</label>
-	             </div>
-		</div>
-		
-			<div class="col-md-12" >
-		    <div class=" col col-md-1"></div>  <strong class="margin-bottom-5">Mensaje:</strong>
-		     <br>
-		    
-			<div class=" col col-md-10 col-xs-12"> <div class=" col-md-1"></div>{{reserva.mensaje}}</div>
-			
-		</div>
-	</div>
+            </div>
+        </div>
+        <br>
 
-		
-	</div>
+        <!-- Client & Supplier -->
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class = "col-md-1"></div>
+                <strong class="  margin-bottom-5">Precio total: </strong>
+                <br>
+                <div class="col-md-5">
+                    <label class="col-md-4"></label>
+                    <label style=" color: green;font-size: 30px;">{{reserva.precioTotal}}  $</label>
+                </div>
+            </div>
+            <div class="col-md-4" >
+                <strong class="margin-bottom-5">Fecha inicio</strong>
+                <p> {{reserva.fechaInicio}}
+                </p>
+            </div>
+
+            <div class="col-md-2">
+                <strong class="margin-bottom-5">Fecha Fin</strong>
+                <p> {{reserva.fechaFin}}
+                </p>
+            </div>
+
+
+            <div class="col-md-12" >
+                <div class="col-md-4">
+                    <div class = "col-md-1"></div>
+                    <strong class="  margin-bottom-5">Mensaje: </strong>
+                    <br>
+                    <div class="col-md-10">
+                        <label class="col-md-4"></label>
+                        <div class=" col col-md-10 col-xs-12"> <div class=" col-md-1"></div>{{reserva.mensaje}}</div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+
+
+        </div>
+        </div>
 	<br>
 	<br>
 	
   <h1 > Mascota a Cuidar </h1>
   
-    <div id="footer">
-	    <!-- Header -->
-<div class="row">
+  <div id="footer">
 
-    <div class="col-md-2 col-lg-12 col-xs-12">
-    <div class="zoom">
-          <div  class=" col-xs-12 avatar"><img id="foto_perro" class="zoom" :src="reserva.perro.fotoPerfil" alt="" style="max-width: 200px;margin-left: 20px;margin-top: -50px;"></div>
-    </div>
-    </div>
-    
-<div class =" col-xs-12"> </div>
-    <div class="col-md-4 col-lg-12" >
-        <p id="details" style="margin-left: 50%;">
-            <strong>Nombre:</strong> {{reserva.perro.nombre}} <br>
-        </p>
-        <p id="details" style="margin-left: 50%;">
-            <strong>Edad:</strong> {{edadPerro}} <br>
-            <strong>Raza:</strong> {{reserva.perro.raza.nombre}} <br>
-        </p>
+<!-- Header -->
+        <div class="row">
 
-    </div>
-    
-    
-</div>
-<br>
-
-<div class="row">
-
-
-    <div class="col-md-12 " style=" left: 40px;">
-        <strong class="margin-bottom-5">Tamaño  : </strong> <label style=" margin-bottom: 20px;">{{tamaño}} </label>
-
-    </div>
-   
-    <div class="col-md-12 " style=" left: 40px;">
-        <strong class="margin-bottom-5">Vacunas  : </strong> 
-        
-          <ul v-for=" vacuna in reserva.perro.listaVacunas" class="listing-features checkboxes margin-top-0"
-                            style="">
-                      <li> {{vacuna.nombre}}</li>
-                             </ul>
-    </div>
-		 
-</div>
-        
-   <!-- Reviews -->
-<div id="listing-reviews" class="listing-section">
-<div class = "text-center">
-    <h3 class="listing-desc-headline margin-top-20 margin-bottom-20">Reviews <span>(1)</span></h3>
-</div>
-    <div class="clearfix"></div>
-     <div class = "col-1"> </div>
-    <!-- Reviews -->
-    <section class="comments listing-reviews" style=" margin-left: 40px;">
-
-        <ul>
-            <li>
-                <div class="avatar"><img src="../../assets/images/review-image-01.jpg" alt=""/>
-                </div>
-                <div class="comment-content">
-                    <div class="arrow-comment"></div>
-                    <div class="comment-by">Fede Backhaus<span class="date">June 2017</span>
-                        <div class="star-rating" data-rating="5"></div>
+                    <div class="col-xs-12 col-md-2 col-sm-8 ">
+                    <div class="zoom">
+                    <div class="col-xs-12 avatar"> <img id="foto_perro" class="zoom" :src="reserva.perro.fotoPerfil" alt="" style="max-width: 200px;margin-left: 20px;margin-top: -50px;"></div>
+                       </div>
                     </div>
-                    <p>Eres el mejor  persona que conoci en mi vida, hurra por ti, te cuidaré
-                        siempre </p>
-                    <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review
-                        <span>12</span></a>
-                </div>
-            </li>
 
-         </ul>
-    </section>
+            <div class="col-xs-12 col-md-8 ">
+                <div class= col-md-6></div>
+                <p id="details" >
+                    <strong>Nombre:</strong> {{reserva.perro.nombre}} <br>
+                </p>
+                <div class= col-md-6></div>
+                <p id="details" >
+                    <strong>Edad:</strong> {{edadPerro}} <br>
 
-    <!-- Pagination -->
-    <div class="clearfix"></div>
-    <div class="row">
-        <div class="col-md-12">
-            <!-- Pagination -->
-            <div class="pagination-container margin-top-15">
-                <nav class="pagination">
-                    <ul>
-                        <li><a href="#" class="current-page">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
-                    </ul>
-                </nav>
+                <div class= col-md-6></div>
+                <strong>Raza:</strong> {{reserva.perro.raza.nombre}} <br>
+                </p>
+
             </div>
         </div>
-    </div>
-    <div class="clearfix"></div>
-    <!-- Pagination / End -->
-</div>
+        <br>
+
+        <!-- Client & Supplier -->
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class = "col-md-1"></div>
+                <strong class="  margin-bottom-5">Tamaño: </strong>
+                <br>
+                <div class="col-md-3">
+                    <label class="col-md-4"></label>
+                    <label >{{tamaño}}</label>
+                </div>
+            </div>
 
 
-        
+
+
+            <div class="col-md-12" >
+                <div class="col-md-4">
+                    <div class = "col-md-1"></div>
+                    <strong class="  margin-bottom-5">Vacunas: </strong>
+                    <br>
+                    <div class="col-md-3">
+                        <label class="col-md-4"></label>
+                        <ul v-for=" vacuna in reserva.perro.listaVacunas" class="listing-features checkboxes margin-top-0"
+                            style="">
+                            <li> {{vacuna.nombre}}</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+
         </div>
+
+    <div id="listing-reviews" class="listing-section">
+        <div class = "text-center">
+            <h3 class="listing-desc-headline margin-top-20 margin-bottom-20">Reviews <span>(1)</span></h3>
+        </div>
+        <div class="clearfix"></div>
+        <div class = "col-2"> </div>
+        <!-- Reviews -->
+         
+        <section class="comments listing-reviews" >
+         
+            <ul>
+                <li>
+                
+                       <div class="col-xs-4 col-md-2 avatar"><img src="../../assets/images/review-image-01.jpg" alt=""/>
+                    </div>
+                    
+                    <div class="comment-content">
+                        <div class="arrow-comment"></div>
+                                        <div class="comment-by">Fede Backhaus<span class="date">June 2017</span>
+                                            <div class="star-rating" data-rating="5"></div>
+                                        </div>
+                           
+                        <p>Eres el mejor  persona que conoci en mi vida, hurra por ti, te cuidaré
+                            siempre </p>
+                        <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review
+                            <span>12</span></a>
+                    </div>
+                </li>
+
+            </ul>
+        </section>
+        
+        <!-- Pagination -->
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Pagination -->
+                <div class="pagination-container margin-top-15">
+                    <nav class="pagination">
+                        <ul>
+                            <li><a href="#" class="current-page">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <!-- Pagination / End -->
+    </div>
+        </div>
+
  
 	      <br> 
 	       
@@ -176,12 +204,12 @@ Vue.component('my-detalle-reserva', {
 	            <div class="center-block">	
 
 	            <div class="col-md-1"></div>
-             <div class="col-xs-12 col-md-4" v-if="reserva.status === 'CONFIRMATION_PENDING'" >
+             <div class="col-xs-8 col-md-4" v-if="reserva.status === 'CONFIRMATION_PENDING'" >
                                     <a v-on:click="confirmarReservaButton()"  style="color: blue; border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Confirmar</a>
                                 </div>
                                
 
-                                <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'" >
+                                <div class="col-xs-8 col-md-3" v-if="reserva.status !== 'CANCEL'" >
                                     <a v-on:click="cancelarReservaActionButton()"  href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>                        
                                 </div>
                             </div>
