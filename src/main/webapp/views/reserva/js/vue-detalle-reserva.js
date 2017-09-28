@@ -168,7 +168,7 @@ Vue.component('my-detalle-reserva', {
                             siempre </p>
                         <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review
                             <span>12</span></a>
-                           <div>
+                           </div>
                     </div>
                 </li>
 
