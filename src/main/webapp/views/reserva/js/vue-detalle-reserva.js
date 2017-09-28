@@ -32,11 +32,11 @@ Vue.component('my-detalle-reserva', {
         <div class="row">
 
             <div class="col-md-4">
-                <div class = "col-md-1"></div>
+                <div class = "col-md-3"></div>
                 <strong class="  margin-bottom-5">Precio total: </strong>
                 <br>
-                <div class="col-md-5">
-                    <label class="col-md-4"></label>
+                <div class="col-md-8">
+                    <label class="col-md-5"></label>
                     <label style=" color: green;font-size: 30px;">{{reserva.precioTotal}}  $</label>
                 </div>
             </div>
@@ -54,14 +54,14 @@ Vue.component('my-detalle-reserva', {
 
 
             <div class="col-md-12" >
-                <div class="col-md-4">
-                    <div class = "col-md-1"></div>
-                    <strong class="  margin-bottom-5">Mensaje: </strong>
+                
+                   <div class = "col-md-1"></div>
+                    <strong class="margin-bottom-5">Mensaje: </strong>
                     <br>
                     <div class="col-md-10">
                         <label class="col-md-4"></label>
                         <div class=" col col-md-10 col-xs-12"> <div class=" col-md-1"></div>{{reserva.mensaje}}</div>
-                    </div>
+                   
                 </div>
 
 
@@ -111,11 +111,11 @@ Vue.component('my-detalle-reserva', {
         <div class="row">
 
             <div class="col-md-4">
-                <div class = "col-md-1"></div>
+                <div class = "col-md-3"></div>
                 <strong class="  margin-bottom-5">Tamaño: </strong>
                 <br>
-                <div class="col-md-3">
-                    <label class="col-md-4"></label>
+                <div class="col-md-8">
+                    <label class="col-md-5"></label>
                     <label >{{tamaño}}</label>
                 </div>
             </div>
@@ -124,19 +124,19 @@ Vue.component('my-detalle-reserva', {
 
 
             <div class="col-md-12" >
-                <div class="col-md-4">
-                    <div class = "col-md-1"></div>
-                    <strong class="  margin-bottom-5">Vacunas: </strong>
+                <div >
+                     <div class="col-md-1"></div>
+                      <strong class="  margin-bottom-5">Vacunas: </strong>
                     <br>
-                    <div class="col-md-3">
-                        <label class="col-md-4"></label>
-                        <ul v-for=" vacuna in reserva.perro.listaVacunas" class="listing-features checkboxes margin-top-0"
+                    <div class="col-md-10">
+                        <label class="col-md-1"></label>
+                        <ul v-for=" vacuna in reserva.perro.listaVacunas" class=" col-md-2 listing-features checkboxes margin-top-0"
                             style="">
                             <li> {{vacuna.nombre}}</li>
                         </ul>
                     </div>
                 </div>
-
+          
             </div>
 
 
@@ -150,24 +150,25 @@ Vue.component('my-detalle-reserva', {
         <div class = "col-2"> </div>
         <!-- Reviews -->
          
-        <section class="comments listing-reviews" >
+        <section >
          
-            <ul>
+            <ul style=" list-style: none;">
                 <li>
                 
-                       <div class="col-xs-4 col-md-2 avatar"><img src="../../assets/images/review-image-01.jpg" alt=""/>
+                       <div class="col-xs-3 col-md-2 avatar"><img src="../../assets/images/review-image-01.jpg" alt=""/>
                     </div>
                     
                     <div class="comment-content">
-                        <div class="arrow-comment"></div>
-                                        <div class="comment-by">Fede Backhaus<span class="date">June 2017</span>
+                        <div class="col-xs-12"> 
+                                        <div class=" comment-by">Fede Backhaus<span class="date">June 2017</span>
                                             <div class="star-rating" data-rating="5"></div>
                                         </div>
-                           
+                        
                         <p>Eres el mejor  persona que conoci en mi vida, hurra por ti, te cuidaré
                             siempre </p>
                         <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review
                             <span>12</span></a>
+                           <div>
                     </div>
                 </li>
 
@@ -271,7 +272,8 @@ Vue.component('my-detalle-reserva', {
                 this.reserva = response.data;
                // document.getElementById("foto_perro").src = this.reserva.perro.fotoPerfil;
                      this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);
-                     this.reserva.fechaTransaccion = new Date();
+                   var date= new Date();
+                    this.reserva.fechaTransaccion =   date.toLocaleDateString();
                     if (this.edadPerro  === 0)
                     {
 
