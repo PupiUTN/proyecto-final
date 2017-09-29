@@ -407,28 +407,6 @@ Vue.component('my-detalle-reserva', {
             return edad;
 
         },
-    },
-
-
-    computed: {
-        tipoDeReservas: function () {
-            if (this.reserva.status == 'CONFIRMATION_PENDING') {
-                return 'pendientes'
-            }
-            if (this.reserva.status== 'CANCEL') {
-                return 'canceladas'
-            }
-            return 'Error'
-        },
-        listClass: function () {
-            if (this.reserva.status == 'CONFIRMATION_PENDING') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.reserva.status== 'CANCEL') {
-                return 'col-xs-12 col-md-10'
-            }
-        },
-
-
     }
+
 });
