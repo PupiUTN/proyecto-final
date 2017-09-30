@@ -2,14 +2,14 @@
 sudo -H gedit /etc/environment
 
 #add this lines
-JDBC_DATABASE_URL=jdbc:mysql://130.211.214.126:3306/pupi?useSSL=false
+JDBC_DATABASE_URL=jdbc:mysql://aa1pu9gjmwalalf.caexa3xou8ho.us-east-2.rds.amazonaws.com:3306/pupi?useSSL=false
 JDBC_DATABASE_USERNAME=user
 JDBC_DATABASE_PASSWORD=user
 
 #MAC OS -> Add this lines to .bash_profile
-export JDBC_DATABASE_URL=jdbc:mysql://130.211.214.126:3306/pupi?useSSL=false
-export JDBC_DATABASE_USERNAME=user
-export JDBC_DATABASE_PASSWORD=user
+export JDBC_DATABASE_URL=jdbc:mysql://aa1pu9gjmwalalf.caexa3xou8ho.us-east-2.rds.amazonaws.com:3306/pupi?useSSL=false
+export JDBC_DATABASE_USERNAME=pupi
+export JDBC_DATABASE_PASSWORD=pupi.utn.2017
 
 #reboot your server
 #check if its all right
