@@ -34,7 +34,7 @@ Vue.component('moderar-cuidador', {
                     </div>
                             <div class="col-lg-2 col-md-6 col-xs-12">
                             <span>DNI: {{solicitud.dni}}</span>
-                            <span>{{solicitud.user.direccion.direccionLinea1}}, {{solicitud.user.direccion.ciudad}}, {{solicitud.user.direccion.provincia}}</span>
+                            <!--<span>{{solicitud.user.direccion.direccionLinea1}}, {{solicitud.user.direccion.ciudad}}, {{solicitud.user.direccion.provincia}}</span>-->
                             </div>
                             <div class="col-lg-3 col-md-6 col-xs-12">
                             <span>{{solicitud.descripcion}}</span>
