@@ -57,7 +57,7 @@ public class ReservaUserController {
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
         reservaService.cancelarCausaUsuario(reservaId,id);
-        MailService.sendEmail(myUserPrincipal.getUser(), MailType.BOOKING_CANCELLATION);
+        MailService.sendEmail(reservaService.getReserva(reservaId).getCuidador().getUser(), MailType.BOOKING_CANCELLATION_BY_USER);
         return new ResponseEntity(HttpStatus.OK);
     }
 

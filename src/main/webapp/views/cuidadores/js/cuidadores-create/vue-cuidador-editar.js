@@ -115,7 +115,7 @@ Vue.component('my-cuidador-edit', {
                          <!--   <form id="imageForm" enctype="multipart/form-data">-->
                             <!-- Avatar -->
                             <div class="edit-profile-photo">
-                                <img  id="imagen1" alt="">
+                                <img  id="imagen1" alt="" src="/img/no-avatar.png" height="170" width="240">
                                 <div class="change-photo-btn">
                                     <div class="photoUpload">
                                         <span><i class="fa fa-upload"></i> Subir Foto</span>
@@ -126,7 +126,7 @@ Vue.component('my-cuidador-edit', {
 
 
                                 <div class="edit-profile-photo">
-                                    <img  id="imagen2" alt="">
+                                    <img  id="imagen2" alt="" src="/img/no-avatar.png" height="170" width="240" >
                                     <div class="change-photo-btn">
                                         <div class="photoUpload">
                                             <span><i class="fa fa-upload"></i> Subir Foto</span>
@@ -136,7 +136,7 @@ Vue.component('my-cuidador-edit', {
                                 </div>
 
                                 <div class="edit-profile-photo">
-                                    <img id="imagen3" alt="">
+                                    <img id="imagen3" alt="" src="/img/no-avatar.png" height="170" width="240">
                                     <div class="change-photo-btn">
                                         <div class="photoUpload">
                                             <span><i class="fa fa-upload"></i> Subir Foto</span>
@@ -146,7 +146,7 @@ Vue.component('my-cuidador-edit', {
                                 </div>
 
                                 <div class="edit-profile-photo">
-                                    <img  id="imagen4" alt="">
+                                    <img  id="imagen4" alt="" src="/img/no-avatar.png" height="170" width="240">
                                     <div class="change-photo-btn">
                                         <div class="photoUpload">
                                             <span><i class="fa fa-upload"></i> Subir Foto</span>
@@ -259,6 +259,8 @@ Vue.component('my-cuidador-edit', {
 
         filesChange(fileList, position) {
             // handle file changes
+            if(fileList[0].size <=  1024000 ) //1 mb 1048576
+            {
             const formData = new FormData();
 
             if (!fileList.length) return;
@@ -271,6 +273,12 @@ Vue.component('my-cuidador-edit', {
 
             // save it
             this.upload(formData, position);
+            }
+            else
+            {
+
+                sweetAlert("Oops...", "Error, Se debe cargar una imagen hasta a 1 mb ", "error");
+            }
         },
         upload(formData, position) {
             axios.post('/api/file/', formData)
@@ -282,6 +290,7 @@ Vue.component('my-cuidador-edit', {
                     this.inicializarImagenes();
                 })
                 .catch(error => {
+                        sweetAlert("Oops...", "Error, Se debe cargar una imagen hasta a 1 mb ", "error");
                         console.log("ERROR AXIOS");
                         console.log(error);
                     }
