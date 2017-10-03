@@ -192,7 +192,7 @@ Vue.component('my-profile', {
                 .catch(error => {
                     console.log(error);
                     //sweetAlert("Oops...", "Error, ver consola", "error");
-                   // window.location="/";
+                    window.location="/";
                 });
         },
         editUserInfo() {
