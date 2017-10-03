@@ -5,7 +5,9 @@ public enum MailType {
     BOOKING_REQUEST,
     BOOKING_CONFIRMATION,
     BOOKING_CANCELLATION_BY_HOST,
-    BOOKING_CANCELLATION_BY_USER;
+    BOOKING_CANCELLATION_BY_USER,
+    HOST_REJECTED,
+    WELCOME_HOST;
 
     public String getMailTemplate(String username) {
         switch (this) {
@@ -18,6 +20,10 @@ public enum MailType {
             case BOOKING_CANCELLATION_BY_HOST:
             case BOOKING_CANCELLATION_BY_USER:
                 return getTemplate(username, "https://k61.kn3.net/1/4/3/4/5/6/51D.jpg");
+            case WELCOME_HOST:
+                return getTemplate(username, "https://k60.kn3.net/4/8/0/E/D/2/15A.jpg");
+            case HOST_REJECTED:
+                return getTemplate(username, "https://k61.kn3.net/9/4/A/0/9/B/18F.jpg");
             default:
                 throw new AssertionError("Unknown email type " + this);
         }
@@ -642,6 +648,10 @@ public enum MailType {
                 return "Cancelación de Solicitud de Reserva - Pupi";
             case BOOKING_CANCELLATION_BY_USER:
                 return "Cancelación de Reserva - Pupi";
+            case WELCOME_HOST:
+                return "Solicitud de Cuidador Aprobada - Pupi";
+            case HOST_REJECTED:
+                return "Solicitud de Cuidador Rechazada - Pupi";
             default:
                 throw new AssertionError("Unknown email type " + this);
         }
@@ -659,6 +669,10 @@ public enum MailType {
                 return "Tu solicitud de reserva ha sido cancelada";
             case BOOKING_CANCELLATION_BY_USER:
                 return "Tu reserva ha sido cancelada";
+            case WELCOME_HOST:
+                return "Has sido aprobado como cuidador";
+            case HOST_REJECTED:
+                return "Lo sentimos, no fuiste aprobado";
             default:
                 throw new AssertionError("Unknown email type " + this);
         }
@@ -667,6 +681,8 @@ public enum MailType {
     public String getButtonText() {
         switch (this) {
             case WELCOME:
+            case WELCOME_HOST:
+            case HOST_REJECTED:
                 return "Ir a Pupi";
             default:
                 return "Ver Detalle";
@@ -676,6 +692,8 @@ public enum MailType {
     public String getRedirectUrl() {
         switch (this) {
             case WELCOME:
+            case WELCOME_HOST:
+            case HOST_REJECTED:
                 return "";
             case BOOKING_REQUEST:
                 return "/views/reserva/mis-reservas-cuidador.html?status=CONFIRMATION_PENDING";
