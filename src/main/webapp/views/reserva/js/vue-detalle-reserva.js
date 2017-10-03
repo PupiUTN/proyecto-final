@@ -304,7 +304,7 @@ Vue.component('my-detalle-reserva', {
             axios.put('/api/cuidador/me/reservas/' + id + '/cancelarReserva')
                 .then((response) => {
 
-                    sweetAlert("Cancelada", "Tu reserva a sido cancelada", "success");
+                sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
                     document.location.href = "/views/dashboard/dashboard.html";
                 })
                 .catch(error => {
@@ -319,7 +319,7 @@ Vue.component('my-detalle-reserva', {
             axios.put('/api/cuidador/me/reservas/' + id + '/confirmarReserva')
                 .then((response) => {
 
-                    sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped page te confirmaremos la reserva.", "success");
+                sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped pague te confirmaremos la reserva.", "success");
                     document.location.href = "/views/dashboard/dashboard.html";
                 })
                 .catch(error => {

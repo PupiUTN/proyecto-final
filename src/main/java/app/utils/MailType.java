@@ -4,7 +4,8 @@ public enum MailType {
     WELCOME,
     BOOKING_REQUEST,
     BOOKING_CONFIRMATION,
-    BOOKING_CANCELLATION;
+    BOOKING_CANCELLATION_BY_HOST,
+    BOOKING_CANCELLATION_BY_USER;
 
     public String getMailTemplate(String username) {
         switch (this) {
@@ -14,7 +15,8 @@ public enum MailType {
                 return getTemplate(username, "https://i1.createsend1.com/ei/j/FA/EA6/A1A/133854/csfinal/dog_heart.jpg");
             case BOOKING_CONFIRMATION:
                 return getTemplate(username, "https://k61.kn3.net/3/6/2/B/8/5/794.jpg");
-            case BOOKING_CANCELLATION:
+            case BOOKING_CANCELLATION_BY_HOST:
+            case BOOKING_CANCELLATION_BY_USER:
                 return getTemplate(username, "https://k61.kn3.net/1/4/3/4/5/6/51D.jpg");
             default:
                 throw new AssertionError("Unknown email type " + this);
@@ -546,7 +548,7 @@ public enum MailType {
                 "        </div>\n" +
                 "      </div>\n" +
                 "  \n" +
-                "      <div style=\"background-color: #4b5462;background-position: 0px 0px;background-image: url(" + photoUrl + ");background-repeat: repeat;\">\n" +
+                "      <div style=\"background-color: #4b5462;background-position: center center;width: 100%; height: 100%; background-size: contain;background-image: url(" + photoUrl + ");background-repeat: no-repeat;\">\n" +
                 "        <div class=\"layout one-col\" style=\"Margin: 0 auto;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;\">\n" +
                 "          <div class=\"layout__inner\" style=\"border-collapse: collapse;display: table;width: 100%;\">\n" +
                 "          <!--[if (mso)|(IE)]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\"><tr class=\"layout-full-width\" style=\"background-color: #4b5462;background-position: 0px 0px;background-image: url(https://i1.createsend1.com/ei/j/FA/EA6/A1A/133854/csfinal/dog_heart.jpg);background-repeat: no-repeat;\"><td class=\"layout__edges\">&nbsp;</td><td style=\"width: 600px\" class=\"w560\"><![endif]-->\n" +
@@ -566,7 +568,7 @@ public enum MailType {
                 "            \n" +
                 "              <div style=\"Margin-left: 20px;Margin-right: 20px;\">\n" +
                 "      <div class=\"btn btn--flat btn--medium\" style=\"Margin-bottom: 20px;text-align: center;\">\n" +
-                "        <![if !mso]><a style=\"border-radius: 4px;display: inline-block;font-size: 12px;font-weight: bold;line-height: 22px;padding: 10px 20px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #ffffff !important;background-color: #e31212;font-family: Avenir, sans-serif;\" href=\"http://localhost:5000/" + getRedirectUrl() + "\">" + getButtonText() + "</a><![endif]>\n" +
+                "        <![if !mso]><a style=\"border-radius: 4px;display: inline-block;font-size: 12px;font-weight: bold;line-height: 22px;padding: 10px 20px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #ffffff !important;background-color: #e31212;font-family: Avenir, sans-serif;\" href=\"http://localhost:5000" + getRedirectUrl() + "\">" + getButtonText() + "</a><![endif]>\n" +
                 "      <!--[if mso]><p style=\"line-height:0;margin:0;\">&nbsp;</p><v:roundrect xmlns:v=\"urn:schemas-microsoft-com:vml\" href=\"http://test.com\" style=\"width:108px\" arcsize=\"10%\" fillcolor=\"#E31212\" stroke=\"f\"><v:textbox style=\"mso-fit-shape-to-text:t\" inset=\"0px,9px,0px,9px\"><center style=\"font-size:12px;line-height:22px;color:#FFFFFF;font-family:Avenir,sans-serif;font-weight:bold;mso-line-height-rule:exactly;mso-text-raise:4px\">Ver Detalles</center></v:textbox></v:roundrect><![endif]--></div>\n" +
                 "    </div>\n" +
                 "            \n" +
@@ -636,7 +638,9 @@ public enum MailType {
                 return "Nueva Solicitud de Reserva - Pupi";
             case BOOKING_CONFIRMATION:
                 return "Confirmación de Reserva - Pupi";
-            case BOOKING_CANCELLATION:
+            case BOOKING_CANCELLATION_BY_HOST:
+                return "Cancelación de Solicitud de Reserva - Pupi";
+            case BOOKING_CANCELLATION_BY_USER:
                 return "Cancelación de Reserva - Pupi";
             default:
                 throw new AssertionError("Unknown email type " + this);
@@ -651,7 +655,9 @@ public enum MailType {
                 return "Tienes una solicitud de reserva";
             case BOOKING_CONFIRMATION:
                 return "Tu reserva ha sido confirmada";
-            case BOOKING_CANCELLATION:
+            case BOOKING_CANCELLATION_BY_HOST:
+                return "Tu solicitud de reserva ha sido cancelada";
+            case BOOKING_CANCELLATION_BY_USER:
                 return "Tu reserva ha sido cancelada";
             default:
                 throw new AssertionError("Unknown email type " + this);
@@ -672,10 +678,12 @@ public enum MailType {
             case WELCOME:
                 return "";
             case BOOKING_REQUEST:
-                return "/views/reserva/mis-reservas-user.html?status=CONFIRMATION_PENDING";
+                return "/views/reserva/mis-reservas-cuidador.html?status=CONFIRMATION_PENDING";
             case BOOKING_CONFIRMATION:
                 return "/views/reserva/mis-reservas-user.html?status=ACCEPTED";
-            case BOOKING_CANCELLATION:
+            case BOOKING_CANCELLATION_BY_HOST:
+                return "/views/reserva/mis-reservas-cuidador.html?status=CANCEL";
+            case BOOKING_CANCELLATION_BY_USER:
                 return "/views/reserva/mis-reservas-user.html?status=CANCEL_BY_USER";
             default:
                 throw new AssertionError("Unknown email type " + this);
