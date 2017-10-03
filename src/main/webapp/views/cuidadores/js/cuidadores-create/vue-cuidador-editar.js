@@ -115,7 +115,7 @@ Vue.component('my-cuidador-edit', {
                          <!--   <form id="imageForm" enctype="multipart/form-data">-->
                             <!-- Avatar -->
                             <div class="edit-profile-photo">
-                                <img  id="imagen1" alt="">
+                                <img  id="imagen1" alt="" src="/img/no-avatar.png" height="170" width="240">
                                 <div class="change-photo-btn">
                                     <div class="photoUpload">
                                         <span><i class="fa fa-upload"></i> Subir Foto</span>
@@ -126,7 +126,7 @@ Vue.component('my-cuidador-edit', {
 
 
                                 <div class="edit-profile-photo">
-                                    <img  id="imagen2" alt="">
+                                    <img  id="imagen2" alt="" src="/img/no-avatar.png" height="170" width="240" >
                                     <div class="change-photo-btn">
                                         <div class="photoUpload">
                                             <span><i class="fa fa-upload"></i> Subir Foto</span>
@@ -136,7 +136,7 @@ Vue.component('my-cuidador-edit', {
                                 </div>
 
                                 <div class="edit-profile-photo">
-                                    <img id="imagen3" alt="">
+                                    <img id="imagen3" alt="" src="/img/no-avatar.png" height="170" width="240">
                                     <div class="change-photo-btn">
                                         <div class="photoUpload">
                                             <span><i class="fa fa-upload"></i> Subir Foto</span>
@@ -146,7 +146,7 @@ Vue.component('my-cuidador-edit', {
                                 </div>
 
                                 <div class="edit-profile-photo">
-                                    <img  id="imagen4" alt="">
+                                    <img  id="imagen4" alt="" src="/img/no-avatar.png" height="170" width="240">
                                     <div class="change-photo-btn">
                                         <div class="photoUpload">
                                             <span><i class="fa fa-upload"></i> Subir Foto</span>
