@@ -33,7 +33,7 @@ Vue.component('my-profile', {
                             <label class="margin-top-0">Nombre y Apellido</label>
                             <input v-model="user.fullName" value="" type="text">
                             <label class="margin-top-0">Fecha de Nacimiento</label>
-                            <input v-model="user.birthday" type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d/m/Y" data-lock="to">
+                            <input v-model="user.birthday" type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to">
                             <label class="margin-top-0">Género</label>
                             <select v-model="user.gender">
                                 <option disabled selected value="">Seleccionar Género</option>
@@ -190,16 +190,27 @@ Vue.component('my-profile', {
                 }
                 this.direccion = address;
                 this.user = sessionInfo.data.principal.user;
-                var date= new Date(this.user.birthday);
-                console.log(date);
-                document.getElementById('booking-date').setAttribute('data-default-date',this.user.birthday);
-                $('#booking-date').dateDropper();
+                this.setDate();
                 console.log(this.user);
             }
             else {
                 console.log(sessionInfo.status + "|" + sessionInfo.statusText);
                 sweetAlert("Oops...", "Necesitas estar logueado para acceder a este contenido", "error");
             }
+        },
+        setDate() {
+
+                if(this.user.birthday){
+                    console.log(this.user.birthday);
+                    var initial =this.user.birthday.split("-");
+                    var date=[ initial[1], initial[0], initial[2] ].join('-');
+                    console.log(date);
+                    document.getElementById('booking-date').setAttribute('data-default-date',date);
+                    document.getElementById('booking-date').setAttribute('data-lock','');
+                    $('#booking-date').dateDropper();
+
+                }
+
         }
     }
 });
