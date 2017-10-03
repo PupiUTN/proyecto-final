@@ -10,7 +10,7 @@ Vue.component('my-profile', {
             </div>
         </div>
     </div>
-    <form id="editCuidador" v-on:submit.prevent='editUserInfo()' enctype="multipart/form-data">
+    <form id="editCuidador" v-on:submit.prevent="editUserInfo" enctype="multipart/form-data">
         <div class="row">
     <!-- Profile -->
         <div class="col-lg-12 col-md-12">
@@ -66,9 +66,11 @@ Vue.component('my-profile', {
             <h4 class="gray">Dirección</h4>
             <div class="dashboard-list-box-static">
                 <div class="my-profile">
-                    <input v-model="direccion.provincia" ref="autocompleteCalle" type="text" placeholder="Ingrese su dirección">
-                    <label class="margin-top-0">Dirección</label>
-                    <input v-model="direccion.direccionLinea1" ref="autocompleteCalle" v-bind:disabled="disabled" type="text" placeholder="Ingrese su dirección">
+                    <input id="autocomplete" type="text" placeholder="Ingrese su dirección">
+                    <div class="row">
+                        <label class="margin-top-0 col-lg-1">Dirección</label>
+                        <input class="col-lg-offset-1 margin-left-10" style="width: inherit" v-model="direccion.numero" type="text" id="street_number" :disable="disabled" >
+                    </div>
                 </div>
             </div>
         </div>
@@ -104,13 +106,23 @@ Vue.component('my-profile', {
     mounted() {
         this.autocompleteAddress();
         this.getUserInfo();
+        this.preventEnter();
     },
     methods: {
-
+        preventEnter(){
+            $('#editCuidador').on('keyup keypress', function(e) {
+                var keyCode = e.keyCode || e.which;
+                if (keyCode === 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        },
         autocompleteAddress() {
             // TODO permitir solo calles
             var autocomplete = new google.maps.places.Autocomplete(
-                /** @type {!HTMLInputElement} */(this.$refs.autocompleteCalle),
+                /** @type {!HTMLInputElement} */
+                (document.getElementById('autocomplete')),
 
                 {
                     types: ['geocode'],
@@ -166,9 +178,9 @@ Vue.component('my-profile', {
                     this.isUserLoggedIn(sessionInfo);
                 })
                 .catch(error => {
-                    //console.log(error);
+                    console.log(error);
                     //sweetAlert("Oops...", "Error, ver consola", "error");
-                    window.location="/";
+                   // window.location="/";
                 });
         },
         editUserInfo() {
