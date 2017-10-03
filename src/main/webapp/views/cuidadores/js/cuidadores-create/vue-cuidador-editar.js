@@ -259,6 +259,8 @@ Vue.component('my-cuidador-edit', {
 
         filesChange(fileList, position) {
             // handle file changes
+            if(fileList[0].size <=  1024000 ) //1 mb 1048576
+            {
             const formData = new FormData();
 
             if (!fileList.length) return;
@@ -271,6 +273,12 @@ Vue.component('my-cuidador-edit', {
 
             // save it
             this.upload(formData, position);
+            }
+            else
+            {
+
+                sweetAlert("Oops...", "Error, Se debe cargar una imagen hasta a 1 mb ", "error");
+            }
         },
         upload(formData, position) {
             axios.post('/api/file/', formData)
@@ -282,6 +290,7 @@ Vue.component('my-cuidador-edit', {
                     this.inicializarImagenes();
                 })
                 .catch(error => {
+                        sweetAlert("Oops...", "Error, Se debe cargar una imagen hasta a 1 mb ", "error");
                         console.log("ERROR AXIOS");
                         console.log(error);
                     }
