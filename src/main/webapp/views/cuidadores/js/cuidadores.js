@@ -14,6 +14,7 @@ let vm = new Vue({
         geoPlace: null,
         dateFrom: null,
         dateTo: null,
+        isIndex: false,
     },
     mounted() {
         this.initMap();
