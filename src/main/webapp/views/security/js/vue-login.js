@@ -218,6 +218,7 @@ let myLogin = Vue.component('my-login', {
                     console.log("login exitoso");
                     console.log(response.data);
                     this.getUserProfile();
+                    window.location=window.location;
                 })
                 .catch(error => {
                         this.loginLoading = false;
