@@ -239,7 +239,7 @@ Vue.component('become-cuidador', {
                     })
                     .catch(error => {
                             console.log(error);
-                            sweetAlert("Oops...", "Error, ver consola", "error");
+                            sweetAlert("Oops...", "Error, ver consola lalalal", "error");
                         }
                     );
             }

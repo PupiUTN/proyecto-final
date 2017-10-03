@@ -10,7 +10,8 @@ Vue.component('my-profile', {
             </div>
         </div>
     </div>
-    <div class="row">
+    <form id="editCuidador" v-on:submit.prevent='editUserInfo()' enctype="multipart/form-data">
+        <div class="row">
     <!-- Profile -->
         <div class="col-lg-12 col-md-12">
             <div class="dashboard-list-box margin-top-0">
@@ -31,11 +32,11 @@ Vue.component('my-profile', {
                         </div>
                         <div class="my-profile col-md-8">
                             <label class="margin-top-0">Nombre y Apellido</label>
-                            <input v-model="user.fullName" value="" type="text">
+                            <input v-model="user.fullName" value="" type="text" required>
                             <label class="margin-top-0">Fecha de Nacimiento</label>
-                            <input v-model="user.birthday" type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to">
+                            <input type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to" required>
                             <label class="margin-top-0">Género</label>
-                            <select v-model="user.gender">
+                            <select v-model="user.gender" required>
                                 <option disabled selected value="">Seleccionar Género</option>
                                 <option>Masculino</option>
                                 <option>Femenino</option>
@@ -46,15 +47,17 @@ Vue.component('my-profile', {
             </div>
         </div>
     </div>
-    <div class="row margin-top-20">
+        <div class="row margin-top-20">
         <div class="col-lg-6 col-xs-12">
         <div class="dashboard-list-box margin-top-0">
             <h4 class="gray">Información de Contacto</h4>
             <div class="dashboard-list-box-static">
-                <label>Telefono</label>
-                <input v-model="user.phone" value="" type="text">
-                <label>Email</label>
-                <input v-model="user.email" value="" type="email">
+                <div class="my-profile">
+                    <label class="margin-top-0">Teléfono</label>
+                    <input v-model="user.phone" value="" type="number" required>
+                    <label class="margin-top-0">Email</label>
+                    <input v-model="user.email" value="" type="email" required>
+                </div>
             </div>
         </div>
     </div>
@@ -62,18 +65,21 @@ Vue.component('my-profile', {
         <div class="dashboard-list-box margin-top-0">
             <h4 class="gray">Dirección</h4>
             <div class="dashboard-list-box-static">
-                <label class="margin-top-0">Dirección</label>
-                <input v-model="direccion.provincia" ref="autocompleteProvincia" type="text" placeholder="Ingrese su provincia">
-                <label class="margin-top-0">Dirección</label>
-                <input v-model="direccion.direccionLinea1" ref="autocompleteCalle" v-bind:disabled="disabled" type="text" placeholder="Ingrese su dirección">
+                <div class="my-profile">
+                    <input v-model="direccion.provincia" ref="autocompleteCalle" type="text" placeholder="Ingrese su dirección">
+                    <label class="margin-top-0">Dirección</label>
+                    <input v-model="direccion.direccionLinea1" ref="autocompleteCalle" v-bind:disabled="disabled" type="text" placeholder="Ingrese su dirección">
+                </div>
             </div>
         </div>
     </div>
     </div>
-    <div class="row">
-        <!--TODO onsubmit para validar el formulario--> 
-        <button v-on:click='editUserInfo' class="button margin-top-15">Guardar</button>
-</div>
+        <div class="row">
+            <div class="col-s-3" style="margin-left: 2%;">
+                <input type="submit" value="Guardar" name="editUserInfo" style=" height: 60px; width: 150px; position: relative; " class="button margin-top-10"/>
+            </div>
+        </div>
+    </form>
 </div>
     `,
     data: function () {
@@ -167,6 +173,8 @@ Vue.component('my-profile', {
         },
         editUserInfo() {
             this.user.direccion = this.direccion;
+            this.user.birthday=document.getElementById('booking-date').value;
+            console.log(this.user);
             var payload = jQuery.extend(true, {}, this.user);
             axios.put(this.url + this.user.id, payload)
                 .then((response) => {
@@ -192,6 +200,8 @@ Vue.component('my-profile', {
                 this.user = sessionInfo.data.principal.user;
                 this.setDate();
                 console.log(this.user);
+                $('#booking-date').dateDropper();
+
             }
             else {
                 console.log(sessionInfo.status + "|" + sessionInfo.statusText);
@@ -199,7 +209,6 @@ Vue.component('my-profile', {
             }
         },
         setDate() {
-
                 if(this.user.birthday){
                     console.log(this.user.birthday);
                     var initial =this.user.birthday.split("-");
@@ -207,11 +216,11 @@ Vue.component('my-profile', {
                     console.log(date);
                     document.getElementById('booking-date').setAttribute('data-default-date',date);
                     document.getElementById('booking-date').setAttribute('data-lock','');
-                    $('#booking-date').dateDropper();
 
                 }
 
         }
+
     }
 });
 
