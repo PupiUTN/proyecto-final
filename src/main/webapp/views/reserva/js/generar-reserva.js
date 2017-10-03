@@ -44,7 +44,7 @@ let vm = new Vue({
             // TRIGGER MOUNTED METHOD
             this.isAuthenticated = isAuthenticated;
             if (!this.isAuthenticated) {
-                var childMylogin = this.$refs.mylogin;
+                var childMylogin = this.$refs.myNavbar.$refs.mylogin;
                 childMylogin.openLoginPopUp();
             } else {
                 this.loadReservaContent();
