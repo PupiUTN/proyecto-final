@@ -21,6 +21,7 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
     // Do something with response error
     $('.pace').hide();
+    console.log("------------  $('.pace').hide();");
     console.log("------------  error axios interceptors response");
     console.log(error.response);
     if(error.response.config.url !== '/api/user/me'){

@@ -119,7 +119,6 @@ Vue.component('my-reservas-user-list', {
             var id = this.reservas[index].id;
             axios.put('/api/user/me/reservas/' + id + '/cancelarUsuario')
                 .then((response) => {
-
                     sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
                     Vue.delete(this.reservas, index);
                 })
