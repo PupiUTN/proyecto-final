@@ -24,6 +24,7 @@ axios.interceptors.response.use(function (response) {
     }
     return response;
 }, function (error) {
+    numberOfAjaxCAllPending--;
     console.log("------------  error axios interceptors response");
     // Do something with response error
     $('.pace').hide();
