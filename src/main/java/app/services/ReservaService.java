@@ -43,7 +43,6 @@ public class ReservaService {
         }
         reserva.setStatus("CANCEL_BY_USER");
         reservaRepository.save(reserva);
-        MailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_CANCELLATION);
     }
 
     public List<Reserva> getReservasByCuidadorIdAndStatus(Long id, String status) {

@@ -120,7 +120,7 @@ Vue.component('my-reservas-user-list', {
             axios.put('/api/user/me/reservas/' + id + '/cancelarUsuario')
                 .then((response) => {
 
-                    sweetAlert("Cancelada", "Tu reserva a sido cancelada", "success");
+                    sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
                     Vue.delete(this.reservas, index);
                 })
                 .catch(error => {

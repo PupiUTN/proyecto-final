@@ -180,7 +180,7 @@ Vue.component('become-cuidador', {
             if (this.user.role == 'ROLE_CUIDADOR') {
                 sweetAlert({
                         title: "Felicidades!!",
-                        text: "Su solicitud a sido aprobada. Ahora puede armar su perfil como cuidador",
+                        text: "Su solicitud ha sido aprobada. Ahora puede armar su perfil como cuidador",
                         type: "info",
                     },
                     function () {

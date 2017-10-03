@@ -2,9 +2,12 @@ package app.controllers;
 
 
 import app.models.entities.Reserva;
-        import app.security.MyUserPrincipal;
-        import app.services.ReservaService;
-        import org.springframework.beans.factory.annotation.Autowired;
+import app.models.entities.User;
+import app.security.MyUserPrincipal;
+import app.services.MailService;
+import app.services.ReservaService;
+import app.utils.MailType;
+import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.http.HttpStatus;
         import org.springframework.http.ResponseEntity;
         import org.springframework.security.access.prepost.PreAuthorize;
@@ -58,11 +61,9 @@ public class ReservaCuidadorController {
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
         reservaService.cancelar(reservaId,id);
-
-        // aca iria la notifiacion a al usuario
-
+        User user = getReserva(reservaId).getPerro().getUser();
+        MailService.sendEmail(user, MailType.BOOKING_CANCELLATION_BY_HOST);
         return new ResponseEntity(HttpStatus.OK);
-
     }
 
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
@@ -72,8 +73,8 @@ public class ReservaCuidadorController {
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
         reservaService.confirmar(reservaId,id);
-        // aca iria la notifiacion a al usuario
-
+        User user = getReserva(reservaId).getPerro().getUser();
+        MailService.sendEmail(user, MailType.BOOKING_CONFIRMATION);
         return new ResponseEntity(HttpStatus.OK);
 
     }

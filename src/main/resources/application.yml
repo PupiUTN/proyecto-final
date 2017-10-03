@@ -7,7 +7,7 @@ spring:
     validationQuery: SELECT 1
  jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
     show-sql: true
     properties:
@@ -17,8 +17,6 @@ spring:
    host: email-smtp.us-east-1.amazonaws.com
    port: 465
    protocol: smtps
-#   username: ${PUPI_MAIL_USERNAME}
-#   password: ${PUPI_MAIL_PASSWORD}
    properties.mail.smtp:
                     auth: true
                     starttls.enable: true
