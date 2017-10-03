@@ -73,7 +73,7 @@ Vue.component('my-buscar-cuidadores', {
                     //https://developers.google.com/maps/documentation/geocoding/start
                     axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.placeLat + ',' + this.placeLng + '&sensor=true')
                         .then((data) => {
-                            console.log("Entra al axios");
+                            console.log(data.data);
                             var city = data.data.results[1];
                             vm.$refs.myBuscarCuidadores.placeID = city.place_id;
                             vm.$refs.myBuscarCuidadores.placeLat = city.geometry.location.lat;

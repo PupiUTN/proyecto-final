@@ -2,71 +2,78 @@ Vue.component('my-profile', {
     template:
         `
 <div>
-                <!-- Titlebar -->
-            <div id="titlebar">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>Mi Perfil</h2>
-                    </div>
-                </div>
+    <!-- Titlebar -->
+    <div id="titlebar">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Mi Perfil</h2>
             </div>
-            <div class="row">
-                <!-- Profile -->
-                <div class="col-lg-6 col-md-12">
-                    <div class="dashboard-list-box margin-top-0">
-                        <h4 class="gray">Informacion personal</h4>
-                        <div class="dashboard-list-box-static">
-                            <div class="col-sm-offset-3">
+        </div>
+    </div>
+    <div class="row">
+    <!-- Profile -->
+        <div class="col-lg-12 col-md-12">
+            <div class="dashboard-list-box margin-top-0">
+                <h4 class="gray">Informacion personal</h4>
+                <div class="dashboard-list-box-static">
+                    <div class="row">
+                        <div class="col-sm-offset-3 col-md-offset-0 col-md-4 margin-top-5">
                             <form id="imageForm" enctype="multipart/form-data">
                             <!-- Avatar -->
-                            <div class="edit-profile-photo">
-                                <img :src="user.profileImageUrl" alt="Foto de Perfil" height="240">
-                                <div class="change-photo-btn">
-                                    <div class="photoUpload">
-                                        <span><i class="fa fa-upload"></i> Subir Foto</span>
-                                        <input type="file" id="imageFile" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
-                                    </div>
+                            <img :src="user.profileImageUrl" alt="Foto de Perfil" height="286">
+                            <div class="change-photo-btn">
+                                <div class="photoUpload">
+                                    <span><i class="fa fa-upload"></i> Subir Foto</span>
+                                    <input type="file" id="imageFile" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
                                 </div>
                             </div>
                             </form>
-                            </div>
-                            <!-- Details -->
-                            <div class="my-profile">
-
-                                <label>Nombre y Apellido</label>
-                                <input v-model="user.fullName" value="" type="text">
-
-                                <label>Fecha de Nacimiento</label>
-                                <input v-model="user.birthday" type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to">
-
-
-                                <label>Genero</label>
-                                <select v-model="user.gender">
-                                    <option disabled value="">Seleccionar Genero</option>
-                                    <option>Masculino</option>
-                                    <option>Femenino</option>
-                                </select>
-
-
-                                <label>Telefono</label>
-                                <input v-model="user.phone" value="" type="text">
-
-                                <label>Email</label>
-                                <input v-model="user.email" value="" type="text">
-                                
-                                <label class="margin-top-0">Dirección</label>
-                                <input v-model="direccion.provincia" ref="autocompleteProvincia" type="text" placeholder="Ingrese su provincia">
-
-                                <label class="margin-top-0">Dirección</label>
-                                <input v-model="direccion.direccionLinea1" ref="autocompleteCalle" v-bind:disabled="disabled" type="text" placeholder="Ingrese su dirección">
-                            </div>
-                            <!--    TODO onsubmit para validar el formulario-->
-                            <button v-on:click='editUserInfo' class="button margin-top-15">Guardar</button>
-
+                        </div>
+                        <div class="my-profile col-md-8">
+                            <label class="margin-top-0">Nombre y Apellido</label>
+                            <input v-model="user.fullName" value="" type="text">
+                            <label class="margin-top-0">Fecha de Nacimiento</label>
+                            <input v-model="user.birthday" type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d/m/Y" data-lock="to">
+                            <label class="margin-top-0">Género</label>
+                            <select v-model="user.gender">
+                                <option disabled selected value="">Seleccionar Género</option>
+                                <option>Masculino</option>
+                                <option>Femenino</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row margin-top-20">
+        <div class="col-lg-6 col-xs-12">
+        <div class="dashboard-list-box margin-top-0">
+            <h4 class="gray">Información de Contacto</h4>
+            <div class="dashboard-list-box-static">
+                <label>Telefono</label>
+                <input v-model="user.phone" value="" type="text">
+                <label>Email</label>
+                <input v-model="user.email" value="" type="email">
+            </div>
+        </div>
+    </div>
+        <div class="col-lg-6 col-xs-12">
+        <div class="dashboard-list-box margin-top-0">
+            <h4 class="gray">Dirección</h4>
+            <div class="dashboard-list-box-static">
+                <label class="margin-top-0">Dirección</label>
+                <input v-model="direccion.provincia" ref="autocompleteProvincia" type="text" placeholder="Ingrese su provincia">
+                <label class="margin-top-0">Dirección</label>
+                <input v-model="direccion.direccionLinea1" ref="autocompleteCalle" v-bind:disabled="disabled" type="text" placeholder="Ingrese su dirección">
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="row">
+        <!--TODO onsubmit para validar el formulario--> 
+        <button v-on:click='editUserInfo' class="button margin-top-15">Guardar</button>
+</div>
 </div>
     `,
     data: function () {
@@ -89,7 +96,6 @@ Vue.component('my-profile', {
     }
     ,
     mounted() {
-        $('#booking-date').dateDropper();
         this.autocompleteAddress();
         this.getUserInfo();
     },
@@ -154,8 +160,9 @@ Vue.component('my-profile', {
                     this.isUserLoggedIn(sessionInfo);
                 })
                 .catch(error => {
-                    console.log(error);
-                    sweetAlert("Oops...", "Error, ver consola", "error");
+                    //console.log(error);
+                    //sweetAlert("Oops...", "Error, ver consola", "error");
+                    window.location="/";
                 });
         },
         editUserInfo() {
@@ -183,6 +190,11 @@ Vue.component('my-profile', {
                 }
                 this.direccion = address;
                 this.user = sessionInfo.data.principal.user;
+                var date= new Date(this.user.birthday);
+                console.log(date);
+                document.getElementById('booking-date').setAttribute('data-default-date',this.user.birthday);
+                $('#booking-date').dateDropper();
+                console.log(this.user);
             }
             else {
                 console.log(sessionInfo.status + "|" + sessionInfo.statusText);
