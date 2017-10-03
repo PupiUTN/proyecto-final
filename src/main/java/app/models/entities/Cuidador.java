@@ -20,7 +20,7 @@ public class Cuidador implements Serializable {
     private List<Imagen> listaImagenes;
     private String descripcion;
     private float precioPorNoche;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     private User user;
     @ManyToMany
     private List<Servicio> listaServicios;

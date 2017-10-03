@@ -34,9 +34,9 @@ public class CuidadorController {
             @RequestParam(value = "ciudadPlaceId", required = false) String ciudadPlaceId,
             @RequestParam(value = "from", required = false) Date from,
             @RequestParam(value = "to", required = false) Date to,
-            @RequestParam(value = "status", defaultValue = "approved") String status) throws Exception {
+            @RequestParam(value = "status", defaultValue = "completed") String status) throws Exception {
 
-        return cuidadorService.searhCuidadores(ciudadPlaceId, from, to, status);
+        return cuidadorService.searchCuidadores(ciudadPlaceId, from, to, status);
 
     }
 

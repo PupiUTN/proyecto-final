@@ -68,7 +68,7 @@ public class CuidadorService {
         return cuidadorRepository.getSolicitudes();
     }
 
-    public List<Cuidador> searhCuidadores(String ciudadPlaceId, Date from, Date to, String status) {
+    public List<Cuidador> searchCuidadores(String ciudadPlaceId, Date from, Date to, String status) {
         if (from == null || to == null){
             return cuidadorRepository.findAllbyCiudadPlaceIdAndStatus(ciudadPlaceId,status);
         }

@@ -38,7 +38,6 @@ Vue.component('moderar-cuidador', {
                             </div>
                             <div class="col-lg-3 col-md-6 col-xs-12">
                             <span>{{solicitud.descripcion}}</span>
-                           
                             </div>
                         </div>
                     </div>
