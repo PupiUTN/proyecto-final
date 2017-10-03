@@ -19,10 +19,10 @@ let mySidebar = Vue.component('my-sidebar', {
                     <li><a href="/views/due%C3%B1o/perfil.html"><i class="sl sl-icon-user"></i> Mi Perfil</a></li>	
 				</li>
                 </ul>
-                <ul v-show="role === 'ROLE_CUIDADOR'" data-submenu-title="Cuidador">
-                    <li><a href="/views/cuidadores/alta-cuidador.html"><i class="sl sl-icon-user"></i> Solicitud</a></li>
-                     <li><a href="/views/cuidadores/cuidadores-editar.html"><i class="sl sl-icon-book-open"></i> Mi Descripcion</a></li>
-                     <li><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>
+                <ul  data-submenu-title="Cuidador">
+                    <li v-show="role === 'ROLE_USER' || role === 'ROLE_CUIDADOR'"><a href="/views/cuidadores/alta-cuidador.html"><i class="sl sl-icon-user"></i> Solicitud</a></li>
+                     <li v-show="role === 'ROLE_CUIDADOR'"><a href="/views/cuidadores/cuidadores-editar.html"><i class="sl sl-icon-book-open"></i> Mi Descripcion</a></li>
+                     <li v-show="role === 'ROLE_CUIDADOR'"><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>
 					 <ul>
 						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=CONFIRMATION_PENDING">Pendientes <span class="nav-tag green">6</span></a></li>
 						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=ACCEPTED">Concretadas <span class="nav-tag yellow">1</span></a></li>
