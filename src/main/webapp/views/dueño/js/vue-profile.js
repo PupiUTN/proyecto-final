@@ -2,7 +2,6 @@ Vue.component('my-profile', {
     template:
         `
 <div>
-    <!-- Titlebar -->
     <div id="titlebar">
         <div class="row">
             <div class="col-md-12">
@@ -12,7 +11,6 @@ Vue.component('my-profile', {
     </div>
     <form id="editCuidador" v-on:submit.prevent="editUserInfo" enctype="multipart/form-data">
         <div class="row">
-    <!-- Profile -->
         <div class="col-lg-12 col-md-12">
             <div class="dashboard-list-box margin-top-0">
                 <h4 class="gray">Informacion personal</h4>
@@ -67,10 +65,14 @@ Vue.component('my-profile', {
             <div class="dashboard-list-box-static">
                 <div class="my-profile">
                     <input id="autocomplete" type="text" placeholder="Ingrese su dirección">
-                    <div class="row">
-                        <label class="margin-top-0 col-lg-1">Dirección</label>
-                        <input class="col-lg-offset-1 margin-left-10" style="width: inherit" v-model="direccion.numero" type="text" id="street_number" :disable="disabled" >
-                    </div>
+                    <label class="margin-top-0">Número</label>
+                    <input v-model="direccion.numero" type="number" id="street_number" :disabled="disabled" >
+                    <label class="margin-top-0">Calle</label>
+                    <input v-model="direccion.calle" type="text" id="route" :disabled="disabled" >
+                    <label class="margin-top-0">Ciudad</label>
+                    <input v-model="direccion.ciudad" type="text" id="locality" :disabled="disabled" >
+                    <label class="margin-top-0">Provincia</label>
+                    <input v-model="direccion.provincia" type="text" id="administrative_area_level_1" :disabled="disabled" >
                 </div>
             </div>
         </div>
@@ -99,6 +101,14 @@ Vue.component('my-profile', {
             administrative_area_level_1: '',
             country: '',
             disabled: true,
+            componentForm:{
+                street_number: 'short_name',
+                route: 'long_name',
+                locality: 'long_name',
+                administrative_area_level_1: 'short_name',
+                country: 'long_name',
+            },
+            autocomplete:null,
         }
 
     }
@@ -120,7 +130,7 @@ Vue.component('my-profile', {
         },
         autocompleteAddress() {
             // TODO permitir solo calles
-            var autocomplete = new google.maps.places.Autocomplete(
+            this.autocomplete = new google.maps.places.Autocomplete(
                 /** @type {!HTMLInputElement} */
                 (document.getElementById('autocomplete')),
 
@@ -128,22 +138,24 @@ Vue.component('my-profile', {
                     types: ['geocode'],
                     componentRestrictions: {country: "ar"}
                 });
-            autocomplete.addListener('place_changed', function () {
-                var place = autocomplete.getPlace();
-                console.log("-------------------------");
-                console.log(place);
-                for (var i = 0; i < place.address_components.length; i++) {
-                    var addressType = place.address_components[i].types[0];
-                    //no es lo mas lindo, pero sirve para saber si falta numero o donde esta
-                    //el error de la direccion
-                    if (addressType == 'street_number') {
-                        vm.street_number = place.address_components[i].long_name;
-                        console.log('street_number ' + vm.street_number);
-                        continue;
-                    }
-                }
 
-            });
+            this.autocomplete.addListener('place_changed', this.completar);
+        },
+        completar(){
+            var place = this.autocomplete.getPlace();
+            console.log("-------------------------");
+            console.log(place);
+            this.disabled=false;
+            for (var i = 0; i < place.address_components.length; i++) {
+                var addressType = place.address_components[i].types[0];
+                console.log(addressType);
+                if (this.componentForm[addressType]) {
+                    console.log(this.componentForm[addressType]);
+                    var val = place.address_components[i][this.componentForm[addressType]];
+                    document.getElementById(addressType).value = val;
+                    console.log(val);
+                }
+            }
         },
         filesChange(fileList) {
             // handle file changes
