@@ -119,101 +119,101 @@ Vue.component('my-reservas-cuidador-list', {
         this.getCuidadorReservas();
     },
     methods:
-        { verReserva(index)
         {
+            verReserva(index) {
 
 
-            document.location.href ="/views/reserva/detalle-reserva.html?id= "+ index;
-        },
+                document.location.href = "/views/reserva/detalle-reserva.html?id= " + index;
+            },
 
-        getCuidadorReservas() {
-            axios.get('/api/cuidador/me/reservas?status=' + this.status)
-                .then((response) => {
-                    this.reservas = response.data;
-                    if (this.reservas.length === 0) {
-                        this.message = "Actualmente no tenés ninguna reserva.";
-                    }
+            getCuidadorReservas() {
+                axios.get('/api/cuidador/me/reservas?status=' + this.status)
+                    .then((response) => {
+                        this.reservas = response.data;
+                        if (this.reservas.length === 0) {
+                            this.message = "Actualmente no tenés ninguna reserva.";
+                        }
 
-                })
-                .catch(error => {
-                    console.log(error);
-                    sweetAlert("Oops...", "Error, ver consola", "error");
-                });
-        },
-        cancelarReserva(index) {
-
-            var id = this.reservas[index].id;
-            axios.put('/api/cuidador/me/reservas/' + id + '/cancelarReserva')
-                .then((response) => {
-
-                    sweetAlert("Cancelada", "Tu reserva a sido cancelada", "success");
-                    Vue.delete(this.reservas, index);
-                })
-                .catch(error => {
+                    })
+                    .catch(error => {
                         console.log(error);
                         sweetAlert("Oops...", "Error, ver consola", "error");
-                    }
-                );
-        },
-        ConfirmarReserva(index) {
+                    });
+            },
+            cancelarReserva(index) {
 
-            var id = this.reservas[index].id;
-            axios.put('/api/cuidador/me/reservas/' + id + '/confirmarReserva')
-                .then((response) => {
+                var id = this.reservas[index].id;
+                axios.put('/api/cuidador/me/reservas/' + id + '/cancelarReserva')
+                    .then((response) => {
 
-                    sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped page te confirmaremos la reserva.", "success");
-                    Vue.delete(this.reservas, index);
-                })
-                .catch(error => {
-                        console.log(error);
-                        sweetAlert("Oops...", "Error, ver consola", "error");
+                        sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
+                        Vue.delete(this.reservas, index);
+                    })
+                    .catch(error => {
+                            console.log(error);
+                            sweetAlert("Oops...", "Error, ver consola", "error");
+                        }
+                    );
+            },
+            ConfirmarReserva(index) {
 
-                    }
-                );
+                var id = this.reservas[index].id;
+                axios.put('/api/cuidador/me/reservas/' + id + '/confirmarReserva')
+                    .then((response) => {
+
+                        sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped page te confirmaremos la reserva.", "success");
+                        Vue.delete(this.reservas, index);
+                    })
+                    .catch(error => {
+                            console.log(error);
+                            sweetAlert("Oops...", "Error, ver consola", "error");
+
+                        }
+                    );
+            },
+            confirmarReservaButton(index) {
+                var reserva = this.reservas[index];
+                sweetAlert({
+                        title: "Confirmar accion",
+                        text: "Quiere confirmar su reserva con " + reserva.perro.user.fullName + " ?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Si, confirmar reserva",
+                        closeOnConfirm: false,
+                        cancelButtonText: "Atras",
+                        showLoaderOnConfirm: true,
+                    },
+                    function () {
+                        console.log(vm);
+                        vm.$refs.myReservasCuidadorList.$refs.currentView.ConfirmarReserva(index)
+                    });
+            },
+            cancelarReservaActionButton(index) {
+                var reserva = this.reservas[index];
+                sweetAlert({
+                        title: "Confirmar accion",
+                        text: "Quieres rechazar su reserva con " + reserva.perro.user.fullName + " ?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Si, cancelar reserva",
+                        closeOnConfirm: false,
+                        cancelButtonText: "Atras",
+                        showLoaderOnConfirm: true,
+                    },
+                    function () {
+                        console.log(vm);
+                        vm.$refs.myReservasCuidadorList.$refs.currentView.cancelarReserva(index)
+                    });
+            },
+            getParameterByName(name) {
+                name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+                var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                    results = regex.exec(location.search);
+                return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+            },
         },
-        confirmarReservaButton(index) {
-            var reserva = this.reservas[index];
-            sweetAlert({
-                    title: "Confirmar accion",
-                    text: "Quiere confirmar su reserva con " + reserva.perro.user.fullName + " ?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Si, confirmar reserva",
-                    closeOnConfirm: false,
-                    cancelButtonText: "Atras",
-                    showLoaderOnConfirm: true,
-                },
-                function () {
-                    console.log(vm);
-                    vm.$refs.myReservasCuidadorList.$refs.currentView.ConfirmarReserva(index)
-                });
-        },
-        cancelarReservaActionButton(index) {
-            var reserva = this.reservas[index];
-            sweetAlert({
-                    title: "Confirmar accion",
-                    text: "Quieres rechazar su reserva con " + reserva.perro.user.fullName + " ?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Si, cancelar reserva",
-                    closeOnConfirm: false,
-                    cancelButtonText: "Atras",
-                    showLoaderOnConfirm: true,
-                },
-                function () {
-                    console.log(vm);
-                    vm.$refs.myReservasCuidadorList.$refs.currentView.cancelarReserva(index)
-                });
-        },
-        getParameterByName(name) {
-            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(location.search);
-            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-        },
-    },
     computed: {
         tipoDeReservas: function () {
             if (this.status == 'CONFIRMATION_PENDING') {

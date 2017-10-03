@@ -16,7 +16,7 @@ function getDefaultData() {
             username: '',
             password: '',
             matchingPassword: '',
-            role:''
+            role: ''
         },
         isMounted: false,
         loginError: false,

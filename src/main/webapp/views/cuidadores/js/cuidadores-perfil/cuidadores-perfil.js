@@ -48,7 +48,6 @@ let vm = new Vue({
                     this.geolocateCuidador(this.item.user.direccion);
 
 
-
                 })
                 .catch(error => {
                         console.log(error);
