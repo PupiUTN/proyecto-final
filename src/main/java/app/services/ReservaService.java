@@ -26,6 +26,10 @@ public class ReservaService {
         return reservaRepository.findAllByUserAndStatus(id,status);
     }
 
+    public Reserva getReserva(Long id) {
+        return reservaRepository.findOne(id);
+    }
+
     public Reserva save(Reserva reserva) {
         reserva.setStatus("CONFIRMATION_PENDING");
         Reserva savedObject = reservaRepository.save(reserva);

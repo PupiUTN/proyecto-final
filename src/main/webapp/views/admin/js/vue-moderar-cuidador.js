@@ -59,7 +59,7 @@ Vue.component('moderar-cuidador', {
     data: function () {
         return {
             url: "/api/user/",
-            solicitudes:[],
+            solicitudes: [],
 
         }
 
@@ -85,7 +85,7 @@ Vue.component('moderar-cuidador', {
             //console.log(this.user);
             if (this.user.role == 'ROLE_ADMIN') {
                 this.recuperarSolicitudes();
-            }else{
+            } else {
                 //document.location.href = "/";
             }
 
@@ -95,7 +95,7 @@ Vue.component('moderar-cuidador', {
             axios.get(consulta)
                 .then((data) => {
                     console.log(data);
-                    this.solicitudes=data.data;
+                    this.solicitudes = data.data;
                 })
                 .catch(error => {
                     console.log(error);
@@ -105,10 +105,10 @@ Vue.component('moderar-cuidador', {
         mostrar(foto) {
 
         },
-        aceptarSolicitud(cuidador){
-            var updateUrl="/api/cuidadores/";
-            cuidador.estado="approved";
-            cuidador.user.role="ROLE_CUIDADOR";
+        aceptarSolicitud(cuidador) {
+            var updateUrl = "/api/cuidadores/";
+            cuidador.estado = "approved";
+            cuidador.user.role = "ROLE_CUIDADOR";
             console.log(cuidador);
             sweetAlert({
                     title: "Atención!",
@@ -121,7 +121,7 @@ Vue.component('moderar-cuidador', {
                     showLoaderOnConfirm: true
                 },
                 function () {
-                    axios.put(updateUrl+cuidador.id, cuidador)
+                    axios.put(updateUrl + cuidador.id, cuidador)
                         .then((data) => {
                             sweetAlert({
                                     title: "Aprobado",
@@ -140,9 +140,9 @@ Vue.component('moderar-cuidador', {
 
 
         },
-        cancelarSolicitud(cuidador){
-            var updateUrl="/api/cuidadores/";
-            cuidador.estado="rejected";
+        cancelarSolicitud(cuidador) {
+            var updateUrl = "/api/cuidadores/";
+            cuidador.estado = "rejected";
             console.log(cuidador);
             sweetAlert({
                     title: "Atención!",
@@ -156,7 +156,7 @@ Vue.component('moderar-cuidador', {
                     showLoaderOnConfirm: true
                 },
                 function () {
-                    axios.put(updateUrl+cuidador.id, cuidador)
+                    axios.put(updateUrl + cuidador.id, cuidador)
                         .then((data) => {
                             sweetAlert({
                                     title: "Rechazado",
@@ -164,7 +164,7 @@ Vue.component('moderar-cuidador', {
                                     type: "success",
                                 },
                                 function () {
-                                location.reload();
+                                    location.reload();
 
                                 });
                         })

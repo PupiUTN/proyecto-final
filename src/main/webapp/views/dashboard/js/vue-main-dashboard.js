@@ -9,10 +9,8 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 				</div>
 			</div>
 		</div>
-
 		<!-- Content -->
 		<div class="row">
-
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-1">
@@ -46,8 +44,6 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 				</div>
 			</div>
 		</div>
-
-
 </div>
 `
 });

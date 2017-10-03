@@ -33,6 +33,14 @@ public class ReservaCuidadorController {
         return reservaService.save(entity);
 
     }
+
+    @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public Reserva getReserva(@PathVariable("id") Long id) {
+        return reservaService.getReserva(id);
+    }
+
+
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
     @RequestMapping(method = RequestMethod.GET)
     public List<Reserva> get(@RequestParam("status") String status) throws Exception {

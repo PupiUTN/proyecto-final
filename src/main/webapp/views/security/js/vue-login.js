@@ -16,6 +16,7 @@ function getDefaultData() {
             username: '',
             password: '',
             matchingPassword: '',
+            role: ''
         },
         isMounted: false,
         loginError: false,
@@ -33,16 +34,16 @@ let myLogin = Vue.component('my-login', {
 <div v-show="isAuthenticated">
 
  <!-- Right Side Content / End -->
-    <div class="right-side">
-        <div class="header-widget">
+    <div class="right-side pull-right">
+        <div class="header-widget pull-right">
            <!-- User Menu -->
             <div class="user-menu">
                 <div class="user-name hidden-xs hidden-sm">
                     <span><img v-bind:src="user.profileImageUrl" alt=""></span>
-                    {{ user.email }}
+                    {{ user.username }}
                 </div>
                 
-                <div class="user-name hidden-md hidden-lg" style="width: 0px;">
+                <div class="user-name hidden-md hidden-lg" >
                     <span><img v-bind:src="user.profileImageUrl" alt=""></span>
                 </div>
                 
