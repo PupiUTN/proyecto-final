@@ -162,6 +162,9 @@ Vue.component('my-reservas-user-list', {
             if (this.status == 'CANCEL_BY_USER') {
                 return 'canceladas'
             }
+            if (this.status == 'ACCEPTED') {
+                return 'Confirmadas'
+            }
             return 'Error'
         },
         listClass: function () {
@@ -171,6 +174,9 @@ Vue.component('my-reservas-user-list', {
             if (this.status == 'CANCEL_BY_USER') {
                 return 'col-xs-12 col-md-10'
             }
+            if (this.status == 'ACCEPTED') {
+                return 'col-xs-12 col-md-10'
+            }
         },
         listColor: function () {
             if (this.status == 'CONFIRMATION_PENDING') {
@@ -178,6 +184,10 @@ Vue.component('my-reservas-user-list', {
             }
             if (this.status == 'CANCEL_BY_USER') {
                 return 'background: rgba(243, 12, 12, 0.15); margin-bottom: 10px;'
+            }
+            if (this.status == 'ACCEPTED') {
+                return 'background: rgba(255, 255, 0, 0.15); margin-bottom: 10px;'
+
             }
         }
 

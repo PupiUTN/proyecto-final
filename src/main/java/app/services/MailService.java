@@ -24,8 +24,8 @@ public class MailService {
                 .withRegion(Regions.US_EAST_1.getName())
                 .withClientConfiguration(
                         new ClientConfiguration()
-                                .withConnectionTimeout(3000)
-                                .withRequestTimeout(3000)
+                                .withConnectionTimeout(Integer.MAX_VALUE)
+                                .withRequestTimeout(Integer.MAX_VALUE)
                 );
 
         AmazonSimpleEmailService service = builder.build();
