@@ -8,6 +8,8 @@ package app.controllers;
 import app.models.entities.Cuidador;
 import app.models.entities.Servicio;
 import app.services.CuidadorService;
+import app.services.MailService;
+import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +62,12 @@ public class CuidadorController {
     public @ResponseBody
     Cuidador editCuidador(@PathVariable("id") Long id, @RequestBody Cuidador entity) throws Exception {
         entity.setId(id);
+        if("approved".equalsIgnoreCase(entity.getEstado())) {
+            MailService.sendEmail(entity.getUser(), MailType.WELCOME_HOST);
+        }
+        else if("rejected".equalsIgnoreCase(entity.getEstado())) {
+            MailService.sendEmail(entity.getUser(), MailType.HOST_REJECTED);
+        }
         return cuidadorService.editCuidador(entity);
     }
 
