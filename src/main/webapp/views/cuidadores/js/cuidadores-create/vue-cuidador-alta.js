@@ -198,9 +198,18 @@ Vue.component('become-cuidador', {
                 .then((data) => {
                     if (data.data != "") {
                         this.cuidador = data.data;
-                        this.isReadOnly = true;
-                        this.inicializarImagenes();
 
+                        this.inicializarImagenes();
+                        if(this.cuidador.estado="rejected"){
+
+                            sweetAlert({
+                                title: "Atención!",
+                                text: "Su solicitud ha sido rechazada. Por favor, revise su solicitud y envie una nueva.",
+                                type: "error",
+                            });
+                            return;
+                        }
+                        this.readOnly=true;
                     }
 
                     // this.formPost = false;
