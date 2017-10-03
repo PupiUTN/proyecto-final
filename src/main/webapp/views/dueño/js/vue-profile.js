@@ -83,7 +83,7 @@ Vue.component('my-profile', {
             locality: '',
             administrative_area_level_1: '',
             country: '',
-            disabled:true,
+            disabled: true,
         }
 
     }
@@ -112,9 +112,9 @@ Vue.component('my-profile', {
                     var addressType = place.address_components[i].types[0];
                     //no es lo mas lindo, pero sirve para saber si falta numero o donde esta
                     //el error de la direccion
-                    if(addressType=='street_number'){
-                        vm.street_number=place.address_components[i].long_name;
-                        console.log('street_number '+ vm.street_number);
+                    if (addressType == 'street_number') {
+                        vm.street_number = place.address_components[i].long_name;
+                        console.log('street_number ' + vm.street_number);
                         continue;
                     }
                 }

@@ -36,7 +36,7 @@ let myHeader = Vue.component('my-header', {
 
                     <!-- Right Side Content / End -->
 
-                       <my-login></my-login>
+                       <my-login v-on:is-authenticated="isAuthenticatedMethod"  ref="myLogin"></my-login>
                     <!-- Right Side Content / End -->
 
 		</div>
@@ -48,5 +48,10 @@ let myHeader = Vue.component('my-header', {
 <!-- Header Container / End -->
     
 </div>
-`
+`,
+    methods: {
+        isAuthenticatedMethod(isAuthenticated) {
+            this.$emit('is-authenticated', isAuthenticated);
+        }
+    }
 });

@@ -221,7 +221,7 @@ Vue.component('my-detalle-reserva', {
     data:
         function () {
             return {
-                url:'',
+                url: '',
                 reserva:
                     {
                         id: null,
@@ -238,25 +238,25 @@ Vue.component('my-detalle-reserva', {
                             nombre: '',
                             birthday: '',
                             raza: {},
-                            sexo:'',
+                            sexo: '',
                             tamaño: {},
-                            listaVacunas:[],
+                            listaVacunas: [],
                         },
                         fechaInicio: "",
                         fechaFin: "",
                         precioTotal: 1,
                         status: '',
                         mensaje: '',
-                        transaccion:'',
+                        transaccion: '',
 
                     }
-                 ,
+                ,
                 message: '',
                 perroProfileUrl: '',
                 id: null,
-                edadPerro:'',
+                edadPerro: '',
                 showModal: false,
-                tamaño:'',
+                tamaño: '',
 
             }
         },
@@ -269,40 +269,34 @@ Vue.component('my-detalle-reserva', {
         getReserva() {
             axios.get('/api/cuidador/me/reservas/' + this.id)
                 .then((response) => {
-                this.reserva = response.data;
-               // document.getElementById("foto_perro").src = this.reserva.perro.fotoPerfil;
-                     this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);
-                   var date= new Date();
-                    this.reserva.fechaTransaccion =   date.toLocaleDateString();
-                    if (this.edadPerro  === 0)
-                    {
+                    this.reserva = response.data;
+                    // document.getElementById("foto_perro").src = this.reserva.perro.fotoPerfil;
+                    this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);
+                    var date = new Date();
+                    this.reserva.fechaTransaccion = date.toLocaleDateString();
+                    if (this.edadPerro === 0) {
 
                         this.edadPerro = " menor a un año";
-                    } else
-                    {
-                         if (this.edadPerro === 1)
-                         {
-                             this.edadPerro = this.edadPerro + " " + "año";
+                    } else {
+                        if (this.edadPerro === 1) {
+                            this.edadPerro = this.edadPerro + " " + "año";
 
-                         } else
-                             if(this.edadPerro  >1)
-                         {
+                        } else if (this.edadPerro > 1) {
 
-                             this.edadPerro = this.edadPerro + " " + "años";
-                         }else
-                             {
-                                 this.edadPerro =  " " ;
-                             }
+                            this.edadPerro = this.edadPerro + " " + "años";
+                        } else {
+                            this.edadPerro = " ";
+                        }
 
                     }
-                    this.tamaño = this.reserva.perro.tamaño.nombre + " " +" (" + this.reserva.perro.tamaño.valorMinimo +" - " + this.reserva.perro.tamaño.valorMaximo +")" +" kgs" ;
-                  //  this.reserva.mensaje = " hola que tal buenos dias cmo va
+                    this.tamaño = this.reserva.perro.tamaño.nombre + " " + " (" + this.reserva.perro.tamaño.valorMinimo + " - " + this.reserva.perro.tamaño.valorMaximo + ")" + " kgs";
+                    //  this.reserva.mensaje = " hola que tal buenos dias cmo va
                 })
-        .catch(error => {
-                console.log(error);
-            this.message = "Actualmente no se encuentra la reserva.";
-            sweetAlert("Oops...", "Actualmente no se encuentra la reserva.", "error");
-        });
+                .catch(error => {
+                    console.log(error);
+                    this.message = "Actualmente no se encuentra la reserva.";
+                    sweetAlert("Oops...", "Actualmente no se encuentra la reserva.", "error");
+                });
         },
         cancelarReserva() {
 
@@ -310,14 +304,14 @@ Vue.component('my-detalle-reserva', {
             axios.put('/api/cuidador/me/reservas/' + id + '/cancelarReserva')
                 .then((response) => {
 
-                sweetAlert("Cancelada", "Tu reserva a sido cancelada", "success");
+                    sweetAlert("Cancelada", "Tu reserva a sido cancelada", "success");
                     document.location.href = "/views/dashboard/dashboard.html";
-        })
-        .catch(error => {
-                console.log(error);
-            sweetAlert("Oops...", "Error, ver consola", "error");
-        }
-        );
+                })
+                .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error, ver consola", "error");
+                    }
+                );
         },
         ConfirmarReserva() {
 
@@ -325,15 +319,15 @@ Vue.component('my-detalle-reserva', {
             axios.put('/api/cuidador/me/reservas/' + id + '/confirmarReserva')
                 .then((response) => {
 
-                sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped page te confirmaremos la reserva.", "success");
+                    sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped page te confirmaremos la reserva.", "success");
                     document.location.href = "/views/dashboard/dashboard.html";
-        })
-        .catch(error => {
-                console.log(error);
-            sweetAlert("Oops...", "Error, ver consola", "error");
+                })
+                .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error, ver consola", "error");
 
-        }
-        );
+                    }
+                );
         },
         confirmarReservaButton() {
 
@@ -368,7 +362,7 @@ Vue.component('my-detalle-reserva', {
                 },
                 function () {
 
-                  vm.$refs.myDetalleReserva.$refs.currentView.cancelarReserva();
+                    vm.$refs.myDetalleReserva.$refs.currentView.cancelarReserva();
 
                 });
         },
@@ -381,29 +375,29 @@ Vue.component('my-detalle-reserva', {
         calcularEdad(fecha) {
             // var fecha=document.getElementById("user_date").value;
 
-                // Si la fecha es correcta, calculamos la edad
-                var values = fecha.split("-");
-                var dia = values[2];
-                var mes = values[1];
-                var ano = values[0];
+            // Si la fecha es correcta, calculamos la edad
+            var values = fecha.split("-");
+            var dia = values[2];
+            var mes = values[1];
+            var ano = values[0];
 
-                // cogemos los valores actuales
-                var fecha_hoy = new Date();
-                var ahora_ano = fecha_hoy.getYear();
-                var ahora_mes = fecha_hoy.getMonth() + 1;
-                var ahora_dia = fecha_hoy.getDate();
+            // cogemos los valores actuales
+            var fecha_hoy = new Date();
+            var ahora_ano = fecha_hoy.getYear();
+            var ahora_mes = fecha_hoy.getMonth() + 1;
+            var ahora_dia = fecha_hoy.getDate();
 
-                // realizamos el calculo
-                var edad = (ahora_ano + 1900) - parseInt(ano);
-                if (ahora_mes < mes) {
-                    edad--;
-                }
-                if ((mes === ahora_mes) && (ahora_dia < dia)) {
-                    edad--;
-                }
-                if (edad > 1900) {
-                    edad -= 1900;
-                }
+            // realizamos el calculo
+            var edad = (ahora_ano + 1900) - parseInt(ano);
+            if (ahora_mes < mes) {
+                edad--;
+            }
+            if ((mes === ahora_mes) && (ahora_dia < dia)) {
+                edad--;
+            }
+            if (edad > 1900) {
+                edad -= 1900;
+            }
             return edad;
 
         },
