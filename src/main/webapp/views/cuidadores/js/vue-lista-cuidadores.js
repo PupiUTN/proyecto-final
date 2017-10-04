@@ -1,20 +1,126 @@
-let vm = new Vue({
-    el: '#wrapper',
-    data: {
-        autocomplete: null,
-        url: "/api/cuidadores/search/",
-        encontrados: '',
-        items: [],
-        formPost: true,
-        map: null,
-        placeID: null,
-        placeLat: null,
-        placeLng: null,
-        placeName: null,
-        geoPlace: null,
-        dateFrom: null,
-        dateTo: null,
-        isIndex: false,
+let myListaCuidadores = Vue.component('my-lista-cuidadores', {
+template: `    
+<div class="fs-container">
+<div class="fs-inner-container content">
+    <div class="fs-content">
+        <!-- Search -->
+        <section style="padding-left: 45px; padding-right: 45px;">
+
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <!-- Main Search Input -->
+                    <my-buscar-cuidadores :is-index="isIndex"></my-buscar-cuidadores>
+                </div>
+            </div>
+
+        </section>
+        <!-- Search / End -->
+        <section class="listings-container margin-top-30">
+            <!-- Sorting / Layout Switcher -->
+            <div class="row fs-switcher">
+
+                <div class="col-md-6">
+                    <!-- Showing Results -->
+                    <p class="showing-results">{{ encontrados }}</p>
+                </div>
+
+            </div>
+            <!-- Listings -->
+            <div class="row fs-listings">
+                <!-- Listing Item -->
+                <div v-for="(item,n) in items" :id="item.id" class="col-lg-6 col-md-12">
+                
+                    <a :href="'/views/cuidadores/cuidadores-perfil.html?id='+item.id"
+                       class="listing-item-container" :data-marker-id=n+1>
+                        <div class="listing-item">
+
+                            <img :src="item.listaImagenes[0].url" alt="">
+
+                            <div class="listing-badge now-open">Destacado</div>
+
+                            <div class="listing-item-content">
+                                <span class="tag"> {{ item.precioPorNoche }} por Noche</span>
+                                <h3>{{item.user.fullName}}</h3>
+                                <span>{{item.user.direccion.calle}}</span>
+                            </div>
+                            <span class="like-icon"></span>
+                        </div>
+                        <div class="star-rating" data-rating="1">
+                            <div class="rating-counter">(120 reviews)</div>
+                        </div>
+                    </a>
+
+                </div>
+                <!-- Listing Item / End -->
+
+
+            </div>
+            <!-- Listings Container / End -->
+
+
+            <!-- Pagination Container -->
+            <div class="row fs-listings">
+                <div class="col-md-12">
+
+                    <!-- Pagination -->
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Pagination -->
+                            <div class="pagination-container margin-top-15 margin-bottom-40">
+                                <nav class="pagination">
+                                    <ul>
+                                        <li><a href="#" class="current-page">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- Pagination / End -->
+
+                    <!-- Copyrights -->
+                    <div class="copyrights margin-top-0">© 2017 Listeo. All Rights Reserved.</div>
+
+                </div>
+            </div>
+            <!-- Pagination Container / End -->
+        </section>
+
+    </div>
+</div>
+<div class="fs-inner-container map-fixed">
+    <!-- Map -->
+    <div id="map-container">
+        <div id="map" data-map-zoom="9" data-map-scroll="true">
+            <!-- map goes here -->
+        </div>
+    </div>
+</div>
+</div>
+`,
+    data: function () {
+        return {
+            autocomplete: null,
+            url: "/api/cuidadores/search/",
+            encontrados: '',
+            items: [],
+            formPost: true,
+            map: null,
+            placeID: null,
+            placeLat: null,
+            placeLng: null,
+            placeName: null,
+            geoPlace: null,
+            dateFrom: null,
+            dateTo: null,
+            isIndex: false,
+        }
     },
     mounted() {
         this.initMap();
@@ -179,6 +285,4 @@ let vm = new Vue({
 
         },
     }
-
-
 });
