@@ -146,27 +146,27 @@ Vue.component('my-reservas-cuidador-list', {
                 axios.put('/api/cuidador/me/reservas/' + id + '/cancelarReserva')
                     .then((response) => {
 
-                    sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
-                    Vue.delete(this.reservas, index);
-                })
-                .catch(error => {
-                        console.log(error);
-                        sweetAlert("Oops...", "Error, ver consola", "error");
-                    }
-                );
-        },
-        ConfirmarReserva(index) {
+                        sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
+                        Vue.delete(this.reservas, index);
+                    })
+                    .catch(error => {
+                            console.log(error);
+                            sweetAlert("Oops...", "Error, ver consola", "error");
+                        }
+                    );
+            },
+            ConfirmarReserva(index) {
 
                 var id = this.reservas[index].id;
                 axios.put('/api/cuidador/me/reservas/' + id + '/confirmarReserva')
                     .then((response) => {
 
-                    sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped pague te confirmaremos la reserva.", "success");
-                    Vue.delete(this.reservas, index);
-                })
-                .catch(error => {
-                        console.log(error);
-                        sweetAlert("Oops...", "Error, ver consola", "error");
+                        sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped pague te confirmaremos la reserva.", "success");
+                        Vue.delete(this.reservas, index);
+                    })
+                    .catch(error => {
+                            console.log(error);
+                            sweetAlert("Oops...", "Error, ver consola", "error");
 
                         }
                     );

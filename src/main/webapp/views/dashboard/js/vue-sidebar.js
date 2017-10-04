@@ -4,7 +4,7 @@ let mySidebar = Vue.component('my-sidebar', {
             <div class="dashboard-nav-inner">
 
                 <ul data-submenu-title="Principal">
-                    <li class="active"><a href="/views/dashboard/dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
+                    <li class="active"><a href="/views/dashboard/dashboard.html"><i class="sl sl-icon-settings"></i> Panel</a></li>
                 </ul>
 
                 <ul v-show="role === 'ROLE_USER' || role === 'ROLE_CUIDADOR'"  data-submenu-title="Cuenta">

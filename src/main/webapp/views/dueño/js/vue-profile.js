@@ -101,14 +101,14 @@ Vue.component('my-profile', {
             administrative_area_level_1: '',
             country: '',
             disabled: true,
-            componentForm:{
+            componentForm: {
                 street_number: 'short_name',
                 route: 'long_name',
                 locality: 'long_name',
                 administrative_area_level_1: 'short_name',
                 country: 'long_name',
             },
-            autocomplete:null,
+            autocomplete: null,
         }
 
     }
@@ -119,8 +119,8 @@ Vue.component('my-profile', {
         this.preventEnter();
     },
     methods: {
-        preventEnter(){
-            $('#editCuidador').on('keyup keypress', function(e) {
+        preventEnter() {
+            $('#editCuidador').on('keyup keypress', function (e) {
                 var keyCode = e.keyCode || e.which;
                 if (keyCode === 13) {
                     e.preventDefault();
@@ -141,11 +141,11 @@ Vue.component('my-profile', {
 
             this.autocomplete.addListener('place_changed', this.completar);
         },
-        completar(){
+        completar() {
             var place = this.autocomplete.getPlace();
             console.log("-------------------------");
             console.log(place);
-            this.disabled=false;
+            this.disabled = false;
             for (var i = 0; i < place.address_components.length; i++) {
                 var addressType = place.address_components[i].types[0];
                 console.log(addressType);
@@ -192,12 +192,12 @@ Vue.component('my-profile', {
                 .catch(error => {
                     console.log(error);
                     //sweetAlert("Oops...", "Error, ver consola", "error");
-                    window.location="/";
+                    window.location = "/";
                 });
         },
         editUserInfo() {
             this.user.direccion = this.direccion;
-            this.user.birthday=document.getElementById('booking-date').value;
+            this.user.birthday = document.getElementById('booking-date').value;
             console.log(this.user);
             var payload = jQuery.extend(true, {}, this.user);
             axios.put(this.url + this.user.id, payload)
@@ -233,15 +233,15 @@ Vue.component('my-profile', {
             }
         },
         setDate() {
-                if(this.user.birthday){
-                    console.log(this.user.birthday);
-                    var initial =this.user.birthday.split("-");
-                    var date=[ initial[1], initial[0], initial[2] ].join('-');
-                    console.log(date);
-                    document.getElementById('booking-date').setAttribute('data-default-date',date);
-                    document.getElementById('booking-date').setAttribute('data-lock','');
+            if (this.user.birthday) {
+                console.log(this.user.birthday);
+                var initial = this.user.birthday.split("-");
+                var date = [initial[1], initial[0], initial[2]].join('-');
+                console.log(date);
+                document.getElementById('booking-date').setAttribute('data-default-date', date);
+                document.getElementById('booking-date').setAttribute('data-lock', '');
 
-                }
+            }
 
         }
 

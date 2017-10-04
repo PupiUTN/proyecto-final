@@ -259,23 +259,22 @@ Vue.component('my-cuidador-edit', {
 
         filesChange(fileList, position) {
             // handle file changes
-            if(fileList[0].size <=  1024000 ) //1 mb 1048576
+            if (fileList[0].size <= 1024000) //1 mb 1048576
             {
-            const formData = new FormData();
+                const formData = new FormData();
 
-            if (!fileList.length) return;
-            // append the files to FormData
-            Array
-                .from(Array(fileList.length).keys())
-                .map(x => {
-                    formData.append('file', fileList[x]);
-                });
+                if (!fileList.length) return;
+                // append the files to FormData
+                Array
+                    .from(Array(fileList.length).keys())
+                    .map(x => {
+                        formData.append('file', fileList[x]);
+                    });
 
-            // save it
-            this.upload(formData, position);
+                // save it
+                this.upload(formData, position);
             }
-            else
-            {
+            else {
 
                 sweetAlert("Oops...", "Error, Se debe cargar una imagen hasta a 1 mb ", "error");
             }
