@@ -200,7 +200,7 @@ Vue.component('become-cuidador', {
                         this.cuidador = data.data;
 
                         this.inicializarImagenes();
-                        if(this.cuidador.estado="rejected"){
+                        if (this.cuidador.estado == "rejected") {
 
                             sweetAlert({
                                 title: "Atención!",
@@ -208,8 +208,10 @@ Vue.component('become-cuidador', {
                                 type: "error",
                             });
                             return;
+                        } else {
+                            this.isReadOnly = true;
                         }
-                        this.readOnly=true;
+
                     }
 
                     // this.formPost = false;

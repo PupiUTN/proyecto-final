@@ -4,7 +4,7 @@ let mySidebar = Vue.component('my-sidebar', {
             <div class="dashboard-nav-inner">
 
                 <ul data-submenu-title="Principal">
-                    <li class="active"><a href="/views/dashboard/dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
+                    <li class="active"><a href="/views/dashboard/dashboard.html"><i class="sl sl-icon-settings"></i> Panel</a></li>
                 </ul>
 
                 <ul v-show="role === 'ROLE_USER' || role === 'ROLE_CUIDADOR'"  data-submenu-title="Cuenta">
@@ -12,7 +12,7 @@ let mySidebar = Vue.component('my-sidebar', {
                     <li><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>
 					<ul>
 						<li><a href="/views/reserva/mis-reservas-user.html?status=CONFIRMATION_PENDING">Pendientes <span class="nav-tag green">6</span></a></li>
-						<li><a href="#">Concretadas <span class="nav-tag yellow">1</span></a></li>
+						<li><a href="/views/reserva/mis-reservas-user.html?status=ACCEPTED">Concretadas <span class="nav-tag yellow">1</span></a></li>
 						<li><a href="/views/reserva/mis-reservas-user.html?status=CANCEL_BY_USER">Canceladas <span class="nav-tag red">2</span></a></li>
 					</ul>
 					

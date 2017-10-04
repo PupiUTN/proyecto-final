@@ -1,15 +1,13 @@
 var numberOfAjaxCAllPending = 0;
+var pageLoader = document.getElementById('page-loader');
+
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
     numberOfAjaxCAllPending++;
-    // Do something before request is sent
-    $('.pace').show();
-    console.log("------------  $('.pace').show();");
+    $('#page-loader').show();
+
     return config;
 }, function (error) {
-    // Do something with request error
-    console.log("------------  error axios interceptors request");
-    sweetAlert("Oops...", "Error, ver consola", "error");
     return Promise.reject(error);
 });
 
@@ -19,19 +17,14 @@ axios.interceptors.response.use(function (response) {
     console.log("------------  Ajax pending", numberOfAjaxCAllPending);
     // Do something with response data
     if (numberOfAjaxCAllPending == 0) {
-        $('.pace').hide();
-        console.log("------------  $('.pace').hide();");
+        $('#page-loader').hide();
     }
     return response;
 }, function (error) {
     numberOfAjaxCAllPending--;
-    console.log("------------  error axios interceptors response");
-    // Do something with response error
-    $('.pace').hide();
-    console.log("------------  $('.pace').hide();");
-    console.log(error.response);
-    if (error.response.config.url !== '/api/user/me') {
-        sweetAlert("Oops...", "Error, ver consola", "error");
+    console.log("------------  Ajax pending", numberOfAjaxCAllPending);
+    if (numberOfAjaxCAllPending == 0) {
+        $('#page-loader').hide();
     }
     return Promise.reject(error);
 });

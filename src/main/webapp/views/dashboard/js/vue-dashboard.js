@@ -10,7 +10,7 @@ Vue.component('my-dashboard', {
         <!-- Navigation
         ================================================== -->
         <!-- Responsive Navigation Trigger -->
-        <a href="#" class="dashboard-responsive-nav-trigger"><i class="fa fa-reorder"></i> Dashboard Navigation</a>
+        <a href="#" class="dashboard-responsive-nav-trigger"><i class="fa fa-reorder"></i> Panel</a>
         <my-sidebar v-bind:role="role" ></my-sidebar>
 
 

@@ -1,11 +1,10 @@
 /* This is a compiled file, you should be editing the file in the templates directory */
-.pace {
+#page-loader {
     -webkit-pointer-events: none;
     pointer-events: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-
     background-image: url('/img/spinner.svg');
     position: fixed;
     top: 0;
@@ -16,8 +15,5 @@
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 3000;
     background-position: center;
-}
-
-.pace .pace-inactive .pace-progress {
     display: none;
 }
