@@ -26,10 +26,6 @@ public class MailService {
                         new ClientConfiguration()
                                 .withConnectionTimeout(3000)
                                 .withRequestTimeout(3000));
-<<<<<<< HEAD
-=======
-                
->>>>>>> vue-router-migration
 
         AmazonSimpleEmailService service = builder.build();
         SendEmailRequest sendEmailRequest = createEmailRequest(FROM, user.getEmail(), type, user.getUsername());
