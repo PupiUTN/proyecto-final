@@ -1,5 +1,5 @@
 // https://github.com/olefirenko/vue-google-autocomplete
-Vue.component('my-buscar-cuidadores', {
+let myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
     template: `
 <form class="main-search-input" v-on:submit.prevent='buscar'>
     <div class="main-search-input-item location" :style="inputSize">
@@ -14,6 +14,8 @@ Vue.component('my-buscar-cuidadores', {
         <a id="geo-location" v-on:click='geolocate()'>
             <i class="fa fa-dot-circle-o"></i>
         </a>
+        
+
     </div>
     <div class="main-search-input-item location">
         <input type="text" v-model="dateFrom" id="dateFrom" placeholder="Desde"
@@ -29,12 +31,12 @@ Vue.component('my-buscar-cuidadores', {
                data-large-mode="true" data-large-default="true" data-min-year="2017"
                data-max-year="2020" data-lock="from">
                <a><i class="fa fa-calendar-check-o"></i></a>
-
-
     </div>
     <button class="button" type="submit">
         Buscar
     </button>
+    
+
 </form>
 
     `,
@@ -58,6 +60,7 @@ Vue.component('my-buscar-cuidadores', {
     mounted() {
         this.bindUrlWithVue();
         this.bindDatePickerWithVue();
+        this.disableEnterKey();
     },
     methods: {
         geolocate() {
@@ -92,9 +95,12 @@ Vue.component('my-buscar-cuidadores', {
             this.placeLat = addressData.latitude;
             this.placeLng = addressData.longitude;
             this.placeName = placeResultData.formatted_address;
-
         },
         buscar() {
+            //si el formulario no tiene los campos basicos no hago nada
+            if (!this.formValitaion()){
+                return;
+            }
             let href = "/views/cuidadores/lista-cuidadores.html?placeName=" + this.placeName +
                 "&placeID=" + this.placeID +
                 "&lat=" + this.placeLat +
@@ -120,6 +126,8 @@ Vue.component('my-buscar-cuidadores', {
                     return;
                 }
             }
+            // router.push({ name: 'buscar'});
+
             window.location.href = href;
 
         },
@@ -163,6 +171,12 @@ Vue.component('my-buscar-cuidadores', {
                 input.placeholder = this.placeName;
                 input.value = this.placeName;
             }
+        },
+        formValitaion(){
+            if(this.placeID == null){
+                return false;
+            }
+            return true;
         }
     },
     computed: {
