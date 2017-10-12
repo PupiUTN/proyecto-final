@@ -272,8 +272,14 @@ Vue.component('my-detalle-reserva', {
                     this.reserva = response.data;
                     // document.getElementById("foto_perro").src = this.reserva.perro.fotoPerfil;
                     this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);
-                    var date = new Date();
+                    var date = new Date(this.reserva.fechaTransaccion);
                     this.reserva.fechaTransaccion = date.toLocaleDateString();
+                    var dateEntrada = new Date (this.reserva.fechaInicio);
+                    var dateSalida = new Date (this.reserva.fechaFin);
+                    dateEntrada =dateEntrada.setDate(dateEntrada.getDate() + 1);
+                    dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
+                    this.reserva.fechaInicio = new Date(dateEntrada).toLocaleDateString();
+                    this.reserva.fechaFin = new Date(dateSalida).toLocaleDateString();
                     if (this.edadPerro === 0) {
 
                         this.edadPerro = " menor a un año";

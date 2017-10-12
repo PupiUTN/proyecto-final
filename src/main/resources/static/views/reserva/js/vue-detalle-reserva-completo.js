@@ -22,7 +22,7 @@ Vue.component('my-detalle-reserva-completo', {
     <div class="add-listing-section">
 
         <div class="add-listing-headline">
-            <h3><i class="sl sl-icon-user-following"></i> Información Básica del Cuidador</h3>
+            <h3><i class="sl sl-icon-user-following" style="color:red;"></i> Información Básica del Cuidador</h3>
         </div>
 
         <div class="row with-forms">
@@ -32,22 +32,22 @@ Vue.component('my-detalle-reserva-completo', {
             </div>
 
             <div class="col-md-4">
-                <h5> Nombre del cuidador </h5>
+                <h5><i class="sl sl-icon-user-following" style="color:red; margin-right: 10px; "></i>  Nombre del cuidador </h5>
                 <h3><b>{{reserva.cuidador.user.fullName}}</b></h3>
             </div>
 
             <div class="col-md-4">
-                <h5>Teléfono Cuidador </h5>
+                <h5><i class="im im-icon-Old-Telephone" style="color:red; margin-right: 10px;"></i>Teléfono Cuidador </h5>
                 <h3><b>{{reserva.cuidador.user.phone}}</b></h3>
             </div>
 
             <div class="col-md-4">
-                <h5>email Cuidador </h5>
+                <h5><i class="im im-icon-Email" style="color:red; margin-right: 10px;"></i>email Cuidador </h5>
                 <h3><b>{{reserva.cuidador.user.email}}</b></h3>
             </div>
 
             <div class="col-md-4">
-                <h5> edad del Cuidador </h5>
+                <h5> <i class="im im-icon-Birthday-Cake" style="color:red; margin-right: 10px;"></i>edad del Cuidador </h5>
                 <h3><b>{{edadCuidador}}</b></h3>
             </div>
 
@@ -60,18 +60,18 @@ Vue.component('my-detalle-reserva-completo', {
 
         <!-- Headline -->
         <div class="add-listing-headline">
-            <h3><i class="sl sl-icon-doc"></i> Información Básica de la Reserva</h3>
+            <h3><i class="sl sl-icon-doc" style="color:red; margin-right: 10px; "></i> Información Básica de la Reserva</h3>
         </div>
 
         <!-- Title -->
         <div class="row with-forms">
             <div class="col-md-8">
-                <h5>Precio Final </h5>
-                <h3 style="color: green;"><b>{{reserva.precioTotal}} $</b></h3>
+                <h5><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px;"></i>Numero De reserva</h5>
+                <h3><b>{{numeroReserva}}</b></h3>
             </div>
 
             <div class="col-md-4">
-                <h5>Fecha De Reserva </h5>
+                <h5><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px; "></i>Fecha De Reserva </h5>
                 <h3><b>{{reserva.fechaTransaccion}}</b></h3>
             </div>
         </div>
@@ -81,19 +81,28 @@ Vue.component('my-detalle-reserva-completo', {
 
             <!-- Status -->
             <div class="col-md-8">
-                <h5>Fecha De entrada</h5>
+                <h5><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px;"></i>Fecha De entrada</h5>
                 <h3><b>{{reserva.fechaInicio}}</b></h3>
             </div>
 
             <!-- Type -->
             <div class="col-md-4">
-                <h5>Fecha De Salida </h5>
+                <h5><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px;"></i>Fecha De Salida </h5>
                 <h3><b>{{reserva.fechaFin}}</b></h3>
             </div>
 
         </div>
         <!-- Row / End -->
 
+        <div class="row with-forms">
+
+            <!-- Status -->
+            <div class="col-md-4"></div>
+            <div class="col-md-3">
+                <h5><i class="im im-icon-Money-2" style="color:red; margin-right: 10px; "></i>Precio Final </h5>
+                <h3 style="color: green;"><b style="font-size: xx-large;">$ {{reserva.precioTotal}} </b></h3>
+            </div>
+        </div>
 
 
     </div>
@@ -104,7 +113,7 @@ Vue.component('my-detalle-reserva-completo', {
 
         <!-- Headline -->
         <div class="add-listing-headline">
-            <h3><i class="sl sl-icon-directions"></i> Direccion</h3>
+            <h3><i class="sl sl-icon-directions" style="color:red; margin-right: 10px;" ></i> Dirección</h3>
         </div>
 
         <div class="submit-section">
@@ -114,25 +123,25 @@ Vue.component('my-detalle-reserva-completo', {
 
                 <!-- City -->
                 <div class="col-md-8">
-                    <h5>Ciudad</h5>
+                    <h5><i class="im im-icon-City-Hall" style="color:red; margin-right: 10px;"></i>Ciudad</h5>
                     <h3><b>{{reserva.cuidador.user.direccion.ciudad}}</b></h3>
                 </div>
 
                 <!-- Address -->
                 <div class="col-md-4">
-                    <h5>Direccion</h5>
+                    <h5><i class="im im-icon-Street-View" style="color:red; margin-right: 10px;"></i>Direccion</h5>
                     <h3><b>{{reserva.cuidador.user.direccion.calle}}</b></h3>
                 </div>
 
                 <!-- City -->
                 <div class="col-md-8">
-                    <h5>Provincia</h5>
+                    <h5><i class="im im-icon-Flag-2" style="color:red; margin-right: 10px;"></i>Provincia</h5>
                     <h3><b>{{reserva.cuidador.user.direccion.provincia}}</b></h3>
                 </div>
 
                 <!-- Zip-Code -->
                 <div class="col-md-4">
-                    <h5>Número</h5>
+                    <h5><i class="im im-icon-Geo-Number" style="color:red; margin-right: 10px;"></i>Número</h5>
                     <h3><b>{{reserva.cuidador.user.direccion.numero}}</b></h3>
                 </div>
 
@@ -147,7 +156,7 @@ Vue.component('my-detalle-reserva-completo', {
 
         <!-- Headline -->
         <div class="add-listing-headline">
-            <h3><i class="sl sl-icon-location-pin"></i> Mapa</h3>
+            <h3><i class="im im-icon-Map-Marker2" style="color:red;" ></i> Mapa</h3>
         </div>
 
         <!-- Dropzone -->
@@ -164,18 +173,18 @@ Vue.component('my-detalle-reserva-completo', {
 
         <!-- Headline -->
         <div class="add-listing-headline">
-            <h3><i class="sl sl-icon-diamond"></i> Sobre  Mi Mascota </h3>
+            <h3><i class="im im-icon-Dog" style="color:red;"></i> Sobre  Mi Mascota </h3>
         </div>
 
         <!-- Title -->
         <div class="row with-forms">
             <div class="col-md-8">
-                <h5>Nombre  </h5>
+                <h5><i class="im im-icon-Paw" style="color:red; margin-right: 10px;"></i>Nombre  </h5>
                 <h3><b>{{reserva.perro.nombre}}</b></h3>
             </div>
 
             <div class="col-md-4">
-                <h5>Raza </h5>
+                <h5><i class="im im-icon-Paw" style="color:red; margin-right: 10px;"></i>Raza </h5>
                 <h3><b>{{reserva.perro.raza.nombre}}</b></h3>
             </div>
         </div>
@@ -185,13 +194,13 @@ Vue.component('my-detalle-reserva-completo', {
 
             <!-- Status -->
             <div class="col-md-8">
-                <h5>Tamaño</h5>
+                <h5><i class="im im-icon-Paw" style="color:red; margin-right: 10px;" ></i>Tamaño</h5>
                 <h3><b>{{tamaño}}</b></h3>
             </div>
 
             <!-- Type -->
             <div class="col-md-4">
-                <h5>Sexo </h5>
+                <h5><i class="im im-icon-Paw" style="color:red; margin-right: 10px;" ></i>Sexo </h5>
                 <h3><b>{{reserva.perro.sexo}}</b></h3>
             </div>
 
@@ -203,7 +212,7 @@ Vue.component('my-detalle-reserva-completo', {
     </div>
     <br>
 
- <div class="center-block">
+    <div class="center-block">
 
         <div class="col-md-3 col-xs-1"></div>
         <div class="col-xs-5 col-md-3" v-if="reserva.status !== 'CANCEL'" >
@@ -274,6 +283,7 @@ Vue.component('my-detalle-reserva-completo', {
                 edadCuidador:'',
                 showModal: false,
                 tamaño: '',
+                numeroReserva:'',
 
             }
         },
@@ -296,9 +306,15 @@ Vue.component('my-detalle-reserva-completo', {
                     // document.getElementById("foto_perro").src = this.reserva.perro.fotoPerfil;
                     this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);
                     this.edadCuidador = this.calcularEdad(this.reserva.cuidador.user.birthday);
-                    var date = new Date();
+                    var date = new Date(this.reserva.fechaTransaccion);
                     this.reserva.fechaTransaccion = date.toLocaleDateString();
-
+                    var dateEntrada = new Date (this.reserva.fechaInicio);
+                    var dateSalida = new Date (this.reserva.fechaFin);
+                     dateEntrada =dateEntrada.setDate(dateEntrada.getDate() + 1);
+                     dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
+                    this.reserva.fechaInicio = new Date(dateEntrada).toLocaleDateString();
+                    this.reserva.fechaFin = new Date(dateSalida).toLocaleDateString();
+                    this.numeroReserva = 570011223344;
                     this.MostrarEdad();
 
                     this.tamaño = this.reserva.perro.tamaño.nombre + " " + " (" + this.reserva.perro.tamaño.valorMinimo + " - " + this.reserva.perro.tamaño.valorMaximo + ")" + " kgs";
