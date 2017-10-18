@@ -61,5 +61,11 @@ public class ReservaUserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public Reserva getReserva(@PathVariable("id") Long id) {
+        return reservaService.getReserva(id);
+    }
+
 
 }

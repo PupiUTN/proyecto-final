@@ -216,7 +216,7 @@ Vue.component('my-detalle-reserva-completo', {
 
         <div class="col-md-3 col-xs-1"></div>
         <div class="col-xs-5 col-md-3" v-if="reserva.status !== 'CANCEL'" >
-            <a v-on:click="cancelarReservaActionButton()"  href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
+            <a v-on:click="cancelarReservaActionButton()"  href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar Reserva</a>
         </div>
     </div>
 
@@ -300,7 +300,7 @@ Vue.component('my-detalle-reserva-completo', {
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         },
         getReserva() {
-            axios.get('/api/cuidador/me/reservas/' + this.id)
+            axios.get('/api/user/me/reservas/' + this.id)
                 .then((response) => {
                     this.reserva = response.data;
                     // document.getElementById("foto_perro").src = this.reserva.perro.fotoPerfil;

@@ -60,10 +60,14 @@ Vue.component('my-reservas-cuidador-list', {
                                     <a v-on:click="cancelarReservaActionButton(index)"  style="  margin-top: 10px;" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>                        
                                 </div>
                             
-                             <div class="col-xs-12 col-md-3" >
+                             <div class="col-xs-12 col-md-3" v-if="reserva.status === 'CONFIRMATION_PENDING'">
                                     <a  style="  margin-top: 10px; color: blue;  border-color: blue; "   v-on:click="verReserva(reserva.id)" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver</a>
                                     
                                 </div>
+                                 <div class="col-xs-12 col-md-6" v-if="reserva.status === 'CONFIRMED'">
+                                            <a  style="  margin-top: 10px; color: blue;  border-color: blue; "   v-on:click="verReserva(reserva.id)" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
+                                            </div>
+                                
                             </div>    
                            
                          </div>       
@@ -222,6 +226,9 @@ Vue.component('my-reservas-cuidador-list', {
             if (this.status == 'CANCEL') {
                 return 'canceladas'
             }
+            if (this.status == 'CONFIRMED') {
+                return 'Pagadas'
+            }
             return 'Error'
         },
         listClass: function () {
@@ -229,6 +236,9 @@ Vue.component('my-reservas-cuidador-list', {
                 return 'col-xs-12 col-md-7'
             }
             if (this.status == 'CANCEL') {
+                return 'col-xs-12 col-md-10'
+            }
+            if (this.status == 'CONFIRMED') {
                 return 'col-xs-12 col-md-10'
             }
         },
@@ -241,6 +251,10 @@ Vue.component('my-reservas-cuidador-list', {
             }
             if (this.status == 'ACCEPTED') {
                 return 'background: rgba(255,255,0,0.3);'
+            }
+            if (this.status == 'CONFIRMED') {
+                return 'background: rgba(0,0,255,0.3); margin-bottom: 10px;'
+
             }
         }
 

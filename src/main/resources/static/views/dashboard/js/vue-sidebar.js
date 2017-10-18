@@ -12,8 +12,9 @@ let mySidebar = Vue.component('my-sidebar', {
                     <li><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>
 					<ul>
 						<li><a href="/views/reserva/mis-reservas-user.html?status=CONFIRMATION_PENDING">Pendientes <span class="nav-tag green">6</span></a></li>
-						<li><a href="/views/reserva/mis-reservas-user.html?status=ACCEPTED">Concretadas <span class="nav-tag yellow">1</span></a></li>
+						<li><a href="/views/reserva/mis-reservas-user.html?status=ACCEPTED">Aceptadas <span class="nav-tag yellow">1</span></a></li>
 						<li><a href="/views/reserva/mis-reservas-user.html?status=CANCEL_BY_USER">Canceladas <span class="nav-tag red">2</span></a></li>
+						<li><a href="/views/reserva/mis-reservas-user.html?status=CONFIRMED">Confirmadas <span class="nav-tag blue">2</span></a></li>
 					</ul>
 					
                     <li><a href="/views/due%C3%B1o/perfil.html"><i class="sl sl-icon-user"></i> Mi Perfil</a></li>	
@@ -25,8 +26,9 @@ let mySidebar = Vue.component('my-sidebar', {
                      <li v-show="role === 'ROLE_CUIDADOR'"><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>
 					 <ul>
 						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=CONFIRMATION_PENDING">Pendientes <span class="nav-tag green">6</span></a></li>
-						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=ACCEPTED">Concretadas <span class="nav-tag yellow">1</span></a></li>
+						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=ACCEPTED">Aceptadas <span class="nav-tag yellow">1</span></a></li>
 						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=CANCEL">Canceladas <span class="nav-tag red">2</span></a></li>
+						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=CONFIRMED">Confirmadas <span class="nav-tag blue">2</span></a></li>
 					 </ul>	
 					 </li>
                 </ul>
