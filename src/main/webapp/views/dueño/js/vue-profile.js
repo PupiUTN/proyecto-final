@@ -66,13 +66,13 @@ Vue.component('my-profile', {
                 <div class="my-profile">
                     <input id="autocomplete" type="text" placeholder="Ingrese su dirección">
                     <label class="margin-top-0">Número</label>
-                    <input v-model="direccion.numero" type="number" id="street_number" :disabled="disabled" >
+                    <input type="number" id="street_number" :disabled="disabled" >
                     <label class="margin-top-0">Calle</label>
-                    <input v-model="direccion.calle" type="text" id="route" :disabled="disabled" >
+                    <input type="text" id="route" :disabled="disabled" >
                     <label class="margin-top-0">Ciudad</label>
-                    <input v-model="direccion.ciudad" type="text" id="locality" :disabled="disabled" >
+                    <input type="text" id="locality" :disabled="disabled" >
                     <label class="margin-top-0">Provincia</label>
-                    <input v-model="direccion.provincia" type="text" id="administrative_area_level_1" :disabled="disabled" >
+                    <input type="text" id="administrative_area_level_1" :disabled="disabled" >
                 </div>
             </div>
         </div>
@@ -95,18 +95,14 @@ Vue.component('my-profile', {
             uploadedFiles: [],
             uploadError: null,
             currentStatus: null,
-            street_number: '',
-            route: '',
-            locality: '',
-            administrative_area_level_1: '',
-            country: '',
             disabled: true,
+            place:null,
             componentForm:{
                 street_number: 'short_name',
                 route: 'long_name',
                 locality: 'long_name',
                 administrative_area_level_1: 'short_name',
-                country: 'long_name',
+                //country: 'long_name',
             },
             autocomplete:null,
         }
@@ -142,16 +138,15 @@ Vue.component('my-profile', {
             this.autocomplete.addListener('place_changed', this.completar);
         },
         completar(){
-            var place = this.autocomplete.getPlace();
-            console.log("-------------------------");
-            console.log(place);
+            this.place = this.autocomplete.getPlace();
             this.disabled=false;
-            for (var i = 0; i < place.address_components.length; i++) {
-                var addressType = place.address_components[i].types[0];
+            for (var i = 0; i < this.place.address_components.length; i++) {
+                var addressType = this.place.address_components[i].types[0];
                 console.log(addressType);
                 if (this.componentForm[addressType]) {
                     console.log(this.componentForm[addressType]);
-                    var val = place.address_components[i][this.componentForm[addressType]];
+                    var val = this.place.address_components[i][this.componentForm[addressType]];
+                    console.log(document.getElementById(addressType));
                     document.getElementById(addressType).value = val;
                     console.log(val);
                 }
@@ -197,21 +192,68 @@ Vue.component('my-profile', {
         },
         editUserInfo() {
             this.user.direccion = this.direccion;
-            this.user.birthday=document.getElementById('booking-date').value;
+            this.validarBirthday();
+            this.generarDireccion();
             console.log(this.user);
             var payload = jQuery.extend(true, {}, this.user);
-            axios.put(this.url + this.user.id, payload)
-                .then((response) => {
+            // axios.put(this.url + this.user.id, payload)
+            //     .then((response) => {
+            //
+            //         sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
+            //         console.log(response);
+            //     })
+            //     .catch(error => {
+            //             console.log(error);
+            //             sweetAlert("Oops...", "Error, ver consola", "error");
+            //
+            //         }
+            //     );
+        },
+        generarDireccion(){
+            console.log(this.place);
+            if(document.getElementById("street_number").value!=null){
+                this.direccion.numero=document.getElementById("street_number").value;
+            }else{
+                return;
+            };
+            if(document.getElementById("route").value!=null){
+                this.direccion.calle=document.getElementById("route").value;
+            }else{
+                return;
+            };
+            if(document.getElementById("locality").value!=null){
+                this.direccion.ciudad=document.getElementById("locality").value;
+            }else{
+                return;
+            };
+            if(document.getElementById("administrative_area_level_1").value!=null){
+                this.direccion.provincia=document.getElementById("administrative_area_level_1").value;
+            }else{
+                return;
+            };
+            this.direccion.latitud=this.place.geometry.location.lat();
+            this.direccion.longitud=this.place.geamotry.location.lng();
+        },
+        validarBirthday(){
+            var birthday=document.getElementById('booking-date').value;
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            if(dd<10) {
+                dd = '0'+dd
+            }
+            if(mm<10) {
+                mm = '0'+mm
+            }
 
-                    sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
-                    console.log(response);
-                })
-                .catch(error => {
-                        console.log(error);
-                        sweetAlert("Oops...", "Error, ver consola", "error");
-
-                    }
-                );
+            today = dd + '-' + mm + '-' + yyyy;
+            console.log(today);
+            if(birthday==today){
+                this.user.birthday=null;
+            }else{
+                this.user.birthday=birthday;
+            }
         },
         isUserLoggedIn(sessionInfo) {
             if (sessionInfo.status === 200) {

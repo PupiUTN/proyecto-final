@@ -3,7 +3,7 @@ var numberOfAjaxCAllPending = 0;
 axios.interceptors.request.use(function (config) {
     numberOfAjaxCAllPending++;
     // Do something before request is sent
-    //$('.pace').show();
+    $('.pace').show();
     console.log("------------  $('.pace').show();");
     return config;
 }, function (error) {
@@ -27,7 +27,7 @@ axios.interceptors.response.use(function (response) {
     numberOfAjaxCAllPending--;
     console.log("------------  error axios interceptors response");
     // Do something with response error
-    //$('.pace').hide();
+    $('.pace').hide();
     console.log("------------  $('.pace').hide();");
     console.log(error.response);
     if (error.response.config.url !== '/api/user/me') {
