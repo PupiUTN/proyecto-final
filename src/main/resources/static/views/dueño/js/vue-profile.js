@@ -276,7 +276,6 @@ Vue.component('my-profile', {
         editUserInfo() {
             this.user.direccion = this.direccion;
             if(this.validarBirthday()) {
-                this.getPlaceId();
                 console.log(this.user);
                 var lat = this.direccion.latitud.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
                 var lng = this.direccion.longitud.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
@@ -302,17 +301,6 @@ Vue.component('my-profile', {
                 });
 
             }
-        },
-        getPlaceId(){
-            var lat = this.direccion.latitud.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
-            var lng = this.direccion.longitud.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
-            axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=true')
-                .then((data) => {
-                    console.log(data.data);
-                    var city = data.data.results[1];
-                    this.direccion.ciudadPlaceId = city.place_id;
-                })
-
         },
         validarBirthday(){
             var birthday=document.getElementById('booking-date').value;
