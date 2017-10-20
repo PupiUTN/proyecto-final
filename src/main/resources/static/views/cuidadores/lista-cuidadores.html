@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<head>
+
+    <!-- Basic Page Needs
+================================================== -->
+    <title>Cuidadores</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+================================================== -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+    <link rel="stylesheet" href="/views/layout/vue-navbar.css">
+
+    <link href="/css/pace-theme.css" rel="stylesheet"/>
+
+</head>
+
+<body>
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <my-app current-view="my-lista-cuidadores"></my-app>
+
+
+</div>
+<!-- Wrapper / End -->
+
+
+<!-- Scripts
+================================================== -->
+<script type="text/javascript" src="/assets/scripts/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jpanelmenu.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/chosen.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/slick.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/rangeslider.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/magnific-popup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/waypoints.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/counterup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/custom.js"></script>
+<!-- My Scripts
+================================================== -->
+<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+<link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
+<script src="/assets/scripts/datedropper.js"></script>
+
+<script src="/js/axios.min.js"></script>
+<script src="/js/axios.interceptor.js"></script>
+<script src="/js/vue.js"></script>
+<link rel="stylesheet" href="/css/sweetalert.css"></link>
+<script src="/js/sweetalert.min.js"></script>
+
+<!-- Maps -->
+
+<script type="text/javascript" src="/views/buscar/vue-google-autocomplete.js"></script>
+<script type="text/javascript" src="/views/buscar/vue-buscar-cuidador.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"></script>
+
+<script type="text/javascript" src="/views/security/js/vue-login.js"></script>
+<script type="text/javascript" src="/views/layout/vue-navbar.js"></script>
+<script type="text/javascript" src="/views/cuidadores/js/vue-lista-cuidadores.js"></script>
+
+<script type="text/javascript" src="/views/index/js/vue-app-template.js"></script>
+
+<script>
+    let vm = new Vue({
+        el: '#wrapper',
+    });
+</script>
+
+
+</body>
+</html>

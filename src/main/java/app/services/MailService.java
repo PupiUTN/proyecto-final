@@ -25,8 +25,7 @@ public class MailService {
                 .withClientConfiguration(
                         new ClientConfiguration()
                                 .withConnectionTimeout(3000)
-                                .withRequestTimeout(3000)
-                );
+                                .withRequestTimeout(3000));
 
         AmazonSimpleEmailService service = builder.build();
         SendEmailRequest sendEmailRequest = createEmailRequest(FROM, user.getEmail(), type, user.getUsername());
