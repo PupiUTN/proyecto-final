@@ -64,7 +64,7 @@ Vue.component('my-reservas-cuidador-list', {
                                     <a  style="  margin-top: 10px; color: blue;  border-color: blue; "   v-on:click="verReserva(reserva.id)" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver</a>
                                     
                                 </div>
-                                 <div class="col-xs-12 col-md-6" v-if="reserva.status === 'CONFIRMED'">
+                                 <div class="col-xs-12 col-md-6" v-if="reserva.status === 'PAID'">
                                             <a  style="  margin-top: 10px; color: blue;  border-color: blue; "   v-on:click="verReserva(reserva.id)" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                             </div>
                                 
@@ -226,7 +226,7 @@ Vue.component('my-reservas-cuidador-list', {
             if (this.status == 'CANCEL') {
                 return 'canceladas'
             }
-            if (this.status == 'CONFIRMED') {
+            if (this.status == 'PAID') {
                 return 'Pagadas'
             }
             return 'Error'
@@ -238,7 +238,7 @@ Vue.component('my-reservas-cuidador-list', {
             if (this.status == 'CANCEL') {
                 return 'col-xs-12 col-md-10'
             }
-            if (this.status == 'CONFIRMED') {
+            if (this.status == 'PAID') {
                 return 'col-xs-12 col-md-10'
             }
         },
@@ -252,7 +252,7 @@ Vue.component('my-reservas-cuidador-list', {
             if (this.status == 'ACCEPTED') {
                 return 'background: rgba(255,255,0,0.3);'
             }
-            if (this.status == 'CONFIRMED') {
+            if (this.status == 'PAID') {
                 return 'background: rgba(0,0,255,0.3); margin-bottom: 10px;'
 
             }

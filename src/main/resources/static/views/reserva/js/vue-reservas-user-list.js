@@ -48,7 +48,7 @@ Vue.component('my-reservas-user-list', {
                                         <div class="col-xs-12 col-md-3" v-if="reserva.status === 'PAYMENT_PENDING'">
                                             <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Pagar</a>
                                         </div>
-                                         <div class="col-xs-12 col-md-6" v-if="reserva.status === 'CONFIRMED'">
+                                         <div class="col-xs-12 col-md-6" v-if="reserva.status === 'PAID'">
                                             <a v-on:click="verDetalleCompletoButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                         </div>
 
@@ -172,7 +172,7 @@ Vue.component('my-reservas-user-list', {
             if (this.status == 'ACCEPTED') {
                 return 'Confirmadas'
             }
-            if (this.status == 'CONFIRMED') {
+            if (this.status == 'PAID') {
                 return 'Pagadas'
             }
             return 'Error'
@@ -187,7 +187,7 @@ Vue.component('my-reservas-user-list', {
             if (this.status == 'ACCEPTED') {
                 return 'col-xs-12 col-md-10'
             }
-            if (this.status == 'CONFIRMED') {
+            if (this.status == 'PAID') {
                 return 'col-xs-12 col-md-10'
             }
         },
@@ -202,7 +202,7 @@ Vue.component('my-reservas-user-list', {
                 return 'background: rgba(255, 255, 0, 0.15); margin-bottom: 10px;'
 
             }
-            if (this.status == 'CONFIRMED') {
+            if (this.status == 'PAID') {
                 return 'background: rgba(0,0,255,0.3); margin-bottom: 10px;'
 
             }

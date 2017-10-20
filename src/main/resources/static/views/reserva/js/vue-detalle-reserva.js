@@ -77,7 +77,7 @@ Vue.component('my-detalle-reserva', {
     <br>
     <br>
 
-    <div v-if="reserva.status === 'CONFIRMED'">
+    <div v-if="reserva.status === 'PAID'">
 
         
         <div id="footer">
