@@ -45,21 +45,23 @@ Vue.component('my-profile', {
             </div>
         </div>
     </div>
-        <div class="row margin-top-20">
-        <div class="col-lg-6 col-xs-12">
-        <div class="dashboard-list-box margin-top-0">
-            <h4 class="gray">Información de Contacto</h4>
-            <div class="dashboard-list-box-static">
-                <div class="my-profile">
-                    <label class="margin-top-0">Teléfono</label>
-                    <input v-model="user.phone" value="" type="number" required>
-                    <label class="margin-top-0">Email</label>
-                    <input v-model="user.email" value="" type="email" required>
+    <div class="row margin-top-20">
+        <div class="col-xs-12">
+            <div class="dashboard-list-box margin-top-0">
+                <h4 class="gray">Información de Contacto</h4>
+                <div class="dashboard-list-box-static">
+                    <div class="my-profile">
+                        <label class="margin-top-0">Teléfono</label>
+                        <input v-model="user.phone" value="" type="number" required>
+                        <label class="margin-top-0">Email</label>
+                        <input v-model="user.email" value="" type="email" required>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-        <div class="col-lg-6 col-xs-12">
+    <div class="row margin-top-20">
+    <div class="col-xs-12">
         <div class="dashboard-list-box margin-top-0">
             <h4 class="gray">Dirección</h4>
             <div class="dashboard-list-box-static">
@@ -77,13 +79,13 @@ Vue.component('my-profile', {
             </div>
         </div>
     </div>
-    </div>
-        <div class="row">
-            <div class="col-s-3" style="margin-left: 2%;">
-                <input type="submit" value="Guardar" name="editUserInfo" style=" height: 60px; width: 150px; position: relative; " class="button margin-top-10"/>
-            </div>
+</div>
+    <div class="row">
+        <div class="col-s-3" style="margin-left: 2%;">
+            <input type="submit" value="Guardar" name="editUserInfo" style=" height: 60px; width: 150px; position: relative; " class="button margin-top-10"/>
         </div>
-    </form>
+    </div>
+</form>
 </div>
     `,
     data: function () {
