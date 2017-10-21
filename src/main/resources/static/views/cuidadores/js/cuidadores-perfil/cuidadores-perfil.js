@@ -20,6 +20,7 @@ let vm = new Vue({
         fechaReservaDesde: '',
         fechaReservaHasta: '',
         idCuidador: 0,
+        showModal: false
     }
     ,
     mounted() {

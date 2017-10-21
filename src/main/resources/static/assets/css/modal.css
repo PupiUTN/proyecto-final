@@ -10,7 +10,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,600');
 @import url('bootstrap.css');
 .modal-mask {
-    position: relative;
+    position: fixed;
     z-index: 9998;
     top: 0;
     left: 0;
@@ -27,7 +27,7 @@
 }
 
 .modal-container {
-    width: 100%;
+    width: 300px;
     margin: 0px auto;
     padding: 20px 30px;
     background-color: #fff;

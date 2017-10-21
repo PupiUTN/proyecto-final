@@ -14,6 +14,8 @@
 
     <link href="/css/pace-theme.css" rel="stylesheet"/>
 
+    <link href="../../assets/css/modal.css" rel="stylesheet"/>
+
 </head>
 
 <body xmlns:v-bind="http://www.w3.org/1999/xhtml">
@@ -243,7 +245,26 @@
 
             </div>
         </div>
+        -- empieza
+        <button id="show-modal" @click="showModal = true">Show Modal</button>
+        <!-- use the modal component, pass in the prop -->
 
+        <modal v-if="showModal" @close="showModal = false">
+            <!--
+              you can use custom content here to overwrite
+              default content
+         -->
+            <div class="modal-footer uk-clearfix">
+                <slot name="footer">
+                    <button class="modal-default-button" @click="showModal = false">
+                        Cerrar
+                    </button>
+                </slot>
+            </div>
+
+        </modal>
+
+        --termina
 
         <!-- Footer
         ================================================== -->
@@ -341,6 +362,9 @@
 <link rel="stylesheet" href="/views/layout/vue-navbar.css">
 <script type="text/javascript" src="/views/layout/vue-navbar.js"></script>
 <script src="js/cuidadores-perfil/cuidadores-perfil.js"></script>
+
+<script src="../reserva/js/vue-review-modal.js"></script>
+
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"></script>
 
