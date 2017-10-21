@@ -1,5 +1,5 @@
 // https://github.com/olefirenko/vue-google-autocomplete
-let myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
+var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
     template: `
 <form class="main-search-input" v-on:submit.prevent='buscar'>
     <div class="main-search-input-item location" :style="inputSize">
@@ -11,7 +11,7 @@ let myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
             v-on:placechanged="setPlaceId"
         >
         </vue-google-autocomplete>
-        <a id="geo-location" v-on:click='geolocate()'>
+        <a id="geo-location" v-on:click='geolocate()' v-show="isIndex">
             <i class="fa fa-dot-circle-o"></i>
         </a>
         
@@ -60,12 +60,11 @@ let myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
     mounted() {
         this.bindUrlWithVue();
         this.bindDatePickerWithVue();
-        this.disableEnterKey();
     },
     methods: {
         geolocate() {
             if (navigator.geolocation) {
-                $('.pace').show();
+                $('#page-loader').show();
                 navigator.geolocation.getCurrentPosition(function (position) {
                     console.log("entra a get current position");
                     let lat = position.coords.latitude;
@@ -75,15 +74,16 @@ let myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
                     this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
                     //https://developers.google.com/maps/documentation/geocoding/start
                     axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.placeLat + ',' + this.placeLng + '&sensor=true')
-                        .then((data) => {
+                        .then((data) =>
+                        {
                             console.log(data.data);
                             var city = data.data.results[1];
-                            vm.$refs.myBuscarCuidadores.placeID = city.place_id;
-                            vm.$refs.myBuscarCuidadores.placeLat = city.geometry.location.lat;
-                            vm.$refs.myBuscarCuidadores.placeLng = city.geometry.location.lng;
-                            vm.$refs.myBuscarCuidadores.placeName = city.formatted_address;
+                            vm.$refs.myIndex.$refs.currentView.$refs.myBuscarCuidadores.placeID = city.place_id;
+                            vm.$refs.myIndex.$refs.currentView.$refs.myBuscarCuidadores.placeLat = city.geometry.location.lat;
+                            vm.$refs.myIndex.$refs.currentView.$refs.myBuscarCuidadores.placeLng = city.geometry.location.lng;
+                            vm.$refs.myIndex.$refs.currentView.$refs.myBuscarCuidadores.placeName = city.formatted_address;
                             let input = document.getElementById('location');
-                            input.value = vm.$refs.myBuscarCuidadores.placeName;
+                            input.value = vm.$refs.myIndex.$refs.currentView.$refs.myBuscarCuidadores.placeName;
 
                         });
                 });
@@ -99,6 +99,7 @@ let myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
         buscar() {
             //si el formulario no tiene los campos basicos no hago nada
             if (!this.formValitaion()){
+                console.log("place id not set in vue-search component");
                 return;
             }
             let href = "/views/cuidadores/lista-cuidadores.html?placeName=" + this.placeName +

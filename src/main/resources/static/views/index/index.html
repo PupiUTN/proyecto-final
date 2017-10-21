@@ -14,7 +14,7 @@
 
     <!-- MY CSS
     ================================================== -->
-    <link href="/css/pace-theme.css" rel="stylesheet"/>
+    <link href="/css/page-loader.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/views/layout/vue-navbar.css">
     <link rel="stylesheet" href="/css/sweetalert.css"/>
     <link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
@@ -26,7 +26,7 @@
 
 <body>
 <div id="wrapper">
-    <router-view></router-view>
+    <my-app current-view="my-index" ref="myIndex"></my-app>
 </div>
 
 
@@ -52,8 +52,6 @@
 <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
 <script src="/assets/scripts/datedropper.js"></script>
 <script src="/js/vue.js"></script>
-<script src="/js/vue-router.js"></script>
-
 <script src="/js/axios.min.js"></script>
 <script src="/js/axios.interceptor.js"></script>
 <script src="/js/sweetalert.min.js"></script>
@@ -66,9 +64,13 @@
 <script type="text/javascript" src="/views/layout/vue-navbar.js"></script>
 <script type="text/javascript" src="/views/index/js/vue-index.js"></script>
 <script type="text/javascript" src="/views/index/js/vue-app-template.js"></script>
-<script type="text/javascript" src="/views/cuidadores/js/vue-lista-cuidadores.js"></script>
 
-<script type="text/javascript" src="/js/routes.js"></script>
+
+<script>
+    let vm = new Vue({
+        el: '#wrapper',
+    });
+</script>
 
 
 </body>

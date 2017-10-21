@@ -5,7 +5,7 @@ let myApp = Vue.component('my-app', {
     <!-- Header Container
     ================================================== -->
     <my-navbar></my-navbar>
-    <component :is="currentView" ref="currentView"></component>
+        <component :is="currentView" ref="currentView"></component>
 </span>
 `,
     props: ['currentView']
