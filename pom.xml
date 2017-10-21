@@ -22,6 +22,12 @@
 
     </properties>
 
+    <repositories>
+        <repository>
+            <id>mercadopago</id>
+            <url>https://github.com/mercadopago/sdk-java/raw/master/releases</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -47,6 +53,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-rest</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mercadopago</groupId>
+            <artifactId>sdk</artifactId>
+            <version>0.3.4</version>
         </dependency>
 
         <dependency>
