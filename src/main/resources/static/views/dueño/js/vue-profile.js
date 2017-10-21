@@ -35,7 +35,7 @@ Vue.component('my-profile', {
                             <input type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to" required>
                             <label class="margin-top-0">Género</label>
                             <select v-model="user.gender" required>
-                                <option disabled selected value="">Seleccionar Género</option>
+                                <option disabled selected value="Seleccionar Género">Seleccionar Género</option>
                                 <option>Masculino</option>
                                 <option>Femenino</option>
                             </select>
@@ -45,68 +45,70 @@ Vue.component('my-profile', {
             </div>
         </div>
     </div>
-        <div class="row margin-top-20">
-        <div class="col-lg-6 col-xs-12">
-        <div class="dashboard-list-box margin-top-0">
-            <h4 class="gray">Información de Contacto</h4>
-            <div class="dashboard-list-box-static">
-                <div class="my-profile">
-                    <label class="margin-top-0">Teléfono</label>
-                    <input v-model="user.phone" value="" type="number" required>
-                    <label class="margin-top-0">Email</label>
-                    <input v-model="user.email" value="" type="email" required>
+    <div class="row margin-top-20">
+        <div class="col-xs-12">
+            <div class="dashboard-list-box margin-top-0">
+                <h4 class="gray">Información de Contacto</h4>
+                <div class="dashboard-list-box-static">
+                    <div class="my-profile">
+                        <label class="margin-top-0">Teléfono</label>
+                        <input v-model="user.phone" value="" type="number" required>
+                        <label class="margin-top-0">Email</label>
+                        <input v-model="user.email" value="" type="email" required>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-        <div class="col-lg-6 col-xs-12">
+    <div class="row margin-top-20">
+    <div class="col-xs-12">
         <div class="dashboard-list-box margin-top-0">
             <h4 class="gray">Dirección</h4>
             <div class="dashboard-list-box-static">
                 <div class="my-profile">
                     <input id="autocomplete" type="text" placeholder="Ingrese su dirección">
                     <label class="margin-top-0">Número</label>
-                    <input v-model="direccion.numero" type="number" id="street_number" :disabled="disabled" >
+                    <input v-model="direccion.numero" type="number" class="street_number" :disabled="disabled" >
                     <label class="margin-top-0">Calle</label>
-                    <input v-model="direccion.calle" type="text" id="route" :disabled="disabled" >
-                    <label class="margin-top-0">Ciudad</label>
-                    <input v-model="direccion.ciudad" type="text" id="locality" :disabled="disabled" >
+                    <input v-model="direccion.calle" type="text" class="route" :disabled="disabled" >
+                    <label class="margin-top-0">Ciudad (salvo CABA)</label>
+                    <input v-model="direccion.ciudad" type="text" class="locality sublocality_level_1" :disabled="disabled" >
                     <label class="margin-top-0">Provincia</label>
-                    <input v-model="direccion.provincia" type="text" id="administrative_area_level_1" :disabled="disabled" >
+                    <input v-model="direccion.provincia" type="text" class="administrative_area_level_1" :disabled="disabled" >
                 </div>
             </div>
         </div>
     </div>
-    </div>
-        <div class="row">
-            <div class="col-s-3" style="margin-left: 2%;">
-                <input type="submit" value="Guardar" name="editUserInfo" style=" height: 60px; width: 150px; position: relative; " class="button margin-top-10"/>
-            </div>
+</div>
+    <div class="row">
+        <div class="col-s-3" style="margin-left: 2%;">
+            <input type="submit" value="Guardar" name="editUserInfo" style=" height: 60px; width: 150px; position: relative; " class="button margin-top-10"/>
         </div>
-    </form>
+    </div>
+</form>
 </div>
     `,
     data: function () {
         return {
-            user: {},
+            user: {
+            },
             url: "/api/user/",
-            direccion: {},
+            direccion: {
+                calle:'holi'
+            },
             formPost: true,
             uploadedFiles: [],
             uploadError: null,
             currentStatus: null,
-            street_number: '',
-            route: '',
-            locality: '',
-            administrative_area_level_1: '',
-            country: '',
             disabled: true,
+            place:null,
             componentForm: {
                 street_number: 'short_name',
                 route: 'long_name',
                 locality: 'long_name',
                 administrative_area_level_1: 'short_name',
                 country: 'long_name',
+                postal_code: 'short_name'
             },
             autocomplete: null,
         }
@@ -142,22 +144,56 @@ Vue.component('my-profile', {
             this.autocomplete.addListener('place_changed', this.completar);
         },
         completar() {
-            var place = this.autocomplete.getPlace();
-            console.log("-------------------------");
-            console.log(place);
-            this.disabled = false;
-            for (var i = 0; i < place.address_components.length; i++) {
-                var addressType = place.address_components[i].types[0];
-                console.log(addressType);
-                if (this.componentForm[addressType]) {
-                    console.log(this.componentForm[addressType]);
-                    var val = place.address_components[i][this.componentForm[addressType]];
-                    document.getElementById(addressType).value = val;
-                    console.log(val);
+            this.place = this.autocomplete.getPlace();
+            console.log(this.place);
+            if(this.place.types[0]!="street_address"){//si es direccion, tiene qie tener numero
+                sweetAlert("Información", "Ingrese una direccion con numero", "info");
+                return;
+            }
+            //this.disabled=false;
+            for (var i = 0; i < this.place.address_components.length; i++) {
+                var addressType = this.place.address_components[i].types[0];
+                //console.log(addressType);
+                var place = this.autocomplete.getPlace();
+                console.log(place);
+                for (var i = 0; i < place.address_components.length; i++) {
+                    var addressType = place.address_components[i].types[0];
+                    if (this.componentForm[addressType]) {
+                        //console.log(this.componentForm[addressType]);
+                        var val = this.place.address_components[i][this.componentForm[addressType]];
+                        if (addressType == "street_number") {//numero
+                            this.direccion.numero = val;
+                            continue;
+                        }
+                        if (addressType == "route") {//calle
+                            this.direccion.calle = val;
+                            continue;
+                        }
+                        if (addressType == "locality") {//ciudad
+                            this.direccion.ciudad = val;
+                            continue;
+                        }
+                        if (addressType == "administrative_area_level_1") {//provincia
+                            this.direccion.provincia = val;
+                            continue;
+                        }
+                        if (addressType == "country") {
+                            this.direccion.pais = val;
+                        }
+                        if (addressType == "postal_code") {
+                            this.direccion.codigoPostal = val;
+                        }
+                        //document.getElementsByClassName(addressType)[0].value = val;
+                        //console.log(this.place);
+                        this.direccion.latitud = this.place.geometry.location.lat();
+                        this.direccion.longitud = this.place.geometry.location.lng();
+                        this.direccion.direccionLinea1 = this.place.formatted_address;
+                        this.direccion.placeId = this.place.id;
+                    }
                 }
             }
         },
-        filesChange(fileList) {
+        filesChange(fileList){
             // handle file changes
             const formData = new FormData();
 
@@ -215,13 +251,10 @@ Vue.component('my-profile', {
         },
         isUserLoggedIn(sessionInfo) {
             if (sessionInfo.status === 200) {
-                let address = sessionInfo.data.principal.user.direccion;
-                if (!address) {
-                    address = {};
-                    address.direccionLinea1 = "";
-                }
-                this.direccion = address;
                 this.user = sessionInfo.data.principal.user;
+                if(this.user.direccion!=null){
+                    this.direccion=this.user.direccion;
+                }
                 this.setDate();
                 console.log(this.user);
                 $('#booking-date').dateDropper();
@@ -233,18 +266,66 @@ Vue.component('my-profile', {
             }
         },
         setDate() {
-            if (this.user.birthday) {
+            if(this.user.birthday){
                 console.log(this.user.birthday);
-                var initial = this.user.birthday.split("-");
-                var date = [initial[1], initial[0], initial[2]].join('-');
+                var initial =this.user.birthday.split("-");
+                var date=[ initial[1], initial[0], initial[2] ].join('-');
                 console.log(date);
-                document.getElementById('booking-date').setAttribute('data-default-date', date);
-                document.getElementById('booking-date').setAttribute('data-lock', '');
+                document.getElementById('booking-date').setAttribute('data-default-date',date);
+                document.getElementById('booking-date').setAttribute('data-lock','');
+            }
+        },
+        editUserInfo() {
+            this.user.direccion = this.direccion;
+            if(this.validarBirthday()) {
+                console.log(this.user);
+                var lat = this.direccion.latitud.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+                var lng = this.direccion.longitud.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+                axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=true')
+                    .then((data) => {
+                        console.log(data.data);
+                        var city = data.data.results[1];
+                        this.direccion.ciudadPlaceId = city.place_id;
+                    }).then(()=>{
+                    var payload = jQuery.extend(true, {}, this.user);
+                    axios.put(this.url + this.user.id, payload)
+                        .then((response) => {
+
+                            sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
+                            console.log(response);
+                        })
+                        .catch(error => {
+                                console.log(error);
+                                sweetAlert("Oops...", "Error, ver consola", "error");
+
+                            }
+                        );
+                });
 
             }
-
+        },
+        validarBirthday(){
+            var birthday=document.getElementById('booking-date').value;
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            if(dd<10) {
+                dd = '0'+dd
+            }
+            if(mm<10) {
+                mm = '0'+mm
+            }
+            today = dd + '-' + mm + '-' + yyyy;
+            if(birthday==today){
+                this.user.birthday=null;
+                sweetAlert("Alerta!", "Seleccione una fecha de nacimiento.", "warning");
+                return true;
+            }else{
+                this.user.birthday=birthday;
+                return true;
+            }
         }
-
     }
 });
 
