@@ -1,8 +1,8 @@
 spring:
  datasource:
-    url: ${JDBC_DATABASE_URL}
-    username: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE_PASSWORD}
+    url: jdbc:mysql://localhost:3306/pupi?useSSL=false
+    username: root
+    password: root
     testWhileIdle: true
     validationQuery: SELECT 1
  jpa:
@@ -22,7 +22,7 @@ spring:
                     starttls.enable: true
 
 server:
-  port: 5000
+  port: 8080
 
 java:
   runtime:
