@@ -1,6 +1,6 @@
 Vue.component('mercadopago', {
     template: `
-    <a href="{{sandboxInitPoint}}">Pagar</a>
+    <a v-bind:href="sandboxInitPoint" name="MP-Checkout" class="red-M-Rn-Ar-ArOn" mp-mode="popup" onreturn="executeOnMyReturn">Pagar</a>
     `,
     data:
         function() {
@@ -16,15 +16,21 @@ Vue.component('mercadopago', {
     },
     methods: {
         getPaymentPreference() {
-            axios.get(url)
+            console.log("ENTRO AL PREFERENCE");
+            axios.get(this.url)
                 .then((paymentPreference) => {
-                this.paymentPreference = paymentPreference;
-                this.sandboxInitPoint = paymentPreference.sandboxInitPoint;
+                console.log(paymentPreference);
+                this.paymentPreference = paymentPreference.data.response;
+                this.sandboxInitPoint = this.paymentPreference.sandbox_init_point;
+                console.log(this.sandboxInitPoint);
                 })
                 .catch(error => {
                     console.log(error);
                     sweetAlert("Oops...", "Error, ver consola", "error");
                 });
+        },
+        executeOnMyReturn(response) {
+            console.log(response);
         }
     }
 })

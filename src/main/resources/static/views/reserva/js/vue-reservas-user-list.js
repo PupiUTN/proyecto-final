@@ -51,6 +51,11 @@ Vue.component('my-reservas-user-list', {
                                          <div class="col-xs-12 col-md-6" v-if="reserva.status === 'PAID'">
                                             <a v-on:click="verDetalleCompletoButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                         </div>
+                                        <div class="col-xs-12 col-md-3" v-if="reserva.status === 'ACCEPTED'">
+                                            <div>
+                                                <mercadopago></mercadopago>
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
