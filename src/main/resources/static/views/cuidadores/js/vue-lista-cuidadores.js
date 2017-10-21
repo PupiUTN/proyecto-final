@@ -53,9 +53,8 @@ template: `
                     </a>
 
                 </div>
+                
                 <!-- Listing Item / End -->
-
-
             </div>
             <!-- Listings Container / End -->
 
