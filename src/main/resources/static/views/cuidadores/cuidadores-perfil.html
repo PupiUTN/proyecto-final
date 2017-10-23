@@ -59,7 +59,21 @@
                         <div class="avatar"><img id="imagenAvatar" src="/img/logo.png" alt=""/>
                         </div>
                         <div class="listing-titlebar-title">
+                            <!-- Reviews -->
+                            -- empieza
+                            <button id="show-modal" @click="showModal = true">Show Modal</button>
+                            <!-- use the modal component, pass in the prop -->
 
+                            <modal v-if="showModal" show="showModal"   @close="showModal = false">
+                                <!--
+                                  you can use custom content here to overwrite
+                                  default content
+                             -->
+
+
+                            </modal>
+
+                            --termina
 
                             <h2 style="margin-left: 100px;" id="nombre"> {{item.user.fullName}} <span
                                     class="listing-tag">Cuidador</span></h2>
@@ -156,7 +170,6 @@
                         </div>
                     </div>
 
-                    <!-- Reviews -->
 
 
                 </div>
@@ -245,26 +258,7 @@
 
             </div>
         </div>
-        -- empieza
-        <button id="show-modal" @click="showModal = true">Show Modal</button>
-        <!-- use the modal component, pass in the prop -->
 
-        <modal v-if="showModal" @close="showModal = false">
-            <!--
-              you can use custom content here to overwrite
-              default content
-         -->
-            <div class="modal-footer uk-clearfix">
-                <slot name="footer">
-                    <button class="modal-default-button" @click="showModal = false">
-                        Cerrar
-                    </button>
-                </slot>
-            </div>
-
-        </modal>
-
-        --termina
 
         <!-- Footer
         ================================================== -->
