@@ -32,7 +32,7 @@ public class StorageServiceFileSystem  implements  StorageService{
     public StorageServiceFileSystem() {
         rootPath = System.getProperty("user.dir");
         pathToLocalHost = rootPath + File.separator + "src" + File.separator + "main" + File.separator + "resources"
-        + File.separator + "static";
+                + File.separator + "static";
         folder = File.separator + "file_upload";
         completePath = pathToLocalHost+ folder;
         // Remote address
