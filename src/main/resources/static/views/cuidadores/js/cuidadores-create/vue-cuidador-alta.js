@@ -225,7 +225,7 @@ Vue.component('become-cuidador', {
                 });
 
         },
-        enviarAltaCuidador: function () {
+        enviarAltaCuidador () {
             if (!this.isReadOnly) {
 
                 if (this.validarCantidadImagenes()) {
@@ -235,12 +235,18 @@ Vue.component('become-cuidador', {
                 if (this.user.status = "INCOMPLETED") {
                     sweetAlert({
                             title: "Alerta!",
-                            text: "Para enviar su solicitud, primero debe completar su perfil <a href='/views/dueño/perfil.html'>aqui</a>",
+                            text: "Para enviar su solicitud, primero debe completar su perfil.",
                             type: "warning",
+                            confirmButtonColor: '#f91942',
+                            cancelButtonColor: '#707070',
+                            confirmButtonText: 'Editar perfil',
+                            showCancelButton: true,
+                            cancelButtonText: 'Cancelar'
                         },
                         function () {
-                            document.location.href = "/views/cuidadores/cuidadores-editar.html";
+                            document.location.href = "/views/dueño/perfil.html";
                         });
+                    return;
                 }
                 this.cuidador.dniImagenes = [this.dniAnverso, this.dniReverso];
                 this.cuidador.user = this.user;
