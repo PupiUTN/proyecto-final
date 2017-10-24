@@ -361,7 +361,7 @@ Vue.component('my-cuidador-edit', {
             this.cuidador.precioPorNoche = this.precioFinal;
             var tam = {id: this.tamaño};
             this.cuidador.tamaño = tam;
-
+            this.isCuidadorCompleted();
 
             var urlCiudador = "/api/cuidadores/";
             var payload = jQuery.extend(true, {}, this.cuidador);
@@ -380,6 +380,28 @@ Vue.component('my-cuidador-edit', {
 
                     }
                 );
+        },
+        isCuidadorCompleted(){
+            this.cuidador.estado="approved";
+            if(!this.cuidador.user.status || this.cuidador.user.status=="INCOMPLETED"){
+                return;
+            }
+            if(!this.cuidador.cantidadMaxDePerros || this.cuidador.cantidadMaxDePerros==0){
+                return;
+            }
+            if(!this.cuidador.descripcion){
+                return;
+            }
+            if(!this.cuidador.precioPorNoche){
+                return;
+            }
+            if(!this.cuidador.tamaño){
+                return;
+            }
+            if(!this.cuidador.listaImagenes || this.cuidador.listaImagenes.length!=4){
+                return;
+            }
+            this.cuidador.estado="completed";
         },
         inicializarImagenes() {
             if (this.cuidador.listaImagenes.length > 0) {
