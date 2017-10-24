@@ -4,6 +4,8 @@ import app.models.entities.Cuidador;
 import app.models.entities.Reserva;
 import app.models.entities.User;
 import com.mercadopago.*;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PaymentsService {
 
+    private static final Logger logger = LogManager.getLogger(PaymentsService.class);
     MP mp = new MP("92590042667422", "R8bMZvxKoJgO4gxALPfVnRv4ueJyqwRL");
 
     public JSONObject createPreference(Reserva reserva) {
@@ -56,5 +59,20 @@ public class PaymentsService {
             System.out.println("Exception when trying to create preference " + e.toString());
         }
         return preference;
+    }
+
+    public JSONObject getPaymentInfo(String paymentId) {
+        try {
+                JSONObject paymentInfo = mp.getPaymentInfo(paymentId);
+                if(paymentInfo.getInt("status") == 200) {
+                    System.out.println(paymentInfo);
+                    logger.info(paymentInfo);
+                }
+        }
+        catch(Exception e) {
+            System.out.println(e.toString());
+            logger.error("Error when trying to get payment info " + e.toString());
+        }
+        return null;
     }
 }
