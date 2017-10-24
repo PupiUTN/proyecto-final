@@ -29,8 +29,11 @@ public class CalificacionController {
     @RequestMapping(method = RequestMethod.POST)
     public Calificacion createCalificacion(@RequestBody  Calificacion entity) throws  Exception {
 
-        return calificacionService.createCalificacion(entity);
-
+        Calificacion calific = calificacionService.createCalificacion(entity);
+         Reserva res  = entity.getReserva();
+          res.setStatus("END");
+        reservaService.save(res);
+        return calific;
     }
 
 }

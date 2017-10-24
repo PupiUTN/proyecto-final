@@ -9,10 +9,10 @@
            <div id="add-review" class="add-review-box">
 
                     <!-- Add Review -->
-                    <h3 class="listing-desc-headline margin-bottom-20"> Review </h3>
+                    <h2 class="listing-desc-headline margin-bottom-20"> Review </h2>
 
-                    <span class="leave-rating-title">tu  calificación para  {{nombreReview}} </span>
-
+                    <span class="leave-rating-title">tu  calificación para </span> <h3>{{entity.name}}</h3>  
+            <div style=" top: 70px;" class="message-avatar"><img :src="entity.profileImage" alt=""></div>
                     <!-- Rating / Upload Button -->
                     <div class="row">
                         <div class="col-md-6">
@@ -76,19 +76,64 @@
                 comentario:'',
                 puntaje:'',
                 reserva: {
-                    id:'32',
+                    id:'',
                 },
-            }
+            },
+             entity:{
+              name:'',
+                 profileImage:'',
+
+             }
             ,
-        nombreReview:' Perro Puto',
+            id:'',
+
            rating: [false,false,false,false,false],
             total : 0,
+             rol:'',
      }
  },
  mounted() {
+     this.id = this.getParameterByName('id');
+     this.getReserva();
+
 
  },
  methods: {
+     getParameterByName(name) {
+         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+             results = regex.exec(location.search);
+         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+     },
+     getReserva() {
+         this.id ="32";
+         axios.get('/api/user/me/reservas/' + this.id)
+             .then((response) => {
+                 this.reserva = response.data;
+                 this.rol = this.getParameterByName('rol');
+
+                  if (this.rol ==="CUIDADOR")
+                  {
+
+                      this.entity.name = this.reserva.perro.nombre;
+                      this.entity.profileImage = this.reserva.perro.fotoPerfil;
+
+                  }
+                  else
+                  {
+
+
+                      this.entity.name = this.reserva.cuidador.user.fullName;
+                      this.entity.profileImage = this.reserva.cuidador.user.profileImageUrl;
+
+                  }
+             })
+             .catch(error => {
+                 console.log(error);
+                 this.message = "Actualmente no se encuentra la reserva.";
+                 sweetAlert("Oops...", "Actualmente no se encuentra la reserva.", "error");
+             });
+     },
      enviarReview()
         {
             if (!this.obtenerPuntaje()) {

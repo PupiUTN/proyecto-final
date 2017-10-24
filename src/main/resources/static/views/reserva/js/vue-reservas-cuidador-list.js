@@ -67,6 +67,10 @@ Vue.component('my-reservas-cuidador-list', {
                                  <div class="col-xs-12 col-md-6" v-if="reserva.status === 'PAID'">
                                             <a  style="  margin-top: 10px; color: blue;  border-color: blue; "   v-on:click="verReserva(reserva.id)" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                             </div>
+                                            
+                                 <div class="col-xs-12 col-md-3" v-if="reserva.status === 'Review_CUIDADOR_PENDING'">
+                                    <a v-on:click="calificarReserva(index)"  style="color: blue; border-color: blue; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
+                                </div>
                                 
                             </div>    
                            
@@ -80,6 +84,8 @@ Vue.component('my-reservas-cuidador-list', {
         </div>
     </div>
 </div>
+
+ 
 </div>   
     `,
     data:
@@ -115,6 +121,7 @@ Vue.component('my-reservas-cuidador-list', {
                 mensaje: '',
                 perroProfileUrl: '',
                 status: null,
+                showModal: false,
 
             }
         },
@@ -128,6 +135,12 @@ Vue.component('my-reservas-cuidador-list', {
 
 
                 document.location.href = "/views/reserva/detalle-reserva.html?id= " + index;
+            },
+            calificarReserva(index) {
+
+
+                document.location.href = "/views/reserva/calificacion-reserva.html?id= " + index +
+                    "&rol=" + "CUIDADOR";
             },
 
             getCuidadorReservas() {
@@ -229,6 +242,9 @@ Vue.component('my-reservas-cuidador-list', {
             if (this.status == 'PAID') {
                 return 'Pagadas'
             }
+            if (this.status == 'Review_CUIDADOR_PENDING') {
+                return 'Pendiente de Calificacion'
+            }
             return 'Error'
         },
         listClass: function () {
@@ -239,6 +255,9 @@ Vue.component('my-reservas-cuidador-list', {
                 return 'col-xs-12 col-md-10'
             }
             if (this.status == 'PAID') {
+                return 'col-xs-12 col-md-10'
+            }
+            if (this.status == 'Review_CUIDADOR_PENDING') {
                 return 'col-xs-12 col-md-10'
             }
         },
@@ -254,6 +273,10 @@ Vue.component('my-reservas-cuidador-list', {
             }
             if (this.status == 'PAID') {
                 return 'background: rgba(0,0,255,0.3); margin-bottom: 10px;'
+
+            }
+            if (this.status == 'Review_CUIDADOR_PENDING') {
+                return 'background: rgba(0,255,0,0.3); margin-bottom: 10px;'
 
             }
         }
