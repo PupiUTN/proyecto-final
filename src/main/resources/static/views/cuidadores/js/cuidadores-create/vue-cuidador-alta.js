@@ -181,7 +181,7 @@ Vue.component('become-cuidador', {
                 sweetAlert({
                         title: "Felicidades!!",
                         text: "Su solicitud ha sido aprobada. Ahora puede armar su perfil como cuidador",
-                        type: "info",
+                        type: "success",
                     },
                     function () {
                         document.location.href = "/views/cuidadores/cuidadores-editar.html";
@@ -225,12 +225,22 @@ Vue.component('become-cuidador', {
                 });
 
         },
-        enviarAltaCuidador() {
+        enviarAltaCuidador: function () {
             if (!this.isReadOnly) {
 
                 if (this.validarCantidadImagenes()) {
                     sweetAlert("Oops...", "Error, Se deben cargar ambas imagenes del dni", "error");
                     return;
+                }
+                if (this.user.status = "INCOMPLETED") {
+                    sweetAlert({
+                            title: "Alerta!",
+                            text: "Para enviar su solicitud, primero debe completar su perfil <a href='/views/dueño/perfil.html'>aqui</a>",
+                            type: "warning",
+                        },
+                        function () {
+                            document.location.href = "/views/cuidadores/cuidadores-editar.html";
+                        });
                 }
                 this.cuidador.dniImagenes = [this.dniAnverso, this.dniReverso];
                 this.cuidador.user = this.user;
