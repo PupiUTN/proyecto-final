@@ -55,8 +55,8 @@ Vue.component('my-reservas-cuidador-list', {
                                     <a v-on:click="confirmarReservaButton(index)"  style="color: blue; border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Confirmar</a>
                                 </div>
                                
-
-                                <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
+ 
+                                <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL' || reserva.status === 'review_usario' || reserva.status === 'finalizada'">
                                     <a v-on:click="cancelarReservaActionButton(index)"  style="  margin-top: 10px;" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>                        
                                 </div>
                             
@@ -68,7 +68,7 @@ Vue.component('my-reservas-cuidador-list', {
                                             <a  style="  margin-top: 10px; color: blue;  border-color: blue; "   v-on:click="verReserva(reserva.id)" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                             </div>
                                             
-                                 <div class="col-xs-12 col-md-3" v-if="reserva.status === 'Review_CUIDADOR_PENDING'">
+                                 <div class="col-xs-12 col-md-3" v-if="reserva.status === 'finalizada' || reserva.status === 'review_usario'">
                                     <a v-on:click="calificarReserva(index)"  style="color: blue; border-color: blue; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
                                 </div>
                                 
@@ -137,9 +137,9 @@ Vue.component('my-reservas-cuidador-list', {
                 document.location.href = "/views/reserva/detalle-reserva.html?id= " + index;
             },
             calificarReserva(index) {
+                var id = this.reservas[index].id;
 
-
-                document.location.href = "/views/reserva/calificacion-reserva.html?id= " + index +
+                document.location.href = "/views/reserva/calificacion-reserva.html?id= " + id +
                     "&rol=" + "CUIDADOR";
             },
 
@@ -242,7 +242,7 @@ Vue.component('my-reservas-cuidador-list', {
             if (this.status == 'PAID') {
                 return 'Pagadas'
             }
-            if (this.status == 'Review_CUIDADOR_PENDING') {
+            if (this.status == 'finalizada') {
                 return 'Pendiente de Calificacion'
             }
             return 'Error'
@@ -257,7 +257,7 @@ Vue.component('my-reservas-cuidador-list', {
             if (this.status == 'PAID') {
                 return 'col-xs-12 col-md-10'
             }
-            if (this.status == 'Review_CUIDADOR_PENDING') {
+            if (this.status == 'finalizada') {
                 return 'col-xs-12 col-md-10'
             }
         },
@@ -275,7 +275,7 @@ Vue.component('my-reservas-cuidador-list', {
                 return 'background: rgba(0,0,255,0.3); margin-bottom: 10px;'
 
             }
-            if (this.status == 'Review_CUIDADOR_PENDING') {
+            if (this.status == 'finalizada') {
                 return 'background: rgba(0,255,0,0.3); margin-bottom: 10px;'
 
             }

@@ -46,7 +46,16 @@ public class ReservaService {
     }
 
     public List<Reserva> getReservasByCuidadorIdAndStatus(Long id, String status) {
-        return reservaRepository.findAllByCuidadorAndStatus(id,status);
+
+       if(status.equals("finalizada"))
+       {     String var1 = "review_usario";
+           return reservaRepository.findAllByCuidadorAndStatusFinalizada(id,status,var1);
+
+       }else
+       {
+           return reservaRepository.findAllByCuidadorAndStatus(id,status);
+       }
+
     }
 
     public void cancelar(Long reservaId, Long userId) {

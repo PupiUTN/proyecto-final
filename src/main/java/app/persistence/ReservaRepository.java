@@ -24,4 +24,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
     @Query("select r from Reserva r where r.cuidador.user.id = :#{#userId} and r.status =:#{#statusId}")
     List<Reserva> findAllByCuidadorAndStatus(@Param("userId")long userId, @Param("statusId")String status);
+
+    @Query("select r from Reserva r where r.cuidador.user.id = :#{#userId} and r.status =:#{#statusId} or r.status =:#{#statusUsuario}")
+    List<Reserva> findAllByCuidadorAndStatusFinalizada(@Param("userId")long userId, @Param("statusId")String status, @Param("statusUsuario")String statusUsuario);
 }

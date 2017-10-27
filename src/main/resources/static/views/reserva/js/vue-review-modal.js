@@ -1,18 +1,30 @@
- Vue.component('modal', {
+ Vue.component('Review', {
     template: `
 <div>
-<transition name="modal'">
-    <div class="modal-mask">
-      <div class="modal-container">
-       
-        <div class="modal-body">
-           <div id="add-review" class="add-review-box">
+
+           <div id="add-review" class="add-review-box" style="background-color: whitesmoke;">
 
                     <!-- Add Review -->
-                    <h2 class="listing-desc-headline margin-bottom-20"> Review </h2>
+                    <h1 class="listing-desc-headline margin-bottom-20"  style="font-size: -webkit-xxx-large;"> Reviews </h1>
 
-                    <span class="leave-rating-title">tu  calificación para </span> <h3>{{entity.name}}</h3>  
-            <div style=" top: 70px;" class="message-avatar"><img :src="entity.profileImage" alt=""></div>
+                
+                 <div class="row">
+                         <div class="col-md-8"> 
+                              	<h3 class="listing-desc-headline margin-bottom-20" style="font-size: xx-large;">tu  calificación para {{entity.name}}</h3>
+                         
+                         </div>
+                   <div class="col-md-3">
+						<!-- Uplaod Photos -->
+						<div class="add-review-photos margin-bottom-30">
+						
+							     <div style=" top: 70px;" class="message-avatar"><img :src="entity.profileImage" alt="" style=" width: 100px; height: 100px;"></div>
+							
+						</div>
+					</div>
+                 </div>
+       
+				
+				<span class="leave-rating-title" style="margin-top: 0px;">Tu Puntaje para esta reserva  </span>
                     <!-- Rating / Upload Button -->
                     <div class="row">
                         <div class="col-md-6">
@@ -32,6 +44,8 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
+                        
+					
                     </div>
 
                     <!-- Review Comment -->
@@ -40,23 +54,19 @@
 
 
                             <div>
-                                <label>Review:</label>
+                                <label>Comentario:</label>
                                 <textarea cols="40" rows="3" v-model="calificacion.comentario" required maxlength="500"></textarea>
                             </div>
 
                         </fieldset>
 
-                        <button class="button" v-on:click="enviarReview()">Enviar Review</button>
+                        <button class="button" v-on:click="enviarReview()">Enviar </button>
                         <div class="clearfix"></div>
                     </form>
 
                 </div>
               
-        </div>
-       
-      </div>
-    </div>
-  </transition>
+     
 </div>
  
 `,

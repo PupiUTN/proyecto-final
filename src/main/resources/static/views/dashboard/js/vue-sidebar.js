@@ -34,7 +34,7 @@ let mySidebar = Vue.component('my-sidebar', {
                 </ul>
                 
                  <ul v-show="role === 'ROLE_CUIDADOR'" data-submenu-title="Calificaciones" >
-                    <li><a href="/views/reserva/mis-reservas-cuidador.html?status=Review_CUIDADOR_PENDING"><i class="sl sl-icon-layers"></i> Reviews</a></li>
+                    <li><a href="/views/reserva/mis-reservas-cuidador.html?status=finalizada"><i class="sl sl-icon-layers"></i> Reviews</a></li>
                 </ul>
                 
                 <ul v-show="role === 'ROLE_ADMIN'" data-submenu-title="Admin" >
