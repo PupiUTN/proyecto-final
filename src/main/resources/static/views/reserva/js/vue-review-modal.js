@@ -87,6 +87,7 @@
                 puntaje:'',
                 reserva: {
                     id:'',
+                    status:'',
                 },
             },
              entity:{
@@ -96,7 +97,6 @@
              }
             ,
             id:'',
-
            rating: [false,false,false,false,false],
             total : 0,
              rol:'',
@@ -104,7 +104,7 @@
  },
  mounted() {
      this.id = this.getParameterByName('id');
-     this.getReserva();
+     this.getReserva(this.id);
 
 
  },
@@ -115,26 +115,26 @@
              results = regex.exec(location.search);
          return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
      },
-     getReserva() {
-         this.id ="32";
-         axios.get('/api/user/me/reservas/' + this.id)
+     getReserva(id) {
+         //this.id ="32";
+         axios.get('/api/user/me/reservas/' + id)
              .then((response) => {
-                 this.reserva = response.data;
+                 this.calificacion.reserva = response.data;
                  this.rol = this.getParameterByName('rol');
 
                   if (this.rol ==="CUIDADOR")
                   {
 
-                      this.entity.name = this.reserva.perro.nombre;
-                      this.entity.profileImage = this.reserva.perro.fotoPerfil;
+                      this.entity.name = this.calificacion.reserva.perro.nombre;
+                      this.entity.profileImage = this.calificacion.reserva.perro.fotoPerfil;
 
                   }
                   else
                   {
 
 
-                      this.entity.name = this.reserva.cuidador.user.fullName;
-                      this.entity.profileImage = this.reserva.cuidador.user.profileImageUrl;
+                      this.entity.name = this.calificacion.reserva.cuidador.user.fullName;
+                      this.entity.profileImage = this.calificacion.reserva.cuidador.user.profileImageUrl;
 
                   }
              })
@@ -152,10 +152,12 @@
             }
             this.calificacion.puntaje = this.total;
             var urlReview = "/api/calificaciones/";
+
+           // this.setearEstadoReserva();
             axios.post(urlReview, this.calificacion)
                 .then((response) => {
                     console.log(response);
-
+                    sweetAlert("Guardada!", "tu calificacion  fue  guardarda  exitosamente.", "success");
                 })
                 .catch(error => {
                         console.log(error);
@@ -198,6 +200,22 @@
 
 
           return flag;
+
+     },
+     setearEstadoReserva()
+     {
+
+         if( this.calificacion.reserva.status === "finalizada")
+         {
+             this.calificacion.reserva.status = "comentario-cuidador";
+
+         }
+
+         else
+         {   if( this.calificacion.reserva.status === "comentario-dueño")
+              {  this.calificacion.reserva.status = "cerrada";}
+
+         }
 
      }
  },

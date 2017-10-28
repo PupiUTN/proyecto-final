@@ -30,9 +30,19 @@ public class CalificacionController {
     public Calificacion createCalificacion(@RequestBody  Calificacion entity) throws  Exception {
 
         Calificacion calific = calificacionService.createCalificacion(entity);
-         Reserva res  = entity.getReserva();
-          res.setStatus("END");
-        reservaService.save(res);
+         Reserva res  =    entity.getReserva() ;
+
+          if(res.getStatus().equals("finalizada"))
+          {
+              res.setStatus("comentario-dueño");
+          }
+          else
+          {  if(res.getStatus().equals("comentario-dueño"))
+                { res.setStatus("cerrada");}
+
+          }
+         res =   reservaService.save(entity.getReserva());
+
         return calific;
     }
 

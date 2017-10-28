@@ -56,7 +56,7 @@ Vue.component('my-reservas-cuidador-list', {
                                 </div>
                                
  
-                                <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL' || reserva.status === 'review_usario' || reserva.status === 'finalizada'">
+                                <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL' || reserva.status !== 'comentario-dueño' || reserva.status !== 'finalizada'">
                                     <a v-on:click="cancelarReservaActionButton(index)"  style="  margin-top: 10px;" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>                        
                                 </div>
                             
