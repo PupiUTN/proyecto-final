@@ -153,7 +153,7 @@ Vue.component('my-reservas-user-list', {
         },
         verDetalleCompletoButton(index) {
             var id = this.reservas[index].id;
-            document.location.href = "/views/reserva/detalle-reserva-completo.html?id="+ id;
+            document.location.href = "/views/reserva/detalle-reserva-completo.html?id=" + id;
         },
         getParameterByName(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");

@@ -292,16 +292,16 @@ Vue.component('my-detalle-reserva', {
                             user: {
                                 fullName: '',
                                 profileImageUrl: '',
-                                email:'',
-                                phone:'',
-                                birthday:'',
-                                direccion:{
-                                    calle:'',
-                                    ciudad:'',
-                                    numero:'',
-                                    latitud:'',
-                                    longitud:'',
-                                    provincia:''
+                                email: '',
+                                phone: '',
+                                birthday: '',
+                                direccion: {
+                                    calle: '',
+                                    ciudad: '',
+                                    numero: '',
+                                    latitud: '',
+                                    longitud: '',
+                                    provincia: ''
 
                                 },
 
@@ -329,8 +329,8 @@ Vue.component('my-detalle-reserva', {
                 edadPerro: '',
                 showModal: false,
                 tamaño: '',
-                edadUsuario:'',
-                numeroReserva:''
+                edadUsuario: '',
+                numeroReserva: ''
 
             }
         },
@@ -348,9 +348,9 @@ Vue.component('my-detalle-reserva', {
                     this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);
                     var date = new Date(this.reserva.fechaTransaccion);
                     this.reserva.fechaTransaccion = date.toLocaleDateString();
-                    var dateEntrada = new Date (this.reserva.fechaInicio);
-                    var dateSalida = new Date (this.reserva.fechaFin);
-                    dateEntrada =dateEntrada.setDate(dateEntrada.getDate() + 1);
+                    var dateEntrada = new Date(this.reserva.fechaInicio);
+                    var dateSalida = new Date(this.reserva.fechaFin);
+                    dateEntrada = dateEntrada.setDate(dateEntrada.getDate() + 1);
                     dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
                     this.reserva.fechaInicio = new Date(dateEntrada).toLocaleDateString();
                     this.reserva.fechaFin = new Date(dateSalida).toLocaleDateString();
