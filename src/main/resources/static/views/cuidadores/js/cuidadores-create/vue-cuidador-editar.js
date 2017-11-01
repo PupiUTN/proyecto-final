@@ -381,27 +381,27 @@ Vue.component('my-cuidador-edit', {
                     }
                 );
         },
-        isCuidadorCompleted(){
-            this.cuidador.estado="approved";
-            if(!this.cuidador.user.status || this.cuidador.user.status=="INCOMPLETED"){
+        isCuidadorCompleted() {
+            this.cuidador.estado = "approved";
+            if (!this.cuidador.user.status || this.cuidador.user.status == "INCOMPLETED") {
                 return;
             }
-            if(!this.cuidador.cantidadMaxDePerros || this.cuidador.cantidadMaxDePerros==0){
+            if (!this.cuidador.cantidadMaxDePerros || this.cuidador.cantidadMaxDePerros == 0) {
                 return;
             }
-            if(!this.cuidador.descripcion){
+            if (!this.cuidador.descripcion) {
                 return;
             }
-            if(!this.cuidador.precioPorNoche){
+            if (!this.cuidador.precioPorNoche) {
                 return;
             }
-            if(!this.cuidador.tamaño){
+            if (!this.cuidador.tamaño) {
                 return;
             }
-            if(!this.cuidador.listaImagenes || this.cuidador.listaImagenes.length!=4){
+            if (!this.cuidador.listaImagenes || this.cuidador.listaImagenes.length != 4) {
                 return;
             }
-            this.cuidador.estado="completed";
+            this.cuidador.estado = "completed";
         },
         inicializarImagenes() {
             if (this.cuidador.listaImagenes.length > 0) {

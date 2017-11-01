@@ -1,5 +1,5 @@
 let myListaCuidadores = Vue.component('my-lista-cuidadores', {
-template: `    
+    template: `    
 <div class="fs-container">
 <div class="fs-inner-container content">
     <div class="fs-content">
