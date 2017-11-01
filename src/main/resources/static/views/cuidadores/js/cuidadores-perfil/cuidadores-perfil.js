@@ -30,8 +30,19 @@ let vm = new Vue({
             reserva: {
                 id:'',
                 status:'',
+                 perro:{
+                   user:{
+                       profileImageUrl:'',
+                       username:'',
+                   }
+                 },
+                fechaTransaccion:'',
             },
         }],
+
+       current_page : 1,
+    records_per_page : 3,
+
     }
     ,
     mounted() {
@@ -167,7 +178,9 @@ let vm = new Vue({
                 .then((response) => {
                     this.calificaciones = response.data;
                      var cont = 0;
-                    this.calificaciones .forEach( function(item, value, array) {
+                     this.calificaciones .forEach( function(item, value, array) {
+
+
                        cont += item.puntaje;
 
                     });
@@ -221,8 +234,8 @@ let vm = new Vue({
                 var dateString = $('#booking-date2').val(); //the getDate method
                 vm.fechaReservaHasta = dateString;
             });
-        }
-
+        },
+      
 
     },
 

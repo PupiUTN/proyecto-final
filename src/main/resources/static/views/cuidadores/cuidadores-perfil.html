@@ -157,6 +157,51 @@
                         </div>
                     </div>
 
+                    <!-- Reviews -->
+                    <div id="listing-reviews" class="listing-section">
+                        <h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Reviews <span>({{calificaciones.length}})</span></h3>
+
+                        <div class="clearfix"></div>
+
+                        <!-- Reviews -->
+                        <section class="comments listing-reviews">
+
+                            <ul>
+                                <li v-for="(calificacion, index) in calificaciones  ">
+                                    <div class="avatar"><img :src="calificacion.reserva.perro.user.profileImageUrl" alt="" /></div>
+                                    <div class="comment-content"><div class="arrow-comment"></div>
+                                        <div class="comment-by">{{calificacion.reserva.perro.user.username}}
+                                            <div class="star-rating" data-rating="2"></div>
+                                        </div>
+                                        <p> {{calificacion.comentario}}</p>
+                                       </div>
+                                </li>
+
+                            </ul>
+                        </section>
+
+
+
+                        <!-- Pagination -->
+                        <div class="clearfix"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- Pagination -->
+                                <div class="pagination-container margin-top-30">
+                                    <nav class="pagination">
+                                        <ul>
+                                            <li><a :href="prevPage()" id="btn_prev">Prev</a></li>
+                                            <li><a :href="nextPage()" id="btn_next">Next</a></li>
+                                            page: <span id="page"></span>
+                                            <li><a :href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <!-- Pagination / End -->
+                    </div>
 
 
                 </div>
@@ -343,7 +388,6 @@
 <link rel="stylesheet" href="/views/layout/vue-navbar.css">
 <script type="text/javascript" src="/views/layout/vue-navbar.js"></script>
 <script src="js/cuidadores-perfil/cuidadores-perfil.js"></script>
-
 
 
 
