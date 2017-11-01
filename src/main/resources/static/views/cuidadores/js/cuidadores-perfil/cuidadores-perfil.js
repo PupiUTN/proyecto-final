@@ -175,10 +175,12 @@ let vm = new Vue({
                         {
                             this.puntaje =Math.trunc(cont /this.calificaciones.length);
 
-                            var h = document.getElementById("rating");
-                            var att = document.createAttribute("data-rating");
-                            att.value =  this.puntaje  ;
-                            h.setAttributeNode(att);
+                            var h = document.getElementsByClassName("star empty");
+                            for (i = 0; i < (this.puntaje-1); i++) {
+                                h[0].className  = 'star' ;
+
+                            }
+
                         }
 
                 })
