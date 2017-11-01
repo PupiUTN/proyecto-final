@@ -19,6 +19,8 @@ public class Calificacion implements Serializable {
     @ManyToOne
     private Reserva reserva;
 
+    private boolean from_owner;
+
     //para jpa o jackson, necesito constructor vacio y todos los setters y getters de cada atributo
     public Calificacion() {
     }
@@ -53,6 +55,14 @@ public class Calificacion implements Serializable {
 
     public void setReserva(Reserva reserva) {
         this.reserva = reserva;
+    }
+
+    public boolean isFrom_owner() {
+        return from_owner;
+    }
+
+    public void setFrom_owner(boolean from_owner) {
+        this.from_owner = from_owner;
     }
 
 

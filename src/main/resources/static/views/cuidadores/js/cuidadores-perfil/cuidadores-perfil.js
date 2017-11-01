@@ -20,7 +20,18 @@ let vm = new Vue({
         fechaReservaDesde: '',
         fechaReservaHasta: '',
         idCuidador: 0,
-        showModal: false
+        showModal: false,
+        puntaje: 0,
+        calificaciones:[{
+            id:'',
+            comentario:'',
+            puntaje:'',
+            from_owner:'',
+            reserva: {
+                id:'',
+                status:'',
+            },
+        }],
     }
     ,
     mounted() {
@@ -47,7 +58,7 @@ let vm = new Vue({
                     this.loadImages(this.item.listaImagenes);
                     this.loadTamaño(this.item.tamaño);
                     this.geolocateCuidador(this.item.user.direccion);
-
+                    this.getCalificacionesCuidador();
 
                 })
                 .catch(error => {
@@ -148,6 +159,43 @@ let vm = new Vue({
 
             this.item.tamaño = param.valorMinimo + " a " + param.valorMaximo + " " + "KG.";
         },
+        getCalificacionesCuidador()
+        {
+                 var urlCalificaciones = "/api/calificaciones/calificacionesCuidador/";
+
+            axios.get(urlCalificaciones + '?id=' + this.idCuidador)
+                .then((response) => {
+                    this.calificaciones = response.data;
+                     var cont = 0;
+                    this.calificaciones .forEach( function(item, value, array) {
+                       cont += item.puntaje;
+
+                    });
+                        if(this.calificaciones.length > 0)
+                        {
+                            this.puntaje =Math.trunc(cont /this.calificaciones.length);
+
+                            var h = document.getElementById("rating");
+                            var att = document.createAttribute("data-rating");
+                            att.value =  this.puntaje  ;
+                            h.setAttributeNode(att);
+                        }
+
+                })
+                .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error  ", "error");
+
+                    }
+                );
+
+
+        },
+        llenarPuntajeCuidador()
+        {
+
+
+        },
         hrerReserva() {
             var url = '/views/reserva/generar-reserva.html?id=' + this.idCuidador + '&dateFrom=' + this.fechaReservaDesde + '&dateTo=' + this.fechaReservaHasta;
             document.location.href = url;
@@ -174,6 +222,7 @@ let vm = new Vue({
         }
 
 
-    }
+    },
+
 });
 

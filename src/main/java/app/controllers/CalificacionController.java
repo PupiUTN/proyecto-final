@@ -24,6 +24,8 @@ public class CalificacionController {
 
     @Autowired
     private CalificacionService calificacionService;
+
+    @Autowired
     private ReservaService reservaService;
 
     @RequestMapping(method = RequestMethod.POST)
@@ -32,18 +34,27 @@ public class CalificacionController {
         Calificacion calific = calificacionService.createCalificacion(entity);
          Reserva res  =    entity.getReserva() ;
 
-          if(res.getStatus().equals("finalizada"))
+          if(res.getStatus().equals("finalizada") && !calific.isFrom_owner())
           {
-              res.setStatus("comentario-dueño");
+              res.setStatus("comentario-cuidador");
           }
           else
-          {  if(res.getStatus().equals("comentario-dueño"))
+          {  if(res.getStatus().equals("comentario-dueño") && !calific.isFrom_owner())
                 { res.setStatus("cerrada");}
 
           }
-         res =   reservaService.save(entity.getReserva());
+
+       res =   reservaService.save(res);
 
         return calific;
+    }
+
+
+    @RequestMapping(value = "/calificacionesCuidador/", method = RequestMethod.GET)
+    public List<Calificacion> getCalificacionesCuidador(@RequestParam(value = "id", required = false) long id) throws Exception {
+            List<Calificacion> list =  calificacionService.getCalificacionesCuidador(id);
+        return list;
+
     }
 
 }

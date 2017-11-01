@@ -31,7 +31,8 @@ public class ReservaService {
     }
 
     public Reserva save(Reserva reserva) {
-        reserva.setStatus("CONFIRMATION_PENDING");
+         if(!reserva.getStatus().equals("cerrada") && !reserva.getStatus().equals("comentario-cuidador"))
+         { reserva.setStatus("CONFIRMATION_PENDING");}
         Reserva savedObject = reservaRepository.save(reserva);
         return savedObject;
     }

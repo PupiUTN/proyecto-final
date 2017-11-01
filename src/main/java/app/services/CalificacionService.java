@@ -31,4 +31,8 @@ public class CalificacionService
         return calificacion.save(entity);
     }
 
+    public List<Calificacion> getCalificacionesCuidador(long id) throws Exception {
+        return calificacion.getCalificacionesCuidador(id);
+    }
+
 }

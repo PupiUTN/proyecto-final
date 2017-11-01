@@ -60,20 +60,7 @@
                         </div>
                         <div class="listing-titlebar-title">
                             <!-- Reviews -->
-                            -- empieza
-                            <button id="show-modal" @click="showModal = true">Show Modal</button>
-                            <!-- use the modal component, pass in the prop -->
 
-                            <modal v-if="showModal" show="showModal"   @close="showModal = false">
-                                <!--
-                                  you can use custom content here to overwrite
-                                  default content
-                             -->
-
-
-                            </modal>
-
-                            --termina
 
                             <h2 style="margin-left: 100px;" id="nombre"> {{item.user.fullName}} <span
                                     class="listing-tag">Cuidador</span></h2>
@@ -96,8 +83,8 @@
 							Cantidad maxima de perros: {{item.cantidadMaxDePerros}}
 
 					</span>
-                            <div class="star-rating" data-rating="5">
-                                <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
+                            <div class="star-rating"  id="rating" data-rating ="0">
+                                <div class="rating-counter"><a href="#listing-reviews">{{calificaciones.length}} Reviews</a></div>
                             </div>
                         </div>
                     </div>
@@ -357,7 +344,7 @@
 <script type="text/javascript" src="/views/layout/vue-navbar.js"></script>
 <script src="js/cuidadores-perfil/cuidadores-perfil.js"></script>
 
-<script src="../reserva/js/vue-review-modal.js"></script>
+
 
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"></script>
