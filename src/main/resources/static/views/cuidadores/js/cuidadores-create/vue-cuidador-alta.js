@@ -225,7 +225,7 @@ Vue.component('become-cuidador', {
                 });
 
         },
-        enviarAltaCuidador () {
+        enviarAltaCuidador() {
             if (!this.isReadOnly) {
 
                 if (this.validarCantidadImagenes()) {

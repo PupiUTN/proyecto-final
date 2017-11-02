@@ -74,8 +74,7 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
                     this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
                     //https://developers.google.com/maps/documentation/geocoding/start
                     axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.placeLat + ',' + this.placeLng + '&sensor=true')
-                        .then((data) =>
-                        {
+                        .then((data) => {
                             console.log(data.data);
                             var city = data.data.results[1];
                             vm.$refs.myIndex.$refs.currentView.$refs.myBuscarCuidadores.placeID = city.place_id;
@@ -98,7 +97,7 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
         },
         buscar() {
             //si el formulario no tiene los campos basicos no hago nada
-            if (!this.formValitaion()){
+            if (!this.formValitaion()) {
                 console.log("place id not set in vue-search component");
                 return;
             }
@@ -173,8 +172,8 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
                 input.value = this.placeName;
             }
         },
-        formValitaion(){
-            if(this.placeID == null){
+        formValitaion() {
+            if (this.placeID == null) {
                 return false;
             }
             return true;

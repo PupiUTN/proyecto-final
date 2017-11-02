@@ -90,8 +90,7 @@ Vue.component('my-profile', {
     `,
     data: function () {
         return {
-            user: {
-            },
+            user: {},
             url: "/api/user/",
             direccion: {
                 calle:''
@@ -101,7 +100,7 @@ Vue.component('my-profile', {
             uploadError: null,
             currentStatus: null,
             disabled: true,
-            place:null,
+            place: null,
             componentForm: {
                 street_number: 'short_name',
                 route: 'long_name',
@@ -198,7 +197,7 @@ Vue.component('my-profile', {
                     //console.log(this.direccion);
                 });
         },
-        filesChange(fileList){
+        filesChange(fileList) {
             // handle file changes
             const formData = new FormData();
 
@@ -239,8 +238,8 @@ Vue.component('my-profile', {
         isUserLoggedIn(sessionInfo) {
             if (sessionInfo.status === 200) {
                 this.user = sessionInfo.data.principal.user;
-                if(this.user.direccion!=null){
-                    this.direccion=this.user.direccion;
+                if (this.user.direccion != null) {
+                    this.direccion = this.user.direccion;
                 }
                 this.setDate();
                 //console.log(this.user);
@@ -253,18 +252,18 @@ Vue.component('my-profile', {
             }
         },
         setDate() {
-            if(this.user.birthday){
+            if (this.user.birthday) {
                 //console.log(this.user.birthday);
-                var initial =this.user.birthday.split("-");
-                var date=[ initial[1], initial[0], initial[2] ].join('-');
+                var initial = this.user.birthday.split("-");
+                var date = [initial[1], initial[0], initial[2]].join('-');
                 //console.log(date);
-                document.getElementById('booking-date').setAttribute('data-default-date',date);
-                document.getElementById('booking-date').setAttribute('data-lock','');
+                document.getElementById('booking-date').setAttribute('data-default-date', date);
+                document.getElementById('booking-date').setAttribute('data-lock', '');
             }
         },
         editUserInfo() {
             this.user.direccion = this.direccion;
-            if(this.validarBirthday()) {
+            if (this.validarBirthday()) {
                 this.isUserCompleted();
                 //console.log(this.user);
                 var payload = jQuery.extend(true, {}, this.user);
@@ -283,57 +282,56 @@ Vue.component('my-profile', {
 
             }
         },
-        validarBirthday(){
-            var birthday=document.getElementById('booking-date').value;
+        validarBirthday() {
+            var birthday = document.getElementById('booking-date').value;
             var today = new Date();
             var dd = today.getDate();
-            var mm = today.getMonth()+1; //January is 0!
+            var mm = today.getMonth() + 1; //January is 0!
             var yyyy = today.getFullYear();
-            if(dd<10) {
-                dd = '0'+dd
+            if (dd < 10) {
+                dd = '0' + dd
             }
-            if(mm<10) {
-                mm = '0'+mm
+            if (mm < 10) {
+                mm = '0' + mm
             }
             today = dd + '-' + mm + '-' + yyyy;
-            if(birthday==today){
-                this.user.birthday=null;
+            if (birthday == today) {
+                this.user.birthday = null;
                 sweetAlert("Alerta!", "Seleccione una fecha de nacimiento.", "warning");
                 return false;
-            }else{
-                this.user.birthday=birthday;
+            } else {
+                this.user.birthday = birthday;
                 return true;
             }
         },
-        isUserCompleted(){
-            this.user.status="INCOMPLETED";
-            if(!this.user.email){
+        isUserCompleted() {
+            this.user.status = "INCOMPLETED";
+            if (!this.user.email) {
                 return;
             }
-            if(!this.user.username){
+            if (!this.user.username) {
                 return;
             }
-            if(this.user.profileImageUrl=="/img/no-avatar.png"){
+            if (this.user.profileImageUrl == "/img/no-avatar.png") {
                 return;
             }
-            if(!this.user.fullName){
+            if (!this.user.fullName) {
                 return;
             }
-            if(!this.user.birthday){
+            if (!this.user.birthday) {
                 return;
             }
-            if(!this.user.gender){
+            if (!this.user.gender) {
                 return;
             }
-            if(!this.user.birthday){
+            if (!this.user.birthday) {
                 return;
             }
-            if(!this.direccion){
+            if (!this.direccion) {
                 return;
             }
 
-            this.user.status="COMPLETED";
-
+            this.user.status = "COMPLETED";
 
 
         }
