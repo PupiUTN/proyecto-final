@@ -41,6 +41,17 @@ public class CalificacionController {
           else
           {  if(res.getStatus().equals("comentario-dueño") && !calific.isFrom_owner())
                 { res.setStatus("cerrada");}
+                else
+                        {
+
+                             if (res.getStatus().equals("comentario-cuidador") && calific.isFrom_owner())
+                                 res.setStatus("cerrada");
+                             else{
+                                 res.setStatus("comentario-dueño");
+
+                             }
+                        }
+
 
           }
 
@@ -57,4 +68,10 @@ public class CalificacionController {
 
     }
 
+    @RequestMapping(value = "/calificacionesPerro/", method = RequestMethod.GET)
+    public List<Calificacion> getCalificacionesPerro(@RequestParam(value = "id", required = false) long id) throws Exception {
+        List<Calificacion> list =  calificacionService.getCalificacionesPerro(id);
+        return list;
+
+    }
 }

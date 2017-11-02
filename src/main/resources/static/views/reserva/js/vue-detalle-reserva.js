@@ -86,9 +86,9 @@ Vue.component('my-detalle-reserva', {
                 <!-- Title -->
                 <div class="row with-forms">
                 <div class="col-md-1"> </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <strong class="margin-bottom-5"><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px;"></i>Número De reserva</strong>
-                        <p> {{numeroReserva}}</p>
+                        <p> {{reserva.id}}</p>
                     </div>
 
                     <div class="col-md-4">
@@ -101,7 +101,7 @@ Vue.component('my-detalle-reserva', {
                 <div class="row with-forms">
                 <div class="col-md-1"> </div>
                     <!-- Status -->
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <strong class="margin-bottom-5"><i class="im im-icon-Old-Telephone" style="color:red; margin-right: 10px;"></i>Teléfono  </strong>
                      <p>    {{reserva.perro.user.phone}}</p>
                     </div>
@@ -119,7 +119,7 @@ Vue.component('my-detalle-reserva', {
                 <div class="col-md-1"> </div>
                     <!-- Status -->
                    
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <strong class="margin-bottom-5"><i class="im im-icon-City-Hall" style="color:red; margin-right: 10px;"></i>Ciudad</strong>
                         <p> {{reserva.perro.user.direccion.ciudad}}</p>
                     </div>
@@ -183,7 +183,9 @@ Vue.component('my-detalle-reserva', {
                 </div>
             </div>
 
-
+                <div class=" col-md-5 col-xs-12 star-rating" id="rating" data-rating="3">
+                                <div class="rating-counter"><a href="#listing-reviews"></a></div>
+                            </div>
 
 
             <div class="col-md-12" >
@@ -313,6 +315,7 @@ Vue.component('my-detalle-reserva', {
                             sexo: '',
                             tamaño: {},
                             listaVacunas: [],
+                            id:''
                         },
                         fechaInicio: "",
                         fechaFin: "",
@@ -330,7 +333,30 @@ Vue.component('my-detalle-reserva', {
                 showModal: false,
                 tamaño: '',
                 edadUsuario:'',
-                numeroReserva:''
+                numeroReserva:'',
+                puntaje: 0,
+                calificaciones:[{
+                    id:'',
+                    comentario:'',
+                    puntaje:'',
+                    from_owner:'',
+                    reserva: {
+                        id:'',
+                        status:'',
+                        perro:{
+                            user:{
+                                profileImageUrl:'',
+                                username:'',
+                            }
+                        },
+                        fechaTransaccion:'',
+                    },
+                }],
+                offset: 0,
+                navButtons:[],
+                perPage: 1,
+                DataReview:[],
+                puntajeUsuario:0,
 
             }
         },
@@ -373,6 +399,7 @@ Vue.component('my-detalle-reserva', {
                     }
                     this.tamaño = this.reserva.perro.tamaño.nombre + " " + " (" + this.reserva.perro.tamaño.valorMinimo + " - " + this.reserva.perro.tamaño.valorMaximo + ")" + " kgs";
                     //  this.reserva.mensaje = " hola que tal buenos dias cmo va
+                    this.getCalificacionesPerro();
                 })
                 .catch(error => {
                     console.log(error);
@@ -483,6 +510,57 @@ Vue.component('my-detalle-reserva', {
             return edad;
 
         },
-    }
+        getCalificacionesPerro()
+        {
+            var urlCalificaciones = "/api/calificaciones/calificacionesPerro/";
+
+            axios.get(urlCalificaciones + '?id=' + this.reserva.perro.id)
+                .then((response) => {
+                    this.DataReview = response.data;
+                    var cont = 0;
+                    this.DataReview .forEach( function(item, value, array) {
+
+
+                        cont += item.puntaje;
+
+                    });
+                    if(this.DataReview.length > 0)
+                    {
+                        this.puntaje =Math.trunc(cont /this.DataReview.length);
+
+                        var h = document.getElementsByClassName("star empty");
+                        for (i = 0; i < (this.puntaje-1); i++) {
+                            h[0].className  = 'star' ;
+
+                        }
+
+                    }
+                    this.paginate();
+                })
+                .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error  ", "error");
+
+                    }
+                );
+
+
+        },
+        paginate() {
+            this.calificaciones = this.DataReview.slice(this.offset, this.offset + this.perPage);
+
+        },
+        previous() {
+            this.offset =  this.offset - this.perPage;
+        },
+        next () {
+            this.offset = this.offset + this.perPage;
+        },
+    },
+    watch: {
+        offset: function () {
+            this.paginate();
+        },
+    },
 
 });

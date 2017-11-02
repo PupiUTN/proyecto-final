@@ -159,7 +159,7 @@
 
                     <!-- Reviews -->
                     <div id="listing-reviews" class="listing-section">
-                        <h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Reviews <span>({{calificaciones.length}})</span></h3>
+                        <h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Reviews <span>({{DataReview.length}})</span></h3>
 
                         <div class="clearfix"></div>
 
@@ -168,9 +168,9 @@
 
                             <ul>
                                 <li v-for="(calificacion, index) in calificaciones  ">
-                                    <div class="avatar"><img :src="calificacion.reserva.perro.user.profileImageUrl" alt="" /></div>
+                                    <div class="col-xs-12 avatar"><img :src="calificacion.reserva.perro.user.profileImageUrl" alt="" /></div>
                                     <div class="comment-content"><div class="arrow-comment"></div>
-                                        <div class="comment-by">{{calificacion.reserva.perro.user.username}}
+                                        <div class="col-xs-12 comment-by">{{calificacion.reserva.perro.user.username}}
                                             <div class="star-rating" >
                                                <span v-bind:class="{'star': calificacion.puntaje >= 1, 'star empty': calificacion.puntaje < 1 }" ></span>
                                                 <span v-bind:class="{'star': calificacion.puntaje >= 2, 'star empty': calificacion.puntaje < 2 }"></span>
@@ -198,9 +198,9 @@
                                         <ul>
 
 
-                                            <li><a v-if="offset > 0"    v-on:click="previous()"><i class="sl sl-icon-arrow-left"></i></a></li>
+                                            <li><a style=" background-color: crimson;" v-if="offset > 0"    v-on:click="previous()"><i class="sl sl-icon-arrow-left" style=" font-weight: bold;color: white;"></i></a></li>
 
-                                            <li><a v-if="offset + perPage <= DataReview.length"  v-on:click="next()"><i class="sl sl-icon-arrow-right"></i></a></li>
+                                            <li><a style=" background-color: crimson;" v-if="offset + perPage <= DataReview.length"  v-on:click="next()"><i class="sl sl-icon-arrow-right" style=" font-weight: bold;color: white;"></i></a></li>
 
                                         </ul>
                                     </nav>

@@ -35,4 +35,8 @@ public class CalificacionService
         return calificacion.getCalificacionesCuidador(id);
     }
 
+    public List<Calificacion> getCalificacionesPerro(long id) throws Exception {
+        return calificacion.getCalificacionesPerro(id);
+    }
+
 }

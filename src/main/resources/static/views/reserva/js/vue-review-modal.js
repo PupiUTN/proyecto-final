@@ -49,7 +49,7 @@
                     </div>
 
                     <!-- Review Comment -->
-                    <form id="add-comment" class="add-comment">
+                    <div id="add-comment" class="add-comment">
                         <fieldset>
 
 
@@ -62,7 +62,7 @@
 
                         <button class="button" v-on:click="enviarReview()">Enviar </button>
                         <div class="clearfix"></div>
-                    </form>
+                    </div>
 
                 </div>
               
@@ -141,22 +141,32 @@
      },
      enviarReview()
         {
-            if (!this.obtenerPuntaje()) {
-                sweetAlert("Oops...", "Error, Se deben ingresar un Puntaje    ", "error");
+            if (!this.obtenerPuntaje() ||this.calificacion.comentario === "" ) {
+                sweetAlert("Oops...", "Error, Se deben ingresar un Puntaje o comentario   ", "error");
                 return;
             }
             this.calificacion.puntaje = this.total;
            // var urlReview = "/api/calificaciones/";
-
            // this.setearEstadoReserva();
-            axios.post(this.url, this.calificacion)
+            var payload = jQuery.extend(true, {}, this.calificacion);
+            axios.post(this.url,payload )
                 .then((response) => {
                     console.log(response);
-                    sweetAlert("Guardada!", "tu calificacion  fue  guardarda  exitosamente.", "success");
+                    sweetAlert({
+                            title: " Review exitosa ",
+                            text: "tu calificación  fue  guardarda  exitosamente.",
+                            type: "success",
+                        },
+                        function () {
+                            window.location.href = "/views/dashboard/dashboard.html";
+                        });
+
+                   // sweetAlert("Guardada!", "tu calificacion  fue  guardarda  exitosamente.", "success");
+
                 })
                 .catch(error => {
                         console.log(error);
-                        sweetAlert("Oops...", "Error, ver consola lalalal", "error");
+                        sweetAlert("Oops...", "Error", "error");
                     }
                 );
         },

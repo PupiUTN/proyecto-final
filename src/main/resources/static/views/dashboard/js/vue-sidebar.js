@@ -16,7 +16,12 @@ let mySidebar = Vue.component('my-sidebar', {
 						<li><a href="/views/reserva/mis-reservas-user.html?status=CANCEL_BY_USER">Canceladas <span class="nav-tag red">2</span></a></li>
 						<li><a href="/views/reserva/mis-reservas-user.html?status=PAID">Pagadas <span class="nav-tag blue">2</span></a></li>
 					</ul>
-					
+					</li>
+				</ul>
+                	 <ul v-show="role === 'ROLE_USER'" data-submenu-title="Calificaciones" >
+                    <li><a href="/views/reserva/mis-reservas-user.html?status=finalizada"><i class="sl sl-icon-layers"></i> Reviews</a></li>
+                    </ul>
+                    
                     <li><a href="/views/due%C3%B1o/perfil.html"><i class="sl sl-icon-user"></i> Mi Perfil</a></li>	
 				</li>
                 </ul>

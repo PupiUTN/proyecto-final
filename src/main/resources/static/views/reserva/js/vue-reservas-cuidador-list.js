@@ -68,7 +68,7 @@ Vue.component('my-reservas-cuidador-list', {
                                             <a  style="  margin-top: 10px; color: blue;  border-color: blue; "   v-on:click="verReserva(reserva.id)" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                             </div>
                                             
-                                 <div class="col-xs-12 col-md-3" v-if="reserva.status === 'finalizada' || reserva.status === 'review_usario'">
+                                 <div class="col-xs-12 col-md-3" v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-dueño'">
                                     <a v-on:click="calificarReserva(index)"  style="color: blue; border-color: blue; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
                                 </div>
                                 

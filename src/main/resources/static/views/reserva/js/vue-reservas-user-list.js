@@ -45,12 +45,16 @@ Vue.component('my-reservas-user-list', {
                                         <div class="col-xs-12 col-md-3" v-if="reserva.status === 'CONFIRMATION_PENDING'">
                                             <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
                                         </div>
-                                        <div class="col-xs-12 col-md-3" v-if="reserva.status === 'PAYMENT_PENDING'">
+                                        <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL' && reserva.status !== 'comentario-cuidador' && reserva.status !== 'finalizada'">
                                             <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Pagar</a>
                                         </div>
                                          <div class="col-xs-12 col-md-6" v-if="reserva.status === 'PAID'">
                                             <a v-on:click="verDetalleCompletoButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                         </div>
+                                          <div class="col-xs-12 col-md-3" v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-cuidador'">
+                                            <a v-on:click="calificarReserva(index)"  style="color: blue; border-color: blue; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
+                                        </div>
+                                
 
                                     </div>
                                 </div>
@@ -102,6 +106,12 @@ Vue.component('my-reservas-user-list', {
         this.getUserReservas();
     },
     methods: {
+        calificarReserva(index) {
+            var id = this.reservas[index].id;
+
+            document.location.href = "/views/reserva/calificacion-reserva.html?id= " + id +
+                "&rol=" + "USER";
+        },
 
         getUserReservas() {
             axios.get('/api/user/me/reservas?status=' + this.status)
@@ -175,6 +185,9 @@ Vue.component('my-reservas-user-list', {
             if (this.status == 'PAID') {
                 return 'Pagadas'
             }
+            if (this.status == 'finalizada') {
+                return 'Pendiente de Calificacion'
+            }
             return 'Error'
         },
         listClass: function () {
@@ -188,6 +201,9 @@ Vue.component('my-reservas-user-list', {
                 return 'col-xs-12 col-md-10'
             }
             if (this.status == 'PAID') {
+                return 'col-xs-12 col-md-10'
+            }
+            if (this.status == 'finalizada') {
                 return 'col-xs-12 col-md-10'
             }
         },
@@ -204,6 +220,10 @@ Vue.component('my-reservas-user-list', {
             }
             if (this.status == 'PAID') {
                 return 'background: rgba(0,0,255,0.3); margin-bottom: 10px;'
+
+            }
+            if (this.status == 'finalizada') {
+                return 'background: rgba(0,255,0,0.3); margin-bottom: 10px;'
 
             }
         }

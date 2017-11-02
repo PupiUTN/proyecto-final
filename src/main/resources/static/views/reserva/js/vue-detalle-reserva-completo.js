@@ -67,7 +67,7 @@ Vue.component('my-detalle-reserva-completo', {
         <div class="row with-forms">
             <div class="col-md-8">
                 <h5><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px;"></i>Numero De reserva</h5>
-                <h3><b>{{numeroReserva}}</b></h3>
+                <h3><b>{{reserva.id}}</b></h3>
             </div>
 
             <div class="col-md-4">

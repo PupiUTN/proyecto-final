@@ -15,4 +15,7 @@ public interface CalificacionRepository extends JpaRepository<Calificacion, Long
 
     @Query("select c from Calificacion as c join c.reserva as r  where " + "  c.from_owner = true AND r.cuidador.id =:#{#id}" )
     List<Calificacion> getCalificacionesCuidador(@Param("id")long id);
+
+    @Query("select c from Calificacion as c join c.reserva as r  where " + "  c.from_owner = false AND r.perro.id =:#{#id}" )
+    List<Calificacion> getCalificacionesPerro(@Param("id")long id);
 }
