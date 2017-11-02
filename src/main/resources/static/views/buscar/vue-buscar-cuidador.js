@@ -18,19 +18,8 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
 
     </div>
     <div class="main-search-input-item location">
-        <input type="text" v-model="dateFrom" id="dateFrom" placeholder="Desde"
-               data-lang="es"
-               data-init-set="false"
-               data-large-mode="true" data-large-default="true" data-min-year="2017"
-               data-max-year="2020" data-lock="from">
+        <my-hotel-date-picker v-model="dateFrom"></my-hotel-date-picker>
               <a><i class="fa fa-calendar-check-o"></i></a>
-    </div>
-    <div class="main-search-input-item location">
-        <input type="text" v-model="dateTo" id="dateTo" placeholder="Hasta" data-lang="es"
-               data-init-set="false"
-               data-large-mode="true" data-large-default="true" data-min-year="2017"
-               data-max-year="2020" data-lock="from">
-               <a><i class="fa fa-calendar-check-o"></i></a>
     </div>
     <button class="button" type="submit">
         Buscar
@@ -60,6 +49,7 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
     mounted() {
         this.bindUrlWithVue();
         this.bindDatePickerWithVue();
+
     },
     methods: {
         geolocate() {
@@ -94,6 +84,11 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
             this.placeLat = addressData.latitude;
             this.placeLng = addressData.longitude;
             this.placeName = placeResultData.formatted_address;
+        },
+        setDateRange(dateRange) {
+            console.log("setDateRange"
+                + dateRange)
+
         },
         buscar() {
             //si el formulario no tiene los campos basicos no hago nada
@@ -131,23 +126,7 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
             window.location.href = href;
 
         },
-        bindDatePickerWithVue() {
-            // https://stackoverflow.com/questions/41200729/vue-js-and-jquery-datepicker-timepicker-two-way-binding
-            $('#dateFrom').dateDropper(this.dateFrom);
-            $('#dateFrom').change(function () {
-                console.log("date picker selected");
-                // var dateObjetc = $('#booking-date').datepicker("getDate");
-                //Java format: 2017-08-27
-                var dateString = $('#dateFrom').val(); //the getDate method
-                vm.$refs.myBuscarCuidadores.dateFrom = dateString;
-            });
-            $('#dateTo').dateDropper(this.dateTo);
-            $('#dateTo').change(function () {
-                console.log("date picker selected");
-                var dateString = $('#dateTo').val(); //the getDate method
-                vm.$refs.myBuscarCuidadores.dateTo = dateString;
-            });
-        },
+
         //obitene los parametros de la url... copiado de internet
         getParameterByName(name, url) {
             if (!url) url = window.location.href;
