@@ -84,7 +84,7 @@
 
 					</span>
                             <div class="star-rating"  id="rating" data-rating ="0">
-                                <div class="rating-counter"><a href="#listing-reviews">{{calificaciones.length}} Reviews</a></div>
+                                <div class="rating-counter"><a href="#listing-reviews">{{DataReview.length}} Reviews</a></div>
                             </div>
                         </div>
                     </div>
@@ -171,7 +171,13 @@
                                     <div class="avatar"><img :src="calificacion.reserva.perro.user.profileImageUrl" alt="" /></div>
                                     <div class="comment-content"><div class="arrow-comment"></div>
                                         <div class="comment-by">{{calificacion.reserva.perro.user.username}}
-                                            <div class="star-rating" data-rating="2"></div>
+                                            <div class="star-rating" >
+                                               <span v-bind:class="[calificacion.puntaje >=1 ? star : 'star empty', errorClass]" ></span>
+                                                <span v-bind:class="[calificacion.puntaje >=2 ? star : 'star empty', errorClass]"></span>
+                                                <span v-bind:class="[calificacion.puntaje >=3 ? star : 'star empty', errorClass]" ></span>
+                                                <span v-bind:class="[calificacion.puntaje >=4 ? star : 'star empty', errorClass]"></span>
+                                                <span v-bind:class="[calificacion.puntaje >=5 ? star : 'star empty', errorClass]"></span>
+                                            </div>
                                         </div>
                                         <p> {{calificacion.comentario}}</p>
                                        </div>
@@ -190,10 +196,12 @@
                                 <div class="pagination-container margin-top-30">
                                     <nav class="pagination">
                                         <ul>
-                                            <li><a :href="prevPage()" id="btn_prev">Prev</a></li>
-                                            <li><a :href="nextPage()" id="btn_next">Next</a></li>
-                                            page: <span id="page"></span>
-                                            <li><a :href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+
+
+                                            <li><a v-if="offset > 0"   v-on:click="previous()"><i class="sl sl-icon-arrow-left"></i></a></li>
+
+                                            <li><a v-if="offset + perPage <= DataReview.length"  v-on:click="next()"><i class="sl sl-icon-arrow-right"></i></a></li>
+
                                         </ul>
                                     </nav>
                                 </div>

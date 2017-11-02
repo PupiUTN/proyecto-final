@@ -39,10 +39,11 @@ let vm = new Vue({
                 fechaTransaccion:'',
             },
         }],
-
-       current_page : 1,
-    records_per_page : 3,
-
+        offset: 0,
+        navButtons:[],
+        perPage: 3,
+        DataReview:[],
+        puntajeUsuario:0,
     }
     ,
     mounted() {
@@ -176,17 +177,17 @@ let vm = new Vue({
 
             axios.get(urlCalificaciones + '?id=' + this.idCuidador)
                 .then((response) => {
-                    this.calificaciones = response.data;
+                    this.DataReview = response.data;
                      var cont = 0;
-                     this.calificaciones .forEach( function(item, value, array) {
+                     this.DataReview .forEach( function(item, value, array) {
 
 
                        cont += item.puntaje;
 
                     });
-                        if(this.calificaciones.length > 0)
+                        if(this.DataReview.length > 0)
                         {
-                            this.puntaje =Math.trunc(cont /this.calificaciones.length);
+                            this.puntaje =Math.trunc(cont /this.DataReview.length);
 
                             var h = document.getElementsByClassName("star empty");
                             for (i = 0; i < (this.puntaje-1); i++) {
@@ -195,7 +196,7 @@ let vm = new Vue({
                             }
 
                         }
-
+                    this.paginate();
                 })
                 .catch(error => {
                         console.log(error);
@@ -203,11 +204,6 @@ let vm = new Vue({
 
                     }
                 );
-
-
-        },
-        llenarPuntajeCuidador()
-        {
 
 
         },
@@ -235,9 +231,33 @@ let vm = new Vue({
                 vm.fechaReservaHasta = dateString;
             });
         },
-      
 
+        paginate() {
+           this.calificaciones = this.DataReview.slice(this.offset, this.offset + this.perPage);
+
+
+          /*  for (i = 0; i < (this.calificaciones.length); i++) {
+
+                this.puntajeUsuario= this.calificaciones[i].puntaje;
+                for (w = 1; w <= (  this.puntajeUsuario); w++)
+                {
+                    var name = "star" + w + i;
+                    document.getElementById(name).className='star';
+                }
+            }*/
+        },
+        previous() {
+            this.offset =  this.offset - this.perPage;
+        },
+        next () {
+            this.offset = this.offset + this.perPage;
+        },
     },
+    watch: {
+       offset: function () {
+            this.paginate();
+        },
+        },
 
 });
 
