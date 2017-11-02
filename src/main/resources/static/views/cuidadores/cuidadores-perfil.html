@@ -172,11 +172,11 @@
                                     <div class="comment-content"><div class="arrow-comment"></div>
                                         <div class="comment-by">{{calificacion.reserva.perro.user.username}}
                                             <div class="star-rating" >
-                                               <span v-bind:class="[calificacion.puntaje >=1 ? star : 'star empty', errorClass]" ></span>
-                                                <span v-bind:class="[calificacion.puntaje >=2 ? star : 'star empty', errorClass]"></span>
-                                                <span v-bind:class="[calificacion.puntaje >=3 ? star : 'star empty', errorClass]" ></span>
-                                                <span v-bind:class="[calificacion.puntaje >=4 ? star : 'star empty', errorClass]"></span>
-                                                <span v-bind:class="[calificacion.puntaje >=5 ? star : 'star empty', errorClass]"></span>
+                                               <span v-bind:class="{'star': calificacion.puntaje >= 1, 'star empty': calificacion.puntaje < 1 }" ></span>
+                                                <span v-bind:class="{'star': calificacion.puntaje >= 2, 'star empty': calificacion.puntaje < 2 }"></span>
+                                                <span v-bind:class="{'star': calificacion.puntaje >= 3, 'star empty': calificacion.puntaje < 3 }" ></span>
+                                                <span v-bind:class="{'star': calificacion.puntaje >= 4, 'star empty': calificacion.puntaje < 4 }"></span>
+                                                <span v-bind:class="{'star': calificacion.puntaje >= 5, 'star empty': calificacion.puntaje < 5 }"></span>
                                             </div>
                                         </div>
                                         <p> {{calificacion.comentario}}</p>
@@ -198,7 +198,7 @@
                                         <ul>
 
 
-                                            <li><a v-if="offset > 0"   v-on:click="previous()"><i class="sl sl-icon-arrow-left"></i></a></li>
+                                            <li><a v-if="offset > 0"    v-on:click="previous()"><i class="sl sl-icon-arrow-left"></i></a></li>
 
                                             <li><a v-if="offset + perPage <= DataReview.length"  v-on:click="next()"><i class="sl sl-icon-arrow-right"></i></a></li>
 

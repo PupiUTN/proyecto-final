@@ -234,17 +234,7 @@ let vm = new Vue({
 
         paginate() {
            this.calificaciones = this.DataReview.slice(this.offset, this.offset + this.perPage);
-
-
-          /*  for (i = 0; i < (this.calificaciones.length); i++) {
-
-                this.puntajeUsuario= this.calificaciones[i].puntaje;
-                for (w = 1; w <= (  this.puntajeUsuario); w++)
-                {
-                    var name = "star" + w + i;
-                    document.getElementById(name).className='star';
-                }
-            }*/
+            
         },
         previous() {
             this.offset =  this.offset - this.perPage;
