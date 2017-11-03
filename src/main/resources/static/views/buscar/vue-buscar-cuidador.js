@@ -2,7 +2,7 @@
 var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
     template: `
 <form class="main-search-input" v-on:submit.prevent='buscar'>
-    <div class="main-search-input-item location" :style="inputSize">
+    <div class="main-search-input-item location">
         <vue-google-autocomplete
             id="location"
             placeholder="Ciudad"
@@ -18,7 +18,13 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
 
     </div>
     <div class="main-search-input-item location">
-        <my-hotel-date-picker v-model="dateFrom"></my-hotel-date-picker>
+        <my-hotel-date-picker 
+            ref="myHotelDatePicker" 
+            format="DD/MM/YYYY"
+            v-on:updateDateRange="bindDates"
+            datepickerId="datepickerId"
+        > 
+</my-hotel-date-picker>
               <a><i class="fa fa-calendar-check-o"></i></a>
     </div>
     <button class="button" type="submit">
@@ -48,7 +54,7 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
         },
     mounted() {
         this.bindUrlWithVue();
-        this.bindDatePickerWithVue();
+        this.setDates();
 
     },
     methods: {
@@ -85,11 +91,6 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
             this.placeLng = addressData.longitude;
             this.placeName = placeResultData.formatted_address;
         },
-        setDateRange(dateRange) {
-            console.log("setDateRange"
-                + dateRange)
-
-        },
         buscar() {
             //si el formulario no tiene los campos basicos no hago nada
             if (!this.formValitaion()) {
@@ -100,14 +101,14 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
                 "&placeID=" + this.placeID +
                 "&lat=" + this.placeLat +
                 "&lng=" + this.placeLng;
-            //con el datapicker los datos no se "bindean" en el dom...
-            this.dateFrom = document.getElementById("dateFrom").value;
-            this.dateTo = document.getElementById("dateTo").value;
-            console.log(this.dateFrom);
-            console.log(this.dateTo);
-            if (this.dateFrom != '') {
-                if (this.dateTo != '') {
-                    if (this.dateTo >= this.dateFrom) {
+
+
+            if (this.dateFrom != null) {
+                if (this.dateTo != null) {
+                    var dateFromObj = fecha.parse(this.dateFrom, 'DD/MM/YYYY'); // new Date(2010, 11, 10, 14, 11, 12)
+                    var dateToObj = fecha.parse(this.dateTo, 'DD/MM/YYYY'); // new Date(2010, 11, 10, 14, 11, 12)
+
+                    if (dateToObj >= dateFromObj) {
                         href += "&from=" + this.dateFrom +
                             "&to=" + this.dateTo;
                     } else {
@@ -116,15 +117,22 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
                         return;
 
                     }
-                } else {
-                    sweetAlert("Oops...", "Debe ingresar una fecha hasta", "error");
-                    return;
                 }
             }
             // router.push({ name: 'buscar'});
 
             window.location.href = href;
 
+        }, bindDates(e) {
+            var split = e.split('-');
+            this.dateFrom = split[0];
+            this.dateTo = split[1];
+        },
+        setDates() {
+            if (this.dateFrom != null & this.dateTo != null) {
+                var value = this.dateFrom + '-' + this.dateTo;
+                this.$refs.myHotelDatePicker.setValue(value);
+            }
         },
 
         //obitene los parametros de la url... copiado de internet
@@ -156,14 +164,6 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
                 return false;
             }
             return true;
-        }
-    },
-    computed: {
-        inputSize() {
-            if (this.isIndex) {
-                return 'flex: 1';
-            }
-            return 'flex: 2';
         }
     }
 });

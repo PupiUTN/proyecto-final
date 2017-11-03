@@ -149,7 +149,10 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 console.log(this.dateFrom);
                 if (this.dateFrom != null) {
                     this.dateTo = this.getParameterByName('to');
-                    if (this.dateTo >= this.dateFrom) {
+                    var dateFromObj = fecha.parse(this.dateFrom, 'DD/MM/YYYY'); // new Date(2010, 11, 10, 14, 11, 12)
+                    var dateToObj = fecha.parse(this.dateTo, 'DD/MM/YYYY'); // new Date(2010, 11, 10, 14, 11, 12)
+
+                    if (dateToObj >= dateFromObj) {
                         consulta += '&from=' + this.dateFrom +
                             '&to=' + this.dateTo;
                         axios.get(consulta)
