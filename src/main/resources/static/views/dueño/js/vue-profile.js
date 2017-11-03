@@ -93,7 +93,7 @@ Vue.component('my-profile', {
             user: {},
             url: "/api/user/",
             direccion: {
-                calle: 'holi'
+                calle:''
             },
             formPost: true,
             uploadedFiles: [],
@@ -144,8 +144,8 @@ Vue.component('my-profile', {
         },
         completar() {
             this.place = this.autocomplete.getPlace();
-            console.log(this.place.types);
-            if (this.place.types && this.place.types[0] != "street_address") {//si es direccion, tiene qie tener numero
+            //console.log(this.place);
+            if(this.place.types && this.place.types[0]!="street_address"){//si es direccion, tiene qie tener numero
                 sweetAlert("Información", "Ingrese una dirección válida (Calle Número, Ciudad, Provincia)", "info");
                 return;
             }
@@ -175,6 +175,8 @@ Vue.component('my-profile', {
                     }
                     if (addressType == "postal_code") {
                         this.direccion.codigoPostal = val;
+                    }else{
+                        this.direccion.codigoPostal=0;
                     }
                     //document.getElementsByClassName(addressType)[0].value = val;
                     //console.log(this.place);
@@ -189,10 +191,10 @@ Vue.component('my-profile', {
             var lng = this.direccion.longitud.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
             axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=true')
                 .then((data) => {
-                    console.log(data.data);
+                    //console.log(data.data);
                     var city = data.data.results[1];
                     this.direccion.ciudadPlaceId = city.place_id;
-                    console.log(this.direccion);
+                    //console.log(this.direccion);
                 });
         },
         filesChange(fileList) {
@@ -263,19 +265,19 @@ Vue.component('my-profile', {
             this.user.direccion = this.direccion;
             if (this.validarBirthday()) {
                 this.isUserCompleted();
-                console.log(this.user);
+                //console.log(this.user);
                 var payload = jQuery.extend(true, {}, this.user);
-                // axios.put(this.url + this.user.id, payload)
-                //     .then((response) => {
-                //
-                //         sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
-                //         console.log(response);
-                //     })
-                //     .catch(error => {
-                //             console.log(error);
-                //
-                //         }
-                //     );
+                axios.put(this.url + this.user.id, payload)
+                    .then((response) => {
+
+                        sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
+                        console.log(response);
+                    })
+                    .catch(error => {
+                            console.log(error);
+
+                        }
+                    );
 
 
             }
