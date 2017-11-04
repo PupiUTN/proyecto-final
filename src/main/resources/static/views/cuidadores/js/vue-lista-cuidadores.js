@@ -32,8 +32,8 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 <!-- Listing Item -->
                 <div v-for="(item,n) in items" :id="item.id" class="col-lg-6 col-md-12">
                 
-                    <a :href="'/views/cuidadores/cuidadores-perfil.html?id='+item.id"
-                       class="listing-item-container" :data-marker-id=n+1>
+                    <a :href="'/views/cuidadores/cuidadores-perfil.html?id=' + item.id 
+                    + getDatesUrl()" class="listing-item-container" :data-marker-id=n+1>
                         <div class="listing-item">
 
                             <img :src="item.listaImagenes[0].url" alt="">
@@ -286,5 +286,14 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             }
 
         },
+        getDatesUrl() {
+            if (this.dateFrom != null) {
+                if (this.dateTo != null) {
+                    return "&from=" + this.dateFrom + "&to=" + this.dateTo;
+                }
+            }
+            return "";
+
+        }
     }
 });

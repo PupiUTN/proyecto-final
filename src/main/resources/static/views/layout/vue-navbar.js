@@ -24,7 +24,7 @@ Vue.component('my-navbar', {
                 <!-- Left Side Content / End -->
                 
                 <!-- Right Side Content / End -->
-                <my-login v-on:is-authenticated="isAuthenticatedMethod" ref="mylogin"></my-login>
+                <my-login v-on:is-authenticated="isAuthenticatedMethod" ref="myLogin"></my-login>
                 <!-- Right Side Content / End -->
             </div>
         </div>

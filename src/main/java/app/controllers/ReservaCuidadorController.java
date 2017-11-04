@@ -8,14 +8,14 @@ import app.services.MailService;
 import app.services.ReservaService;
 import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.http.HttpStatus;
-        import org.springframework.http.ResponseEntity;
-        import org.springframework.security.access.prepost.PreAuthorize;
-        import org.springframework.security.core.context.SecurityContextHolder;
-        import org.springframework.security.core.userdetails.UserDetails;
-        import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
-        import java.util.List;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/cuidador/me/reservas")
@@ -33,7 +33,7 @@ public class ReservaCuidadorController {
     @RequestMapping(method = RequestMethod.POST)
     public Reserva post(@RequestBody Reserva entity) throws Exception {
         //TODO setear info del cuidador asi nadie puede meter info que no es.
-        return reservaService.save(entity);
+        return reservaService.crearNuevaReserva(entity);
 
     }
 

@@ -37,7 +37,7 @@ public class ReservaUserController {
     public Reserva post(@RequestBody Reserva entity) throws Exception {
         //TODO setear info del cuidador asi nadie puede meter info que no es.
         MailService.sendEmail(entity.getCuidador().getUser(), MailType.BOOKING_REQUEST);
-        return reservaService.save(entity);
+        return reservaService.crearNuevaReserva(entity);
 
     }
     @PreAuthorize("isAuthenticated()")

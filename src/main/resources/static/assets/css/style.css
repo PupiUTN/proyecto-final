@@ -3122,7 +3122,7 @@ a.send-message-to-owner.button {
 
 /* Opening Hours */
 .opening-hours {
-    position: relative;
+    /*position: relative;*/
     overflow: hidden;
 }
 

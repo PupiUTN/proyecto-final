@@ -295,7 +295,7 @@
         content: '';
         display: block;
         left: 50%;
-        position: absolute;
+        position: relative;
         top: 0;
         width: 1px;
     }

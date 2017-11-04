@@ -125,8 +125,8 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
 
         }, bindDates(e) {
             var split = e.split('-');
-            this.dateFrom = split[0];
-            this.dateTo = split[1];
+            this.dateFrom = split[0].replace(/\s/g, '');
+            this.dateTo = split[1].replace(/\s/g, '');
         },
         setDates() {
             if (this.dateFrom != null & this.dateTo != null) {
