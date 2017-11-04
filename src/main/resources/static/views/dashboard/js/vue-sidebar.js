@@ -18,7 +18,7 @@ let mySidebar = Vue.component('my-sidebar', {
 					</ul>
 					</li>
 				</ul>
-                	 <ul v-show="role === 'ROLE_USER'" data-submenu-title="Calificaciones" >
+                	 <ul v-show="role === 'ROLE_USER' || role === 'ROLE_CUIDADOR'"  data-submenu-title="Calificaciones" >
                     <li><a href="/views/reserva/mis-reservas-user.html?status=finalizada"><i class="sl sl-icon-layers"></i> Reviews</a></li>
                     </ul>
                     
@@ -53,7 +53,101 @@ let mySidebar = Vue.component('my-sidebar', {
     , props: {
         role: {
             required: true,
-            type: String
+            type: String,
+
         },
+    },
+    watch: {
+        // whenever question changes, this function will run
+        role: function () {
+            this.answer = 'Waiting for you to stop typing...'
+            this.getReservasPendientesReview(this.role)
+        }
+    },
+
+    data:
+        function () {
+            return {
+
+               pendientes: false,
+
+
+
     }
+    },
+    mounted() {
+
+       // this.getReservasPendientesReview();
+    },
+
+    methods: {
+        getReservasPendientesReview(role)
+        {
+            if (role === "ROLE_CUIDADOR")
+            {
+                axios.get('/api/cuidador/me/reservas/PendientesReview/')
+                    .then((response) => {
+                        this.pendientes = response.data;
+                        if (!this.pendientes ) {
+                            sweetAlert({
+                                    title: "Reviews ",
+                                    text: "Tiene Reservas pendientes de calificar",
+                                    type: "info",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "ir a calificaciones",
+                                    closeOnConfirm: false,
+                                    cancelButtonText: "ok",
+                                    showLoaderOnConfirm: true,
+                                },
+                                function () {
+                                    document.location.href = "/views/reserva/mis-reservas-cuidador.html?status=finalizada";
+                                });
+                        }
+
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error, ver consola", "error");
+                    });
+
+            }
+                else {
+                if (role === "ROLE_USER") {
+
+                axios.get('/api/user/me/reservas/PendientesReview/')
+                    .then((response) => {
+                        this.pendientes = response.data;
+                        if (this.pendientes) {
+                            sweetAlert({
+                                    title: "Reviews ",
+                                    text: "Tiene Reservas pendientes de calificar",
+                                    type: "info",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "ir a calificaciones",
+                                    closeOnConfirm: false,
+                                    cancelButtonText: "ok",
+                                    showLoaderOnConfirm: true,
+                                },
+                                function () {
+                                    document.location.href = "/views/reserva/mis-reservas-user.html?status=finalizada";
+                                });
+                        }
+
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error, ver consola", "error");
+                    });
+            }
+            }
+            return true;
+        }
+
+
+
+
+}
+
 });

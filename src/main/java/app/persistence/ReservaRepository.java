@@ -12,6 +12,9 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     @Query("select r from Reserva r where r.perro.user.id = :#{#userId}")
     List<Reserva> findAllByUser(@Param("userId")long userId);
 
+    @Query("select r from Reserva r where r.cuidador.user.id = :#{#userId}")
+    List<Reserva> findAllByCuidador(@Param("userId")long userId);
+
     @Query("select r from Reserva r where r.perro.user.id = :#{#userId} and r.status =:#{#statusId}")
     List<Reserva> findAllByUserAndStatus(@Param("userId")long userId, @Param("statusId")String status);
 
@@ -30,4 +33,12 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
     @Query("select r from Reserva r where r.cuidador.user.id = :#{#userId} and r.status =:#{#statusId} or r.status =:#{#statusUsuario}")
     List<Reserva> findAllByUserAndStatusFinalizada(@Param("userId")long userId, @Param("statusId")String status, @Param("statusUsuario")String statusUsuario);
+
+
+    @Query("select r from Reserva r where r.perro.user.id = :#{#userId} and r.status = 'comentario-cuidador' or r.status = 'finalizada'" )
+    List<Reserva> findPendienteReviewUser();
+
+
+    @Query("select r from Reserva r where r.perro.user.id = :#{#userId} and r.status = 'comentario-cuidador' or r.status = 'finalizada'" )
+    List<Reserva> findPendienteReviewCuidador();
 }

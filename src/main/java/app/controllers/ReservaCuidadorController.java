@@ -78,4 +78,14 @@ public class ReservaCuidadorController {
         return new ResponseEntity(HttpStatus.OK);
 
     }
+
+    @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
+
+    @RequestMapping(value = "/PendientesReview/", method = RequestMethod.GET)
+    public boolean getPendientesReview() throws Exception {
+      boolean r = false;
+           List reserva = reservaService.findPendienteReviewCuidador();
+            return reserva.isEmpty();
+
+    }
 }

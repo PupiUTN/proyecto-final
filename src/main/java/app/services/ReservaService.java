@@ -88,5 +88,13 @@ public class ReservaService {
         reservaRepository.save(reserva);
     }
 
+       public List<Reserva>findPendienteReviewCuidador()
+       { return reservaRepository.findPendienteReviewCuidador();
 
+       }
+
+    public List<Reserva>findPendienteReviewUser()
+    { return reservaRepository.findPendienteReviewUser();
+
+    }
 }

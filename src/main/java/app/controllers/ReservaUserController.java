@@ -67,5 +67,14 @@ public class ReservaUserController {
         return reservaService.getReserva(id);
     }
 
+    @PreAuthorize("isAuthenticated()")
+
+    @RequestMapping(value = "/PendientesReview/", method = RequestMethod.GET)
+    public boolean getPendientesReview() throws Exception {
+        boolean r = false;
+        List reserva = reservaService.findPendienteReviewUser();
+        return reserva.isEmpty();
+
+    }
 
 }
