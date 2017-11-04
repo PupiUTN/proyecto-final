@@ -9,7 +9,7 @@ var myHotelDatePicker = Vue.component('my-hotel-date-picker', {
         },
         placeholder: {
             type: String,
-            default: 'Check-in ~ Check-out'
+            default: 'Desde - Hasta'
         },
         format: {
             type: String,
@@ -25,7 +25,7 @@ var myHotelDatePicker = Vue.component('my-hotel-date-picker', {
         },
         startOfWeek: {
             type: String,
-            default: 'sunday'
+            default: 'monday'
         },
         startDate: {
             type: [Date, String],
