@@ -37,10 +37,13 @@ Vue.component('my-reservas-user-list', {
                                             <p ><b>Perro: </b> {{ reserva.perro.nombre}}</p>
                                         </div>
                                         <div class="col-xs-12 col-md-1">
+                                            <p><b>Precio</b> </br>{{ reserva.precioTotal }} $</p>
+                                        </div>
+                                        <div class="col-xs-12 col-md-1">
                                             <p><b>Desde</b> </br>{{ reserva.fechaFin }}</p>
                                         </div>
                                         <div class="col-xs-12 col-md-1">
-                                            <p><b> Hasta </b> </br> {{ reserva.fechaFin }}</p>
+                                            <p><b> Hasta</b> </br> {{ reserva.fechaFin }}</p>
                                         </div>
                                         <div class="col-xs-12 col-md-3" v-if="reserva.status === 'CONFIRMATION_PENDING'">
                                             <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
@@ -68,30 +71,7 @@ Vue.component('my-reservas-user-list', {
     data:
         function () {
             return {
-                reservas: [
-                    {
-                        id: null,
-                        cuidador: {
-                            user: {
-                                fullName: '',
-                                direccion: {
-                                    calle: '',
-                                    ciudad: '',
-                                }
-                            },
-                            listaImagenes: [
-                                {
-                                    url: ""
-                                }
-                            ]
-                        },
-                        perro: {},
-                        fechaInicio: "",
-                        fechaFin: "",
-                        precioTotal: 1,
-                        status: 0
-                    }
-                ],
+                reservas: [],
                 mensaje: null,
                 cuidadorProfileUrl: '/views/cuidadores/cuidadores-perfil.html?id=',
                 status: null,
@@ -180,16 +160,16 @@ Vue.component('my-reservas-user-list', {
         },
         listClass: function () {
             if (this.status == 'CONFIRMATION_PENDING') {
-                return 'col-xs-12 col-md-7'
+                return 'col-xs-12 col-md-6'
             }
             if (this.status == 'CANCEL_BY_USER') {
-                return 'col-xs-12 col-md-10'
+                return 'col-xs-12 col-md-9'
             }
             if (this.status == 'ACCEPTED') {
-                return 'col-xs-12 col-md-10'
+                return 'col-xs-12 col-md-9'
             }
             if (this.status == 'PAID') {
-                return 'col-xs-12 col-md-10'
+                return 'col-xs-12 col-md-9'
             }
         },
         listColor: function () {

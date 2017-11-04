@@ -14,7 +14,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-1">
-					<div class="dashboard-stat-content"><h4>6</h4> <span>Reservas</span></div>
+					<div class="dashboard-stat-content"><h4>0</h4> <span>Reservas</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Map2"></i></div>
 				</div>
 			</div>
@@ -22,7 +22,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-2">
-					<div class="dashboard-stat-content"><h4>726</h4> <span>Visitas</span></div>
+					<div class="dashboard-stat-content"><h4>0</h4> <span>Visitas</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Line-Chart"></i></div>
 				</div>
 			</div>
@@ -31,7 +31,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-3">
-					<div class="dashboard-stat-content"><h4>95</h4> <span>Reseñas</span></div>
+					<div class="dashboard-stat-content"><h4>0</h4> <span>Reseñas</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Add-UserStar"></i></div>
 				</div>
 			</div>
@@ -39,7 +39,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-4">
-					<div class="dashboard-stat-content"><h4>126</h4> <span>Favoritos</span></div>
+					<div class="dashboard-stat-content"><h4>0</h4> <span>Favoritos</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Heart"></i></div>
 				</div>
 			</div>
