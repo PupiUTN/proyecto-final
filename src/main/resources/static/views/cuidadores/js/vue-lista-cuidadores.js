@@ -20,87 +20,23 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             <div class="row padding-top-10">
                 <!-- Filters -->
                 <div class="col-fs-12">
-
-                    <!-- Panel Dropdown / End -->
-                    <div class="panel-dropdown">
-                        <a href="#">Categories</a>
-                        <div class="panel-dropdown-content checkboxes categories">
-
-                            <!-- Checkboxes -->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input id="check-1" type="checkbox" name="check" checked class="all">
-                                    <label for="check-1">All Categories</label>
-
-                                    <input id="check-2" type="checkbox" name="check">
-                                    <label for="check-2">Shops</label>
-
-                                    <input id="check-3" type="checkbox" name="check">
-                                    <label for="check-3">Hotels</label>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <input id="check-4" type="checkbox" name="check" >
-                                    <label for="check-4">Eat & Drink</label>
-
-                                    <input id="check-5" type="checkbox" name="check">
-                                    <label for="check-5">Fitness</label>
-
-                                    <input id="check-6" type="checkbox" name="check">
-                                    <label for="check-6">Events</label>
-                                </div>
-                            </div>
-
-                            <!-- Buttons -->
-                            <div class="panel-buttons">
-                                <button class="panel-cancel">Cancel</button>
-                                <button class="panel-apply">Apply</button>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- Panel Dropdown / End -->
-
                     <!-- Panel Dropdown -->
                     <div class="panel-dropdown wide">
-                        <a href="#">More Filters</a>
+                        <a href="#">Servicios</a>
                         <div class="panel-dropdown-content checkboxes">
 
                             <!-- Checkboxes -->
                             <div class="row">
-                                <div class="col-md-6">
-                                    <input id="check-a" type="checkbox" name="check">
-                                    <label for="check-a">Elevator in building</label>
-
-                                    <input id="check-b" type="checkbox" name="check">
-                                    <label for="check-b">Friendly workspace</label>
-
-                                    <input id="check-c" type="checkbox" name="check">
-                                    <label for="check-c">Instant Book</label>
-
-                                    <input id="check-d" type="checkbox" name="check">
-                                    <label for="check-d">Wireless Internet</label>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <input id="check-e" type="checkbox" name="check" >
-                                    <label for="check-e">Free parking on premises</label>
-
-                                    <input id="check-f" type="checkbox" name="check" >
-                                    <label for="check-f">Free parking on street</label>
-
-                                    <input id="check-g" type="checkbox" name="check">
-                                    <label for="check-g">Smoking allowed</label>
-
-                                    <input id="check-h" type="checkbox" name="check">
-                                    <label for="check-h">Events</label>
-                                </div>
+                                <div v-for =" servicio in listaServicios">
+                                    <input :id="servicio.nombre" type="checkbox" name="check">
+                                    <label :for="servicio.nombre">{{servicio.nombre}}</label>
+                                </div>    
                             </div>
 
                             <!-- Buttons -->
                             <div class="panel-buttons">
-                                <button class="panel-cancel">Cancel</button>
-                                <button class="panel-apply">Apply</button>
+                                <button class="panel-cancel">Cancelar</button>
+                                <button v-on:click="filtroServicio()" class="panel-apply">Aplicar</button>
                             </div>
 
                         </div>
@@ -109,12 +45,29 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                     <!-- Panel Dropdown -->
                     <div class="panel-dropdown">
-                        <a href="#">Distance Radius</a>
+                        <a href="#">Precio</a>
                         <div class="panel-dropdown-content">
-                            <input class="distance-radius" type="range" min="1" max="100" step="1" value="50" data-title="Radius around selected destination">
+                            <div class="row">
+                                <label class="col-xs-2 margin-top-10">Desde:</label>
+                                <input type="number" style="width: 25%; float: left;" placeholder="Desde" v-model="precioDesde">
+                                <label class="col-xs-2 col-xs-offset-1 margin-top-10">Hasta:</label>
+                                <input type="number" style="width: 25%; float: left;" placeholder="Hasta" v-model="precioHasta">
+                            </div>
                             <div class="panel-buttons">
-                                <button class="panel-cancel">Disable</button>
-                                <button class="panel-apply">Apply</button>
+                                <button class="panel-cancel">Cancelar</button>
+                                <button v-on:click="filtrarPrecio()" class="panel-apply">Aplicar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Panel Dropdown / End -->
+                    <!-- Panel Dropdown 
+                    <div class="panel-dropdown">
+                        <a href="#">Precio Mínimo</a>
+                        <div class="panel-dropdown-content">
+                            <input class="distance-radius" type="range" min="1" :max="precioMax" step="1" value="0" data-title="Precio Mínimo">
+                            <div class="panel-buttons">
+                                <button class="panel-cancel">Cancelar</button>
+                                <button class="panel-apply">Aplicar</button>
                             </div>
                         </div>
                     </div>
@@ -218,6 +171,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             url: "/api/cuidadores/search/",
             encontrados: 'Resultados',
             items: [],
+            itemsSinFiltro:[],
             formPost: true,
             map: null,
             placeID: null,
@@ -228,14 +182,31 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             dateFrom: null,
             dateTo: null,
             isIndex: false,
+            precioMax: 0,
+            listaServicios:null,
+            precioDesde: null,
+            precioHasta: null,
+            markers:[],
         }
     },
     mounted() {
+        this.getServicios();
         this.initMap();
         this.getCuidadores();
 
     },
     methods: {
+        getServicios() {
+            axios.get("/api/servicios/")
+                .then((data) => {
+                    this.listaServicios = data.data;
+
+                })
+                .catch(error => {
+                    console.log(error);
+                    //sweetAlert("Oops...", "Error, no se pudo cargar servicios", "error");
+                });
+        },
         initMap() {
             var argentina = {lat: -37.0230271, lng: -64.6175935};
             this.map = new google.maps.Map(document.getElementById('map'), {
@@ -266,13 +237,8 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                                 console.log(this.placeID);
                                 console.log(response.data);
                                 this.items = response.data;
-                                this.encontrados = this.items.length;
-                                if (this.items.length === 1) {
-                                    this.encontrados += ' Resultado Encontrado';
-                                } else {
-                                    this.encontrados += ' Resultados Encontrados';
-                                }
-                                this.mostrarEnMapa();
+                                this.itemsSinFiltro = this.items;
+                                this.calcularEncontrados();
 
 
                             })
@@ -291,16 +257,8 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                             console.log(this.placeID);
                             console.log(response.data);
                             this.items = response.data;
-                            this.encontrados = this.items.length;
-                            console.log(this.encontrados);
-                            if (this.items.length === 1) {
-                                this.encontrados += ' Resultado Encontrado';
-                            } else {
-                                this.encontrados += ' Resultados Encontrados';
-                            }
-                            this.mostrarEnMapa();
-
-
+                            this.itemsSinFiltro = this.items;
+                            this.calcularEncontrados();
                         })
                         .catch(error => {
                                 console.log(error);
@@ -310,9 +268,11 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                     //console.log(this.encontrados);
                 }
             } else {
-                window.location.href="/";
+                window.location.href = "/";
             }
+
         },
+
         //obitene los parametros de la url... copiado de internet
         getParameterByName(name) {
             var url = window.location.href;
@@ -325,6 +285,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
         },
         //añade los marcadores al mapa
         mostrarEnMapa() {
+            this.clearMarkers();
             if (this.items != null && this.items.length > 0) {
                 if (this.items.length > 1) {
                     var bounds = new google.maps.LatLngBounds();
@@ -356,8 +317,9 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                             };
                         })(marker, content, infowindow));
-                        bounds.extend(marker.center);
 
+                        bounds.extend(marker.center);
+                        this.markers.push(marker);
                     }
 
                     //now fit the map to the newly inclusive bounds
@@ -392,10 +354,66 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                             };
                         })(marker, content, infowindow));
+                        this.markers.push(marker);
+                        var centro = new google.maps.LatLng(this.placeLat, this.placeLng);
+                        this.map.setCenter(centro);
+                        this.map.setZoom(12);
                     }
                 }
             }
 
         },
+        clearMarkers(){
+            for(var i=0; i<this.markers.length; i++){
+                this.markers[i].setMap(null);
+            }
+            this.markers=[];
+        },
+        filtrarPrecio() {
+            this.items = [];
+            if(!this.precioDesde&&!this.precioHasta){
+                this.items=this.itemsSinFiltro;
+                this.calcularEncontrados();
+            }
+            if (this.precioHasta) {
+                if (this.precioDesde) {
+                    for (var i = 0; i < this.itemsSinFiltro.length; i++) {
+                        if (this.itemsSinFiltro[i].precioPorNoche >= this.precioDesde && this.itemsSinFiltro[i].precioPorNoche <= this.precioHasta) {
+                            this.items.push(this.itemsSinFiltro[i]);
+                        }
+
+                    }
+                    console.log("precio desde y hasta")
+                    this.calcularEncontrados();
+                } else {
+                    for (var i = 0; i < this.itemsSinFiltro.length; i++) {
+                        if (this.itemsSinFiltro[i].precioPorNoche <= this.precioHasta) {
+                            this.items.push(this.itemsSinFiltro[i]);
+                        }
+                    }
+                    console.log("precio hasta")
+                    this.calcularEncontrados();
+                }
+            }else{
+                if(this.precioDesde){
+                    for (var i = 0; i < this.itemsSinFiltro.length; i++) {
+                        if (this.itemsSinFiltro[i].precioPorNoche >= this.precioDesde) {
+                            this.items.push(this.itemsSinFiltro[i]);
+                        }
+                    }
+                    this.calcularEncontrados();
+                    console.log("precio desde")
+                }
+            }
+        },
+        calcularEncontrados(){
+            this.encontrados = this.items.length;
+            if (this.items.length === 1) {
+                this.encontrados += ' Resultado Encontrado';
+            } else {
+                this.encontrados += ' Resultados Encontrados';
+            }
+            this.mostrarEnMapa();
+        }
     }
 });
