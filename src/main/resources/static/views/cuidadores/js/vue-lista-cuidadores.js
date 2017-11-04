@@ -48,10 +48,10 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                         <a href="#">Precio</a>
                         <div class="panel-dropdown-content">
                             <div class="row">
-                                <label class="col-xs-2 margin-top-10">Desde:</label>
-                                <input type="number" style="width: 25%; float: left;" placeholder="Desde" v-model="precioDesde">
-                                <label class="col-xs-2 col-xs-offset-1 margin-top-10">Hasta:</label>
-                                <input type="number" style="width: 25%; float: left;" placeholder="Hasta" v-model="precioHasta">
+                                <label class="col-md-2 col-xs-6 margin-top-10">Desde:</label>
+                                <input class="inp" type="number" style=" float: left;" placeholder="Desde" v-model="precioDesde">
+                                <label class="col-md-2 col-xs-6 col-md-offset-1 margin-top-10">Hasta:</label>
+                                <input class="inp" type="number" style=" float: left;" placeholder="Hasta" v-model="precioHasta">
                             </div>
                             <div class="panel-buttons">
                                 <button class="panel-cancel">Cancelar</button>
