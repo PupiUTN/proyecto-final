@@ -94,8 +94,8 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 <!-- Listing Item -->
                 <div v-for="(item,n) in items" :id="item.id" class="col-lg-6 col-md-12">
                 
-                    <a :href="'/views/cuidadores/cuidadores-perfil.html?id='+item.id"
-                       class="listing-item-container" :data-marker-id=n+1>
+                    <a :href="'/views/cuidadores/cuidadores-perfil.html?id=' + item.id 
+                    + getDatesUrl()" class="listing-item-container" :data-marker-id=n+1>
                         <div class="listing-item">
 
                             <img :src="item.listaImagenes[0].url" alt="">
@@ -229,7 +229,10 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 console.log(this.dateFrom);
                 if (this.dateFrom != null) {
                     this.dateTo = this.getParameterByName('to');
-                    if (this.dateTo >= this.dateFrom) {
+                    var dateFromObj = fecha.parse(this.dateFrom, 'DD/MM/YYYY'); // new Date(2010, 11, 10, 14, 11, 12)
+                    var dateToObj = fecha.parse(this.dateTo, 'DD/MM/YYYY'); // new Date(2010, 11, 10, 14, 11, 12)
+
+                    if (dateToObj >= dateFromObj) {
                         consulta += '&from=' + this.dateFrom +
                             '&to=' + this.dateTo;
                         axios.get(consulta)
@@ -406,7 +409,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 }
             }
         },
-        calcularEncontrados(){
+        calcularEncontrados() {
             this.encontrados = this.items.length;
             if (this.items.length === 1) {
                 this.encontrados += ' Resultado Encontrado';
@@ -414,6 +417,14 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 this.encontrados += ' Resultados Encontrados';
             }
             this.mostrarEnMapa();
+        },
+        getDatesUrl() {
+            if (this.dateFrom != null) {
+                if (this.dateTo != null) {
+                    return "&from=" + this.dateFrom + "&to=" + this.dateTo;
+                }
+            }
+            return "";
         }
     }
 });
