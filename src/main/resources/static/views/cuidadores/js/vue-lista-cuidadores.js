@@ -1,10 +1,11 @@
 let myListaCuidadores = Vue.component('my-lista-cuidadores', {
+    // language=HTML
     template: `    
 <div class="fs-container">
-<div class="fs-inner-container content">
+<div class="fs-inner-container content padding-top-0" >
     <div class="fs-content">
         <!-- Search -->
-        <section style="padding-left: 45px; padding-right: 45px;">
+        <section class="search" style="padding-left: 45px; padding-right: 45px; padding-top: 15px; padding-bottom: 20px">
 
             <div class="row">
 
@@ -12,7 +13,68 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                     <!-- Main Search Input -->
                     <my-buscar-cuidadores :is-index="isIndex"></my-buscar-cuidadores>
+                    
                 </div>
+                
+            </div>
+            <div class="row padding-top-10">
+                <!-- Filters -->
+                <div class="col-fs-12">
+                    <!-- Panel Dropdown -->
+                    <div class="panel-dropdown wide">
+                        <a href="#">Servicios</a>
+                        <div class="panel-dropdown-content checkboxes">
+
+                            <!-- Checkboxes -->
+                            <div class="row">
+                                <div v-for =" servicio in listaServicios">
+                                    <input :id="servicio.nombre" type="checkbox" name="check">
+                                    <label :for="servicio.nombre">{{servicio.nombre}}</label>
+                                </div>    
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="panel-buttons">
+                                <button class="panel-cancel">Cancelar</button>
+                                <button v-on:click="filtroServicio()" class="panel-apply">Aplicar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Panel Dropdown / End -->
+
+                    <!-- Panel Dropdown -->
+                    <div class="panel-dropdown">
+                        <a href="#">Precio</a>
+                        <div class="panel-dropdown-content">
+                            <div class="row">
+                                <label class="col-md-2 col-xs-6 margin-top-10">Desde:</label>
+                                <input class="inp" type="number" style=" float: left;" placeholder="Desde" v-model="precioDesde">
+                                <label class="col-md-2 col-xs-6 col-md-offset-1 margin-top-10">Hasta:</label>
+                                <input class="inp" type="number" style=" float: left;" placeholder="Hasta" v-model="precioHasta">
+                            </div>
+                            <div class="panel-buttons">
+                                <button class="panel-cancel">Cancelar</button>
+                                <button v-on:click="filtrarPrecio()" class="panel-apply">Aplicar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Panel Dropdown / End -->
+                    <!-- Panel Dropdown 
+                    <div class="panel-dropdown">
+                        <a href="#">Precio Mínimo</a>
+                        <div class="panel-dropdown-content">
+                            <input class="distance-radius" type="range" min="1" :max="precioMax" step="1" value="0" data-title="Precio Mínimo">
+                            <div class="panel-buttons">
+                                <button class="panel-cancel">Cancelar</button>
+                                <button class="panel-apply">Aplicar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Panel Dropdown / End -->
+
+                </div>
+                <!-- Filters / End -->
             </div>
 
         </section>
@@ -41,9 +103,9 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                             <div class="listing-badge now-open">Destacado</div>
 
                             <div class="listing-item-content">
-                                <span class="tag"> {{ item.precioPorNoche }} por Noche</span>
+                                <span class="tag">{{item.user.direccion.calle}}, {{item.user.direccion.provincia}} </span>
                                 <h3>{{item.user.fullName}}</h3>
-                                <span>{{item.user.direccion.calle}}</span>
+                                <span> $ {{item.precioPorNoche}} por Noche</span>
                             </div>
                             <span class="like-icon"></span>
                         </div>
@@ -107,8 +169,9 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
         return {
             autocomplete: null,
             url: "/api/cuidadores/search/",
-            encontrados: '',
+            encontrados: 'Resultados',
             items: [],
+            itemsSinFiltro:[],
             formPost: true,
             map: null,
             placeID: null,
@@ -119,14 +182,31 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             dateFrom: null,
             dateTo: null,
             isIndex: false,
+            precioMax: 0,
+            listaServicios:null,
+            precioDesde: null,
+            precioHasta: null,
+            markers:[],
         }
     },
     mounted() {
+        this.getServicios();
         this.initMap();
         this.getCuidadores();
 
     },
     methods: {
+        getServicios() {
+            axios.get("/api/servicios/")
+                .then((data) => {
+                    this.listaServicios = data.data;
+
+                })
+                .catch(error => {
+                    console.log(error);
+                    //sweetAlert("Oops...", "Error, no se pudo cargar servicios", "error");
+                });
+        },
         initMap() {
             var argentina = {lat: -37.0230271, lng: -64.6175935};
             this.map = new google.maps.Map(document.getElementById('map'), {
@@ -160,19 +240,14 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                                 console.log(this.placeID);
                                 console.log(response.data);
                                 this.items = response.data;
-                                this.encontrados = this.items.length;
-                                if (this.items.length === 1) {
-                                    this.encontrados += ' Resultado Encontrado';
-                                } else {
-                                    this.encontrados += ' Resultados Encontrados';
-                                }
-                                this.mostrarEnMapa();
+                                this.itemsSinFiltro = this.items;
+                                this.calcularEncontrados();
 
 
                             })
                             .catch(error => {
                                     console.log(error);
-                                    sweetAlert("Oops...", "Error, ver consola", "error");
+                                    //sweetAlert("Oops...", "Error, ver consola", "error");
                                 }
                             );
                     } else {
@@ -185,23 +260,22 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                             console.log(this.placeID);
                             console.log(response.data);
                             this.items = response.data;
-                            if (this.items.length === 1) {
-                                this.encontrados == ' Resultado Encontrado';
-                            } else {
-                                this.encontrados == ' Resultados Encontrados';
-                            }
-                            this.mostrarEnMapa();
+                            this.itemsSinFiltro = this.items;
+                            this.calcularEncontrados();
                         })
                         .catch(error => {
                                 console.log(error);
-                                sweetAlert("Oops...", "Error, ver consola", "error");
+                                //sweetAlert("Oops...", "Error, ver consola", "error");
                             }
                         );
+                    //console.log(this.encontrados);
                 }
             } else {
-
+                window.location.href = "/";
             }
+
         },
+
         //obitene los parametros de la url... copiado de internet
         getParameterByName(name) {
             var url = window.location.href;
@@ -214,6 +288,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
         },
         //añade los marcadores al mapa
         mostrarEnMapa() {
+            this.clearMarkers();
             if (this.items != null && this.items.length > 0) {
                 if (this.items.length > 1) {
                     var bounds = new google.maps.LatLngBounds();
@@ -245,8 +320,9 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                             };
                         })(marker, content, infowindow));
-                        bounds.extend(marker.center);
 
+                        bounds.extend(marker.center);
+                        this.markers.push(marker);
                     }
 
                     //now fit the map to the newly inclusive bounds
@@ -281,10 +357,66 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                             };
                         })(marker, content, infowindow));
+                        this.markers.push(marker);
+                        var centro = new google.maps.LatLng(this.placeLat, this.placeLng);
+                        this.map.setCenter(centro);
+                        this.map.setZoom(12);
                     }
                 }
             }
 
+        },
+        clearMarkers(){
+            for(var i=0; i<this.markers.length; i++){
+                this.markers[i].setMap(null);
+            }
+            this.markers=[];
+        },
+        filtrarPrecio() {
+            this.items = [];
+            if(!this.precioDesde&&!this.precioHasta){
+                this.items=this.itemsSinFiltro;
+                this.calcularEncontrados();
+            }
+            if (this.precioHasta) {
+                if (this.precioDesde) {
+                    for (var i = 0; i < this.itemsSinFiltro.length; i++) {
+                        if (this.itemsSinFiltro[i].precioPorNoche >= this.precioDesde && this.itemsSinFiltro[i].precioPorNoche <= this.precioHasta) {
+                            this.items.push(this.itemsSinFiltro[i]);
+                        }
+
+                    }
+                    console.log("precio desde y hasta")
+                    this.calcularEncontrados();
+                } else {
+                    for (var i = 0; i < this.itemsSinFiltro.length; i++) {
+                        if (this.itemsSinFiltro[i].precioPorNoche <= this.precioHasta) {
+                            this.items.push(this.itemsSinFiltro[i]);
+                        }
+                    }
+                    console.log("precio hasta")
+                    this.calcularEncontrados();
+                }
+            }else{
+                if(this.precioDesde){
+                    for (var i = 0; i < this.itemsSinFiltro.length; i++) {
+                        if (this.itemsSinFiltro[i].precioPorNoche >= this.precioDesde) {
+                            this.items.push(this.itemsSinFiltro[i]);
+                        }
+                    }
+                    this.calcularEncontrados();
+                    console.log("precio desde")
+                }
+            }
+        },
+        calcularEncontrados() {
+            this.encontrados = this.items.length;
+            if (this.items.length === 1) {
+                this.encontrados += ' Resultado Encontrado';
+            } else {
+                this.encontrados += ' Resultados Encontrados';
+            }
+            this.mostrarEnMapa();
         },
         getDatesUrl() {
             if (this.dateFrom != null) {
@@ -293,7 +425,6 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 }
             }
             return "";
-
         }
     }
 });
