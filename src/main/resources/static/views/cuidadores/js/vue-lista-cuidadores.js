@@ -174,7 +174,8 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             encontrados: 'Resultados',
             items: [],
             itemsSinFiltro:[],
-            itemsPantalla:[],
+            itemsConFiltroPrecio:[],
+            itemsConFiltroServicio:[],
             formPost: true,
             map: null,
             placeID: null,
@@ -377,51 +378,70 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             this.markers=[];
         },
         filtrarPrecio() {
-
             this.items = [];
+            console.log(this.precioDesde);
             if(!this.precioDesde&&!this.precioHasta){
-                this.items=this.itemsSinFiltro;
+                if(!this.itemsConFiltroServicio || this.itemsConFiltroServicio.length==0){
+                    itemsFiltrar=this.itemsConFiltroServicio;
+                }else{
+                    itemsFiltrar=this.itemsSinFiltro;
+                }
+                this.itemsConFiltroPrecio=[];
                 this.calcularEncontrados();
+            }
+            console.log(this.items);
+            var itemsFiltrar=[];
+            console.log(this.itemsConFiltroServicio.length);
+            if(this.itemsConFiltroServicio && this.itemsConFiltroServicio.length>0){
+                console.log("entre filtro serivcio");
+                itemsFiltrar=this.itemsConFiltroServicio;
+            }else{
+                itemsFiltrar=this.itemsSinFiltro;
             }
             if (this.precioHasta) {
                 if (this.precioDesde) {
-                    for (var i = 0; i < this.itemsSinFiltro.length; i++) {
-                        if (this.itemsSinFiltro[i].precioPorNoche >= this.precioDesde && this.itemsSinFiltro[i].precioPorNoche <= this.precioHasta) {
-                            this.items.push(this.itemsSinFiltro[i]);
+                    for (var i = 0; i < itemsFiltrar.length; i++) {
+                        if (itemsFiltrar[i].precioPorNoche >= this.precioDesde && itemsFiltrar[i].precioPorNoche <= this.precioHasta) {
+                            this.items.push(itemsFiltrar[i]);
                         }
 
                     }
-                    console.log("precio desde y hasta")
-                    this.calcularEncontrados();
+                    //this.calcularEncontrados();
                 } else {
-                    for (var i = 0; i < this.itemsSinFiltro.length; i++) {
-                        if (this.itemsSinFiltro[i].precioPorNoche <= this.precioHasta) {
-                            this.items.push(this.itemsSinFiltro[i]);
+                    for (var i = 0; i < itemsFiltrar.length; i++) {
+                        if (itemsFiltrar[i].precioPorNoche <= this.precioHasta) {
+                            this.items.push(itemsFiltrar[i]);
                         }
                     }
-                    console.log("precio hasta")
-                    this.calcularEncontrados();
+                    //this.calcularEncontrados();
                 }
+                this.itemsConFiltroPrecio=this.items;
             }else{
                 if(this.precioDesde){
-                    for (var i = 0; i < this.itemsSinFiltro.length; i++) {
-                        if (this.itemsSinFiltro[i].precioPorNoche >= this.precioDesde) {
-                            this.items.push(this.itemsSinFiltro[i]);
+                    for (var i = 0; i < itemsFiltrar.length; i++) {
+                        if (itemsFiltrar[i].precioPorNoche >= this.precioDesde) {
+                            this.items.push(itemsFiltrar[i]);
                         }
                     }
-                    this.calcularEncontrados();
-                    console.log("precio desde")
+                    //this.calcularEncontrados();
+                    this.itemsConFiltroPrecio=this.items;
                 }
             }
+            this.calcularEncontrados();
         },
         filtrarServicio(){
-            console.log(this.checkedServicios);
+            if(!this.itemsConFiltroPrecio || this.itemsConFiltroPrecio.length==0){
+                this.items=this.itemsSinFiltro;
+            }else{
+                this.items=this.itemsConFiltroPrecio;
+
+            }
+            console.log(this.items);
             this.itemsPantalla=this.items;
             this.items=[];
             var tieneServicio=[];
-            console.log(this.checkedServicios);
             if(this.checkedServicios && this.checkedServicios.length>0){
-
+                this.itemsConFiltroServicio=[];
                 for(var i=0;i<this.itemsPantalla.length;i++){
                     tieneServicio=[];
                     for(var j=0;j<this.itemsPantalla[i].listaServicios.length;j++){
@@ -436,12 +456,18 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                     if(tieneServicio.length==this.checkedServicios.length) {
                         this.items.push(this.itemsPantalla[i]);
                     }
-                    console.log(i);
                 }
+                this.itemsConFiltroServicio=this.items;
                 this.calcularEncontrados();
             }else{
+                console.log(this.itemsConFiltroPrecio);
+                if(!this.itemsConFiltroPrecio || this.itemsConFiltroPrecio.length==0){
+                    this.items=this.itemsSinFiltro;
+                }else{
+                    this.items=this.itemsConFiltroPrecio;
 
-                this.items=this.itemsSinFiltro;
+                }
+                this.itemsConFiltroServicio=[];
                 this.calcularEncontrados();
 
             }
