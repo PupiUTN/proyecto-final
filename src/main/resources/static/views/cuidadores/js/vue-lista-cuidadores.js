@@ -1,16 +1,18 @@
 let myListaCuidadores = Vue.component('my-lista-cuidadores', {
     // language=HTML
-    template: `    
-<div class="fs-container">
-<div class="fs-inner-container content padding-top-0" >
-    <div class="fs-content">
-        <!-- Search -->
-        <section class="search" style="padding-left: 45px; padding-right: 45px; padding-top: 15px; padding-bottom: 20px">
+    template: `
+        <div class="fs-container">
+            <div class="fs-inner-container content padding-top-0">
+                <div class="fs-content">
+                    <!-- Search -->
+                    <section class="search"
+                             style="padding-left: 45px; padding-right: 45px; padding-top: 15px; padding-bottom: 20px">
 
-            <div class="row">
+                        <div class="row">
 
-                <div class="col-md-12">
+                            <div class="col-md-12">
 
+<<<<<<< HEAD
                     <!-- Main Search Input -->
                     <my-buscar-cuidadores :is-index="isIndex"></my-buscar-cuidadores>
                     
@@ -58,115 +60,141 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                             <div class="panel-buttons">
                                 <button class="panel-cancel">Cancelar</button>
                                 <button v-on:click="filtrar()" class="panel-apply">Aplicar</button>
+=======
+                                <!-- Main Search Input -->
+                                <my-buscar-cuidadores :is-index="isIndex"></my-buscar-cuidadores>
+
                             </div>
+
                         </div>
-                    </div>
-                    <!-- Panel Dropdown / End -->
-                    <!-- Panel Dropdown 
-                    <div class="panel-dropdown">
-                        <a href="#">Precio Mínimo</a>
-                        <div class="panel-dropdown-content">
-                            <input class="distance-radius" type="range" min="1" :max="precioMax" step="1" value="0" data-title="Precio Mínimo">
-                            <div class="panel-buttons">
-                                <button class="panel-cancel">Cancelar</button>
-                                <button class="panel-apply">Aplicar</button>
+                        <div class="row padding-top-10">
+                            <!-- Filters -->
+                            <div class="col-fs-12">
+                                <!-- Panel Dropdown -->
+                                <div class="panel-dropdown wide">
+                                    <a href="#">Servicios</a>
+                                    <div class="panel-dropdown-content checkboxes">
+
+                                        <!-- Checkboxes -->
+                                        <div class="row">
+                                            <div v-for=" servicio in listaServicios">
+                                                <input :id="servicio.nombre" type="checkbox" name="check">
+                                                <label :for="servicio.nombre">{{servicio.nombre}}</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Buttons -->
+                                        <div class="panel-buttons">
+                                            <button class="panel-cancel">Cancelar</button>
+                                            <button v-on:click="filtroServicio()" class="panel-apply">Aplicar</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- Panel Dropdown / End -->
+
+                                <!-- Panel Dropdown -->
+                                <div class="panel-dropdown">
+                                    <a href="#">Precio</a>
+                                    <div class="panel-dropdown-content">
+                                        <div class="row">
+                                            <label class="col-md-2 col-xs-6 margin-top-10">Desde:</label>
+                                            <input class="inp" type="number" style=" float: left;" placeholder="Desde"
+                                                   v-model="precioDesde">
+                                            <label class="col-md-2 col-xs-6 col-md-offset-1 margin-top-10">Hasta:</label>
+                                            <input class="inp" type="number" style=" float: left;" placeholder="Hasta"
+                                                   v-model="precioHasta">
+                                        </div>
+                                        <div class="panel-buttons">
+                                            <button class="panel-cancel">Cancelar</button>
+                                            <button v-on:click="filtrarPrecio()" class="panel-apply">Aplicar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Panel Dropdown / End -->
+                                <!-- Panel Dropdown 
+                                <div class="panel-dropdown">
+                                    <a href="#">Precio Mínimo</a>
+                                    <div class="panel-dropdown-content">
+                                        <input class="distance-radius" type="range" min="1" :max="precioMax" step="1" value="0" data-title="Precio Mínimo">
+                                        <div class="panel-buttons">
+                                            <button class="panel-cancel">Cancelar</button>
+                                            <button class="panel-apply">Aplicar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Panel Dropdown / End -->
+
+>>>>>>> master
                             </div>
+                            <!-- Filters / End -->
                         </div>
-                    </div>
-                    <!-- Panel Dropdown / End -->
 
-                </div>
-                <!-- Filters / End -->
-            </div>
+                    </section>
+                    <!-- Search / End -->
+                    <section class="listings-container margin-top-30">
+                        <!-- Sorting / Layout Switcher -->
+                        <div class="row fs-switcher">
 
-        </section>
-        <!-- Search / End -->
-        <section class="listings-container margin-top-30">
-            <!-- Sorting / Layout Switcher -->
-            <div class="row fs-switcher">
+                            <div class="col-md-6">
+                                <!-- Showing Results -->
+                                <p class="showing-results">{{ encontrados }}</p>
+                            </div>
 
-                <div class="col-md-6">
-                    <!-- Showing Results -->
-                    <p class="showing-results">{{ encontrados }}</p>
-                </div>
+                        </div>
+                        <!-- Listings -->
+                        <div class="row fs-listings">
+                            <!-- Listing Item -->
+                            <div v-for="(item,n) in items" :id="item.id" class="col-lg-6 col-md-12">
 
-            </div>
-            <!-- Listings -->
-            <div class="row fs-listings">
-                <!-- Listing Item -->
-                <div v-for="(item,n) in items" :id="item.id" class="col-lg-6 col-md-12">
-                
-                    <a :href="'/views/cuidadores/cuidadores-perfil.html?id=' + item.id 
+                                <a :href="'/views/cuidadores/cuidadores-perfil.html?id=' + item.id 
                     + getDatesUrl()" class="listing-item-container" :data-marker-id=n+1>
-                        <div class="listing-item">
+                                    <div class="listing-item">
 
+                                        <img :src="item.listaImagenes[0].url" alt="">
+
+                                        <!--<div class="listing-badge now-open">Destacado</div>-->
+
+                                        <div class="listing-item-content">
+                                            <!--<span class="tag">{{item.user.direccion.calle}}, {{item.user.direccion.provincia}} </span>-->
+                                            <h3>{{item.user.fullName}}</h3>
+                                            <span> $ {{item.precioPorNoche}} por Noche</span>
+                                        </div>
+                                        <!--<span class="like-icon"></span>-->
+                                    </div>
+                                    <div class="star-rating" data-rating="5.0">
+                                        <div class="rating-counter">({{item.cantidadReviews}} reviews)</div>
+
+                                        <span v-for="n in item.promedioReviews" class="star"></span>
+                                        <span v-for="n in complemento(item.promedioReviews)" class="star empty"></span>
+
+<<<<<<< HEAD
                             <img :src="item.user.profileImageUrl" alt="">
+=======
+                                    </div>
+>>>>>>> master
 
-                            <div class="listing-badge now-open">Destacado</div>
+                                </a>
 
-                            <div class="listing-item-content">
-                                <span class="tag">{{item.user.direccion.calle}}, {{item.user.direccion.provincia}} </span>
-                                <h3>{{item.user.fullName}}</h3>
-                                <span> $ {{item.precioPorNoche}} por Noche</span>
                             </div>
-                            <span class="like-icon"></span>
+
+                            <!-- Listing Item / End -->
                         </div>
-                        <div class="star-rating" data-rating="1">
-                            <div class="rating-counter">(120 reviews)</div>
-                        </div>
-                    </a>
+                        <!-- Listings Container / End -->
+                    </section>
 
                 </div>
-                
-                <!-- Listing Item / End -->
             </div>
-            <!-- Listings Container / End -->
-
-
-            <!-- Pagination Container -->
-            <div class="row fs-listings">
-                <div class="col-md-12">
-
-                    <!-- Pagination -->
-                    <div class="clearfix"></div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <!-- Pagination -->
-                            <div class="pagination-container margin-top-15 margin-bottom-40">
-                                <nav class="pagination">
-                                    <ul>
-                                        <li><a href="#" class="current-page">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
+            <div class="fs-inner-container map-fixed">
+                <!-- Map -->
+                <div id="map-container">
+                    <div id="map" data-map-zoom="9" data-map-scroll="true">
+                        <!-- map goes here -->
                     </div>
-                    <div class="clearfix"></div>
-                    <!-- Pagination / End -->
-
-                    <!-- Copyrights -->
-                    <div class="copyrights margin-top-0">© 2017 Pupi. Todos los derechos reservados.</div>
-
                 </div>
             </div>
-            <!-- Pagination Container / End -->
-        </section>
-
-    </div>
-</div>
-<div class="fs-inner-container map-fixed">
-    <!-- Map -->
-    <div id="map-container">
-        <div id="map" data-map-zoom="9" data-map-scroll="true">
-            <!-- map goes here -->
         </div>
-    </div>
-</div>
-</div>
-`,
+    `,
     data: function () {
         return {
             autocomplete: null,
@@ -187,7 +215,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             dateTo: null,
             isIndex: false,
             precioMax: 0,
-            listaServicios:null,
+            listaServicios: null,
             precioDesde: null,
             precioHasta: null,
             markers:[],
@@ -380,11 +408,11 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             }
 
         },
-        clearMarkers(){
-            for(var i=0; i<this.markers.length; i++){
+        clearMarkers() {
+            for (var i = 0; i < this.markers.length; i++) {
                 this.markers[i].setMap(null);
             }
-            this.markers=[];
+            this.markers = [];
         },
         filtrarPrecio() {
             this.items = [];
@@ -444,7 +472,6 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                         this.items=itemsFiltrar;
                     }
                 }
-
                 this.calcularEncontrados();
         },
         filtrarServicio(){
@@ -492,6 +519,9 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             }
 
         },
+        filtrar(){
+
+        },
         calcularEncontrados() {
             this.encontrados = this.items.length;
             if (this.items.length === 1) {
@@ -508,6 +538,9 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 }
             }
             return "";
+        },
+        complemento: function (promedioReviews) {
+            return 5 - promedioReviews
         }
     }
 });
