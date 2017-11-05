@@ -38,7 +38,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                             <!-- Buttons -->
                             <div class="panel-buttons">
                                 <button class="panel-cancel">Cancelar</button>
-                                <button v-on:click="filtrarServicio()" class="panel-apply">Aplicar</button>
+                                <button v-on:click="filtrar()" class="panel-apply">Aplicar</button>
                             </div>
 
                         </div>
@@ -57,7 +57,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                             </div>
                             <div class="panel-buttons">
                                 <button class="panel-cancel">Cancelar</button>
-                                <button v-on:click="filtrarPrecio()" class="panel-apply">Aplicar</button>
+                                <button v-on:click="filtrar()" class="panel-apply">Aplicar</button>
                             </div>
                         </div>
                     </div>
@@ -100,7 +100,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                     + getDatesUrl()" class="listing-item-container" :data-marker-id=n+1>
                         <div class="listing-item">
 
-                            <img :src="item.listaImagenes[0].url" alt="">
+                            <img :src="item.user.profileImageUrl" alt="">
 
                             <div class="listing-badge now-open">Destacado</div>
 
@@ -148,7 +148,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                     <!-- Pagination / End -->
 
                     <!-- Copyrights -->
-                    <div class="copyrights margin-top-0">© 2017 Listeo. All Rights Reserved.</div>
+                    <div class="copyrights margin-top-0">© 2017 Pupi. Todos los derechos reservados.</div>
 
                 </div>
             </div>
