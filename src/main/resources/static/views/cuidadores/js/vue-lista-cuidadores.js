@@ -51,9 +51,9 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                         <div class="panel-dropdown-content">
                             <div class="row">
                                 <label class="col-md-2 col-xs-6 margin-top-10">Desde:</label>
-                                <input class="inp" type="number" style=" float: left;" placeholder="Desde" v-model="precioDesde">
+                                <input class="inp" type="number" min="0" max="10000" style=" float: left;" placeholder="Desde" v-model="precioDesde">
                                 <label class="col-md-2 col-xs-6 col-md-offset-1 margin-top-10">Hasta:</label>
-                                <input class="inp" type="number" style=" float: left;" placeholder="Hasta" v-model="precioHasta">
+                                <input class="inp" type="number" min="0" max="10000" style=" float: left;" placeholder="Hasta" v-model="precioHasta">
                             </div>
                             <div class="panel-buttons">
                                 <button class="panel-cancel">Cancelar</button>
@@ -192,6 +192,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             precioHasta: null,
             markers:[],
             checkedServicios:[],
+            filtroServicioAnterior:0,
         }
     },
     mounted() {
@@ -294,79 +295,87 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
         //añade los marcadores al mapa
         mostrarEnMapa() {
             this.clearMarkers();
-            if (this.items != null && this.items.length > 0) {
-                if (this.items.length > 1) {
-                    var bounds = new google.maps.LatLngBounds();
-                    for (item of this.items) {
-                        var marker = new google.maps.Circle({
-                            strokeColor: '#FF0000',
-                            strokeOpacity: 0.8,
-                            strokeWeight: 2,
-                            fillColor: '#FF0000',
-                            fillOpacity: 0.35,
-                            map: this.map,
-                            center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
-                            radius: 300,
-                        });
+            if (this.items != null) {
+                if (this.items.length > 0) {
+                    if (this.items.length > 1) {
+                        var bounds = new google.maps.LatLngBounds();
+                        for (item of this.items) {
+                            var marker = new google.maps.Circle({
+                                strokeColor: '#FF0000',
+                                strokeOpacity: 0.8,
+                                strokeWeight: 2,
+                                fillColor: '#FF0000',
+                                fillOpacity: 0.35,
+                                map: this.map,
+                                center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
+                                radius: 300,
+                            });
+                            //extend the bounds to include each marker's position
+                            var id = item.id;
 
-                        //extend the bounds to include each marker's position
-                        var id = item.id;
-                        var content =
-                            '<div id="bodyContent">' +
-                            '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
-                            '<h4>' + item.user.fullName + '</h4></a> ' +
-                            '</div>';
-                        var infowindow = new google.maps.InfoWindow();
-                        google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
-                            return function () {
-                                infowindow.setContent(content);
-                                infowindow.setPosition(marker.getCenter());
-                                infowindow.open(this.map, marker);
+                            var content =
+                                '<div id="bodyContent">' +
+                                '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
+                                '<h4>' + item.user.fullName + '</h4></a> ' +
+                                '</div>';
+                            var infowindow = new google.maps.InfoWindow();
+                            google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
+                                return function () {
+                                    infowindow.setContent(content);
+                                    infowindow.setPosition(marker.getCenter());
+                                    infowindow.open(this.map, marker);
 
-                            };
-                        })(marker, content, infowindow));
+                                };
+                            })(marker, content, infowindow));
+                            bounds.extend(marker.center);
 
-                        bounds.extend(marker.center);
-                        this.markers.push(marker);
+                            this.markers.push(marker);
+                        }
+                        //now fit the map to the newly inclusive bounds
+                        this.map.fitBounds(bounds);
+
+                    } else {
+
+                        for (item of this.items) {
+                            var marker = new google.maps.Circle({
+                                strokeColor: '#FF0000',
+                                strokeOpacity: 0.8,
+                                strokeWeight: 2,
+                                fillColor: '#FF0000',
+                                fillOpacity: 0.35,
+                                map: this.map,
+                                center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
+                                radius: 300,
+                            });
+                            //extend the bounds to include each marker's position
+                            var id = item.id;
+
+                            var content =
+                                '<div id="bodyContent">' +
+                                '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
+                                '<h4>' + item.user.fullName + '</h4></a> ' +
+                                '</div>';
+                            var infowindow = new google.maps.InfoWindow();
+                            google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
+                                return function () {
+                                    infowindow.setContent(content);
+                                    infowindow.setPosition(marker.getCenter());
+                                    infowindow.open(this.map, marker);
+
+                                };
+                            })(marker, content, infowindow));
+                            this.markers.push(marker);
+                            var centro = new google.maps.LatLng(this.placeLat, this.placeLng);
+                            this.map.setCenter(centro);
+                            this.map.setZoom(12);
+                        }
                     }
-
-                    //now fit the map to the newly inclusive bounds
-                    this.map.fitBounds(bounds);
-
-                } else {
-                    for (item of this.items) {
-                        var marker = new google.maps.Circle({
-                            strokeColor: '#FF0000',
-                            strokeOpacity: 0.8,
-                            strokeWeight: 2,
-                            fillColor: '#FF0000',
-                            fillOpacity: 0.35,
-                            map: this.map,
-                            center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
-                            radius: 300,
-                        });
-
-                        //extend the bounds to include each marker's position
-                        var id = item.id;
-                        var content =
-                            '<div id="bodyContent">' +
-                            '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
-                            '<h4>' + item.user.fullName + '</h4></a> ' +
-                            '</div>';
-                        var infowindow = new google.maps.InfoWindow();
-                        google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
-                            return function () {
-                                infowindow.setContent(content);
-                                infowindow.setPosition(marker.getCenter());
-                                infowindow.open(this.map, marker);
-
-                            };
-                        })(marker, content, infowindow));
-                        this.markers.push(marker);
-                        var centro = new google.maps.LatLng(this.placeLat, this.placeLng);
-                        this.map.setCenter(centro);
-                        this.map.setZoom(12);
-                    }
+                }else{
+                    this.placeLat = this.getParameterByName('lat');
+                    this.placeLng = this.getParameterByName('lng');
+                    var centro = new google.maps.LatLng(this.placeLat, this.placeLng);
+                    this.map.setCenter(centro);
+                    this.map.setZoom(12);
                 }
             }
 
@@ -379,55 +388,64 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
         },
         filtrarPrecio() {
             this.items = [];
-            console.log(this.precioDesde);
-            if(!this.precioDesde&&!this.precioHasta){
-                if(!this.itemsConFiltroServicio || this.itemsConFiltroServicio.length==0){
+            var itemsFiltrar=[];
+            this.itemsConFiltroPrecio=[];
+            if(this.checkedServicios && this.checkedServicios.length>0){
+                itemsFiltrar=this.itemsConFiltroServicio;
+            }else{
+                console.log("sin filtro");
+                itemsFiltrar=this.itemsSinFiltro;
+            }
+            /*//no hay filtro a aplicar...
+            if(!this.precioDesde && !this. precioHasta){
+                //si hay filtro de servicios
+                if(this.itemsConFiltroServicio && this.itemsConFiltroServicio.length>0){
+                    this.items=this.itemsConFiltroServicio;
+                }else{
+                    this.items=this.itemsSinFiltro;
+                }
+                this.calcularEncontrados();
+            }else{
+                //si hay filtro de servicios
+                if(this.itemsConFiltroServicio && this.itemsConFiltroServicio.length>0){
                     itemsFiltrar=this.itemsConFiltroServicio;
                 }else{
                     itemsFiltrar=this.itemsSinFiltro;
-                }
-                this.itemsConFiltroPrecio=[];
-                this.calcularEncontrados();
-            }
-            console.log(this.items);
-            var itemsFiltrar=[];
-            console.log(this.itemsConFiltroServicio.length);
-            if(this.itemsConFiltroServicio && this.itemsConFiltroServicio.length>0){
-                console.log("entre filtro serivcio");
-                itemsFiltrar=this.itemsConFiltroServicio;
-            }else{
-                itemsFiltrar=this.itemsSinFiltro;
-            }
-            if (this.precioHasta) {
-                if (this.precioDesde) {
-                    for (var i = 0; i < itemsFiltrar.length; i++) {
-                        if (itemsFiltrar[i].precioPorNoche >= this.precioDesde && itemsFiltrar[i].precioPorNoche <= this.precioHasta) {
-                            this.items.push(itemsFiltrar[i]);
+                }*/
+                if (this.precioHasta) {
+                    if (this.precioDesde) {
+                        //console.log(Number(this.precioDesde)>Number(this.precioHasta));
+                        if(Number(this.precioDesde)>Number(this.precioHasta)){
+                            this.items=[];
+                        }else{
+                            for (var i = 0; i < itemsFiltrar.length; i++) {
+                                if (itemsFiltrar[i].precioPorNoche >= this.precioDesde && itemsFiltrar[i].precioPorNoche <= this.precioHasta) {
+                                    this.items.push(itemsFiltrar[i]);
+                                }
+                            }
                         }
-
-                    }
-                    //this.calcularEncontrados();
-                } else {
-                    for (var i = 0; i < itemsFiltrar.length; i++) {
-                        if (itemsFiltrar[i].precioPorNoche <= this.precioHasta) {
-                            this.items.push(itemsFiltrar[i]);
+                    } else {
+                        for (var i = 0; i < itemsFiltrar.length; i++) {
+                            if (itemsFiltrar[i].precioPorNoche <= this.precioHasta) {
+                                this.items.push(itemsFiltrar[i]);
+                            }
                         }
                     }
-                    //this.calcularEncontrados();
-                }
-                this.itemsConFiltroPrecio=this.items;
-            }else{
-                if(this.precioDesde){
-                    for (var i = 0; i < itemsFiltrar.length; i++) {
-                        if (itemsFiltrar[i].precioPorNoche >= this.precioDesde) {
-                            this.items.push(itemsFiltrar[i]);
-                        }
-                    }
-                    //this.calcularEncontrados();
                     this.itemsConFiltroPrecio=this.items;
+                }else{
+                    if(this.precioDesde){
+                        for (var i = 0; i < itemsFiltrar.length; i++) {
+                            if (itemsFiltrar[i].precioPorNoche >= this.precioDesde) {
+                                this.items.push(itemsFiltrar[i]);
+                            }
+                        }
+                        this.itemsConFiltroPrecio=this.items;
+                    }else{
+                        this.items=itemsFiltrar;
+                    }
                 }
-            }
-            this.calcularEncontrados();
+
+                this.calcularEncontrados();
         },
         filtrarServicio(){
             if(!this.itemsConFiltroPrecio || this.itemsConFiltroPrecio.length==0){
@@ -437,30 +455,31 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
             }
             console.log(this.items);
-            this.itemsPantalla=this.items;
+            var itemsFiltrar = this.items;
             this.items=[];
             var tieneServicio=[];
             if(this.checkedServicios && this.checkedServicios.length>0){
                 this.itemsConFiltroServicio=[];
-                for(var i=0;i<this.itemsPantalla.length;i++){
+                for(var i=0;i<itemsFiltrar.length;i++){
                     tieneServicio=[];
-                    for(var j=0;j<this.itemsPantalla[i].listaServicios.length;j++){
+                    for(var j=0;j<itemsFiltrar[i].listaServicios.length;j++){
                         for(var k=0;k<this.checkedServicios.length;k++){
-                            if(this.itemsPantalla[i].listaServicios[j].id==this.checkedServicios[k]){
+                            if(itemsFiltrar[i].listaServicios[j].id==this.checkedServicios[k]){
                                 tieneServicio.push(true);
                                 console.log("matcheo");
-                                //break;
+                                break;
                             }
                         }
                     }
                     if(tieneServicio.length==this.checkedServicios.length) {
-                        this.items.push(this.itemsPantalla[i]);
+                        this.items.push(itemsFiltrar[i]);
                     }
                 }
                 this.itemsConFiltroServicio=this.items;
                 this.calcularEncontrados();
             }else{
-                console.log(this.itemsConFiltroPrecio);
+                this.filtrarPrecio();
+/*
                 if(!this.itemsConFiltroPrecio || this.itemsConFiltroPrecio.length==0){
                     this.items=this.itemsSinFiltro;
                 }else{
@@ -468,7 +487,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                 }
                 this.itemsConFiltroServicio=[];
-                this.calcularEncontrados();
+                this.calcularEncontrados();*/
 
             }
 
