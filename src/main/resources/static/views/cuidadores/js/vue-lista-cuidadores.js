@@ -27,16 +27,18 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                             <!-- Checkboxes -->
                             <div class="row">
+                                <!--<input id="check-1" type="checkbox" name="check" class="all">
+                                <label for="check-1">Todos</label>-->
                                 <div v-for =" servicio in listaServicios">
-                                    <input :id="servicio.nombre" type="checkbox" name="check">
-                                    <label :for="servicio.nombre">{{servicio.nombre}}</label>
+                                    <input :id="servicio.id" type="checkbox" :value="servicio.id" name="check" v-model="checkedServicios">
+                                    <label :for="servicio.id">{{servicio.nombre}}</label>
                                 </div>    
                             </div>
 
                             <!-- Buttons -->
                             <div class="panel-buttons">
                                 <button class="panel-cancel">Cancelar</button>
-                                <button v-on:click="filtroServicio()" class="panel-apply">Aplicar</button>
+                                <button v-on:click="filtrarServicio()" class="panel-apply">Aplicar</button>
                             </div>
 
                         </div>
@@ -172,6 +174,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             encontrados: 'Resultados',
             items: [],
             itemsSinFiltro:[],
+            itemsPantalla:[],
             formPost: true,
             map: null,
             placeID: null,
@@ -187,6 +190,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             precioDesde: null,
             precioHasta: null,
             markers:[],
+            checkedServicios:[],
         }
     },
     mounted() {
@@ -373,6 +377,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             this.markers=[];
         },
         filtrarPrecio() {
+
             this.items = [];
             if(!this.precioDesde&&!this.precioHasta){
                 this.items=this.itemsSinFiltro;
@@ -408,6 +413,39 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                     console.log("precio desde")
                 }
             }
+        },
+        filtrarServicio(){
+            console.log(this.checkedServicios);
+            this.itemsPantalla=this.items;
+            this.items=[];
+            var tieneServicio=[];
+            console.log(this.checkedServicios);
+            if(this.checkedServicios && this.checkedServicios.length>0){
+
+                for(var i=0;i<this.itemsPantalla.length;i++){
+                    tieneServicio=[];
+                    for(var j=0;j<this.itemsPantalla[i].listaServicios.length;j++){
+                        for(var k=0;k<this.checkedServicios.length;k++){
+                            if(this.itemsPantalla[i].listaServicios[j].id==this.checkedServicios[k]){
+                                tieneServicio.push(true);
+                                console.log("matcheo");
+                                //break;
+                            }
+                        }
+                    }
+                    if(tieneServicio.length==this.checkedServicios.length) {
+                        this.items.push(this.itemsPantalla[i]);
+                    }
+                    console.log(i);
+                }
+                this.calcularEncontrados();
+            }else{
+
+                this.items=this.itemsSinFiltro;
+                this.calcularEncontrados();
+
+            }
+
         },
         calcularEncontrados() {
             this.encontrados = this.items.length;
