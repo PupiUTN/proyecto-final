@@ -17,9 +17,19 @@
     <link rel="stylesheet" href="/views/layout/vue-navbar.css">
 
     <!--<script src="/js/pace.min.js"></script>-->
-    <link href="/css/pace-theme.css" rel="stylesheet"/>
+    <link href="/css/page-loader.css" rel="stylesheet"/>
 
 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74104605-6"></script>
+    <script>  window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('send', {hitType: 'pageview', page: location.pathname});
+    gtag('config', 'UA-74104605-6');</script>
 </head>
 
 <body>
@@ -56,7 +66,7 @@
 <script type="text/javascript" src="/views/security/js/vue-login.js"></script>
 <script type="text/javascript" src="/views/dashboard/js/vue-header.js"></script>
 <script type="text/javascript" src="/views/dashboard/js/vue-sidebar.js"></script>
-<script type="text/javascript" src="/views/dashboard/js/vue-dashboard.js"></script>
+<script type="text/javascript" src="/views/dashboard/js/vue-dashboard-template.js"></script>
 <script src="js/vue-main-dashboard.js"></script>
 
 <script>

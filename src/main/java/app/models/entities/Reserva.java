@@ -5,6 +5,8 @@
  */
 package app.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -18,7 +20,7 @@ public class Reserva implements Serializable {
     private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
     private Date fechaTransaccion;
     @ManyToOne
     @NotNull
@@ -27,10 +29,12 @@ public class Reserva implements Serializable {
     @NotNull
     private Perro perro;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.DATE)
     @NotNull
     private Date fechaInicio;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.DATE)
     @NotNull
     private Date fechaFin;

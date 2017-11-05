@@ -50,6 +50,7 @@ public class User implements Serializable {
 
     private String phone;
 
+    private String status;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Direccion direccion;
@@ -158,6 +159,14 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

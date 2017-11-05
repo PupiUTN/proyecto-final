@@ -37,10 +37,13 @@ Vue.component('my-reservas-user-list', {
                                             <p ><b>Perro: </b> {{ reserva.perro.nombre}}</p>
                                         </div>
                                         <div class="col-xs-12 col-md-1">
+                                            <p><b>Precio</b> </br>{{ reserva.precioTotal }} $</p>
+                                        </div>
+                                        <div class="col-xs-12 col-md-1">
                                             <p><b>Desde</b> </br>{{ reserva.fechaFin }}</p>
                                         </div>
                                         <div class="col-xs-12 col-md-1">
-                                            <p><b> Hasta </b> </br> {{ reserva.fechaFin }}</p>
+                                            <p><b> Hasta</b> </br> {{ reserva.fechaFin }}</p>
                                         </div>
                                         <div class="col-xs-12 col-md-3" v-if="reserva.status === 'CONFIRMATION_PENDING'">
                                             <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
@@ -48,11 +51,15 @@ Vue.component('my-reservas-user-list', {
                                         <div class="col-xs-12 col-md-3" v-if="reserva.status === 'PAYMENT_PENDING'">
                                             <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Pagar</a>
                                         </div>
-
+                                         <div class="col-xs-12 col-md-6" v-if="reserva.status === 'PAID'">
+                                            <a v-on:click="verDetalleCompletoButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6" v-if="reserva.status === 'ACCEPTED'">
+                                            <mercadopago :reserva="reserva"></mercadopago>
+                                        </div>
                                     </div>
                                 </div>
-                            </a>
-                                
+                            </a>                                                                          
                         </li>
 					 </ul>
 				</div>
@@ -64,30 +71,7 @@ Vue.component('my-reservas-user-list', {
     data:
         function () {
             return {
-                reservas: [
-                    {
-                        id: null,
-                        cuidador: {
-                            user: {
-                                fullName: '',
-                                direccion: {
-                                    calle: '',
-                                    ciudad: '',
-                                }
-                            },
-                            listaImagenes: [
-                                {
-                                    url: ""
-                                }
-                            ]
-                        },
-                        perro: {},
-                        fechaInicio: "",
-                        fechaFin: "",
-                        precioTotal: 1,
-                        status: 0
-                    }
-                ],
+                reservas: [],
                 mensaje: null,
                 cuidadorProfileUrl: '/views/cuidadores/cuidadores-perfil.html?id=',
                 status: null,
@@ -147,6 +131,10 @@ Vue.component('my-reservas-user-list', {
                     vm.$refs.myReservasUserList.$refs.currentView.cancelarReserva(index)
                 });
         },
+        verDetalleCompletoButton(index) {
+            var id = this.reservas[index].id;
+            document.location.href = "/views/reserva/detalle-reserva-completo.html?id=" + id;
+        },
         getParameterByName(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
             var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -165,17 +153,23 @@ Vue.component('my-reservas-user-list', {
             if (this.status == 'ACCEPTED') {
                 return 'Confirmadas'
             }
+            if (this.status == 'PAID') {
+                return 'Pagadas'
+            }
             return 'Error'
         },
         listClass: function () {
             if (this.status == 'CONFIRMATION_PENDING') {
-                return 'col-xs-12 col-md-7'
+                return 'col-xs-12 col-md-6'
             }
             if (this.status == 'CANCEL_BY_USER') {
-                return 'col-xs-12 col-md-10'
+                return 'col-xs-12 col-md-9'
             }
             if (this.status == 'ACCEPTED') {
-                return 'col-xs-12 col-md-10'
+                return 'col-xs-12 col-md-9'
+            }
+            if (this.status == 'PAID') {
+                return 'col-xs-12 col-md-9'
             }
         },
         listColor: function () {
@@ -187,6 +181,10 @@ Vue.component('my-reservas-user-list', {
             }
             if (this.status == 'ACCEPTED') {
                 return 'background: rgba(255, 255, 0, 0.15); margin-bottom: 10px;'
+
+            }
+            if (this.status == 'PAID') {
+                return 'background: rgba(0,0,255,0.3); margin-bottom: 10px;'
 
             }
         }

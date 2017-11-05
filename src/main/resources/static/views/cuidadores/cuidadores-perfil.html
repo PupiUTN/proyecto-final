@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<head xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
 
     <!-- Basic Page Needs
     ================================================== -->
@@ -12,305 +12,33 @@
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
 
-    <link href="/css/pace-theme.css" rel="stylesheet"/>
+    <link href="/css/page-loader.css" rel="stylesheet"/>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74104605-6"></script>
+    <script>  window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('send', {hitType: 'pageview', page: location.pathname});
+    gtag('config', 'UA-74104605-6');</script>
 
 </head>
 
-<body xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<body>
+<!-- Wrapper -->
 <!-- Wrapper -->
 <div id="wrapper">
-    <div id="page-loader"></div>
-    <div id="appVue">
 
-        <!-- Header Container
-        ================================================== -->
-        <my-navbar></my-navbar>
-        <!-- Header Container / End -->
 
-        <!--<div class="row" >-->
+    <my-app current-view="my-cuidador-perfil"></my-app>
 
 
-        <!-- Slider
-        ================================================== -->
-        <div class="listing-slider mfp-gallery-container margin-bottom-0" id="ContenedorImagen">
-
-            <!--<img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg0" />
-
-            <img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg1" />
-
-            <img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg2" />
-
-            <img  class="item mfp-gallery"  src="/assets/images/logo.png" id="myImg3" />-->
-
-
-        </div>
-
-
-        <!-- Content
-        ================================================== -->
-        <div class="container">
-            <div class="row sticky-wrapper">
-                <div class="col-lg-8 col-md-8 padding-right-30">
-
-                    <!-- Titlebar -->
-                    <div id="titlebar" class="listing-titlebar">
-                        <div class="avatar"><img id="imagenAvatar" src="/img/logo.png" alt=""/>
-                        </div>
-                        <div class="listing-titlebar-title">
-
-
-                            <h2 style="margin-left: 100px;" id="nombre"> {{item.user.fullName}} <span
-                                    class="listing-tag">Cuidador</span></h2>
-
-                            <div class="card-image col s3 ">
-
-                            </div>
-
-                            <input type="hidden" value="" name="test">
-                            <span>
-
-							<a style=" margin-left: 100px;" href="#listing-location" class="listing-address">
-							<i class="fa fa-map-marker"></i>
-
-              				{{item.ciudad}}
-						</a>
-						<br>
-						<br>
-							<i class="fa fa-paw"></i>
-							Cantidad maxima de perros: {{item.cantidadMaxDePerros}}
-
-					</span>
-                            <div class="star-rating" data-rating="5">
-                                <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Listing Nav -->
-                    <div id="listing-nav" class="listing-nav-container">
-                        <ul class="listing-nav">
-                            <li><a href="#listing-overview" class="active">Sobre mi </a></li>
-                            <li><a href="#listing-pricing-list">Precios</a></li>
-                            <li><a href="#listing-location">Donde estoy </a></li>
-                            <li><a href="#listing-reviews">Reviews</a></li>
-                            <!--<li><a href="#add-review">Agrega una  Review</a></li>-->
-                        </ul>
-                    </div>
-
-                    <!-- Overview -->
-                    <div id="listing-overview" class="listing-section">
-
-                        <!-- Description -->
-
-                        <p>
-                            <label>{{item.descripcion}}</label>
-
-                            <!--Soy el chico ideal para tu compañia, nada me agradara mas que poder jugar contigo y con tu dueña ( si esta buena )-->
-                        </p>
-
-                        <!-- Amenities -->
-                        <h3 class="listing-desc-headline">Servicios y Restricciones</h3>
-                        <ul v-for=" servicio in item.listaServicios" class="listing-features checkboxes margin-top-0"
-                            style="">
-                            <li style="width: 790px;"> {{servicio.nombre}}</li>
-
-                        </ul>
-                    </div>
-
-
-                    <!-- Food Menu -->
-                    <div id="listing-pricing-list" class="listing-section">
-                        <h3 class="listing-desc-headline margin-top-70 margin-bottom-30">Precios</h3>
-
-                        <div class="show-more">
-                            <div class="pricing-list-container">
-
-                                <!-- Food List -->
-                                <h4>Estadía</h4>
-                                <ul>
-                                    <li>
-                                        <h5>Por día</h5>
-                                        <p>servicio por día</p>
-                                        <span style="color: forestgreen; font-size: x-large;"> <b>$ {{item.precioPorNoche}}</b></span>
-                                    </li>
-
-
-                                </ul>
-
-                            </div>
-                        </div>
-                        <!--<a href="#" class="show-more-button" data-more-title="Show More" data-less-title="Show Less"><i class="fa fa-angle-down"></i></a>-->
-                    </div>
-                    <!-- Food Menu / End -->
-
-
-                    <!-- Location -->
-                    <div id="listing-location" class="listing-section">
-                        <h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Donde estoy</h3>
-
-                        <div id="singleListingMap-container">
-                            <div id="singleListingMap" data-map-icon="im im-icon-Hamburger"></div>
-
-                        </div>
-                    </div>
-
-                    <!-- Reviews -->
-
-
-                </div>
-
-
-                <!-- Sidebar
-                ================================================== -->
-                <div class="col-lg-4 col-md-4 margin-top-75 sticky" style="position:relative;">
-
-                    <!-- Book Now -->
-                    <div class="boxed-widget">
-                        <h3><i class="fa fa-calendar-check-o "></i> Fechas de Reserva </h3>
-                        <div class="row with-forms  margin-top-0">
-
-                            <div class="col-lg-6 col-md-12">
-                                <label style=" margin-top: 12px;">Entrada </label>
-                            </div>
-
-                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-                            <div class="col-lg-6 col-md-12">
-                                <input type="text" v-model="fechaReservaDesde" data-format=" Y-m-d" id="booking-date"
-                                       data-lang="es" data-init-set="false"
-                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
-                                       data-max-year="2020" data-lock="from">
-                            </div>
-
-                        </div>
-                        <div class="row with-forms  margin-top-0">
-
-                            <div class="col-lg-6 col-md-12">
-                                <label style=" margin-top: 12px;">Salida </label>
-                            </div>
-                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-                            <div class="col-lg-6 col-md-12">
-
-                                <input type="text" v-model="fechaReservaHasta"
-                                       style="text-align: center; font-size: 16px; font-weight: 600" data-format="Y-m-d"
-                                       id="booking-date2" data-lang="es"
-                                       data-init-set="false"
-                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
-                                       data-max-year="2020" data-lock="from">
-                            </div>
-
-
-                        </div>
-                        <!-- progress button animation handled via custom.js -->
-                        <button class="progress-button button fullwidth margin-top-5" v-on:click="hrerReserva"><span>Reservá ahora </span>
-                        </button>
-                    </div>
-                    <!-- Book Now / End -->
-
-
-                    <div class="boxed-widget opening-hours margin-top-35">
-
-                        <h3><i class="im im-icon-Dog"></i> Preferencias de tamaños </h3>
-                        <div class="col-lg-6 col-md-5" style="width: 80px;">
-                            <label style=" margin-top: 12px; width: 60px;">Hasta</label>
-                        </div>
-
-
-                        <div class="col-lg-6 col-md-12">
-                            <img id="imgTamañoPerro" alt="">
-                            <label style=" margin-left: 30px;"> {{item.tamaño}} </label>
-                        </div>
-
-
-                    </div>
-
-
-                    <!-- Share / Like -->
-                    <div class="listing-share margin-top-40 margin-bottom-40 no-border">
-
-
-                        <!-- Share Buttons -->
-                        <ul class="share-buttons margin-top-40 margin-bottom-0">
-                            <li><a class="fb-share" href="#"><i class="fa fa-facebook"></i> Share</a></li>
-                            <li><a class="twitter-share" href="#"><i class="fa fa-twitter"></i> Tweet</a></li>
-                            <li><a class="gplus-share" href="#"><i class="fa fa-google-plus"></i> Share</a></li>
-                            <!-- <li><a class="pinterest-share" href="#"><i class="fa fa-pinterest-p"></i> Pin</a></li> -->
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-
-                </div>
-                <!-- Sidebar / End -->
-
-            </div>
-        </div>
-
-
-        <!-- Footer
-        ================================================== -->
-        <div id="footer" class="margin-top-15">
-            <!-- Main -->
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-5 col-sm-6">
-                        <img class="footer-logo" src="/assets/images/logo.png" alt="">
-                        <br><br>
-                        <p> Olvidate de la perrera! Pupi es el principal servicio en línea que conecta a los dueños de
-                            mascotas con más de 20,000 cuidadores de confianza en toda Argentina, haciendo que tu y tu
-                            amigo peludo tengan toda la tranquilidad que merecen.</p>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6 ">
-                        <h4>Helpful Links</h4>
-                        <ul class="footer-links">
-                            <li><a href="#">Login</a></li>
-                            <li><a href="#">Hazte Cuidador</a></li>
-                            <li><a href="#">Mi Cuenta</a></li>
-                            <li><a href="#">Terminos y condiciones de uso </a></li>
-                        </ul>
-
-                        <div class="clearfix"></div>
-                    </div>
-
-                    <div class="col-md-3  col-sm-12">
-                        <h4>Contactanos</h4>
-                        <div class="text-widget">
-                            <span>12345 evasio garrone</span> <br>
-                            Phone: <span>(351) 123-456 </span><br>
-                            E-Mail:<span> <a href="#">pupi@gmail.com</a> </span><br>
-                        </div>
-
-                        <ul class="social-icons margin-top-20">
-                            <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-                            <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
-                            <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
-                            <li><a class="vimeo" href="#"><i class="icon-vimeo"></i></a></li>
-                        </ul>
-
-                    </div>
-
-                </div>
-
-                <!-- Copyright -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="copyrights">© 2017 pupi. Todos los derechos reservados.</div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-        <!-- Footer / End -->
-
-
-        <!-- Back To Top Button -->
-        <div id="backtotop"><a href="#"></a></div>
-
-
-        <!--</div>-->
-        <!-- Wrapper / End -->
-    </div>
 </div>
+<!-- Wrapper / End -->
+
 
 <!-- Scripts
 ================================================== -->
@@ -328,9 +56,6 @@
 
 <!-- Maps -->
 
-<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-<link href="../../assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
-<script src="../../assets/scripts/datedropper.js"></script>
 
 <script src="/js/vue.js"></script>
 <script src="/js/axios.min.js"></script>
@@ -340,10 +65,29 @@
 <script type="text/javascript" src="/views/security/js/vue-login.js"></script>
 <link rel="stylesheet" href="/views/layout/vue-navbar.css">
 <script type="text/javascript" src="/views/layout/vue-navbar.js"></script>
-<script src="js/cuidadores-perfil/cuidadores-perfil.js"></script>
+<script type="text/javascript" src="/views/index/js/vue-app-template.js"></script>
+
+
+<!-- NEW DATE PICKER -->
+<link href="/css/hotel-datepicker.css" rel="stylesheet">
+<script src="/js/fecha.min.js"></script>
+<script src="/js/hotel-datepicker.min.js"></script>
+<script src="/views/buscar/vue-hotel-datepicker.js"></script>
+<style>
+    .datepicker {
+        position: relative !important;
+    }
+</style>
+
+<script src="js/cuidadores-perfil.js"></script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"></script>
 
+<script>
+    let vm = new Vue({
+        el: '#wrapper',
+    });
+</script>
 
 </body>
 </html>

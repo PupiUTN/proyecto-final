@@ -17,6 +17,16 @@
     <link rel="stylesheet" href="/views/layout/vue-navbar.css">
 
 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74104605-6"></script>
+    <script>  window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('send', {hitType: 'pageview', page: location.pathname});
+    gtag('config', 'UA-74104605-6');</script>
 </head>
 <!-- Wrapper -->
 
@@ -251,7 +261,7 @@
 
                         <div class="carousel-item">
 
-                            <div class="avatar2"><img src="/img/Gabi.jpeg" alt=""
+                            <div class="avatar2"><img src="../../img/Gabi.jpg" alt=""
                                                       style="  height: 300px;  width: 300px; "/>
                             </div>
                             <span class="tag"><h3 style="padding-left: 35px">Gabriel Lorenzatti</h3></span>
@@ -360,7 +370,6 @@
 <!-- Maps -->
 <script type="text/javascript"
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"></script>
-<script type="text/javascript" src="/views/index/js/index.js"></script>
 
 
 </body>
