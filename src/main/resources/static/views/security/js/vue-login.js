@@ -187,6 +187,8 @@ let myLogin = Vue.component('my-login', {
     },
     methods: {
         getUserProfile() {
+
+
             axios.get(this.meUrl)
                 .then((response) => {
                     console.log(response.data);
@@ -211,7 +213,7 @@ let myLogin = Vue.component('my-login', {
 
         },
         login() {
-
+            localStorage.setItem("pending", 1);
             this.loginLoading = true;
             axios.post(this.entryUrl, jQuery.param(this.credentials))
                 .then((response) => {
