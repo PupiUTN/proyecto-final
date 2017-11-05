@@ -5,6 +5,10 @@
  */
 package app.models.entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +17,9 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Tamaño implements Serializable {
 
     @Id
@@ -25,41 +32,6 @@ public class Tamaño implements Serializable {
     @NotNull
     private int valorMaximo;
 
-    //para jpa, necesito constructor vacio y todos los stegest y getters de cada atributo
-    public Tamaño() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getValorMinimo() {
-        return valorMinimo;
-    }
-
-    public void setValorMinimo(int valorMinimo) {
-        this.valorMinimo = valorMinimo;
-    }
-
-    public int getValorMaximo() {
-        return valorMaximo;
-    }
-
-    public void setValorMaximo(int valorMaximo) {
-        this.valorMaximo = valorMaximo;
-    }
 
     @Override
     public String toString() {

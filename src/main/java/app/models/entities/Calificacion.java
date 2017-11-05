@@ -5,10 +5,17 @@
  */
 package app.models.entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Calificacion implements Serializable {
 
     @Id
@@ -18,41 +25,5 @@ public class Calificacion implements Serializable {
     private String comentario;
     @ManyToOne
     private Reserva reserva;
-
-    //para jpa o jackson, necesito constructor vacio y todos los setters y getters de cada atributo
-    public Calificacion() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public int getPuntaje() {
-        return puntaje;
-    }
-
-    public void setPuntaje(int puntaje) {
-        this.puntaje = puntaje;
-    }
-
-    public String getComentario() {
-        return comentario;
-    }
-
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
-    }
-
-    public Reserva getReserva() {
-        return reserva;
-    }
-
-    public void setReserva(Reserva reserva) {
-        this.reserva = reserva;
-    }
 
 }

@@ -25,7 +25,7 @@ let myHeader = Vue.component('my-header', {
                         <!-- Main Navigation -->
 				        <nav id="navigation" class="style-1">
 					        <ul id="responsive">
-                                <li><a href="#">!</a>
+                                <li><div style="height: 42px;"> </div>
                                 </li>
 						    </ul>
 						</nav>
