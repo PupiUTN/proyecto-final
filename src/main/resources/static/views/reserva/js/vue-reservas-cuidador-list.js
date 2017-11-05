@@ -15,6 +15,12 @@ Vue.component('my-reservas-cuidador-list', {
               <div  v-if="status === 'ACCEPTED'">
                     <h2> Mis reservas Confirmadas</h2>                
              </div>
+               <div  v-if="status === 'PAID'">
+                    <h2> Mis reservas pagadas</h2>                
+             </div>
+               <div  v-if="status === 'finalizada'">
+                    <h2> Pendientes de Calificacion</h2>                
+             </div>
             
         </div>
     </div>

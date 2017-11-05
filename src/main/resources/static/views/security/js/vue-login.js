@@ -48,7 +48,7 @@ let myLogin = Vue.component('my-login', {
                 </div>
                 
                 <ul>
-                    <li><a href="/views/dashboard/dashboard.html"><i class="sl sl-icon-settings"></i> Mi cuenta</a></li>
+                    <li><a v-on:click="micuenta()" ><i class="sl sl-icon-settings"></i> Mi cuenta</a></li>
                     <li><a v-on:click="logout()"><i class="sl sl-icon-power"></i> Logout</a></li>
                 </ul>
             </div>
@@ -269,8 +269,14 @@ let myLogin = Vue.component('my-login', {
                 type: 'inline',
                 modal: true
             });
+        },
+        micuenta()
+        { //href="/views/dashboard/dashboard.html"
+            localStorage.setItem("pending", 1);
+            document.location.href = "/views/dashboard/dashboard.html";
         }
-    },
+    }
+    ,
     computed: {
         matchingPassword() {
             if (!this.isMounted)
