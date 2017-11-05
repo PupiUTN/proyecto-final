@@ -22,11 +22,12 @@ public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
 
    @Query("select c from Cuidador c " +
            "where c.user.direccion.ciudadPlaceId = :#{#ciudadPlaceId} " +
-           "AND c.estado like'approved'" +
+           "AND c.estado = :#{#status} " +
            "AND not exists ( " +
            "select 1 from Reserva r " +
-           "where r.cuidador = c and c.estado = :#{#status} and" +
-           "(r.fechaInicio between :#{#from} AND :#{#to} " +
+           "where r.cuidador = c and c.estado = :#{#status} " +
+           "and r.status like 'paid' " +
+           "and (r.fechaInicio between :#{#from} AND :#{#to} " +
            "or r.fechaFin between :#{#from} AND :#{#to} ))")
     List<Cuidador> findAllbyCiudadYFecha(@Param("ciudadPlaceId")String ciudadPlaceId,
                                          @Param("from")Date from,

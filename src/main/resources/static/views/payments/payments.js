@@ -3,7 +3,7 @@ Vue.component('mercadopago', {
     <a v-on:click="createPayment" class="button medium border pull-right" target="_blank">Pagar <i class="im im-icon-Money-2"></i></a>
     `,
     data:
-        function() {
+        function () {
             return {
                 url: "/api/payments/",
                 paymentPreference: {},
@@ -22,9 +22,9 @@ Vue.component('mercadopago', {
         createPayment() {
             axios.post(this.url, this.reserva)
                 .then((paymentPreference) => {
-                this.paymentPreference = paymentPreference.data.response;
-                this.sandboxInitPoint = this.paymentPreference.sandbox_init_point;
-                this.openInNewTab(this.sandboxInitPoint);
+                    this.paymentPreference = paymentPreference.data.response;
+                    this.sandboxInitPoint = this.paymentPreference.sandbox_init_point;
+                    this.openInNewTab(this.sandboxInitPoint);
                 })
                 .catch(error => {
                     console.log(error);
@@ -34,8 +34,8 @@ Vue.component('mercadopago', {
             console.log(response);
         },
         openInNewTab(url) {
-        var checkout = window.open(url, '_blank');
-        checkout.focus();
-}
+            var checkout = window.open(url, '_blank');
+            checkout.focus();
+        }
     }
 })

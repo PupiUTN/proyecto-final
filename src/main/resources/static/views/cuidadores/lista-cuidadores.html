@@ -9,12 +9,23 @@
 
     <!-- CSS
 ================================================== -->
+    <link rel="stylesheet" href="/views/cuidadores/css/lista-cuidadores.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
     <link rel="stylesheet" href="/views/layout/vue-navbar.css">
 
     <link href="/css/page-loader.css" rel="stylesheet"/>
 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74104605-6"></script>
+    <script>  window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('send', {hitType: 'pageview', page: location.pathname});
+    gtag('config', 'UA-74104605-6');</script>
 </head>
 
 <body>
@@ -66,6 +77,12 @@
 <script type="text/javascript" src="/views/cuidadores/js/vue-lista-cuidadores.js"></script>
 
 <script type="text/javascript" src="/views/index/js/vue-app-template.js"></script>
+
+<!-- NEW DATE PICKER -->
+<link href="/css/hotel-datepicker.css" rel="stylesheet">
+<script src="/js/fecha.min.js"></script>
+<script src="/js/hotel-datepicker.min.js"></script>
+<script src="/views/buscar/vue-hotel-datepicker.js"></script>
 
 <script>
     let vm = new Vue({

@@ -90,18 +90,17 @@ Vue.component('my-profile', {
     `,
     data: function () {
         return {
-            user: {
-            },
+            user: {},
             url: "/api/user/",
             direccion: {
-                calle:'holi'
+                calle:''
             },
             formPost: true,
             uploadedFiles: [],
             uploadError: null,
             currentStatus: null,
             disabled: true,
-            place:null,
+            place: null,
             componentForm: {
                 street_number: 'short_name',
                 route: 'long_name',
@@ -145,55 +144,60 @@ Vue.component('my-profile', {
         },
         completar() {
             this.place = this.autocomplete.getPlace();
-            console.log(this.place);
-            if(this.place.types[0]!="street_address"){//si es direccion, tiene qie tener numero
-                sweetAlert("Información", "Ingrese una direccion con numero", "info");
+            //console.log(this.place);
+            if(this.place.types && this.place.types[0]!="street_address"){//si es direccion, tiene qie tener numero
+                sweetAlert("Información", "Ingrese una dirección válida (Calle Número, Ciudad, Provincia)", "info");
                 return;
             }
             //this.disabled=false;
             for (var i = 0; i < this.place.address_components.length; i++) {
                 var addressType = this.place.address_components[i].types[0];
-                //console.log(addressType);
-                var place = this.autocomplete.getPlace();
-                console.log(place);
-                for (var i = 0; i < place.address_components.length; i++) {
-                    var addressType = place.address_components[i].types[0];
-                    if (this.componentForm[addressType]) {
-                        //console.log(this.componentForm[addressType]);
-                        var val = this.place.address_components[i][this.componentForm[addressType]];
-                        if (addressType == "street_number") {//numero
-                            this.direccion.numero = val;
-                            continue;
-                        }
-                        if (addressType == "route") {//calle
-                            this.direccion.calle = val;
-                            continue;
-                        }
-                        if (addressType == "locality") {//ciudad
-                            this.direccion.ciudad = val;
-                            continue;
-                        }
-                        if (addressType == "administrative_area_level_1") {//provincia
-                            this.direccion.provincia = val;
-                            continue;
-                        }
-                        if (addressType == "country") {
-                            this.direccion.pais = val;
-                        }
-                        if (addressType == "postal_code") {
-                            this.direccion.codigoPostal = val;
-                        }
-                        //document.getElementsByClassName(addressType)[0].value = val;
-                        //console.log(this.place);
-                        this.direccion.latitud = this.place.geometry.location.lat();
-                        this.direccion.longitud = this.place.geometry.location.lng();
-                        this.direccion.direccionLinea1 = this.place.formatted_address;
-                        this.direccion.placeId = this.place.id;
+                if (this.componentForm[addressType]) {
+                    var val = this.place.address_components[i][this.componentForm[addressType]];
+                    if (addressType == "street_number") {//numero
+                        this.direccion.numero = val;
+                        continue;
                     }
+                    if (addressType == "route") {//calle
+                        this.direccion.calle = val;
+                        continue;
+                    }
+                    if (addressType == "locality") {//ciudad
+                        this.direccion.ciudad = val;
+                        continue;
+                    }
+                    if (addressType == "administrative_area_level_1") {//provincia
+                        this.direccion.provincia = val;
+                        continue;
+                    }
+                    if (addressType == "country") {
+                        this.direccion.pais = val;
+                    }
+                    if (addressType == "postal_code") {
+                        this.direccion.codigoPostal = val;
+                    }else{
+                        this.direccion.codigoPostal=0;
+                    }
+                    //document.getElementsByClassName(addressType)[0].value = val;
+                    //console.log(this.place);
                 }
+
             }
+            this.direccion.latitud = this.place.geometry.location.lat();
+            this.direccion.longitud = this.place.geometry.location.lng();
+            this.direccion.direccionLinea1 = this.place.formatted_address;
+            this.direccion.placeId = this.place.id;
+            var lat = this.direccion.latitud.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+            var lng = this.direccion.longitud.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+            axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=true')
+                .then((data) => {
+                    //console.log(data.data);
+                    var city = data.data.results[1];
+                    this.direccion.ciudadPlaceId = city.place_id;
+                    //console.log(this.direccion);
+                });
         },
-        filesChange(fileList){
+        filesChange(fileList) {
             // handle file changes
             const formData = new FormData();
 
@@ -231,32 +235,14 @@ Vue.component('my-profile', {
                     window.location = "/";
                 });
         },
-        editUserInfo() {
-            this.user.direccion = this.direccion;
-            this.user.birthday = document.getElementById('booking-date').value;
-            console.log(this.user);
-            var payload = jQuery.extend(true, {}, this.user);
-            axios.put(this.url + this.user.id, payload)
-                .then((response) => {
-
-                    sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
-                    console.log(response);
-                })
-                .catch(error => {
-                        console.log(error);
-                        sweetAlert("Oops...", "Error, ver consola", "error");
-
-                    }
-                );
-        },
         isUserLoggedIn(sessionInfo) {
             if (sessionInfo.status === 200) {
                 this.user = sessionInfo.data.principal.user;
-                if(this.user.direccion!=null){
-                    this.direccion=this.user.direccion;
+                if (this.user.direccion != null) {
+                    this.direccion = this.user.direccion;
                 }
                 this.setDate();
-                console.log(this.user);
+                //console.log(this.user);
                 $('#booking-date').dateDropper();
 
             }
@@ -266,65 +252,88 @@ Vue.component('my-profile', {
             }
         },
         setDate() {
-            if(this.user.birthday){
-                console.log(this.user.birthday);
-                var initial =this.user.birthday.split("-");
-                var date=[ initial[1], initial[0], initial[2] ].join('-');
-                console.log(date);
-                document.getElementById('booking-date').setAttribute('data-default-date',date);
-                document.getElementById('booking-date').setAttribute('data-lock','');
+            if (this.user.birthday) {
+                //console.log(this.user.birthday);
+                var initial = this.user.birthday.split("-");
+                var date = [initial[1], initial[0], initial[2]].join('-');
+                //console.log(date);
+                document.getElementById('booking-date').setAttribute('data-default-date', date);
+                document.getElementById('booking-date').setAttribute('data-lock', '');
             }
         },
         editUserInfo() {
             this.user.direccion = this.direccion;
-            if(this.validarBirthday()) {
-                console.log(this.user);
-                var lat = this.direccion.latitud.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
-                var lng = this.direccion.longitud.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
-                axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=true')
-                    .then((data) => {
-                        console.log(data.data);
-                        var city = data.data.results[1];
-                        this.direccion.ciudadPlaceId = city.place_id;
-                    }).then(()=>{
-                    var payload = jQuery.extend(true, {}, this.user);
-                    axios.put(this.url + this.user.id, payload)
-                        .then((response) => {
+            if (this.validarBirthday()) {
+                this.isUserCompleted();
+                //console.log(this.user);
+                var payload = jQuery.extend(true, {}, this.user);
+                axios.put(this.url + this.user.id, payload)
+                    .then((response) => {
 
-                            sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
-                            console.log(response);
-                        })
-                        .catch(error => {
-                                console.log(error);
-                                sweetAlert("Oops...", "Error, ver consola", "error");
+                        sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
+                        console.log(response);
+                    })
+                    .catch(error => {
+                            console.log(error);
 
-                            }
-                        );
-                });
+                        }
+                    );
+
 
             }
         },
-        validarBirthday(){
-            var birthday=document.getElementById('booking-date').value;
+        validarBirthday() {
+            var birthday = document.getElementById('booking-date').value;
             var today = new Date();
             var dd = today.getDate();
-            var mm = today.getMonth()+1; //January is 0!
+            var mm = today.getMonth() + 1; //January is 0!
             var yyyy = today.getFullYear();
-            if(dd<10) {
-                dd = '0'+dd
+            if (dd < 10) {
+                dd = '0' + dd
             }
-            if(mm<10) {
-                mm = '0'+mm
+            if (mm < 10) {
+                mm = '0' + mm
             }
             today = dd + '-' + mm + '-' + yyyy;
-            if(birthday==today){
-                this.user.birthday=null;
+            if (birthday == today) {
+                this.user.birthday = null;
                 sweetAlert("Alerta!", "Seleccione una fecha de nacimiento.", "warning");
-                return true;
-            }else{
-                this.user.birthday=birthday;
+                return false;
+            } else {
+                this.user.birthday = birthday;
                 return true;
             }
+        },
+        isUserCompleted() {
+            this.user.status = "INCOMPLETED";
+            if (!this.user.email) {
+                return;
+            }
+            if (!this.user.username) {
+                return;
+            }
+            if (this.user.profileImageUrl == "/img/no-avatar.png") {
+                return;
+            }
+            if (!this.user.fullName) {
+                return;
+            }
+            if (!this.user.birthday) {
+                return;
+            }
+            if (!this.user.gender) {
+                return;
+            }
+            if (!this.user.birthday) {
+                return;
+            }
+            if (!this.direccion) {
+                return;
+            }
+
+            this.user.status = "COMPLETED";
+
+
         }
     }
 });

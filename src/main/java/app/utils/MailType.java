@@ -574,7 +574,7 @@ public enum MailType {
                 "            \n" +
                 "              <div style=\"Margin-left: 20px;Margin-right: 20px;\">\n" +
                 "      <div class=\"btn btn--flat btn--medium\" style=\"Margin-bottom: 20px;text-align: center;\">\n" +
-                "        <![if !mso]><a style=\"border-radius: 4px;display: inline-block;font-size: 12px;font-weight: bold;line-height: 22px;padding: 10px 20px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #ffffff !important;background-color: #e31212;font-family: Avenir, sans-serif;\" href=\"http://localhost:5000" + getRedirectUrl() + "\">" + getButtonText() + "</a><![endif]>\n" +
+                "        <![if !mso]><a style=\"border-radius: 4px;display: inline-block;font-size: 12px;font-weight: bold;line-height: 22px;padding: 10px 20px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #ffffff !important;background-color: #e31212;font-family: Avenir, sans-serif;\" href=\"http://pupi.com.ar" + getRedirectUrl() + "\">" + getButtonText() + "</a><![endif]>\n" +
                 "      <!--[if mso]><p style=\"line-height:0;margin:0;\">&nbsp;</p><v:roundrect xmlns:v=\"urn:schemas-microsoft-com:vml\" href=\"http://test.com\" style=\"width:108px\" arcsize=\"10%\" fillcolor=\"#E31212\" stroke=\"f\"><v:textbox style=\"mso-fit-shape-to-text:t\" inset=\"0px,9px,0px,9px\"><center style=\"font-size:12px;line-height:22px;color:#FFFFFF;font-family:Avenir,sans-serif;font-weight:bold;mso-line-height-rule:exactly;mso-text-raise:4px\">Ver Detalles</center></v:textbox></v:roundrect><![endif]--></div>\n" +
                 "    </div>\n" +
                 "            \n" +

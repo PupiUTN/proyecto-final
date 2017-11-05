@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<head xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
 
     <!-- Basic Page Needs
     ================================================== -->
@@ -13,164 +13,26 @@
     <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
 
     <link href="/css/page-loader.css" rel="stylesheet"/>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74104605-6"></script>
+    <script>  window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('send', {hitType: 'pageview', page: location.pathname});
+    gtag('config', 'UA-74104605-6');</script>
 </head>
 
-<body xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<body>
 
-<!-- Wrapper -->
 <div id="wrapper">
-    <div id="page-loader"></div>
-
-    <!-- Header Container
-    ================================================== -->
-    <my-navbar v-on:is-authenticated="isAuthenticatedMethod" ref="myNavbar"></my-navbar>
-    <!-- Header Container / End -->
 
 
-    <!-- Content
-    ================================================== -->
-    <div class="container">
-        <form v-on:submit.prevent="postReserva">
-            <div class="form-group">
-                <!--cuidador resume-->
-                <div class="col-lg-6 col-md-12 col-lg-offset-3 ">
-
-                    <!-- Titlebar -->
-                    <div id="titlebar" class="listing-titlebar padding-bottom-35 padding-top-35 padding-left-35">
-                        <div class="listing-titlebar-title">
-
-                            <h2 id="nombre"> {{ reserva.cuidador.user.fullName}} <span
-                                    class="listing-tag">Cuidador</span>
-                            </h2>
-
-                            <div class="card-image col s3 ">
-
-                            </div>
-                            <span>
-
-							<a class="listing-address">
-							    <i class="fa fa-map-marker"></i> {{ reserva.cuidador.user.direccion.ciudad}}
-						    </a>
-						<br>
-							<i class="fa fa-paw"></i>
-							Cantidad maxima de perros: {{ reserva.cuidador.cantidadMaxDePerros}}
-
-					</span>
-                            <div class="star-rating" data-rating="5">
-                                <div class="rating-counter"><a href="">(31 reviews)</a></div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- Fechas -->
-                <div class="col-lg-6 col-md-12 col-lg-offset-3">
-
-                    <!-- Book Now -->
-                    <div class="boxed-widget">
-                        <h3><i class="fa fa-calendar-check-o "></i> Fechas de Reserva </h3>
-                        <div class="row with-forms  margin-top-0">
-
-                            <div class="col-lg-6 col-md-12">
-                                <label style=" margin-top: 12px;">Entrada </label>
-                            </div>
-
-                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-                            <div id="booking-date-col" class="col-lg-6 col-md-12 form-group">
-                                <input type="text" v-model="reserva.fechaInicio"
-                                       data-format=" Y-m-d" id="booking-date"
-                                       data-lang="es" data-init-set="false"
-                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
-                                       data-max-year="2020" data-lock="from"
-                                       class="required" ref="bookingDate"/>
-                            </div>
-
-                        </div>
-                        <div class="row with-forms  margin-top-0">
-
-                            <div class="col-lg-6 col-md-12">
-                                <label style=" margin-top: 12px;">Salida </label>
-                            </div>
-                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-                            <div class="col-lg-6 col-md-12">
-
-                                <input type="text" v-model="reserva.fechaFin"
-                                       style="text-align: center; font-size: 16px; font-weight: 600"
-                                       data-format=" Y-m-d" id="booking-date2" data-lang="es"
-                                       data-init-set="false"
-                                       data-large-mode="true" data-large-default="true" data-min-year="2017"
-                                       data-max-year="2020" data-lock="from"
-                                       class="required"/>
-                            </div>
+    <my-app current-view="my-generar-reserva"></my-app>
 
 
-                        </div>
-
-                    </div>
-                    <!-- Book Now / End -->
-
-
-                </div>
-                <!-- perros-->
-                <div class="col-lg-6 col-md-12 col-lg-offset-3">
-
-                    <!-- Book Now -->
-                    <div class="boxed-widget">
-                        <h3><i class="fa  fa-heart-o"></i>Mis Perros </h3>
-                        <div class="row with-forms  margin-top-0">
-
-                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-                            <div class="col-lg-12 col-md-12">
-                                <div class="checkboxes in-row margin-top-0">
-                                    <template v-for="perro in perros">
-                                        <input v-bind:id="'perro_' +perro.id" type="checkbox" name="check"
-                                               v-bind:value="perro.id"
-                                               v-model="checkboxPerros">
-                                        <label v-bind:for="'perro_' +perro.id">{{perro.nombre}}</label>
-                                    </template>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <!-- Book Now / End -->
-
-                </div>
-                <!--mensaje-->
-                <div class="col-lg-6 col-md-12 col-lg-offset-3">
-
-                    <!-- Book Now -->
-                    <div class="boxed-widget">
-                        <h3><i class="fa  fa-pencil-square-o "></i> Mensaje </h3>
-                        <div class="row with-forms  margin-top-0">
-
-                            <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-                            <div class="col-lg-12 col-md-12">
-                                <textarea v-model="reserva.mensaje" name="summary" spellcheck="true"
-                                          required></textarea>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <!-- Book Now / End -->
-
-                </div>
-
-
-                <div class="col-lg-6 col-lg-offset-3 padding-bottom-30">
-                    <!-- progress button animation handled via custom.js -->
-                    <button class="progress-button button fullwidth margin-top-5">
-                        <span>Confirmar Solicitud de Reserva</span>
-                    </button>
-                </div>
-
-            </div>
-        </form>
-    </div>
-    <!-- Wrapper / End -->
 </div>
 
 <!-- Scripts
@@ -189,9 +51,6 @@
 
 <!-- Maps -->
 
-<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
-<link href="../../assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
-<script src="../../assets/scripts/datedropper.js"></script>
 
 <script src="/js/axios.min.js"></script>
 <script src="/js/axios.interceptor.js"></script>
@@ -201,7 +60,28 @@
 <script type="text/javascript" src="/views/security/js/vue-login.js"></script>
 <link rel="stylesheet" href="/views/layout/vue-navbar.css">
 <script type="text/javascript" src="/views/layout/vue-navbar.js"></script>
+<script type="text/javascript" src="/views/index/js/vue-app-template.js"></script>
+
+
+<!-- NEW DATE PICKER -->
+<link href="/css/hotel-datepicker.css" rel="stylesheet">
+<script src="/js/fecha.min.js"></script>
+<script src="/js/hotel-datepicker.min.js"></script>
+<script src="/views/buscar/vue-hotel-datepicker.js"></script>
+<style>
+    .datepicker {
+        position: relative !important;
+    }
+</style>
+
 <script src="js/generar-reserva.js"></script>
+
+
+<script>
+    let vm = new Vue({
+        el: '#wrapper',
+    });
+</script>
 
 
 </body>

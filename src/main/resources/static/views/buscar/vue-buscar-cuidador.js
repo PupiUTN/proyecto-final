@@ -2,7 +2,7 @@
 var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
     template: `
 <form class="main-search-input" v-on:submit.prevent='buscar'>
-    <div class="main-search-input-item location" :style="inputSize">
+    <div class="main-search-input-item location">
         <vue-google-autocomplete
             id="location"
             placeholder="Ciudad"
@@ -18,19 +18,14 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
 
     </div>
     <div class="main-search-input-item location">
-        <input type="text" v-model="dateFrom" id="dateFrom" placeholder="Desde"
-               data-lang="es"
-               data-init-set="false"
-               data-large-mode="true" data-large-default="true" data-min-year="2017"
-               data-max-year="2020" data-lock="from">
+        <my-hotel-date-picker 
+            ref="myHotelDatePicker" 
+            format="DD/MM/YYYY"
+            v-on:updateDateRange="bindDates"
+            datepickerId="datepickerId"
+        > 
+</my-hotel-date-picker>
               <a><i class="fa fa-calendar-check-o"></i></a>
-    </div>
-    <div class="main-search-input-item location">
-        <input type="text" v-model="dateTo" id="dateTo" placeholder="Hasta" data-lang="es"
-               data-init-set="false"
-               data-large-mode="true" data-large-default="true" data-min-year="2017"
-               data-max-year="2020" data-lock="from">
-               <a><i class="fa fa-calendar-check-o"></i></a>
     </div>
     <button class="button" type="submit">
         Buscar
@@ -59,7 +54,8 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
         },
     mounted() {
         this.bindUrlWithVue();
-        this.bindDatePickerWithVue();
+        this.setDates();
+
     },
     methods: {
         geolocate() {
@@ -74,8 +70,7 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
                     this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
                     //https://developers.google.com/maps/documentation/geocoding/start
                     axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.placeLat + ',' + this.placeLng + '&sensor=true')
-                        .then((data) =>
-                        {
+                        .then((data) => {
                             console.log(data.data);
                             var city = data.data.results[1];
                             vm.$refs.myIndex.$refs.currentView.$refs.myBuscarCuidadores.placeID = city.place_id;
@@ -98,7 +93,7 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
         },
         buscar() {
             //si el formulario no tiene los campos basicos no hago nada
-            if (!this.formValitaion()){
+            if (!this.formValitaion()) {
                 console.log("place id not set in vue-search component");
                 return;
             }
@@ -106,14 +101,14 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
                 "&placeID=" + this.placeID +
                 "&lat=" + this.placeLat +
                 "&lng=" + this.placeLng;
-            //con el datapicker los datos no se "bindean" en el dom...
-            this.dateFrom = document.getElementById("dateFrom").value;
-            this.dateTo = document.getElementById("dateTo").value;
-            console.log(this.dateFrom);
-            console.log(this.dateTo);
-            if (this.dateFrom != '') {
-                if (this.dateTo != '') {
-                    if (this.dateTo >= this.dateFrom) {
+
+
+            if (this.dateFrom != null) {
+                if (this.dateTo != null) {
+                    var dateFromObj = fecha.parse(this.dateFrom, 'DD/MM/YYYY'); // new Date(2010, 11, 10, 14, 11, 12)
+                    var dateToObj = fecha.parse(this.dateTo, 'DD/MM/YYYY'); // new Date(2010, 11, 10, 14, 11, 12)
+
+                    if (dateToObj >= dateFromObj) {
                         href += "&from=" + this.dateFrom +
                             "&to=" + this.dateTo;
                     } else {
@@ -122,33 +117,24 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
                         return;
 
                     }
-                } else {
-                    sweetAlert("Oops...", "Debe ingresar una fecha hasta", "error");
-                    return;
                 }
             }
             // router.push({ name: 'buscar'});
 
             window.location.href = href;
 
+        }, bindDates(e) {
+            var split = e.split('-');
+            this.dateFrom = split[0].replace(/\s/g, '');
+            this.dateTo = split[1].replace(/\s/g, '');
         },
-        bindDatePickerWithVue() {
-            // https://stackoverflow.com/questions/41200729/vue-js-and-jquery-datepicker-timepicker-two-way-binding
-            $('#dateFrom').dateDropper(this.dateFrom);
-            $('#dateFrom').change(function () {
-                console.log("date picker selected");
-                // var dateObjetc = $('#booking-date').datepicker("getDate");
-                //Java format: 2017-08-27
-                var dateString = $('#dateFrom').val(); //the getDate method
-                vm.$refs.myBuscarCuidadores.dateFrom = dateString;
-            });
-            $('#dateTo').dateDropper(this.dateTo);
-            $('#dateTo').change(function () {
-                console.log("date picker selected");
-                var dateString = $('#dateTo').val(); //the getDate method
-                vm.$refs.myBuscarCuidadores.dateTo = dateString;
-            });
+        setDates() {
+            if (this.dateFrom != null & this.dateTo != null) {
+                var value = this.dateFrom + '-' + this.dateTo;
+                this.$refs.myHotelDatePicker.setValue(value);
+            }
         },
+
         //obitene los parametros de la url... copiado de internet
         getParameterByName(name, url) {
             if (!url) url = window.location.href;
@@ -173,19 +159,11 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
                 input.value = this.placeName;
             }
         },
-        formValitaion(){
-            if(this.placeID == null){
+        formValitaion() {
+            if (this.placeID == null) {
                 return false;
             }
             return true;
-        }
-    },
-    computed: {
-        inputSize() {
-            if (this.isIndex) {
-                return 'flex: 1';
-            }
-            return 'flex: 2';
         }
     }
 });
