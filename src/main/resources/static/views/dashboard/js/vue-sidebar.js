@@ -14,7 +14,7 @@ let mySidebar = Vue.component('my-sidebar', {
 						<li><a href="/views/reserva/mis-reservas-user.html?status=CONFIRMATION_PENDING">Pendientes <span class="nav-tag green"></span></a></li>
 						<li><a href="/views/reserva/mis-reservas-user.html?status=ACCEPTED">Aceptadas <span class="nav-tag yellow"></span></a></li>
 						<li><a href="/views/reserva/mis-reservas-user.html?status=CANCEL_BY_USER">Canceladas <span class="nav-tag red"></span></a></li>
-						<li><a href="/views/reserva/mis-reservas-user.html?status=PAID">Pagadas <span class="nav-tag blue">2</span></a></li>
+						<li><a href="/views/reserva/mis-reservas-user.html?status=PAID">Pagadas <span class="nav-tag blue"></span></a></li>
 					</ul>
 					</li>
 				</ul>

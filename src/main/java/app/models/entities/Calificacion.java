@@ -15,6 +15,8 @@ public class Calificacion implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private int puntaje;
+
+
     private boolean from_owner;
     private String comentario;
     @ManyToOne
@@ -55,5 +57,14 @@ public class Calificacion implements Serializable {
     public void setReserva(Reserva reserva) {
         this.reserva = reserva;
     }
+
+    public boolean isFrom_owner() {
+        return from_owner;
+    }
+
+    public void setFrom_owner(boolean from_owner) {
+        this.from_owner = from_owner;
+    }
+
 
 }

@@ -33,7 +33,7 @@ public class ReservaCuidadorController {
     @RequestMapping(method = RequestMethod.POST)
     public Reserva post(@RequestBody Reserva entity) throws Exception {
         //TODO setear info del cuidador asi nadie puede meter info que no es.
-        return reservaService.crearNuevaReserva(entity);
+        return reservaService.save(entity);
 
     }
 

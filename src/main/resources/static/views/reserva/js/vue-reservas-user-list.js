@@ -44,10 +44,7 @@ Vue.component('my-reservas-user-list', {
                                         </div>
                                         <div class="col-xs-12 col-md-3" v-if="reserva.status === 'CONFIRMATION_PENDING'">
                                             <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
-                                        </div>
-                                        <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL' && reserva.status !== 'comentario-cuidador' && reserva.status !== 'finalizada'">
-                                            <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Pagar</a>
-                                        </div>
+                                        </div>                                        
                                          <div class="col-xs-12 col-md-6" v-if="reserva.status === 'PAID'">
                                             <a v-on:click="verDetalleCompletoButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                         </div>

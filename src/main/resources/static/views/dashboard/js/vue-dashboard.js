@@ -51,7 +51,7 @@ Vue.component('my-dashboard', {
         {
             if (role === "ROLE_CUIDADOR")
             {
-                axios.get('/api/cuidador/me/reservas/PendientesReview/')
+                axios.get('/api/cuidador/me/reservas/PendientesReview/' +  this.$refs.myHeader.$refs.myLogin.user.id)
                     .then((response) => {
                         this.pendientes = response.data;
                         if (!this.pendientes ) {
@@ -81,7 +81,7 @@ Vue.component('my-dashboard', {
             else {
                 if (role === "ROLE_USER") {
 
-                    axios.get('/api/user/me/reservas/PendientesReview/')
+                    axios.get('/api/user/me/reservas/PendientesReview/'+  this.$refs.myHeader.$refs.myLogin.user.id)
                         .then((response) => {
                             this.pendientes = response.data;
                             if (this.pendientes) {
