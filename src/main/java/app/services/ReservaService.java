@@ -6,6 +6,7 @@ import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -41,10 +42,22 @@ public class ReservaService {
     }
 
     public Reserva save(Reserva reserva) {
-         if(!reserva.getStatus().equals("cerrada") && !reserva.getStatus().equals("comentario-cuidador") && !reserva.getStatus().equals("comentario-dueño") )
-         { reserva.setStatus("CONFIRMATION_PENDING");}
+        reserva.setStatus("creada-dueño");
+        float precioTotal = daysBetween(reserva.getFechaInicio(), reserva.getFechaFin()) * reserva.getCuidador().getPrecioPorNoche();
+        reserva.setPrecioTotal(precioTotal);
         Reserva savedObject = reservaRepository.save(reserva);
         return savedObject;
+    }
+
+    public Reserva SetEstadoFinalizado(Reserva reserva) {
+        Reserva savedObject = reservaRepository.save(reserva);
+        return savedObject;
+    }
+
+
+    private static long daysBetween(Date one, Date two) {
+        long difference = (one.getTime() - two.getTime()) / 86400000;
+        return Math.abs(difference);
     }
 
     public void cancelarCausaUsuario(Long reservaId, Long userId) {
@@ -52,7 +65,7 @@ public class ReservaService {
         if (reserva.getStatus() == "foo"){
             throw new IllegalArgumentException();
         }
-        reserva.setStatus("CANCEL_BY_USER");
+        reserva.setStatus("rechazada-dueño");
         reservaRepository.save(reserva);
     }
 
@@ -74,7 +87,7 @@ public class ReservaService {
         if (reserva.getStatus() == "foo"){
             throw new IllegalArgumentException();
         }
-        reserva.setStatus("CANCEL");
+        reserva.setStatus("rechazada-cuidador");
         reservaRepository.save(reserva);
     }
 
@@ -84,7 +97,7 @@ public class ReservaService {
         if (reserva.getStatus() == "foo"){
             throw new IllegalArgumentException();
         }
-        reserva.setStatus("ACCEPTED");
+        reserva.setStatus("aceptada-cuidador");
         reservaRepository.save(reserva);
     }
 

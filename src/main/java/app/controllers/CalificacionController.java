@@ -32,7 +32,7 @@ public class CalificacionController {
     public Calificacion createCalificacion(@RequestBody  Calificacion entity) throws  Exception {
 
         Calificacion calific = calificacionService.createCalificacion(entity);
-         Reserva res  =    entity.getReserva() ;
+         Reserva res  =   reservaService.getReserva( entity.getReserva().getId()) ;
 
           if(res.getStatus().equals("finalizada") && !calific.isFrom_owner())
           {
@@ -55,7 +55,7 @@ public class CalificacionController {
 
           }
 
-       res =   reservaService.save(res);
+       res =   reservaService.SetEstadoFinalizado(res);
 
         return calific;
     }

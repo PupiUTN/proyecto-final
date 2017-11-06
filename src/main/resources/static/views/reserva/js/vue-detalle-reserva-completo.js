@@ -1,142 +1,5 @@
 Vue.component('my-detalle-reserva-completo', {
     template: `
-<div>       
-
- 
- <div id="titlebar">
-			<div class="row">
-				<div class="col-md-12">
-					<h2>Datos de la Reserva </h2>
-					<!-- Breadcrumbs -->
-					<nav id="breadcrumbs">
-						<ul>
-							<li><a href="#">Home</a></li>
-							<li><a href="#">Dashboard</a></li>
-							<li>Datos de la reserva </li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-		</div>
-		
-			<div class="add-listing-section">
-
-						<!-- Headline -->
-						<div class="add-listing-headline">
-							<h3><i class="sl sl-icon-doc"></i> Información Básica del Cuidador</h3>
-						</div>
-
-						<!-- Title -->
-						<div class="row with-forms">
-							<div class="col-md-12">
-								<h3> <b>Nombre del cuidador </b></h3>
-								{{reserva.cuidador.nombre}}
-							</div>
-						</div>
-
-						<!-- Row -->
-						<div class="row with-forms">
-
-							<!-- Status -->
-							<div class="col-md-6">
-								<h5>Category</h5>
-								<select class="chosen-select-no-single" >
-									<option label="blank">Select Category</option>	
-									<option>Eat & Drink</option>
-									<option>Shops</option>
-									<option>Hotels</option>
-									<option>Restaurants</option>
-									<option>Fitness</option>
-									<option>Events</option>
-								</select>
-							</div>
-
-							<!-- Type -->
-							<div class="col-md-6">
-								<h3><b>Precio Final </b></h3>
-								{{reserva.PrecioTotal}}
-							</div>
-
-						</div>
-						<!-- Row / End -->
-
-					</div>
-					
-					
-					<!-- Section -->
-					<div class="add-listing-section margin-top-45">
-
-						<!-- Headline -->
-						<div class="add-listing-headline">
-							<h3><i class="sl sl-icon-location"></i> Direccion</h3>
-						</div>
-
-						<div class="submit-section">
-
-							<!-- Row -->
-							<div class="row with-forms">
-
-								<!-- City -->
-								<div class="col-md-6">
-									<h5>City</h5>
-									<select class="chosen-select-no-single" >
-										<option label="blank">Select City</option>	
-										<option>New York</option>
-										<option>Los Angeles</option>
-										<option>Chicago</option>
-										<option>Houston</option>
-										<option>Phoenix</option>
-										<option>San Diego</option>
-										<option>Austin</option>
-									</select>
-								</div>
-
-								<!-- Address -->
-								<div class="col-md-6">
-									<h5>Address</h5>
-									<input type="text" placeholder="e.g. 964 School Street">
-								</div>
-
-								<!-- City -->
-								<div class="col-md-6">
-									<h5>State</h5>
-									<input type="text">
-								</div>
-
-								<!-- Zip-Code -->
-								<div class="col-md-6">
-									<h5>Zip-Code</h5>
-									<input type="text">
-								</div>
-
-							</div>
-							<!-- Row / End -->
-
-						</div>
-					</div>
-					
-					
-					<div class="add-listing-section margin-top-45">
-
-						<!-- Headline -->
-						<div class="add-listing-headline">
-							<h3><i class="sl sl-icon-picture"></i> Mapa</h3>
-						</div>
-
-						<!-- Dropzone -->
-						<div class="submit-section">
-							<form action="/file-upload" class="dropzone" ></form>
-						</div>
-
-					</div>
-					
-					---
-				
-					---
-					
-					
-
-</div>   
 <div>
 
 
@@ -352,14 +215,13 @@ Vue.component('my-detalle-reserva-completo', {
     <div class="center-block">
 
         <div class="col-md-3 col-xs-1"></div>
-        <div class="col-xs-5 col-md-3" v-if="reserva.status !== 'CANCEL'" >
+        <div class="col-xs-5 col-md-3" v-if="reserva.status !== 'rechazada-dueño'" >
             <a v-on:click="cancelarReservaActionButton()"  href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar Reserva</a>
         </div>
     </div>
 
 
 </div>  
-
     `,
     data:
         function () {
@@ -390,61 +252,44 @@ Vue.component('my-detalle-reserva-completo', {
                         precioTotal: 1,
                         status: '',
                         mensaje: '',
-                        transaccion: '',
+                        fechaTransaccion: '',
                         cuidador: {
-                            nombre: '',
-                            user: {
-                                email: '',
-                                phone: '',
-                                profileImageUrl: '',
-                                edad: '',
-                                direccion: {},
-                                fechaTransaccion: '',
-                                cuidador: {
 
-                                    user: {
-                                        fullName: '',
-                                        email: '',
-                                        phone: '',
-                                        profileImageUrl: '',
-                                        birthday: '',
-                                        direccion: {
-                                            calle: '',
-                                            ciudad: '',
-                                            numero: '',
-                                            latitud: '',
-                                            longitud: '',
-                                            provincia: ''
-
-                                        }
-                                    }
+                            user:{
+                                fullName:'',
+                                email:'',
+                                phone:'',
+                                profileImageUrl:'',
+                                birthday:'',
+                                direccion:{
+                                    calle:'',
+                                    ciudad:'',
+                                    numero:'',
+                                    latitud:'',
+                                    longitud:'',
+                                    provincia:''
 
                                 }
-
                             }
+
                         }
-                        }
+
+                    }
                 ,
                 message: '',
                 perroProfileUrl: '',
                 id: null,
                 edadPerro: '',
-
+                edadCuidador:'',
                 showModal: false,
                 tamaño: '',
-
-                edadCuidador: '',
-                showModal: false,
-                tamaño: '',
-                numeroReserva: '',
-
+                numeroReserva:'',
 
             }
         },
     mounted() {
         this.id = this.getParameterByName('id');
         this.getReserva();
-
 
     },
     methods: {
@@ -463,9 +308,9 @@ Vue.component('my-detalle-reserva-completo', {
                     this.edadCuidador = this.calcularEdad(this.reserva.cuidador.user.birthday);
                     var date = new Date(this.reserva.fechaTransaccion);
                     this.reserva.fechaTransaccion = date.toLocaleDateString();
-                    var dateEntrada = new Date(this.reserva.fechaInicio);
-                    var dateSalida = new Date(this.reserva.fechaFin);
-                    dateEntrada = dateEntrada.setDate(dateEntrada.getDate() + 1);
+                    var dateEntrada = new Date (this.reserva.fechaInicio);
+                    var dateSalida = new Date (this.reserva.fechaFin);
+                    dateEntrada =dateEntrada.setDate(dateEntrada.getDate() + 1);
                     dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
                     this.reserva.fechaInicio = new Date(dateEntrada).toLocaleDateString();
                     this.reserva.fechaFin = new Date(dateSalida).toLocaleDateString();
@@ -511,7 +356,8 @@ Vue.component('my-detalle-reserva-completo', {
             return edad;
 
         },
-        MostrarEdad() {
+        MostrarEdad()
+        {
             if (this.edadPerro === 0) {
 
                 this.edadPerro = " menor a un año";
@@ -593,7 +439,6 @@ Vue.component('my-detalle-reserva-completo', {
 
                 });
         },
-
 
     }
 
