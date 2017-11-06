@@ -24,7 +24,7 @@ let mySidebar = Vue.component('my-sidebar', {
 				
                 </ul>
                 <ul  data-submenu-title="Cuidador">
-                    <li v-show="role === 'ROLE_USER' || role === 'ROLE_CUIDADOR'"><a href="/views/cuidadores/alta-cuidador.html"><i class="sl sl-icon-user"></i> Solicitud</a></li>
+                    <li v-show="role === 'ROLE_USER'"><a href="/views/cuidadores/alta-cuidador.html"><i class="sl sl-icon-user"></i> Convertirse</a></li>
                      <li v-show="role === 'ROLE_CUIDADOR'"><a href="/views/cuidadores/cuidadores-editar.html"><i class="sl sl-icon-book-open"></i> Mi Descripcion</a></li>
                      <li v-show="role === 'ROLE_CUIDADOR'"><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>
 					 <ul>
