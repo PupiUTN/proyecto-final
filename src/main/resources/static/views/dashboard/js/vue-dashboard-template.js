@@ -41,10 +41,85 @@ Vue.component('my-dashboard', {
 
             if (!this.isAuthenticated) {
                 childMylogin.openLoginPopUp();
+              //  var pending = true;
+
             } else {
                 this.role = childMylogin.user.role;
+
+
             }
+
+            if(localStorage.getItem("pending") <=1 )
+            {
+             //   this.getReservasPendientesReview(this.role)
+            }
+        },
+
+        getReservasPendientesReview(role)
+        {
+            if (role === "ROLE_CUIDADOR")
+            {
+                axios.get('/api/cuidador/me/reservas/PendientesReview/?id=' + this.$refs.myHeader.$refs.myLogin.user.id)
+                    .then((response) => {
+                        this.pendientes = response.data;
+                        if (!this.pendientes ) {
+                            sweetAlert({
+                                    title: "Reviews ",
+                                    text: "Tiene Reservas pendientes de calificar",
+                                    type: "info",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "ir a calificaciones",
+                                    closeOnConfirm: false,
+                                    cancelButtonText: "ok",
+                                    showLoaderOnConfirm: true,
+                                },
+                                function () {
+                                    document.location.href = "/views/reserva/mis-reservas-cuidador.html?status=finalizada";
+                                });
+                        }
+
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error, ver consola", "error");
+                    });
+
+            }
+            else {
+                if (role === "ROLE_USER") {
+
+                    axios.get('/api/user/me/reservas/PendientesReview/?id='+ this.$refs.myHeader.$refs.myLogin.user.id)
+                        .then((response) => {
+                            this.pendientes = response.data;
+                            if (this.pendientes) {
+                                sweetAlert({
+                                        title: "Reviews ",
+                                        text: "Tiene Reservas pendientes de calificar",
+                                        type: "info",
+                                        showCancelButton: true,
+                                        confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "ir a calificaciones",
+                                        closeOnConfirm: false,
+                                        cancelButtonText: "ok",
+                                        showLoaderOnConfirm: true,
+                                    },
+                                    function () {
+                                        document.location.href = "/views/reserva/mis-reservas-user.html?status=finalizada";
+                                    });
+                            }
+
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            sweetAlert("Oops...", "Error, ver consola", "error");
+                        });
+                }
+            }
+            localStorage.setItem("pending",(localStorage.getItem("pending") +1));
         }
+
+
     }
 
 
