@@ -10,7 +10,6 @@ let mySidebar = Vue.component('my-sidebar', {
                 <ul v-show="role === 'ROLE_USER' || role === 'ROLE_CUIDADOR'"  data-submenu-title="Cuenta">
                     <li><a href="/views/due%C3%B1o/perfil.html"><i class="sl sl-icon-user"></i> Mi Perfil</a></li>	
                     <li><a href="/views/perros/perros.html"><i class="im im-icon-Dog"></i> Mis Perros</a></li>
-                   
                     <li><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>
 					<ul>
 						<li><a href="/views/reserva/mis-reservas-user.html?status=CONFIRMATION_PENDING">Pendientes <span class="nav-tag green"></span></a></li>
@@ -20,14 +19,12 @@ let mySidebar = Vue.component('my-sidebar', {
 					</ul>
 					</li>
 				</ul>
-                	 <ul v-show="role === 'ROLE_USER' || role === 'ROLE_CUIDADOR'"  data-submenu-title="Calificaciones" >
+                	<ul v-show="role === 'ROLE_USER' || role === 'ROLE_CUIDADOR'"  data-submenu-title="Calificaciones" >
                     <li><a href="/views/reserva/mis-reservas-user.html?status=finalizada"><i class="sl sl-icon-layers"></i> Calificaciones</a></li>
-                    </ul>
-                    
-                 
 				
+                </ul>
                 <ul  data-submenu-title="Cuidador">
-                    <li v-show="role === 'ROLE_USER' || role === 'ROLE_CUIDADOR'"><a href="/views/cuidadores/alta-cuidador.html"><i class="sl sl-icon-user"></i> Solicitud</a></li>
+                    <li v-show="role === 'ROLE_USER'"><a href="/views/cuidadores/alta-cuidador.html"><i class="sl sl-icon-user"></i> Convertirse</a></li>
                      <li v-show="role === 'ROLE_CUIDADOR'"><a href="/views/cuidadores/cuidadores-editar.html"><i class="sl sl-icon-book-open"></i> Mi Descripcion</a></li>
                      <li v-show="role === 'ROLE_CUIDADOR'"><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>
 					 <ul>
@@ -40,7 +37,7 @@ let mySidebar = Vue.component('my-sidebar', {
                 </ul>
                 
                  <ul v-show="role === 'ROLE_CUIDADOR'" data-submenu-title="Calificaciones" >
-                    <li><a href="/views/reserva/mis-reservas-cuidador.html?status=finalizada"><i class="sl sl-icon-layers"></i> Calificaciones<span v-if="pendientesCuidador > 0" class="nav-tag green">{{pendientesCuidador}}</span></a></li>
+                    <li><a href="/views/reserva/mis-reservas-cuidador.html?status=finalizada"><i class="sl sl-icon-layers"></i> Calificaciones</a></li>
                 </ul>
                 
                 <ul v-show="role === 'ROLE_ADMIN'" data-submenu-title="Admin" >
