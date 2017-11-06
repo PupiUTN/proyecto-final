@@ -272,7 +272,9 @@ let myLogin = Vue.component('my-login', {
         },
         micuenta()
         { //href="/views/dashboard/dashboard.html"
-            localStorage.setItem("pending", 1);
+            localStorage.setItem("pending", true);
+            localStorage.setItem("pendingCountCuidador", 0);
+            localStorage.setItem("pendingCountUser", 0);
             document.location.href = "/views/dashboard/dashboard.html";
         }
     }

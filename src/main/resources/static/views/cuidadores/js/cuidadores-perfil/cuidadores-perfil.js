@@ -234,7 +234,7 @@ let vm = new Vue({
 
         paginate() {
            this.calificaciones = this.DataReview.slice(this.offset, this.offset + this.perPage);
-            
+
         },
         previous() {
             this.offset =  this.offset - this.perPage;
