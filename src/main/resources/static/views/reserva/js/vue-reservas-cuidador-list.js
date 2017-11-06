@@ -6,14 +6,20 @@ Vue.component('my-reservas-cuidador-list', {
 <div id="titlebar">
     <div class="row">
         <div class="col-md-12">
-             <div  v-if="status === 'CONFIRMATION_PENDING'">
+             <div  v-if="status === 'creada-dueño'">
                     <h2>Quieren reservar Conmigo</h2>                
              </div>
-              <div  v-if="status === 'CANCEL'">
+              <div  v-if="status === 'rechazada-cuidador'">
                     <h2>reservas rechazadas</h2>                
              </div>
-              <div  v-if="status === 'ACCEPTED'">
+              <div  v-if="status === 'aceptada-cuidador'">
                     <h2> Mis reservas Confirmadas</h2>                
+             </div>
+               <div  v-if="status === 'pagada-dueño'">
+                    <h2> Mis reservas pagadas</h2>                
+             </div>
+               <div  v-if="status === 'finalizada'">
+                    <h2> Pendientes de Calificacion</h2>                
              </div>
             
         </div>
@@ -51,22 +57,26 @@ Vue.component('my-reservas-cuidador-list', {
                                         
                                  </div>
                           
-                                    <div class="col-xs-12 col-md-3" v-if="reserva.status === 'CONFIRMATION_PENDING'">
+                                    <div class="col-xs-12 col-md-3" v-if="reserva.status === 'creada-dueño'">
                                     <a v-on:click="confirmarReservaButton(index)"  style="color: blue; border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Confirmar</a>
                                 </div>
                                
-
-                                <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
+ 
+                                <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'comentario-dueño' && reserva.status !== 'finalizada'">
                                     <a v-on:click="cancelarReservaActionButton(index)"  style="  margin-top: 10px;" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>                        
                                 </div>
                             
-                             <div class="col-xs-12 col-md-3" v-if="reserva.status === 'CONFIRMATION_PENDING'">
+                             <div class="col-xs-12 col-md-3" v-if="reserva.status === 'creada-dueño'">
                                     <a  style="  margin-top: 10px; color: blue;  border-color: blue; "   v-on:click="verReserva(reserva.id)" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver</a>
                                     
                                 </div>
-                                 <div class="col-xs-12 col-md-6" v-if="reserva.status === 'PAID'">
+                                 <div class="col-xs-12 col-md-6" v-if="reserva.status === 'pagada-dueño'">
                                             <a  style="  margin-top: 10px; color: blue;  border-color: blue; "   v-on:click="verReserva(reserva.id)" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                             </div>
+                                            
+                                 <div class="col-xs-12 col-md-3" v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-dueño'">
+                                    <a v-on:click="calificarReserva(index)"  style="color: blue; border-color: blue; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
+                                </div>
                                 
                             </div>    
                            
@@ -80,6 +90,8 @@ Vue.component('my-reservas-cuidador-list', {
         </div>
     </div>
 </div>
+
+ 
 </div>   
     `,
     data:
@@ -115,6 +127,7 @@ Vue.component('my-reservas-cuidador-list', {
                 mensaje: '',
                 perroProfileUrl: '',
                 status: null,
+                showModal: false,
 
             }
         },
@@ -128,6 +141,12 @@ Vue.component('my-reservas-cuidador-list', {
 
 
                 document.location.href = "/views/reserva/detalle-reserva.html?id= " + index;
+            },
+            calificarReserva(index) {
+                var id = this.reservas[index].id;
+
+                document.location.href = "/views/reserva/calificacion-reserva.html?id= " + id +
+                    "&rol=" + "CUIDADOR";
             },
 
             getCuidadorReservas() {
@@ -220,40 +239,56 @@ Vue.component('my-reservas-cuidador-list', {
         },
     computed: {
         tipoDeReservas: function () {
-            if (this.status == 'CONFIRMATION_PENDING') {
+            if (this.status == 'creada-dueño') {
                 return 'pendientes'
             }
-            if (this.status == 'CANCEL') {
+            if (this.status == 'rechazada-cuidador') {
                 return 'canceladas'
             }
-            if (this.status == 'PAID') {
+            if (this.status == 'aceptada-cuidador') {
+                return 'Confirmadas'
+            }
+            if (this.status == 'pagada-dueño') {
                 return 'Pagadas'
+            }
+            if (this.status == 'finalizada') {
+                return 'Pendiente de Calificacion'
             }
             return 'Error'
         },
         listClass: function () {
-            if (this.status == 'CONFIRMATION_PENDING') {
+            if (this.status == 'creada-dueño') {
                 return 'col-xs-12 col-md-7'
             }
-            if (this.status == 'CANCEL') {
+            if (this.status == 'rechazada-cuidador') {
                 return 'col-xs-12 col-md-10'
             }
-            if (this.status == 'PAID') {
+            if (this.status == 'aceptada-cuidador') {
+                return 'col-xs-12 col-md-10'
+            }
+            if (this.status == 'pagada-dueño') {
+                return 'col-xs-12 col-md-10'
+            }
+            if (this.status == 'finalizada') {
                 return 'col-xs-12 col-md-10'
             }
         },
         listColor: function () {
-            if (this.status == 'CONFIRMATION_PENDING') {
+            if (this.status == 'creada-dueño') {
                 return 'background: rgba(0, 169, 72, 0.15);'
             }
-            if (this.status == 'CANCEL') {
+            if (this.status == 'rechazada-cuidador') {
                 return 'background: rgba(243, 12, 12, 0.15);'
             }
-            if (this.status == 'ACCEPTED') {
+            if (this.status == 'aceptada-cuidador') {
                 return 'background: rgba(255,255,0,0.3);'
             }
-            if (this.status == 'PAID') {
+            if (this.status == 'pagada-dueño') {
                 return 'background: rgba(0,0,255,0.3); margin-bottom: 10px;'
+
+            }
+            if (this.status == 'finalizada') {
+                return 'background: rgba(0,255,0,0.3); margin-bottom: 10px;'
 
             }
         }

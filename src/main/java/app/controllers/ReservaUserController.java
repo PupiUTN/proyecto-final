@@ -39,7 +39,7 @@ public class ReservaUserController {
     public Reserva post(@RequestBody Reserva entity) throws Exception {
         //TODO setear info del cuidador asi nadie puede meter info que no es.
         mailService.sendEmail(entity.getCuidador().getUser(), MailType.BOOKING_REQUEST);
-        return reservaService.crearNuevaReserva(entity);
+        return reservaService.save(entity);
 
     }
     @PreAuthorize("isAuthenticated()")
@@ -69,5 +69,17 @@ public class ReservaUserController {
         return reservaService.getReserva(id);
     }
 
+    @PreAuthorize("isAuthenticated()")
+
+    @RequestMapping(value = "/PendientesReview/", method = RequestMethod.GET)
+    public long getPendientesReview() throws Exception {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
+        long id = myUserPrincipal.getUser().getId();
+        String status = "finalizada";
+        List reserva = reservaService.getReservasByUserIdAndStatus(id,status);
+        return reserva.size();
+
+    }
 
 }
