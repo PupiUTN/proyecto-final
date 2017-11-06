@@ -77,7 +77,7 @@ Vue.component('my-detalle-reserva', {
     <br>
     <br>
 
-    <div v-if="reserva.status === 'PAID'">
+    <div v-if="reserva.status === 'pagada-dueño'">
 
 
         <div id="footer">
@@ -294,12 +294,12 @@ Vue.component('my-detalle-reserva', {
     <div class="center-block">
 
         <div class="col-md-1"></div>
-        <div class="col-xs-8 col-md-4" v-if="reserva.status === 'CONFIRMATION_PENDING'" >
+        <div class="col-xs-8 col-md-4" v-if="reserva.status === 'creada-dueño'" >
             <a v-on:click="confirmarReservaButton()"  style="color: blue; border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Confirmar</a>
         </div>
 
 
-        <div class="col-xs-8 col-md-6" v-if="reserva.status !== 'CANCEL'" >
+        <div class="col-xs-8 col-md-6" v-if="reserva.status !== 'rechazada-cuidador'" >
             <a v-on:click="cancelarReservaActionButton()"  href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
         </div>
     </div>

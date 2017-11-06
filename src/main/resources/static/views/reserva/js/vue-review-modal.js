@@ -82,6 +82,7 @@
                 reserva: {
                     id:'',
                     status:'',
+
                 },
             },
              entity:{
@@ -132,6 +133,11 @@
                       this.entity.profileImage = this.calificacion.reserva.cuidador.user.profileImageUrl;
                       this.calificacion.from_owner = true;
                   }
+                 var id =  this.calificacion.reserva.id;
+                 var status =  this.calificacion.reserva.status;
+                 this.calificacion.reserva = {};
+                 this.calificacion.reserva.id = id;
+                 this.calificacion.reserva.status = status;
              })
              .catch(error => {
                  console.log(error);
@@ -148,10 +154,22 @@
             this.calificacion.puntaje = this.total;
            // var urlReview = "/api/calificaciones/";
            // this.setearEstadoReserva();
+           // this.calificacion.reserva.fechaInicio = "";
+            //this.calificacion.reserva.fechaFin = "";
             var payload = jQuery.extend(true, {}, this.calificacion);
             axios.post(this.url,payload )
                 .then((response) => {
                     console.log(response);
+                    if (this.rol ==="CUIDADOR")
+                    {
+                        var pendientesCuidador = parseInt(localStorage.getItem("pendingCountCuidador")) -1;
+
+                        localStorage.setItem("pendingCountCuidador",   pendientesCuidador);
+                    }
+                    else{
+                        var  pendientesUser = parseInt(localStorage.getItem("pendingCountUser")) -1;
+                        localStorage.setItem("pendingCountUser",   pendientesUser);
+                    }
                     sweetAlert({
                             title: " Review exitosa ",
                             text: "tu calificación  fue  guardarda  exitosamente.",

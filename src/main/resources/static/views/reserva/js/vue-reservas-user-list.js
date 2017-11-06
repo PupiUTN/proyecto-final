@@ -42,10 +42,10 @@ Vue.component('my-reservas-user-list', {
                                         <div class="col-xs-12 col-md-1">
                                             <p><b> Hasta </b> </br> {{ reserva.fechaFin }}</p>
                                         </div>
-                                        <div class="col-xs-12 col-md-3" v-if="reserva.status === 'CONFIRMATION_PENDING'">
+                                        <div class="col-xs-12 col-md-3" v-if="reserva.status === 'creada-dueño'">
                                             <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
                                         </div>                                        
-                                         <div class="col-xs-12 col-md-6" v-if="reserva.status === 'PAID'">
+                                         <div class="col-xs-12 col-md-6" v-if="reserva.status === 'pagada-dueño'">
                                             <a v-on:click="verDetalleCompletoButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                         </div>
                                           <div class="col-xs-12 col-md-3" v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-cuidador'">
@@ -170,16 +170,16 @@ Vue.component('my-reservas-user-list', {
     },
     computed: {
         tipoDeReservas: function () {
-            if (this.status == 'CONFIRMATION_PENDING') {
+            if (this.status == 'creada-dueño') {
                 return 'pendientes'
             }
-            if (this.status == 'CANCEL_BY_USER') {
+            if (this.status == 'rechazada-dueño') {
                 return 'canceladas'
             }
-            if (this.status == 'ACCEPTED') {
+            if (this.status == 'aceptada-cuidador') {
                 return 'Confirmadas'
             }
-            if (this.status == 'PAID') {
+            if (this.status == 'pagada-dueño') {
                 return 'Pagadas'
             }
             if (this.status == 'finalizada') {
@@ -188,16 +188,16 @@ Vue.component('my-reservas-user-list', {
             return 'Error'
         },
         listClass: function () {
-            if (this.status == 'CONFIRMATION_PENDING') {
+            if (this.status == 'creada-dueño') {
                 return 'col-xs-12 col-md-7'
             }
-            if (this.status == 'CANCEL_BY_USER') {
+            if (this.status == 'rechazada-dueño') {
                 return 'col-xs-12 col-md-10'
             }
-            if (this.status == 'ACCEPTED') {
+            if (this.status == 'aceptada-cuidador') {
                 return 'col-xs-12 col-md-10'
             }
-            if (this.status == 'PAID') {
+            if (this.status == 'pagada-dueño') {
                 return 'col-xs-12 col-md-10'
             }
             if (this.status == 'finalizada') {
@@ -205,17 +205,17 @@ Vue.component('my-reservas-user-list', {
             }
         },
         listColor: function () {
-            if (this.status == 'CONFIRMATION_PENDING') {
+            if (this.status == 'creada-dueño') {
                 return 'background: rgba(0, 169, 72, 0.15); margin-bottom: 10px;'
             }
-            if (this.status == 'CANCEL_BY_USER') {
+            if (this.status == 'rechazada-dueño') {
                 return 'background: rgba(243, 12, 12, 0.15); margin-bottom: 10px;'
             }
-            if (this.status == 'ACCEPTED') {
+            if (this.status == 'aceptada-cuidador') {
                 return 'background: rgba(255, 255, 0, 0.15); margin-bottom: 10px;'
 
             }
-            if (this.status == 'PAID') {
+            if (this.status == 'pagada-dueño') {
                 return 'background: rgba(0,0,255,0.3); margin-bottom: 10px;'
 
             }
