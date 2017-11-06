@@ -11,56 +11,6 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                         <div class="row">
 
                             <div class="col-md-12">
-
-<<<<<<< HEAD
-                    <!-- Main Search Input -->
-                    <my-buscar-cuidadores :is-index="isIndex"></my-buscar-cuidadores>
-                    
-                </div>
-                
-            </div>
-            <div class="row padding-top-10">
-                <!-- Filters -->
-                <div class="col-fs-12">
-                    <!-- Panel Dropdown -->
-                    <div class="panel-dropdown wide">
-                        <a href="#">Servicios</a>
-                        <div class="panel-dropdown-content checkboxes">
-
-                            <!-- Checkboxes -->
-                            <div class="row">
-                                <!--<input id="check-1" type="checkbox" name="check" class="all">
-                                <label for="check-1">Todos</label>-->
-                                <div v-for =" servicio in listaServicios">
-                                    <input :id="servicio.id" type="checkbox" :value="servicio.id" name="check" v-model="checkedServicios">
-                                    <label :for="servicio.id">{{servicio.nombre}}</label>
-                                </div>    
-                            </div>
-
-                            <!-- Buttons -->
-                            <div class="panel-buttons">
-                                <button class="panel-cancel">Cancelar</button>
-                                <button v-on:click="filtrar()" class="panel-apply">Aplicar</button>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- Panel Dropdown / End -->
-
-                    <!-- Panel Dropdown -->
-                    <div class="panel-dropdown">
-                        <a href="#">Precio</a>
-                        <div class="panel-dropdown-content">
-                            <div class="row">
-                                <label class="col-md-2 col-xs-6 margin-top-10">Desde:</label>
-                                <input class="inp" type="number" min="0" max="10000" style=" float: left;" placeholder="Desde" v-model="precioDesde">
-                                <label class="col-md-2 col-xs-6 col-md-offset-1 margin-top-10">Hasta:</label>
-                                <input class="inp" type="number" min="0" max="10000" style=" float: left;" placeholder="Hasta" v-model="precioHasta">
-                            </div>
-                            <div class="panel-buttons">
-                                <button class="panel-cancel">Cancelar</button>
-                                <button v-on:click="filtrar()" class="panel-apply">Aplicar</button>
-=======
                                 <!-- Main Search Input -->
                                 <my-buscar-cuidadores :is-index="isIndex"></my-buscar-cuidadores>
 
@@ -77,16 +27,18 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                                         <!-- Checkboxes -->
                                         <div class="row">
-                                            <div v-for=" servicio in listaServicios">
-                                                <input :id="servicio.nombre" type="checkbox" name="check">
-                                                <label :for="servicio.nombre">{{servicio.nombre}}</label>
+                                            <!--<input id="check-1" type="checkbox" name="check" class="all">
+                                            <label for="check-1">Todos</label>-->
+                                            <div v-for =" servicio in listaServicios">
+                                                <input :id="servicio.id" type="checkbox" :value="servicio.id" name="check" v-model="checkedServicios">
+                                                <label :for="servicio.id">{{servicio.nombre}}</label>
                                             </div>
                                         </div>
 
                                         <!-- Buttons -->
                                         <div class="panel-buttons">
                                             <button class="panel-cancel">Cancelar</button>
-                                            <button v-on:click="filtroServicio()" class="panel-apply">Aplicar</button>
+                                            <button v-on:click="filtrar()" class="panel-apply">Aplicar</button>
                                         </div>
 
                                     </div>
@@ -107,25 +59,10 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                                         </div>
                                         <div class="panel-buttons">
                                             <button class="panel-cancel">Cancelar</button>
-                                            <button v-on:click="filtrarPrecio()" class="panel-apply">Aplicar</button>
+                                            <button v-on:click="filtrar()" class="panel-apply">Aplicar</button>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Panel Dropdown / End -->
-                                <!-- Panel Dropdown 
-                                <div class="panel-dropdown">
-                                    <a href="#">Precio Mínimo</a>
-                                    <div class="panel-dropdown-content">
-                                        <input class="distance-radius" type="range" min="1" :max="precioMax" step="1" value="0" data-title="Precio Mínimo">
-                                        <div class="panel-buttons">
-                                            <button class="panel-cancel">Cancelar</button>
-                                            <button class="panel-apply">Aplicar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Panel Dropdown / End -->
-
->>>>>>> master
                             </div>
                             <!-- Filters / End -->
                         </div>
@@ -151,7 +88,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                     + getDatesUrl()" class="listing-item-container" :data-marker-id=n+1>
                                     <div class="listing-item">
 
-                                        <img :src="item.listaImagenes[0].url" alt="">
+                                        <img :src="item.user.profileImageUrl" alt="">
 
                                         <!--<div class="listing-badge now-open">Destacado</div>-->
 
@@ -167,12 +104,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                                         <span v-for="n in item.promedioReviews" class="star"></span>
                                         <span v-for="n in complemento(item.promedioReviews)" class="star empty"></span>
-
-<<<<<<< HEAD
-                            <img :src="item.user.profileImageUrl" alt="">
-=======
                                     </div>
->>>>>>> master
 
                                 </a>
 
@@ -202,8 +134,6 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             encontrados: 'Resultados',
             items: [],
             itemsSinFiltro:[],
-            itemsConFiltroPrecio:[],
-            itemsConFiltroServicio:[],
             formPost: true,
             map: null,
             placeID: null,
@@ -220,7 +150,6 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             precioHasta: null,
             markers:[],
             checkedServicios:[],
-            filtroServicioAnterior:0,
         }
     },
     mounted() {
@@ -440,38 +369,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 }else{
                     itemsFiltrar=this.itemsSinFiltro;
                 }*/
-                if (this.precioHasta) {
-                    if (this.precioDesde) {
-                        //console.log(Number(this.precioDesde)>Number(this.precioHasta));
-                        if(Number(this.precioDesde)>Number(this.precioHasta)){
-                            this.items=[];
-                        }else{
-                            for (var i = 0; i < itemsFiltrar.length; i++) {
-                                if (itemsFiltrar[i].precioPorNoche >= this.precioDesde && itemsFiltrar[i].precioPorNoche <= this.precioHasta) {
-                                    this.items.push(itemsFiltrar[i]);
-                                }
-                            }
-                        }
-                    } else {
-                        for (var i = 0; i < itemsFiltrar.length; i++) {
-                            if (itemsFiltrar[i].precioPorNoche <= this.precioHasta) {
-                                this.items.push(itemsFiltrar[i]);
-                            }
-                        }
-                    }
-                    this.itemsConFiltroPrecio=this.items;
-                }else{
-                    if(this.precioDesde){
-                        for (var i = 0; i < itemsFiltrar.length; i++) {
-                            if (itemsFiltrar[i].precioPorNoche >= this.precioDesde) {
-                                this.items.push(itemsFiltrar[i]);
-                            }
-                        }
-                        this.itemsConFiltroPrecio=this.items;
-                    }else{
-                        this.items=itemsFiltrar;
-                    }
-                }
+
                 this.calcularEncontrados();
         },
         filtrarServicio(){
@@ -485,26 +383,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             var itemsFiltrar = this.items;
             this.items=[];
             var tieneServicio=[];
-            if(this.checkedServicios && this.checkedServicios.length>0){
-                this.itemsConFiltroServicio=[];
-                for(var i=0;i<itemsFiltrar.length;i++){
-                    tieneServicio=[];
-                    for(var j=0;j<itemsFiltrar[i].listaServicios.length;j++){
-                        for(var k=0;k<this.checkedServicios.length;k++){
-                            if(itemsFiltrar[i].listaServicios[j].id==this.checkedServicios[k]){
-                                tieneServicio.push(true);
-                                console.log("matcheo");
-                                break;
-                            }
-                        }
-                    }
-                    if(tieneServicio.length==this.checkedServicios.length) {
-                        this.items.push(itemsFiltrar[i]);
-                    }
-                }
-                this.itemsConFiltroServicio=this.items;
-                this.calcularEncontrados();
-            }else{
+
                 this.filtrarPrecio();
 /*
                 if(!this.itemsConFiltroPrecio || this.itemsConFiltroPrecio.length==0){
@@ -516,10 +395,73 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 this.itemsConFiltroServicio=[];
                 this.calcularEncontrados();*/
 
-            }
+
 
         },
         filtrar(){
+            this.items = [];
+            var banderaServicios=0;
+            var itemsFiltrar=this.itemsSinFiltro;
+            var itemsFiltroPrecio=[];
+            //filtro precio
+            if (this.precioHasta) {
+                if (this.precioDesde) {
+                    for (var i = 0; i < itemsFiltrar.length; i++) {
+                        if (itemsFiltrar[i].precioPorNoche >= this.precioDesde && itemsFiltrar[i].precioPorNoche <= this.precioHasta) {
+                            itemsFiltroPrecio.push(itemsFiltrar[i]);
+                        }
+                    }
+                } else {
+                    for (var i = 0; i < itemsFiltrar.length; i++) {
+                        if (itemsFiltrar[i].precioPorNoche <= this.precioHasta) {
+                            itemsFiltroPrecio.push(itemsFiltrar[i]);
+                        }
+                    }
+                }
+            }else{
+                if(this.precioDesde){
+                    for (var i = 0; i < itemsFiltrar.length; i++) {
+                        if (itemsFiltrar[i].precioPorNoche >= this.precioDesde) {
+                            itemsFiltroPrecio.push(itemsFiltrar[i]);
+                        }
+                    }
+                }else{
+                    if(!this.checkedServicios || this.checkedServicios.length==0) {
+                        this.items=this.itemsSinFiltro;
+                    }
+                }
+            }
+
+            if(itemsFiltroPrecio.length==0){
+                itemsFiltroPrecio=itemsFiltrar;
+            }
+
+            //filtro servicio
+            if(this.checkedServicios && this.checkedServicios.length>0) {
+                this.itemsConFiltroServicio = [];
+                for (var i = 0; i < itemsFiltroPrecio.length; i++) {
+                    banderaServicios = 0;
+                    console.log("=======");
+                    console.log(itemsFiltroPrecio[i].user.fullName);
+                    console.log("---");
+                    for (var j = 0; j < itemsFiltroPrecio[i].listaServicios.length; j++) {
+                        console.log(itemsFiltroPrecio[i].listaServicios[j].nombre);
+                        for (var k = 0; k < this.checkedServicios.length; k++) {
+                            if(itemsFiltroPrecio[i].listaServicios[j].id == this.checkedServicios[k]){
+                                banderaServicios ++;
+                                console.log("--------match");
+                                break;
+                            }
+                        }
+                    }
+                    if (banderaServicios == this.checkedServicios.length) {
+                            this.items.push(itemsFiltroPrecio[i]);
+                    }
+                }
+            }
+                this.calcularEncontrados();
+
+
 
         },
         calcularEncontrados() {
