@@ -61,13 +61,33 @@ public class PaymentsService {
         return preference;
     }
 
-    public JSONObject getPaymentInfo(String paymentId) {
+    public JSONObject getPaymentInfo(String id, String topic) {
         try {
-                JSONObject paymentInfo = mp.getPaymentInfo(paymentId);
-                if(paymentInfo.getInt("status") == 200) {
-                    System.out.println(paymentInfo);
-                    logger.info(paymentInfo);
+            JSONObject merchantOrderInfo = null;
+            JSONObject paymentInfo;
+            if (topic.equalsIgnoreCase("payment")) {
+                paymentInfo = mp.get("/collections/notifications/" + id);
+                merchantOrderInfo = mp.get("/merchant_orders/" + paymentInfo
+                        .getJSONObject("response")
+                        .getJSONObject("collection")
+                        .getString("merchant_order_id"));
+            } else if (topic.equalsIgnoreCase("merchant_order")) {
+                merchantOrderInfo = mp.get("/merchant_orders/" + id);
+            }
+            if (merchantOrderInfo != null && merchantOrderInfo.getInt("status") == 200) {
+                Float paidAmount = 0f;
+                JSONArray payments = merchantOrderInfo.getJSONObject("response").getJSONArray("payments");
+                for (int i = 0; i < payments.length(); i++) {
+                    JSONObject payment = payments.getJSONObject(i);
+                    if ("approved".equalsIgnoreCase(payment.getString("status"))) {
+                        paidAmount += Float.parseFloat(payment.get("transaction_amount").toString());
+                    }
                 }
+                Float bookingAmount = Float.parseFloat(merchantOrderInfo.getJSONObject("response").get("total_amount").toString());
+                if (paidAmount >= bookingAmount) {
+                    //LÓGICA QUE CAMBIA EL ESTADO DEL PAGO
+                }
+            }
         }
         catch(Exception e) {
             System.out.println(e.toString());

@@ -27,8 +27,8 @@ public class PaymentsController {
 
     @RequestMapping(value = "/notifications", method = RequestMethod.POST)
     public HttpStatus receiveNotification(@RequestParam("topic") String topic, @RequestParam("id") String paymentId)  {
-        if("payment".equalsIgnoreCase(topic)) {
-            JSONObject response = paymentsService.getPaymentInfo(paymentId);
+        if("payment".equalsIgnoreCase(topic) || "merchant_order".equalsIgnoreCase(topic)) {
+            JSONObject response = paymentsService.getPaymentInfo(paymentId, topic);
         }
         return HttpStatus.OK;
     }
