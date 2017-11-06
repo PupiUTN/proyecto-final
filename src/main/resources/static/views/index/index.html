@@ -14,20 +14,27 @@
 
     <!-- MY CSS
     ================================================== -->
-    <link href="/css/pace-theme.css" rel="stylesheet"/>
+    <link href="/css/page-loader.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/views/layout/vue-navbar.css">
     <link rel="stylesheet" href="/css/sweetalert.css"/>
     <link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
 
 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74104605-6"></script>
+    <script>  window.dataLayer = window.dataLayer || [];
 
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
+    gtag('js', new Date());
+    gtag('send', {hitType: 'pageview', page: location.pathname});
+    gtag('config', 'UA-74104605-6');</script>
 </head>
 
 <body>
 <div id="wrapper">
-    <!--<div style="background-color: #0f3e68; width: 100% ; height: 100px"></div>-->
-    <my-app current-view="my-index"></my-app>
+    <my-app current-view="my-index" ref="myIndex"></my-app>
 </div>
 
 
@@ -65,6 +72,13 @@
 <script type="text/javascript" src="/views/layout/vue-navbar.js"></script>
 <script type="text/javascript" src="/views/index/js/vue-index.js"></script>
 <script type="text/javascript" src="/views/index/js/vue-app-template.js"></script>
+
+
+<!-- NEW DATE PICKER -->
+<link href="/css/hotel-datepicker.css" rel="stylesheet">
+<script src="/js/fecha.min.js"></script>
+<script src="/js/hotel-datepicker.min.js"></script>
+<script src="/views/buscar/vue-hotel-datepicker.js"></script>
 
 
 <script>

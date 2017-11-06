@@ -5,6 +5,10 @@
  */
 package app.models.entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +17,9 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Vacuna implements Serializable {
 
     @Id
@@ -20,24 +27,6 @@ public class Vacuna implements Serializable {
     private Long id;
     @NotNull
     private String nombre;
-
-    public Vacuna() {}
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 
     @Override
     public String toString() {

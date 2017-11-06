@@ -14,8 +14,6 @@
 
     <link href="/css/pace-theme.css" rel="stylesheet"/>
 
-    <link href="../../assets/css/modal.css" rel="stylesheet"/>
-
 </head>
 
 <body xmlns:v-bind="http://www.w3.org/1999/xhtml">
@@ -59,7 +57,6 @@
                         <div class="avatar"><img id="imagenAvatar" src="/img/logo.png" alt=""/>
                         </div>
                         <div class="listing-titlebar-title">
-                            <!-- Reviews -->
 
 
                             <h2 style="margin-left: 100px;" id="nombre"> {{item.user.fullName}} <span
@@ -83,8 +80,8 @@
 							Cantidad maxima de perros: {{item.cantidadMaxDePerros}}
 
 					</span>
-                            <div class="star-rating"  id="rating" data-rating ="0">
-                                <div class="rating-counter"><a href="#listing-reviews">{{DataReview.length}} Reviews</a></div>
+                            <div class="star-rating" data-rating="5">
+                                <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
                             </div>
                         </div>
                     </div>
@@ -158,60 +155,6 @@
                     </div>
 
                     <!-- Reviews -->
-                    <div id="listing-reviews" class="listing-section">
-                        <h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Reviews <span>({{DataReview.length}})</span></h3>
-
-                        <div class="clearfix"></div>
-
-                        <!-- Reviews -->
-                        <section class="comments listing-reviews">
-
-                            <ul>
-                                <li v-for="(calificacion, index) in calificaciones  ">
-                                    <div class="col-md-2 col-xs-12 avatar"><img :src="calificacion.reserva.perro.user.profileImageUrl" alt="" /></div>
-                                    <!--<div class="col-xs-12"> <label class="col-xs-12"></label></div>-->
-                                    <div class="comment-content"><div class="arrow-comment"></div>
-                                        <div class="comment-by">{{calificacion.reserva.perro.user.username}}<span class="date">June 2017</span>
-                                            <div class="star-rating" >
-                                               <span v-bind:class="{'star': calificacion.puntaje >= 1, 'star empty': calificacion.puntaje < 1 }" ></span>
-                                                <span v-bind:class="{'star': calificacion.puntaje >= 2, 'star empty': calificacion.puntaje < 2 }"></span>
-                                                <span v-bind:class="{'star': calificacion.puntaje >= 3, 'star empty': calificacion.puntaje < 3 }" ></span>
-                                                <span v-bind:class="{'star': calificacion.puntaje >= 4, 'star empty': calificacion.puntaje < 4 }"></span>
-                                                <span v-bind:class="{'star': calificacion.puntaje >= 5, 'star empty': calificacion.puntaje < 5 }"></span>
-                                            </div>
-                                        </div>
-                                        <p> {{calificacion.comentario}}</p>
-                                       </div>
-
-                                </li>
-
-                            </ul>
-                        </section>
-
-
-
-                        <!-- Pagination -->
-                        <div class="clearfix"></div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!-- Pagination -->
-                                <div class="pagination-container margin-top-30">
-                                    <nav class="pagination">
-                                        <ul>
-
-
-                                            <li><a style=" background-color: crimson;" v-if="offset > 0"    v-on:click="previous()"><i class="sl sl-icon-arrow-left" style=" font-weight: bold;color: white;"></i></a></li>
-
-                                            <li><a style=" background-color: crimson;" v-if="offset + perPage < DataReview.length"  v-on:click="next()"><i class="sl sl-icon-arrow-right" style=" font-weight: bold;color: white;"></i></a></li>
-
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <!-- Pagination / End -->
-                    </div>
 
 
                 </div>
@@ -398,8 +341,6 @@
 <link rel="stylesheet" href="/views/layout/vue-navbar.css">
 <script type="text/javascript" src="/views/layout/vue-navbar.js"></script>
 <script src="js/cuidadores-perfil/cuidadores-perfil.js"></script>
-
-
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"></script>
 

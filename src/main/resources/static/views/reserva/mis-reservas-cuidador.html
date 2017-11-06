@@ -3,7 +3,7 @@
 
     <!-- Basic Page Needs
     ================================================== -->
-    <title>Pupi</title>
+    <title>Listeo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -16,10 +16,18 @@
     ================================================== -->
     <link rel="stylesheet" href="/views/layout/vue-navbar.css">
 
-    <link href="../../assets/css/modal.css" rel="stylesheet"/>
+    <link href="/css/page-loader.css" rel="stylesheet"/>
 
-    <link href="/css/pace-theme.css" rel="stylesheet"/>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74104605-6"></script>
+    <script>  window.dataLayer = window.dataLayer || [];
 
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('send', {hitType: 'pageview', page: location.pathname});
+    gtag('config', 'UA-74104605-6');</script>
 </head>
 
 <body>
@@ -45,8 +53,6 @@
 <script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
 <script type="text/javascript" src="/assets/scripts/custom.js"></script>
-
-<script src="./js/vue-review-modal.js"></script>
 
 <link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
 <script src="/assets/scripts/datedropper.js"></script>
