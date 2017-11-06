@@ -35,8 +35,12 @@ public class StorageServiceS3 implements StorageService {
     @Value("${app.aws.s3.bucketName}")
     private String bucketName;
 
+    private String systemFolderName = "tmp" + File.separator;
+
 
     public StorageServiceS3() {
+        File dir = new File(systemFolderName);
+        if (!dir.exists()) dir.mkdirs();
     }
 
 
@@ -63,13 +67,13 @@ public class StorageServiceS3 implements StorageService {
 
         return AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .withRegion(Regions.US_EAST_1.getName())
+                .withRegion(Regions.US_EAST_2.getName())
                 .build();
 
     }
 
     private File convert(MultipartFile file) throws IOException {
-        File convFile = new File(file.getOriginalFilename());
+        File convFile = new File(systemFolderName + file.getOriginalFilename());
         convFile.createNewFile();
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());

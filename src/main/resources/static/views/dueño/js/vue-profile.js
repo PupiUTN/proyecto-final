@@ -20,9 +20,10 @@ Vue.component('my-profile', {
                             <form id="imageForm" enctype="multipart/form-data">
                             <!-- Avatar -->
                             <img :src="user.profileImageUrl" alt="Foto de Perfil" height="286">
+                            
                             <div class="change-photo-btn">
                                 <div class="photoUpload">
-                                    <span><i class="fa fa-upload"></i> Subir Foto</span>
+                                    <span> <i class="fa fa-upload"></i> Subir Foto  </span>
                                     <input type="file" id="imageFile" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
                                 </div>
                             </div>
@@ -32,7 +33,9 @@ Vue.component('my-profile', {
                             <label class="margin-top-0">Nombre y Apellido</label>
                             <input v-model="user.fullName" value="" type="text" required>
                             <label class="margin-top-0">Fecha de Nacimiento</label>
-                            <input type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to" required>
+                            
+                            <input type="date" v-model="user.birthday" required>
+                            
                             <label class="margin-top-0">Género</label>
                             <select v-model="user.gender" required>
                                 <option disabled selected value="Seleccionar Género">Seleccionar Género</option>
@@ -93,7 +96,7 @@ Vue.component('my-profile', {
             user: {},
             url: "/api/user/",
             direccion: {
-                calle:''
+                calle: ''
             },
             formPost: true,
             uploadedFiles: [],
@@ -109,7 +112,7 @@ Vue.component('my-profile', {
                 country: 'long_name',
                 postal_code: 'short_name'
             },
-            autocomplete: null,
+            autocomplete: null
         }
 
     }
@@ -145,7 +148,7 @@ Vue.component('my-profile', {
         completar() {
             this.place = this.autocomplete.getPlace();
             //console.log(this.place);
-            if(this.place.types && this.place.types[0]!="street_address"){//si es direccion, tiene qie tener numero
+            if (this.place.types && this.place.types[0] != "street_address") {//si es direccion, tiene qie tener numero
                 sweetAlert("Información", "Ingrese una dirección válida (Calle Número, Ciudad, Provincia)", "info");
                 return;
             }
@@ -175,8 +178,8 @@ Vue.component('my-profile', {
                     }
                     if (addressType == "postal_code") {
                         this.direccion.codigoPostal = val;
-                    }else{
-                        this.direccion.codigoPostal=0;
+                    } else {
+                        this.direccion.codigoPostal = 0;
                     }
                     //document.getElementsByClassName(addressType)[0].value = val;
                     //console.log(this.place);
@@ -215,12 +218,13 @@ Vue.component('my-profile', {
         upload(formData) {
             axios.post('/api/file/', formData)
                 .then((response) => {
-
                     this.user.profileImageUrl = response.data;
+
                 })
                 .catch(error => {
                         console.log("ERROR AXIOS");
                         console.log(error);
+
                     }
                 );
         },
@@ -241,9 +245,7 @@ Vue.component('my-profile', {
                 if (this.user.direccion != null) {
                     this.direccion = this.user.direccion;
                 }
-                this.setDate();
-                //console.log(this.user);
-                $('#booking-date').dateDropper();
+                this.frontEndDateFormat();
 
             }
             else {
@@ -251,58 +253,28 @@ Vue.component('my-profile', {
                 sweetAlert("Oops...", "Necesitas estar logueado para acceder a este contenido", "error");
             }
         },
-        setDate() {
-            if (this.user.birthday) {
-                //console.log(this.user.birthday);
-                var initial = this.user.birthday.split("-");
-                var date = [initial[1], initial[0], initial[2]].join('-');
-                //console.log(date);
-                document.getElementById('booking-date').setAttribute('data-default-date', date);
-                document.getElementById('booking-date').setAttribute('data-lock', '');
-            }
-        },
         editUserInfo() {
+            //MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
+            this.backEndDateFormat();
+
             this.user.direccion = this.direccion;
-            if (this.validarBirthday()) {
-                this.isUserCompleted();
-                //console.log(this.user);
-                var payload = jQuery.extend(true, {}, this.user);
-                axios.put(this.url + this.user.id, payload)
-                    .then((response) => {
+            this.isUserCompleted();
+            //console.log(this.user);
+            var payload = jQuery.extend(true, {}, this.user);
+            axios.put(this.url + this.user.id, payload)
+                .then((response) => {
 
-                        sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
-                        console.log(response);
-                    })
-                    .catch(error => {
-                            console.log(error);
+                    sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
+                    this.frontEndDateFormat();
+                    console.log(response);
+                })
+                .catch(error => {
+                        console.log(error);
 
-                        }
-                    );
+                    }
+                );
 
 
-            }
-        },
-        validarBirthday() {
-            var birthday = document.getElementById('booking-date').value;
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1; //January is 0!
-            var yyyy = today.getFullYear();
-            if (dd < 10) {
-                dd = '0' + dd
-            }
-            if (mm < 10) {
-                mm = '0' + mm
-            }
-            today = dd + '-' + mm + '-' + yyyy;
-            if (birthday == today) {
-                this.user.birthday = null;
-                sweetAlert("Alerta!", "Seleccione una fecha de nacimiento.", "warning");
-                return false;
-            } else {
-                this.user.birthday = birthday;
-                return true;
-            }
         },
         isUserCompleted() {
             this.user.status = "INCOMPLETED";
@@ -334,6 +306,22 @@ Vue.component('my-profile', {
             this.user.status = "COMPLETED";
 
 
+        },
+        frontEndDateFormat() {
+            //MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
+            this.user.birthday = fecha.format(fecha.parse(this.user.birthday, 'YYYY-MM-DD hh:mm:ss'), 'YYYY-MM-DD');
+        },
+        backEndDateFormat() {
+            //MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
+            this.user.birthday = fecha.format(fecha.parse(this.user.birthday, 'YYYY-MM-DD'), 'YYYY-MM-DD hh:mm:ss');
+        }
+    },
+
+    filters: {
+        dateFormat: function (value) {
+            if (value) {
+                return fecha.parse(value, 'YYYY-MM-DD hh:mm:ss');
+            }
         }
     }
 });

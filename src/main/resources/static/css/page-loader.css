@@ -17,3 +17,24 @@
     background-position: center;
     display: none;
 }
+
+.loader_ajax_small {
+    border: 2px solid #f3f3f3 !important;
+    border-radius: 50%;
+    border-top: 2px solid #2D2D2D !important;
+    width: 29px;
+    height: 29px;
+    margin:10px auto;
+    -webkit-animation: spin_loader_ajax_small 2s linear infinite;
+    animation: spin_loader_ajax_small 2s linear infinite;
+}
+
+@-webkit-keyframes spin_loader_ajax_small {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin_loader_ajax_small {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

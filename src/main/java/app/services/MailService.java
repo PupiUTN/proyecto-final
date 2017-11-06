@@ -10,33 +10,24 @@ import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
 import com.amazonaws.services.simpleemail.model.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MailService {
-    private static final String FROM = "reservas@pupi.com.ar";
+    private final String FROM = "reservas@pupi.com.ar";
     @Value("${app.aws.ses.accessKey}")
-    private static String accesskey;
+    private String accesskey;
 
     @Value("${app.aws.ses.secretKey}")
-    private static String secretKey;
+    private String secretKey;
 
-    public static int sendEmail(User user, MailType type) {
+    public int sendEmail(User user, MailType type) {
 
         try {
-            BasicAWSCredentials credentials = new BasicAWSCredentials(accesskey, secretKey);
-            AmazonSimpleEmailServiceClientBuilder builder = AmazonSimpleEmailServiceClientBuilder
-                    .standard()
-                    .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                    .withRegion(Regions.US_EAST_1.getName())
-                    .withClientConfiguration(
-                            new ClientConfiguration()
-                                    .withConnectionTimeout(3000)
-                                    .withRequestTimeout(3000));
-
-            AmazonSimpleEmailService service = builder.build();
+            AmazonSimpleEmailService client = getClient();
             SendEmailRequest sendEmailRequest = createEmailRequest(FROM, user.getEmail(), type, user.getUsername());
-            SendEmailResult sendEmailResult = service.sendEmail(sendEmailRequest);
+            SendEmailResult sendEmailResult = client.sendEmail(sendEmailRequest);
             return sendEmailResult.getSdkHttpMetadata().getHttpStatusCode();
         } catch (Exception e) {
             throw new AmazonSimpleEmailServiceException(e.toString());
@@ -53,6 +44,24 @@ public class MailService {
         Message message = new Message().withSubject(subjectContent).withBody(body);
 
         return new SendEmailRequest().withSource(from).withDestination(destination).withMessage(message);
+
+    }
+
+
+    @Bean
+    private AmazonSimpleEmailService getClient() {
+        BasicAWSCredentials credentials = new BasicAWSCredentials(accesskey, secretKey);
+        AmazonSimpleEmailServiceClientBuilder builder = AmazonSimpleEmailServiceClientBuilder
+                .standard()
+                .withCredentials(new AWSStaticCredentialsProvider(credentials))
+                .withRegion(Regions.US_EAST_1.getName())
+                .withClientConfiguration(
+                        new ClientConfiguration()
+                                .withConnectionTimeout(3000)
+                                .withRequestTimeout(3000));
+
+        AmazonSimpleEmailService service = builder.build();
+        return service;
 
     }
 }
