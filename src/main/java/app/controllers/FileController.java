@@ -3,6 +3,7 @@ package app.controllers;
 import app.models.support.FileJson;
 import app.services.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,9 +19,10 @@ public class FileController {
     private final StorageService storageService;
 
     @Autowired
-    public FileController(StorageService storageService) {
+    public FileController(@Qualifier("storageServiceS3") StorageService storageService) {
         this.storageService = storageService;
     }
+
     @GetMapping("/")
     public List<FileJson> listUploadedFiles() throws IOException {
         return storageService.loadAll();

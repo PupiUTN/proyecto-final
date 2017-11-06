@@ -7,7 +7,7 @@ spring:
     validationQuery: SELECT 1
  jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
     show-sql: true
     properties:
@@ -27,3 +27,9 @@ server:
 java:
   runtime:
       version: 1.8
+
+app:
+  aws:
+      s3.bucketName: pupi-images
+      accessKey: AKIAJC5QINGQL2PXT7TA
+      secretKey: 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
