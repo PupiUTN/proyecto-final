@@ -11,14 +11,14 @@
     ================================================== -->
     <link rel="stylesheet" href=" ../../assets/css/style.css">
     <link rel="stylesheet" href="../../assets/css/colors/main.css" id="colors">
-    <link rel="stylesheet" href="../../assets/css/modal.css">
+
 
 
     <!-- MY CSS
     ================================================== -->
-
+    <link href="../../assets/css/modal.css" rel="stylesheet"/>
     <!--<script src="/js/pace.min.js"></script>-->
-    <link href="/css/pace-theme.css" rel="stylesheet"/>
+    <link href="../../css/page-loader.css" rel="stylesheet"/>
 
 
 </head>
@@ -28,7 +28,7 @@
 <!-- Wrapper -->
 <div id="wrapper">
     <div id="page-loader"></div>
-    <my-dashboard current-view="my-detalle-reserva" ref="myDetalleReserva"></my-dashboard>
+    <my-dashboard current-view="Review" ref="Review"></my-dashboard>
 </div>
 <!-- Wrapper / End -->
 
@@ -58,8 +58,10 @@
 <script type="text/javascript" src="../../views/dashboard/js/vue-header.js"></script>
 <script type="text/javascript" src="../../views/dashboard/js/vue-sidebar.js"></script>
 <!--own-->
-<script src="js/vue-detalle-reserva.js"></script>
+
 <script src="js/vue-review-modal.js"></script>
+
+
 
 
 <!--INIT-->
@@ -71,33 +73,6 @@
     });
 </script>
 
-
-<style type="text/css">
-    .zoom {
-        transition: 1.5s ease;
-        -moz-transition: 1.5s ease; /* Firefox */
-        -webkit-transition: 1.5s ease; /* Chrome - Safari */
-        -o-transition: 1.5s ease; /* Opera */
-        position: relative;
-        z-index: 1;
-
-    }
-
-    .zoom:hover {
-        transform: scale(2);
-        -moz-transform: scale(2); /* Firefox */
-        -webkit-transform: scale(2); /* Chrome - Safari */
-        -o-transform: scale(2); /* Opera */
-        -ms-transform: scale(2); /* IE9 */
-        position: relative;
-        z-index: 1;
-        width: 200%;
-        height: 200%;
-        margin-left: 400px;
-
-    }
-
-</style>
 
 </body>
 </html>

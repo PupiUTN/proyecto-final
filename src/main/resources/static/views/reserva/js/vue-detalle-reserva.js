@@ -79,67 +79,68 @@ Vue.component('my-detalle-reserva', {
 
     <div v-if="reserva.status === 'PAID'">
 
-        
+
         <div id="footer">
 
-            
-                <!-- Title -->
-                <div class="row with-forms">
-                <div class="col-md-1"> </div>
-                    <div class="col-md-6">
-                        <strong class="margin-bottom-5"><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px;"></i>Número De reserva</strong>
-                        <p> {{numeroReserva}}</p>
-                    </div>
 
-                    <div class="col-md-4">
-                        <strong class="margin-bottom-5"><i class="im im-icon-Email" style="color:red; margin-right: 10px;"></i>Email    </strong>
-                     <p>   {{reserva.perro.user.email}}</p>
-                    </div>
+            <!-- Title -->
+            <div class="row with-forms">
+                <div class="col-md-1"> </div>
+                <div class="col-md-7">
+                    <strong class="margin-bottom-5"><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px;"></i>Número De reserva</strong>
+                    <p> {{reserva.id}}</p>
                 </div>
 
-                <!-- Row -->
-                <div class="row with-forms">
-                <div class="col-md-1"> </div>
-                    <!-- Status -->
-                    <div class="col-md-6">
-                        <strong class="margin-bottom-5"><i class="im im-icon-Old-Telephone" style="color:red; margin-right: 10px;"></i>Teléfono  </strong>
-                     <p>    {{reserva.perro.user.phone}}</p>
-                    </div>
-
-                    <!-- Type -->
-                    <div class="col-md-4">
-                        <strong class="margin-bottom-5"> <i class="im im-icon-Birthday-Cake" style="color:red; margin-right: 10px;"></i>Edad   </strong>
-                     <p>   {{edadUsuario}}</p>
-                    </div>
-
+                <div class="col-md-4">
+                    <strong class="margin-bottom-5"><i class="im im-icon-Email" style="color:red; margin-right: 10px;"></i>Email    </strong>
+                    <p>   {{reserva.perro.user.email}}</p>
                 </div>
-                <!-- Row / End -->
+            </div>
 
-                <div class="row with-forms">
+            <!-- Row -->
+            <div class="row with-forms">
                 <div class="col-md-1"> </div>
-                    <!-- Status -->
-                   
-                    <div class="col-md-6">
-                        <strong class="margin-bottom-5"><i class="im im-icon-City-Hall" style="color:red; margin-right: 10px;"></i>Ciudad</strong>
-                        <p> {{reserva.perro.user.direccion.ciudad}}</p>
-                    </div>
-                    
-                    <div class="col-md-4">
-                        <strong class="margin-bottom-5"><i class="im im-icon-Flag-2" style="color:red; margin-right: 10px;"></i>Provincia</strong>
-                        <p> {{reserva.perro.user.direccion.provincia}}</p>
-                    </div>
+                <!-- Status -->
+                <div class="col-md-7">
+                    <strong class="margin-bottom-5"><i class="im im-icon-Old-Telephone" style="color:red; margin-right: 10px;"></i>Teléfono  </strong>
+                    <p>    {{reserva.perro.user.phone}}</p>
                 </div>
 
+                <!-- Type -->
+                <div class="col-md-4">
+                    <strong class="margin-bottom-5"> <i class="im im-icon-Birthday-Cake" style="color:red; margin-right: 10px;"></i>Edad   </strong>
+                    <p>   {{edadUsuario}}</p>
+                </div>
 
-            
+            </div>
+            <!-- Row / End -->
+
+            <div class="row with-forms">
+                <div class="col-md-1"> </div>
+                <!-- Status -->
+
+                <div class="col-md-7">
+                    <strong class="margin-bottom-5"><i class="im im-icon-City-Hall" style="color:red; margin-right: 10px;"></i>Ciudad</strong>
+                    <p> {{reserva.perro.user.direccion.ciudad}}</p>
+                </div>
+
+                <div class="col-md-4">
+                    <strong class="margin-bottom-5"><i class="im im-icon-Flag-2" style="color:red; margin-right: 10px;"></i>Provincia</strong>
+                    <p> {{reserva.perro.user.direccion.provincia}}</p>
+                </div>
+            </div>
+
+
+                        
+
 
         </div>
 
 
-      
+
     </div>
-        <br>
-        <br>
+    <br>
+    <br>
     <h1 > Mascota a Cuidar </h1>
 
     <div id="footer">
@@ -161,10 +162,13 @@ Vue.component('my-detalle-reserva', {
                 <div class= col-md-6></div>
                 <p id="details" >
                     <strong><i class="im im-icon-Birthday-Cake" style="color:red; margin-right: 10px;"></i> Edad:</strong> {{edadPerro}} <br>
-
+                </p>
                 <div class= col-md-6></div>
+                <p>
                 <strong><i class="im im-icon-Dog" style="color:red; margin-right: 10px;"></i>Raza:</strong> {{reserva.perro.raza.nombre}} <br>
                 </p>
+
+       
 
             </div>
         </div>
@@ -182,8 +186,25 @@ Vue.component('my-detalle-reserva', {
                     <label >{{tamaño}}</label>
                 </div>
             </div>
+            <div class="col-md-1" style=" margin-right: 80px;"></div>
+             <div class="col-md-3">
+                
+                <div>
+                <strong class="  margin-bottom-5"><i class="im im-icon-Starfish" style="color:red; margin-right: 10px;"></i>Calificacion: </strong>
+                   <div class="star-rating"  id="rating" data-rating ="0">
+                  <span v-bind:class="{'star': puntaje >= 1, 'star empty': puntaje < 1 }" ></span>
+                   <span v-bind:class="{'star': puntaje >= 2, 'star empty': puntaje < 2 }"></span>
+                  <span v-bind:class="{'star': puntaje >= 3, 'star empty': puntaje < 3 }" ></span>
+                <span v-bind:class="{'star': puntaje >= 4, 'star empty': puntaje < 4 }"></span>
+                 <span v-bind:class="{'star': puntaje >= 5, 'star empty': puntaje < 5 }"></span>
+               </div>
+                <br>
+                 </div>
+            </div>
 
-
+           <!-- <div class=" col-md-5 col-xs-12 star-rating" id="rating" data-rating="3">
+                <div class="rating-counter"><a href="#listing-reviews"></a></div>&ndash;&gt;
+            </div>-->
 
 
             <div class="col-md-12" >
@@ -207,32 +228,35 @@ Vue.component('my-detalle-reserva', {
 
         <div id="listing-reviews" class="listing-section">
             <div class = "text-center">
-                <h3 class="listing-desc-headline margin-top-20 margin-bottom-20">Reviews <span>(1)</span></h3>
+                <h3 class="listing-desc-headline margin-top-20 margin-bottom-20">Reviews <span>({{DataReview.length}})</span></h3>
             </div>
             <div class="clearfix"></div>
             <div class = "col-2"> </div>
             <!-- Reviews -->
-
-            <section >
+         <section class="comments listing-reviews" >
 
                 <ul style=" list-style: none;">
-                    <li>
-
-                        <div class="col-xs-3 col-md-2 avatar"><img src="../../assets/images/review-image-01.jpg" alt=""/>
+                    <li v-for="(calificacion, index) in calificaciones  ">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2 col-xs-12 avatar"><img :src="calificacion.reserva.cuidador.user.profileImageUrl" alt=""/>
                         </div>
-
+                        
                         <div class="comment-content">
-                            <div class="col-xs-12">
-                                <div class=" comment-by">Fede Backhaus<span class="date">June 2017</span>
-                                    <div class="star-rating" data-rating="5"></div>
-                                </div>
 
-                                <p>Eres el mejor  persona que conoci en mi vida, hurra por ti, te cuidaré
-                                    siempre </p>
-                                <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review
-                                    <span>12</span></a>
+                            <div class="comment-by">{{calificacion.reserva.cuidador.user.username}}<span class="date"></span>
+                                    <div class="col-md-3 star-rating" >
+                                        <span v-bind:class="{'star': calificacion.puntaje >= 1, 'star empty': calificacion.puntaje < 1 }" ></span>
+                                        <span v-bind:class="{'star': calificacion.puntaje >= 2, 'star empty': calificacion.puntaje < 2 }"></span>
+                                        <span v-bind:class="{'star': calificacion.puntaje >= 3, 'star empty': calificacion.puntaje < 3 }" ></span>
+                                        <span v-bind:class="{'star': calificacion.puntaje >= 4, 'star empty': calificacion.puntaje < 4 }"></span>
+                                        <span v-bind:class="{'star': calificacion.puntaje >= 5, 'star empty': calificacion.puntaje < 5 }"></span>
+                                    </div>
+                                </div>
+                            
+                                <p> {{calificacion.comentario}}</p>
+
                             </div>
-                        </div>
+                        
                     </li>
 
                 </ul>
@@ -246,9 +270,11 @@ Vue.component('my-detalle-reserva', {
                     <div class="pagination-container margin-top-15">
                         <nav class="pagination">
                             <ul>
-                                <li><a href="#" class="current-page">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+
+                                <li><a style=" background-color: crimson;" v-if="offset > 0"    v-on:click="previous()"><i class="sl sl-icon-arrow-left" style=" font-weight: bold;color: white;"></i></a></li>
+
+                                <li><a style=" background-color: crimson;" v-if="offset + perPage < DataReview.length"  v-on:click="next()"><i class="sl sl-icon-arrow-right" style=" font-weight: bold;color: white;"></i></a></li>
+
                             </ul>
                         </nav>
                     </div>
@@ -273,13 +299,13 @@ Vue.component('my-detalle-reserva', {
         </div>
 
 
-        <div class="col-xs-8 col-md-3" v-if="reserva.status !== 'CANCEL'" >
+        <div class="col-xs-8 col-md-6" v-if="reserva.status !== 'CANCEL'" >
             <a v-on:click="cancelarReservaActionButton()"  href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
         </div>
     </div>
 
 
-</div> 
+</div>
     `,
     data:
         function () {
@@ -292,16 +318,16 @@ Vue.component('my-detalle-reserva', {
                             user: {
                                 fullName: '',
                                 profileImageUrl: '',
-                                email: '',
-                                phone: '',
-                                birthday: '',
-                                direccion: {
-                                    calle: '',
-                                    ciudad: '',
-                                    numero: '',
-                                    latitud: '',
-                                    longitud: '',
-                                    provincia: ''
+                                email:'',
+                                phone:'',
+                                birthday:'',
+                                direccion:{
+                                    calle:'',
+                                    ciudad:'',
+                                    numero:'',
+                                    latitud:'',
+                                    longitud:'',
+                                    provincia:''
 
                                 },
 
@@ -313,6 +339,7 @@ Vue.component('my-detalle-reserva', {
                             sexo: '',
                             tamaño: {},
                             listaVacunas: [],
+                            id:''
                         },
                         fechaInicio: "",
                         fechaFin: "",
@@ -329,8 +356,31 @@ Vue.component('my-detalle-reserva', {
                 edadPerro: '',
                 showModal: false,
                 tamaño: '',
-                edadUsuario: '',
-                numeroReserva: ''
+                edadUsuario:'',
+                numeroReserva:'',
+                puntaje: 0,
+                calificaciones:[{
+                    id:'',
+                    comentario:'',
+                    puntaje:'',
+                    from_owner:'',
+                    reserva: {
+                        id:'',
+                        status:'',
+                        cuidador:{
+                            user:{
+                                profileImageUrl:'',
+                                username:'',
+                            }
+                        },
+                        fechaTransaccion:'',
+                    },
+                }],
+                offset: 0,
+                navButtons:[],
+                perPage: 2,
+                DataReview:[],
+                puntajeUsuario:0,
 
             }
         },
@@ -348,9 +398,9 @@ Vue.component('my-detalle-reserva', {
                     this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);
                     var date = new Date(this.reserva.fechaTransaccion);
                     this.reserva.fechaTransaccion = date.toLocaleDateString();
-                    var dateEntrada = new Date(this.reserva.fechaInicio);
-                    var dateSalida = new Date(this.reserva.fechaFin);
-                    dateEntrada = dateEntrada.setDate(dateEntrada.getDate() + 1);
+                    var dateEntrada = new Date (this.reserva.fechaInicio);
+                    var dateSalida = new Date (this.reserva.fechaFin);
+                    dateEntrada =dateEntrada.setDate(dateEntrada.getDate() + 1);
                     dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
                     this.reserva.fechaInicio = new Date(dateEntrada).toLocaleDateString();
                     this.reserva.fechaFin = new Date(dateSalida).toLocaleDateString();
@@ -373,6 +423,7 @@ Vue.component('my-detalle-reserva', {
                     }
                     this.tamaño = this.reserva.perro.tamaño.nombre + " " + " (" + this.reserva.perro.tamaño.valorMinimo + " - " + this.reserva.perro.tamaño.valorMaximo + ")" + " kgs";
                     //  this.reserva.mensaje = " hola que tal buenos dias cmo va
+                    this.getCalificacionesPerro();
                 })
                 .catch(error => {
                     console.log(error);
@@ -483,6 +534,57 @@ Vue.component('my-detalle-reserva', {
             return edad;
 
         },
-    }
+        getCalificacionesPerro()
+        {
+            var urlCalificaciones = "/api/calificaciones/calificacionesPerro/";
+
+            axios.get(urlCalificaciones + '?id=' + this.reserva.perro.id)
+                .then((response) => {
+                    this.DataReview = response.data;
+                    var cont = 0;
+                    this.DataReview .forEach( function(item, value, array) {
+
+
+                        cont += item.puntaje;
+
+                    });
+                    if(this.DataReview.length > 0)
+                    {
+                        this.puntaje =Math.trunc(cont /this.DataReview.length);
+
+                        var h = document.getElementsByClassName("star empty");
+                        for (i = 0; i < (this.puntaje-1); i++) {
+                            h[0].className  = 'star' ;
+
+                        }
+
+                    }
+                    this.paginate();
+                })
+                .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error  ", "error");
+
+                    }
+                );
+
+
+        },
+        paginate() {
+            this.calificaciones = this.DataReview.slice(this.offset, this.offset + this.perPage);
+
+        },
+        previous() {
+            this.offset =  this.offset - this.perPage;
+        },
+        next () {
+            this.offset = this.offset + this.perPage;
+        },
+    },
+    watch: {
+        offset: function () {
+            this.paginate();
+        },
+    },
 
 });
