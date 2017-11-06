@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailService {
     private static final String FROM = "reservas@pupi.com.ar";
-    @Value("${app.aws.accessKey}")
+    @Value("${app.aws.ses.accessKey}")
     private static String accesskey;
 
-    @Value("${app.aws.secretKey}")
+    @Value("${app.aws.ses.secretKey}")
     private static String secretKey;
 
     public static int sendEmail(User user, MailType type) {

@@ -3,8 +3,11 @@ package app.services;
 import app.models.support.FileJson;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,10 +26,10 @@ public class StorageServiceS3 implements StorageService {
 
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Value("${app.aws.accessKey}")
+    @Value("${app.aws.s3.accessKey}")
     private String accesskey;
 
-    @Value("${app.aws.secretKey}")
+    @Value("${app.aws.s3.secretKey}")
     private String secretKey;
 
     @Value("${app.aws.s3.bucketName}")
@@ -47,9 +50,10 @@ public class StorageServiceS3 implements StorageService {
         String remoteFileName = remoteFile.getOriginalFilename();
         String remoteFileExtension = remoteFileName.substring(remoteFileName.lastIndexOf(".") + 1);
         String serverFileName = UUID.randomUUID().toString() + "." + remoteFileExtension;
-        client.putObject(bucketName, serverFileName, convert(remoteFile));
+        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, serverFileName, convert(remoteFile))
+                .withCannedAcl(CannedAccessControlList.PublicRead);
+        client.putObject(putObjectRequest);
         return String.valueOf(client.getUrl(bucketName, serverFileName));
-
 
     }
 
@@ -59,7 +63,7 @@ public class StorageServiceS3 implements StorageService {
 
         return AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
-
+                .withRegion(Regions.US_EAST_1.getName())
                 .build();
 
     }

@@ -30,6 +30,10 @@ java:
 
 app:
   aws:
-      s3.bucketName: pupi-images
-      accessKey: AKIAJC5QINGQL2PXT7TA
-      secretKey: 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
+      s3:
+        bucketName: pupi-images
+        accessKey: AKIAJMZIXQFQHRZGDRCQ
+        secretKey: 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
+      ses:
+        accessKey: AKIAJC5QINGQL2PXT7TA
+        secretKey: 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
