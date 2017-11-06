@@ -22,21 +22,21 @@ Vue.component('moderar-cuidador', {
                         <div class="col-xs-12">
                             <h3>{{solicitud.user.fullName}}</h3>
                             </div>
-                            <div class="col-lg-2 col-md-6 col-xs-6"> 
+                            <div class="col-lg-2 col-md-6 col-xs-6 padding-top-15 padding-bottom-15"> 
                             <a :href= "solicitud.dniImagenes[0].url">
-                        <img :src="solicitud.dniImagenes[0].url" alt="DNI" >
+                        <img :src="solicitud.dniImagenes[0].url" alt="DNI" v-on:click='mostrar(solicitud.dniImagenes[0].url)'>
                         </a>
                     </div>
-                    <div class="col-lg-2 col-md-6 col-xs-6">
+                    <div class="col-lg-2 col-md-6 col-xs-6 padding-top-15 padding-bottom-15">
                     <a :href= "solicitud.dniImagenes[1].url">
                         <img :src="solicitud.dniImagenes[1].url" alt="DNI" v-on:click='mostrar(solicitud.dniImagenes[1].url)'>
                     </a>
                     </div>
-                            <div class="col-lg-2 col-md-6 col-xs-12">
-                            <span>DNI: {{solicitud.dni}}</span>
+                            <div class="col-lg-2 col-md-6 col-xs-12 padding-top-15">
+                            <span style="text-decoration: underline;">DNI</span>: {{solicitud.dni}}
                             <!--<span>{{solicitud.user.direccion.direccionLinea1}}, {{solicitud.user.direccion.ciudad}}, {{solicitud.user.direccion.provincia}}</span>-->
                             </div>
-                            <div class="col-lg-3 col-md-6 col-xs-12">
+                            <div class="col-lg-3 col-md-6 col-xs-12 padding-top-15">
                             <span>{{solicitud.descripcion}}</span>
                             </div>
                         </div>

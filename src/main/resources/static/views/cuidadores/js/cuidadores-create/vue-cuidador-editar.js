@@ -365,7 +365,7 @@ Vue.component('my-cuidador-edit', {
 
             var urlCiudador = "/api/cuidadores/";
             var payload = jQuery.extend(true, {}, this.cuidador);
-
+            console.log(this.cuidador);
             axios.put(urlCiudador + this.cuidador.id, payload)
                 .then((response) => {
 

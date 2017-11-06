@@ -48,8 +48,8 @@ let myLogin = Vue.component('my-login', {
                 </div>
                 
                 <ul>
-                    <li><a href="/views/dashboard/dashboard.html"><i class="sl sl-icon-settings"></i> Mi cuenta</a></li>
-                    <li><a v-on:click="logout()"><i class="sl sl-icon-power"></i> Logout</a></li>
+                    <li><a v-on:click="micuenta()" ><i class="sl sl-icon-settings"></i> Mi cuenta</a></li>
+                    <li><a v-on:click="logout()"><i class="sl sl-icon-power"></i> Salir</a></li>
                 </ul>
             </div>
         </div>
@@ -64,7 +64,7 @@ let myLogin = Vue.component('my-login', {
         <div class="header-widget">
             <a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i
                     class="sl sl-icon-login"></i>
-                Sign In</a>
+                Iniciar Sesión o Registrarse</a>
         </div>
     </div>
     <!-- Right Side Content / End -->
@@ -73,15 +73,15 @@ let myLogin = Vue.component('my-login', {
     <div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
 
         <div class="small-dialog-header">
-            <h3>Sign In</h3>
+            <h3>Iniciar Sesión o Registrarse</h3>
         </div>
 
         <!--Tabs -->
         <div class="sign-in-form style-1">
 
             <ul class="tabs-nav">
-                <li class=""><a href="#tab1">Log In</a></li>
-                <li><a href="#tab2">Register</a></li>
+                <li class=""><a href="#tab1">Iniciar Sesión</a></li>
+                <li><a href="#tab2">Registrarse</a></li>
             </ul>
 
             <div class="tabs-container alt">
@@ -101,7 +101,7 @@ let myLogin = Vue.component('my-login', {
                         </p>
 
                         <p class="form-row form-row-wide">
-                            <label for="password">Password:
+                            <label for="password">Contraseña:
                                 <i class="im im-icon-Lock-2"></i>
                                 <input class="input-text" type="password"
                                        v-model="credentials.password"
@@ -113,7 +113,7 @@ let myLogin = Vue.component('my-login', {
                          </div>
                         <div class="form-row">
                             <button class="button border margin-top-5">
-                              <i class="fa fa-spinner fa-spin" v-show="loginLoading"></i>  Iniciar Sesion
+                              <i class="fa fa-spinner fa-spin" v-show="loginLoading"></i>  Iniciar Sesión
                             </button>
                         </div>
 
@@ -126,7 +126,7 @@ let myLogin = Vue.component('my-login', {
 
                     <form class="register" v-on:submit.prevent='register()'>
                         <p class="form-row form-row-wide">
-                            <label for="email2">Username:
+                            <label for="email2">Usuario:
                                 <i class="im im-icon-Male"></i>
                                 <input type="username" class="input-text" v-model="user.username"
                                        id="username" value="" required/>
@@ -134,7 +134,7 @@ let myLogin = Vue.component('my-login', {
                         </p>
                         
                         <p class="form-row form-row-wide">
-                            <label for="email2">Email Address:
+                            <label for="email2">Email:
                                 <i class="im im-icon-Mail"></i>
                                 <input type="email" class="input-text" v-model="user.email"
                                        id="email2" value="" required/>
@@ -142,7 +142,7 @@ let myLogin = Vue.component('my-login', {
                         </p>
 
                         <p class="form-row form-row-wide">
-                            <label for="password1">Password:
+                            <label for="password1">Contraseña:
                                 <i class="im im-icon-Lock-2"></i>
                                 <input class="input-text" type="password"
                                        v-model="user.password" id="password1" required/>
@@ -150,7 +150,7 @@ let myLogin = Vue.component('my-login', {
                         </p>
 
                         <p class="form-row form-row-wide">
-                            <label for="password2">Repeat Password:
+                            <label for="password2">Repetir Contraseña:
                                 <i class="im im-icon-Lock-2"></i>
                                 <input class="input-text" type="password"
                                        v-model="user.matchingPassword" 
@@ -160,11 +160,11 @@ let myLogin = Vue.component('my-login', {
                         </p>
 
                         <div class="notification warning" v-show="matchingPassword">
-                            <p><span>Warning!</span> Password does not match.</p>
+                            <p><span>Warning!</span> La contraseña no coincide.</p>
                         </div>
                         <input type="submit" class="button border fw margin-top-10"
                                name="register"
-                               value="Register"/>
+                               value="Registrarse"/>
 
                     </form>
                 </div>
@@ -187,6 +187,8 @@ let myLogin = Vue.component('my-login', {
     },
     methods: {
         getUserProfile() {
+
+
             axios.get(this.meUrl)
                 .then((response) => {
                     console.log(response.data);
@@ -211,7 +213,7 @@ let myLogin = Vue.component('my-login', {
 
         },
         login() {
-
+            localStorage.setItem("pending", 1);
             this.loginLoading = true;
             axios.post(this.entryUrl, jQuery.param(this.credentials))
                 .then((response) => {
@@ -267,8 +269,16 @@ let myLogin = Vue.component('my-login', {
                 type: 'inline',
                 modal: true
             });
+        },
+        micuenta()
+        { //href="/views/dashboard/dashboard.html"
+            localStorage.setItem("pending", true);
+            localStorage.setItem("pendingCountCuidador", 0);
+            localStorage.setItem("pendingCountUser", 0);
+            document.location.href = "/views/dashboard/dashboard.html";
         }
-    },
+    }
+    ,
     computed: {
         matchingPassword() {
             if (!this.isMounted)

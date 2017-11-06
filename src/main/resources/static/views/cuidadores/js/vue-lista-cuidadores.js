@@ -11,7 +11,6 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                         <div class="row">
 
                             <div class="col-md-12">
-
                                 <!-- Main Search Input -->
                                 <my-buscar-cuidadores :is-index="isIndex"></my-buscar-cuidadores>
 
@@ -28,16 +27,18 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                                         <!-- Checkboxes -->
                                         <div class="row">
-                                            <div v-for=" servicio in listaServicios">
-                                                <input :id="servicio.nombre" type="checkbox" name="check">
-                                                <label :for="servicio.nombre">{{servicio.nombre}}</label>
+                                            <!--<input id="check-1" type="checkbox" name="check" class="all">
+                                            <label for="check-1">Todos</label>-->
+                                            <div v-for =" servicio in listaServicios">
+                                                <input :id="servicio.id" type="checkbox" :value="servicio.id" name="check" v-model="checkedServicios">
+                                                <label :for="servicio.id">{{servicio.nombre}}</label>
                                             </div>
                                         </div>
 
                                         <!-- Buttons -->
                                         <div class="panel-buttons">
                                             <button class="panel-cancel">Cancelar</button>
-                                            <button v-on:click="filtroServicio()" class="panel-apply">Aplicar</button>
+                                            <button v-on:click="filtrar()" class="panel-apply">Aplicar</button>
                                         </div>
 
                                     </div>
@@ -58,24 +59,10 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                                         </div>
                                         <div class="panel-buttons">
                                             <button class="panel-cancel">Cancelar</button>
-                                            <button v-on:click="filtrarPrecio()" class="panel-apply">Aplicar</button>
+                                            <button v-on:click="filtrar()" class="panel-apply">Aplicar</button>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Panel Dropdown / End -->
-                                <!-- Panel Dropdown 
-                                <div class="panel-dropdown">
-                                    <a href="#">Precio Mínimo</a>
-                                    <div class="panel-dropdown-content">
-                                        <input class="distance-radius" type="range" min="1" :max="precioMax" step="1" value="0" data-title="Precio Mínimo">
-                                        <div class="panel-buttons">
-                                            <button class="panel-cancel">Cancelar</button>
-                                            <button class="panel-apply">Aplicar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Panel Dropdown / End -->
-
                             </div>
                             <!-- Filters / End -->
                         </div>
@@ -101,7 +88,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                     + getDatesUrl()" class="listing-item-container" :data-marker-id=n+1>
                                     <div class="listing-item">
 
-                                        <img :src="item.listaImagenes[0].url" alt="">
+                                        <img :src="item.user.profileImageUrl" alt="">
 
                                         <!--<div class="listing-badge now-open">Destacado</div>-->
 
@@ -117,7 +104,6 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                                         <span v-for="n in item.promedioReviews" class="star"></span>
                                         <span v-for="n in complemento(item.promedioReviews)" class="star empty"></span>
-
                                     </div>
 
                                 </a>
@@ -147,7 +133,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             url: "/api/cuidadores/search/",
             encontrados: 'Resultados',
             items: [],
-            itemsSinFiltro: [],
+            itemsSinFiltro:[],
             formPost: true,
             map: null,
             placeID: null,
@@ -162,7 +148,8 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             listaServicios: null,
             precioDesde: null,
             precioHasta: null,
-            markers: [],
+            markers:[],
+            checkedServicios:[],
         }
     },
     mounted() {
@@ -265,79 +252,87 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
         //añade los marcadores al mapa
         mostrarEnMapa() {
             this.clearMarkers();
-            if (this.items != null && this.items.length > 0) {
-                if (this.items.length > 1) {
-                    var bounds = new google.maps.LatLngBounds();
-                    for (item of this.items) {
-                        var marker = new google.maps.Circle({
-                            strokeColor: '#FF0000',
-                            strokeOpacity: 0.8,
-                            strokeWeight: 2,
-                            fillColor: '#FF0000',
-                            fillOpacity: 0.35,
-                            map: this.map,
-                            center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
-                            radius: 300,
-                        });
+            if (this.items != null) {
+                if (this.items.length > 0) {
+                    if (this.items.length > 1) {
+                        var bounds = new google.maps.LatLngBounds();
+                        for (item of this.items) {
+                            var marker = new google.maps.Circle({
+                                strokeColor: '#FF0000',
+                                strokeOpacity: 0.8,
+                                strokeWeight: 2,
+                                fillColor: '#FF0000',
+                                fillOpacity: 0.35,
+                                map: this.map,
+                                center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
+                                radius: 300,
+                            });
+                            //extend the bounds to include each marker's position
+                            var id = item.id;
 
-                        //extend the bounds to include each marker's position
-                        var id = item.id;
-                        var content =
-                            '<div id="bodyContent">' +
-                            '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
-                            '<h4>' + item.user.fullName + '</h4></a> ' +
-                            '</div>';
-                        var infowindow = new google.maps.InfoWindow();
-                        google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
-                            return function () {
-                                infowindow.setContent(content);
-                                infowindow.setPosition(marker.getCenter());
-                                infowindow.open(this.map, marker);
+                            var content =
+                                '<div id="bodyContent">' +
+                                '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
+                                '<h4>' + item.user.fullName + '</h4></a> ' +
+                                '</div>';
+                            var infowindow = new google.maps.InfoWindow();
+                            google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
+                                return function () {
+                                    infowindow.setContent(content);
+                                    infowindow.setPosition(marker.getCenter());
+                                    infowindow.open(this.map, marker);
 
-                            };
-                        })(marker, content, infowindow));
+                                };
+                            })(marker, content, infowindow));
+                            bounds.extend(marker.center);
 
-                        bounds.extend(marker.center);
-                        this.markers.push(marker);
+                            this.markers.push(marker);
+                        }
+                        //now fit the map to the newly inclusive bounds
+                        this.map.fitBounds(bounds);
+
+                    } else {
+
+                        for (item of this.items) {
+                            var marker = new google.maps.Circle({
+                                strokeColor: '#FF0000',
+                                strokeOpacity: 0.8,
+                                strokeWeight: 2,
+                                fillColor: '#FF0000',
+                                fillOpacity: 0.35,
+                                map: this.map,
+                                center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
+                                radius: 300,
+                            });
+                            //extend the bounds to include each marker's position
+                            var id = item.id;
+
+                            var content =
+                                '<div id="bodyContent">' +
+                                '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
+                                '<h4>' + item.user.fullName + '</h4></a> ' +
+                                '</div>';
+                            var infowindow = new google.maps.InfoWindow();
+                            google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
+                                return function () {
+                                    infowindow.setContent(content);
+                                    infowindow.setPosition(marker.getCenter());
+                                    infowindow.open(this.map, marker);
+
+                                };
+                            })(marker, content, infowindow));
+                            this.markers.push(marker);
+                            var centro = new google.maps.LatLng(this.placeLat, this.placeLng);
+                            this.map.setCenter(centro);
+                            this.map.setZoom(12);
+                        }
                     }
-
-                    //now fit the map to the newly inclusive bounds
-                    this.map.fitBounds(bounds);
-
-                } else {
-                    for (item of this.items) {
-                        var marker = new google.maps.Circle({
-                            strokeColor: '#FF0000',
-                            strokeOpacity: 0.8,
-                            strokeWeight: 2,
-                            fillColor: '#FF0000',
-                            fillOpacity: 0.35,
-                            map: this.map,
-                            center: new google.maps.LatLng(item.user.direccion.latitud, item.user.direccion.longitud),
-                            radius: 300,
-                        });
-
-                        //extend the bounds to include each marker's position
-                        var id = item.id;
-                        var content =
-                            '<div id="bodyContent">' +
-                            '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
-                            '<h4>' + item.user.fullName + '</h4></a> ' +
-                            '</div>';
-                        var infowindow = new google.maps.InfoWindow();
-                        google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
-                            return function () {
-                                infowindow.setContent(content);
-                                infowindow.setPosition(marker.getCenter());
-                                infowindow.open(this.map, marker);
-
-                            };
-                        })(marker, content, infowindow));
-                        this.markers.push(marker);
-                        var centro = new google.maps.LatLng(this.placeLat, this.placeLng);
-                        this.map.setCenter(centro);
-                        this.map.setZoom(12);
-                    }
+                }else{
+                    this.placeLat = this.getParameterByName('lat');
+                    this.placeLng = this.getParameterByName('lng');
+                    var centro = new google.maps.LatLng(this.placeLat, this.placeLng);
+                    this.map.setCenter(centro);
+                    this.map.setZoom(12);
                 }
             }
 
@@ -350,40 +345,124 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
         },
         filtrarPrecio() {
             this.items = [];
-            if (!this.precioDesde && !this.precioHasta) {
-                this.items = this.itemsSinFiltro;
-                this.calcularEncontrados();
+            var itemsFiltrar=[];
+            this.itemsConFiltroPrecio=[];
+            if(this.checkedServicios && this.checkedServicios.length>0){
+                itemsFiltrar=this.itemsConFiltroServicio;
+            }else{
+                console.log("sin filtro");
+                itemsFiltrar=this.itemsSinFiltro;
             }
+            /*//no hay filtro a aplicar...
+            if(!this.precioDesde && !this. precioHasta){
+                //si hay filtro de servicios
+                if(this.itemsConFiltroServicio && this.itemsConFiltroServicio.length>0){
+                    this.items=this.itemsConFiltroServicio;
+                }else{
+                    this.items=this.itemsSinFiltro;
+                }
+                this.calcularEncontrados();
+            }else{
+                //si hay filtro de servicios
+                if(this.itemsConFiltroServicio && this.itemsConFiltroServicio.length>0){
+                    itemsFiltrar=this.itemsConFiltroServicio;
+                }else{
+                    itemsFiltrar=this.itemsSinFiltro;
+                }*/
+
+                this.calcularEncontrados();
+        },
+        filtrarServicio(){
+            if(!this.itemsConFiltroPrecio || this.itemsConFiltroPrecio.length==0){
+                this.items=this.itemsSinFiltro;
+            }else{
+                this.items=this.itemsConFiltroPrecio;
+
+            }
+            console.log(this.items);
+            var itemsFiltrar = this.items;
+            this.items=[];
+            var tieneServicio=[];
+
+                this.filtrarPrecio();
+/*
+                if(!this.itemsConFiltroPrecio || this.itemsConFiltroPrecio.length==0){
+                    this.items=this.itemsSinFiltro;
+                }else{
+                    this.items=this.itemsConFiltroPrecio;
+
+                }
+                this.itemsConFiltroServicio=[];
+                this.calcularEncontrados();*/
+
+
+
+        },
+        filtrar(){
+            this.items = [];
+            var banderaServicios=0;
+            var itemsFiltrar=this.itemsSinFiltro;
+            var itemsFiltroPrecio=[];
+            //filtro precio
             if (this.precioHasta) {
                 if (this.precioDesde) {
-                    for (var i = 0; i < this.itemsSinFiltro.length; i++) {
-                        if (this.itemsSinFiltro[i].precioPorNoche >= this.precioDesde && this.itemsSinFiltro[i].precioPorNoche <= this.precioHasta) {
-                            this.items.push(this.itemsSinFiltro[i]);
+                    for (var i = 0; i < itemsFiltrar.length; i++) {
+                        if (itemsFiltrar[i].precioPorNoche >= this.precioDesde && itemsFiltrar[i].precioPorNoche <= this.precioHasta) {
+                            itemsFiltroPrecio.push(itemsFiltrar[i]);
                         }
-
                     }
-                    console.log("precio desde y hasta")
-                    this.calcularEncontrados();
                 } else {
-                    for (var i = 0; i < this.itemsSinFiltro.length; i++) {
-                        if (this.itemsSinFiltro[i].precioPorNoche <= this.precioHasta) {
-                            this.items.push(this.itemsSinFiltro[i]);
+                    for (var i = 0; i < itemsFiltrar.length; i++) {
+                        if (itemsFiltrar[i].precioPorNoche <= this.precioHasta) {
+                            itemsFiltroPrecio.push(itemsFiltrar[i]);
                         }
                     }
-                    console.log("precio hasta")
-                    this.calcularEncontrados();
                 }
-            } else {
-                if (this.precioDesde) {
-                    for (var i = 0; i < this.itemsSinFiltro.length; i++) {
-                        if (this.itemsSinFiltro[i].precioPorNoche >= this.precioDesde) {
-                            this.items.push(this.itemsSinFiltro[i]);
+            }else{
+                if(this.precioDesde){
+                    for (var i = 0; i < itemsFiltrar.length; i++) {
+                        if (itemsFiltrar[i].precioPorNoche >= this.precioDesde) {
+                            itemsFiltroPrecio.push(itemsFiltrar[i]);
                         }
                     }
-                    this.calcularEncontrados();
-                    console.log("precio desde")
+                }else{
+                    if(!this.checkedServicios || this.checkedServicios.length==0) {
+                        this.items=this.itemsSinFiltro;
+                    }
                 }
             }
+
+            if(itemsFiltroPrecio.length==0){
+                itemsFiltroPrecio=itemsFiltrar;
+            }
+
+            //filtro servicio
+            if(this.checkedServicios && this.checkedServicios.length>0) {
+                this.itemsConFiltroServicio = [];
+                for (var i = 0; i < itemsFiltroPrecio.length; i++) {
+                    banderaServicios = 0;
+                    console.log("=======");
+                    console.log(itemsFiltroPrecio[i].user.fullName);
+                    console.log("---");
+                    for (var j = 0; j < itemsFiltroPrecio[i].listaServicios.length; j++) {
+                        console.log(itemsFiltroPrecio[i].listaServicios[j].nombre);
+                        for (var k = 0; k < this.checkedServicios.length; k++) {
+                            if(itemsFiltroPrecio[i].listaServicios[j].id == this.checkedServicios[k]){
+                                banderaServicios ++;
+                                console.log("--------match");
+                                break;
+                            }
+                        }
+                    }
+                    if (banderaServicios == this.checkedServicios.length) {
+                            this.items.push(itemsFiltroPrecio[i]);
+                    }
+                }
+            }
+                this.calcularEncontrados();
+
+
+
         },
         calcularEncontrados() {
             this.encontrados = this.items.length;

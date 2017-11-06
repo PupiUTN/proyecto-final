@@ -67,7 +67,7 @@ Vue.component('my-detalle-reserva-completo', {
         <div class="row with-forms">
             <div class="col-md-8">
                 <h5><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px;"></i>Numero De reserva</h5>
-                <h3><b>{{numeroReserva}}</b></h3>
+                <h3><b>{{reserva.id}}</b></h3>
             </div>
 
             <div class="col-md-4">
@@ -215,7 +215,7 @@ Vue.component('my-detalle-reserva-completo', {
     <div class="center-block">
 
         <div class="col-md-3 col-xs-1"></div>
-        <div class="col-xs-5 col-md-3" v-if="reserva.status !== 'CANCEL'" >
+        <div class="col-xs-5 col-md-3" v-if="reserva.status !== 'rechazada-dueño'" >
             <a v-on:click="cancelarReservaActionButton()"  href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar Reserva</a>
         </div>
     </div>
@@ -255,19 +255,19 @@ Vue.component('my-detalle-reserva-completo', {
                         fechaTransaccion: '',
                         cuidador: {
 
-                            user: {
-                                fullName: '',
-                                email: '',
-                                phone: '',
-                                profileImageUrl: '',
-                                birthday: '',
-                                direccion: {
-                                    calle: '',
-                                    ciudad: '',
-                                    numero: '',
-                                    latitud: '',
-                                    longitud: '',
-                                    provincia: ''
+                            user:{
+                                fullName:'',
+                                email:'',
+                                phone:'',
+                                profileImageUrl:'',
+                                birthday:'',
+                                direccion:{
+                                    calle:'',
+                                    ciudad:'',
+                                    numero:'',
+                                    latitud:'',
+                                    longitud:'',
+                                    provincia:''
 
                                 }
                             }
@@ -280,10 +280,10 @@ Vue.component('my-detalle-reserva-completo', {
                 perroProfileUrl: '',
                 id: null,
                 edadPerro: '',
-                edadCuidador: '',
+                edadCuidador:'',
                 showModal: false,
                 tamaño: '',
-                numeroReserva: '',
+                numeroReserva:'',
 
             }
         },
@@ -308,9 +308,9 @@ Vue.component('my-detalle-reserva-completo', {
                     this.edadCuidador = this.calcularEdad(this.reserva.cuidador.user.birthday);
                     var date = new Date(this.reserva.fechaTransaccion);
                     this.reserva.fechaTransaccion = date.toLocaleDateString();
-                    var dateEntrada = new Date(this.reserva.fechaInicio);
-                    var dateSalida = new Date(this.reserva.fechaFin);
-                    dateEntrada = dateEntrada.setDate(dateEntrada.getDate() + 1);
+                    var dateEntrada = new Date (this.reserva.fechaInicio);
+                    var dateSalida = new Date (this.reserva.fechaFin);
+                    dateEntrada =dateEntrada.setDate(dateEntrada.getDate() + 1);
                     dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
                     this.reserva.fechaInicio = new Date(dateEntrada).toLocaleDateString();
                     this.reserva.fechaFin = new Date(dateSalida).toLocaleDateString();
@@ -356,7 +356,8 @@ Vue.component('my-detalle-reserva-completo', {
             return edad;
 
         },
-        MostrarEdad() {
+        MostrarEdad()
+        {
             if (this.edadPerro === 0) {
 
                 this.edadPerro = " menor a un año";
