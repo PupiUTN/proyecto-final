@@ -33,7 +33,7 @@ public class ReservaCuidadorController {
     @RequestMapping(method = RequestMethod.POST)
     public Reserva post(@RequestBody Reserva entity) throws Exception {
         //TODO setear info del cuidador asi nadie puede meter info que no es.
-        return reservaService.crearNuevaReserva(entity);
+        return reservaService.save(entity);
 
     }
 
@@ -76,6 +76,16 @@ public class ReservaCuidadorController {
         User user = getReserva(reservaId).getPerro().getUser();
         MailService.sendEmail(user, MailType.BOOKING_CONFIRMATION);
         return new ResponseEntity(HttpStatus.OK);
+
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
+
+    @RequestMapping(value = "/PendientesReview/", method = RequestMethod.GET)
+    public boolean getPendientesReview() throws Exception {
+      boolean r = false;
+           List reserva = reservaService.findPendienteReviewCuidador();
+            return reserva.isEmpty();
 
     }
 }

@@ -11,26 +11,16 @@
     ================================================== -->
     <link rel="stylesheet" href=" ../../assets/css/style.css">
     <link rel="stylesheet" href="../../assets/css/colors/main.css" id="colors">
-    <link rel="stylesheet" href="../../assets/css/modal.css">
+
 
 
     <!-- MY CSS
     ================================================== -->
-
+    <link href="../../assets/css/modal.css" rel="stylesheet"/>
     <!--<script src="/js/pace.min.js"></script>-->
     <link href="../../css/page-loader.css" rel="stylesheet"/>
 
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74104605-6"></script>
-    <script>  window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('send', {hitType: 'pageview', page: location.pathname});
-    gtag('config', 'UA-74104605-6');</script>
 </head>
 
 <body>
@@ -38,7 +28,7 @@
 <!-- Wrapper -->
 <div id="wrapper">
     <div id="page-loader"></div>
-    <my-dashboard current-view="my-detalle-reserva-completo" ref="myDetalleReservaCompleto"></my-dashboard>
+    <my-dashboard current-view="Review" ref="Review"></my-dashboard>
 </div>
 <!-- Wrapper / End -->
 
@@ -68,11 +58,10 @@
 <script type="text/javascript" src="../../views/dashboard/js/vue-header.js"></script>
 <script type="text/javascript" src="../../views/dashboard/js/vue-sidebar.js"></script>
 <!--own-->
-<script src="js/vue-detalle-reserva-completo.js"></script>
+
 <script src="js/vue-review-modal.js"></script>
 
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxRjrAgwzUG6g4thS0f1osXdML4Npc3cQ&libraries=places"></script>
 
 
 <!--INIT-->

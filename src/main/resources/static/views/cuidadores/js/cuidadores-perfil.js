@@ -41,9 +41,14 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                     Cantidad maxima de perros: {{item.cantidadMaxDePerros}}
 
             </span>
-                    <div class="star-rating" data-rating="5">
-                        <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
-                    </div>
+                     <div class="star-rating"  id="rating" data-rating ="0">
+                      <span v-bind:class="{'star': puntaje >= 1, 'star empty': puntaje < 1 }" ></span>
+                   <span v-bind:class="{'star': puntaje >= 2, 'star empty': puntaje < 2 }"></span>
+                  <span v-bind:class="{'star': puntaje >= 3, 'star empty': puntaje < 3 }" ></span>
+                <span v-bind:class="{'star': puntaje >= 4, 'star empty': puntaje < 4 }"></span>
+                 <span v-bind:class="{'star': puntaje >= 5, 'star empty': puntaje < 5 }"></span>
+                                <div class="rating-counter"><a href="#listing-reviews">{{DataReview.length}} Reviews</a></div>
+                            </div>
                 </div>
             </div>
 
@@ -115,7 +120,62 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                 </div>
             </div>
 
-            <!-- Reviews -->
+                    <!-- Reviews -->
+     
+                    <div id="listing-reviews" class="listing-section">
+                        <h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Reviews <span>({{DataReview.length}})</span></h3>
+
+                        <div class="clearfix"></div>
+
+                        <!-- Reviews -->
+                        <section class="comments listing-reviews">
+
+                            <ul>
+                                <li v-for="(calificacion, index) in calificaciones  ">
+                                    <div class="col-md-2 col-xs-12 avatar"><img :src="calificacion.reserva.perro.user.profileImageUrl" alt="" /></div>
+                                    <!--<div class="col-xs-12"> <label class="col-xs-12"></label></div>-->
+                                    <div class="comment-content"><div class="arrow-comment"></div>
+                                        <div class="comment-by">{{calificacion.reserva.perro.user.username}}<span class="date">June 2017</span>
+                                            <div class="star-rating" >
+                                                <span v-bind:class="{'star': calificacion.puntaje >= 1, 'star empty': calificacion.puntaje < 1 }" ></span>
+                                                <span v-bind:class="{'star': calificacion.puntaje >= 2, 'star empty': calificacion.puntaje < 2 }"></span>
+                                                <span v-bind:class="{'star': calificacion.puntaje >= 3, 'star empty': calificacion.puntaje < 3 }" ></span>
+                                                <span v-bind:class="{'star': calificacion.puntaje >= 4, 'star empty': calificacion.puntaje < 4 }"></span>
+                                                <span v-bind:class="{'star': calificacion.puntaje >= 5, 'star empty': calificacion.puntaje < 5 }"></span>
+                                            </div>
+                                        </div>
+                                        <p> {{calificacion.comentario}}</p>
+                                    </div>
+
+                                </li>
+
+                            </ul>
+                        </section>
+
+
+
+                        <!-- Pagination -->
+                        <div class="clearfix"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- Pagination -->
+                                <div class="pagination-container margin-top-30">
+                                    <nav class="pagination">
+                                        <ul>
+
+
+                                            <li><a style=" background-color: crimson;" v-if="offset > 0"    v-on:click="previous()"><i class="sl sl-icon-arrow-left" style=" font-weight: bold;color: white;"></i></a></li>
+
+                                            <li><a style=" background-color: crimson;" v-if="offset + perPage < DataReview.length"  v-on:click="next()"><i class="sl sl-icon-arrow-right" style=" font-weight: bold;color: white;"></i></a></li>
+
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <!-- Pagination / End -->
+                    </div>
 
 
         </div>
@@ -207,7 +267,30 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             },
             idCuidador: 0,
             dateFrom: null,
-            dateTo: null
+            dateTo: null,
+            puntaje: 0,
+            calificaciones:[{
+                id:'',
+                comentario:'',
+                puntaje:'',
+                from_owner:'',
+                reserva: {
+                    id:'',
+                    status:'',
+                    perro:{
+                        user:{
+                            profileImageUrl:'',
+                            username:'',
+                        }
+                    },
+                    fechaTransaccion:'',
+                },
+            }],
+            offset: 0,
+            navButtons:[],
+            perPage: 3,
+            DataReview:[],
+            puntajeUsuario:0,
         }
     }
     ,
@@ -228,6 +311,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                     this.loadImages(this.item.listaImagenes);
                     this.loadTamaño(this.item.tamaño);
                     this.geolocateCuidador(this.item.user.direccion);
+                    this.getCalificacionesCuidador();
 
 
                 })
@@ -365,8 +449,59 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             this.dateFrom = split[0].replace(/\s/g, '');
             this.dateTo = split[1].replace(/\s/g, '');
         },
+        getCalificacionesCuidador()
+        {
+            var urlCalificaciones = "/api/calificaciones/calificacionesCuidador/";
+
+            axios.get(urlCalificaciones + '?id=' + this.idCuidador)
+                .then((response) => {
+                    this.DataReview = response.data;
+                    var cont = 0;
+                    this.DataReview .forEach( function(item, value, array) {
 
 
-    }
+                        cont += item.puntaje;
+
+                    });
+                    if(this.DataReview.length > 0)
+                    {
+                        this.puntaje =Math.trunc(cont /this.DataReview.length);
+
+                        var h = document.getElementsByClassName("star empty");
+                        for (i = 0; i < (this.puntaje-1); i++) {
+                            h[0].className  = 'star' ;
+
+                        }
+
+                    }
+                    this.paginate();
+                })
+                .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error  ", "error");
+
+                    }
+                );
+
+
+        },
+
+        paginate() {
+            this.calificaciones = this.DataReview.slice(this.offset, this.offset + this.perPage);
+
+        },
+        previous() {
+            this.offset =  this.offset - this.perPage;
+        },
+        next () {
+            this.offset = this.offset + this.perPage;
+        },
+    },
+    watch: {
+        offset: function () {
+            this.paginate();
+        },
+    },
+
 });
 

@@ -15,6 +15,12 @@ Vue.component('my-reservas-cuidador-list', {
               <div  v-if="status === 'ACCEPTED'">
                     <h2> Mis reservas Confirmadas</h2>                
              </div>
+               <div  v-if="status === 'PAID'">
+                    <h2> Mis reservas pagadas</h2>                
+             </div>
+               <div  v-if="status === 'finalizada'">
+                    <h2> Pendientes de Calificacion</h2>                
+             </div>
             
         </div>
     </div>
@@ -55,8 +61,8 @@ Vue.component('my-reservas-cuidador-list', {
                                     <a v-on:click="confirmarReservaButton(index)"  style="color: blue; border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Confirmar</a>
                                 </div>
                                
-
-                                <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL'">
+ 
+                                <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'CANCEL' && reserva.status !== 'comentario-dueño' && reserva.status !== 'finalizada'">
                                     <a v-on:click="cancelarReservaActionButton(index)"  style="  margin-top: 10px;" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>                        
                                 </div>
                             
@@ -67,6 +73,10 @@ Vue.component('my-reservas-cuidador-list', {
                                  <div class="col-xs-12 col-md-6" v-if="reserva.status === 'PAID'">
                                             <a  style="  margin-top: 10px; color: blue;  border-color: blue; "   v-on:click="verReserva(reserva.id)" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                             </div>
+                                            
+                                 <div class="col-xs-12 col-md-3" v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-dueño'">
+                                    <a v-on:click="calificarReserva(index)"  style="color: blue; border-color: blue; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
+                                </div>
                                 
                             </div>    
                            
@@ -80,6 +90,8 @@ Vue.component('my-reservas-cuidador-list', {
         </div>
     </div>
 </div>
+
+ 
 </div>   
     `,
     data:
@@ -115,6 +127,7 @@ Vue.component('my-reservas-cuidador-list', {
                 mensaje: '',
                 perroProfileUrl: '',
                 status: null,
+                showModal: false,
 
             }
         },
@@ -128,6 +141,12 @@ Vue.component('my-reservas-cuidador-list', {
 
 
                 document.location.href = "/views/reserva/detalle-reserva.html?id= " + index;
+            },
+            calificarReserva(index) {
+                var id = this.reservas[index].id;
+
+                document.location.href = "/views/reserva/calificacion-reserva.html?id= " + id +
+                    "&rol=" + "CUIDADOR";
             },
 
             getCuidadorReservas() {
@@ -229,6 +248,9 @@ Vue.component('my-reservas-cuidador-list', {
             if (this.status == 'PAID') {
                 return 'Pagadas'
             }
+            if (this.status == 'finalizada') {
+                return 'Pendiente de Calificacion'
+            }
             return 'Error'
         },
         listClass: function () {
@@ -239,6 +261,9 @@ Vue.component('my-reservas-cuidador-list', {
                 return 'col-xs-12 col-md-10'
             }
             if (this.status == 'PAID') {
+                return 'col-xs-12 col-md-10'
+            }
+            if (this.status == 'finalizada') {
                 return 'col-xs-12 col-md-10'
             }
         },
@@ -254,6 +279,10 @@ Vue.component('my-reservas-cuidador-list', {
             }
             if (this.status == 'PAID') {
                 return 'background: rgba(0,0,255,0.3); margin-bottom: 10px;'
+
+            }
+            if (this.status == 'finalizada') {
+                return 'background: rgba(0,255,0,0.3); margin-bottom: 10px;'
 
             }
         }
