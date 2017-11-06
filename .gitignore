@@ -12,6 +12,7 @@
 hs_err_pid*
 /target/
 /nbproject/
+/tmp/
 
 # Intelli J
 .env
