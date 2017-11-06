@@ -82,10 +82,13 @@ public class ReservaCuidadorController {
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
 
     @RequestMapping(value = "/PendientesReview/", method = RequestMethod.GET)
-    public boolean getPendientesReview() throws Exception {
-      boolean r = false;
-           List reserva = reservaService.findPendienteReviewCuidador();
-            return reserva.isEmpty();
+    public long getPendientesReview() throws Exception {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
+        long id = myUserPrincipal.getUser().getId();
+        String status = "finalizada";
+        List reserva = reservaService.getReservasByCuidadorIdAndStatus(id,status);
+        return reserva.size();
 
     }
 }

@@ -11,7 +11,7 @@ Vue.component('my-dashboard', {
         ================================================== -->
         <!-- Responsive Navigation Trigger -->
         <a href="#" class="dashboard-responsive-nav-trigger"><i class="fa fa-reorder"></i> Panel</a>
-        <my-sidebar v-bind:role="role" ></my-sidebar>
+        <my-sidebar v-bind:role="role" v-bind:pendientesCuidador="pendientesCuidador"></my-sidebar>
 
 
         <!-- Content
@@ -30,7 +30,8 @@ Vue.component('my-dashboard', {
     props: ['currentView'],
     data: function () {
         return {
-            role: "NO_ROLE"
+            role: "NO_ROLE",
+            pendientesCuidador: parseInt(localStorage.getItem("pendingCountCuidador"))
         }
     },
     methods: {
@@ -49,9 +50,9 @@ Vue.component('my-dashboard', {
 
             }
 
-            if(localStorage.getItem("pending") <=1 )
+            if(localStorage.getItem("pending") === "true" )
             {
-             //   this.getReservasPendientesReview(this.role)
+               this.getReservasPendientesReview(this.role)
             }
         },
 
@@ -59,25 +60,10 @@ Vue.component('my-dashboard', {
         {
             if (role === "ROLE_CUIDADOR")
             {
-                axios.get('/api/cuidador/me/reservas/PendientesReview/?id=' + this.$refs.myHeader.$refs.myLogin.user.id)
+                axios.get('/api/cuidador/me/reservas/PendientesReview/')
                     .then((response) => {
-                        this.pendientes = response.data;
-                        if (!this.pendientes ) {
-                            sweetAlert({
-                                    title: "Reviews ",
-                                    text: "Tiene Reservas pendientes de calificar",
-                                    type: "info",
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#DD6B55",
-                                    confirmButtonText: "ir a calificaciones",
-                                    closeOnConfirm: false,
-                                    cancelButtonText: "ok",
-                                    showLoaderOnConfirm: true,
-                                },
-                                function () {
-                                    document.location.href = "/views/reserva/mis-reservas-cuidador.html?status=finalizada";
-                                });
-                        }
+                        this.pendientesCuidador = response.data;
+                        localStorage.setItem("pendingCountCuidador",   this.pendientesCuidador);
 
                     })
                     .catch(error => {
@@ -89,26 +75,10 @@ Vue.component('my-dashboard', {
             else {
                 if (role === "ROLE_USER") {
 
-                    axios.get('/api/user/me/reservas/PendientesReview/?id='+ this.$refs.myHeader.$refs.myLogin.user.id)
+                    axios.get('/api/user/me/reservas/PendientesReview/')
                         .then((response) => {
                             this.pendientes = response.data;
-                            if (this.pendientes) {
-                                sweetAlert({
-                                        title: "Reviews ",
-                                        text: "Tiene Reservas pendientes de calificar",
-                                        type: "info",
-                                        showCancelButton: true,
-                                        confirmButtonColor: "#DD6B55",
-                                        confirmButtonText: "ir a calificaciones",
-                                        closeOnConfirm: false,
-                                        cancelButtonText: "ok",
-                                        showLoaderOnConfirm: true,
-                                    },
-                                    function () {
-                                        document.location.href = "/views/reserva/mis-reservas-user.html?status=finalizada";
-                                    });
-                            }
-
+                            localStorage.setItem("pendingCountUser",   this.pendientes);
                         })
                         .catch(error => {
                             console.log(error);
@@ -116,7 +86,8 @@ Vue.component('my-dashboard', {
                         });
                 }
             }
-            localStorage.setItem("pending",(localStorage.getItem("pending") +1));
+           // localStorage.setItem("pending",(localStorage.getItem("pending") +1));
+            localStorage.setItem("pending",false );
         }
 
 

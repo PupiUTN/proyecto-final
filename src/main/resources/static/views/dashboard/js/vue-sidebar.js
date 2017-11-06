@@ -54,6 +54,11 @@ let mySidebar = Vue.component('my-sidebar', {
             type: String,
 
         },
+        pendientesCuidador: {
+            required: true,
+            type: Number,
+
+        }
     },
 
 
