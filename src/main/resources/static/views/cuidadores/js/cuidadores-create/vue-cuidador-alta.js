@@ -232,7 +232,7 @@ Vue.component('become-cuidador', {
                     sweetAlert("Oops...", "Error, Se deben cargar ambas imagenes del dni", "error");
                     return;
                 }
-                if (this.user.status = "INCOMPLETED") {
+                if (this.user.status == "INCOMPLETED") {
                     sweetAlert({
                             title: "Alerta!",
                             text: "Para enviar su solicitud, primero debe completar su perfil.",
@@ -261,7 +261,7 @@ Vue.component('become-cuidador', {
                                 type: "success"
                             },
                             function () {
-                                window.location.href = "/";
+                                window.location.href = "/views/dashboard/dashboard.html";
                             });
                     })
                     .catch(error => {
