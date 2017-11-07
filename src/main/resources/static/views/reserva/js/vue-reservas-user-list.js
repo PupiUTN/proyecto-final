@@ -40,7 +40,7 @@ Vue.component('my-reservas-user-list', {
                                             <p><b>Precio</b> </br>{{ reserva.precioTotal }} $</p>
                                         </div>
                                         <div class="col-xs-12 col-md-1">
-                                            <p><b>Desde</b> </br>{{ reserva.fechaFin }}</p>
+                                            <p><b>Desde</b> </br>{{ reserva.fechaDesde }}</p>
                                         </div>
                                         <div class="col-xs-12 col-md-1">
                                             <p><b> Hasta </b> </br> {{ reserva.fechaFin }}</p>
