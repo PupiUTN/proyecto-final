@@ -100,8 +100,7 @@ public class ReservaService {
         return reservaRepository.findPendienteReviewUser();
     }
 
-    public void setEstadoPagada(Long reservaId) {
-        Reserva reserva = reservaRepository.findOne(reservaId);
+    public void setEstadoPagada(Reserva reserva) {
         reserva.setStatus("pagada-dueño");
         reservaRepository.save(reserva);
     }

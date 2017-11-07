@@ -101,7 +101,7 @@ public class PaymentsService {
                 Float bookingAmount = Float.parseFloat(merchantOrderInfo.getJSONObject("response").get("total_amount").toString());
 
                 if (paidAmount >= bookingAmount) {
-                    reservaService.setEstadoFinalizado(booking);
+                    reservaService.setEstadoPagada(booking);
                 }
             }
         }
