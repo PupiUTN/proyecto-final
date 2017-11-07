@@ -16,7 +16,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     List<Reserva> findAllByCuidador(@Param("userId")long userId);
 
     @Query("select r from Reserva r where r.perro.user.id = :#{#userId} and r.status =:#{#statusId}")
-    List<Reserva> findAllByUserAndStatus(@Param("userId")long userId, @Param("statusId")String status);
+    List<Reserva> findAllByUserAndStatus(@Param("userId")long userId, @Param("statusId")String statusId);
 
     @Query("select r from Reserva r where r.perro.user.id = :#{#userId} and r.id = :#{#id}")
     Reserva findByUserIdAnId(@Param("userId")long userId, @Param("id")long id);
@@ -26,13 +26,13 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
 
     @Query("select r from Reserva r where r.cuidador.user.id = :#{#userId} and r.status =:#{#statusId}")
-    List<Reserva> findAllByCuidadorAndStatus(@Param("userId")long userId, @Param("statusId")String status);
+    List<Reserva> findAllByCuidadorAndStatus(@Param("userId")long userId, @Param("statusId")String statusId);
 
     @Query("select r from Reserva r where r.cuidador.user.id = :#{#userId} and r.status =:#{#statusId} or r.status =:#{#statusUsuario}")
-    List<Reserva> findAllByCuidadorAndStatusFinalizada(@Param("userId")long userId, @Param("statusId")String status, @Param("statusUsuario")String statusUsuario);
+    List<Reserva> findAllByCuidadorAndStatusFinalizada(@Param("userId")long userId, @Param("statusId")String statusId, @Param("statusUsuario")String statusUsuario);
 
     @Query("select r from Reserva r where r.perro.user.id = :#{#userId} and r.status =:#{#statusId} or r.status =:#{#statusUsuario}")
-    List<Reserva> findAllByUserAndStatusFinalizada(@Param("userId")long userId, @Param("statusId")String status, @Param("statusUsuario")String statusUsuario);
+    List<Reserva> findAllByUserAndStatusFinalizada(@Param("userId")long userId, @Param("statusId")String statusId, @Param("statusUsuario")String statusUsuario);
 
 
     @Query("select r from Reserva r where r.perro.user.id = :#{#userId} and r.status = 'comentario-cuidador' or r.status = 'finalizada'" )

@@ -395,7 +395,9 @@ Vue.component('my-detalle-reserva', {
                 .then((response) => {
                     this.reserva = response.data;
                     // document.getElementById("foto_perro").src = this.reserva.perro.fotoPerfil;
-                    this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);
+                    if(this.reserva.perro.birthday !== null){
+                    this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);}
+                    else{this.edadPerro = "-";}
                     var date = new Date(this.reserva.fechaTransaccion);
                     this.reserva.fechaTransaccion = date.toLocaleDateString();
                     var dateEntrada = new Date (this.reserva.fechaInicio);
@@ -404,7 +406,12 @@ Vue.component('my-detalle-reserva', {
                     dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
                     this.reserva.fechaInicio = new Date(dateEntrada).toLocaleDateString();
                     this.reserva.fechaFin = new Date(dateSalida).toLocaleDateString();
-                    this.edadUsuario = this.calcularEdad(this.reserva.cuidador.user.birthday);
+                    if(this.reserva.cuidador.user.birthday !== null){
+                    this.edadUsuario = this.calcularEdad(this.reserva.cuidador.user.birthday);}
+                    else
+                    { this.edadUsuario ="";
+
+                    }
                     this.numeroReserva = 570011223344;
                     if (this.edadPerro === 0) {
 
@@ -510,9 +517,9 @@ Vue.component('my-detalle-reserva', {
 
             // Si la fecha es correcta, calculamos la edad
             var values = fecha.split("-");
-            var dia = values[0];
+            var dia = values[2];
             var mes = values[1];
-            var ano = values[2];
+            var ano = values[0];
 
             // cogemos los valores actuales
             var fecha_hoy = new Date();
