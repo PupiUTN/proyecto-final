@@ -69,9 +69,11 @@ public class PaymentsService {
             transactionInfo.put("external_reference", reserva.getId());
 
             preference = mp.createPreference(transactionInfo.toString());
+            logger.info("Payment Preference - " + preference.toString());
         }
         catch(Exception e) {
             System.out.println("Exception when trying to create preference " + e.toString());
+            logger.error("Exception when trying to create preference " + e.toString());
         }
         return preference;
     }
@@ -82,13 +84,20 @@ public class PaymentsService {
             JSONObject paymentInfo = null;
             if (topic.equalsIgnoreCase("payment")) {
                 paymentInfo = mp.get("/collections/notifications/" + id);
+                logger.info("TOPIC -> PAYMENT");
+                logger.info("paymentInfo - " + paymentInfo.toString());
                 Long merchantOrderId = paymentInfo.getJSONObject("response").getJSONObject("collection").optLong("merchant_order_id");
                 merchantOrderInfo = mp.get("/merchant_orders/" + merchantOrderId);
+                logger.info("merchantOrderInfo - " + merchantOrderInfo.toString());
             } else if (topic.equalsIgnoreCase("merchant_order")) {
                 merchantOrderInfo = mp.get("/merchant_orders/" + id);
+                logger.info("TOPIC -> MERCHANT_ORDER");
+                logger.info("merchantOrderInfo - " + merchantOrderInfo.toString());
             }
             if (merchantOrderInfo != null && merchantOrderInfo.getInt("status") == 200) {
-                Reserva booking = getReserva(Long.valueOf(paymentInfo.getJSONObject("response").getString("external_reference")));
+                Long externalReference = Long.valueOf(paymentInfo.getJSONObject("response").getString("external_reference"));
+                Reserva booking = getReserva(externalReference);
+                logger.info("EXTERNAL REFERENCE -> " + externalReference);
                 Float paidAmount = 0f;
                 JSONArray payments = merchantOrderInfo.getJSONObject("response").getJSONArray("payments");
                 for (int i = 0; i < payments.length(); i++) {
@@ -101,6 +110,7 @@ public class PaymentsService {
                 Float bookingAmount = Float.parseFloat(merchantOrderInfo.getJSONObject("response").get("total_amount").toString());
 
                 if (paidAmount >= bookingAmount) {
+                    logger.info("RESERVA PAGADA - " + booking.toString());
                     reservaService.setEstadoPagada(booking);
                 }
             }
