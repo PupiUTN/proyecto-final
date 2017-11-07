@@ -52,7 +52,7 @@ Vue.component('my-reservas-cuidador-list', {
                                 
                                    </div>
                                 <div class="col-xs-12 col-md-1">
-                                    <p><b>Desde</b> </br>{{ reserva.fechaFin }}</p>
+                                    <p><b>Desde</b> </br>{{ reserva.fechaInicio }}</p>
                                 </div>
                                 <div class="col-xs-12 col-md-1">
                                     <p><b> Hasta </b> </br> {{ reserva.fechaFin }}</p>

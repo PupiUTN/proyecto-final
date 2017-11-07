@@ -214,7 +214,7 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                 this.reserva.fechaInicio = fecha.format(dateFromObj, 'YYYY-MM-DD');
                 this.reserva.fechaFin = fecha.format(dateToObj, 'YYYY-MM-DD');
                 //this.reserva.cuidador.user.birthday = null;
-
+                console.log(this.reserva);
                 axios.post("/api/user/me/reservas", this.reserva)
                     .then((response) => {
                         sweetAlert({
