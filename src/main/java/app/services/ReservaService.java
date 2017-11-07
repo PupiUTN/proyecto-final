@@ -49,7 +49,7 @@ public class ReservaService {
         return savedObject;
     }
 
-    public Reserva SetEstadoFinalizado(Reserva reserva) {
+    public Reserva setEstadoFinalizado(Reserva reserva) {
         Reserva savedObject = reservaRepository.save(reserva);
         return savedObject;
     }
@@ -101,13 +101,11 @@ public class ReservaService {
         reservaRepository.save(reserva);
     }
 
-       public List<Reserva>findPendienteReviewCuidador()
-       { return reservaRepository.findPendienteReviewCuidador();
-
+       public List<Reserva>findPendienteReviewCuidador() {
+        return reservaRepository.findPendienteReviewCuidador();
        }
 
-    public List<Reserva>findPendienteReviewUser()
-    { return reservaRepository.findPendienteReviewUser();
-
+    public List<Reserva>findPendienteReviewUser() {
+        return reservaRepository.findPendienteReviewUser();
     }
 }

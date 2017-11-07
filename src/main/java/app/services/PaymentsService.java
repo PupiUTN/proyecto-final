@@ -1,20 +1,31 @@
 package app.services;
 
 import app.models.entities.Cuidador;
+import app.models.entities.Payment;
 import app.models.entities.Reserva;
 import app.models.entities.User;
+import app.persistence.PaymentRepository;
 import com.mercadopago.*;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PaymentsService {
 
+    PaymentRepository paymentRepository;
+
     private static final Logger logger = LogManager.getLogger(PaymentsService.class);
     MP mp = new MP("92590042667422", "R8bMZvxKoJgO4gxALPfVnRv4ueJyqwRL");
+
+    @Autowired
+    public PaymentsService(PaymentRepository paymentRepository) {
+        this.paymentRepository = paymentRepository;
+    }
 
     public JSONObject createPreference(Reserva reserva) {
         Float totalAmount = reserva.getPrecioTotal();
@@ -67,10 +78,10 @@ public class PaymentsService {
             JSONObject paymentInfo;
             if (topic.equalsIgnoreCase("payment")) {
                 paymentInfo = mp.get("/collections/notifications/" + id);
-                merchantOrderInfo = mp.get("/merchant_orders/" + paymentInfo
-                        .getJSONObject("response")
-                        .getJSONObject("collection")
-                        .getString("merchant_order_id"));
+                Long merchantOrderId = paymentInfo.getJSONObject("response").getJSONObject("collection").optLong("merchant_order_id");
+                if(merchantOrderId != null) {
+                    merchantOrderInfo = mp.get("/merchant_orders/" + merchantOrderId);
+                }
             } else if (topic.equalsIgnoreCase("merchant_order")) {
                 merchantOrderInfo = mp.get("/merchant_orders/" + id);
             }
@@ -94,5 +105,9 @@ public class PaymentsService {
             logger.error("Error when trying to get payment info " + e.toString());
         }
         return null;
+    }
+
+    public Payment createPayment(Payment entity) throws Exception {
+        return paymentRepository.save(entity);
     }
 }
