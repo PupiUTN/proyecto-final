@@ -128,7 +128,7 @@ public class PaymentsService {
     public Payment createPayment(Reserva reserva, Long mpId, String status, String paymentData) {
         Payment p = new Payment();
         p.setUser(reserva.getPerro().getUser());
-        p.setPaymentData(paymentData);
+        p.setPaymentData("DATOS PAGO");
         p.setMpPaymentId(mpId);
         p.setStatus(status);
         return paymentRepository.save(p);
