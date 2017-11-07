@@ -85,7 +85,7 @@ public class CalificacionController {
 
           }
 
-       res =   reservaService.SetEstadoFinalizado(res);
+       res =   reservaService.setEstadoFinalizado(res);
 
         return calific;
     }
