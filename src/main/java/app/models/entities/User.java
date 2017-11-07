@@ -1,6 +1,7 @@
 package app.models.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 
 @Entity
@@ -50,7 +52,9 @@ public class User implements Serializable {
 
     private String fullName;
 
-    private String birthday;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Temporal(TemporalType.DATE)
+    private Date birthday;
 
     private String gender;
 
@@ -78,7 +82,6 @@ public class User implements Serializable {
                 ", matchingPassword='" + matchingPassword + '\'' +
                 ", role='" + role + '\'' +
                 ", fullName='" + fullName + '\'' +
-                ", birthday='" + birthday + '\'' +
                 ", gender='" + gender + '\'' +
                 ", phone='" + phone + '\'' +
                 ", direccion=" + direccion +

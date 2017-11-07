@@ -246,7 +246,7 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                             },
                             function () {
                                 console.log("redirect");
-                                document.location.href = "/views/reserva/mis-reservas-user.html?status=CONFIRMATION_PENDING";
+                                document.location.href = "/views/reserva/mis-reservas-user.html?status=creada-dueño";
                             });
 
                     })
