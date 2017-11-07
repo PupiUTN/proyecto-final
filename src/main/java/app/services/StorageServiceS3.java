@@ -50,6 +50,7 @@ public class StorageServiceS3 implements StorageService {
 
 
     public String store(MultipartFile remoteFile) throws IOException {
+        logger.info("subiendo archivo a S3");
         AmazonS3 client = getClient();
         String remoteFileName = remoteFile.getOriginalFilename();
         String remoteFileExtension = remoteFileName.substring(remoteFileName.lastIndexOf(".") + 1);
@@ -57,6 +58,8 @@ public class StorageServiceS3 implements StorageService {
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, serverFileName, convert(remoteFile))
                 .withCannedAcl(CannedAccessControlList.PublicRead);
         client.putObject(putObjectRequest);
+        logger.info("subida existosa");
+
         return String.valueOf(client.getUrl(bucketName, serverFileName));
 
     }
