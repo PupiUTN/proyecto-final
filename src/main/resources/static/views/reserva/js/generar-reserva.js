@@ -212,7 +212,7 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                 //MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
                 this.reserva.fechaInicio = fecha.format(dateFromObj, 'YYYY/MM/DD');
                 this.reserva.fechaFin = fecha.format(dateToObj, 'YYYY/MM/DD');
-                this.reserva.cuidador.birthday = null;
+                this.reserva.cuidador.user.birthday = null;
 
                 axios.post("/api/user/me/reservas", this.reserva)
                     .then((response) => {
