@@ -204,6 +204,7 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                 }
                 var dateFromObj = fecha.parse(this.reserva.fechaInicio, 'DD/MM/YYYY'); // new Date(2010, 11, 10, 14, 11, 12)
                 var dateToObj = fecha.parse(this.reserva.fechaFin, 'DD/MM/YYYY'); // new Date(2010, 11, 10, 14, 11, 12)
+
                 if (dateToObj <= dateFromObj) {
                     console.log("Fecha inicio igual a fecha fin");
                     sweetAlert("Campo Vacio", "Fecha inicio igual a fecha fin", "info");

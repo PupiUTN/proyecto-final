@@ -40,10 +40,10 @@ Vue.component('my-reservas-user-list', {
                                             <p><b>Precio</b> </br>{{ reserva.precioTotal }} $</p>
                                         </div>
                                         <div class="col-xs-12 col-md-1">
-                                            <p><b>Desde</b> </br>{{ reserva.fechaFin }}</p>
+                                            <p><b>Desde</b> </br>{{ reserva.fechaFin | dateFormat }}</p>
                                         </div>
                                         <div class="col-xs-12 col-md-1">
-                                            <p><b> Hasta </b> </br> {{ reserva.fechaFin }}</p>
+                                            <p><b> Hasta </b> </br> {{ reserva.fechaFin  | dateFormat }}</p>
                                         </div>
                                         <div class="col-xs-12 col-md-3" v-if="reserva.status === 'creada-dueño' || reserva.status !== 'cerrada'">
                                             <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
@@ -241,6 +241,14 @@ Vue.component('my-reservas-user-list', {
             }
         }
 
+    }
+    , filters: {
+        dateFormat: function (value) {
+            if (value) {
+                return fecha.format(fecha.parse(value, 'YYYY-MM-DD'), 'DD/MM/YYYY');
+
+            }
+        }
     }
 });
 

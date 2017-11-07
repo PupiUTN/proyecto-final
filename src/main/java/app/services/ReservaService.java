@@ -6,6 +6,7 @@ import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -24,17 +25,16 @@ public class ReservaService {
     }
 
     public List<Reserva> getReservasByUserIdAndStatus(Long id, String status) {
-        if(status.equals("finalizada"))
-        {     String var1 = "comentario-cuidador";
-            return reservaRepository.findAllByUserAndStatusFinalizada(id,status,var1);
+        if (status.equals("finalizada")) {
+            String var1 = "comentario-cuidador";
+            return reservaRepository.findAllByUserAndStatusFinalizada(id, status, var1);
 
-        }else
-        {
-            return reservaRepository.findAllByUserAndStatus(id,status);
+        } else {
+            return reservaRepository.findAllByUserAndStatus(id, status);
         }
 
 
-       // return reservaRepository.findAllByUserAndStatus(id,status);
+        // return reservaRepository.findAllByUserAndStatus(id,status);
     }
 
     public Reserva getReserva(Long id) {
@@ -42,6 +42,11 @@ public class ReservaService {
     }
 
     public Reserva save(Reserva reserva) {
+        //TODO hot fix, el formato de la fecha al no tener hora se desplaza un dia
+        // https://stackoverflow.com/questions/7556591/javascript-date-object-always-one-day-off
+        reserva.setFechaFin(addDays(reserva.getFechaFin(), 1));
+        reserva.setFechaInicio(addDays(reserva.getFechaInicio(), 1));
+
         reserva.setStatus("creada-dueño");
         float precioTotal = daysBetween(reserva.getFechaInicio(), reserva.getFechaFin()) * reserva.getCuidador().getPrecioPorNoche();
         reserva.setPrecioTotal(precioTotal);
@@ -68,14 +73,13 @@ public class ReservaService {
 
     public List<Reserva> getReservasByCuidadorIdAndStatus(Long id, String status) {
 
-       if(status.equals("finalizada"))
-       {     String var1 = "comentario-dueño";
-           return reservaRepository.findAllByCuidadorAndStatusFinalizada(id,status,var1);
+        if (status.equals("finalizada")) {
+            String var1 = "comentario-dueño";
+            return reservaRepository.findAllByCuidadorAndStatusFinalizada(id, status, var1);
 
-       }else
-       {
-           return reservaRepository.findAllByCuidadorAndStatus(id,status);
-       }
+        } else {
+            return reservaRepository.findAllByCuidadorAndStatus(id, status);
+        }
 
     }
 
@@ -92,16 +96,23 @@ public class ReservaService {
         reservaRepository.save(reserva);
     }
 
-       public List<Reserva>findPendienteReviewCuidador() {
+    public List<Reserva> findPendienteReviewCuidador() {
         return reservaRepository.findPendienteReviewCuidador();
-       }
+    }
 
-    public List<Reserva>findPendienteReviewUser() {
+    public List<Reserva> findPendienteReviewUser() {
         return reservaRepository.findPendienteReviewUser();
     }
 
     public void setEstadoPagada(Reserva reserva) {
         reserva.setStatus("pagada-dueño");
         reservaRepository.save(reserva);
+    }
+
+    public Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
     }
 }
