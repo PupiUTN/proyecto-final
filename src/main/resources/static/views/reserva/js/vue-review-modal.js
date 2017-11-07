@@ -5,7 +5,7 @@
            <div id="add-review" class="add-review-box" style="background-color: whitesmoke;">
 
                     <!-- Add Review -->
-                    <h1 class="listing-desc-headline margin-bottom-20"  style="font-size: -webkit-xxx-large;"> Reviews </h1>
+                    <h1 class="listing-desc-headline margin-bottom-20"  style="font-size: -webkit-xxx-large;"> Calificaciones </h1>
 
                 
                  <div class="row">
@@ -173,7 +173,7 @@
                         localStorage.setItem("pendingCountUser",   pendientesUser);
                     }
                     sweetAlert({
-                            title: " Review exitosa ",
+                            title: " Calificación exitosa ",
                             text: "tu calificación  fue  guardarda  exitosamente.",
                             type: "success",
                         },
