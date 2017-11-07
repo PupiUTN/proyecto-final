@@ -135,9 +135,11 @@
                   }
                  var id =  this.calificacion.reserva.id;
                  var status =  this.calificacion.reserva.status;
+                 var idCuidador = this.calificacion.reserva.cuidador.id;
                  this.calificacion.reserva = {};
                  this.calificacion.reserva.id = id;
                  this.calificacion.reserva.status = status;
+                // this.calificacion.reserva.cuidador.id = idCuidador;
              })
              .catch(error => {
                  console.log(error);

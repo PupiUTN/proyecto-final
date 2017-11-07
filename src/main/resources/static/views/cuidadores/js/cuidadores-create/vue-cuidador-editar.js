@@ -259,7 +259,7 @@ Vue.component('my-cuidador-edit', {
 
         filesChange(fileList, position) {
             // handle file changes
-            if (fileList[0].size <= 10240000) //1 mb 1048576
+            if (fileList[0].size <= 10285760) //10 mb 10485760
             {
                 const formData = new FormData();
 
@@ -372,6 +372,7 @@ Vue.component('my-cuidador-edit', {
 
                     sweetAlert("Editado!", "Descripción editada exitosamente.", "success");
                     console.log(response);
+                    //  window.location = "http://localhost:8080/views/cuidadores/cuidadores-perfil.html?id="+ this.cuidador.id ;
 
                 })
                 .catch(error => {
