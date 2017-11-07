@@ -19,11 +19,10 @@ let mySidebar = Vue.component('my-sidebar', {
 						<li><a href="/views/reserva/mis-reservas-user.html?status=cerrada">Finalizadas <span class="nav-tag grey"></span></a></li>
 					</ul>
 					</li>
-				</ul>
-                	<ul v-show="role === 'ROLE_USER' || role === 'ROLE_CUIDADOR'"  data-submenu-title="Calificaciones" >
-                    <li><a href="/views/reserva/mis-reservas-user.html?status=finalizada"><i class="sl sl-icon-layers"></i> Calificaciones<span v-if="pendientesUser > 0" class="nav-tag green">{{pendientesUser}}</span></a></li>
+					                    <li><a href="/views/reserva/mis-reservas-user.html?status=finalizada"><i class="sl sl-icon-star"></i> Calificaciones<span v-if="pendientesUser > 0" class="nav-tag green">{{pendientesUser}}</span></a></li>
 				
-                </ul>
+				</ul>
+                	
                 <ul  data-submenu-title="Cuidador">
                     <li v-show="role === 'ROLE_USER'"><a href="/views/cuidadores/alta-cuidador.html"><i class="sl sl-icon-user"></i> Convertirse</a></li>
                      <li v-show="role === 'ROLE_CUIDADOR'"><a href="/views/cuidadores/cuidadores-editar.html"><i class="sl sl-icon-book-open"></i> Mi Descripcion</a></li>
@@ -36,11 +35,10 @@ let mySidebar = Vue.component('my-sidebar', {
 			        	<li><a href="/views/reserva/mis-reservas-cuidador.html?status=cerrada">Finalizadas <span class="nav-tag grey"></span></a></li>
 					 </ul>	
 					 </li>
+					                     <li v-show="role === 'ROLE_CUIDADOR'"><a href="/views/reserva/mis-reservas-cuidador.html?status=finalizada"><i class="sl sl-icon-star"></i> Calificaciones<span v-if="pendientesCuidador > 0" class="nav-tag green">{{pendientesCuidador}}</span></a></li>
+
                 </ul>
-                
-                 <ul v-show="role === 'ROLE_CUIDADOR'" data-submenu-title="Calificaciones" >
-                    <li><a href="/views/reserva/mis-reservas-cuidador.html?status=finalizada"><i class="sl sl-icon-layers"></i> Calificaciones<span v-if="pendientesCuidador > 0" class="nav-tag green">{{pendientesCuidador}}</span></a></li>
-                </ul>
+              
                 
                 <ul v-show="role === 'ROLE_ADMIN'" data-submenu-title="Admin" >
                     <li><a href="/views/admin/moderar-cuidador.html"><i class="sl sl-icon-user"></i> Moderar Solicitud</a></li>
@@ -61,13 +59,12 @@ let mySidebar = Vue.component('my-sidebar', {
             type: Number,
 
         },
-        pendientesUser:{
+        pendientesUser: {
             required: false,
             type: Number,
 
         }
     },
-
 
 
 });

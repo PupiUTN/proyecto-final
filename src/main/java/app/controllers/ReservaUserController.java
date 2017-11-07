@@ -26,17 +26,19 @@ public class ReservaUserController {
 
 
     private final ReservaService reservaService;
+    private final MailService mailService;
 
     @Autowired
-    public ReservaUserController(ReservaService reservaService) {
+    public ReservaUserController(ReservaService reservaService, MailService mailService) {
         this.reservaService = reservaService;
+        this.mailService = mailService;
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST)
     public Reserva post(@RequestBody Reserva entity) throws Exception {
         //TODO setear info del cuidador asi nadie puede meter info que no es.
-        MailService.sendEmail(entity.getCuidador().getUser(), MailType.BOOKING_REQUEST);
+        mailService.sendEmail(entity.getCuidador().getUser(), MailType.BOOKING_REQUEST);
         return reservaService.save(entity);
 
     }
@@ -57,7 +59,7 @@ public class ReservaUserController {
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
         reservaService.cancelarCausaUsuario(reservaId,id);
-        MailService.sendEmail(reservaService.getReserva(reservaId).getCuidador().getUser(), MailType.BOOKING_CANCELLATION_BY_USER);
+        mailService.sendEmail(reservaService.getReserva(reservaId).getCuidador().getUser(), MailType.BOOKING_CANCELLATION_BY_USER);
         return new ResponseEntity(HttpStatus.OK);
     }
 

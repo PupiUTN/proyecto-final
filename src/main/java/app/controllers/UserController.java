@@ -8,6 +8,8 @@ package app.controllers;
 import app.exception.EmailExistsException;
 import app.exception.PasswordDoesNotMatchException;
 import app.models.entities.User;
+import app.security.MyUserDetailsService;
+import app.security.MyUserPrincipal;
 import app.services.MailService;
 import app.services.UserService;
 import app.utils.MailType;
@@ -15,6 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,8 +33,18 @@ import java.security.Principal;
 public class UserController {
 
 
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final MyUserDetailsService myUserDetailsService;
+    private final MailService mailService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService, AuthenticationManager authenticationManager, MyUserDetailsService myUserDetailsService, MailService mailService) {
+        this.userService = userService;
+        this.authenticationManager = authenticationManager;
+        this.myUserDetailsService = myUserDetailsService;
+        this.mailService = mailService;
+    }
 
     /**
      * http://www.baeldung.com/get-user-in-spring-security
@@ -46,8 +62,8 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/registration")
     public ResponseEntity registerUserAccount(@RequestBody @Valid User user) throws EmailExistsException, PasswordDoesNotMatchException {
-        userService.registerNewUserAccount(user);
-        MailService.sendEmail(user, MailType.WELCOME);
+        User userSaved = userService.registerNewUserAccount(user);
+        mailService.sendEmail(user, MailType.WELCOME);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -61,6 +77,15 @@ public class UserController {
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public User editUser(@PathVariable("id") Long id, @RequestBody User entity) throws Exception {
         entity.setId(id);
-        return userService.editUser(entity);
+        User user = userService.editUser(entity);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
+        myUserPrincipal.setUser(user);
+
+        //update session information
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        return user;
+
     }
 }
