@@ -42,7 +42,7 @@ Vue.component('my-reservas-user-list', {
                                         <div class="col-xs-12 col-md-1">
                                             <p><b> Hasta </b> </br> {{ reserva.fechaFin }}</p>
                                         </div>
-                                        <div class="col-xs-12 col-md-3" v-if="reserva.status === 'creada-dueño'">
+                                        <div class="col-xs-12 col-md-3" v-if="reserva.status === 'creada-dueño' || reserva.status !== 'cerrada'">
                                             <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
                                         </div>                                        
                                          <div class="col-xs-12 col-md-6" v-if="reserva.status === 'pagada-dueño'">
@@ -185,6 +185,9 @@ Vue.component('my-reservas-user-list', {
             if (this.status == 'finalizada') {
                 return 'Pendiente de Calificacion'
             }
+            if (this.status == 'cerrada') {
+                return 'Finalizadas'
+            }
             return 'Error'
         },
         listClass: function () {
@@ -201,6 +204,9 @@ Vue.component('my-reservas-user-list', {
                 return 'col-xs-12 col-md-10'
             }
             if (this.status == 'finalizada') {
+                return 'col-xs-12 col-md-10'
+            }
+            if (this.status == 'cerrada') {
                 return 'col-xs-12 col-md-10'
             }
         },
@@ -221,6 +227,10 @@ Vue.component('my-reservas-user-list', {
             }
             if (this.status == 'finalizada') {
                 return 'background: rgba(0,255,0,0.3); margin-bottom: 10px;'
+
+            }
+            if (this.status == 'cerrada') {
+                return 'background: rgba(192,192,192,0.3); margin-bottom: 10px;'
 
             }
         }

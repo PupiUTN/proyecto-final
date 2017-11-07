@@ -16,6 +16,7 @@ let mySidebar = Vue.component('my-sidebar', {
 						<li><a href="/views/reserva/mis-reservas-user.html?status=aceptada-cuidador">Aceptadas <span class="nav-tag yellow"></span></a></li>
 						<li><a href="/views/reserva/mis-reservas-user.html?status=rechazada-dueño">Canceladas <span class="nav-tag red"></span></a></li>
 						<li><a href="/views/reserva/mis-reservas-user.html?status=pagada-dueño">Pagadas <span class="nav-tag blue"></span></a></li>
+						<li><a href="/views/reserva/mis-reservas-user.html?status=cerrada">Finalizadas <span class="nav-tag grey"></span></a></li>
 					</ul>
 					</li>
 				</ul>
@@ -32,6 +33,7 @@ let mySidebar = Vue.component('my-sidebar', {
 						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=aceptada-cuidador">Aceptadas <span class="nav-tag yellow"></span></a></li>
 						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=rechazada-cuidador">Canceladas <span class="nav-tag red"></span></a></li>
 						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=pagada-dueño">Pagadas <span class="nav-tag blue"></span></a></li>
+			        	<li><a href="/views/reserva/mis-reservas-cuidador.html?status=cerrada">Finalizadas <span class="nav-tag grey"></span></a></li>
 					 </ul>	
 					 </li>
                 </ul>
