@@ -23,8 +23,15 @@ import java.util.List;
 @RequestMapping(value = "/api/cuidadores")
 public class CuidadorController {
 
+
+    private final CuidadorService cuidadorService;
+    private final MailService mailService;
+
     @Autowired
-    private CuidadorService cuidadorService;
+    public CuidadorController(CuidadorService cuidadorService, MailService mailService) {
+        this.cuidadorService = cuidadorService;
+        this.mailService = mailService;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Cuidador> getCuidadores() throws Exception {
@@ -62,11 +69,10 @@ public class CuidadorController {
     public @ResponseBody
     Cuidador editCuidador(@PathVariable("id") Long id, @RequestBody Cuidador entity) throws Exception {
         entity.setId(id);
-        if("approved".equalsIgnoreCase(entity.getEstado())) {
-            MailService.sendEmail(entity.getUser(), MailType.WELCOME_HOST);
-        }
-        else if("rejected".equalsIgnoreCase(entity.getEstado())) {
-            MailService.sendEmail(entity.getUser(), MailType.HOST_REJECTED);
+        if ("approved".equalsIgnoreCase(entity.getEstado())) {
+            mailService.sendEmail(entity.getUser(), MailType.WELCOME_HOST);
+        } else if ("rejected".equalsIgnoreCase(entity.getEstado())) {
+            mailService.sendEmail(entity.getUser(), MailType.HOST_REJECTED);
         }
         return cuidadorService.editCuidador(entity);
     }
@@ -77,8 +83,9 @@ public class CuidadorController {
         return cuidadorService.getListaServicios();
 
     }
+
     @RequestMapping(value = "/solicitudes/", method = RequestMethod.GET)
-    public List<Cuidador> getSolicitudes()throws Exception {
+    public List<Cuidador> getSolicitudes() throws Exception {
 
         return cuidadorService.getSolicitudes();
 
@@ -90,7 +97,6 @@ public class CuidadorController {
         return cuidadorService.cuidadorXUser(id);
 
     }
-
 
 
 }

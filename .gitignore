@@ -12,6 +12,7 @@
 hs_err_pid*
 /target/
 /nbproject/
+/tmp/
 
 # Intelli J
 .env
@@ -31,4 +32,3 @@ buildNumber.properties
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
-src/main/resources/static/views/cuidadores/js/cuidadores-perfil/cuidadores-perfil.js

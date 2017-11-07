@@ -23,10 +23,12 @@ public class ReservaCuidadorController {
 
 
     private final ReservaService reservaService;
+    private final MailService mailService;
 
     @Autowired
-    public ReservaCuidadorController(ReservaService reservaService) {
+    public ReservaCuidadorController(ReservaService reservaService, MailService mailService) {
         this.reservaService = reservaService;
+        this.mailService = mailService;
     }
 
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
@@ -47,34 +49,37 @@ public class ReservaCuidadorController {
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
     @RequestMapping(method = RequestMethod.GET)
     public List<Reserva> get(@RequestParam("status") String status) throws Exception {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();;
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ;
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
-        return reservaService.getReservasByCuidadorIdAndStatus(id,status);
+        return reservaService.getReservasByCuidadorIdAndStatus(id, status);
     }
 
 
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
-    @RequestMapping(method = RequestMethod.PUT, value ="{reservaId}/cancelarReserva")
+    @RequestMapping(method = RequestMethod.PUT, value = "{reservaId}/cancelarReserva")
     public ResponseEntity cancelar(@PathVariable Long reservaId) throws Exception {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();;
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
-        reservaService.cancelar(reservaId,id);
+        reservaService.cancelar(reservaId, id);
         User user = getReserva(reservaId).getPerro().getUser();
-        MailService.sendEmail(user, MailType.BOOKING_CANCELLATION_BY_HOST);
+        mailService.sendEmail(user, MailType.BOOKING_CANCELLATION_BY_HOST);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
-    @RequestMapping(method = RequestMethod.PUT, value ="{reservaId}/confirmarReserva")
+    @RequestMapping(method = RequestMethod.PUT, value = "{reservaId}/confirmarReserva")
     public ResponseEntity Confirmar(@PathVariable Long reservaId) throws Exception {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();;
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
-        reservaService.confirmar(reservaId,id);
+        reservaService.confirmar(reservaId, id);
         User user = getReserva(reservaId).getPerro().getUser();
-        MailService.sendEmail(user, MailType.BOOKING_CONFIRMATION);
+        mailService.sendEmail(user, MailType.BOOKING_CONFIRMATION);
         return new ResponseEntity(HttpStatus.OK);
 
     }
