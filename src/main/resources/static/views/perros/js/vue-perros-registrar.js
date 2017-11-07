@@ -34,17 +34,17 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
                     <!-- Details -->
                     <div class="my-profile">
                             <label>Nombre</label>
-                            <input v-model="perro.nombre" value="" type="text">
-                            <label>Fecha de Nacimiento</label>
-                            <input v-model="perro.birthday" type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to">
+                            <input v-model="perro.nombre" value="" type="text" required>
+                            <label class="">Fecha de Nacimiento</label>
+                            <input type="date" v-model="perro.birthday" required>
                             <label>Sexo</label>
-                            <select v-model="perro.sexo">
+                            <select v-model="perro.sexo" required>
                                 <option disabled value="">Seleccionar Sexo</option>
                                 <option>Macho</option>
                                 <option>Hembra</option>
                             </select>
                             <label>Raza</label>
-                            <select v-model="raza.id">
+                            <select v-model="raza.id" required>
                                 <option disabled value="">Seleccionar Raza</option>
                                 <option v-for="raza in razas" :value="raza.id">
                                     {{ raza.nombre }}
@@ -59,7 +59,7 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
                             </div>
     
                             <label>Tamaño</label>
-                            <select v-model="tamaño.id">
+                            <select v-model="tamaño.id" required>
                                 <option disabled value="">Seleccionar Tamaño</option>
                                 <option v-for="tamaño in sizes" :value="tamaño.id">
                                     {{tamaño.nombre}} - Entre {{tamaño.valorMinimo}} y {{tamaño.valorMaximo}} kg
@@ -95,7 +95,6 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
     },
     mounted() {
         this.getUserInfo();
-        this.bindDatePickerWithVue();
     },
     methods: {
 
@@ -149,11 +148,11 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
                 vacuna.id = this.listaVacunas[i];
                 this.perro.listaVacunas.push(vacuna);
             }
-            console.log(this.perro);
-            //ACA JOSE CAMBIA LA FECHA
+            //console.log(this.perro.birthday);
             if (!this.perro.birthday || this.perro.birthday=="") {
-                this.perro.birthday = "10-10-2016";
+                this.perro.birthday = "2016-01-01";
             }
+            //this.perro.user.birthday=null;
 
             axios.post(this.url + this.user.id + "/perros", this.perro)
                 .then((response) => {
@@ -236,14 +235,6 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
                     }
                 );
         },
-        bindDatePickerWithVue() {
-            $('#booking-date').dateDropper();
-            $('#booking-date').change(function () {
-                var dateString = $('#booking-date').val(); //the getDate method
-                myPerrosRegistrar.perro.birthday = dateString;
-            });
-        }
-
     }
 });
 
