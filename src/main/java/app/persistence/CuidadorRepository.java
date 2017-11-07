@@ -26,9 +26,11 @@ public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
            "AND not exists ( " +
            "select 1 from Reserva r " +
            "where r.cuidador = c and c.estado = :#{#status} " +
-           "and r.status like 'paid' " +
-           "and (r.fechaInicio between :#{#from} AND :#{#to} " +
-           "or r.fechaFin between :#{#from} AND :#{#to} )) " +
+           "and r.status like 'pagada-dueño' " +
+           "and (( :#{#from} between r.fechaInicio AND r.fechaFin " +
+           "or  :#{#to} between r.fechaInicio AND r.fechaFin ) " +
+           "or (r.fechaInicio between :#{#from} AND :#{#to} " +
+           "or r.fechaFin between :#{#from} AND :#{#to} ))) " +
            "order by c.promedioReviews desc")
     List<Cuidador> findAllbyCiudadYFecha(@Param("ciudadPlaceId")String ciudadPlaceId,
                                          @Param("from")Date from,
