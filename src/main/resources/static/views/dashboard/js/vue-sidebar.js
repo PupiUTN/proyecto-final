@@ -12,11 +12,11 @@ let mySidebar = Vue.component('my-sidebar', {
                     <li><a href="/views/perros/perros.html"><i class="im im-icon-Dog"></i> Mis Perros</a></li>
                     <li><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>
 					<ul>
-						<li><a href="/views/reserva/mis-reservas-user.html?status=creada-dueño">Pendientes <span class="nav-tag green"></span></a></li>
-						<li><a href="/views/reserva/mis-reservas-user.html?status=aceptada-cuidador">Aceptadas <span class="nav-tag yellow"></span></a></li>
-						<li><a href="/views/reserva/mis-reservas-user.html?status=rechazada-dueño">Canceladas <span class="nav-tag red"></span></a></li>
-						<li><a href="/views/reserva/mis-reservas-user.html?status=pagada-dueño">Pagadas <span class="nav-tag blue"></span></a></li>
-						<li><a href="/views/reserva/mis-reservas-user.html?status=cerrada">Finalizadas <span class="nav-tag grey"></span></a></li>
+						<li><a href="/views/reserva/mis-reservas-user.html?status=creada-dueño">Generadas </a></li>
+						<li><a href="/views/reserva/mis-reservas-user.html?status=aceptada-cuidador">Aceptadas </a></li>
+						<li><a href="/views/reserva/mis-reservas-user.html?status=rechazada-dueño">Canceladas </a></li>
+						<li><a href="/views/reserva/mis-reservas-user.html?status=pagada-dueño">Pagadas </a></li>
+						<li><a href="/views/reserva/mis-reservas-user.html?status=cerrada">Finalizadas </a></li>
 					</ul>
 					</li>
 					                    <li><a href="/views/reserva/mis-reservas-user.html?status=finalizada"><i class="sl sl-icon-star"></i> Calificaciones<span v-if="pendientesUser > 0" class="nav-tag green">{{pendientesUser}}</span></a></li>
@@ -28,11 +28,11 @@ let mySidebar = Vue.component('my-sidebar', {
                      <li v-show="role === 'ROLE_CUIDADOR'"><a href="/views/cuidadores/cuidadores-editar.html"><i class="sl sl-icon-book-open"></i> Mi Descripcion</a></li>
                      <li v-show="role === 'ROLE_CUIDADOR'"><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>
 					 <ul>
-						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=creada-dueño">Pendientes <span class="nav-tag green"></span></a></li>
-						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=aceptada-cuidador">Aceptadas <span class="nav-tag yellow"></span></a></li>
-						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=rechazada-cuidador">Canceladas <span class="nav-tag red"></span></a></li>
-						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=pagada-dueño">Pagadas <span class="nav-tag blue"></span></a></li>
-			        	<li><a href="/views/reserva/mis-reservas-cuidador.html?status=cerrada">Finalizadas <span class="nav-tag grey"></span></a></li>
+						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=creada-dueño">Nuevas </a></li>
+						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=aceptada-cuidador">Aceptadas </a></li>
+						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=rechazada-cuidador">Canceladas </a></li>
+						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=pagada-dueño">Pagadas </a></li>
+			        	<li><a href="/views/reserva/mis-reservas-cuidador.html?status=cerrada">Finalizadas </a></li>
 					 </ul>	
 					 </li>
 					                     <li v-show="role === 'ROLE_CUIDADOR'"><a href="/views/reserva/mis-reservas-cuidador.html?status=finalizada"><i class="sl sl-icon-star"></i> Calificaciones<span v-if="pendientesCuidador > 0" class="nav-tag green">{{pendientesCuidador}}</span></a></li>
