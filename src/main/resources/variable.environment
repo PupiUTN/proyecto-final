@@ -1,16 +1,19 @@
-#edit the eviroment file
-sudo -H gedit /etc/environment
-
-#add this lines
-JDBC_DATABASE_URL=jdbc:mysql://aa1pu9gjmwalalf.caexa3xou8ho.us-east-2.rds.amazonaws.com:3306/pupi?useSSL=false
-JDBC_DATABASE_USERNAME=pupi
-JDBC_DATABASE_PASSWORD=pupi.utn.2017
 
 #MAC OS -> Add this lines to .bash_profile
+
 export JDBC_DATABASE_URL=jdbc:mysql://aa1pu9gjmwalalf.caexa3xou8ho.us-east-2.rds.amazonaws.com:3306/pupi?useSSL=false
 export JDBC_DATABASE_USERNAME=pupi
 export JDBC_DATABASE_PASSWORD=pupi.utn.2017
 
-#reboot your server
+export S3_ACCESS_KEY=AKIAJMZIXQFQHRZGDRCQ
+export S3_SECRET_KEY=qX4Nsa5ROztD07+/Vx4vNRqZO+m1rfZQWQcxunVu
+
+export SES_ACCESS_KEY=AKIAJC5QINGQL2PXT7TA
+export SES_SECRET_KEY=//PQfIw02psEx2ZWmdgCR1KktRJRR5m2qUTwDW+8
+
+#reboot your server or
+source ~/.bash_profile
+
 #check if its all right
+
 env | grep JDBC
