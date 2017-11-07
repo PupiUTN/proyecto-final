@@ -322,14 +322,6 @@ Vue.component('my-profile', {
             //MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
             this.user.birthday = fecha.format(fecha.parse(this.user.birthday, 'YYYY/MM/DD'), 'YYYY-MM-DD');
         }
-    },
-
-    filters: {
-        dateFormat: function (value) {
-            if (value) {
-                return fecha.parse(value, 'YYYY-MM-DD hh:mm:ss');
-            }
-        }
     }
 });
 
