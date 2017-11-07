@@ -362,6 +362,7 @@ Vue.component('my-cuidador-edit', {
             var tam = {id: this.tamaño};
             this.cuidador.tamaño = tam;
             this.isCuidadorCompleted();
+            this.cuidador.user.birthday = null;
 
             var urlCiudador = "/api/cuidadores/";
             var payload = jQuery.extend(true, {}, this.cuidador);
