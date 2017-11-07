@@ -1,47 +1,32 @@
 let myGenerarReserva = Vue.component('my-generar-reserva', {
         template: `
 <div class="container">
-<form v-on:submit.prevent="postReserva">
-<div class="form-group">
-    <!--cuidador resume-->
-    <div class="col-lg-6 col-md-12 col-lg-offset-3 ">
-
-        <!-- Titlebar -->
-        <div id="titlebar" class="listing-titlebar padding-bottom-35 padding-top-35 padding-left-35">
-            <div class="listing-titlebar-title">
-
-                <h2 id="nombre"> {{ reserva.cuidador.user.fullName}} <span
-                        class="listing-tag">Cuidador</span>
-                </h2>
-
-                <div class="card-image col s3 ">
-
-                </div>
-                <span>
-
-                <a class="listing-address">
-                    <i class="fa fa-map-marker"></i> {{ reserva.cuidador.user.direccion.ciudad}}
-                </a>
-            <br>
-                <i class="fa fa-paw"></i>
-                Cantidad maxima de perros: {{ reserva.cuidador.cantidadMaxDePerros}}
-
-        </span>
-                <div class="star-rating" data-rating="5">
-                    <div class="rating-counter"><a href="">(31 reviews)</a></div>
+    <form v-on:submit.prevent="postReserva">
+        <div class="form-group">
+        <!--cuidador resume-->
+        <div class="col-lg-6 col-md-12 col-lg-offset-3 ">
+            <!-- Titlebar -->
+            <div id="titlebar" class="listing-titlebar padding-bottom-35 padding-top-35 padding-left-35">
+                <div class="listing-titlebar-title">
+                    <h2 id="nombre"> {{ reserva.cuidador.user.fullName}} 
+                        <span class="listing-tag">Cuidador</span>
+                    </h2>
+                    <i class="fa fa-map-marker"></i> {{reserva.cuidador.user.direccion.ciudad}}
+                    <br>
+                    <i class="fa fa-paw"></i> Cantidad maxima de perros: {{reserva.cuidador.cantidadMaxDePerros}}
+                    <div class="star-rating" data-rating="5.0">
+                        <div class="rating-counter">({{reserva.cuidador.cantidadReviews}} reviews)</div>
+                        
+                    </div>
                 </div>
             </div>
         </div>
-
-    </div>
     <!-- Fechas -->
     <div class="col-lg-6 col-md-12 col-lg-offset-3">
-
         <!-- Book Now -->
         <div class="boxed-widget">
             <h3><i class="fa fa-calendar-check-o "></i> Fechas de Reserva </h3>
             <div class="row with-forms  margin-top-0">
-
                 <div class="col-lg-12 col-md-12">
                     <my-hotel-date-picker
                             ref="myHotelDatePicker"
@@ -54,17 +39,13 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
 
         </div>
         <!-- Book Now / End -->
-
-
     </div>
     <!-- perros-->
     <div class="col-lg-6 col-md-12 col-lg-offset-3">
-
         <!-- Book Now -->
         <div class="boxed-widget">
             <h3><i class="fa  fa-heart-o"></i>Mis Perros </h3>
             <div class="row with-forms  margin-top-0">
-
                 <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
                 <div class="col-lg-12 col-md-12">
                     <div class="checkboxes in-row margin-top-0">
@@ -82,7 +63,6 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
 
         </div>
         <!-- Book Now / End -->
-
     </div>
     <!--mensaje-->
     <div class="col-lg-6 col-md-12 col-lg-offset-3">
@@ -91,13 +71,10 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
         <div class="boxed-widget">
             <h3><i class="fa  fa-pencil-square-o "></i> Mensaje </h3>
             <div class="row with-forms  margin-top-0">
-
                 <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
                 <div class="col-lg-12 col-md-12">
-                    <textarea v-model="reserva.mensaje" name="summary" spellcheck="true"
-                              required></textarea>
+                    <textarea v-model="reserva.mensaje" name="summary" spellcheck="true" required></textarea>
                 </div>
-
             </div>
 
         </div>
@@ -261,6 +238,9 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                     var value = this.reserva.fechaInicio + '-' + this.reserva.fechaFin;
                     this.$refs.myHotelDatePicker.setValue(value);
                 }
+            },
+            complemento: function (promedioReviews) {
+                return 5 - promedioReviews
             }
 
 
