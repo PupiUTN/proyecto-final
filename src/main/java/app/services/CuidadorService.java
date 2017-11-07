@@ -7,6 +7,7 @@ import app.persistence.CuidadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -70,8 +71,11 @@ public class CuidadorService {
 
     public List<Cuidador> searchCuidadores(String ciudadPlaceId, Date from, Date to, String status) {
         if (from == null || to == null){
+
             return cuidadorRepository.findAllbyCiudadPlaceIdAndStatus(ciudadPlaceId,status);
         }
+        System.out.println(new SimpleDateFormat("YYYY-MM-dd").format(from));
+        System.out.println(new SimpleDateFormat("YYYY-MM-dd").format(to));
         return cuidadorRepository.findAllbyCiudadYFecha(ciudadPlaceId,from,to,status);
 
     }
