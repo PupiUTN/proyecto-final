@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<head>
+
+    <!-- Basic Page Needs
+    ================================================== -->
+    <title>pupi</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16"/>
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+
+    <link href="/css/page-loader.css" rel="stylesheet"/>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74104605-6"></script>
+    <script>  window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('send', {hitType: 'pageview', page: location.pathname});
+    gtag('config', 'UA-74104605-6');</script>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+
+    <my-app current-view="my-generar-reserva"></my-app>
+
+
+</div>
+
+<!-- Scripts
+================================================== -->
+<script type="text/javascript" src="/assets/scripts/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jpanelmenu.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/chosen.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/slick.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/rangeslider.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/magnific-popup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/waypoints.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/counterup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/custom.js"></script>
+
+<!-- Maps -->
+
+
+<script src="/js/axios.min.js"></script>
+<script src="/js/axios.interceptor.js"></script>
+<script src="/js/vue.js"></script>
+<link rel="stylesheet" href="/css/sweetalert.css"/>
+<script src="/js/sweetalert.min.js"></script>
+<script type="text/javascript" src="/views/security/js/vue-login.js"></script>
+<link rel="stylesheet" href="/views/layout/vue-navbar.css">
+<script type="text/javascript" src="/views/layout/vue-navbar.js"></script>
+<script type="text/javascript" src="/views/index/js/vue-app-template.js"></script>
+
+
+<!-- NEW DATE PICKER -->
+<link href="/css/hotel-datepicker.css" rel="stylesheet">
+<script src="/js/fecha.min.js"></script>
+<script src="/js/hotel-datepicker.min.js"></script>
+<script src="/views/buscar/vue-hotel-datepicker.js"></script>
+<style>
+    .datepicker {
+        position: relative !important;
+    }
+</style>
+
+<script src="js/generar-reserva.js"></script>
+
+
+<script>
+    let vm = new Vue({
+        el: '#wrapper',
+    });
+</script>
+
+
+</body>
+</html>

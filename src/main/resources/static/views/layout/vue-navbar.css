@@ -1,0 +1,28 @@
+/*jose*/
+.left-side {
+    width: 60%;
+}
+
+.right-side {
+    width: 40%;
+}
+
+/*jose*/
+.header-widget {
+    text-align: right;
+    height: auto;
+}
+
+.header-widget .sign-in {
+    top: 10px;
+    display: inline-block;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.user-menu ul {
+    left: -100px;
+}

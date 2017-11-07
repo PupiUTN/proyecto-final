@@ -1,0 +1,40 @@
+/* This is a compiled file, you should be editing the file in the templates directory */
+#page-loader {
+    -webkit-pointer-events: none;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-image: url('/img/spinner.svg');
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 3000;
+    background-position: center;
+    display: none;
+}
+
+.loader_ajax_small {
+    border: 2px solid #f3f3f3 !important;
+    border-radius: 50%;
+    border-top: 2px solid #2D2D2D !important;
+    width: 29px;
+    height: 29px;
+    margin:10px auto;
+    -webkit-animation: spin_loader_ajax_small 2s linear infinite;
+    animation: spin_loader_ajax_small 2s linear infinite;
+}
+
+@-webkit-keyframes spin_loader_ajax_small {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin_loader_ajax_small {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
