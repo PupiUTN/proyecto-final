@@ -63,6 +63,8 @@ public class PaymentsService {
 
             transactionInfo.put("items", items);
             transactionInfo.put("payer", payer);
+            transactionInfo.put("notification_url", "http://pupi.com.ar/api/payments/notifications");
+            transactionInfo.put("external_reference", reserva.getId());
 
             preference = mp.createPreference(transactionInfo.toString());
         }
@@ -75,13 +77,11 @@ public class PaymentsService {
     public JSONObject getPaymentInfo(String id, String topic) {
         try {
             JSONObject merchantOrderInfo = null;
-            JSONObject paymentInfo;
+            JSONObject paymentInfo = null;
             if (topic.equalsIgnoreCase("payment")) {
                 paymentInfo = mp.get("/collections/notifications/" + id);
                 Long merchantOrderId = paymentInfo.getJSONObject("response").getJSONObject("collection").optLong("merchant_order_id");
-                if(merchantOrderId != null) {
-                    merchantOrderInfo = mp.get("/merchant_orders/" + merchantOrderId);
-                }
+                merchantOrderInfo = mp.get("/merchant_orders/" + merchantOrderId);
             } else if (topic.equalsIgnoreCase("merchant_order")) {
                 merchantOrderInfo = mp.get("/merchant_orders/" + id);
             }
@@ -97,6 +97,16 @@ public class PaymentsService {
                 Float bookingAmount = Float.parseFloat(merchantOrderInfo.getJSONObject("response").get("total_amount").toString());
                 if (paidAmount >= bookingAmount) {
                     //LÓGICA QUE CAMBIA EL ESTADO DEL PAGO
+                    Payment payment = new Payment();
+                    payment.setMpPaymentId(Long.valueOf(id));
+                    if(paymentInfo != null) {
+                        payment.setPaymentData(paymentInfo.toString());
+                    }
+                    else {
+                        payment.setPaymentData("VINO NULO");
+                    }
+                    paymentRepository.save(payment);
+
                 }
             }
         }

@@ -20,6 +20,9 @@ Vue.component('mercadopago', {
     },
     methods: {
         createPayment() {
+            console.log("ENTRA AL CREATE PAYMENT");
+            console.log("URL: " + this.url);
+            console.log("RESERVA: " + this.reserva.toString());
             axios.post(this.url, this.reserva)
                 .then((paymentPreference) => {
                     this.paymentPreference = paymentPreference.data.response;

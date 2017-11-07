@@ -51,6 +51,9 @@ Vue.component('my-reservas-user-list', {
                                           <div class="col-xs-12 col-md-3" v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-cuidador'">
                                             <a v-on:click="calificarReserva(index)"  style="color: blue; border-color: blue; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
                                         </div>
+                                        <div class = "col-xs-12 col-md-6" v-if="reserva.status === 'aceptada-cuidador'">
+                                            <mercadopago :reserva="reserva"></mercadopago>
+                                        </div>
                                 
 
                                     </div>
