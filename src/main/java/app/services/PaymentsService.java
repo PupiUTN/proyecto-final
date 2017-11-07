@@ -95,29 +95,32 @@ public class PaymentsService {
                 logger.info("merchantOrderInfo - " + merchantOrderInfo.toString());
             }
             if (merchantOrderInfo != null && merchantOrderInfo.getInt("status") == 200) {
-                Long externalReference = Long.valueOf(paymentInfo.getJSONObject("response").getString("external_reference"));
-                Reserva booking = getReserva(externalReference);
+                String externalReference = merchantOrderInfo.getJSONObject("response").getString("external_reference");
+                Reserva booking = getReserva(Long.parseLong(externalReference));
                 logger.info("EXTERNAL REFERENCE -> " + externalReference);
                 Float paidAmount = 0f;
                 JSONArray payments = merchantOrderInfo.getJSONObject("response").getJSONArray("payments");
-                for (int i = 0; i < payments.length(); i++) {
-                    JSONObject payment = payments.getJSONObject(i);
-                    if ("approved".equalsIgnoreCase(payment.getString("status"))) {
-                        paidAmount += Float.parseFloat(payment.get("transaction_amount").toString());
+                if(payments.length() > 0) {
+                    for (int i = 0; i < payments.length(); i++) {
+                        JSONObject payment = payments.getJSONObject(i);
+                        if ("approved".equalsIgnoreCase(payment.getString("status"))) {
+                            paidAmount += Float.parseFloat(payment.get("transaction_amount").toString());
+                        }
+                        createPayment(booking, Long.valueOf(id), payment.getString("status"), payment.toString());
                     }
-                    createPayment(booking, Long.valueOf(id), payment.getString("status"), payment.toString());
-                }
-                Float bookingAmount = Float.parseFloat(merchantOrderInfo.getJSONObject("response").get("total_amount").toString());
+                    Float bookingAmount = Float.parseFloat(merchantOrderInfo.getJSONObject("response").get("total_amount").toString());
 
-                if (paidAmount >= bookingAmount) {
-                    logger.info("RESERVA PAGADA - " + booking.toString());
-                    reservaService.setEstadoPagada(booking);
+                    if (paidAmount >= bookingAmount) {
+                        logger.info("RESERVA PAGADA - " + booking.toString());
+                        reservaService.setEstadoPagada(booking);
+                    }
                 }
             }
         }
         catch(Exception e) {
             System.out.println(e.toString());
-            logger.error("Error when trying to get payment info " + e.toString());
+            logger.error("Error when trying to get payment info " + e.toString() + "\n");
+            e.printStackTrace();
         }
         return null;
     }
@@ -125,7 +128,7 @@ public class PaymentsService {
     public Payment createPayment(Reserva reserva, Long mpId, String status, String paymentData) {
         Payment p = new Payment();
         p.setUser(reserva.getPerro().getUser());
-        p.setPaymentData(paymentData);
+        p.setPaymentData("DATOS PAGO");
         p.setMpPaymentId(mpId);
         p.setStatus(status);
         return paymentRepository.save(p);
