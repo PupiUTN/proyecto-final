@@ -304,8 +304,17 @@ Vue.component('my-detalle-reserva-completo', {
                 .then((response) => {
                     this.reserva = response.data;
                     // document.getElementById("foto_perro").src = this.reserva.perro.fotoPerfil;
-                    this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);
-                    this.edadCuidador = this.calcularEdad(this.reserva.cuidador.user.birthday);
+                    if(this.reserva.perro.birthday !== null){
+                        this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);}
+                    else{this.edadPerro = "-";}
+                   // this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);
+                    if(this.reserva.cuidador.user.birthday !== null){
+                        this.edadCuidador = this.calcularEdad(this.reserva.cuidador.user.birthday);}
+                    else
+                    { this.edadCuidador =" ";
+
+                    }
+                   // this.edadCuidador = this.calcularEdad(this.reserva.cuidador.user.birthday);
                     var date = new Date(this.reserva.fechaTransaccion);
                     this.reserva.fechaTransaccion = date.toLocaleDateString();
                     var dateEntrada = new Date (this.reserva.fechaInicio);
@@ -332,9 +341,9 @@ Vue.component('my-detalle-reserva-completo', {
 
             // Si la fecha es correcta, calculamos la edad
             var values = fecha.split("-");
-            var dia = values[0];
+            var dia = values[2];
             var mes = values[1];
-            var ano = values[2];
+            var ano = values[0];
 
             // cogemos los valores actuales
             var fecha_hoy = new Date();
