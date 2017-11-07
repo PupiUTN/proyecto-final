@@ -62,9 +62,6 @@ public class ReservaService {
 
     public void cancelarCausaUsuario(Long reservaId, Long userId) {
         Reserva reserva = reservaRepository.findByUserIdAnId(userId, reservaId);
-        if (reserva.getStatus() == "foo"){
-            throw new IllegalArgumentException();
-        }
         reserva.setStatus("rechazada-dueño");
         reservaRepository.save(reserva);
     }
@@ -84,9 +81,6 @@ public class ReservaService {
 
     public void cancelar(Long reservaId, Long userId) {
         Reserva reserva = reservaRepository.findByCuidadorIdAnId(userId, reservaId);
-        if (reserva.getStatus() == "foo"){
-            throw new IllegalArgumentException();
-        }
         reserva.setStatus("rechazada-cuidador");
         reservaRepository.save(reserva);
     }
@@ -94,9 +88,6 @@ public class ReservaService {
 
     public void confirmar(Long reservaId, Long userId) {
         Reserva reserva = reservaRepository.findByCuidadorIdAnId(userId, reservaId);
-        if (reserva.getStatus() == "foo"){
-            throw new IllegalArgumentException();
-        }
         reserva.setStatus("aceptada-cuidador");
         reservaRepository.save(reserva);
     }
@@ -107,5 +98,11 @@ public class ReservaService {
 
     public List<Reserva>findPendienteReviewUser() {
         return reservaRepository.findPendienteReviewUser();
+    }
+
+    public void setEstadoPagada(Long reservaId) {
+        Reserva reserva = reservaRepository.findOne(reservaId);
+        reserva.setStatus("pagada-dueño");
+        reservaRepository.save(reserva);
     }
 }

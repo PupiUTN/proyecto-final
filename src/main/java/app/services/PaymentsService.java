@@ -17,14 +17,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class PaymentsService {
 
-    PaymentRepository paymentRepository;
+    private PaymentRepository paymentRepository;
+    private ReservaService reservaService;
 
     private static final Logger logger = LogManager.getLogger(PaymentsService.class);
     MP mp = new MP("92590042667422", "R8bMZvxKoJgO4gxALPfVnRv4ueJyqwRL");
 
     @Autowired
-    public PaymentsService(PaymentRepository paymentRepository) {
+    public PaymentsService(PaymentRepository paymentRepository, ReservaService reservaService) {
         this.paymentRepository = paymentRepository;
+        this.reservaService = reservaService;
     }
 
     public JSONObject createPreference(Reserva reserva) {
@@ -86,6 +88,7 @@ public class PaymentsService {
                 merchantOrderInfo = mp.get("/merchant_orders/" + id);
             }
             if (merchantOrderInfo != null && merchantOrderInfo.getInt("status") == 200) {
+                Reserva booking = getReserva(Long.valueOf(paymentInfo.getJSONObject("response").getString("external_reference")));
                 Float paidAmount = 0f;
                 JSONArray payments = merchantOrderInfo.getJSONObject("response").getJSONArray("payments");
                 for (int i = 0; i < payments.length(); i++) {
@@ -93,20 +96,12 @@ public class PaymentsService {
                     if ("approved".equalsIgnoreCase(payment.getString("status"))) {
                         paidAmount += Float.parseFloat(payment.get("transaction_amount").toString());
                     }
+                    createPayment(booking, Long.valueOf(id), payment.getString("status"), payment.toString());
                 }
                 Float bookingAmount = Float.parseFloat(merchantOrderInfo.getJSONObject("response").get("total_amount").toString());
-                if (paidAmount >= bookingAmount) {
-                    //LÓGICA QUE CAMBIA EL ESTADO DEL PAGO
-                    Payment payment = new Payment();
-                    payment.setMpPaymentId(Long.valueOf(id));
-                    if(paymentInfo != null) {
-                        payment.setPaymentData(paymentInfo.toString());
-                    }
-                    else {
-                        payment.setPaymentData("VINO NULO");
-                    }
-                    paymentRepository.save(payment);
 
+                if (paidAmount >= bookingAmount) {
+                    reservaService.setEstadoFinalizado(booking);
                 }
             }
         }
@@ -117,7 +112,16 @@ public class PaymentsService {
         return null;
     }
 
-    public Payment createPayment(Payment entity) throws Exception {
-        return paymentRepository.save(entity);
+    public Payment createPayment(Reserva reserva, Long mpId, String status, String paymentData) {
+        Payment p = new Payment();
+        p.setUser(reserva.getPerro().getUser());
+        p.setPaymentData(paymentData);
+        p.setMpPaymentId(mpId);
+        p.setStatus(status);
+        return paymentRepository.save(p);
+    }
+
+    public Reserva getReserva(Long reservaId) {
+        return reservaService.getReserva(reservaId);
     }
 }

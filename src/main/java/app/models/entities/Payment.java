@@ -24,6 +24,8 @@ public class Payment implements Serializable {
     @NotNull
     private Long mpPaymentId;
     @NotNull
+    private String status;
+    @NotNull
     private String paymentData;
 
 }
