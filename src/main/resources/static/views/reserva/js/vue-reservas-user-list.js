@@ -37,6 +37,9 @@ Vue.component('my-reservas-user-list', {
                                             <p ><b>Perro: </b> {{ reserva.perro.nombre}}</p>
                                         </div>
                                         <div class="col-xs-12 col-md-1">
+                                            <p><b>Precio</b> </br>{{ reserva.precioTotal }} $</p>
+                                        </div>
+                                        <div class="col-xs-12 col-md-1">
                                             <p><b>Desde</b> </br>{{ reserva.fechaFin }}</p>
                                         </div>
                                         <div class="col-xs-12 col-md-1">
@@ -159,7 +162,7 @@ Vue.component('my-reservas-user-list', {
         },
         verDetalleCompletoButton(index) {
             var id = this.reservas[index].id;
-            document.location.href = "/views/reserva/detalle-reserva-completo.html?id="+ id;
+            document.location.href = "/views/reserva/detalle-reserva-completo.html?id=" + id;
         },
         getParameterByName(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -192,22 +195,22 @@ Vue.component('my-reservas-user-list', {
         },
         listClass: function () {
             if (this.status == 'creada-dueño') {
-                return 'col-xs-12 col-md-7'
+                return 'col-xs-12 col-md-6'
             }
             if (this.status == 'rechazada-dueño') {
-                return 'col-xs-12 col-md-10'
+                return 'col-xs-12 col-md-9'
             }
             if (this.status == 'aceptada-cuidador') {
-                return 'col-xs-12 col-md-10'
+                return 'col-xs-12 col-md-9'
             }
             if (this.status == 'pagada-dueño') {
-                return 'col-xs-12 col-md-10'
+                return 'col-xs-12 col-md-9'
             }
             if (this.status == 'finalizada') {
-                return 'col-xs-12 col-md-10'
+                return 'col-xs-12 col-md-9'
             }
             if (this.status == 'cerrada') {
-                return 'col-xs-12 col-md-10'
+                return 'col-xs-12 col-md-9'
             }
         },
         listColor: function () {

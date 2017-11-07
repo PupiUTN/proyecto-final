@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -52,7 +53,8 @@ public class User implements Serializable {
 
     private String fullName;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     @Temporal(TemporalType.DATE)
     private Date birthday;
 

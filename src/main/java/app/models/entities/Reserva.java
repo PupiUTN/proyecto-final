@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -35,12 +36,14 @@ public class Reserva implements Serializable {
     @NotNull
     private Perro perro;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     @Temporal(TemporalType.DATE)
     @NotNull
     private Date fechaInicio;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     @Temporal(TemporalType.DATE)
     @NotNull
     private Date fechaFin;
