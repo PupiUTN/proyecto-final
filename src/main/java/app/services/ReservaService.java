@@ -49,7 +49,7 @@ public class ReservaService {
         return savedObject;
     }
 
-    public Reserva SetEstadoFinalizado(Reserva reserva) {
+    public Reserva setEstadoFinalizado(Reserva reserva) {
         Reserva savedObject = reservaRepository.save(reserva);
         return savedObject;
     }
@@ -62,9 +62,6 @@ public class ReservaService {
 
     public void cancelarCausaUsuario(Long reservaId, Long userId) {
         Reserva reserva = reservaRepository.findByUserIdAnId(userId, reservaId);
-        if (reserva.getStatus() == "foo"){
-            throw new IllegalArgumentException();
-        }
         reserva.setStatus("rechazada-dueño");
         reservaRepository.save(reserva);
     }
@@ -84,9 +81,6 @@ public class ReservaService {
 
     public void cancelar(Long reservaId, Long userId) {
         Reserva reserva = reservaRepository.findByCuidadorIdAnId(userId, reservaId);
-        if (reserva.getStatus() == "foo"){
-            throw new IllegalArgumentException();
-        }
         reserva.setStatus("rechazada-cuidador");
         reservaRepository.save(reserva);
     }
@@ -94,20 +88,20 @@ public class ReservaService {
 
     public void confirmar(Long reservaId, Long userId) {
         Reserva reserva = reservaRepository.findByCuidadorIdAnId(userId, reservaId);
-        if (reserva.getStatus() == "foo"){
-            throw new IllegalArgumentException();
-        }
         reserva.setStatus("aceptada-cuidador");
         reservaRepository.save(reserva);
     }
 
-       public List<Reserva>findPendienteReviewCuidador()
-       { return reservaRepository.findPendienteReviewCuidador();
-
+       public List<Reserva>findPendienteReviewCuidador() {
+        return reservaRepository.findPendienteReviewCuidador();
        }
 
-    public List<Reserva>findPendienteReviewUser()
-    { return reservaRepository.findPendienteReviewUser();
+    public List<Reserva>findPendienteReviewUser() {
+        return reservaRepository.findPendienteReviewUser();
+    }
 
+    public void setEstadoPagada(Reserva reserva) {
+        reserva.setStatus("pagada-dueño");
+        reservaRepository.save(reserva);
     }
 }

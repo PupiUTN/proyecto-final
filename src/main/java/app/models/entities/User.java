@@ -53,8 +53,8 @@ public class User implements Serializable {
 
     private String fullName;
 
-    @JsonFormat(pattern = "yyyy/MM/dd")
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date birthday;
 
