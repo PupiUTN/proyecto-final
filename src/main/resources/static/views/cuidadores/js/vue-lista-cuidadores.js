@@ -343,61 +343,6 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             }
             this.markers = [];
         },
-        filtrarPrecio() {
-            this.items = [];
-            var itemsFiltrar=[];
-            this.itemsConFiltroPrecio=[];
-            if(this.checkedServicios && this.checkedServicios.length>0){
-                itemsFiltrar=this.itemsConFiltroServicio;
-            }else{
-                console.log("sin filtro");
-                itemsFiltrar=this.itemsSinFiltro;
-            }
-            /*//no hay filtro a aplicar...
-            if(!this.precioDesde && !this. precioHasta){
-                //si hay filtro de servicios
-                if(this.itemsConFiltroServicio && this.itemsConFiltroServicio.length>0){
-                    this.items=this.itemsConFiltroServicio;
-                }else{
-                    this.items=this.itemsSinFiltro;
-                }
-                this.calcularEncontrados();
-            }else{
-                //si hay filtro de servicios
-                if(this.itemsConFiltroServicio && this.itemsConFiltroServicio.length>0){
-                    itemsFiltrar=this.itemsConFiltroServicio;
-                }else{
-                    itemsFiltrar=this.itemsSinFiltro;
-                }*/
-
-                this.calcularEncontrados();
-        },
-        filtrarServicio(){
-            if(!this.itemsConFiltroPrecio || this.itemsConFiltroPrecio.length==0){
-                this.items=this.itemsSinFiltro;
-            }else{
-                this.items=this.itemsConFiltroPrecio;
-
-            }
-            console.log(this.items);
-            var itemsFiltrar = this.items;
-            this.items=[];
-            var tieneServicio=[];
-
-                this.filtrarPrecio();
-/*
-                if(!this.itemsConFiltroPrecio || this.itemsConFiltroPrecio.length==0){
-                    this.items=this.itemsSinFiltro;
-                }else{
-                    this.items=this.itemsConFiltroPrecio;
-
-                }
-                this.itemsConFiltroServicio=[];
-                this.calcularEncontrados();*/
-
-
-
-        },
         filtrar(){
             this.items = [];
             var banderaServicios=0;
@@ -441,15 +386,11 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 this.itemsConFiltroServicio = [];
                 for (var i = 0; i < itemsFiltroPrecio.length; i++) {
                     banderaServicios = 0;
-                    console.log("=======");
-                    console.log(itemsFiltroPrecio[i].user.fullName);
-                    console.log("---");
                     for (var j = 0; j < itemsFiltroPrecio[i].listaServicios.length; j++) {
                         console.log(itemsFiltroPrecio[i].listaServicios[j].nombre);
                         for (var k = 0; k < this.checkedServicios.length; k++) {
                             if(itemsFiltroPrecio[i].listaServicios[j].id == this.checkedServicios[k]){
                                 banderaServicios ++;
-                                console.log("--------match");
                                 break;
                             }
                         }
