@@ -24,7 +24,7 @@ Vue.component('my-reservas-user-list', {
 					<ul>
                         <li v-for="(reserva, index) in reservas" v-bind:style="listColor">
                             <a>
-                                <div class="message-avatar"><img :src="reserva.cuidador.listaImagenes[0].url"alt=""></div>
+                                <div class="message-avatar"><img :src="reserva.cuidador.user.profileImageUrl"alt=""></div>
 
                                 <div class="message-by">
                                     
@@ -45,7 +45,7 @@ Vue.component('my-reservas-user-list', {
                                         <div class="col-xs-12 col-md-1">
                                             <p><b> Hasta </b> </br> {{ reserva.fechaFin  | dateFormat }}</p>
                                         </div>
-                                        <div class="col-xs-12 col-md-3" v-if="reserva.status === 'creada-dueño' || reserva.status !== 'cerrada'">
+                                        <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'finalizada' && reserva.status !== 'cerrada'  && reserva.status !== 'comentario-cuidador'">
                                             <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
                                         </div>                                        
                                          <div class="col-xs-12 col-md-6" v-if="reserva.status === 'pagada-dueño'">
@@ -79,6 +79,7 @@ Vue.component('my-reservas-user-list', {
                         id: null,
                         cuidador: {
                             user: {
+                                profileImageUrl:'',
                                 fullName: '',
                                 direccion: {
                                     calle: '',

@@ -10,9 +10,7 @@ Vue.component('my-detalle-reserva-completo', {
                 <!-- Breadcrumbs -->
                 <nav id="breadcrumbs">
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Dashboard</a></li>
-                        <li>Datos de la reserva </li>
+                       
                     </ul>
                 </nav>
             </div>

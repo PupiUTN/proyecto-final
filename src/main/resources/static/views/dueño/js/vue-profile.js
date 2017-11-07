@@ -33,9 +33,7 @@ Vue.component('my-profile', {
                             <label class="margin-top-0">Nombre y Apellido</label>
                             <input v-model="user.fullName" value="" type="text" required>
                             <label class="margin-top-0">Fecha de Nacimiento</label>
-                            
-                            <input type="date" v-model="user.birthday" required>
-                            
+                            <input type="date" v-model="user.birthday" required>    
                             <label class="margin-top-0">Género</label>
                             <select v-model="user.gender" required>
                                 <option disabled selected value="Seleccionar Género">Seleccionar Género</option>
@@ -244,6 +242,7 @@ Vue.component('my-profile', {
                     this.direccion = this.user.direccion;
                 }
                 this.frontEndDateFormat();
+                console.log(this.user.birthday);
 
             }
             else {
@@ -254,7 +253,7 @@ Vue.component('my-profile', {
         editUserInfo() {
             //MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
             this.backEndDateFormat();
-
+            console.log(this.user.birthday);
             this.user.direccion = this.direccion;
             this.isUserCompleted();
             //console.log(this.user);
@@ -262,7 +261,15 @@ Vue.component('my-profile', {
             axios.put(this.url + this.user.id, payload)
                 .then((response) => {
 
-                    sweetAlert("Editado!", "Usuario editado exitosamente.", "success");
+                    sweetAlert({
+                            title:"Editado!",
+                            text:"Usuario editado exitosamente.",
+                            type:"success",
+                        },
+                        function () {
+                          window.location.href="/views/dueño/perfil.html";
+                        }
+                        );
                     this.frontEndDateFormat();
                     console.log(response);
                 })
@@ -306,12 +313,14 @@ Vue.component('my-profile', {
 
         },
         frontEndDateFormat() {
+            console.log(this.user.birthday);
             //MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
             this.user.birthday = fecha.format(fecha.parse(this.user.birthday, 'YYYY/MM/DD'), 'YYYY-MM-DD');
         },
         backEndDateFormat() {
+            console.log(this.user.birthday);
             //MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
-            this.user.birthday = fecha.format(fecha.parse(this.user.birthday, 'YYYY-MM-DD'), 'YYYY/MM/DD');
+            this.user.birthday = fecha.format(fecha.parse(this.user.birthday, 'YYYY/MM/DD'), 'YYYY-MM-DD');
         }
     }
 });
