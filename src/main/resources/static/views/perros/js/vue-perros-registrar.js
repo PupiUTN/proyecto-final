@@ -15,54 +15,56 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
         <!-- Profile -->
         <div class="col-lg-12 col-md-12">
             <div class="dashboard-list-box margin-top-0">
-                <h4 class="gray">Profile Details</h4>
+                <h4 class="gray">Detalles del perro</h4>
                 <div class="dashboard-list-box-static">
                     <form id="imageForm" enctype="multipart/form-data">
                         <!-- Avatar -->
-                        <div class="edit-profile-photo">
-                            <img :src="perro.fotoPerfil" alt="">
-                            <div class="change-photo-btn">
-                                <div class="photoUpload">
-                                    <span><i class="fa fa-upload"></i> Subir Foto</span>
-                                    <input type="file" id="imageFile" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+                        <div class="row">
+                            <div class="edit-profile-photo col-xs-3 padding-left-30">
+                                <img :src="perro.fotoPerfil" alt="">
+                                <div class="change-photo-btn">
+                                    <div class="photoUpload">
+                                        <span><i class="fa fa-upload"></i> Subir Foto</span>
+                                        <input type="file" id="imageFile" @change="filesChange($event.target.files)" class="upload" accept="image/x-png,image/jpg,image/jpeg"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </form>
                     <!-- Details -->
                     <div class="my-profile">
-                        <label>Nombre</label>
-                        <input v-model="perro.nombre" value="" type="text">
-                        <label>Fecha de Nacimiento</label>
-                        <input v-model="perro.birthday" type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to">
-                        <label>Sexo</label>
-                        <select v-model="perro.sexo">
-                            <option disabled value="">Seleccionar Sexo</option>
-                            <option>Macho</option>
-                            <option>Hembra</option>
-                        </select>
-                        <label>Raza</label>
-                        <select v-model="raza.id">
-                            <option disabled value="">Seleccionar Raza</option>
-                            <option v-for="raza in razas" :value="raza.id">
-                                {{ raza.nombre }}
-                            </option>
-                        </select>
-                        <label>Vacunas</label>
-                        <div class="checkboxes in-row margin-bottom-20">
-                            <div v-for="vacuna in vacunas">
-                            <input :id="vacuna.id" type="checkbox" :value="vacuna.id" v-model="listaVacunas">
-                            <label :for="vacuna.id">{{vacuna.nombre}}</label>
+                            <label>Nombre</label>
+                            <input v-model="perro.nombre" value="" type="text">
+                            <label>Fecha de Nacimiento</label>
+                            <input v-model="perro.birthday" type="text" id="booking-date" data-lang="es" data-large-mode="true" data-format="d-m-Y" data-lock="to">
+                            <label>Sexo</label>
+                            <select v-model="perro.sexo">
+                                <option disabled value="">Seleccionar Sexo</option>
+                                <option>Macho</option>
+                                <option>Hembra</option>
+                            </select>
+                            <label>Raza</label>
+                            <select v-model="raza.id">
+                                <option disabled value="">Seleccionar Raza</option>
+                                <option v-for="raza in razas" :value="raza.id">
+                                    {{ raza.nombre }}
+                                </option>
+                            </select>
+                            <label>Vacunas</label>
+                            <div class="checkboxes in-row margin-bottom-20">
+                                <div v-for="vacuna in vacunas">
+                                <input :id="vacuna.id" type="checkbox" :value="vacuna.id" v-model="listaVacunas">
+                                <label :for="vacuna.id">{{vacuna.nombre}}</label>
+                                </div>
                             </div>
-                        </div>
-
-                        <label>Tamaño</label>
-                        <select v-model="tamaño.id">
-                            <option disabled value="">Seleccionar Tamaño</option>
-                            <option v-for="tamaño in sizes" :value="tamaño.id">
-                                {{tamaño.nombre}} - Entre {{tamaño.valorMinimo}} y {{tamaño.valorMaximo}} kg
-                            </option>
-                        </select>
+    
+                            <label>Tamaño</label>
+                            <select v-model="tamaño.id">
+                                <option disabled value="">Seleccionar Tamaño</option>
+                                <option v-for="tamaño in sizes" :value="tamaño.id">
+                                    {{tamaño.nombre}} - Entre {{tamaño.valorMinimo}} y {{tamaño.valorMaximo}} kg
+                                </option>
+                            </select>
                     </div>
                     <!--TODO on submit to validate the form-->
                     <button v-on:click='saveDog()' class="button margin-top-15">Guardar</button>
@@ -77,6 +79,7 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
             user: {},
             perro: {
                 birthday: '',
+                fotoPerfil: "/img/no-perro.png",
             },
             url: "/api/user/",
             formPost: true,
@@ -147,7 +150,8 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
                 this.perro.listaVacunas.push(vacuna);
             }
             console.log(this.perro);
-            if (this.perro.birthday === undefined) {
+            //ACA JOSE CAMBIA LA FECHA
+            if (!this.perro.birthday || this.perro.birthday=="") {
                 this.perro.birthday = "10-10-2016";
             }
 
