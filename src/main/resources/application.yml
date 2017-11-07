@@ -20,6 +20,10 @@ spring:
    properties.mail.smtp:
                     auth: true
                     starttls.enable: true
+ http:
+   multipart:
+    max-file-size: 10MB
+    max-request-size: 10MB
 
 server:
   port: 5000
@@ -37,3 +41,4 @@ app:
       ses:
         accessKey: AKIAJC5QINGQL2PXT7TA
         secretKey: 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
+

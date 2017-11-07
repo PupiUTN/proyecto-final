@@ -5,6 +5,7 @@ package app.controllers;
  */
 
 import app.models.entities.Calificacion;
+import app.models.entities.Cuidador;
 import app.models.entities.Reserva;
 import app.services.CalificacionService;
 import app.services.CuidadorService;
@@ -28,11 +29,15 @@ public class CalificacionController {
     @Autowired
     private ReservaService reservaService;
 
+    @Autowired
+    private CuidadorService cuidadorService;
+
     @RequestMapping(method = RequestMethod.POST)
     public Calificacion createCalificacion(@RequestBody  Calificacion entity) throws  Exception {
-
+            int aux=0;
         Calificacion calific = calificacionService.createCalificacion(entity);
          Reserva res  =   reservaService.getReserva( entity.getReserva().getId()) ;
+
 
           if(res.getStatus().equals("finalizada") && !calific.isFrom_owner())
           {
@@ -40,14 +45,39 @@ public class CalificacionController {
           }
           else
           {  if(res.getStatus().equals("comentario-dueño") && !calific.isFrom_owner())
-                { res.setStatus("cerrada");}
+                { res.setStatus("cerrada");
+
+
+                }
                 else
                         {
 
                              if (res.getStatus().equals("comentario-cuidador") && calific.isFrom_owner())
+                             {  Cuidador cuidador = cuidadorService.getCuidador( res.getCuidador().getId()) ;
+                                 List<Calificacion> list   =calificacionService.getCalificacionesCuidador(cuidador.getId());
+
+                                 for (Calificacion item: list)
+                                 {
+                                     aux += item.getPuntaje();
+                                 }
+                                 cuidador.setCantidadReviews(list.size());
+                                 cuidador.setPromedioReviews((aux ) / cuidador.getCantidadReviews());
                                  res.setStatus("cerrada");
+                                 cuidadorService.editCuidador(cuidador);
+
+                             }
                              else{
+                                 Cuidador cuidador = cuidadorService.getCuidador( res.getCuidador().getId()) ;
+                                 List<Calificacion> list   =calificacionService.getCalificacionesCuidador(cuidador.getId());
+
+                                 for (Calificacion item: list)
+                                 {
+                                     aux += item.getPuntaje();
+                                 }
+                                 cuidador.setCantidadReviews(list.size());
+                                 cuidador.setPromedioReviews((aux) / cuidador.getCantidadReviews());
                                  res.setStatus("comentario-dueño");
+                                 cuidadorService.editCuidador(cuidador);
 
                              }
                         }

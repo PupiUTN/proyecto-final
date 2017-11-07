@@ -259,7 +259,7 @@ Vue.component('my-cuidador-edit', {
 
         filesChange(fileList, position) {
             // handle file changes
-            if (fileList[0].size <= 1024000) //1 mb 1048576
+            if (fileList[0].size <= 10285760) //10 mb 10485760
             {
                 const formData = new FormData();
 
@@ -276,7 +276,7 @@ Vue.component('my-cuidador-edit', {
             }
             else {
 
-                sweetAlert("Oops...", "Error, Se debe cargar una imagen hasta a 1 mb ", "error");
+                sweetAlert("Oops...", "Error, Se debe cargar una imagen hasta a 10 mb ", "error");
             }
         },
         upload(formData, position) {
@@ -369,7 +369,7 @@ Vue.component('my-cuidador-edit', {
             axios.put(urlCiudador + this.cuidador.id, payload)
                 .then((response) => {
 
-                    sweetAlert("Editado!", "despcripción editada exitosamente.", "success");
+                    sweetAlert("Editado!", "Descripción editada exitosamente.", "success");
                     console.log(response);
                     //  window.location = "http://localhost:8080/views/cuidadores/cuidadores-perfil.html?id="+ this.cuidador.id ;
 
