@@ -5,6 +5,7 @@ package app.controllers;
  */
 
 import app.models.entities.Calificacion;
+import app.models.entities.Cuidador;
 import app.models.entities.Reserva;
 import app.services.CalificacionService;
 import app.services.CuidadorService;
@@ -28,19 +29,27 @@ public class CalificacionController {
     @Autowired
     private ReservaService reservaService;
 
+    @Autowired
+    private CuidadorService cuidadorService;
+
     @RequestMapping(method = RequestMethod.POST)
     public Calificacion createCalificacion(@RequestBody  Calificacion entity) throws  Exception {
 
         Calificacion calific = calificacionService.createCalificacion(entity);
          Reserva res  =   reservaService.getReserva( entity.getReserva().getId()) ;
-
+        Cuidador cuidador = cuidadorService.getCuidador( entity.getReserva().getCuidador().getId()) ;
           if(res.getStatus().equals("finalizada") && !calific.isFrom_owner())
-          {
+          {    cuidador.setCantidadReviews(cuidador.getCantidadReviews() +1);
+                cuidador.setPromedioReviews((cuidador.getPromedioReviews() + calific.getPuntaje() ) / cuidador.getCantidadReviews());
               res.setStatus("comentario-cuidador");
           }
           else
           {  if(res.getStatus().equals("comentario-dueño") && !calific.isFrom_owner())
-                { res.setStatus("cerrada");}
+                { res.setStatus("cerrada");
+                    cuidador.setCantidadReviews(cuidador.getCantidadReviews() +1);
+                    cuidador.setPromedioReviews((cuidador.getPromedioReviews() + calific.getPuntaje() ) / cuidador.getCantidadReviews());
+
+                }
                 else
                         {
 
@@ -56,7 +65,7 @@ public class CalificacionController {
           }
 
        res =   reservaService.SetEstadoFinalizado(res);
-
+         cuidadorService.editCuidador(cuidador);
         return calific;
     }
 
