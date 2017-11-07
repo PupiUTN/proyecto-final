@@ -263,7 +263,9 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                 user: '',
                 profile_image_url: '',
                 tamaño: '',
-                listaServicios: ''
+                listaServicios: '',
+                promedioReviews:'',
+                cantidadReviews:'',
             },
             idCuidador: 0,
             dateFrom: null,
@@ -306,6 +308,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                 .then((response) => {
                     this.item = response.data;
                     this.item.ciudad = this.item.user.direccion.ciudad;
+                    this.puntaje =this.item.promedioReviews;
                     document.getElementById("imagenAvatar").src = this.item.user.profileImageUrl;
 
                     this.loadImages(this.item.listaImagenes);
@@ -465,13 +468,13 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                     });
                     if(this.DataReview.length > 0)
                     {
-                        this.puntaje =Math.trunc(cont /this.DataReview.length);
+                       // this.puntaje =Math.trunc(cont /this.DataReview.length);
 
-                        var h = document.getElementsByClassName("star empty");
-                        for (i = 0; i < (this.puntaje-1); i++) {
-                            h[0].className  = 'star' ;
-
-                        }
+                        // var h = document.getElementsByClassName("star empty");
+                        // for (i = 0; i < (this.puntaje-1); i++) {
+                        //     h[0].className  = 'star' ;
+                        //
+                        // }
 
                     }
                     this.paginate();

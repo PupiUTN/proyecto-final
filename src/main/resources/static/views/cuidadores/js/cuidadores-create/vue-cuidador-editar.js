@@ -369,7 +369,7 @@ Vue.component('my-cuidador-edit', {
             axios.put(urlCiudador + this.cuidador.id, payload)
                 .then((response) => {
 
-                    sweetAlert("Editado!", "despcripción editada exitosamente.", "success");
+                    sweetAlert("Editado!", "Descripción editada exitosamente.", "success");
                     console.log(response);
                     //  window.location = "http://localhost:8080/views/cuidadores/cuidadores-perfil.html?id="+ this.cuidador.id ;
 
