@@ -44,8 +44,8 @@ public class ReservaService {
     public Reserva save(Reserva reserva) {
         //TODO hot fix, el formato de la fecha al no tener hora se desplaza un dia
         // https://stackoverflow.com/questions/7556591/javascript-date-object-always-one-day-off
-        reserva.setFechaFin(addDays(reserva.getFechaFin(), 1));
-        reserva.setFechaInicio(addDays(reserva.getFechaInicio(), 1));
+        //reserva.setFechaFin(addDays(reserva.getFechaFin(), 1));
+        //reserva.setFechaInicio(addDays(reserva.getFechaInicio(), 1));
 
         reserva.setStatus("creada-dueño");
         float precioTotal = daysBetween(reserva.getFechaInicio(), reserva.getFechaFin()) * reserva.getCuidador().getPrecioPorNoche();
