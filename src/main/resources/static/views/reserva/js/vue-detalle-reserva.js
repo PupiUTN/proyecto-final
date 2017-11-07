@@ -459,9 +459,15 @@ Vue.component('my-detalle-reserva', {
             axios.put('/api/cuidador/me/reservas/' + id + '/confirmarReserva')
                 .then((response) => {
 
-                    sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped pague te confirmaremos la reserva.", "success");
-                    document.location.href = "/views/dashboard/dashboard.html";
-                })
+                    sweetAlert({
+                            title: "Aceptada",
+                            text: "Has confirmado la solicitud de reserva, cuando el dueño pague te confirmaremos la reserva.",
+                            type: "success",
+                        },
+                    function () {
+                        document.location.href = "/views/dashboard/dashboard.html";
+                    })
+
                 .catch(error => {
                         console.log(error);
                         sweetAlert("Oops...", "Error, ver consola", "error");
