@@ -22,28 +22,28 @@ let vm = new Vue({
         idCuidador: 0,
         showModal: false,
         puntaje: 0,
-        calificaciones:[{
-            id:'',
-            comentario:'',
-            puntaje:'',
-            from_owner:'',
+        calificaciones: [{
+            id: '',
+            comentario: '',
+            puntaje: '',
+            from_owner: '',
             reserva: {
-                id:'',
-                status:'',
-                 perro:{
-                   user:{
-                       profileImageUrl:'',
-                       username:'',
-                   }
-                 },
-                fechaTransaccion:'',
+                id: '',
+                status: '',
+                perro: {
+                    user: {
+                        profileImageUrl: '',
+                        username: '',
+                    }
+                },
+                fechaTransaccion: '',
             },
         }],
         offset: 0,
-        navButtons:[],
+        navButtons: [],
         perPage: 3,
-        DataReview:[],
-        puntajeUsuario:0,
+        DataReview: [],
+        puntajeUsuario: 0,
     }
     ,
     mounted() {
@@ -171,31 +171,29 @@ let vm = new Vue({
 
             this.item.tamaño = param.valorMinimo + " a " + param.valorMaximo + " " + "KG.";
         },
-        getCalificacionesCuidador()
-        {
-                 var urlCalificaciones = "/api/calificaciones/calificacionesCuidador/";
+        getCalificacionesCuidador() {
+            var urlCalificaciones = "/api/calificaciones/calificacionesCuidador/";
 
             axios.get(urlCalificaciones + '?id=' + this.idCuidador)
                 .then((response) => {
                     this.DataReview = response.data;
-                     var cont = 0;
-                     this.DataReview .forEach( function(item, value, array) {
+                    var cont = 0;
+                    this.DataReview.forEach(function (item, value, array) {
 
 
-                       cont += item.puntaje;
+                        cont += item.puntaje;
 
                     });
-                        if(this.DataReview.length > 0)
-                        {
-                            this.puntaje =Math.trunc(cont /this.DataReview.length);
+                    if (this.DataReview.length > 0) {
+                        this.puntaje = Math.trunc(cont / this.DataReview.length);
 
-                            var h = document.getElementsByClassName("star empty");
-                            for (i = 0; i < (this.puntaje-1); i++) {
-                                h[0].className  = 'star' ;
-
-                            }
+                        var h = document.getElementsByClassName("star empty");
+                        for (i = 0; i < (this.puntaje - 1); i++) {
+                            h[0].className = 'star';
 
                         }
+
+                    }
                     this.paginate();
                 })
                 .catch(error => {
@@ -233,21 +231,21 @@ let vm = new Vue({
         },
 
         paginate() {
-           this.calificaciones = this.DataReview.slice(this.offset, this.offset + this.perPage);
+            this.calificaciones = this.DataReview.slice(this.offset, this.offset + this.perPage);
 
         },
         previous() {
-            this.offset =  this.offset - this.perPage;
+            this.offset = this.offset - this.perPage;
         },
-        next () {
+        next() {
             this.offset = this.offset + this.perPage;
         },
     },
     watch: {
-       offset: function () {
+        offset: function () {
             this.paginate();
         },
-        },
+    },
 
 });
 

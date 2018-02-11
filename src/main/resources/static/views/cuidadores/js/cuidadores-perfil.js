@@ -277,22 +277,22 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                 puntaje:'',
                 from_owner:'',
                 reserva: {
-                    id:'',
-                    status:'',
-                    perro:{
-                        user:{
-                            profileImageUrl:'',
-                            username:'',
+                    id: '',
+                    status: '',
+                    perro: {
+                        user: {
+                            profileImageUrl: '',
+                            username: '',
                         }
                     },
-                    fechaTransaccion:'',
+                    fechaTransaccion: '',
                 },
             }],
             offset: 0,
-            navButtons:[],
+            navButtons: [],
             perPage: 3,
-            DataReview:[],
-            puntajeUsuario:0,
+            DataReview: [],
+            puntajeUsuario: 0,
         }
     }
     ,
@@ -308,7 +308,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                 .then((response) => {
                     this.item = response.data;
                     this.item.ciudad = this.item.user.direccion.ciudad;
-                    this.puntaje =this.item.promedioReviews;
+                    this.puntaje = this.item.promedioReviews;
                     document.getElementById("imagenAvatar").src = this.item.user.profileImageUrl;
 
                     this.loadImages(this.item.listaImagenes);
@@ -452,23 +452,21 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             this.dateFrom = split[0].replace(/\s/g, '');
             this.dateTo = split[1].replace(/\s/g, '');
         },
-        getCalificacionesCuidador()
-        {
+        getCalificacionesCuidador() {
             var urlCalificaciones = "/api/calificaciones/calificacionesCuidador/";
 
             axios.get(urlCalificaciones + '?id=' + this.idCuidador)
                 .then((response) => {
                     this.DataReview = response.data;
                     var cont = 0;
-                    this.DataReview .forEach( function(item, value, array) {
+                    this.DataReview.forEach(function (item, value, array) {
 
 
                         cont += item.puntaje;
 
                     });
-                    if(this.DataReview.length > 0)
-                    {
-                       // this.puntaje =Math.trunc(cont /this.DataReview.length);
+                    if (this.DataReview.length > 0) {
+                        // this.puntaje =Math.trunc(cont /this.DataReview.length);
 
                         // var h = document.getElementsByClassName("star empty");
                         // for (i = 0; i < (this.puntaje-1); i++) {
@@ -494,9 +492,9 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
 
         },
         previous() {
-            this.offset =  this.offset - this.perPage;
+            this.offset = this.offset - this.perPage;
         },
-        next () {
+        next() {
             this.offset = this.offset + this.perPage;
         },
     },

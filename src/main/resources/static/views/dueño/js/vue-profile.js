@@ -262,14 +262,14 @@ Vue.component('my-profile', {
                 .then((response) => {
 
                     sweetAlert({
-                            title:"Editado!",
-                            text:"Usuario editado exitosamente.",
-                            type:"success",
+                            title: "Editado!",
+                            text: "Usuario editado exitosamente.",
+                            type: "success",
                         },
                         function () {
-                          window.location.href="/views/dueño/perfil.html";
+                            window.location.href = "/views/dueño/perfil.html";
                         }
-                        );
+                    );
                     this.frontEndDateFormat();
                     console.log(response);
                 })

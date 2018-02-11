@@ -1,7 +1,7 @@
 @media (min-width: 1023px) {
-.inp {
-    width: 25% !important;
-}
+    .inp {
+        width: 25% !important;
+    }
 }
 @media (max-width: 1023px) {
     .inp {

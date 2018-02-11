@@ -253,19 +253,19 @@ Vue.component('my-detalle-reserva-completo', {
                         fechaTransaccion: '',
                         cuidador: {
 
-                            user:{
-                                fullName:'',
-                                email:'',
-                                phone:'',
-                                profileImageUrl:'',
-                                birthday:'',
-                                direccion:{
-                                    calle:'',
-                                    ciudad:'',
-                                    numero:'',
-                                    latitud:'',
-                                    longitud:'',
-                                    provincia:''
+                            user: {
+                                fullName: '',
+                                email: '',
+                                phone: '',
+                                profileImageUrl: '',
+                                birthday: '',
+                                direccion: {
+                                    calle: '',
+                                    ciudad: '',
+                                    numero: '',
+                                    latitud: '',
+                                    longitud: '',
+                                    provincia: ''
 
                                 }
                             }
@@ -278,10 +278,10 @@ Vue.component('my-detalle-reserva-completo', {
                 perroProfileUrl: '',
                 id: null,
                 edadPerro: '',
-                edadCuidador:'',
+                edadCuidador: '',
                 showModal: false,
                 tamaño: '',
-                numeroReserva:'',
+                numeroReserva: '',
 
             }
         },
@@ -302,27 +302,31 @@ Vue.component('my-detalle-reserva-completo', {
                 .then((response) => {
                     this.reserva = response.data;
                     // document.getElementById("foto_perro").src = this.reserva.perro.fotoPerfil;
-                    if(this.reserva.perro.birthday !== null){
-                        this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);}
-                    else{this.edadPerro = "-";}
-                   // this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);
-                    if(this.reserva.cuidador.user.birthday !== null){
-                        this.edadCuidador = this.calcularEdad(this.reserva.cuidador.user.birthday);}
-                    else
-                    { this.edadCuidador =" ";
+                    if (this.reserva.perro.birthday !== null) {
+                        this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);
+                    }
+                    else {
+                        this.edadPerro = "-";
+                    }
+                    // this.edadPerro = this.calcularEdad(this.reserva.perro.birthday);
+                    if (this.reserva.cuidador.user.birthday !== null) {
+                        this.edadCuidador = this.calcularEdad(this.reserva.cuidador.user.birthday);
+                    }
+                    else {
+                        this.edadCuidador = " ";
 
                     }
-                   // this.edadCuidador = this.calcularEdad(this.reserva.cuidador.user.birthday);
+                    // this.edadCuidador = this.calcularEdad(this.reserva.cuidador.user.birthday);
                     var date = new Date(this.reserva.fechaTransaccion);
                     this.reserva.fechaTransaccion = date.toLocaleDateString();
-                    var dateEntrada = new Date (this.reserva.fechaInicio);
-                    var dateSalida = new Date (this.reserva.fechaFin);
-                    dateEntrada =dateEntrada.setDate(dateEntrada.getDate() + 1);
+                    var dateEntrada = new Date(this.reserva.fechaInicio);
+                    var dateSalida = new Date(this.reserva.fechaFin);
+                    dateEntrada = dateEntrada.setDate(dateEntrada.getDate() + 1);
                     dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
                     this.reserva.fechaInicio = new Date(dateEntrada).toLocaleDateString();
                     this.reserva.fechaFin = new Date(dateSalida).toLocaleDateString();
                     this.numeroReserva = 570011223344;
-                    this.MostrarEdad();
+                    this.mostrarEdad();
 
                     this.tamaño = this.reserva.perro.tamaño.nombre + " " + " (" + this.reserva.perro.tamaño.valorMinimo + " - " + this.reserva.perro.tamaño.valorMaximo + ")" + " kgs";
 
@@ -363,8 +367,7 @@ Vue.component('my-detalle-reserva-completo', {
             return edad;
 
         },
-        MostrarEdad()
-        {
+        mostrarEdad() {
             if (this.edadPerro === 0) {
 
                 this.edadPerro = " menor a un año";

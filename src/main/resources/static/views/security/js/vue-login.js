@@ -274,8 +274,7 @@ let myLogin = Vue.component('my-login', {
                 modal: true
             });
         },
-        micuenta()
-        { //href="/views/dashboard/dashboard.html"
+        micuenta() { //href="/views/dashboard/dashboard.html"
             localStorage.setItem("pending", true);
             localStorage.setItem("pendingCountCuidador", 0);
             localStorage.setItem("pendingCountUser", 0);

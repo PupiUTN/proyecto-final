@@ -29,8 +29,9 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                                         <div class="row">
                                             <!--<input id="check-1" type="checkbox" name="check" class="all">
                                             <label for="check-1">Todos</label>-->
-                                            <div v-for =" servicio in listaServicios">
-                                                <input :id="servicio.id" type="checkbox" :value="servicio.id" name="check" v-model="checkedServicios">
+                                            <div v-for=" servicio in listaServicios">
+                                                <input :id="servicio.id" type="checkbox" :value="servicio.id"
+                                                       name="check" v-model="checkedServicios">
                                                 <label :for="servicio.id">{{servicio.nombre}}</label>
                                             </div>
                                         </div>
@@ -133,7 +134,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             url: "/api/cuidadores/search/",
             encontrados: 'Resultados',
             items: [],
-            itemsSinFiltro:[],
+            itemsSinFiltro: [],
             formPost: true,
             map: null,
             placeID: null,
@@ -148,8 +149,8 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             listaServicios: null,
             precioDesde: null,
             precioHasta: null,
-            markers:[],
-            checkedServicios:[],
+            markers: [],
+            checkedServicios: [],
         }
     },
     mounted() {
@@ -328,7 +329,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                             this.map.setZoom(12);
                         }
                     }
-                }else{
+                } else {
                     this.placeLat = this.getParameterByName('lat');
                     this.placeLng = this.getParameterByName('lng');
                     var centro = new google.maps.LatLng(this.placeLat, this.placeLng);
@@ -344,11 +345,11 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             }
             this.markers = [];
         },
-        filtrar(){
+        filtrar() {
             this.items = [];
-            var banderaServicios=0;
-            var itemsFiltrar=this.itemsSinFiltro;
-            var itemsFiltroPrecio=[];
+            var banderaServicios = 0;
+            var itemsFiltrar = this.itemsSinFiltro;
+            var itemsFiltroPrecio = [];
             //filtro precio
             if (this.precioHasta) {
                 if (this.precioDesde) {
@@ -364,45 +365,44 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                         }
                     }
                 }
-            }else{
-                if(this.precioDesde){
+            } else {
+                if (this.precioDesde) {
                     for (var i = 0; i < itemsFiltrar.length; i++) {
                         if (itemsFiltrar[i].precioPorNoche >= this.precioDesde) {
                             itemsFiltroPrecio.push(itemsFiltrar[i]);
                         }
                     }
-                }else{
-                    if(!this.checkedServicios || this.checkedServicios.length==0) {
-                        this.items=this.itemsSinFiltro;
+                } else {
+                    if (!this.checkedServicios || this.checkedServicios.length == 0) {
+                        this.items = this.itemsSinFiltro;
                     }
                 }
             }
 
-            if(itemsFiltroPrecio.length==0){
-                itemsFiltroPrecio=itemsFiltrar;
+            if (itemsFiltroPrecio.length == 0) {
+                itemsFiltroPrecio = itemsFiltrar;
             }
 
             //filtro servicio
-            if(this.checkedServicios && this.checkedServicios.length>0) {
+            if (this.checkedServicios && this.checkedServicios.length > 0) {
                 this.itemsConFiltroServicio = [];
                 for (var i = 0; i < itemsFiltroPrecio.length; i++) {
                     banderaServicios = 0;
                     for (var j = 0; j < itemsFiltroPrecio[i].listaServicios.length; j++) {
                         console.log(itemsFiltroPrecio[i].listaServicios[j].nombre);
                         for (var k = 0; k < this.checkedServicios.length; k++) {
-                            if(itemsFiltroPrecio[i].listaServicios[j].id == this.checkedServicios[k]){
-                                banderaServicios ++;
+                            if (itemsFiltroPrecio[i].listaServicios[j].id == this.checkedServicios[k]) {
+                                banderaServicios++;
                                 break;
                             }
                         }
                     }
                     if (banderaServicios == this.checkedServicios.length) {
-                            this.items.push(itemsFiltroPrecio[i]);
+                        this.items.push(itemsFiltroPrecio[i]);
                     }
                 }
             }
-                this.calcularEncontrados();
-
+            this.calcularEncontrados();
 
 
         },

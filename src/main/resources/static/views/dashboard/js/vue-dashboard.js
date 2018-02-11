@@ -47,14 +47,12 @@ Vue.component('my-dashboard', {
             }
         },
 
-        getReservasPendientesReview(role)
-        {
-            if (role === "ROLE_CUIDADOR")
-            {
-                axios.get('/api/cuidador/me/reservas/PendientesReview/' +  this.$refs.myHeader.$refs.myLogin.user.id)
+        getReservasPendientesReview(role) {
+            if (role === "ROLE_CUIDADOR") {
+                axios.get('/api/cuidador/me/reservas/PendientesReview/' + this.$refs.myHeader.$refs.myLogin.user.id)
                     .then((response) => {
                         this.pendientes = response.data;
-                        if (!this.pendientes ) {
+                        if (!this.pendientes) {
                             sweetAlert({
                                     title: "Reviews ",
                                     text: "Tiene Reservas pendientes de calificar",
@@ -81,7 +79,7 @@ Vue.component('my-dashboard', {
             else {
                 if (role === "ROLE_USER") {
 
-                    axios.get('/api/user/me/reservas/PendientesReview/'+  this.$refs.myHeader.$refs.myLogin.user.id)
+                    axios.get('/api/user/me/reservas/PendientesReview/' + this.$refs.myHeader.$refs.myLogin.user.id)
                         .then((response) => {
                             this.pendientes = response.data;
                             if (this.pendientes) {

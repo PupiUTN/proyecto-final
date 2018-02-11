@@ -149,7 +149,7 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
                 this.perro.listaVacunas.push(vacuna);
             }
             //console.log(this.perro.birthday);
-            if (!this.perro.birthday || this.perro.birthday=="") {
+            if (!this.perro.birthday || this.perro.birthday == "") {
                 this.perro.birthday = "2016-01-01";
             }
             //this.perro.user.birthday=null;

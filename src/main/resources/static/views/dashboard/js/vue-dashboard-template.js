@@ -43,7 +43,7 @@ Vue.component('my-dashboard', {
 
             if (!this.isAuthenticated) {
                 childMylogin.openLoginPopUp();
-              //  var pending = true;
+                //  var pending = true;
 
             } else {
                 this.role = childMylogin.user.role;
@@ -51,23 +51,20 @@ Vue.component('my-dashboard', {
 
             }
 
-            if(localStorage.getItem("pending") === "true" )
-            {
-               this.getReservasPendientesReview(this.role)
+            if (localStorage.getItem("pending") === "true") {
+                this.getReservasPendientesReview(this.role)
             }
         },
 
-        getReservasPendientesReview(role)
-        {
-            if (role === "ROLE_CUIDADOR")
-            {
+        getReservasPendientesReview(role) {
+            if (role === "ROLE_CUIDADOR") {
                 axios.get('/api/cuidador/me/reservas/PendientesReview/')
                     .then((response) => {
                         this.data = response.data;
                         this.pendientesCuidador = this.data[0];
                         this.pendientesUser = this.data[1];
-                        localStorage.setItem("pendingCountCuidador",   this.pendientesCuidador);
-                        localStorage.setItem("pendingCountUser",   this.pendientesUser);
+                        localStorage.setItem("pendingCountCuidador", this.pendientesCuidador);
+                        localStorage.setItem("pendingCountUser", this.pendientesUser);
 
                     })
                     .catch(error => {
@@ -82,7 +79,7 @@ Vue.component('my-dashboard', {
                     axios.get('/api/user/me/reservas/PendientesReview/')
                         .then((response) => {
                             this.pendientesUser = response.data;
-                            localStorage.setItem("pendingCountUser",   this.pendientesUser);
+                            localStorage.setItem("pendingCountUser", this.pendientesUser);
                         })
                         .catch(error => {
                             console.log(error);
@@ -90,8 +87,8 @@ Vue.component('my-dashboard', {
                         });
                 }
             }
-           // localStorage.setItem("pending",(localStorage.getItem("pending") +1));
-            localStorage.setItem("pending",false );
+            // localStorage.setItem("pending",(localStorage.getItem("pending") +1));
+            localStorage.setItem("pending", false);
         }
 
 
