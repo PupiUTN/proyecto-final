@@ -464,7 +464,14 @@ Vue.component('my-detalle-reserva', {
                 .catch(error => {
                         console.log(error);
                         sweetAlert("Oops...", "Error, ver consola", "error");
-
+                    sweetAlert({
+                            title: "Error",
+                            text: "Error, ver consola",
+                            type: "success",
+                        },
+                        function () {
+                            document.location.href = "/views/dashboard/dashboard.html";
+                        })
                     }
                 );
         },
