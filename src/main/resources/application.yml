@@ -33,6 +33,10 @@ java:
       version: 1.8
 
 app:
+  mp:
+      pupi:
+        clientId: ${MP_CLIENT_ID}
+        clientSecret: ${MP_CLIENT_SECRET}
   aws:
       s3:
         bucketName: pupi-images

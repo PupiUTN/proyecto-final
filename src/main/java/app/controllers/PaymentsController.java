@@ -2,7 +2,6 @@ package app.controllers;
 
 import app.models.entities.Reserva;
 import app.services.PaymentsService;
-import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
