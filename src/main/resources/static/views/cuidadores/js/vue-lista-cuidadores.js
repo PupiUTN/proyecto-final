@@ -134,7 +134,6 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             url: "/api/cuidadores/search/",
             encontrados: 'Resultados',
             items: [],
-            itemsSinFiltro: [],
             formPost: true,
             map: null,
             placeID: null,
@@ -207,6 +206,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                                 this.items = response.data;
                                 this.itemsSinFiltro = this.items;
                                 this.calcularEncontrados();
+                                this.mostrarEnMapa();
 
 
                             })
@@ -219,7 +219,6 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                         sweetAlert("Oops...", "No seas hacker", "error");
                     }
                 } else {
-
                     axios.get(consulta)
                         .then((response) => {
                             console.log(this.placeID);
@@ -227,6 +226,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                             this.items = response.data;
                             this.itemsSinFiltro = this.items;
                             this.calcularEncontrados();
+                            this.mostrarEnMapa();
                         })
                         .catch(error => {
                                 console.log(error);
@@ -253,6 +253,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
         },
         //añade los marcadores al mapa
         mostrarEnMapa() {
+            console.log("mostrar");
             this.clearMarkers();
             if (this.items != null) {
                 if (this.items.length > 0) {
@@ -273,10 +274,12 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                             var id = item.id;
 
                             var content =
-                                '<div id="bodyContent">' +
+                                '<div class="marker-item" id="bodyContent">' +
                                 '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
-                                '<h4>' + item.user.fullName + '</h4></a> ' +
+                                '<h4>' + item.user.fullName + '</h4> ' +
+                                '<img style="height: 100%; width: 100%;" src=' + item.user.profileImageUrl + ' alt=""></a>' +
                                 '</div>';
+                            console.log(content);
                             var infowindow = new google.maps.InfoWindow();
                             google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
                                 return function () {
@@ -312,8 +315,10 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                             var content =
                                 '<div id="bodyContent">' +
                                 '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
-                                '<h4>' + item.user.fullName + '</h4></a> ' +
+                                '<h4>' + item.user.fullName + '</h4> ' +
+                                '<img style="height: 100%; width: 100%;" src=' + item.user.profileImageUrl + ' alt=""></a>' +
                                 '</div>';
+                            console.log(content);
                             var infowindow = new google.maps.InfoWindow();
                             google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
                                 return function () {
@@ -346,65 +351,121 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             this.markers = [];
         },
         filtrar() {
-            this.items = [];
-            var banderaServicios = 0;
-            var itemsFiltrar = this.itemsSinFiltro;
-            var itemsFiltroPrecio = [];
-            //filtro precio
+            this.items = this.itemsSinFiltro;
+            var filtrados = [];
+            for (item in this.items){
+                for (var i = 0; i < this.items.length; i++) {
+                    var cuidador = this.items[i];
+                    if(this.cumplePrecio(cuidador) && this.cumpleServicios(cuidador)){
+                        filtrados.push(cuidador);
+                    }
+                }
+            }
+            filtrados = this.filtrarPrecio();
+            console.log(filtrados)
+            filtrados = this.filtrarServicio(filtrados);
+            this.items = filtrados;
+            this.calcularEncontrados();
+            this.mostrarEnMapa();
+        },
+        cumplePrecio(cuidador){
+            if(!this.precioHasta && !this.precioDesde){
+                return true;
+            }
             if (this.precioHasta) {
                 if (this.precioDesde) {
-                    for (var i = 0; i < itemsFiltrar.length; i++) {
-                        if (itemsFiltrar[i].precioPorNoche >= this.precioDesde && itemsFiltrar[i].precioPorNoche <= this.precioHasta) {
-                            itemsFiltroPrecio.push(itemsFiltrar[i]);
+                    if (cuidador.precioPorNoche >= this.precioDesde && cuidador.precioPorNoche <= this.precioHasta) {
+                        return true;
+                    }
+                } else {
+                    if (cuidador.precioPorNoche <= this.precioHasta) {
+                        return true;
+                    }
+                }
+            } else {
+                if (this.precioDesde) {
+                        if (cuidador.precioPorNoche >= this.precioDesde) {
+                            return true;
+                        }
+                }
+            }
+            return false;
+
+        },
+        cumpleServicios(cuidador){
+            if (this.checkedServicios && this.checkedServicios.length > 0) {
+                banderaServicios = 0;
+                for (var j = 0; j < cuidador.listaServicios.length; j++) {
+                    console.log(cuidador.listaServicios[j].nombre);
+                    for (var k = 0; k < this.checkedServicios.length; k++) {
+                        if (cuidador.listaServicios[j].id == this.checkedServicios[k]) {
+                            banderaServicios++;
+                            break;
+                        }
+
+                    }
+                    if (banderaServicios == this.checkedServicios.length) {
+                        return true;
+                    }
+                }
+            }else {
+                return true;
+            }
+        },
+        filtrarPrecio(){
+            //filtro precio
+            if(!this.precioHasta && !this.precioDesde){
+                return this.items;
+            }
+            var itemsFiltroPrecio = [];
+            if (this.precioHasta) {
+                if (this.precioDesde) {
+                    for (var i = 0; i < this.items.length; i++) {
+                        if (this.items[i].precioPorNoche >= this.precioDesde && this.items[i].precioPorNoche <= this.precioHasta) {
+                            itemsFiltroPrecio.push(this.items[i]);
                         }
                     }
                 } else {
-                    for (var i = 0; i < itemsFiltrar.length; i++) {
-                        if (itemsFiltrar[i].precioPorNoche <= this.precioHasta) {
-                            itemsFiltroPrecio.push(itemsFiltrar[i]);
+                    for (var i = 0; i < this.items.length; i++) {
+                        if (this.items[i].precioPorNoche <= this.precioHasta) {
+                            itemsFiltroPrecio.push(this.items[i]);
                         }
                     }
                 }
             } else {
                 if (this.precioDesde) {
-                    for (var i = 0; i < itemsFiltrar.length; i++) {
-                        if (itemsFiltrar[i].precioPorNoche >= this.precioDesde) {
-                            itemsFiltroPrecio.push(itemsFiltrar[i]);
+                    for (var i = 0; i < this.items.length; i++) {
+                        if (this.items[i].precioPorNoche >= this.precioDesde) {
+                            itemsFiltroPrecio.push(this.items[i]);
                         }
-                    }
-                } else {
-                    if (!this.checkedServicios || this.checkedServicios.length == 0) {
-                        this.items = this.itemsSinFiltro;
                     }
                 }
             }
-
-            if (itemsFiltroPrecio.length == 0) {
-                itemsFiltroPrecio = itemsFiltrar;
-            }
-
+            return itemsFiltroPrecio;
+        },
+        filtrarServicio(filtrados){
             //filtro servicio
+            var filtroServicios = [];
             if (this.checkedServicios && this.checkedServicios.length > 0) {
-                this.itemsConFiltroServicio = [];
-                for (var i = 0; i < itemsFiltroPrecio.length; i++) {
+                for (var i = 0; i < filtrados.length; i++) {
                     banderaServicios = 0;
-                    for (var j = 0; j < itemsFiltroPrecio[i].listaServicios.length; j++) {
-                        console.log(itemsFiltroPrecio[i].listaServicios[j].nombre);
+                    for (var j = 0; j < filtrados[i].listaServicios.length; j++) {
+                        console.log(filtrados[i].listaServicios[j].nombre);
                         for (var k = 0; k < this.checkedServicios.length; k++) {
-                            if (itemsFiltroPrecio[i].listaServicios[j].id == this.checkedServicios[k]) {
+                            if (filtrados[i].listaServicios[j].id == this.checkedServicios[k]) {
                                 banderaServicios++;
                                 break;
                             }
                         }
                     }
                     if (banderaServicios == this.checkedServicios.length) {
-                        this.items.push(itemsFiltroPrecio[i]);
+                        filtroServicios.push(filtrados[i]);
                     }
                 }
+            }else {
+                filtroServicios = filtrados;
             }
-            this.calcularEncontrados();
-
-
+            return filtroServicios;
         },
         calcularEncontrados() {
             this.encontrados = this.items.length;
@@ -413,7 +474,6 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             } else {
                 this.encontrados += ' Resultados Encontrados';
             }
-            this.mostrarEnMapa();
         },
         getDatesUrl() {
             if (this.dateFrom != null) {

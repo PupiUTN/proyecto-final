@@ -66,4 +66,11 @@ public class Cuidador implements Serializable {
                 ", dni=" + dni +
                 '}';
     }
+
+    public Double getPonderacion() {
+        System.out.println((Math.pow(this.promedioReviews, 2) + this.cantidadReviews * 0.5));
+        return (Math.pow(this.promedioReviews, 2) + this.cantidadReviews * 0.5);
+    }
+
+
 }
