@@ -8,6 +8,7 @@ public class PaymentsUtils {
     public static Item fillItem(Float price, String fullName) {
         Item item = new Item();
         item.setTitle("Pupi - Pago de Estadía")
+                .setId("1234")
                 .setQuantity(1)
                 .setDescription("Servicios de cuidado de mascotas a " + fullName)
                 .setPictureUrl("http://pupi.com.ar/assets/images/logo.png")

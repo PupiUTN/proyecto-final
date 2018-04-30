@@ -34,9 +34,9 @@ java:
 
 app:
   mp:
-      pupi:
-        clientId: ${MP_CLIENT_ID}
-        clientSecret: ${MP_CLIENT_SECRET}
+    pupi:
+      clientId: ${MP_CLIENT_ID}
+      clientSecret: ${MP_CLIENT_SECRET}
   aws:
       s3:
         bucketName: pupi-images

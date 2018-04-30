@@ -1,22 +1,23 @@
 package app.services;
 
-import app.models.entities.Cuidador;
-import app.models.entities.Payment;
 import app.models.entities.Reserva;
-import app.models.entities.User;
+import app.models.mercadopago.Preference;
 import app.persistence.PaymentRepository;
 import app.utils.PaymentsUtils;
 import com.mercadopago.MercadoPago;
 import com.mercadopago.exceptions.MPException;
-import com.mercadopago.resources.Preference;
+import com.mercadopago.resources.MerchantOrder;
+import com.mercadopago.resources.Payment;
+import com.mercadopago.resources.datastructures.merchantorder.MerchantOrderPayment;
 import com.mercadopago.resources.datastructures.preference.Item;
 import com.mercadopago.resources.datastructures.preference.Payer;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 
 @Service
 public class PaymentsService {
@@ -38,9 +39,9 @@ public class PaymentsService {
     public PaymentsService(PaymentRepository paymentRepository, ReservaService reservaService) {
         this.paymentRepository = paymentRepository;
         this.reservaService = reservaService;
-        configureSDK();
     }
 
+    @PostConstruct
     private void configureSDK() {
         try {
             MercadoPago.SDK.setClientId(clientId);
@@ -51,7 +52,9 @@ public class PaymentsService {
     }
 
     public Preference createPreference(Reserva reserva) {
+
         Preference preference = new Preference();
+
         Item item = PaymentsUtils.fillItem(reserva.getPrecioTotal(), reserva.getCuidador()
                 .getUser()
                 .getFullName());
@@ -64,7 +67,6 @@ public class PaymentsService {
         preference.setNotificationUrl("http://pupi.com.ar/api/payments/notifications");
         preference.setExternalReference(reserva.getId()
                 .toString());
-
         try {
             preference.save();
         } catch (MPException e) {
@@ -74,49 +76,19 @@ public class PaymentsService {
         return preference;
     }
 
-    public JSONObject getPaymentInfo(String id, String topic) {
+    public void getPaymentInfo(String id, String topic) {
         try {
-            JSONObject merchantOrderInfo = null;
-            JSONObject paymentInfo = null;
-            if (topic.equalsIgnoreCase("payment")) {
-                paymentInfo = mp.get("/collections/notifications/" + id);
-                logger.info("TOPIC -> PAYMENT");
-                logger.info("paymentInfo - " + paymentInfo.toString());
-                Long merchantOrderId = paymentInfo.getJSONObject("response")
-                        .getJSONObject("collection")
-                        .optLong("merchant_order_id");
-                merchantOrderInfo = mp.get("/merchant_orders/" + merchantOrderId);
-                logger.info("merchantOrderInfo - " + merchantOrderInfo.toString());
-            } else if (topic.equalsIgnoreCase("merchant_order")) {
-                merchantOrderInfo = mp.get("/merchant_orders/" + id);
-                logger.info("TOPIC -> MERCHANT_ORDER");
-                logger.info("merchantOrderInfo - " + merchantOrderInfo.toString());
-            }
-            if (merchantOrderInfo != null && merchantOrderInfo.getInt("status") == 200) {
-                String externalReference = merchantOrderInfo.getJSONObject("response")
-                        .getString("external_reference");
-                Reserva booking = getReserva(Long.parseLong(externalReference));
-                logger.info("EXTERNAL REFERENCE -> " + externalReference);
-                Float paidAmount = 0f;
-                JSONArray payments = merchantOrderInfo.getJSONObject("response")
-                        .getJSONArray("payments");
-                if (payments.length() > 0) {
-                    for (int i = 0; i < payments.length(); i++) {
-                        JSONObject payment = payments.getJSONObject(i);
-                        if ("approved".equalsIgnoreCase(payment.getString("status"))) {
-                            paidAmount += Float.parseFloat(payment.get("transaction_amount")
-                                    .toString());
-                        }
-                        createPayment(booking, Long.valueOf(id), payment.getString("status"), payment.toString());
-                    }
-                    Float bookingAmount = Float.parseFloat(merchantOrderInfo.getJSONObject("response")
-                            .get("total_amount")
-                            .toString());
 
-                    if (paidAmount >= bookingAmount) {
-                        logger.info("RESERVA PAGADA - " + booking.toString());
-                        reservaService.setEstadoPagada(booking);
-                    }
+            MerchantOrder merchantOrder = topic.equalsIgnoreCase("payment") ? MerchantOrder.findById(Payment.findById(id)
+                    .getOrder()
+                    .getId()
+                    .toString()) : MerchantOrder.findById(id);
+
+            if (merchantOrder != null && merchantOrder.getLastApiResponse()
+                    .getStatusCode() == 200) {
+                Reserva booking = getReserva(Long.parseLong(merchantOrder.getExternalReference()));
+                if (calculatePaidAmountAndLog(merchantOrder.getPayments(), booking, id) >= merchantOrder.getTotalAmount()) {
+                    reservaService.setEstadoPagada(booking);
                 }
             }
         } catch (Exception e) {
@@ -124,17 +96,25 @@ public class PaymentsService {
             logger.error("Error when trying to get payment info " + e.toString() + "\n");
             e.printStackTrace();
         }
-        return null;
     }
 
-    public Payment createPayment(Reserva reserva, Long mpId, String status, String paymentData) {
-        Payment p = new Payment();
+    private float calculatePaidAmountAndLog(ArrayList<MerchantOrderPayment> payments, Reserva booking, String id) {
+        if (payments.isEmpty()) return 0f;
+        return (float) payments.stream()
+                .filter(pay -> "approved".equalsIgnoreCase(pay.getStatus()))
+                .peek(pay -> createPayment(booking, Long.valueOf(id), pay.getStatus()))
+                .mapToDouble(pay -> pay.getTransactionAmount())
+                .sum();
+    }
+
+    public void createPayment(Reserva reserva, Long mpId, String status) {
+        app.models.entities.Payment p = new app.models.entities.Payment();
         p.setUser(reserva.getPerro()
                 .getUser());
         p.setPaymentData("DATOS PAGO");
         p.setMpPaymentId(mpId);
         p.setStatus(status);
-        return paymentRepository.save(p);
+        paymentRepository.save(p);
     }
 
     public Reserva getReserva(Long reservaId) {
