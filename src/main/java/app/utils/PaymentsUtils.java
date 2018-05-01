@@ -2,6 +2,10 @@ package app.utils;
 
 import app.models.entities.User;
 import com.mercadopago.resources.datastructures.preference.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.util.MultiValueMap;
+import java.util.Collections;
 
 public class PaymentsUtils {
 
@@ -44,6 +48,13 @@ public class PaymentsUtils {
                             .getCodigoPostal()));
         }
         return payer;
+    }
+
+    public static MultiValueMap<String, String> getMercadoPagoHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return headers;
     }
 
 }

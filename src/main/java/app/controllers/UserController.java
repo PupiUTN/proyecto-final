@@ -13,6 +13,7 @@ import app.security.MyUserPrincipal;
 import app.services.MailService;
 import app.services.UserService;
 import app.utils.MailType;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,6 +66,12 @@ public class UserController {
         User userSaved = userService.registerNewUserAccount(user);
         mailService.sendEmail(user, MailType.WELCOME);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value="/get-mp-token")
+    public ResponseEntity getMercadoPagoToken(@RequestParam String code) {
+        JsonNode json = userService.getMercadoPagoToken(code);
+        return new ResponseEntity(json, HttpStatus.OK);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)

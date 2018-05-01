@@ -19,14 +19,16 @@ public class PaymentsController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<String> createPayment(@RequestBody Reserva entity)  {
-        String response = paymentsService.createPreference(entity).toString();
+    public ResponseEntity<String> createPayment(@RequestBody Reserva entity) {
+        String response = paymentsService.createPreference(entity)
+                .getLastApiResponse()
+                .getStringResponse();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/notifications", method = RequestMethod.POST)
-    public HttpStatus receiveNotification(@RequestParam("topic") String topic, @RequestParam("id") String paymentId)  {
-        if("payment".equalsIgnoreCase(topic) || "merchant_order".equalsIgnoreCase(topic)) {
+    public HttpStatus receiveNotification(@RequestParam("topic") String topic, @RequestParam("id") String paymentId) {
+        if ("payment".equalsIgnoreCase(topic) || "merchant_order".equalsIgnoreCase(topic)) {
             paymentsService.getPaymentInfo(paymentId, topic);
         }
         return HttpStatus.OK;

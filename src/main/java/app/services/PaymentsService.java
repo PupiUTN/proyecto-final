@@ -67,6 +67,9 @@ public class PaymentsService {
         preference.setNotificationUrl("http://pupi.com.ar/api/payments/notifications");
         preference.setExternalReference(reserva.getId()
                 .toString());
+
+        //Acá seteamos el token del vendedor
+        //MercadoPago.SDK.setUserToken("tokenId");
         try {
             preference.save();
         } catch (MPException e) {

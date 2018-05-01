@@ -22,8 +22,10 @@ Vue.component('mercadopago', {
         createPayment() {
             axios.post(this.url, this.reserva)
                 .then((paymentPreference) => {
-                    this.paymentPreference = paymentPreference.data.response;
-                    this.sandboxInitPoint = this.paymentPreference.init_point;
+                    this.paymentPreference = paymentPreference.data;
+                    console.log(this.paymentPreference);
+                    this.initPoint = this.paymentPreference.init_point;
+                    this.sandboxInitPoint = this.paymentPreference.sandbox_init_point;
                     this.openInNewTab(this.sandboxInitPoint);
                 })
                 .catch(error => {
