@@ -115,4 +115,13 @@ public class ReservaService {
         cal.add(Calendar.DATE, days); //minus number would decrement the days
         return cal.getTime();
     }
+
+    public int getCantidadReservas(Long id) {
+        return reservaRepository.getCantidadReservas(id);
+    }
+
+    public List<Reserva> findAllByCuidador( Long id) {
+        return reservaRepository.findAllByCuidador(id);
+    }
+
 }

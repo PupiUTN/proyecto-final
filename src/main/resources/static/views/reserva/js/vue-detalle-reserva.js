@@ -478,6 +478,7 @@ Vue.component('my-detalle-reserva', {
 
                     }
                 );
+        })
         },
         confirmarReservaButton() {
 

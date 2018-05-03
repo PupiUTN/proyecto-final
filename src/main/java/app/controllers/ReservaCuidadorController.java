@@ -1,9 +1,11 @@
 package app.controllers;
 
 
+import app.models.entities.Estadistica;
 import app.models.entities.Reserva;
 import app.models.entities.User;
 import app.security.MyUserPrincipal;
+import app.services.CuidadorService;
 import app.services.MailService;
 import app.services.ReservaService;
 import app.utils.MailType;
@@ -24,11 +26,13 @@ public class ReservaCuidadorController {
 
     private final ReservaService reservaService;
     private final MailService mailService;
+    private final CuidadorService cuidadorService;
 
     @Autowired
-    public ReservaCuidadorController(ReservaService reservaService, MailService mailService) {
+    public ReservaCuidadorController(ReservaService reservaService, MailService mailService,CuidadorService cuidadorService ) {
         this.reservaService = reservaService;
         this.mailService = mailService;
+        this.cuidadorService = cuidadorService;
     }
 
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
@@ -99,4 +103,57 @@ public class ReservaCuidadorController {
         return cant;
 
     }
+
+    @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
+
+    @RequestMapping(value = "/estadisticas/", method = RequestMethod.GET)
+    public Estadistica getEstadisticas() throws Exception {
+         long id = getIdCuidador();
+        int[] cantidadXtipo = new int[6];
+        Estadistica  estadistica = new Estadistica();
+        List<Reserva> list = reservaService.findAllByCuidador(id);
+
+        for (Reserva item: list) {
+
+             switch (item.getStatus())
+             {  case  "finalizada":
+                 cantidadXtipo[0]++;
+                 break;
+                 case  "pagada-dueño":
+                     cantidadXtipo[1]++;
+                     break;
+                 case  "creada-dueño":
+                     cantidadXtipo[2]++;
+                     break;
+                 case  "aceptada-cuidador":
+                     cantidadXtipo[3]++;
+                     break;
+                 case  "rechazada-dueño":
+                     cantidadXtipo[4]++;
+                     break;
+                 case  "rechazada-cuidador":
+                     cantidadXtipo[4]++;
+                     break;
+                 case  "cerrada":
+                     cantidadXtipo[5]++;
+                     break;
+                 default:
+
+             }
+        }
+        estadistica.setTotalPorTipo(cantidadXtipo);
+        estadistica.setCantidadTotal(list.size());
+        estadistica.setPromedio(list.get(0).getCuidador().getPromedioReviews());
+
+         return estadistica;
+
+    }
+
+
+    private long getIdCuidador () {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
+       return myUserPrincipal.getUser().getId();
+    }
+
 }
