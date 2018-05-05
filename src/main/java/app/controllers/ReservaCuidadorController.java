@@ -17,7 +17,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.DataBindingException;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Date;
+import java.util.Date.*;
 
 @RestController
 @RequestMapping(value = "/api/cuidador/me/reservas")
@@ -29,7 +33,7 @@ public class ReservaCuidadorController {
     private final CuidadorService cuidadorService;
 
     @Autowired
-    public ReservaCuidadorController(ReservaService reservaService, MailService mailService,CuidadorService cuidadorService ) {
+    public ReservaCuidadorController(ReservaService reservaService, MailService mailService, CuidadorService cuidadorService) {
         this.reservaService = reservaService;
         this.mailService = mailService;
         this.cuidadorService = cuidadorService;
@@ -95,11 +99,11 @@ public class ReservaCuidadorController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
-          int[]cant  = new int[2];
+        int[] cant = new int[2];
         String status = "finalizada";
-       // List reserva = ;
-        cant[0] =reservaService.getReservasByCuidadorIdAndStatus(id,status).size();
-        cant[1] =reservaService.getReservasByUserIdAndStatus(id,status).size();
+        // List reserva = ;
+        cant[0] = reservaService.getReservasByCuidadorIdAndStatus(id, status).size();
+        cant[1] = reservaService.getReservasByUserIdAndStatus(id, status).size();
         return cant;
 
     }
@@ -108,52 +112,92 @@ public class ReservaCuidadorController {
 
     @RequestMapping(value = "/estadisticas/", method = RequestMethod.GET)
     public Estadistica getEstadisticas() throws Exception {
-         long id = getIdCuidador();
+        long id = getIdCuidador();
         int[] cantidadXtipo = new int[6];
-        Estadistica  estadistica = new Estadistica();
+        Estadistica estadistica = new Estadistica();
         List<Reserva> list = reservaService.findAllByCuidador(id);
 
-        for (Reserva item: list) {
+        for (Reserva item : list) {
 
-             switch (item.getStatus())
-             {  case  "finalizada":
-                 cantidadXtipo[0]++;
-                 break;
-                 case  "pagada-dueño":
-                     cantidadXtipo[1]++;
-                     break;
-                 case  "creada-dueño":
-                     cantidadXtipo[2]++;
-                     break;
-                 case  "aceptada-cuidador":
-                     cantidadXtipo[3]++;
-                     break;
-                 case  "rechazada-dueño":
-                     cantidadXtipo[4]++;
-                     break;
-                 case  "rechazada-cuidador":
-                     cantidadXtipo[4]++;
-                     break;
-                 case  "cerrada":
-                     cantidadXtipo[5]++;
-                     break;
-                 default:
+            switch (item.getStatus()) {
+                case "finalizada":
+                    cantidadXtipo[0]++;
+                    break;
+                case "pagada-dueño":
+                    cantidadXtipo[1]++;
+                    break;
+                case "creada-dueño":
+                    cantidadXtipo[2]++;
+                    break;
+                case "aceptada-cuidador":
+                    cantidadXtipo[3]++;
+                    break;
+                case "rechazada-dueño":
+                    cantidadXtipo[4]++;
+                    break;
+                case "rechazada-cuidador":
+                    cantidadXtipo[4]++;
+                    break;
+                case "cerrada":
+                    cantidadXtipo[5]++;
+                    break;
+                default:
 
-             }
+            }
         }
         estadistica.setTotalPorTipo(cantidadXtipo);
         estadistica.setCantidadTotal(list.size());
         estadistica.setPromedio(list.get(0).getCuidador().getPromedioReviews());
-
-         return estadistica;
+        estadistica.setCantidadPorMes(getReservasXMes(list));
+        return estadistica;
 
     }
 
 
-    private long getIdCuidador () {
+    private long getIdCuidador() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
-       return myUserPrincipal.getUser().getId();
+        return myUserPrincipal.getUser().getId();
     }
+
+    private int[] getReservasXMes(List<Reserva> reservas) {
+        int[] cantidad = new int[6];
+        int month, beforeMonth, position;
+        Calendar date;
+
+        Date referenceDate = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(referenceDate);
+        c.add(Calendar.MONTH, -6);
+        beforeMonth = c.get(Calendar.MONTH);
+
+        month = 12- beforeMonth;
+
+        for (Reserva item : reservas) {
+            date = getDateReserva(item.getFechaTransaccion());
+            if (date.getTime().after(c.getTime())) {
+
+            position = beforeMonth -date.get(Calendar.MONTH);
+                  if(position <=0) {
+                      cantidad[Math.abs(position)] = cantidad[Math.abs(position)] + 1;
+                  } else{
+                      if (date.get(Calendar.MONTH) +month <= 5)
+                      cantidad[date.get(Calendar.MONTH) +month] = cantidad[date.get(Calendar.MONTH) +1] + 1;
+
+                  }
+
+            }
+        }
+
+        return cantidad;
+    }
+
+
+     private Calendar getDateReserva(Date item){
+         Calendar reservaDate = Calendar.getInstance();
+         reservaDate.setTime(item);
+          return reservaDate;
+
+     }
 
 }

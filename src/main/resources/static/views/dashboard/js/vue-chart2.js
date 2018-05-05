@@ -1,38 +1,33 @@
 
 Vue.component('chart-pie', {
     extends: VueChartJs.Pie,
+    props: ['totalPorTipo'],
     data: function () {
         return {
-            cantidad: [1,2,3,4,5,6]
+            nombre: '',
 
         }
     },
     mounted () {
-
+    this.setNombre();
 
 
     },
     methods: {
-        getCuidadorReservas() {
-            axios.get('/api/cuidador/me/reservas/CantidadDeReservas/')
-                .then((response) => {
-                    this.cantidad = response.data;
+        setNombre(){
 
-                    this.render();
-                })
-                .catch(error => {
-                    console.log(error);
-                    sweetAlert("Oops...", "Error, ver consola", "error");
-                });
-        },
+             this.nombre = 'Porcentaje de reservas';
+             this.render();
+
+         },
         render(){
             this.renderChart({
                 labels: ['Canceladas', 'Pagadas', 'Finalizadas', 'Aceptadas', 'Pendientes'],
                 datasets: [
                     {
-                        label: 'Porcentaje de reservas',
+                        label: this.nombre,
                         backgroundColor: ['#77F874', '#bb0007', '#BBB61A', '#7023BB', '#f87979', '#bb0007'],
-                        data: [4,6,2,9,4]
+                        data: this.totalPorTipo,
                     }
                 ]
             }, {responsive: true, maintainAspectRatio: false})

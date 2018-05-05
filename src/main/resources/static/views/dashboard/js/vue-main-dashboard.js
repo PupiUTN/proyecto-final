@@ -12,6 +12,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 			</div>
 		</div>
 		<!-- Content -->
+		 <div class="col-lg-1 col-md-1"></div>
 		<div class="row">
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
@@ -20,7 +21,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 					<div class="dashboard-stat-icon"><i class="im im-icon-Map2"></i></div>
 				</div>
 			</div>
-
+           
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-2">
@@ -48,11 +49,11 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 		</div>
 		
 		<br>
-  <button-counter></button-counter>
+  <button-counter v-bind:cantidad="estadisticas.cantidadPorMes" ></button-counter>
 
         <br>
          <br>
-  <chart-pie></chart-pie>
+  <chart-pie v-bind:totalPorTipo="estadisticas.totalPorTipo"></chart-pie>
 
      
 
@@ -61,10 +62,10 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
     data: function () {
         return {
             estadisticas:{
-                cantidadPorMes:[],
-                promedio:'',
+                cantidadPorMes:[2,0,0,0,0,8],
+                promedio:'2',
                 totalVisitas:'',
-                totalPorTipo:[],
+                totalPorTipo:[5,6,2,7,9,2],
                 cantidadTotal:'',
 
             }
@@ -83,7 +84,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                 this.estadisticas = response.data;
                 this.estadisticas.cantidadTotal = response.data.cantidadTotal;
                 this.estadisticas.promedio = response.data.promedio;
-
+                this.estadisticas.cantidadPorMes = response.data.cantidadPorMes;
             })
             .catch(error => {
                 console.log(error);
