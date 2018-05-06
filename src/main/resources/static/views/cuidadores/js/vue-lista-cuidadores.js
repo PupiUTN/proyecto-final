@@ -5,17 +5,12 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             <div class="fs-inner-container content padding-top-0">
                 <div class="fs-content">
                     <!-- Search -->
-                    <section class="search"
-                             style="padding-left: 45px; padding-right: 45px; padding-top: 15px; padding-bottom: 20px">
-
+                    <section class="search" style="padding-left: 45px; padding-right: 45px; padding-top: 15px; padding-bottom: 20px">
                         <div class="row">
-
                             <div class="col-md-12">
                                 <!-- Main Search Input -->
                                 <my-buscar-cuidadores :is-index="isIndex"></my-buscar-cuidadores>
-
                             </div>
-
                         </div>
                         <div class="row padding-top-10">
                             <!-- Filters -->
@@ -24,15 +19,34 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                                 <div class="panel-dropdown wide">
                                     <a href="#">Servicios</a>
                                     <div class="panel-dropdown-content checkboxes">
-
                                         <!-- Checkboxes -->
                                         <div class="row">
-                                            <!--<input id="check-1" type="checkbox" name="check" class="all">
-                                            <label for="check-1">Todos</label>-->
                                             <div v-for=" servicio in listaServicios">
                                                 <input :id="servicio.id" type="checkbox" :value="servicio.id"
                                                        name="check" v-model="checkedServicios">
                                                 <label :for="servicio.id">{{servicio.nombre}}</label>
+                                            </div>
+                                        </div>
+                                        <!-- Buttons -->
+                                        <div class="panel-buttons">
+                                            <button class="panel-cancel">Cancelar</button>
+                                            <button v-on:click="filtrar()" class="panel-apply">Aplicar</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- Panel Dropdown / End -->
+
+                                <!-- Panel Dropdown -->
+                                <div class="panel-dropdown wide">
+                                    <a href="#">Tamaño Perro</a>
+                                    <div class="panel-dropdown-content checkboxes">
+                                        <!-- Checkboxes -->
+                                        <div class="row">
+                                            <div v-for=" tamaño in listaTamaños">
+                                                <input :id="tamaño.nombre" type="checkbox" :value="tamaño.id"
+                                                       name="check" v-model="checkedTamaños">
+                                                <label :for="tamaño.nombre">{{tamaño.nombre}} - De{{tamaño.valorMinimo}}kg a {{tamaño.valorMaximo}}kg</label>
                                             </div>
                                         </div>
 
@@ -46,6 +60,29 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                                 </div>
                                 <!-- Panel Dropdown / End -->
 
+                                <!-- Panel Dropdown -->
+                                <div class="panel-dropdown wide">
+                                    <a href="#">Cantidad de  Perros</a>
+                                    <div class="panel-dropdown-content checkboxes">
+                                        <!-- Checkboxes -->
+                                        <div class="row">
+                                            <div v-for=" cantidad in listaCantidad">
+                                                <input class="radio" :id="cantidad.id" type="checkbox" :value="cantidad.value"
+                                                       name="cantidad" v-model="checkedCantidad">
+                                                <label :for="cantidad.id">{{cantidad.nombre}}</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Buttons -->
+                                        <div class="panel-buttons">
+                                            <button class="panel-cancel">Cancelar</button>
+                                            <button v-on:click="filtrar()" class="panel-apply">Aplicar</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- Panel Dropdown / End -->
+                                
                                 <!-- Panel Dropdown -->
                                 <div class="panel-dropdown">
                                     <a href="#">Precio</a>
@@ -145,17 +182,23 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             dateTo: null,
             isIndex: false,
             precioMax: 0,
-            listaServicios: null,
+            listaServicios: [],
+            listaTamaños: [],
+            listaCantidad: this.crearListaCantidad(),
             precioDesde: null,
             precioHasta: null,
             markers: [],
             checkedServicios: [],
+            checkedTamaños: [],
+            checkedCantidad: [],
         }
     },
     mounted() {
         this.getServicios();
+        this.getTamaños();
         this.initMap();
         this.getCuidadores();
+        this.unCheckBox();
 
     },
     methods: {
@@ -168,6 +211,17 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 .catch(error => {
                     console.log(error);
                     //sweetAlert("Oops...", "Error, no se pudo cargar servicios", "error");
+                });
+        },
+        getTamaños() {
+            axios.get("/api/tamaños/")
+                .then((data) => {
+                    this.listaTamaños = data.data;
+
+                })
+                .catch(error => {
+                    console.log(error);
+                    //sweetAlert("Oops...", "Error, no se pudo cargar tamaños", "error");
                 });
         },
         initMap() {
@@ -279,7 +333,6 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                                 '<h4>' + item.user.fullName + '</h4> ' +
                                 '<img style="height: 100%; width: 100%;" src=' + item.user.profileImageUrl + ' alt=""></a>' +
                                 '</div>';
-                            console.log(content);
                             var infowindow = new google.maps.InfoWindow();
                             google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
                                 return function () {
@@ -313,12 +366,11 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                             var id = item.id;
 
                             var content =
-                                '<div id="bodyContent">' +
+                                '<div  class="marker-item" id="bodyContent">' +
                                 '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
                                 '<h4>' + item.user.fullName + '</h4> ' +
                                 '<img style="height: 100%; width: 100%;" src=' + item.user.profileImageUrl + ' alt=""></a>' +
                                 '</div>';
-                            console.log(content);
                             var infowindow = new google.maps.InfoWindow();
                             google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
                                 return function () {
@@ -353,17 +405,13 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
         filtrar() {
             this.items = this.itemsSinFiltro;
             var filtrados = [];
-            for (item in this.items){
                 for (var i = 0; i < this.items.length; i++) {
                     var cuidador = this.items[i];
-                    if(this.cumplePrecio(cuidador) && this.cumpleServicios(cuidador)){
+                    if(this.cumplePrecio(cuidador) && this.cumpleServicios(cuidador)
+                        && this.cumpleTamaño(cuidador) && this.cumpleCantidad(cuidador)){
                         filtrados.push(cuidador);
                     }
                 }
-            }
-            filtrados = this.filtrarPrecio();
-            console.log(filtrados)
-            filtrados = this.filtrarServicio(filtrados);
             this.items = filtrados;
             this.calcularEncontrados();
             this.mostrarEnMapa();
@@ -392,11 +440,24 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             return false;
 
         },
+        cumpleTamaño(cuidador){
+            if(this.checkedTamaños.length > 0){
+                for(var i = 0; i < this.checkedTamaños.length; i++){
+                    console.log(cuidador.user.fullName +" "+ cuidador.tamaño.id);
+                    console.log(this.checkedTamaños[i]);
+                    if(cuidador.tamaño.id == this.checkedTamaños[i]){
+                        return true;
+                    }
+                }
+                return false;
+            }else{
+                return true;
+            }
+        },
         cumpleServicios(cuidador){
             if (this.checkedServicios && this.checkedServicios.length > 0) {
                 banderaServicios = 0;
                 for (var j = 0; j < cuidador.listaServicios.length; j++) {
-                    console.log(cuidador.listaServicios[j].nombre);
                     for (var k = 0; k < this.checkedServicios.length; k++) {
                         if (cuidador.listaServicios[j].id == this.checkedServicios[k]) {
                             banderaServicios++;
@@ -412,60 +473,17 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 return true;
             }
         },
-        filtrarPrecio(){
-            //filtro precio
-            if(!this.precioHasta && !this.precioDesde){
-                return this.items;
-            }
-            var itemsFiltroPrecio = [];
-            if (this.precioHasta) {
-                if (this.precioDesde) {
-                    for (var i = 0; i < this.items.length; i++) {
-                        if (this.items[i].precioPorNoche >= this.precioDesde && this.items[i].precioPorNoche <= this.precioHasta) {
-                            itemsFiltroPrecio.push(this.items[i]);
-                        }
-                    }
-                } else {
-                    for (var i = 0; i < this.items.length; i++) {
-                        if (this.items[i].precioPorNoche <= this.precioHasta) {
-                            itemsFiltroPrecio.push(this.items[i]);
-                        }
-                    }
+        cumpleCantidad(cuidador){
+            if(this.checkedCantidad && this.checkedCantidad[0]){
+                this.checkedCantidadPrimero();
+                if(this.checkedCantidad[0] == 4){
+                    return cuidador.cantidadMaxDePerros >= 4;
+                }else{
+                    return this.checkedCantidad[0] == cuidador.cantidadMaxDePerros;
                 }
-            } else {
-                if (this.precioDesde) {
-                    for (var i = 0; i < this.items.length; i++) {
-                        if (this.items[i].precioPorNoche >= this.precioDesde) {
-                            itemsFiltroPrecio.push(this.items[i]);
-                        }
-                    }
-                }
+            }else{
+                return true;
             }
-            return itemsFiltroPrecio;
-        },
-        filtrarServicio(filtrados){
-            //filtro servicio
-            var filtroServicios = [];
-            if (this.checkedServicios && this.checkedServicios.length > 0) {
-                for (var i = 0; i < filtrados.length; i++) {
-                    banderaServicios = 0;
-                    for (var j = 0; j < filtrados[i].listaServicios.length; j++) {
-                        console.log(filtrados[i].listaServicios[j].nombre);
-                        for (var k = 0; k < this.checkedServicios.length; k++) {
-                            if (filtrados[i].listaServicios[j].id == this.checkedServicios[k]) {
-                                banderaServicios++;
-                                break;
-                            }
-                        }
-                    }
-                    if (banderaServicios == this.checkedServicios.length) {
-                        filtroServicios.push(filtrados[i]);
-                    }
-                }
-            }else {
-                filtroServicios = filtrados;
-            }
-            return filtroServicios;
         },
         calcularEncontrados() {
             this.encontrados = this.items.length;
@@ -485,6 +503,29 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
         },
         complemento: function (promedioReviews) {
             return 5 - promedioReviews
+        },
+        crearListaCantidad(){
+            var unPerro = {id:"1P", value:1, nombre: "1 Perro"};
+            var dosPerros = {id:"2P", value:2, nombre: "2 Perros"};
+            var tresPerros = {id:"3P", value:3, nombre: "3 Perros"};
+            var cuatroOMas = {id:"4P", value:4, nombre: "4 o más Perros"};
+
+            return [unPerro, dosPerros, tresPerros, cuatroOMas];
+        },
+        unCheckBox(){
+            $('.radio').on('change', function() {
+                $('.radio').not(this).prop('checked', false);
+            });
+        },
+        checkedCantidadPrimero(){
+            if(this.checkedCantidad.length > 1){
+                console.log("holi  " +this.checkedCantidad);
+
+                var i = this.checkedCantidad.length - 1;
+                var cantidad = this.checkedCantidad[i];
+                this.checkedCantidad = [cantidad];
+                console.log("chau  " +this.checkedCantidad);
+            }
         }
     }
 });
