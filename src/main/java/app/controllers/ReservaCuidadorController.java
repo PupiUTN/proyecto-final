@@ -149,6 +149,7 @@ public class ReservaCuidadorController {
         estadistica.setCantidadTotal(list.size());
         estadistica.setPromedio(list.get(0).getCuidador().getPromedioReviews());
         estadistica.setCantidadPorMes(getReservasXMes(list));
+        estadistica.setTotalVisitas(list.get(0).getCuidador().getCantidadVisitas());
         return estadistica;
 
     }

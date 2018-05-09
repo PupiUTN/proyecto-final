@@ -50,8 +50,12 @@ public class CuidadorController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Cuidador getCuidador(@PathVariable("id") Long id) {
-        return cuidadorService.getCuidador(id);
+    public Cuidador getCuidador(@PathVariable("id") Long id) throws Exception {
+      Cuidador cuidador = cuidadorService.getCuidador(id);
+        if (cuidador != null){
+           cuidador.setCantidadVisitas(cuidador.getCantidadVisitas() + 1);
+        cuidadorService.editCuidador(cuidador);}
+        return cuidador;
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)

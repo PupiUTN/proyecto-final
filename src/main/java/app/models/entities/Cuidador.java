@@ -41,6 +41,7 @@ public class Cuidador implements Serializable {
     private int dni;
     private int cantidadReviews;
     private int promedioReviews;
+    private int cantidadVisitas;
 
 
     @Override

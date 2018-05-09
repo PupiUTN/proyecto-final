@@ -79,4 +79,5 @@ public class CuidadorService {
         return cuidadorRepository.findAllbyCiudadYFecha(ciudadPlaceId,from,to,status);
 
     }
+
 }
