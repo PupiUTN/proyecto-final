@@ -8,6 +8,11 @@ Vue.component('chart-pie', {
 
         }
     },
+    watch: {
+        totalPorTipo: function(newVal, oldVal) { // watch it
+            this.setNombre()
+        }
+        },
     mounted () {
     this.setNombre();
 
@@ -22,11 +27,11 @@ Vue.component('chart-pie', {
          },
         render(){
             this.renderChart({
-                labels: ['Canceladas', 'Pagadas', 'Finalizadas', 'Aceptadas', 'Pendientes'],
+                labels: ['Finalizadas', 'Pagadas', 'Creadas', 'Aceptadas', 'Rechazadas','Cerradas'],
                 datasets: [
                     {
                         label: this.nombre,
-                        backgroundColor: ['#77F874', '#bb0007', '#BBB61A', '#7023BB', '#f87979', '#bb0007'],
+                        backgroundColor: ['#bb0007', '#f87233', '#01bb00', '#bb686a', '#bb4e00', '#0c0001'],
                         data: this.totalPorTipo,
                     }
                 ]

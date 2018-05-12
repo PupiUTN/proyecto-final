@@ -1,6 +1,7 @@
 package app.controllers;
 
 
+import app.models.entities.Cuidador;
 import app.models.entities.Estadistica;
 import app.models.entities.Reserva;
 import app.models.entities.User;
@@ -145,11 +146,13 @@ public class ReservaCuidadorController {
 
             }
         }
+        Cuidador cuidador = list.get(0).getCuidador();
         estadistica.setTotalPorTipo(cantidadXtipo);
         estadistica.setCantidadTotal(list.size());
-        estadistica.setPromedio(list.get(0).getCuidador().getPromedioReviews());
+        estadistica.setPromedio(cuidador.getPromedioReviews());
         estadistica.setCantidadPorMes(getReservasXMes(list));
-        estadistica.setTotalVisitas(list.get(0).getCuidador().getCantidadVisitas());
+        estadistica.setTotalVisitas(cuidador.getCantidadVisitas());
+        estadistica.setNombre(cuidador.getUser().getUsername());
         return estadistica;
 
     }
@@ -161,8 +164,9 @@ public class ReservaCuidadorController {
         return myUserPrincipal.getUser().getId();
     }
 
+
     private int[] getReservasXMes(List<Reserva> reservas) {
-        int[] cantidad = new int[6];
+        int[] cantidad = new int[7];
         int month, beforeMonth, position;
         Calendar date;
 
@@ -171,7 +175,7 @@ public class ReservaCuidadorController {
         c.setTime(referenceDate);
         c.add(Calendar.MONTH, -6);
         beforeMonth = c.get(Calendar.MONTH);
-
+        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH),1);
         month = 12- beforeMonth;
 
         for (Reserva item : reservas) {
@@ -182,7 +186,7 @@ public class ReservaCuidadorController {
                   if(position <=0) {
                       cantidad[Math.abs(position)] = cantidad[Math.abs(position)] + 1;
                   } else{
-                      if (date.get(Calendar.MONTH) +month <= 5)
+
                       cantidad[date.get(Calendar.MONTH) +month] = cantidad[date.get(Calendar.MONTH) +1] + 1;
 
                   }

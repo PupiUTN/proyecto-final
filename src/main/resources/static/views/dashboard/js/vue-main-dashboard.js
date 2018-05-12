@@ -7,7 +7,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
-					<h2> Bienvenido </h2> <h2> </h2> 
+					<h2> Bienvenido {{estadisticas.nombre}} !!</h2> <h2> </h2> 
 				</div>
 			</div>
 		</div>
@@ -20,14 +20,14 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 				</div>
 			</div>
 		</div>
-
+    
 
 		 <div class="col-lg-1 col-md-1"></div>
 		<div class="row">
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-1">
-					<div class="dashboard-stat-content"><h4>{{estadisticas.cantidadTotal}}</h4> <span>Reservas</span></div>
+					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.cantidadTotal}} <br><span>Reservas</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Map2"></i></div>
 				</div>
 			</div>
@@ -36,7 +36,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 		
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-2">
-					<div class="dashboard-stat-content"><h4>{{estadisticas.totalVisitas}}</h4> <span>Visitas en el mes</span></div>
+					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalVisitas}} <br><span>Visitas</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Line-Chart"></i></div>
 				</div>
 			</div>
@@ -45,7 +45,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-3">
-					<div class="dashboard-stat-content"><h4>{{estadisticas.promedio}}</h4> <span>Puntaje</span></div>
+					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.promedio}}<br> <span>Puntaje</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Add-UserStar"></i></div>
 				</div>
 			</div>
@@ -64,8 +64,8 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 		<div class="col-lg-12 col-md-12">
 		
 				<div class="dashboard-list-box invoices with-icons">
-				<h4 style="background-color:gainsboro;"> Mis ultimos 6 meses</h4>
-             <button-counter v-bind:cantidad="estadisticas.cantidadPorMes" >
+				<h4 style="background-color:gainsboro;"> Mis ultimos  meses</h4>
+             <button-counter :cantidad="estadisticas.cantidadPorMes" >
              
             </button-counter>
                 </div>
@@ -86,7 +86,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
          <div class="col-lg-12 col-md-12">
 				<div class="dashboard-list-box invoices with-icons">
 				<h4 style="background-color: gainsboro;"> Estados de mis Reservas</h4>
-               <chart-pie v-bind:totalPorTipo="estadisticas.totalPorTipo">
+               <chart-pie :totalPorTipo="estadisticas.totalPorTipo">
                
                 </chart-pie>
                 </div>
@@ -101,11 +101,12 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
     data: function () {
         return {
             estadisticas:{
-                cantidadPorMes:[5,6,7,8,9,2],
-                promedio:'4',
-                totalVisitas:'15',
-                totalPorTipo:[6,5,4,3,2,10],
-                cantidadTotal:'30',
+                cantidadPorMes:[0,0,0,0,0,0,0],
+                promedio:'',
+                totalVisitas:'',
+                totalPorTipo: [],
+                cantidadTotal: '',
+                nombre:'',
 
             }
 
@@ -121,10 +122,16 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
         axios.get('/api/cuidador/me/reservas/estadisticas/')
             .then((response) => {
                 this.estadisticas = response.data;
-                this.estadisticas.cantidadTotal = response.data.cantidadTotal;
-                this.estadisticas.promedio = response.data.promedio;
+                this.estadisticas.cantidadTotal = response.data.cantidadTotal.toString();
+                this.estadisticas.promedio = response.data.promedio.toString();
                 this.estadisticas.cantidadPorMes = response.data.cantidadPorMes;
-                this.estadisticas.totalVisitas = response.data.totalVisitas
+                this.estadisticas.totalVisitas = response.data.totalVisitas.toString();
+                this.estadisticas.totalPorTipo = response.data.totalPorTipo;
+                this.estadisticas.nombre = response.data.nombre;
+
+               // this.estadisticas.cantidadPorMes = [4,8,7,12,1,8]
+                //
+
             })
             .catch(error => {
                 console.log(error);

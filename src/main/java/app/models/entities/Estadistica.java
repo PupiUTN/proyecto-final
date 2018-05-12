@@ -21,4 +21,5 @@ public class Estadistica {
     float promedio;
     long totalVisitas;
     long cantidadTotal;
+    String nombre;
 }
