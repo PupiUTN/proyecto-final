@@ -57,7 +57,8 @@ public class UserService extends AbstractRestClientService {
     }
 
     public JsonNode getMercadoPagoToken(String code) {
-        JsonNode json = post("https://api.mercadopago.com/oauth/token", getPostEntity("123"));
+        JsonNode json = post("https://api.mercadopago.com/oauth/token", getPostEntity(code));
+
         return json;
     }
 
@@ -67,7 +68,7 @@ public class UserService extends AbstractRestClientService {
         json.put("client_secret", MercadoPago.SDK.getClientSecret());
         json.put("grant_type", "authorization_code");
         json.put("code", code);
-        json.put("redirect_uri", "http://localhost:5000/getOAuthToken");
+        json.put("redirect_uri", "http://localhost:5000/api/user/get-mp-token");
         return new HttpEntity<>(json, PaymentsUtils.getMercadoPagoHeaders());
     }
 
