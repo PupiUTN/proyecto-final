@@ -40,11 +40,6 @@ Vue.component('my-detalle-reserva-completo', {
             </div>
 
             <div class="col-md-4">
-                <h5><i class="im im-icon-Email" style="color:red; margin-right: 10px;"></i>email Cuidador </h5>
-                <h3><b>{{reserva.cuidador.user.email}}</b></h3>
-            </div>
-
-            <div class="col-md-4">
                 <h5> <i class="im im-icon-Birthday-Cake" style="color:red; margin-right: 10px;"></i>edad del Cuidador </h5>
                 <h3><b>{{edadCuidador}}</b></h3>
             </div>
@@ -54,18 +49,49 @@ Vue.component('my-detalle-reserva-completo', {
 
     </div>
 
+
+    <!-- Section -->
     <div class="add-listing-section margin-top-45">
 
         <!-- Headline -->
         <div class="add-listing-headline">
-            <h3><i class="sl sl-icon-doc" style="color:red; margin-right: 10px; "></i> Información Básica de la Reserva</h3>
+            <h3><i class="sl sl-icon-doc" style="color:red; margin-right: 10px; "></i> Información Básica de la Reserva</h3> </div>
+
+        <div class="submit-section">
+
+            <!-- Row -->
+            <div class="row with-forms">
+
+                <!-- City -->
+                <div class="col-md-8">
+                 <h5><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px;"></i>Numero De reserva</h5>
+                     <h3><b>{{reserva.id}}</b></h3>
+                </div>
+
+                <!-- Address -->
+                <div class="col-md-4">
+                    <h5><i class="im im-icon-Money-2" style="color:red; margin-right: 10px;"></i>Precio Final</h5>
+                    <h3 style="color: green;"><b style="font-size: xx-large;">$ {{reserva.precioTotal}} </b></h3>
+                </div>
+
+            </div>
+            <!-- Row / End -->
+
+        </div>
+    </div>
+
+    <div class="add-listing-section margin-top-45">
+
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="" style="color:red; margin-right: 10px; "></i> </h3>
         </div>
 
         <!-- Title -->
         <div class="row with-forms">
             <div class="col-md-8">
-                <h5><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px;"></i>Numero De reserva</h5>
-                <h3><b>{{reserva.id}}</b></h3>
+                <h5><i class="im im-icon-Email" style="color:red; margin-right: 10px;"></i>email Cuidador </h5>
+                <h3><b>{{reserva.cuidador.user.email}}</b></h3>
             </div>
 
             <div class="col-md-4">
@@ -92,15 +118,7 @@ Vue.component('my-detalle-reserva-completo', {
         </div>
         <!-- Row / End -->
 
-        <div class="row with-forms">
-
-            <!-- Status -->
-            <div class="col-md-4"></div>
-            <div class="col-md-3">
-                <h5><i class="im im-icon-Money-2" style="color:red; margin-right: 10px; "></i>Precio Final </h5>
-                <h3 style="color: green;"><b style="font-size: xx-large;">$ {{reserva.precioTotal}} </b></h3>
-            </div>
-        </div>
+      
 
 
     </div>
