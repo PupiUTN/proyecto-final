@@ -65,7 +65,7 @@ Vue.component('my-reservas-user-list', {
                                             <a v-on:click="verDetalleCompletoButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                         </div>
                                           <div class="col-xs-12 col-md-2" v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-cuidador'">
-                                            <a v-on:click="calificarReserva(index)"  style="color: blue; border-color: blue; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
+                                            <a v-on:click="calificarReserva(index)"   href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
                                         </div>
                                         <div class = "col-xs-12 col-md-6" v-if="reserva.status === 'aceptada-cuidador'">
                                             <mercadopago :reserva="reserva"></mercadopago>

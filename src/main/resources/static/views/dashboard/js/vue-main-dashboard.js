@@ -34,7 +34,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
            
 			<!-- Item -->
 		
-			<div class="col-lg-3 col-md-6">
+			<div v-show="role === 'ROLE_CUIDADOR'" class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-2">
 					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalVisitas}} <br><span>Visitas</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Line-Chart"></i></div>
@@ -97,7 +97,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
      
 
 </div>
-`,
+`,   props: ['role'],
     data: function () {
         return {
             estadisticas:{
@@ -112,35 +112,52 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 
         }
     },
+    watch: {
+        role: function(newVal, oldVal) { // watch it
+
+            if (this.role == "ROLE_CUIDADOR")
+                this.getCuidadorEstadistica();
+
+            if (this.role == "ROLE_USER")
+                this.getUserEstadistica();
+        }
+
+
+    },
     mounted () {
-    this.getCuidadorReservas();
+
+       // var childMylogin = this.role;
+
+
 
 
     },
     methods: {
-    getCuidadorReservas() {
-        axios.get('/api/cuidador/me/reservas/estadisticas/')
-            .then((response) => {
-                this.estadisticas = response.data;
-                this.estadisticas.cantidadTotal = response.data.cantidadTotal.toString();
-                this.estadisticas.promedio = response.data.promedio.toString();
-                this.estadisticas.cantidadPorMes = response.data.cantidadPorMes;
-                this.estadisticas.totalVisitas = response.data.totalVisitas.toString();
-                this.estadisticas.totalPorTipo = response.data.totalPorTipo;
-                this.estadisticas.nombre = response.data.nombre;
+        getCuidadorEstadistica() {
+            axios.get('/api/cuidador/me/reservas/estadisticas/')
+                .then((response) => {
+                    this.estadisticas = response.data;
+                    this.estadisticas.cantidadTotal = response.data.cantidadTotal.toString();
+                    this.estadisticas.promedio = response.data.promedio.toString();
+                    this.estadisticas.cantidadPorMes = response.data.cantidadPorMes;
+                    this.estadisticas.totalVisitas = response.data.totalVisitas.toString();
+                    this.estadisticas.totalPorTipo = response.data.totalPorTipo;
+                    this.estadisticas.nombre = response.data.nombre;
 
-               // this.estadisticas.cantidadPorMes = [4,8,7,12,1,8]
-                //
+                    // this.estadisticas.cantidadPorMes = [4,8,7,12,1,8]
+                    //
 
-            })
-            .catch(error => {
-                console.log(error);
-                sweetAlert("Oops...", "Error, ver consola", "error");
-            });
-    },
+                })
+                .catch(error => {
+                    console.log(error);
+                    sweetAlert("Oops...", "Error, ver consola", "error");
+                });
+        },
+        getUserEstadistica() {
+
+
+        }
 
     }
-
-
 });
 

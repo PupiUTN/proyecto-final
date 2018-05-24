@@ -18,7 +18,7 @@ Vue.component('my-dashboard', {
         ================================================== -->
         <div class="dashboard-content">
             <!-- render the currently active component/page here -->
-            <component :is="currentView" ref="currentView"></component>
+            <component v-bind:role="role" :is="currentView" ref="currentView"></component>
         </div>
         <!-- Content / End -->
 
