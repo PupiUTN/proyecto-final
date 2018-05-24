@@ -7,7 +7,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
-					<h2> Bienvenido {{estadisticas.nombre}} !!</h2> <h2> </h2> 
+					<h2> Bienvenido {{estadisticas.nombre}} !</h2> <h2> </h2> 
 				</div>
 			</div>
 		</div>
