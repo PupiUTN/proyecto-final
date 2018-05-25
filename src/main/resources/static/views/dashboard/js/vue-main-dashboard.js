@@ -13,12 +13,18 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 		</div>
 		<!-- Content -->
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-9">
 				<div class="notification success closeable margin-bottom-30">
-					<p> <strong>Estos son tus datos</strong>!</p>
-					<a class="close" href="#"></a>
+					<p> <strong>Estos son tus datos</strong>!</p>								
+					<a class="close" href="#"></a>				
 				</div>
+						
+			<select data-placeholder="Select Item" class="chosen-select" v-model="selected">
+				 <option v-for="dog in dogs" value="dog.value">{{dog.text}}</option>
+			</select>
+		
 			</div>
+		
 		</div>
     
 
@@ -108,7 +114,13 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                 cantidadTotal: '',
                 nombre:'',
 
-            }
+            },
+            selected:'',
+            dogs: [
+                {'value': 1, 'text': 'Game 1'},
+                {'value': 4, 'text': 'Game 4'}
+            ],
+
 
         }
     },
@@ -155,7 +167,15 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
         },
         getUserEstadistica() {
 
+            axios.get('/api/user/me/reservas/estadisticas/')
+                .then((response) => {
+                    this.estadisticas = response.data;
 
+                })
+                .catch(error => {
+                    console.log(error);
+                    sweetAlert("Oops...", "Error, ver consola", "error");
+                });
         }
 
     }
