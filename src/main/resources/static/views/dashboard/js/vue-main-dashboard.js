@@ -16,11 +16,13 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 			<div class="col-md-9">
 				<div class="notification success closeable margin-bottom-30">
 					<p> <strong>Estos son tus datos</strong>!</p>								
-					<a class="close" href="#"></a>				
+							
 				</div>
 						
-			<select data-placeholder="Select Item" class="chosen-select" v-model="selected">
-				 <option v-for="dog in dogs" value="dog.value">{{dog.text}}</option>
+			<select id='selector_perro' v-model="selected" >
+			  <option v-for="dog in dogs" :value="dog.value">
+                                    {{ dog.text }}
+                                </option>
 			</select>
 		
 			</div>
@@ -113,15 +115,15 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                 totalPorTipo: [],
                 cantidadTotal: '',
                 nombre:'',
-
+                nombrePerro:'',
+                idPerro:'',
             },
-            selected:'',
-            dogs: [
-                {'value': 1, 'text': 'Game 1'},
-                {'value': 4, 'text': 'Game 4'}
-            ],
-
-
+            selected:0,
+            dogs:  {},
+            aux: {},
+            cont: 0,
+            flag: '',
+            list:{},
         }
     },
     watch: {
@@ -132,7 +134,15 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 
             if (this.role == "ROLE_USER")
                 this.getUserEstadistica();
-        }
+        },
+        selected: function(newVal, oldVal) { // watch it
+
+            this.estadisticas.cantidadTotal = this.list[newVal].cantidadTotal.toString();
+            this.estadisticas.promedio = this.list[newVal].promedio.toString();
+            this.estadisticas.cantidadPorMes = this.list[newVal].cantidadPorMes;
+            this.estadisticas.totalPorTipo = this.list[newVal].totalPorTipo;
+            this.estadisticas.nombre = this.list[newVal].nombre;
+        },
 
 
     },
@@ -169,8 +179,16 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 
             axios.get('/api/user/me/reservas/estadisticas/')
                 .then((response) => {
-                    this.estadisticas = response.data;
-
+                    this.list = response.data;
+                    var x = document.getElementById("selector_perro");
+                    for (i = 0; i < this.list.length; i++) {
+                        this.dogs[i] = {value: i, text: this.list[i].nombrePerro};
+                    }
+                    this.estadisticas.cantidadTotal = this.list[0].cantidadTotal.toString();
+                    this.estadisticas.promedio = this.list[0].promedio.toString();
+                    this.estadisticas.cantidadPorMes = this.list[0].cantidadPorMes;
+                    this.estadisticas.totalPorTipo = this.list[0].totalPorTipo;
+                    this.estadisticas.nombre = this.list[0].nombre;
                 })
                 .catch(error => {
                     console.log(error);

@@ -17,7 +17,7 @@ public class EstadisticaUser {
     float promedio;
     long cantidadTotal;
     String nombrePerro;
-    String nombreDueño;
+    String nombre;
      int idPerro;
 
 }

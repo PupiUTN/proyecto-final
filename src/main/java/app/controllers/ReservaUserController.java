@@ -108,7 +108,7 @@ public class ReservaUserController {
             int[] aux = getCantidadXTipo(item.getId(), list);
             estadisticaUser.setTotalPorTipo(aux);
             estadisticaUser.setNombrePerro(item.getNombre());
-            estadisticaUser.setNombreDueño(user.getUsername());
+            estadisticaUser.setNombre(user.getUsername());
             estadisticaUser.setCantidadPorMes(getReservasXMes(list, item.getId()));
             estadisticaUser.setCantidadTotal(getCantidadTotal(aux));
             estadisticaUser.setPromedio(getPromedio(item.getId()));
@@ -158,11 +158,11 @@ public class ReservaUserController {
                      case "finalizada":
                          cantidadXtipo[0]++;
                          break;
-                     case "pagada-dueño":
-                         cantidadXtipo[1]++;
-                         break;
                      case "creada-dueño":
                          cantidadXtipo[2]++;
+                         break;
+                     case "pagada-dueño":
+                         cantidadXtipo[1]++;
                          break;
                      case "aceptada-cuidador":
                          cantidadXtipo[3]++;
