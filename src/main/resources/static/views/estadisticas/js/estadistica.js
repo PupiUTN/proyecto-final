@@ -1,4 +1,4 @@
-let myMainDashboard = Vue.component('my-main-dashboard', {
+Vue.component('my-estadistica', {
     template: `
 <div>
 
@@ -7,11 +7,12 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
-					<h2> Bienvenido {{estadisticas.nombre}} !</h2> <h2> </h2> 
+					<h2> Mis Estadisticas </h2> <h2> </h2> 
 				</div>
 			</div>
 		</div>
 		<!-- Content -->
+		<div v-show="flag">
 		<div class="row">
 			<div class="col-md-12">			    
 				<div class="notification success closeable margin-bottom-30 ">
@@ -22,7 +23,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 		
 		</div>
 		
-		<div v-show="role === 'ROLE_USER'" class="col-md-12 row"> 
+		<div class="col-md-12 row"> 
 			   <div class="col-md-3"></div>
 			   <div class="col-md-3 margin-top-10 row opening-day js-demo-hours"> <label><h4><i class="im im-icon-Dog" style="margin-right: 10px;"></i>Elige a tu mascota</h4></label></div>
 			    <div class="col-md-3">
@@ -47,21 +48,13 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 			</div>
            
 			<!-- Item -->
-		
-			<div v-show="role === 'ROLE_CUIDADOR'" class="col-lg-3 col-md-6">
-				<div class="dashboard-stat color-2">
-					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalVisitas}} <br><span>Visitas</span></div>
-					<div class="dashboard-stat-icon"><i class="im im-icon-Line-Chart"></i></div>
-				</div>
-			</div>
-	<div v-show="role === 'ROLE_USER'" class="col-lg-3 col-md-6">
+	
+	<div  class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-2">
 					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalCuidadores}} <br><span>Me Cuidaron</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-MaleFemale"></i></div>
 				</div>
 			</div>
-
-
 
 			
 			<!-- Item -->
@@ -114,12 +107,12 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                 </div>
          </div>
            </div>
-
+    </div>
 
      
 
 </div>
-`,   props: ['role'],
+`,
     data: function () {
         return {
             estadisticas:{
@@ -137,19 +130,11 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
             dogs:  {},
             aux: {},
             cont: 0,
-            flag: '',
+            flag: false,
             list:{},
         }
     },
     watch: {
-        role: function(newVal, oldVal) { // watch it
-
-            if (this.role == "ROLE_CUIDADOR")
-                this.getCuidadorEstadistica();
-
-            if (this.role == "ROLE_USER")
-                this.getUserEstadistica();
-        },
         selected: function(newVal, oldVal) { // watch it
 
             this.estadisticas.cantidadTotal = this.list[newVal].cantidadTotal.toString();
@@ -164,38 +149,20 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
     },
     mounted () {
 
-       // var childMylogin = this.role;
+        // var childMylogin = this.role;
 
-
+        this.getUserEstadistica();
 
 
     },
     methods: {
-        getCuidadorEstadistica() {
-            axios.get('/api/cuidador/me/reservas/estadisticas/')
-                .then((response) => {
-                    this.estadisticas = response.data;
-                    this.estadisticas.cantidadTotal = response.data.cantidadTotal.toString();
-                    this.estadisticas.promedio = response.data.promedio.toString();
-                    this.estadisticas.cantidadPorMes = response.data.cantidadPorMes;
-                    this.estadisticas.totalVisitas = response.data.totalVisitas.toString();
-                    this.estadisticas.totalPorTipo = response.data.totalPorTipo;
-                    this.estadisticas.nombre = response.data.nombre;
-
-                    // this.estadisticas.cantidadPorMes = [4,8,7,12,1,8]
-                    //
-
-                })
-                .catch(error => {
-                    console.log(error);
-                    sweetAlert("Oops...", "Error, ver consola", "error");
-                });
-        },
         getUserEstadistica() {
 
             axios.get('/api/user/me/reservas/estadisticas/')
                 .then((response) => {
                     this.list = response.data;
+                    if (this.length > 0) {
+                        this.flag = true;
                     for (i = 0; i < this.list.length; i++) {
                         this.dogs[i] = {value: i, text: this.list[i].nombrePerro};
                     }
@@ -205,6 +172,25 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                     this.estadisticas.totalPorTipo = this.list[0].totalPorTipo;
                     this.estadisticas.nombre = this.list[0].nombre;
                     this.estadisticas.totalCuidadores = this.list[0].totalCuidadores;
+
+
+                }
+                    else
+                    {    this.flag = false;
+                        sweetAlert({
+                                title: "No encontramos reservas!",
+                                text: "Tus perros no poseen reservas",
+                                type: "warning",
+                                confirmButtonText: "agrega uno!"
+                            },
+                        function(){
+                            document.location.href = '/views/perros/registrar-perros.html';
+                        });
+
+
+
+                    }
+
                 })
                 .catch(error => {
                     console.log(error);
@@ -214,4 +200,5 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 
     }
 });
+
 

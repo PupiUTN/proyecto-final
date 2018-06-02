@@ -100,6 +100,10 @@ public class ReservaUserController {
         List<EstadisticaUser> estadisticaUserList = new ArrayList<>();
 
         List<Reserva> list = reservaService.getReservasByUserId(id);
+        if (list.size() == 0)
+        {
+            return estadisticaUserList;
+        }
         User user = list.get(0).getPerro().getUser();
         List<Perro> listPerro = perroService.getPerrosByUserId(user.getId());
         EstadisticaUser estadisticaUser;
@@ -113,6 +117,7 @@ public class ReservaUserController {
             estadisticaUser.setCantidadTotal(getCantidadTotal(aux));
             estadisticaUser.setPromedio(getPromedio(item.getId()));
             estadisticaUser.setIdPerro(item.getId().intValue());
+            estadisticaUser.setTotalCuidadores(getCuidadoresXPerro(list, item.getId()));
             estadisticaUserList.add(estadisticaUser);
         }
 
@@ -235,6 +240,33 @@ public class ReservaUserController {
         reservaDate.setTime(item);
         return reservaDate;
 
+    }
+
+    public int getCuidadoresXPerro(List<Reserva> reservas, Long id) {
+        int cont = 0;
+
+        ArrayList<Integer> aux = new ArrayList<>();
+        for (Reserva item : reservas) {
+            if (item.getPerro().getId().equals(id)) {
+                if (cont == 0) {
+                    aux.add(item.getCuidador().getId().intValue());
+                    cont++;
+
+                } else {
+                    if (!aux.contains(item.getCuidador().getId().intValue())) {
+                        aux.add(item.getCuidador().getId().intValue());
+                        cont++;
+                    }
+
+
+                }
+
+
+            }
+
+        }
+
+        return cont;
     }
 
 }

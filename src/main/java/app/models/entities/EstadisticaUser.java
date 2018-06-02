@@ -19,5 +19,6 @@ public class EstadisticaUser {
     String nombrePerro;
     String nombre;
      int idPerro;
+     int totalCuidadores;
 
 }
