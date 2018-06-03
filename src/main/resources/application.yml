@@ -37,6 +37,8 @@ app:
     pupi:
       clientId: ${MP_CLIENT_ID}
       clientSecret: ${MP_CLIENT_SECRET}
+      encryptKey: ${MP_ENCRYPT_KEY}
+      encryptVector: ${MP_ENCRYPT_VECTOR}
   aws:
       s3:
         bucketName: pupi-images

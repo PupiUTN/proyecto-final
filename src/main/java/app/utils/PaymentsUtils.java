@@ -5,18 +5,24 @@ import com.mercadopago.resources.datastructures.preference.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
+
 import java.util.Collections;
 
 public class PaymentsUtils {
 
-    public static Item fillItem(Float price, String fullName) {
+    private static final String TITLE = "Pupi - Pago de Estadía";
+    private static final String DESCRIPTION = "Servicios de cuidado de mascotas a ";
+    private static final String PICTURE_URL = "http://pupi.com.ar/assets/images/logo.png";
+    private static final String CURRENCY = "ARS";
+
+    public static Item fillItem(Float price, String fullName, String reservaId) {
         Item item = new Item();
-        item.setTitle("Pupi - Pago de Estadía")
-                .setId("1234")
+        item.setTitle(TITLE)
+                .setId(reservaId)
                 .setQuantity(1)
-                .setDescription("Servicios de cuidado de mascotas a " + fullName)
-                .setPictureUrl("http://pupi.com.ar/assets/images/logo.png")
-                .setCurrencyId("ARS")
+                .setDescription(DESCRIPTION + fullName)
+                .setPictureUrl(PICTURE_URL)
+                .setCurrencyId(CURRENCY)
                 .setUnitPrice(price);
         return item;
     }
@@ -56,5 +62,4 @@ public class PaymentsUtils {
         headers.setContentType(MediaType.APPLICATION_JSON);
         return headers;
     }
-
 }

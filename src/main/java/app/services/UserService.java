@@ -5,11 +5,13 @@ import app.exception.EmailExistsException;
 import app.exception.PasswordDoesNotMatchException;
 import app.models.entities.User;
 import app.persistence.UserRepository;
+import app.security.Encryptor;
 import app.utils.PaymentsUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mercadopago.MercadoPago;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,12 @@ public class UserService extends AbstractRestClientService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Value("${app.mp.pupi.encryptKey}")
+    private String KEY;
+
+    @Value("${app.mp.pupi.encryptVector}")
+    private String VECTOR;
+
     @Transactional
     public User registerNewUserAccount(User user)
             throws EmailExistsException, PasswordDoesNotMatchException {
@@ -32,7 +40,7 @@ public class UserService extends AbstractRestClientService {
         }
         if (emailExist(user.getEmail())) {
             throw new EmailExistsException(
-                    "There is an account with that email address:"  + user.getEmail());
+                    "There is an account with that email address:" + user.getEmail());
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -56,19 +64,26 @@ public class UserService extends AbstractRestClientService {
         return repository.save(entity);
     }
 
-    public JsonNode getMercadoPagoToken(String code) {
-        JsonNode json = post("https://api.mercadopago.com/oauth/token", getPostEntity(code));
 
-        return json;
+    public String getMercadoPagoToken(String code, String email) {
+        User mpUser = repository.findByEmail(email);
+        if (mpUser.getMpToken() == null) {
+            JsonNode json = post("https://api.mercadopago.com/oauth/token", getPostEntity(code, email));
+            String mpToken = json.get("access_token")
+                    .toString();
+            mpUser.setMpToken(Encryptor.encrypt(KEY, VECTOR, mpToken));
+            repository.save(mpUser);
+        }
+        return Encryptor.decrypt(KEY, VECTOR, mpUser.getMpToken());
     }
 
-    private HttpEntity<JsonNode> getPostEntity(String code) {
+    private HttpEntity<JsonNode> getPostEntity(String code, String email) {
         ObjectNode json = mapper.createObjectNode();
         json.put("client_id", MercadoPago.SDK.getClientId());
         json.put("client_secret", MercadoPago.SDK.getClientSecret());
         json.put("grant_type", "authorization_code");
         json.put("code", code);
-        json.put("redirect_uri", "http://localhost:5000/api/user/get-mp-token");
+        json.put("redirect_uri", "http://localhost:5000/api/user/get-mp-token?email=" + email);
         return new HttpEntity<>(json, PaymentsUtils.getMercadoPagoHeaders());
     }
 

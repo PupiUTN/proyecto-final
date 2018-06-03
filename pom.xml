@@ -51,7 +51,7 @@
         <dependency>
             <groupId>com.mercadopago</groupId>
             <artifactId>dx-java</artifactId>
-            <version>1.0.8</version>
+            <version>1.0.9</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.google.code.gson</groupId>

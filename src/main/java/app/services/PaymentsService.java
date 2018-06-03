@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 
@@ -57,7 +58,8 @@ public class PaymentsService {
 
         Item item = PaymentsUtils.fillItem(reserva.getPrecioTotal(), reserva.getCuidador()
                 .getUser()
-                .getFullName());
+                .getFullName(), reserva.getId()
+                .toString());
 
         Payer payer = PaymentsUtils.fillPayer(reserva.getPerro()
                 .getUser());
