@@ -1,6 +1,7 @@
 package app.services;
 
 import app.models.entities.Reserva;
+import app.models.entities.User;
 import app.models.mercadopago.Preference;
 import app.persistence.PaymentRepository;
 import app.utils.PaymentsUtils;
@@ -56,9 +57,10 @@ public class PaymentsService {
 
         Preference preference = new Preference();
 
-        Item item = PaymentsUtils.fillItem(reserva.getPrecioTotal(), reserva.getCuidador()
-                .getUser()
-                .getFullName(), reserva.getId()
+        User user = reserva.getCuidador()
+                .getUser();
+
+        Item item = PaymentsUtils.fillItem(reserva.getPrecioTotal(), user.getFullName(), reserva.getId()
                 .toString());
 
         Payer payer = PaymentsUtils.fillPayer(reserva.getPerro()
@@ -71,7 +73,9 @@ public class PaymentsService {
                 .toString());
 
         //Acá seteamos el token del vendedor
-        //MercadoPago.SDK.setUserToken("tokenId");
+        MercadoPago.SDK.setUserToken(user.getMpToken());
+
+        preference.setMarketplaceFee(20f);
         try {
             preference.save();
         } catch (MPException e) {
