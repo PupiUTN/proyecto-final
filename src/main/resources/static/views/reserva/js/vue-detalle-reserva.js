@@ -1,238 +1,231 @@
 Vue.component('my-detalle-reserva', {
     template: `
 <div>
-    <h1 > Detalles de la Reserva</h1>
-    <div id="footer">
-
-        <!-- Header -->
+  <div id="titlebar">
         <div class="row">
-
-            <div class="col-xs-12 col-md-2 col-sm-8 ">
-                <div class="col-xs-12 avatar"> <div class="col-xs-12"><img id="foto_user"  :src="reserva.perro.user.profileImageUrl" alt="" style="max-width: 200px;margin-left: 20px;margin-top: -50px;"></div>
-                </div>
+            <div class="col-md-12">
+                <h2>Datos de la Reserva </h2>
+                <!-- Breadcrumbs -->
+                <nav id="breadcrumbs">
+                    <ul>
+                       
+                    </ul>
+                </nav>
             </div>
-
-            <div class="col-xs-12 col-md-8 ">
-                <div class= col-md-6></div>
-                <p id="details" >
-                    <strong><i class="sl sl-icon-user-following" style="color:red; margin-right: 10px; "></i>Usuario:</strong> {{reserva.perro.user.fullName}} <br>
-                </p>
-                <div class= col-md-6></div>
-                <p id="details" >
-                    <strong><i class="im im-icon-Security-Check" style="color:red; margin-right: 10px; "></i>Estado:</strong> {{reserva.status}} <br>
-                <div class= col-md-6></div>
-                <strong><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px; "></i>Fecha:</strong>  {{reserva.fechaTransaccion}} <br>
-                </p>
-
-            </div>
-        </div>
-        <br>
-
-        <!-- Client & Supplier -->
-        <div class="row">
-
-            <div class="col-md-4">
-                <div class = "col-md-3"></div>
-                <strong class="  margin-bottom-5"><i class="im im-icon-Money-2" style="color:red; margin-right: 10px; "></i>Precio total: </strong>
-                <br>
-                <div class="col-md-8">
-                    <label class="col-md-5"></label>
-                    <label style=" color: green;font-size: 30px;">{{reserva.precioTotal}}  $</label>
-                </div>
-            </div>
-            <div class="col-md-4" >
-                <strong class="margin-bottom-5"><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px; "></i>Fecha inicio</strong>
-                <p> {{reserva.fechaInicio}}
-                </p>
-            </div>
-
-            <div class="col-md-2">
-                <strong class="margin-bottom-5"><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px; "></i>Fecha Fin</strong>
-                <p> {{reserva.fechaFin}}
-                </p>
-            </div>
-
-
-            <div class="col-md-12" >
-
-                <div class = "col-md-1"></div>
-                <strong class="margin-bottom-5"><i class="im im-icon-Mailbox-Full" style="color:red; margin-right: 10px; "></i>Mensaje: </strong>
-                <br>
-                <div class="col-md-10">
-                    <label class="col-md-4"></label>
-                    <div class=" col col-md-10 col-xs-12"> <div class=" col-md-1"></div>{{reserva.mensaje}}</div>
-
-                </div>
-
-
-
-
-
-
-            </div>
-
-
         </div>
     </div>
-    <br>
-    <br>
+      <div class="add-listing-section">
 
-    <div v-if="reserva.status === 'pagada-dueño'">
-
-
-        <div id="footer">
-
-
-            <!-- Title -->
-            <div class="row with-forms">
-                <div class="col-md-1"> </div>
-                <div class="col-md-7">
-                    <strong class="margin-bottom-5"><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px;"></i>Número De reserva</strong>
-                    <p> {{reserva.id}}</p>
-                </div>
-
-                <div class="col-md-4">
-                    <strong class="margin-bottom-5"><i class="im im-icon-Email" style="color:red; margin-right: 10px;"></i>Email    </strong>
-                    <p>   {{reserva.perro.user.email}}</p>
-                </div>
-            </div>
-
-            <!-- Row -->
-            <div class="row with-forms">
-                <div class="col-md-1"> </div>
-                <!-- Status -->
-                <div class="col-md-7">
-                    <strong class="margin-bottom-5"><i class="im im-icon-Old-Telephone" style="color:red; margin-right: 10px;"></i>Teléfono  </strong>
-                    <p>    {{reserva.perro.user.phone}}</p>
-                </div>
-
-                <!-- Type -->
-                <div class="col-md-4">
-                    <strong class="margin-bottom-5"> <i class="im im-icon-Birthday-Cake" style="color:red; margin-right: 10px;"></i>Edad   </strong>
-                    <p>   {{edadUsuario}}</p>
-                </div>
-
-            </div>
-            <!-- Row / End -->
-
-            <div class="row with-forms">
-                <div class="col-md-1"> </div>
-                <!-- Status -->
-
-                <div class="col-md-7">
-                    <strong class="margin-bottom-5"><i class="im im-icon-City-Hall" style="color:red; margin-right: 10px;"></i>Ciudad</strong>
-                    <p> {{reserva.perro.user.direccion.ciudad}}</p>
-                </div>
-
-                <div class="col-md-4">
-                    <strong class="margin-bottom-5"><i class="im im-icon-Flag-2" style="color:red; margin-right: 10px;"></i>Provincia</strong>
-                    <p> {{reserva.perro.user.direccion.provincia}}</p>
-                </div>
-            </div>
-
-
-                        
-
-
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-user-following" style="color:red;"></i> Información Básica de la Mascota</h3>
         </div>
 
-
-
-    </div>
-    <br>
-    <br>
-    <h1 > Mascota a Cuidar </h1>
-
-    <div id="footer">
-
-        <!-- Header -->
-        <div class="row">
-
-            <div class="col-xs-12 col-md-2 col-sm-8 ">
-                <div class="zoom">
-                    <div class="col-xs-12 avatar"> <img id="foto_perro" class="zoom" :src="reserva.perro.fotoPerfil" alt="" style="max-width: 200px;margin-left: 20px;margin-top: -50px;"></div>
-                </div>
+        <div class="row with-forms">
+            <div class="col-md-8">
+                <h5>  </h5>
+                <img id="foto_user"  :src="reserva.perro.fotoPerfil" alt="" style="width:300px;" >
             </div>
-
-            <div class="col-xs-12 col-md-8 ">
-                <div class= col-md-6></div>
-                <p id="details" >
-                    <strong><i class="sl sl-icon-user-following" style="color:red; margin-right: 10px; "></i> Nombre:</strong> {{reserva.perro.nombre}} <br>
-                </p>
-                <div class= col-md-6></div>
-                <p id="details" >
-                    <strong><i class="im im-icon-Birthday-Cake" style="color:red; margin-right: 10px;"></i> Edad:</strong> {{edadPerro}} <br>
-                </p>
-                <div class= col-md-6></div>
-                <p>
-                <strong><i class="im im-icon-Dog" style="color:red; margin-right: 10px;"></i>Raza:</strong> {{reserva.perro.raza.nombre}} <br>
-                </p>
-
-       
-
-            </div>
-        </div>
-        <br>
-
-        <!-- Client & Supplier -->
-        <div class="row">
 
             <div class="col-md-4">
-                <div class = "col-md-3"></div>
-                <strong class="  margin-bottom-5"><i class="im im-icon-Ruler" style="color:red; margin-right: 10px;"></i>Tamaño: </strong>
-                <br>
-                <div class="col-md-8">
-                    <label class="col-md-5"></label>
-                    <label >{{tamaño}}</label>
-                </div>
+                <h5><i class="sl sl-icon-user-following" style="color:red; margin-right: 10px; "></i>  Nombre </h5>
+                <h3><b>{{reserva.perro.nombre}}</b></h3>
             </div>
-            <div class="col-md-1" style=" margin-right: 80px;"></div>
-             <div class="col-md-3">
-                
-                <div>
-                <strong class="  margin-bottom-5"><i class="im im-icon-Starfish" style="color:red; margin-right: 10px;"></i>Calificacion: </strong>
-                   <div class="star-rating"  id="rating" data-rating ="0">
+
+            <div class="col-md-4">
+                <h5><i class="im im-icon-Old-Telephone" style="color:red; margin-right: 10px;"></i>Raza </h5>
+                <h3><b>{{reserva.perro.raza.nombre}}</b></h3>
+            </div>
+
+           <div class="col-md-4">
+                <h5><i class="im im-icon-Starfish" style="color:red; margin-right: 10px"></i>Calificacion </h5>
+                <h3><b>  <div class="star-rating"  id="rating" data-rating ="0">
                   <span v-bind:class="{'star': puntaje >= 1, 'star empty': puntaje < 1 }" ></span>
                    <span v-bind:class="{'star': puntaje >= 2, 'star empty': puntaje < 2 }"></span>
                   <span v-bind:class="{'star': puntaje >= 3, 'star empty': puntaje < 3 }" ></span>
                 <span v-bind:class="{'star': puntaje >= 4, 'star empty': puntaje < 4 }"></span>
                  <span v-bind:class="{'star': puntaje >= 5, 'star empty': puntaje < 5 }"></span>
-               </div>
-                <br>
-                 </div>
+               </div></b></h3>
             </div>
+            
+            <div class="col-md-4">
+                <h5><i class="im im-icon-Paw" style="color:red; margin-right: 10px;" ></i>Sexo </h5>
+                <h3><b>{{reserva.perro.sexo}}</b></h3>
+            </div>
+        </div>
 
-           <!-- <div class=" col-md-5 col-xs-12 star-rating" id="rating" data-rating="3">
-                <div class="rating-counter"><a href="#listing-reviews"></a></div>&ndash;&gt;
-            </div>-->
 
+    </div>
+    
+      <!-- Section -->
+    <div class="add-listing-section margin-top-45">
 
-            <div class="col-md-12" >
-                <div >
-                    <div class="col-md-1"></div>
-                    <strong class="  margin-bottom-5"><i class="im im-icon-Heart" style="color:red; margin-right: 10px;"></i>Vacunas: </strong>
-                    <br>
-                    <div class="col-md-10">
-                        <label class="col-md-1"></label>
-                        <ul v-for=" vacuna in reserva.perro.listaVacunas" class=" col-md-2 listing-features checkboxes margin-top-0"
-                            style="">
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="" style="color:red; margin-right: 10px;" ></i> </h3>
+        </div>
+
+            <div class="row with-forms">
+            <div class="col-md-8">
+                <h5> <i class="im im-icon-Birthday-Cake" style="color:red; margin-right: 10px;"></i>Edad</h5>
+                <h3><b>{{edadPerro}}</b></h3>
+            </div>
+            
+             <div class="col-md-4">
+                <h5><i class="im im-icon-Email" style="color:red; margin-right: 10px;"></i>Tamaño</h5>
+                <h3><b>{{tamaño}}</b></h3>
+            </div>
+            
+            
+        </div>
+        
+         <div class="row with-forms">
+            <div class="col-md-12">
+                <h5> <i class="im im-icon-Heart" style="color:red; margin-right: 10px;"></i>Vacunas</h5>
+               <div class="col-md-12" style="padding-left: 0px;">
+                        <!--<label class="col-md-1"></label>-->
+                        <ul v-for=" vacuna in reserva.perro.listaVacunas" class=" col-md-3 listing-features checkboxes margin-top-0"
+                            style=" padding-left: 0px;">
                             <li> {{vacuna.nombre}}</li>
                         </ul>
                     </div>
-                </div>
-
+            </div>            
+          </div>
+    </div>
+    
+    
+     <div class="add-listing-section margin-top-45">
+       <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-user-following" style="color:red;"></i> Información Básica de la Reserva</h3>
+        </div>
+     
+       <div class="row with-forms">
+            <div class="col-md-8">
+                <h5><i class="sl sl-icon-user-following" style="color:red; margin-right: 10px;"></i>Usuario</h5>
+                <h3><b>{{reserva.perro.user.fullName}}</b></h3>
             </div>
 
+            <div class="col-md-4">
+                <h5><i class="im im-icon-Money-2" style="color:red; margin-right: 10px; "></i>Precio total</h5>
+                <h3><b><label style=" color: green;font-size: 30px;">&#36 {{reserva.precioTotal}} </label></b></h3>
+            </div>
+        </div>
+        
+        <div class="row with-forms">
+            <div class="col-md-12">
+                <h5><i class="im im-icon-Mailbox-Full" style="color:red; margin-right: 10px;"></i>Mensaje</h5>
+                <h3><b>{{reserva.mensaje}}</b></h3>
+            </div>
 
         </div>
 
-        <div id="listing-reviews" class="listing-section">
-            <div class = "text-center">
-                <h3 class="listing-desc-headline margin-top-20 margin-bottom-20">Reviews <span>({{DataReview.length}})</span></h3>
+     </div>
+    
+       <div class="add-listing-section margin-top-45">
+
+        <div class="add-listing-headline">
+            <h3><i class="" style="color:red;"></i> </h3>
+        </div>
+        
+        <!-- Title -->
+        <div class="row with-forms">
+            <div class="col-md-8">
+                <h5><i class="im im-icon-Security-Check" style="color:red; margin-right: 10px;"></i>Estado</h5>
+                <h3><b>{{reserva.status}}</b></h3>
             </div>
-            <div class="clearfix"></div>
-            <div class = "col-2"> </div>
-            <!-- Reviews -->
+
+            <div class="col-md-4">
+                <h5><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px; "></i>Fecha De Reserva </h5>
+                <h3><b>{{reserva.fechaTransaccion}}</b></h3>
+            </div>
+        </div>
+
+        <!-- Row -->
+        <div class="row with-forms">
+
+            <!-- Status -->
+            <div class="col-md-8">
+                <h5><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px;"></i>Fecha De entrada</h5>
+                <h3><b>{{reserva.fechaInicio}}</b></h3>
+            </div>
+
+            <!-- Type -->
+            <div class="col-md-4">
+                <h5><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px;"></i>Fecha De Salida </h5>
+                <h3><b>{{reserva.fechaFin}}</b></h3>
+            </div>
+
+        </div>
+
+    </div>
+    
+    
+    <div v-if="reserva.status === 'pagada-dueño'">
+
+      <div class="add-listing-section margin-top-45">
+
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-user-following" style="color:red;"></i> Información del Dueño </h3>
+        </div>
+         <!-- Title -->
+        <div class="row with-forms">
+            <div class="col-md-8">
+                <h5><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px;"></i>Número De reserva</h5>
+                <h3><b>{{reserva.id}}</b></h3>
+            </div>
+
+            <div class="col-md-4">
+                <h5><i class="im im-icon-Email" style="color:red; margin-right: 10px; "></i>Email </h5>
+                <h3><b>{{reserva.perro.user.email}}</b></h3>
+            </div>
+        </div>
+
+        <!-- Row -->
+        <div class="row with-forms">
+
+            <!-- Status -->
+            <div class="col-md-8">
+                <h5><i class="im im-icon-Old-Telephone" style="color:red; margin-right: 10px;"></i>Teléfono</h5>
+                <h3><b>{{reserva.perro.user.phone}}</b></h3>
+            </div>
+
+            <!-- Type -->
+            <div class="col-md-4">
+                <h5><i class="im im-icon-Birthday-Cake" style="color:red; margin-right: 10px;"></i>Edad </h5>
+                <h3><b>{{edadUsuario}}</b></h3>
+            </div>
+
+        </div>
+        
+          <!-- Row -->
+        <div class="row with-forms">
+
+            <!-- Status -->
+            <div class="col-md-8">
+                <h5><i class="im im-icon-City-Hall" style="color:red; margin-right: 10px;"></i>Ciudad</h5>
+                <h3><b>{{reserva.perro.user.direccion.ciudad}}</b></h3>
+            </div>
+
+            <!-- Type -->
+            <div class="col-md-4">
+                <h5><i class="im im-icon-Flag-2" style="color:red; margin-right: 10px;"></i>Provincia</h5>
+                <h3><b>{{reserva.perro.user.direccion.provincia}}</b></h3>
+            </div>
+
+        </div>
+ 
+        </div>
+    </div>
+    
+    
+          <div class="add-listing-section margin-top-45">
+
+        <div class="add-listing-headline">
+            <h3 style="height: 32px;"><i class="fa fa-comments-o  margin-top-20 margin-bottom-20" style="color:red;"></i> Reviews ({{DataReview.length}})  </h3>
+        </div>
+
+        <div class="row with-forms">
+            <div class="col-md-12">
+                     <!-- Reviews -->
          <section class="comments listing-reviews" >
 
                 <ul style=" list-style: none;">
@@ -270,7 +263,6 @@ Vue.component('my-detalle-reserva', {
                     <div class="pagination-container margin-top-15">
                         <nav class="pagination">
                             <ul>
-
                                 <li><a style=" background-color: crimson;" v-if="offset > 0"    v-on:click="previous()"><i class="sl sl-icon-arrow-left" style=" font-weight: bold;color: white;"></i></a></li>
 
                                 <li><a style=" background-color: crimson;" v-if="offset + perPage < DataReview.length"  v-on:click="next()"><i class="sl sl-icon-arrow-right" style=" font-weight: bold;color: white;"></i></a></li>
@@ -282,108 +274,105 @@ Vue.component('my-detalle-reserva', {
             </div>
             <div class="clearfix"></div>
             <!-- Pagination / End -->
+            </div>
+           
         </div>
+
+
     </div>
-
-
-    <br>
-
-
-
+   
+     <br>
 
     <div class="center-block">
 
         <div class="col-md-1"></div>
-        <div class="col-xs-8 col-md-4" v-if="reserva.status === 'creada-dueño'" >
+        <div class="col-xs-5 col-md-3" v-if="reserva.status === 'creada-dueño'" >
             <a v-on:click="confirmarReservaButton()"  style="color: blue; border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Confirmar</a>
+        
         </div>
-
-
-        <div class="col-xs-8 col-md-6" v-if="reserva.status !== 'rechazada-cuidador'" >
+            <div class="col-xs-5 col-md-6" v-if="reserva.status !== 'rechazada-cuidador'" >
             <a v-on:click="cancelarReservaActionButton()"  href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
         </div>
+        
     </div>
-
 
 </div>
     `,
-    data:
-        function () {
-            return {
-                url: '',
-                reserva:
-                    {
-                        id: null,
-                        perro: {
-                            user: {
-                                fullName: '',
-                                profileImageUrl: '',
-                                email: '',
-                                phone: '',
-                                birthday: '',
-                                direccion: {
-                                    calle: '',
-                                    ciudad: '',
-                                    numero: '',
-                                    latitud: '',
-                                    longitud: '',
-                                    provincia: ''
-
-                                },
-
-                            },
-                            fotoPerfil: '',
-                            nombre: '',
-                            birthday: '',
-                            raza: {},
-                            sexo: '',
-                            tamaño: {},
-                            listaVacunas: [],
-                            id: ''
-                        },
-                        fechaInicio: "",
-                        fechaFin: "",
-                        precioTotal: 1,
-                        status: '',
-                        mensaje: '',
-                        transaccion: '',
-
-                    }
-                ,
-                message: '',
-                perroProfileUrl: '',
+    data: function () {
+        return {
+            url: '',
+            reserva: {
                 id: null,
-                edadPerro: '',
-                showModal: false,
-                tamaño: '',
-                edadUsuario: '',
-                numeroReserva: '',
-                puntaje: 0,
-                calificaciones: [{
-                    id: '',
-                    comentario: '',
-                    puntaje: '',
-                    from_owner: '',
-                    reserva: {
-                        id: '',
-                        status: '',
-                        cuidador: {
-                            user: {
-                                profileImageUrl: '',
-                                username: '',
-                            }
+                perro: {
+                    user: {
+                        fullName: '',
+                        profileImageUrl: '',
+                        email: '',
+                        phone: '',
+                        birthday: '',
+                        direccion: {
+                            calle: '',
+                            ciudad: '',
+                            numero: '',
+                            latitud: '',
+                            longitud: '',
+                            provincia: ''
+
                         },
-                        fechaTransaccion: '',
+
                     },
-                }],
-                offset: 0,
-                navButtons: [],
-                perPage: 2,
-                DataReview: [],
-                puntajeUsuario: 0,
+                    fotoPerfil: '',
+                    nombre: '',
+                    birthday: '',
+                    raza: {},
+                    sexo: '',
+                    tamaño: {},
+                    listaVacunas: [],
+                    id: ''
+                },
+                fechaInicio: "",
+                fechaFin: "",
+                precioTotal: 1,
+                status: '',
+                mensaje: '',
+                transaccion: '',
 
             }
-        },
+            ,
+            message: '',
+            perroProfileUrl: '',
+            id: null,
+            edadPerro: '',
+            showModal: false,
+            tamaño: '',
+            edadUsuario: '',
+            numeroReserva: '',
+            puntaje: 0,
+            calificaciones: [{
+                id: '',
+                comentario: '',
+                puntaje: '',
+                from_owner: '',
+                reserva: {
+                    id: '',
+                    status: '',
+                    cuidador: {
+                        user: {
+                            profileImageUrl: '',
+                            username: '',
+                        }
+                    },
+                    fechaTransaccion: '',
+                },
+            }],
+            offset: 0,
+            navButtons: [],
+            perPage: 2,
+            DataReview: [],
+            puntajeUsuario: 0,
+
+        }
+    },
     mounted() {
         this.id = this.getParameterByName('id');
         this.getReserva();
@@ -468,14 +457,21 @@ Vue.component('my-detalle-reserva', {
                             text: "Has confirmado la solicitud de reserva, cuando el dueño pague te confirmaremos la reserva.",
                             type: "success",
                         },
-                    function () {
-                        document.location.href = "/views/dashboard/dashboard.html";
-                    })
-
+                        function () {
+                            document.location.href = "/views/dashboard/dashboard.html";
+                        })
+                })
                 .catch(error => {
                         console.log(error);
                         sweetAlert("Oops...", "Error, ver consola", "error");
-
+                    sweetAlert({
+                            title: "Error",
+                            text: "Error, ver consola",
+                            type: "success",
+                        },
+                        function () {
+                            document.location.href = "/views/dashboard/dashboard.html";
+                        })
                     }
                 );
         },
@@ -559,19 +555,18 @@ Vue.component('my-detalle-reserva', {
                 .then((response) => {
                     this.DataReview = response.data;
                     var cont = 0;
-                    this.DataReview .forEach( function(item, value, array) {
+                    this.DataReview.forEach(function (item, value, array) {
 
 
                         cont += item.puntaje;
 
                     });
-                    if(this.DataReview.length > 0)
-                    {
-                        this.puntaje =Math.trunc(cont /this.DataReview.length);
+                    if (this.DataReview.length > 0) {
+                        this.puntaje = Math.trunc(cont / this.DataReview.length);
 
                         var h = document.getElementsByClassName("star empty");
-                        for (i = 0; i < (this.puntaje-1); i++) {
-                            h[0].className  = 'star' ;
+                        for (i = 0; i < (this.puntaje - 1); i++) {
+                            h[0].className = 'star';
 
                         }
 
@@ -592,7 +587,7 @@ Vue.component('my-detalle-reserva', {
 
         },
         previous() {
-            this.offset =  this.offset - this.perPage;
+            this.offset = this.offset - this.perPage;
         },
         next () {
             this.offset = this.offset + this.perPage;
@@ -602,6 +597,7 @@ Vue.component('my-detalle-reserva', {
         offset: function () {
             this.paginate();
         },
-    },
+    }
+
 
 });
