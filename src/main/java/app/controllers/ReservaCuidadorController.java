@@ -108,7 +108,7 @@ public class ReservaCuidadorController {
         return cant;
 
     }
-
+/*
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
 
     @RequestMapping(value = "/estadisticas/", method = RequestMethod.GET)
@@ -203,6 +203,6 @@ public class ReservaCuidadorController {
          reservaDate.setTime(item);
           return reservaDate;
 
-     }
+     }*/
 
 }

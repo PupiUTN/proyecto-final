@@ -172,7 +172,9 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
     },
     methods: {
         getCuidadorEstadistica() {
-            axios.get('/api/cuidador/me/reservas/estadisticas/')
+
+           ///api/cuidador/me/reservas/estadisticas/
+            axios.get('/api/estadisticas/cuidadores/')
                 .then((response) => {
                     this.estadisticas = response.data;
                     this.estadisticas.cantidadTotal = response.data.cantidadTotal.toString();
@@ -192,8 +194,8 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                 });
         },
         getUserEstadistica() {
-
-            axios.get('/api/user/me/reservas/estadisticas/')
+                    //'/api/user/me/reservas/estadisticas/'
+            axios.get('/api/estadisticas/usuarios/')
                 .then((response) => {
                     this.list = response.data;
                     for (i = 0; i < this.list.length; i++) {

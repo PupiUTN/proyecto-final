@@ -92,6 +92,7 @@ public class ReservaUserController {
 
     }
 
+/*
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/estadisticas/", method = RequestMethod.GET)
@@ -268,5 +269,6 @@ public class ReservaUserController {
 
         return cont;
     }
+*/
 
 }

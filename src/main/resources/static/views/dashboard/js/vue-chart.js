@@ -56,9 +56,27 @@ data: function () {
                         label: 'Cantidad de reservas',
                         backgroundColor: '#bb0007',
                         data: this.cantidad,
+
                     }
                 ]
-            }, {responsive: true, maintainAspectRatio: false})
+
+            }, {responsive: true, maintainAspectRatio: false,
+                options: {
+                    scales: {
+                        yAxes: [{
+                            gridLines: {
+                                display: true
+                            },
+                            ticks: {
+                                max: 5,
+                                min: 0,
+                                stepSize: 0.5
+                            }
+                        }]
+                    }
+                }
+
+            })
 
         }
 
