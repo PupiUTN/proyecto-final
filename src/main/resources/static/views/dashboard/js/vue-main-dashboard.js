@@ -2,6 +2,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
     template: `
 <div>
 
+  <div v-show="role !== 'ROLE_ADMIN'">
 
         <!-- Titlebar -->
 		<div id="titlebar">
@@ -116,7 +117,12 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
            </div>
 
 
-     
+       </div>
+       <div v-show =" role === 'ROLE_ADMIN'">
+         <admin-dashboard>            
+                </admin-dashboard>
+      
+</div>
 
 </div>
 `,   props: ['role'],

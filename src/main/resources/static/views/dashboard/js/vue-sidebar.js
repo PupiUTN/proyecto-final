@@ -44,6 +44,8 @@ let mySidebar = Vue.component('my-sidebar', {
                 
                 <ul v-show="role === 'ROLE_ADMIN'" data-submenu-title="Admin" >
                     <li><a href="/views/admin/moderar-cuidador.html"><i class="sl sl-icon-user"></i> Moderar Solicitud</a></li>
+                     <li><a href="#"><i class="sl sl-icon-pie-chart"></i> Estadisticas</a></li>
+                     <li><a href="#"><i class="sl sl-icon-map"></i> Mapa</a></li>
                 </ul>
 
             </div>
