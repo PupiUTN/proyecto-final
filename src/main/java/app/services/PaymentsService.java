@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class PaymentsService {
@@ -73,7 +74,8 @@ public class PaymentsService {
                 .toString());
 
         //Acá seteamos el token del vendedor
-        MercadoPago.SDK.setUserToken(user.getMpToken());
+        Optional<String> mpToken = Optional.ofNullable(user.getMpToken());
+        mpToken.ifPresent(MercadoPago.SDK::setUserToken);
 
         preference.setMarketplaceFee(20f);
         try {
@@ -112,7 +114,7 @@ public class PaymentsService {
         return (float) payments.stream()
                 .filter(pay -> "approved".equalsIgnoreCase(pay.getStatus()))
                 .peek(pay -> createPayment(booking, Long.valueOf(id), pay.getStatus()))
-                .mapToDouble(pay -> pay.getTransactionAmount())
+                .mapToDouble(MerchantOrderPayment::getTransactionAmount)
                 .sum();
     }
 

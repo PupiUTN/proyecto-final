@@ -1,5 +1,6 @@
 package app.utils;
 
+import app.models.entities.Direccion;
 import app.models.entities.User;
 import com.mercadopago.resources.datastructures.preference.*;
 import org.springframework.http.HttpHeaders;
@@ -7,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
 
 import java.util.Collections;
+import java.util.Optional;
 
 public class PaymentsUtils {
 
@@ -36,23 +38,24 @@ public class PaymentsUtils {
             payer.setSurname(nombreCompleto[1]);
         }
 
-        if (user.getEmail() != null) {
-            payer.setEmail(user.getEmail());
-        }
 
-        if (user.getPhone() != null) {
-            payer.setPhone(new Phone().setAreaCode("")
-                    .setNumber(user.getPhone()));
-        }
-        if (user.getDireccion() != null) {
-            payer.setAddress(new Address()
-                    .setStreetName(user.getDireccion()
-                            .getCalle())
-                    .setStreetNumber(user.getDireccion()
-                            .getNumero())
-                    .setZipCode(user.getDireccion()
-                            .getCodigoPostal()));
-        }
+        Optional<String> email = Optional.ofNullable(user.getEmail());
+
+        email.ifPresent(payer::setEmail);
+
+        Optional<String> phone = Optional.ofNullable(user.getPhone());
+
+        phone.ifPresent(s -> payer.setPhone(new Phone().setAreaCode("")
+                .setNumber(s)));
+
+        Optional<Direccion> direccion = Optional.ofNullable(user.getDireccion());
+
+        direccion.ifPresent(dir -> payer.setAddress(new Address()
+                .setStreetName(dir.getCalle())
+                .setStreetNumber(dir.getNumero())
+                .setZipCode(dir
+                        .getCodigoPostal())));
+
         return payer;
     }
 
