@@ -44,4 +44,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     @Query("select count (r) from Reserva r where r.cuidador.user.id = :#{#userId}")
     int getCantidadReservas(@Param("userId")long userId);
 
+    @Query("select r from Reserva r")
+    List<Reserva> getCantidadReservasTotal();
+
 }

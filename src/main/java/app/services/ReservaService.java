@@ -124,4 +124,11 @@ public class ReservaService {
         return reservaRepository.findAllByCuidador(id);
     }
 
+
+
+
+    public List<Reserva> getCantidadReservasTotal() {
+        return reservaRepository.getCantidadReservasTotal();
+    }
+
 }

@@ -2,9 +2,6 @@ Vue.component('admin-dashboard', {
     template:
         `
 <div>
-   
-  
-    
    	<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
@@ -27,7 +24,7 @@ Vue.component('admin-dashboard', {
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-1">
-					<div class="dashboard-stat-content" style="font-size: 40px;">0<br><span>Reservas</span></div>
+					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalReservas}} <br><span>Reservas</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Cursor-Click2"></i></div>
 				</div>
 			</div>
@@ -36,13 +33,13 @@ Vue.component('admin-dashboard', {
 		
 			<div  class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-2">
-					<div class="dashboard-stat-content" style="font-size: 40px;">0 <br><span>Visitas</span></div>
+					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalDenuncias}}  <br><span>Denuncias</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Line-Chart"></i></div>
 				</div>
 			</div>
 	<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-4">
-					<div class="dashboard-stat-content"><h4>0</h4> <span>Favoritos</span></div>
+					<div class="dashboard-stat-content"><h4>{{estadisticas.totalSolicitudes}} </h4> <span>Solicitudes</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Heart"></i></div>
 				</div>
 			</div>
@@ -53,7 +50,7 @@ Vue.component('admin-dashboard', {
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-3">
-					<div class="dashboard-stat-content" style="font-size: 40px;">0<br> <span>Puntaje</span></div>
+					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalCalificaciones}} <br> <span> calificaciones</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Add-UserStar"></i></div>
 				</div>
 			</div>
@@ -77,9 +74,9 @@ Vue.component('admin-dashboard', {
 				<div class="plan">
 
 					<div class="plan-price">
-						<h3>Denuncias</h3>
-						<span class="value">Free</span>
-						<span class="period">Free of charge one standard listing active for 90 days</span>
+						<h3>Perros</h3>
+						<span class="value">{{estadisticas.totalPerros}}</span>
+						<span class="period"></span>
 					</div>
 
 
@@ -88,9 +85,9 @@ Vue.component('admin-dashboard', {
 					<div class="plan">
 
 					<div class="plan-price">
-						<h3>Solicitudes</h3>
-						<span class="value">Free</span>
-						<span class="period">Free of charge one standard listing active for 90 days</span>
+						<h3>Cuidadores</h3>
+						<span class="value">{{estadisticas.totalCuidadores}}</span>
+						<span class="period"></span>
 					</div>
 
 
@@ -104,8 +101,8 @@ Vue.component('admin-dashboard', {
 
 					<div class="plan-price">
 						<h3>Dinero Actual</h3>
-						<span class="value">$59</span>
-						<span class="period">Monthly subscription for unlimited listings and lifetime availability</span>
+						<span class="value">{{estadisticas.totalDineroActual}}</span>
+						<span class="period"></span>
 					</div>
 
 			
@@ -121,18 +118,45 @@ Vue.component('admin-dashboard', {
 		
 		<div class="col-md-12">
 
-			<h4 class="headline margin-top-70 margin-bottom-30">TABLA</h4>
+			<h4 class="headline margin-top-70 margin-bottom-30">RESERVAS</h4>
+			
+			     <div class="row">
+               <div class="col-lg-3 col-md-6">
+                        <input type="text" class="form-control"  placeholder="Cuidador">
+                </div>
+                <!-- Item -->
+                <div class="col-lg-3 col-md-6">
+                        <select>
+                            <option value="volvo" selected>Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="mercedes">Mercedes</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <input type="date" class="form-control"  placeholder="fecha inicio">
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <input type="date" class="form-control"  placeholder="fecha fin">
+                </div>
+                
+        </div>
 			<table class="basic-table">
 
 				<tr>
-					<th>Column 1</th>
-					<th>Column 2</th>
-					<th>Column 3</th>
-					<th>Column 4</th>
+					<th>Cuidador</th>
+					<th>Perro</th>
+					<th>Fecha inicio</th>
+					<th>Fecha fin</th>
+					<th>Precio</th>
 				</tr>
 
 				<tr>
 					<td>Item</td>
+					<td>Description</td>
+					<td>Description</td>
+					<td>Description</td>
 					<td>Description</td>
 				</tr>
 
@@ -151,8 +175,34 @@ Vue.component('admin-dashboard', {
 					<td>Description</td>
 				</tr>
 			</table>
-		</div>
+			
+					<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12">
+					<!-- Pagination -->
+					<div class="pagination-container margin-top-20 margin-bottom-40">
+						<nav class="pagination">
+							<ul>
+								<li><a href="#" class="current-page">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+			<!-- Pagination / End -->
 
+		</div>
+	</div>
+
+
+
+
+
+	
+	
 		
    
    
@@ -160,15 +210,43 @@ Vue.component('admin-dashboard', {
     `,
     data: function () {
         return {
+            estadisticas:{
+                 totalReservas: 0,
+         totalDenuncias: 0,
+         totalSolicitudes: 0,
+         totalCalificaciones: 0,
+         totalPerros: 0,
+         totalCuidadores: 0,
+                totalDineroActual: 0
 
+            }
         }
-
     }
     ,
     mounted() {
 
+        this.getAdminEstadisticas();
     },
     methods: {
+        getAdminEstadisticas() {
+
+            axios.get('/api/admin/estadisticas/me/')
+                .then((response) => {
+                    this.estadisticas = response.data;
+                    this.estadisticas.totalReservas = response.data.totalReservas.toString();
+                    this.estadisticas.totalDenuncias = response.data.totalDenuncias.toString();
+                    this.estadisticas.totalSolicitudes = response.data.totalSolicitudes.toString();
+                    this.estadisticas.totalCalificaciones = response.data.totalCalificaciones.toString();
+                    this.estadisticas.totalPerros = response.data.totalPerros;
+                    this.estadisticas.totalCuidadores = response.data.totalCuidadores;
+                    this.estadisticas.totalDineroActual = response.data.totalDineroActual;
+
+                })
+                .catch(error => {
+                    console.log(error);
+                    sweetAlert("Oops...", "Error, ver consola", "error");
+                });
+        },
 
     }
 });
