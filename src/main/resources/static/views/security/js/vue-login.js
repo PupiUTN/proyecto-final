@@ -20,7 +20,8 @@ function getDefaultData() {
         },
         isMounted: false,
         loginError: false,
-        loginLoading: false
+        loginLoading: false,
+        emailAlreadyExists: false
     }
 };
 
@@ -140,6 +141,9 @@ let myLogin = Vue.component('my-login', {
                                        id="email2" value="" required/>
                             </label>
                         </p>
+                        <div class="notification warning" v-show="emailAlreadyExists">
+                            <p>Este email ya se encuentra registrado.</p>
+                        </div>
 
                         <p class="form-row form-row-wide">
                             <label for="password1">Contraseña:
@@ -160,7 +164,7 @@ let myLogin = Vue.component('my-login', {
                         </p>
 
                         <div class="notification warning" v-show="matchingPassword">
-                            <p><span>Warning!</span> La contraseña no coincide.</p>
+                            <p><span>Cuidado!</span> La contraseña no coincide.</p>
                         </div>
                         <input type="submit" class="button border fw margin-top-10"
                                name="register"
@@ -187,8 +191,6 @@ let myLogin = Vue.component('my-login', {
     },
     methods: {
         getUserProfile() {
-
-
             axios.get(this.meUrl)
                 .then((response) => {
                     console.log(response.data);
@@ -241,6 +243,7 @@ let myLogin = Vue.component('my-login', {
                 );
         },
         register() {
+            this.emailAlreadyExists = false;
             axios.post(this.registrationUrl, this.user)
                 .then((response) => {
                     this.credentials.username = this.user.email;
@@ -256,6 +259,9 @@ let myLogin = Vue.component('my-login', {
                     this.resetVueJsData();
                 })
                 .catch(error => {
+                    if(error.response.status === 409){
+                        this.emailAlreadyExists = true;
+                    }
                         console.log(error);
                     }
                 );
