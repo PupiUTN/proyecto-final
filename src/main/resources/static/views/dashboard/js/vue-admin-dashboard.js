@@ -25,7 +25,7 @@ Vue.component('admin-dashboard', {
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-1">
 					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalReservas}} <br><span>Reservas</span></div>
-					<div class="dashboard-stat-icon"><i class="im im-icon-Cursor-Click2"></i></div>
+					<div class="dashboard-stat-icon"><i class="im im-icon-Check"></i></div>
 				</div>
 			</div>
            
@@ -34,13 +34,13 @@ Vue.component('admin-dashboard', {
 			<div  class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-2">
 					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalDenuncias}}  <br><span>Denuncias</span></div>
-					<div class="dashboard-stat-icon"><i class="im im-icon-Line-Chart"></i></div>
+					<div class="dashboard-stat-icon"><i class="im im-icon-Close-Window"></i></div>
 				</div>
 			</div>
 	<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-4">
 					<div class="dashboard-stat-content"><h4>{{estadisticas.totalSolicitudes}} </h4> <span>Solicitudes</span></div>
-					<div class="dashboard-stat-icon"><i class="im im-icon-Heart"></i></div>
+					<div class="dashboard-stat-icon"><i class="im im-icon-Warning-Window"></i></div>
 				</div>
 			</div>
 
@@ -101,7 +101,7 @@ Vue.component('admin-dashboard', {
 
 					<div class="plan-price">
 						<h3>Dinero Actual</h3>
-						<span class="value">{{estadisticas.totalDineroActual}}</span>
+						<span class="value">&#36 {{estadisticas.totalDineroActual}}</span>
 						<span class="period"></span>
 					</div>
 
@@ -113,98 +113,42 @@ Vue.component('admin-dashboard', {
 	</div>
 	<!-- Row / End -->
 
+    <div class="row">
+        <div class="col-md-12">
+    <h4 class="headline margin-top-70 margin-bottom-30">RESERVAS</h4>
+    <form id="search">
 
-<div class="row">
-		
-		<div class="col-md-12">
-
-			<h4 class="headline margin-top-70 margin-bottom-30">RESERVAS</h4>
-			
-			     <div class="row">
-               <div class="col-lg-3 col-md-6">
-                        <input type="text" class="form-control"  placeholder="Cuidador">
-                </div>
-                <!-- Item -->
-                <div class="col-lg-3 col-md-6">
-                        <select>
-                            <option value="volvo" selected>Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="mercedes">Mercedes</option>
-                            <option value="audi">Audi</option>
-                        </select>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <input type="date" class="form-control"  placeholder="fecha inicio">
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <input type="date" class="form-control"  placeholder="fecha fin">
-                </div>
-                
+            <div class="col-lg-2 col-md-6 margin-top-10 row opening-day js-demo-hours" style="width: 115px;">
+                <label style=" margin-top: 3px;"> Buscar por: </label>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <input type="text" class="form-control"  placeholder="Palabra Clave" name="query" v-model="searchQuery">
+            </div>
+            <div class="col-lg-1 col-md-6 margin-top-10 row opening-day js-demo-hours">
+                <label style=" margin-top: 3px;"> Estado: </label>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <select v-model="selected">
+                    <option value="1">Creadas</option>
+                    <option value="2">Aceptadas</option>
+                    <option value="3" selected>Pagadas</option>
+                    <option value="4">Rechazadas</option>
+                    <option value="5" >Finalizadas</option>
+                    <option value="6">Cerradas</option>
+                    <option value="7">Comentarios cuidador</option>
+                    <option value="8">Comentarios dueño</option>
+                </select>
+            </div>
+    </form>
         </div>
-			<table class="basic-table">
+        </div>
 
-				<tr>
-					<th>Cuidador</th>
-					<th>Perro</th>
-					<th>Fecha inicio</th>
-					<th>Fecha fin</th>
-					<th>Precio</th>
-				</tr>
+    <my-table
+            :data="gridData"
+            :columns="gridColumns"
+            :filter-key="searchQuery">
+    </my-table>
 
-				<tr>
-					<td>Item</td>
-					<td>Description</td>
-					<td>Description</td>
-					<td>Description</td>
-					<td>Description</td>
-				</tr>
-
-				<tr>
-					<td>Item</td>
-					<td>Description</td>
-				</tr>
-
-				<tr>
-					<td>Item</td>
-					<td>Description</td>
-				</tr>
-
-				<tr>
-					<td>Item</td>
-					<td>Description</td>
-				</tr>
-			</table>
-			
-					<div class="clearfix"></div>
-			<div class="row">
-				<div class="col-md-12">
-					<!-- Pagination -->
-					<div class="pagination-container margin-top-20 margin-bottom-40">
-						<nav class="pagination">
-							<ul>
-								<li><a href="#" class="current-page">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
-							</ul>
-						</nav>
-					</div>
-				</div>
-			</div>
-			<!-- Pagination / End -->
-
-		</div>
-	</div>
-
-
-
-
-
-	
-	
-		
-   
    
 </div>
     `,
@@ -217,12 +161,45 @@ Vue.component('admin-dashboard', {
          totalCalificaciones: 0,
          totalPerros: 0,
          totalCuidadores: 0,
-                totalDineroActual: 0
+         totalDineroActual: 0,
+                reservas: [
+                    {
+                        id: null,
+                        cuidador: {
+                            user: {
+                                fullName: '',
+                            },
+                        },
+                        perro: {
+                            nombre: '',
+                        },
+                        fechaInicio: "",
+                        fechaFin: "",
+                        precioTotal: 1,
+                    }
+                ],
 
-            }
+            },
+            searchQuery: '',
+            gridColumns: ['Cuidador','Perro','Inicio','Fin','Total'],
+            gridData: [],
+            selected:3,
+            offset: 0,
+            gridReservas: [],
+            perPage: 2,
+
         }
-    }
-    ,
+    },
+    watch: {
+        selected: function(newVal, oldVal) { // watch it
+
+             this.getReservasByStatus(newVal)
+        },
+        offset: function () {
+            this.paginate();
+        }
+
+    },
     mounted() {
 
         this.getAdminEstadisticas();
@@ -230,7 +207,7 @@ Vue.component('admin-dashboard', {
     methods: {
         getAdminEstadisticas() {
 
-            axios.get('/api/admin/estadisticas/me/')
+            axios.get('/api/admin/estadisticas/me/' )
                 .then((response) => {
                     this.estadisticas = response.data;
                     this.estadisticas.totalReservas = response.data.totalReservas.toString();
@@ -240,6 +217,16 @@ Vue.component('admin-dashboard', {
                     this.estadisticas.totalPerros = response.data.totalPerros;
                     this.estadisticas.totalCuidadores = response.data.totalCuidadores;
                     this.estadisticas.totalDineroActual = response.data.totalDineroActual;
+                    this.estadisticas.reservas = response.data.reservas;
+                         var aux = [];
+                    this.estadisticas.reservas.forEach(function(element) {
+                        var fechaInicio = element.fechaInicio;
+                        var fechaFin =  element.fechaFin;
+                        var elem = {Cuidador: element.cuidador.user.fullName, Perro: element.perro.nombre, Inicio: fechaInicio,Fin:fechaFin ,Total: "$ " +  element.precioTotal};
+                        aux.push(elem)
+                    });
+                    this.gridData = aux;
+
 
                 })
                 .catch(error => {
@@ -247,6 +234,33 @@ Vue.component('admin-dashboard', {
                     sweetAlert("Oops...", "Error, ver consola", "error");
                 });
         },
+        getReservasByStatus (value){
+
+            axios.get('/api/admin/estadisticas/getReservas?status=' + value)
+                .then((response) => {
+                    this.estadisticas.reservas = response.data;
+                    var aux = [];
+                    this.estadisticas.reservas.forEach(function(element) {
+                         var fechaInicio = element.fechaInicio;
+                         var fechaFin = element.fechaFin;
+                        var elem = {Cuidador: element.cuidador.user.fullName, Perro: element.perro.nombre, Inicio: fechaInicio,Fin:fechaFin ,Total: "$ " + element.precioTotal};
+                        aux.push(elem);
+                    });
+                    this.gridData = aux;
+
+                })
+                .catch(error => {
+                    console.log(error);
+                    sweetAlert("Oops...", "Error, ver consola", "error");
+                });
+
+        },
+        convertDate(dateString){
+            var p = dateString.split(/\D/g);
+            return [p[2],p[1],p[0] ].join("/");
+        }
+
+
 
     }
 });

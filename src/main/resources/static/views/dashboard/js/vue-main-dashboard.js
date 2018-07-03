@@ -2,7 +2,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
     template: `
 <div>
 
-  <div v-show="role !== 'ROLE_ADMIN'">
+  <div  v-show="role !== 'ROLE_ADMIN'">
 
         <!-- Titlebar -->
 		<div id="titlebar">
@@ -83,8 +83,9 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 		</div>
 		
 		<br>
+		      <div class="row">  
 			<div class="zoom">
-		<div class="col-lg-12 col-md-12">
+		<div class="col-lg-10 col-md-10">
 		
 				<div class="dashboard-list-box invoices with-icons">
 				<h4 style="background-color:gainsboro;"> <i class="im im-icon-Line-Chart"></i> Mis ultimos  meses</h4>
@@ -94,19 +95,14 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                 </div>
          </div>
          </div>
+        </div>
 
         <br>
          <br>
-         <div class="row">
-        <label class="col-lg-12"> </label>
-        <br>
-         <label class="col-lg-12"> </label>   
-        <br>
-        <label class="col-lg-12"> </label>
-        </div>
-         
+      
+        <div class ="row">
          <div class="zoom">
-         <div class="col-lg-12 col-md-12">
+         <div class="col-lg-10 col-md-10">
 				<div class="dashboard-list-box invoices with-icons">
 				<h4 style="background-color: gainsboro;"><i class="im im-icon-Line-Chart"></i> Estados de mis Reservas</h4>
                <chart-pie :totalPorTipo="estadisticas.totalPorTipo">
@@ -115,7 +111,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                 </div>
          </div>
            </div>
-
+</div>
 
        </div>
        <div v-show =" role === 'ROLE_ADMIN'">

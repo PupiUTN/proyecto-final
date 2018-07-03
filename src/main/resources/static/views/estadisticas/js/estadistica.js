@@ -158,7 +158,7 @@ Vue.component('my-estadistica', {
     methods: {
         getUserEstadistica() {
 
-            axios.get('/api/user/me/reservas/estadisticas/')
+            axios.get('/api/estadisticas/usuarios/')
                 .then((response) => {
                     this.list = response.data;
                     if (this.length > 0) {

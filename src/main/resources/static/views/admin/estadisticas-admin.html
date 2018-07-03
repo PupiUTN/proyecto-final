@@ -16,9 +16,17 @@
 
     <!-- MY CSS
     ================================================== -->
-    <link rel="stylesheet" href="/views/index/css/index.css">
+
 
     <link href="/css/page-loader.css" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="../../ammap/ammap.css" type="text/css">
+    <script src="../../ammap/ammap.js" type="text/javascript"></script>
+    <!-- check ammap/maps/js/ folder to see all available countries -->
+    <!-- map file should be included after ammap.js -->
+    <script src="../../ammap/maps/js/argentinaLow.js" type="text/javascript"></script>
+
+    <script src="../../ammap/plugins/dataloader/dataloader.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
@@ -75,8 +83,6 @@
 <script type="text/javascript" src="/views/dashboard/js/vue-dashboard-template.js"></script>
 <script src="js/vue-chart-admin1.js"></script>
 <script src="js/vue-chart-admin2.js"></script>
-<script src="js/vue-chart-admin3.js"></script>
-<script src="js/vue-chart-admin4.js"></script>
 
 <!--own-->
 <script src="../admin/js/vue-estadisticas-admin.js"></script>
@@ -91,15 +97,43 @@
 </script>
 <style>
     .zoom {
-        transition: transform .2s; /* Animation */
-        margin: 0 auto;
+
     }
 
     .zoom:hover {
-        transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+
     }
 </style>
 
+<script>
+/*
+    var map;
+
+    AmCharts.ready(function() {
+        map = new AmCharts.AmMap();
+
+
+        map.balloon.color = "#000000";
+
+        var dataProvider = {
+            mapVar: AmCharts.maps.argentinaLow,
+            getAreasFromMap:true
+        };
+
+        map.dataProvider = dataProvider;
+
+        map.areasSettings = {
+            autoZoom: true,
+            selectedColor: "#CC0000"
+        };
+
+        map.smallMap = new AmCharts.SmallMap();
+
+        map.write("mapdiv");
+
+    });*/
+
+</script>
 
 </body>
 </html>

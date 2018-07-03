@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * Created by gabriellorenzatti on 20/6/18.
  */
@@ -20,5 +22,11 @@ public class EstadisticaAdmin {
     long totalPerros;
     long totalCuidadores;
     String TotalDineroActual;
+    List<Reserva> reservas;
+    int[] cantidadPorMes;
+    int[] totalPorTipo;
+    String[] totalPorProvincia;
+
+
 
 }

@@ -1,5 +1,6 @@
 package app.services;
 
+import app.models.entities.EstadoReserva;
 import app.models.entities.Reserva;
 import app.persistence.ReservaRepository;
 import app.utils.MailType;
@@ -130,5 +131,14 @@ public class ReservaService {
     public List<Reserva> getCantidadReservasTotal() {
         return reservaRepository.getCantidadReservasTotal();
     }
+
+
+    public List<Reserva>  getReservasByStatus (EstadoReserva estadoReserva) {
+          if (estadoReserva.getStatus().equals("rechazada-cuidador"))
+          {
+              return reservaRepository.getCantidadByStatus(estadoReserva.getStatus(), "rechazada-dueño");
+          }
+
+        return reservaRepository.getCantidadByStatus(estadoReserva.getStatus(),"");}
 
 }

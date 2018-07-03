@@ -27,12 +27,12 @@ Vue.component('chart-admin1', {
         },
         render(){
             this.renderChart({
-                labels: ['January', 'February'],
+                labels: ['Creadas', 'Aceptadas', 'Pagadas', 'Rechazadas','Ejecucion', 'Finalizadas','Cerradas'],
                 datasets: [
                     {
-                        label: 'Cantidad de reservas',
+                        label: 'Estados de las reservas',
                         backgroundColor: '#bb0007',
-                        data: [40, 20],
+                        data: this.cantidad,
 
                     }
                 ]
