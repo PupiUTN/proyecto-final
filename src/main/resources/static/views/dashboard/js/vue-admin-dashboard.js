@@ -152,6 +152,7 @@ Vue.component('admin-dashboard', {
    
 </div>
     `,
+    props: ['rol'],
     data: function () {
         return {
             estadisticas:{
@@ -197,12 +198,19 @@ Vue.component('admin-dashboard', {
         },
         offset: function () {
             this.paginate();
+        },
+        rol: function(newVal, oldVal) { // watch it
+            if (this.rol == "ROLE_ADMIN")
+            {  this.getAdminEstadisticas();
+
+            }
+
         }
 
     },
     mounted() {
 
-        this.getAdminEstadisticas();
+
     },
     methods: {
         getAdminEstadisticas() {

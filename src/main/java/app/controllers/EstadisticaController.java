@@ -47,6 +47,8 @@ public class EstadisticaController {
         Estadistica estadistica = new Estadistica();
         List<Reserva> list = reservaService.findAllByCuidador(id);
 
+
+
         for (Reserva item : list) {
 
             switch (item.getStatus()) {
@@ -75,7 +77,16 @@ public class EstadisticaController {
 
             }
         }
-        Cuidador cuidador = list.get(0).getCuidador();
+        Cuidador cuidador;
+         if(list.size() > 0)
+         {
+              cuidador = list.get(0).getCuidador();
+         }
+         else
+         {
+              cuidador = cuidadorService.cuidadorXUser(id);
+         }
+
         estadistica.setTotalPorTipo(cantidadXtipo);
         estadistica.setCantidadTotal(list.size());
         estadistica.setPromedio(cuidador.getPromedioReviews());

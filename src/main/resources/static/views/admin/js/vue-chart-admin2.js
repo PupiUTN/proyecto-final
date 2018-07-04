@@ -1,6 +1,14 @@
 
 Vue.component('chart-admin2', {
-    extends: VueChartJs.Line,
+    template:
+        `
+<div>
+      <div class="chart-container">
+                  <canvas id="myChartLine" height="484" ></canvas>
+                     
+      </div> 
+</div>
+    `,
     props: ['cantidad'],
     data: function () {
         return {
@@ -15,7 +23,7 @@ Vue.component('chart-admin2', {
     },
     mounted () {
 
-        this.getFechas();
+       // this.getFechas();
 
 
     },
@@ -46,34 +54,54 @@ Vue.component('chart-admin2', {
             this.render();
         },
         render(){
-            this.renderChart({
-                labels:this.meses,
-                datasets: [
-                    {
-                        label: 'Cantidad de reservas',
-                        backgroundColor: '#bb0007',
-                        data: this.cantidad,
+            var data = {
+                labels: this.meses,
+                datasets: [{
+                    label: "reservas",
+                    backgroundColor: '#bb0007',
+                    borderColor: '#bb0007',
+                    borderWidth: 2,
+                    hoverBackgroundColor: '#bb0007',
+                    hoverBorderColor: '#bb0007',
+                    data: this.cantidad,
+                }]
+            };
 
-                    }
-                ]
 
-            }, {responsive: true, maintainAspectRatio: false,
-                options: {
-                    scales: {
-                        yAxes: [{
-                            gridLines: {
-                                display: true
-                            },
-                            ticks: {
-                                max: 5,
-                                min: 0,
-                                stepSize: 0.5
-                            }
-                        }]
-                    }
+            var options = {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        stacked: true,
+                        ticks: {
+                            stepSize: 1,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            display: false,
+                            color: '#bb0007'
+                        }
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        }
+                    }]
                 }
+            };
 
-            })
+            /*   Chart.Line('chart', {
+             options: options,
+             data: data
+             });*/
+
+            var ctx = document.getElementById("myChartLine");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                options: options,
+                data: data
+            });
+
 
         }
 

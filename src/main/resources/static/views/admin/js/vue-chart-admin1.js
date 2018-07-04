@@ -1,7 +1,15 @@
 
 
 Vue.component('chart-admin1', {
-    extends: VueChartJs.Bar,
+    template:
+        `
+<div>
+      <div class="chart-container">
+                  <canvas id="myChartBar" height="484" ></canvas>
+                     
+      </div> 
+</div>
+    `,
     props: ['cantidad'],
     data: function () {
         return {
@@ -26,34 +34,40 @@ Vue.component('chart-admin1', {
             this.render();
         },
         render(){
-            this.renderChart({
-                labels: ['Creadas', 'Aceptadas', 'Pagadas', 'Rechazadas','Ejecucion', 'Finalizadas','Cerradas'],
-                datasets: [
-                    {
-                        label: 'Estados de las reservas',
-                        backgroundColor: '#bb0007',
+
+
+            var options = {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        stacked: true,
+                        gridLines: {
+                            display: false,
+                        }
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                }
+            };
+
+            var ctx = document.getElementById("myChartBar");
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                options: options,
+                data: {
+                    labels: ['Creadas', 'Aceptadas', 'Pagadas', 'Rechazadas','Ejecucion', 'Finalizadas','Cerradas'],
+                    datasets: [{
+                        label:  "reservas",
                         data: this.cantidad,
-
-                    }
-                ]
-
-            }, {responsive: true, maintainAspectRatio: false,
-                options: {
-                    scales: {
-                        yAxes: [{
-                            gridLines: {
-                                display: true
-                            },
-                            ticks: {
-                                max: 5,
-                                min: 0,
-                                stepSize: 0.5
-                            }
-                        }]
-                    }
+                        backgroundColor: '#bb0007',
+                        borderWidth: 1
+                    }]
                 }
 
-            })
+            });
 
         }
 

@@ -57,9 +57,9 @@ Vue.component('estadisticas-admin', {
                <i class="im im-icon-Map2"></i> MAPA DE RESERVAS</h4>
 	        <br>
 	        
-            <div  class="col-md-12"">
+            <div class="col-md-12"">
                
-           <div  style=" width: 500px; height: 500px;" id="chartdiv" ></div>
+           <div   id="chartdiv" ></div>
   
             </div>
    
