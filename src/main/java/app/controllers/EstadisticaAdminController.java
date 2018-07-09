@@ -127,9 +127,9 @@ public class EstadisticaAdminController {
         EstadisticaAdmin  estadisticaAdmin = new EstadisticaAdmin();
         List<Reserva> reservas = reservaService.getCantidadReservasTotal();
 
-             EstadisticaAdmin aux = getReservasxProvincia(reservas);
-            estadisticaAdmin.setTotalPorProvincia(aux.getTotalPorProvincia());
-             estadisticaAdmin.setTotalCuidadoresPorProvincia(aux.getTotalCuidadoresPorProvincia());
+           //  EstadisticaAdmin aux = getReservasxProvincia(reservas);
+            estadisticaAdmin.setTotalPorProvincia(getReservasxProvincia(reservas));
+             estadisticaAdmin.setTotalCuidadoresPorProvincia(getTotalCuidadoresPorProvincia());
             estadisticaAdmin.setTotalPorTipo(getTotalReservasxTipo(reservas));
             estadisticaAdmin.setCantidadPorMes(getTotalReservasxMes(reservas));
 
@@ -138,9 +138,8 @@ public class EstadisticaAdminController {
     }
 
 
-
-    public EstadisticaAdmin getReservasxProvincia( List<Reserva> reservas){
-        EstadisticaAdmin  aux = new EstadisticaAdmin();
+    public int[] getReservasxProvincia( List<Reserva> reservas){
+     //   EstadisticaAdmin  aux = new EstadisticaAdmin();
          int [] cuidadores = new int[24];
          int [] arrayReservas = new int[24];
          List<Long> id = new ArrayList<>();
@@ -324,12 +323,99 @@ public class EstadisticaAdminController {
              array[i] = " Cuidadores: " + cuidadores[i] + " - " + "Reservas: " + arrayReservas[i];
          }*/
 
-        aux.setTotalPorProvincia(arrayReservas);
-        aux.setTotalCuidadoresPorProvincia(cuidadores);
-        return aux;
+      //  aux.setTotalPorProvincia(arrayReservas);
+       // aux.setTotalCuidadoresPorProvincia(cuidadores);
+        return arrayReservas;
 
      }
 
+    private int[] getTotalCuidadoresPorProvincia() {
+    List<Cuidador> listacuidadores = cuidadorService.getCuidadores();
+        int [] cuidadores = new int[24];
+        List<Long> id = new ArrayList<>();
+
+        for (Cuidador item : listacuidadores ) {
+                if(item.getEstado().equals("completed")) {
+                    switch (item.getUser().getDireccion().getProvincia()) {
+                        case "Buenos Aires":
+                            cuidadores[0]++;
+                            break;
+                        case "Catamarca":
+                            cuidadores[1]++;
+                        case "Chaco":
+                            cuidadores[2]++;
+                            break;
+                        case "Chubut":
+                            cuidadores[3]++;
+                            break;
+                        case "Ciudad de Buenos Aires":
+                            cuidadores[4]++;
+                            break;
+                        case "Córdoba":
+                            cuidadores[5]++;
+                            break;
+                        case "Corrientes":
+                            cuidadores[6]++;
+                            break;
+                        case "Entre Ríos":
+                            cuidadores[7]++;
+                            break;
+                        case "Formosa":
+                            cuidadores[8]++;
+                            break;
+                        case "Jujuy":
+                            cuidadores[9]++;
+                            break;
+                        case "La Pampa":
+                            cuidadores[10]++;
+                            break;
+                        case "La Rioja":
+                            cuidadores[11]++;
+                            break;
+                        case "Mendoza":
+                            cuidadores[12]++;
+                            break;
+                        case "Misiones":
+                            cuidadores[13]++;
+                            break;
+                        case "Neuquén":
+                            cuidadores[14]++;
+                            break;
+                        case "Río Negro":
+                            cuidadores[15]++;
+                            break;
+                        case "Salta":
+                            cuidadores[16]++;
+                            break;
+                        case "Santa Cruz":
+                            cuidadores[17]++;
+                            break;
+                        case "Santiago del Estero":
+                            cuidadores[18]++;
+                            break;
+                        case "Santa Fe":
+                            cuidadores[19]++;
+                            break;
+                        case "San Juan":
+                            cuidadores[20]++;
+                            break;
+                        case "San Luis":
+                            cuidadores[21]++;
+                            break;
+                        case "Tierra del Fuego":
+                            cuidadores[22]++;
+                            break;
+                        case "Tucumán":
+                            cuidadores[23]++;
+                            break;
+                        default:
+
+                    }
+                }
+        }
+
+        return cuidadores;
+    }
 
      public int[] getTotalReservasxTipo(List<Reserva> reservas)
      {   int[] cantidadXtipo = new int[7];

@@ -239,17 +239,21 @@ Vue.component('estadisticas-admin', {
 
              function getElementHeat(value)
              {
-                 if (value >= 0 && value < 20)
+                 if (value === 0 )
                  {
                      return 493782;
                  }
-                 if (value >= 20 && value < 40)
+                 if (value > 0 && value < 20)
                  {
                      return 5363675;
                  }
-                 if (value >= 40 && value < 60)
+                 if (value >= 20 && value < 40)
                  {
                      return 8049313;
+                 }
+                 if (value >= 40 && value < 60)
+                 {
+                     return 12419293;
                  }
                  if (value >= 60 && value < 80)
                  {
@@ -274,33 +278,14 @@ Vue.component('estadisticas-admin', {
 
 
             function getElementHeatCuidadores(value)
-            {
+            { // 0 493782
+
                 if (value === 0 )
                 {
-                    return 53782;
+                    return 0;
                 }
-                if (value > 0 && value < 20)
-                {
-                    return 193782;
-                }
-                if (value >= 20 && value < 40)
-                {
-                    return 293782;
-                }
-                if (value >= 40 && value < 60)
-                {
-                    return 393782;
-                }
-                if (value >= 60 && value < 80)
-                {
-                    return 493782;
-                }
-                if (value >= 80 && value < 100)
-                {
-                    return 593782;
-                }
+                 return 493782;
 
-                return 693782;
             }
         },
         renderChart(){
@@ -372,15 +357,15 @@ Vue.component('estadisticas-admin', {
                     areas: data,
                     showErrors: false
                 },
-                colorSteps: 5,
+                colorSteps: 2,
                 areasSettings: {
                     autoZoom: true
                 },
                 smallMap: {},
                 valueLegend: {
-                    right: 5,
+                    right: 2,
                     minValue: "0",
-                    maxValue: ">100"
+                    maxValue: ">0"
                 }
             } );
 
