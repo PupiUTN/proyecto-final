@@ -8,7 +8,8 @@ Vue.component('mercadopago', {
                 url: "/api/payments/",
                 paymentPreference: {},
                 sandboxInitPoint: "",
-                initPoint: ""
+                initPoint: "",
+                showModal: false
             }
         },
     props: {

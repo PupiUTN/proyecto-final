@@ -10,6 +10,7 @@ import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.MerchantOrder;
 import com.mercadopago.resources.Payment;
 import com.mercadopago.resources.datastructures.merchantorder.MerchantOrderPayment;
+import com.mercadopago.resources.datastructures.preference.BackUrls;
 import com.mercadopago.resources.datastructures.preference.Item;
 import com.mercadopago.resources.datastructures.preference.Payer;
 import org.apache.log4j.LogManager;
@@ -78,6 +79,8 @@ public class PaymentsService {
         mpToken.ifPresent(MercadoPago.SDK::setUserToken);
 
         preference.setMarketplaceFee(20f);
+        BackUrls backUrls = new BackUrls("http://google.com", "http://google.com", "http://google.com");
+        preference.setBackUrls(backUrls);
         try {
             preference.save();
         } catch (MPException e) {
