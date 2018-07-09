@@ -11,7 +11,7 @@ Vue.component('admin-dashboard', {
 		</div>
 		<!-- Content -->
 		<div class="row">
-			<div class="col-md-12">			    
+			<div class="col-md-12 col-xs-12">			    
 				<div class="notification success closeable margin-bottom-30 ">
 					<p> <strong>Estos son los datos de pupi</strong>!</p>    					                    <!-- <a class="close" href="#"></a>-->
 			</div>
@@ -143,11 +143,15 @@ Vue.component('admin-dashboard', {
         </div>
         </div>
 
+        <div class="row">
+     <div class="col-md-12">
     <my-table
             :data="gridData"
             :columns="gridColumns"
             :filter-key="searchQuery">
     </my-table>
+     </div>
+    </div>
 
    
 </div>
@@ -182,7 +186,7 @@ Vue.component('admin-dashboard', {
 
             },
             searchQuery: '',
-            gridColumns: ['Cuidador','Perro','Inicio','Fin','Total'],
+            gridColumns: ['Cuidador','Perro','Inicio','Fin'],
             gridData: [],
             selected:3,
             offset: 0,
@@ -210,7 +214,7 @@ Vue.component('admin-dashboard', {
     },
     mounted() {
 
-
+       // this.getAdminEstadisticas();
     },
     methods: {
         getAdminEstadisticas() {
@@ -251,7 +255,9 @@ Vue.component('admin-dashboard', {
                     this.estadisticas.reservas.forEach(function(element) {
                          var fechaInicio = element.fechaInicio;
                          var fechaFin = element.fechaFin;
-                        var elem = {Cuidador: element.cuidador.user.fullName, Perro: element.perro.nombre, Inicio: fechaInicio,Fin:fechaFin ,Total: "$ " + element.precioTotal};
+                   //     var elem = {Cuidador: element.cuidador.user.fullName, Perro: element.perro.nombre, Inicio: fechaInicio,Fin:fechaFin ,Total: "$ " + element.precioTotal};
+
+                        var elem = {Cuidador: element.cuidador.user.fullName, Perro: element.perro.nombre, Inicio: fechaInicio,Fin:fechaFin};
                         aux.push(elem);
                     });
                     this.gridData = aux;

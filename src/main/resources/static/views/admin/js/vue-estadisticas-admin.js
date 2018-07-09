@@ -5,7 +5,7 @@ Vue.component('estadisticas-admin', {
    	<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
-					<h2> Estadisticas</h2> <h2> </h2> 
+					<h2>  <i class="im im-icon-Line-Chart"></i> Estadisticas</h2> <h2> </h2> 
 				</div>
 			</div>
 		</div>
@@ -23,20 +23,20 @@ Vue.component('estadisticas-admin', {
 		
 			<br>
 			<div class=" row">
-			<div class="zoom">
+		
 		<div class="col-lg-6 col-md-6">
 		
 				<div class="dashboard-list-box invoices with-icons">
-				<h4 style="background-color:gainsboro;"> <i class="im im-icon-Line-Chart"></i>Estados de mis Reservas </h4>
+				<h4 style="background-color:gainsboro;"> <i class="im im-icon-Line-Chart" style=" margin-right: 10px; "></i>Estados de mis Reservas </h4>
              <chart-admin1 :cantidad="estadisticas.totalPorTipo">
              
             </chart-admin1>
                 </div>
          </div>
-         </div>
+       
 
          
-         <div class="zoom">
+        
          <div class="col-lg-6 col-md-6">
 				<div class="dashboard-list-box invoices with-icons">
 				<h4 style="background-color: gainsboro;"><i class="im im-icon-Line-Chart"></i> Historial de Reservas</h4>
@@ -45,7 +45,7 @@ Vue.component('estadisticas-admin', {
                 </chart-admin2>
                 </div>
          </div>
-           </div>
+           
 			</div>
 			
 			<br>
@@ -57,10 +57,21 @@ Vue.component('estadisticas-admin', {
                <i class="im im-icon-Map2"></i> MAPA DE RESERVAS</h4>
 	        <br>
 	        
-            <div class="col-md-12"">
+            <div class="col-lg-6 col-md-6">
+                <div class="dashboard-list-box invoices with-icons">
+				<h4 style="background-color:gainsboro;"> <i class="im im-icon-Line-Chart" style=" margin-right: 10px; "></i>Reservas por Provincia </h4>
+           <div  class="chart-container"  id="chartdiv" style="height: 484px; width: 100%;"></div>
+  </div>
+            </div>
+            
+        
+            
+                <div class="col-lg-6 col-md-6">
                
-           <div   id="chartdiv" ></div>
-  
+               <div class="dashboard-list-box invoices with-icons">
+				<h4 style="background-color:gainsboro;"> <i class="im im-icon-Line-Chart" style=" margin-right: 10px; "></i>Cuidadores por Provincia </h4>
+           <div  class="chart-container"  id="chartdiv1" style="height: 484px; width: 100%;"></div>
+               </div>
             </div>
    
            </div>
@@ -71,109 +82,113 @@ Vue.component('estadisticas-admin', {
     `,
     data: function () {
         return {
+
+
             estadisticas:{
                 cantidadPorMes:[0,0,0,0,0,0,0],
                 mapa: [{
                     "id": "AR-B",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-K",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 3 - reservas: 8"
                 }, {
                     "id": "AR-H",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-U",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-C",
-                    "value": 4447100,
-                    "description": " cuidadores: 5 - reservas: 5"
+                    "value": 493782,
+                    "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-X",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-W",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-E",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-P",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-Y",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-L",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-F",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-M",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-N",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-Q",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-R",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-A",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-Z",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-G",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-S",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-J",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-D",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-V",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 }, {
                     "id": "AR-T",
-                    "value": 4447100,
+                    "value": 493782,
                     "description": " cuidadores: 0 - reservas: 0"
                 } ],
                 totalPorTipo: [],
-                totalPorProvincia:[]
+                totalPorProvincia:[],
+                totalCuidadoresPorProvincia:[],
             },
             array:[],
+            arrayCuidadores:[],
 
         }
 
@@ -182,12 +197,16 @@ Vue.component('estadisticas-admin', {
         array: function(newVal, oldVal) { // watch it
             this.renderChart();
         },
+        arrayCuidadores:function(newVal, oldVal) { // watch it
+            this.renderChartCuidadores();
+        },
 
     },
     mounted() {
         this.renderChart();
+        this.renderChartCuidadores();
         this.getAdminEstadisticas();
-        this.deleteStyle();
+
     },
     methods: {
 
@@ -198,8 +217,9 @@ Vue.component('estadisticas-admin', {
                     this.estadisticas.cantidadPorMes = response.data.cantidadPorMes;
                     this.estadisticas.totalPorTipo = response.data.totalPorTipo;
                     this.estadisticas.totalPorProvincia = response.data.totalPorProvincia;
+                    this.estadisticas.totalCuidadoresPorProvincia = response.data.totalCuidadoresPorProvincia;
                     this.setDescriptionxProvincia(this.estadisticas.totalPorProvincia);
-
+                    this.setDescriptionCuidadoresxProvincia(this.estadisticas.totalCuidadoresPorProvincia);
                 })
                 .catch(error => {
                     console.log(error);
@@ -208,38 +228,107 @@ Vue.component('estadisticas-admin', {
         },
          setDescriptionxProvincia(list){
              var cont = 0;
+
              this.estadisticas.mapa.forEach(function(obj)
-             { obj.description = list[cont];
+             { obj.description = "reservas: " + list[cont];
+                 obj.value = getElementHeat(list[cont]);
                  cont++;
              });
-
              this.array =   this.estadisticas.mapa;
+
+
+             function getElementHeat(value)
+             {
+                 if (value >= 0 && value < 20)
+                 {
+                     return 493782;
+                 }
+                 if (value >= 20 && value < 40)
+                 {
+                     return 5363675;
+                 }
+                 if (value >= 40 && value < 60)
+                 {
+                     return 8049313;
+                 }
+                 if (value >= 60 && value < 80)
+                 {
+                     return 15982378;
+                 }
+                 if (value >= 80 && value < 100)
+                 {
+                     return 20851820;
+                 }
+
+                 return 33871648;
+             }
          },
+        setDescriptionCuidadoresxProvincia(list){
+            var cont = 0;
+            mapaCuidadores.forEach(function(obj)
+            { obj.description = "Cuidadores: " + list[cont];
+                obj.value = getElementHeatCuidadores(list[cont]);
+                cont++;
+            });
+            this.arrayCuidadores =   mapaCuidadores;
+
+
+            function getElementHeatCuidadores(value)
+            {
+                if (value === 0 )
+                {
+                    return 53782;
+                }
+                if (value > 0 && value < 20)
+                {
+                    return 193782;
+                }
+                if (value >= 20 && value < 40)
+                {
+                    return 293782;
+                }
+                if (value >= 40 && value < 60)
+                {
+                    return 393782;
+                }
+                if (value >= 60 && value < 80)
+                {
+                    return 493782;
+                }
+                if (value >= 80 && value < 100)
+                {
+                    return 593782;
+                }
+
+                return 693782;
+            }
+        },
         renderChart(){
                 var  data = this.estadisticas.mapa;
-/*
+
 
             var map = AmCharts.makeChart( "chartdiv", {
                 type: "map",
                 dataProvider: {
                     map: "argentinaLow",
-                    areas: array,
+                    areas: data,
                     showErrors: false
                 },
-                colorSteps: 10,
+                colorSteps: 5,
                 areasSettings: {
                     autoZoom: true
                 },
                 smallMap: {},
                 valueLegend: {
-                    right: 10,
-                    minValue: "little",
-                    maxValue: "a lot!"
+                    right: 5,
+                    minValue: "0",
+                    maxValue: ">100"
                 }
             } );
-*/
 
 
+
+/*
 
             var map;
 
@@ -267,15 +356,35 @@ Vue.component('estadisticas-admin', {
                 map.write("chartdiv");
 
             });
+*/
 
             //this.deleteStyle();
 
         },
-        deleteStyle(){
+        renderChartCuidadores(){
+            var  data = mapaCuidadores;
 
-        }
 
+            var map = AmCharts.makeChart( "chartdiv1", {
+                type: "map",
+                dataProvider: {
+                    map: "argentinaLow",
+                    areas: data,
+                    showErrors: false
+                },
+                colorSteps: 5,
+                areasSettings: {
+                    autoZoom: true
+                },
+                smallMap: {},
+                valueLegend: {
+                    right: 5,
+                    minValue: "0",
+                    maxValue: ">100"
+                }
+            } );
 
+        },
     }
 });
 

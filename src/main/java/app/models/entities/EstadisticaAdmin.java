@@ -25,7 +25,8 @@ public class EstadisticaAdmin {
     List<Reserva> reservas;
     int[] cantidadPorMes;
     int[] totalPorTipo;
-    String[] totalPorProvincia;
+    int[] totalPorProvincia;
+    int[] totalCuidadoresPorProvincia;
 
 
 

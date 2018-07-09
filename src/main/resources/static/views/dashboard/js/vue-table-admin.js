@@ -87,8 +87,8 @@ Vue.component('my-table', {
             }
             if (sortKey) {
                 data = data.slice().sort(function (a, b) {
-                    a = a[sortKey]
-                    b = b[sortKey]
+                    a = a[sortKey];
+                    b = b[sortKey];
                     return (a === b ? 0 : a > b ? 1 : -1) * order
                 })
             }
@@ -131,7 +131,6 @@ Vue.component('my-table', {
 
     }
 
-// bootstrap the demo
 
 
 });

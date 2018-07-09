@@ -127,7 +127,9 @@ public class EstadisticaAdminController {
         EstadisticaAdmin  estadisticaAdmin = new EstadisticaAdmin();
         List<Reserva> reservas = reservaService.getCantidadReservasTotal();
 
-            estadisticaAdmin.setTotalPorProvincia(getReservasxProvincia(reservas));
+             EstadisticaAdmin aux = getReservasxProvincia(reservas);
+            estadisticaAdmin.setTotalPorProvincia(aux.getTotalPorProvincia());
+             estadisticaAdmin.setTotalCuidadoresPorProvincia(aux.getTotalCuidadoresPorProvincia());
             estadisticaAdmin.setTotalPorTipo(getTotalReservasxTipo(reservas));
             estadisticaAdmin.setCantidadPorMes(getTotalReservasxMes(reservas));
 
@@ -137,10 +139,10 @@ public class EstadisticaAdminController {
 
 
 
-    public String[] getReservasxProvincia( List<Reserva> reservas){
-        String [] array = new String[23];
-         int [] cuidadores = new int[23];
-         int [] arrayReservas = new int[23];
+    public EstadisticaAdmin getReservasxProvincia( List<Reserva> reservas){
+        EstadisticaAdmin  aux = new EstadisticaAdmin();
+         int [] cuidadores = new int[24];
+         int [] arrayReservas = new int[24];
          List<Long> id = new ArrayList<>();
          for (Reserva item : reservas ) {
                   Long idAux = item.getCuidador().getUser().getId();
@@ -318,10 +320,14 @@ public class EstadisticaAdminController {
              }
 
          }
-         for (int i = 0; i< array.length; i++){
+       /*  for (int i = 0; i< array.length; i++){
              array[i] = " Cuidadores: " + cuidadores[i] + " - " + "Reservas: " + arrayReservas[i];
-         }
-         return array;
+         }*/
+
+        aux.setTotalPorProvincia(arrayReservas);
+        aux.setTotalCuidadoresPorProvincia(cuidadores);
+        return aux;
+
      }
 
 

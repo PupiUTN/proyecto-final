@@ -113,14 +113,16 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
          </div>
           
          </div>
-
        </div>
        
-      
        <div v-show =" role === 'ROLE_ADMIN'">
+       
+       <div class="row">
+       <div>
          <admin-dashboard :rol="rol">            
                 </admin-dashboard>
-      
+      </div>
+      </div>
 </div>
 
 </div>
