@@ -74,7 +74,7 @@ Vue.component('chart-admin2', {
                     yAxes: [{
                         stacked: true,
                         ticks: {
-                            stepSize: 1,
+                           /* stepSize: 1,*/
                             beginAtZero: true
                         },
                         gridLines: {

@@ -76,7 +76,7 @@ data: function () {
                     yAxes: [{
                         stacked: true,
                         ticks: {
-                            stepSize: 1,
+                            // stepSize: 1,
                             beginAtZero: true
                         },
                         gridLines: {

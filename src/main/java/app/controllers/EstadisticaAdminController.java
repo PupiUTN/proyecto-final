@@ -1,14 +1,11 @@
 package app.controllers;
 
 import app.models.entities.*;
-import app.security.MyUserPrincipal;
 import app.services.CalificacionService;
 import app.services.CuidadorService;
 import app.services.PerroService;
 import app.services.ReservaService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;

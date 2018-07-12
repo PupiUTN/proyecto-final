@@ -311,40 +311,6 @@ Vue.component('estadisticas-admin', {
                 }
             } );
 
-
-
-/*
-
-            var map;
-
-            AmCharts.ready(function() {
-                map = new AmCharts.AmMap();
-
-
-                map.balloon.color = "#000000";
-
-                var dataProvider = {
-                    map: "argentinaLow",
-                    areas: data,
-                    showErrors: false
-                };
-
-                map.dataProvider = dataProvider;
-
-                map.areasSettings = {
-                    autoZoom: true,
-                    selectedColor: "#CC0000"
-                };
-
-                map.smallMap = new AmCharts.SmallMap();
-
-                map.write("chartdiv");
-
-            });
-*/
-
-            //this.deleteStyle();
-
         },
         renderChartCuidadores(){
             var  data = mapaCuidadores;
