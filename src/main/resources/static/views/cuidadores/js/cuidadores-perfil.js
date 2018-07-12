@@ -205,6 +205,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                                 v-on:updateDateRange="bindDates"
                                 datePickerId="datepickerId"
                                 :disabledDates="fechasDeshabilitadas"
+                                v-if="showDatePicker"
                         >
                         </my-hotel-date-picker>
                     </div>
@@ -301,7 +302,8 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             perPage: 3,
             DataReview: [],
             puntajeUsuario: 0,
-            fechasDeshabilitadas:[]
+            fechasDeshabilitadas:[],
+            showDatePicker: false
         }
     }
     ,
@@ -501,23 +503,45 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             this.offset = this.offset + this.perPage;
         },
         getReservasPagadasYEjecucion() {
-            // TODO IMPLEMENTAR CUANDO ESTAN EN EJECUCION
-            // ejecucion
-
             // obtengo las reservas
-            // PAGADAS DUEÑO
-            axios.get("/api/reservas/fromToday/?idCuidador="+this.idCuidador+"&status=pagada-due%C3%B1o")
+            // PAGADAS DUEÑO y ejecucion
+            axios.get("/api/reservas/fromToday/?idCuidador="+this.idCuidador+"&status=pagada-due%C3%B1o&status=ejecucion")
                 .then((response) => {
-                    let fechasDeshabilitadas = this.calcularFechasDeshabilitadas(response.data);
+                    let fechasList = this.calcularListadoDeFechas(response.data);
+                    this.fechasDeshabilitadas = this.calcularFechasDeshabilitadas(fechasList);
+                    // como las properties del componente no son reactivas debo montar el date picker luego de calcular las fecha
+                    this.showDatePicker = true
                 })
                 .catch(error => {
+                    this.showDatePicker = true
                     console.log(error);
                     sweetAlert("Oops...", "Error  ", "error");
                 });
 
         },
-        calcularFechasDeshabilitadas(reservasPagadasYEjecucion) {
+        calcularFechasDeshabilitadas(fechasList){
+            // debemos deshabilitar aquellas fechas que en el mismo dia tiene mayor o igual cantidad de reservas
+            // que la maxima admitida por el cuidador
+            let cantidadReservasPorDia = new Map()
+            for (let i = 0; i < fechasList.length; i++) {
+                let fecha = fechasList[i];
+                let frecuencia = cantidadReservasPorDia.get(fecha);
+                if(frecuencia === undefined){
+                    cantidadReservasPorDia.set(fecha,1);
+                }else {
+                    cantidadReservasPorDia.set(fecha,frecuencia + 1);
+                }
+            }
+            let fechasSuperanCantidadMaximaDePerro = [];
+            for (var [key, value] of cantidadReservasPorDia.entries()) {
+                if (value >= this.item.cantidadMaxDePerros) {
+                    fechasSuperanCantidadMaximaDePerro.push(key)
+                }
+            }
             debugger;
+            return fechasSuperanCantidadMaximaDePerro;
+        },
+        calcularListadoDeFechas(reservasPagadasYEjecucion) {
             // creo una lista con todas las fechas de todas las reservas
             let datesList = [];
             for (var i = 0; i < reservasPagadasYEjecucion.length; i++) {
@@ -526,7 +550,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                 let dates = this.getDatesBetween(reserva.fechaInicio, reserva.fechaFin)
                 datesList.push(...dates)
             }
-            this.fechasDeshabilitadas = datesList;
+            return datesList;
         },
         getDatesBetween(startDate, stopDate) {
             var dateArray = new Array();

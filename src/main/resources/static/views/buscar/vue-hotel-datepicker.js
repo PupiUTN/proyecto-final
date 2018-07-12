@@ -1,7 +1,7 @@
 //https://github.com/benitolopez/hotel-datepicker
 var myHotelDatePicker = Vue.component('my-hotel-date-picker', {
     template: `
-        <input class="datepicker__input" type="text" :id="datePickerId" :placeholder="placeholder" />
+        <input class="datepicker__input" type="text" :id="datePickerId" :placeholder="placeholder" autocomplete="off"/>
     `,
     props: {
         datePickerId: {
@@ -35,7 +35,12 @@ var myHotelDatePicker = Vue.component('my-hotel-date-picker', {
             }
         },
         endDate: {
-            type: [Date, String, Boolean]
+            type: [Date, String, Boolean],
+            default: function () {
+                var today = new Date();
+                var fiveMonths= today.setMonth(today.getMonth()+5);
+                return fiveMonths;
+            }
         },
         minNights: {
             type: Number,
