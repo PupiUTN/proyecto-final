@@ -1,3 +1,4 @@
+//https://github.com/benitolopez/hotel-datepicker
 var myHotelDatePicker = Vue.component('my-hotel-date-picker', {
     template: `
         <input class="datepicker__input" type="text" :id="datePickerId" :placeholder="placeholder" />

@@ -70,7 +70,6 @@ public class ReservaUserController {
     }
 
     @PreAuthorize("isAuthenticated()")
-
     @RequestMapping(value = "/PendientesReview/", method = RequestMethod.GET)
     public long getPendientesReview() throws Exception {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

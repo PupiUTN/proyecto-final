@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ReservaRepository extends JpaRepository<Reserva, Long> {
@@ -26,6 +27,9 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
     @Query("select r from Reserva r where r.cuidador.user.id = :#{#userId} and r.status =:#{#statusId}")
     List<Reserva> findAllByCuidadorAndStatus(@Param("userId")long userId, @Param("statusId")String statusId);
+
+    @Query("select r from Reserva r where r.cuidador.id = :#{#cuidadorId} and r.status IN (:#{#statusId}) and r.fechaFin >= CURDATE()")
+    List<Reserva> findAllByCuidadorIdAndStatusListAndFechaVigente(@Param("cuidadorId")long cuidadorId, @Param("statusId")List<String> statusList);
 
     @Query("select r from Reserva r where r.cuidador.user.id = :#{#userId} and r.status =:#{#statusId} or r.status =:#{#statusUsuario}")
     List<Reserva> findAllByCuidadorAndStatusFinalizada(@Param("userId")long userId, @Param("statusId")String statusId, @Param("statusUsuario")String statusUsuario);

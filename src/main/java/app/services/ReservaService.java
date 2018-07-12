@@ -2,7 +2,6 @@ package app.services;
 
 import app.models.entities.Reserva;
 import app.persistence.ReservaRepository;
-import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,7 +71,6 @@ public class ReservaService {
     }
 
     public List<Reserva> getReservasByCuidadorIdAndStatus(Long id, String status) {
-
         if (status.equals("finalizada")) {
             String var1 = "comentario-dueño";
             return reservaRepository.findAllByCuidadorAndStatusFinalizada(id, status, var1);
@@ -80,6 +78,18 @@ public class ReservaService {
         } else {
             return reservaRepository.findAllByCuidadorAndStatus(id, status);
         }
+
+    }
+
+    public List<Reserva> getReservasByCuidadorIdAndStatusFromTodaySinJoin(Long id, List<String> statusList) {
+        List<Reserva> reservas = reservaRepository.findAllByCuidadorIdAndStatusListAndFechaVigente(id, statusList);
+
+        for (int i = 0; i < reservas.size(); i++) {
+            Reserva reserva = reservas.get(i);
+            reserva.setCuidador(null);
+            reserva.setPerro(null);
+        }
+        return reservas;
 
     }
 
