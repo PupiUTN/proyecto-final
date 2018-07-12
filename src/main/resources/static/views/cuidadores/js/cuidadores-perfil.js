@@ -538,7 +538,6 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                     fechasSuperanCantidadMaximaDePerro.push(key)
                 }
             }
-            debugger;
             return fechasSuperanCantidadMaximaDePerro;
         },
         calcularListadoDeFechas(reservasPagadasYEjecucion) {
