@@ -42,6 +42,8 @@ public class Cuidador implements Serializable {
     private int cantidadReviews;
     private int promedioReviews;
     private int cantidadVisitas;
+    @Transient
+    private double ponderacion;
 
 
     @Override

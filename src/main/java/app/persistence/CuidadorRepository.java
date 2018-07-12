@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
 
-    @Query("select c from Cuidador c where c.user.direccion.ciudadPlaceId = :#{#ciudadPlaceId} and c.estado = :#{#status} order by c.promedioReviews desc" )
+    @Query("select c from Cuidador c where c.user.direccion.ciudadPlaceId = :#{#ciudadPlaceId} and c.estado = :#{#status}")
     List<Cuidador> findAllbyCiudadPlaceIdAndStatus (@Param("ciudadPlaceId")String ciudadPlaceId, @Param("status")String status);
 
 
@@ -30,8 +30,8 @@ public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
            "and (( :#{#from} between r.fechaInicio AND r.fechaFin " +
            "or  :#{#to} between r.fechaInicio AND r.fechaFin ) " +
            "or (r.fechaInicio between :#{#from} AND :#{#to} " +
-           "or r.fechaFin between :#{#from} AND :#{#to} ))) " +
-           "order by c.promedioReviews desc")
+           "or r.fechaFin between :#{#from} AND :#{#to} ))) "/* +
+           "order by c.promedioReviews desc, c.cantidadReviews desc"*/)
     List<Cuidador> findAllbyCiudadYFecha(@Param("ciudadPlaceId")String ciudadPlaceId,
                                          @Param("from")Date from,
                                          @Param("to")Date to,

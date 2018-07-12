@@ -16,8 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/api/cuidadores")
@@ -45,7 +44,9 @@ public class CuidadorController {
             @RequestParam(value = "to", required = false) Date to,
             @RequestParam(value = "status", defaultValue = "completed") String status) throws Exception {
 
-        return cuidadorService.searchCuidadores(ciudadPlaceId, from, to, status);
+        List<Cuidador> cuidadores = cuidadorService.searchCuidadores(ciudadPlaceId, from, to, status);
+        ordenarCuidadores(cuidadores);
+        return cuidadores;
 
     }
 
@@ -100,6 +101,16 @@ public class CuidadorController {
 
         return cuidadorService.cuidadorXUser(id);
 
+    }
+
+    private void ordenarCuidadores(List<Cuidador> cuidadores){
+        Collections.sort(cuidadores, new Comparator<Cuidador>() {
+            @Override
+            public int compare(Cuidador c1, Cuidador c2) {
+                return (int) (c2.getPonderacion() - c1.getPonderacion());
+            }
+
+        });
     }
 
 
