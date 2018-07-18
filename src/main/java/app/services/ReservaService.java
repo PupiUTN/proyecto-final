@@ -1,5 +1,6 @@
 package app.services;
 
+import app.models.entities.EstadoReserva;
 import app.models.entities.Reserva;
 import app.persistence.ReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,4 +126,29 @@ public class ReservaService {
         cal.add(Calendar.DATE, days); //minus number would decrement the days
         return cal.getTime();
     }
+
+    public int getCantidadReservas(Long id) {
+        return reservaRepository.getCantidadReservas(id);
+    }
+
+    public List<Reserva> findAllByCuidador( Long id) {
+        return reservaRepository.findAllByCuidador(id);
+    }
+
+
+
+
+    public List<Reserva> getCantidadReservasTotal() {
+        return reservaRepository.getCantidadReservasTotal();
+    }
+
+
+    public List<Reserva>  getReservasByStatus (EstadoReserva estadoReserva) {
+          if (estadoReserva.getStatus().equals("rechazada-cuidador"))
+          {
+              return reservaRepository.getCantidadByStatus(estadoReserva.getStatus(), "rechazada-dueño");
+          }
+
+        return reservaRepository.getCantidadByStatus(estadoReserva.getStatus(),"");}
+
 }

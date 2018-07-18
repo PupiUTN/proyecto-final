@@ -5,9 +5,11 @@
  */
 package app.controllers;
 
-import app.models.entities.Reserva;
+import app.models.entities.*;
 import app.security.MyUserPrincipal;
+import app.services.CalificacionService;
 import app.services.MailService;
+import app.services.PerroService;
 import app.services.ReservaService;
 import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -27,11 +32,15 @@ public class ReservaUserController {
 
     private final ReservaService reservaService;
     private final MailService mailService;
+    private final PerroService perroService;
+    private final CalificacionService calificacionService;
 
     @Autowired
-    public ReservaUserController(ReservaService reservaService, MailService mailService) {
+    public ReservaUserController(ReservaService reservaService, MailService mailService, PerroService perroService,CalificacionService calificacionService) {
         this.reservaService = reservaService;
         this.mailService = mailService;
+        this.perroService = perroService;
+        this.calificacionService = calificacionService;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -42,23 +51,24 @@ public class ReservaUserController {
         return reservaService.save(entity);
 
     }
+
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public List<Reserva> get(@RequestParam("status") String status) throws Exception {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
-        return reservaService.getReservasByUserIdAndStatus(id,status);
+        return reservaService.getReservasByUserIdAndStatus(id, status);
     }
 
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(method = RequestMethod.PUT, value ="{reservaId}/cancelarUsuario")
+    @RequestMapping(method = RequestMethod.PUT, value = "{reservaId}/cancelarUsuario")
     public ResponseEntity cancelarCausaUsuario(@PathVariable Long reservaId) throws Exception {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
-        reservaService.cancelarCausaUsuario(reservaId,id);
+        reservaService.cancelarCausaUsuario(reservaId, id);
         mailService.sendEmail(reservaService.getReserva(reservaId).getCuidador().getUser(), MailType.BOOKING_CANCELLATION_BY_USER);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -76,7 +86,7 @@ public class ReservaUserController {
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
         String status = "finalizada";
-        List reserva = reservaService.getReservasByUserIdAndStatus(id,status);
+        List reserva = reservaService.getReservasByUserIdAndStatus(id, status);
         return reserva.size();
 
     }

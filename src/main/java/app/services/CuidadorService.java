@@ -83,4 +83,8 @@ public class CuidadorService {
 
 
     }
+
+    public Long getTotalCuidadores() {
+       return  cuidadorRepository.count();
+    }
 }
