@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "api/payments")
 public class PaymentsController {
 
-    PaymentsService paymentsService;
+    private final PaymentsService paymentsService;
 
     @Autowired
     public PaymentsController(PaymentsService paymentsService) {

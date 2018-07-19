@@ -20,33 +20,38 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/user/")
 public class PerroUserController {
-    @Autowired
-    PerroService perroService;
+    private final PerroService perroService;
 
-    public PerroUserController() {
+    @Autowired
+    public PerroUserController(PerroService perroService) {
+        this.perroService = perroService;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "{idUser}/perros")
-    public Perro createPerro(@PathVariable("idUser") Long id, @RequestBody @Valid Perro entity) throws Exception {
+    public Perro createPerro(@PathVariable("idUser") Long id, @RequestBody @Valid Perro entity) {
         return perroService.createPerro(entity);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "{idUser}/perros")
-    public List<Perro> getPerros(@PathVariable("idUser") Long id) throws Exception {
+    public List<Perro> getPerros(@PathVariable("idUser") Long id) {
         return perroService.getPerrosByUserId(id);
     }
 
     @RequestMapping(value = "{idUser}/perros/{perroId}", method = RequestMethod.GET)
-    public Perro getPerro(@PathVariable("idUser") Long userId, @PathVariable("perroId") Long perroId) throws Exception {
+    public Perro getPerro(@PathVariable("idUser") Long userId, @PathVariable("perroId") Long perroId) {
         return perroService.getPerro(perroId);
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET, value = "me/perros")
-    public List<Perro> getPerros() throws Exception {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public List<Perro> getPerros() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
-        long id = myUserPrincipal.getUser().getId();
+
+        long id = myUserPrincipal.getUser()
+                .getId();
         return perroService.getPerrosByUserId(id);
     }
 

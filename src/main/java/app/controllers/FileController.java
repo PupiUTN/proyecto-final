@@ -24,7 +24,7 @@ public class FileController {
     }
 
     @GetMapping("/")
-    public List<FileJson> listUploadedFiles() throws IOException {
+    public List<FileJson> listUploadedFiles() {
         return storageService.loadAll();
     }
 

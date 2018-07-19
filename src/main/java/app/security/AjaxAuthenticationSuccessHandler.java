@@ -21,8 +21,7 @@ public class AjaxAuthenticationSuccessHandler
     public void onAuthenticationSuccess(
             HttpServletRequest request,
             HttpServletResponse response,
-            Authentication authentication)
-            throws ServletException, IOException {
+            Authentication authentication) {
 
         SavedRequest savedRequest
                 = requestCache.getRequest(request, response);

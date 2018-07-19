@@ -25,8 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
     @Autowired
-    private AjaxAuthenticationSuccessHandler
-            ajaxAuthenticationSuccessHandler;
+    private AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler;
 
 
     @Autowired
@@ -38,15 +37,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .csrf()
+                .disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                 .authorizeRequests()
-//                .antMatchers("/api/user/registration/**").permitAll()
-//                .antMatchers("/api/razas/**").hasRole("ADMIN")
-//                .antMatchers("/api/**").authenticated()
-                .anyRequest().permitAll()
+                .anyRequest()
+                .permitAll()
                 .and()
                 .formLogin()
                 .successHandler(ajaxAuthenticationSuccessHandler)
@@ -64,8 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
     }
 

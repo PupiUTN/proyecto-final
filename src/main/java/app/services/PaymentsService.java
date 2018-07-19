@@ -32,9 +32,9 @@ public class PaymentsService {
     @Value("${app.mp.pupi.clientSecret}")
     private String clientSecret;
 
-    private PaymentRepository paymentRepository;
+    private final PaymentRepository paymentRepository;
 
-    private ReservaService reservaService;
+    private final ReservaService reservaService;
 
 
     private static final Logger logger = LogManager.getLogger(PaymentsService.class);

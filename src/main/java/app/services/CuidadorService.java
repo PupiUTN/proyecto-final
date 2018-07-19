@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class CuidadorService {
 
-    private CuidadorRepository cuidadorRepository;
+    private final CuidadorRepository cuidadorRepository;
 
     @Autowired
     public CuidadorService(CuidadorRepository cuidadorRepository) {
@@ -27,10 +27,6 @@ public class CuidadorService {
 
     public List<Cuidador> getCuidadores() {
         return cuidadorRepository.findAll();
-    }
-
-    public List<Cuidador> getCuidadoresPorLocalidad(Long id) {
-        throw new UnsupportedOperationException();
     }
 
     public Cuidador getCuidador(Long id) {
@@ -48,7 +44,7 @@ public class CuidadorService {
     }
 
 
-    public Cuidador editCuidador(Cuidador entity) throws Exception {
+    public Cuidador editCuidador(Cuidador entity) {
         return cuidadorRepository.save(entity);
     }
 
@@ -59,8 +55,7 @@ public class CuidadorService {
     }
 
 
-    public Cuidador cuidadorXUser(Long id)
-    {
+    public Cuidador cuidadorXUser(Long id) {
         return cuidadorRepository.findcuidadorXUser(id);
     }
 
@@ -71,13 +66,13 @@ public class CuidadorService {
     }
 
     public List<Cuidador> searchCuidadores(String ciudadPlaceId, Date from, Date to, String status) {
-        List<Cuidador> cuidadores = new ArrayList<>();
-        if (from == null || to == null){
-            cuidadores = cuidadorRepository.findAllbyCiudadPlaceIdAndStatus(ciudadPlaceId,status);
+        List<Cuidador> cuidadores;
+        if (from == null || to == null) {
+            cuidadores = cuidadorRepository.findAllbyCiudadPlaceIdAndStatus(ciudadPlaceId, status);
         } else {
             System.out.println(new SimpleDateFormat("YYYY-MM-dd").format(from));
             System.out.println(new SimpleDateFormat("YYYY-MM-dd").format(to));
-            cuidadores = cuidadorRepository.findAllbyCiudadYFecha(ciudadPlaceId,from,to,status);
+            cuidadores = cuidadorRepository.findAllbyCiudadYFecha(ciudadPlaceId, from, to, status);
         }
         return cuidadores;
 

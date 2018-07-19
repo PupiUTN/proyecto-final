@@ -33,7 +33,7 @@ public class CuidadorController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Cuidador> getCuidadores() throws Exception {
+    public List<Cuidador> getCuidadores() {
         return cuidadorService.getCuidadores();
     }
 
@@ -42,7 +42,7 @@ public class CuidadorController {
             @RequestParam(value = "ciudadPlaceId", required = false) String ciudadPlaceId,
             @RequestParam(value = "from", required = false) Date from,
             @RequestParam(value = "to", required = false) Date to,
-            @RequestParam(value = "status", defaultValue = "completed") String status) throws Exception {
+            @RequestParam(value = "status", defaultValue = "completed") String status) {
 
         List<Cuidador> cuidadores = cuidadorService.searchCuidadores(ciudadPlaceId, from, to, status);
         ordenarCuidadores(cuidadores);
@@ -68,7 +68,7 @@ public class CuidadorController {
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public @ResponseBody
-    Cuidador editCuidador(@PathVariable("id") Long id, @RequestBody Cuidador entity) throws Exception {
+    Cuidador editCuidador(@PathVariable("id") Long id, @RequestBody Cuidador entity) {
         entity.setId(id);
         if ("approved".equalsIgnoreCase(entity.getEstado())) {
             mailService.sendEmail(entity.getUser(), MailType.WELCOME_HOST);
@@ -79,34 +79,28 @@ public class CuidadorController {
     }
 
     @RequestMapping(value = "/searchServicios/", method = RequestMethod.GET)
-    public List<Servicio> getServicios() throws Exception {
+    public List<Servicio> getServicios() {
 
         return cuidadorService.getListaServicios();
 
     }
 
     @RequestMapping(value = "/solicitudes/", method = RequestMethod.GET)
-    public List<Cuidador> getSolicitudes() throws Exception {
+    public List<Cuidador> getSolicitudes() {
 
         return cuidadorService.getSolicitudes();
 
     }
 
     @RequestMapping(value = "/user/", method = RequestMethod.GET)
-    public Cuidador getCuidadorxUsuario(@RequestParam(value = "id", required = false) long id) throws Exception {
+    public Cuidador getCuidadorxUsuario(@RequestParam(value = "id", required = false) long id) {
 
         return cuidadorService.cuidadorXUser(id);
 
     }
 
     private void ordenarCuidadores(List<Cuidador> cuidadores){
-        Collections.sort(cuidadores, new Comparator<Cuidador>() {
-            @Override
-            public int compare(Cuidador c1, Cuidador c2) {
-                return (int) (c2.getPonderacion() - c1.getPonderacion());
-            }
-
-        });
+        cuidadores.sort((c1, c2) -> (int) (c2.getPonderacion() - c1.getPonderacion()));
     }
 
 

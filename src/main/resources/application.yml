@@ -39,6 +39,8 @@ app:
       clientSecret: ${MP_CLIENT_SECRET}
       encryptKey: ${MP_ENCRYPT_KEY}
       encryptVector: ${MP_ENCRYPT_VECTOR}
+      url: https://auth.mercadopago.com.ar/authorization?client_id=%s&response_type=code&platform_id=mp&redirect_uri=%s
+      redirectUri: http://localhost:5000/api/user/get-mp-token?email=%s
   aws:
       s3:
         bucketName: pupi-images

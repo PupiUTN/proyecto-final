@@ -8,12 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AjaxLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler{
+public class AjaxLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
-                                Authentication authentication)
-            throws IOException, ServletException {
+                                Authentication authentication) {
         response.setStatus(HttpServletResponse.SC_OK);
     }
 }

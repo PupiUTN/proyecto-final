@@ -16,26 +16,25 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class CalificacionService
-{
+public class CalificacionService {
 
 
-    private CalificacionRepository calificacion;
+    private final CalificacionRepository calificacion;
 
     @Autowired
     public CalificacionService(CalificacionRepository calificacion) {
         this.calificacion = calificacion;
     }
 
-    public Calificacion createCalificacion(Calificacion entity) throws Exception {
+    public Calificacion createCalificacion(Calificacion entity) {
         return calificacion.save(entity);
     }
 
-    public List<Calificacion> getCalificacionesCuidador(long id) throws Exception {
+    public List<Calificacion> getCalificacionesCuidador(long id) {
         return calificacion.getCalificacionesCuidador(id);
     }
 
-    public List<Calificacion> getCalificacionesPerro(long id) throws Exception {
+    public List<Calificacion> getCalificacionesPerro(long id) {
         return calificacion.getCalificacionesPerro(id);
     }
 

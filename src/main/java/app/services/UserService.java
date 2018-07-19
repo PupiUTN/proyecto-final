@@ -17,18 +17,31 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.crypto.Cipher;
+import java.util.Optional;
+
 @Service
 public class UserService extends AbstractRestClientService {
-    @Autowired
-    private UserRepository repository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${app.mp.pupi.encryptKey}")
     private String KEY;
 
     @Value("${app.mp.pupi.encryptVector}")
     private String VECTOR;
+
+    @Value("${app.mp.pupi.url}")
+    private String MP_URL;
+
+    @Value("${app.mp.pupi.redirectUri}")
+    private String MP_REDIRECT_URI;
+
+    @Autowired
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
+        this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Transactional
     public User registerNewUserAccount(User user)
@@ -56,25 +69,32 @@ public class UserService extends AbstractRestClientService {
         return false;
     }
 
-    public User getUser(Long id) throws Exception {
+    public User getUser(Long id) {
         return repository.findOne(id);
     }
 
-    public User editUser(User entity) throws Exception {
+    public User editUser(User entity) {
         return repository.save(entity);
     }
 
 
-    public String getMercadoPagoToken(String code, String email) {
+    public void setMercadoPagoToken(String code, String email) {
         User mpUser = repository.findByEmail(email);
-        if (mpUser.getMpToken() == null) {
-            JsonNode json = post("https://api.mercadopago.com/oauth/token", getPostEntity(code, email));
-            String mpToken = json.get("access_token")
-                    .toString();
-            mpUser.setMpToken(Encryptor.encrypt(KEY, VECTOR, mpToken));
-            repository.save(mpUser);
-        }
-        return Encryptor.decrypt(KEY, VECTOR, mpUser.getMpToken());
+        JsonNode json = post("https://api.mercadopago.com/oauth/token", getPostEntity(code, email));
+        String mpToken = json.get("access_token")
+                .toString();
+        mpUser.setMpToken(Encryptor.run(KEY, VECTOR, mpToken, Cipher.ENCRYPT_MODE));
+        repository.save(mpUser);
+    }
+
+    public String getMercadoPagoToken(String email) {
+        User mpUser = repository.findByEmail(email);
+        return Encryptor.run(KEY, VECTOR, mpUser.getMpToken(), Cipher.DECRYPT_MODE);
+    }
+
+    public boolean userHasMpToken(String email) {
+        return repository.findByEmail(email)
+                .getMpToken() != null;
     }
 
     private HttpEntity<JsonNode> getPostEntity(String code, String email) {
@@ -85,6 +105,12 @@ public class UserService extends AbstractRestClientService {
         json.put("code", code);
         json.put("redirect_uri", "http://localhost:5000/api/user/get-mp-token?email=" + email);
         return new HttpEntity<>(json, PaymentsUtils.getMercadoPagoHeaders());
+    }
+
+    public String getMercadoPagoUrl(String email) {
+        String redirectUri = String.format(MP_REDIRECT_URI, email);
+
+        return String.format(MP_URL, MercadoPago.SDK.getClientId(), redirectUri);
     }
 
 
