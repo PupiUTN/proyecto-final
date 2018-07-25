@@ -67,7 +67,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET, value = "/get-mp-token")
     public RedirectView setMercadoPagoToken(@RequestParam String code, @RequestParam String email) {
         userService.setMercadoPagoToken(code, email);
-        return new RedirectView("/views/cuidadores/alta-cuidador.html?hasMpToken=true");
+        return new RedirectView("/views/cuidadores/alta-cuidador.html");
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/has-mp-token")

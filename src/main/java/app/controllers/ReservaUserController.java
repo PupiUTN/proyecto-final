@@ -42,13 +42,14 @@ public class ReservaUserController {
         return reservaService.save(entity);
 
     }
+
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public List<Reserva> get(@RequestParam("status") String status) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
-        return reservaService.getReservasByUserIdAndStatus(id,status);
+        return reservaService.getReservasByUserIdAndStatus(id, status);
     }
 
 
@@ -58,7 +59,7 @@ public class ReservaUserController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
-        reservaService.cancelarCausaUsuario(reservaId,id);
+        reservaService.cancelarCausaUsuario(reservaId, id);
         mailService.sendEmail(reservaService.getReserva(reservaId).getCuidador().getUser(), MailType.BOOKING_CANCELLATION_BY_USER);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -70,14 +71,13 @@ public class ReservaUserController {
     }
 
     @PreAuthorize("isAuthenticated()")
-
     @RequestMapping(value = "/PendientesReview/", method = RequestMethod.GET)
     public long getPendientesReview() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
         String status = "finalizada";
-        List reserva = reservaService.getReservasByUserIdAndStatus(id,status);
+        List reserva = reservaService.getReservasByUserIdAndStatus(id, status);
         return reserva.size();
 
     }

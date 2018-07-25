@@ -73,7 +73,7 @@ Vue.component('my-reservas-cuidador-list', {
 
                                     <div class="col-xs-12 col-md-2" v-if="reserva.status === 'creada-dueño'">
                                         <a v-on:click="confirmarReservaButton(index)"
-                                           style="color: blue; border-color: blue; " href="#"
+                                           href="#"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
                                             Confirmar</a>
                                     </div>
@@ -87,14 +87,14 @@ Vue.component('my-reservas-cuidador-list', {
                                     </div>
 
                                     <div class="col-xs-12 col-md-2" v-if="reserva.status === 'creada-dueño'">
-                                        <a style="color: blue;  border-color: blue; "
+                                        <a 
                                            v-on:click="verReserva(reserva.id)"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
                                             Examinar</a>
 
                                     </div>
                                     <div class="col-xs-12 col-md-4" v-if="reserva.status === 'pagada-dueño'">
-                                        <a style=" color: blue;  border-color: blue; "
+                                        <a 
                                            v-on:click="verReserva(reserva.id)"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver
                                             Detalle Completo</a>
@@ -103,7 +103,7 @@ Vue.component('my-reservas-cuidador-list', {
                                     <div class="col-xs-12 col-md-2"
                                          v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-dueño'">
                                         <a v-on:click="calificarReserva(index)"
-                                           style="color: blue; border-color: blue; " href="#"
+                                           href="#"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
                                             Calificar</a>
                                     </div>

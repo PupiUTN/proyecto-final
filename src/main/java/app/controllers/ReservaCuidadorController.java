@@ -4,6 +4,7 @@ package app.controllers;
 import app.models.entities.Reserva;
 import app.models.entities.User;
 import app.security.MyUserPrincipal;
+import app.services.CuidadorService;
 import app.services.MailService;
 import app.services.ReservaService;
 import app.utils.MailType;
@@ -24,11 +25,13 @@ public class ReservaCuidadorController {
 
     private final ReservaService reservaService;
     private final MailService mailService;
+    private final CuidadorService cuidadorService;
 
     @Autowired
-    public ReservaCuidadorController(ReservaService reservaService, MailService mailService) {
+    public ReservaCuidadorController(ReservaService reservaService, MailService mailService, CuidadorService cuidadorService) {
         this.reservaService = reservaService;
         this.mailService = mailService;
+        this.cuidadorService = cuidadorService;
     }
 
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
@@ -114,4 +117,5 @@ public class ReservaCuidadorController {
         return cant;
 
     }
+
 }

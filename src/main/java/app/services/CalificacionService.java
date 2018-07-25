@@ -38,4 +38,7 @@ public class CalificacionService {
         return calificacion.getCalificacionesPerro(id);
     }
 
+    public Long getTotalCalificaciones() {
+        return calificacion.count();
+    }
 }

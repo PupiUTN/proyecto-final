@@ -1,8 +1,8 @@
 package app.services;
 
+import app.models.entities.EstadoReserva;
 import app.models.entities.Reserva;
 import app.persistence.ReservaRepository;
-import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +48,8 @@ public class ReservaService {
         //reserva.setFechaInicio(addDays(reserva.getFechaInicio(), 1));
 
         reserva.setStatus("creada-dueño");
-        float precioTotal = daysBetween(reserva.getFechaInicio(), reserva.getFechaFin()) * reserva.getCuidador().getPrecioPorNoche();
+        float precioTotal = daysBetween(reserva.getFechaInicio(), reserva.getFechaFin()) * reserva.getCuidador()
+                .getPrecioPorNoche();
         reserva.setPrecioTotal(precioTotal);
         Reserva savedObject = reservaRepository.save(reserva);
         return savedObject;
@@ -72,7 +73,6 @@ public class ReservaService {
     }
 
     public List<Reserva> getReservasByCuidadorIdAndStatus(Long id, String status) {
-
         if (status.equals("finalizada")) {
             String var1 = "comentario-dueño";
             return reservaRepository.findAllByCuidadorAndStatusFinalizada(id, status, var1);
@@ -80,6 +80,18 @@ public class ReservaService {
         } else {
             return reservaRepository.findAllByCuidadorAndStatus(id, status);
         }
+
+    }
+
+    public List<Reserva> getReservasByCuidadorIdAndStatusFromTodaySinJoin(Long id, List<String> statusList) {
+        List<Reserva> reservas = reservaRepository.findAllByCuidadorIdAndStatusListAndFechaVigente(id, statusList);
+
+        for (int i = 0; i < reservas.size(); i++) {
+            Reserva reserva = reservas.get(i);
+            reserva.setCuidador(null);
+            reserva.setPerro(null);
+        }
+        return reservas;
 
     }
 
@@ -115,4 +127,28 @@ public class ReservaService {
         cal.add(Calendar.DATE, days); //minus number would decrement the days
         return cal.getTime();
     }
+
+    public int getCantidadReservas(Long id) {
+        return reservaRepository.getCantidadReservas(id);
+    }
+
+    public List<Reserva> findAllByCuidador(Long id) {
+        return reservaRepository.findAllByCuidador(id);
+    }
+
+
+    public List<Reserva> getCantidadReservasTotal() {
+        return reservaRepository.getCantidadReservasTotal();
+    }
+
+
+    public List<Reserva> getReservasByStatus(EstadoReserva estadoReserva) {
+        if (estadoReserva.getStatus()
+                .equals("rechazada-cuidador")) {
+            return reservaRepository.getCantidadByStatus(estadoReserva.getStatus(), "rechazada-dueño");
+        }
+
+        return reservaRepository.getCantidadByStatus(estadoReserva.getStatus(), "");
+    }
+
 }

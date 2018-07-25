@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<head>
+
+    <!-- Basic Page Needs
+    ================================================== -->
+    <title>Estadisticas</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16"/>
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+
+    <!-- MY CSS
+    ================================================== -->
+
+
+    <link href="/css/page-loader.css" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="../../ammap/ammap.css" type="text/css">
+    <script src="../../ammap/ammap.js" type="text/javascript"></script>
+    <!-- check ammap/maps/js/ folder to see all available countries -->
+    <!-- map file should be included after ammap.js -->
+    <script src="../../ammap/maps/js/argentinaLow.js" type="text/javascript"></script>
+
+    <script src="../../ammap/plugins/dataloader/dataloader.min.js"></script>
+
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
+    <script src="https://unpkg.com/vue-chartjs@3.0.1-rc2/dist/vue-chartjs.js"></script>-->
+
+
+    <script src="../../ammap/dist/Chart.bundle.js"></script>
+    <script src="../../ammap/dist/Chart.js"></script>
+
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74104605-6"></script>
+    <script>  window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('send', {hitType: 'pageview', page: location.pathname});
+    gtag('config', 'UA-74104605-6');</script>
+
+</head>
+
+<body>
+
+
+<!-- Wrapper -->
+<div id="wrapper">
+    <div id="page-loader"></div>
+    <my-dashboard current-view="estadisticas-admin"></my-dashboard>
+</div>
+<!-- Wrapper / End -->
+
+
+<!-- Scripts
+================================================== -->
+<script type="text/javascript" src="/assets/scripts/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jpanelmenu.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/chosen.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/slick.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/rangeslider.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/magnific-popup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/waypoints.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/counterup.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/tooltips.min.js"></script>
+<script type="text/javascript" src="/assets/scripts/custom.js"></script>
+
+<link href="/assets/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
+<script src="/assets/scripts/datedropper.js"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<script src="/js/axios.interceptor.js"></script>
+<link rel="stylesheet" href="/css/sweetalert.css"/>
+<script src="/js/sweetalert.min.js"></script>
+<script type="text/javascript" src="/views/security/js/vue-login.js"></script>
+<script type="text/javascript" src="/views/dashboard/js/vue-header.js"></script>
+<script type="text/javascript" src="/views/dashboard/js/vue-sidebar.js"></script>
+<script type="text/javascript" src="/views/dashboard/js/vue-dashboard-template.js"></script>
+<script src="js/vue-chart-admin1.js"></script>
+<script src="js/vue-chart-admin2.js"></script>
+
+<!--own-->
+<script src="../admin/js/vue-estadisticas-admin.js"></script>
+
+<script src="js/cuidadoresMap.js"></script>
+
+<!--INIT-->
+<script type="text/javascript" src="/views/dashboard/js/vue-dashboard-template.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#wrapper'
+    });
+</script>
+
+<style>
+
+    .chart-container {
+        position: relative;
+        margin: auto;
+    }
+
+</style>
+
+
+<script>
+/*
+    var map;
+
+    AmCharts.ready(function() {
+        map = new AmCharts.AmMap();
+
+
+        map.balloon.color = "#000000";
+
+        var dataProvider = {
+            mapVar: AmCharts.maps.argentinaLow,
+            getAreasFromMap:true
+        };
+
+        map.dataProvider = dataProvider;
+
+        map.areasSettings = {
+            autoZoom: true,
+            selectedColor: "#CC0000"
+        };
+
+        map.smallMap = new AmCharts.SmallMap();
+
+        map.write("mapdiv");
+
+    });*/
+
+</script>
+
+<style>
+
+    .chart-container {
+        position: relative;
+        margin: auto;
+    }
+
+</style>
+
+</body>
+</html>

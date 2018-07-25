@@ -1,3 +1,11 @@
+// https://stackoverflow.com/questions/4413590/javascript-get-array-of-dates-between-2-dates
+Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+
 let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
     template: `
 <span>
@@ -133,7 +141,6 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                             <ul>
                                 <li v-for="(calificacion, index) in calificaciones  ">
                                     <div class="col-md-2 col-xs-12 avatar"><img :src="calificacion.reserva.perro.user.profileImageUrl" alt="" /></div>
-                                    <!--<div class="col-xs-12"> <label class="col-xs-12"></label></div>-->
                                     <div class="comment-content"><div class="arrow-comment"></div>
                                         <div class="comment-by">{{calificacion.reserva.perro.user.username}}<span class="date">June 2017</span>
                                             <div class="star-rating" >
@@ -197,6 +204,8 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                                 format="DD/MM/YYYY"
                                 v-on:updateDateRange="bindDates"
                                 datePickerId="datepickerId"
+                                :disabledDates="fechasDeshabilitadas"
+                                v-if="showDatePicker"
                         >
                         </my-hotel-date-picker>
                     </div>
@@ -293,6 +302,8 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             perPage: 3,
             DataReview: [],
             puntajeUsuario: 0,
+            fechasDeshabilitadas:[],
+            showDatePicker: false
         }
     }
     ,
@@ -300,9 +311,9 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
         this.bindUrlWithVue();
         this.setDates();
         this.getCuidador(this.url, this.idCuidador);
+        this.getReservasPagadasYEjecucion();
     },
     methods: {
-
         getCuidador() {
             axios.get(this.url + "/" + this.idCuidador)
                 .then((response) => {
@@ -325,15 +336,12 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                     }
                 );
         },
-
         getParameterByName(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
             var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
                 results = regex.exec(location.search);
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         },
-
-
         geolocateCuidador(direccion) {
             var lat = direccion.latitud;
             var long = direccion.longitud;
@@ -355,7 +363,6 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             });
 
         },
-
         loadImages(imagenes) {
 
 
@@ -386,7 +393,6 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
 
             }
         },
-
         loadTamaño(param) {
             if (param.id === 1) {
                 document.getElementById("imgTamañoPerro").src = "/img/perro_miniatura.png";
@@ -486,7 +492,6 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
 
 
         },
-
         paginate() {
             this.calificaciones = this.DataReview.slice(this.offset, this.offset + this.perPage);
 
@@ -497,6 +502,66 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
         next() {
             this.offset = this.offset + this.perPage;
         },
+        getReservasPagadasYEjecucion() {
+            // obtengo las reservas
+            // PAGADAS DUEÑO y ejecucion
+            axios.get("/api/reservas/fromToday/?idCuidador="+this.idCuidador+"&status=pagada-due%C3%B1o&status=ejecucion")
+                .then((response) => {
+                    let fechasList = this.calcularListadoDeFechas(response.data);
+                    this.fechasDeshabilitadas = this.calcularFechasDeshabilitadas(fechasList);
+                    // como las properties del componente no son reactivas debo montar el date picker luego de calcular las fecha
+                    this.showDatePicker = true
+                })
+                .catch(error => {
+                    this.showDatePicker = true
+                    console.log(error);
+                    sweetAlert("Oops...", "Error  ", "error");
+                });
+
+        },
+        calcularFechasDeshabilitadas(fechasList){
+            // debemos deshabilitar aquellas fechas que en el mismo dia tiene mayor o igual cantidad de reservas
+            // que la maxima admitida por el cuidador
+            let cantidadReservasPorDia = new Map()
+            for (let i = 0; i < fechasList.length; i++) {
+                let fecha = fechasList[i];
+                let frecuencia = cantidadReservasPorDia.get(fecha);
+                if(frecuencia === undefined){
+                    cantidadReservasPorDia.set(fecha,1);
+                }else {
+                    cantidadReservasPorDia.set(fecha,frecuencia + 1);
+                }
+            }
+            let fechasSuperanCantidadMaximaDePerro = [];
+            for (var [key, value] of cantidadReservasPorDia.entries()) {
+                if (value >= this.item.cantidadMaxDePerros) {
+                    fechasSuperanCantidadMaximaDePerro.push(key)
+                }
+            }
+            return fechasSuperanCantidadMaximaDePerro;
+        },
+        calcularListadoDeFechas(reservasPagadasYEjecucion) {
+            // creo una lista con todas las fechas de todas las reservas
+            let datesList = [];
+            for (var i = 0; i < reservasPagadasYEjecucion.length; i++) {
+                // Do stuff with arr[i] or i
+                let reserva = reservasPagadasYEjecucion[i];
+                let dates = this.getDatesBetween(reserva.fechaInicio, reserva.fechaFin)
+                datesList.push(...dates)
+            }
+            return datesList;
+        },
+        getDatesBetween(startDate, stopDate) {
+            var dateArray = new Array();
+            var currentDate =  fecha.parse(startDate, 'YYYY-MM-DD');
+            var stopDate =  fecha.parse(stopDate, 'YYYY-MM-DD');
+            while (currentDate <= stopDate) {
+                dateArray.push(fecha.format(currentDate,'YYYY-MM-DD'));
+                currentDate = currentDate.addDays(1);
+            }
+            return dateArray;
+        }
+
     },
     watch: {
         offset: function () {

@@ -20,6 +20,8 @@ let mySidebar = Vue.component('my-sidebar', {
 					</ul>
 					</li>
 					                    <li><a href="/views/reserva/mis-reservas-user.html?status=finalizada"><i class="sl sl-icon-star"></i> Calificaciones<span v-if="pendientesUser > 0" class="nav-tag green">{{pendientesUser}}</span></a></li>
+					                    
+					  <li v-show="role === 'ROLE_CUIDADOR'""><a href="/views/estadisticas/estadistica.html"><i class="sl sl-icon-pie-chart"></i> Mis Estadisticas </a></li>
 				
 				</ul>
                 	
@@ -42,6 +44,8 @@ let mySidebar = Vue.component('my-sidebar', {
                 
                 <ul v-show="role === 'ROLE_ADMIN'" data-submenu-title="Admin" >
                     <li><a href="/views/admin/moderar-cuidador.html"><i class="sl sl-icon-user"></i> Moderar Solicitud</a></li>
+                     <li><a href="/views/admin/estadisticas-admin.html"><i class="sl sl-icon-pie-chart"></i> Estadisticas</a></li>
+                   
                 </ul>
 
             </div>

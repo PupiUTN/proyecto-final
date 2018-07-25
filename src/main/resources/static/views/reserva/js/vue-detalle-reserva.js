@@ -471,9 +471,10 @@ Vue.component('my-detalle-reserva', {
                         },
                         function () {
                             document.location.href = "/views/dashboard/dashboard.html";
-                        })
+
                     }
                 );
+        })
         },
         confirmarReservaButton() {
 

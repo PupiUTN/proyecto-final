@@ -11,18 +11,30 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/colors/main.css" id="colors">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/colors/main.css" id="colors">
 
     <!-- MY CSS
     ================================================== -->
-    <link rel="stylesheet" href="/views/layout/vue-navbar.css">
+    <link rel="stylesheet" href="../../views/layout/vue-navbar.css">
 
     <!--<script src="/js/pace.min.js"></script>-->
-    <link href="/css/page-loader.css" rel="stylesheet"/>
+    <link href="../../css/page-loader.css" rel="stylesheet"/>
+
+
+  <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
+    <script src="https://unpkg.com/vue-chartjs@3.0.1-rc2/dist/vue-chartjs.js"></script>-->
+
+    <script src="../../ammap/dist/Chart.bundle.js"></script>
+    <script src="../../ammap/dist/Chart.js"></script>
+
 
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74104605-6"></script>
+
+
+
     <script>  window.dataLayer = window.dataLayer || [];
 
     function gtag() {
@@ -70,12 +82,25 @@
 <script type="text/javascript" src="/views/dashboard/js/vue-sidebar.js"></script>
 <script type="text/javascript" src="/views/dashboard/js/vue-dashboard-template.js"></script>
 <script src="js/vue-main-dashboard.js"></script>
+<script src="js/vue-chart.js"></script>
+<script src="js/vue-chart2.js"></script>
+
+<script type="text/javascript" src="../../views/dashboard/js/vue-admin-dashboard.js"></script>
+<script type="text/javascript" src="../../views/dashboard/js/vue-table-admin.js"></script>
 
 <script>
     let vm = new Vue({
         el: '#wrapper'
     });
 </script>
+<style>
+
+    .chart-container {
+        position: relative;
+        margin: auto;
+    }
+
+</style>
 
 </body>
 </html>

@@ -33,4 +33,9 @@ public class PerroService {
     public Perro getPerro(Long perroId) {
         return perroRepository.findOne(perroId);
     }
+
+    public Long getPerrosTotal() {
+
+        return perroRepository.count();
+    }
 }
