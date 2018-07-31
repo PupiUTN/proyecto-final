@@ -29,5 +29,4 @@ public class EstadisticaAdmin {
     int[] totalCuidadoresPorProvincia;
 
 
-
 }

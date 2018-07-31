@@ -32,7 +32,7 @@ public class RazaController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Raza getRaza(@PathVariable ("id") Long id) throws Exception {
+    public Raza getRaza(@PathVariable("id") Long id) throws Exception {
         return razaService.getRaza(id);
     }
 
@@ -42,7 +42,7 @@ public class RazaController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public Raza editRaza(@PathVariable("id") Long id,@RequestBody Raza entity) throws Exception {
+    public Raza editRaza(@PathVariable("id") Long id, @RequestBody Raza entity) throws Exception {
         entity.setId(id);
         return razaService.editRaza(entity);
     }

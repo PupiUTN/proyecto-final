@@ -27,7 +27,7 @@ public class VacunaController {
 
     @RequestMapping(method = RequestMethod.POST)
     public Vacuna createVacuna(@RequestBody Vacuna entity) throws Exception {
-       return vacunaService.createVacuna(entity);
+        return vacunaService.createVacuna(entity);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
@@ -37,13 +37,13 @@ public class VacunaController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public Vacuna editVacuna(@PathVariable("id") Long id,@RequestBody Vacuna entity) throws Exception {
+    public Vacuna editVacuna(@PathVariable("id") Long id, @RequestBody Vacuna entity) throws Exception {
         entity.setId(id);
         return vacunaService.editVacuna(entity);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Vacuna getVacuna(@PathVariable ("id") Long id) throws Exception {
+    public Vacuna getVacuna(@PathVariable("id") Long id) throws Exception {
         return vacunaService.getVacuna(id);
     }
 }

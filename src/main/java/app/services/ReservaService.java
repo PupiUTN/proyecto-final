@@ -1,8 +1,8 @@
 package app.services;
 
-import app.models.entities.EstadoReserva;
 import app.models.entities.Reserva;
 import app.persistence.ReservaRepository;
+import app.utils.EstadoReserva;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -131,11 +131,9 @@ public class ReservaService {
         return reservaRepository.getCantidadReservas(id);
     }
 
-    public List<Reserva> findAllByCuidador( Long id) {
+    public List<Reserva> findAllByCuidador(Long id) {
         return reservaRepository.findAllByCuidador(id);
     }
-
-
 
 
     public List<Reserva> getCantidadReservasTotal() {
@@ -143,12 +141,12 @@ public class ReservaService {
     }
 
 
-    public List<Reserva>  getReservasByStatus (EstadoReserva estadoReserva) {
-          if (estadoReserva.getStatus().equals("rechazada-cuidador"))
-          {
-              return reservaRepository.getCantidadByStatus(estadoReserva.getStatus(), "rechazada-dueño");
-          }
+    public List<Reserva> getReservasByStatus(EstadoReserva estadoReserva) {
+        if (estadoReserva.getStatus().equals("rechazada-cuidador")) {
+            return reservaRepository.getCantidadByStatus(estadoReserva.getStatus(), "rechazada-dueño");
+        }
 
-        return reservaRepository.getCantidadByStatus(estadoReserva.getStatus(),"");}
+        return reservaRepository.getCantidadByStatus(estadoReserva.getStatus(), "");
+    }
 
 }

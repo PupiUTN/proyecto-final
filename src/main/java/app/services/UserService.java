@@ -27,7 +27,7 @@ public class UserService {
         }
         if (emailExist(user.getEmail())) {
             throw new EmailExistsException(
-                    "There is an account with that email address:"  + user.getEmail());
+                    "There is an account with that email address:" + user.getEmail());
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -37,17 +37,14 @@ public class UserService {
 
     private boolean emailExist(String email) {
         User user = repository.findByEmail(email);
-        if (user != null) {
-            return true;
-        }
-        return false;
+        return user != null;
     }
 
-    public User getUser(Long id) throws Exception {
+    public User getUser(Long id) {
         return repository.findOne(id);
     }
 
-    public User editUser(User entity) throws Exception {
+    public User editUser(User entity) {
         return repository.save(entity);
     }
 }

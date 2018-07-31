@@ -5,17 +5,13 @@
  */
 package app.controllers;
 
-import app.models.entities.Cuidador;
 import app.models.entities.Servicio;
-import app.services.CuidadorService;
 import app.services.ServicioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -25,7 +21,7 @@ public class ServiciosController {
     private ServicioService servicioService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Servicio> getCuidadores() throws Exception {
+    public List<Servicio> getCuidadores() {
         return servicioService.getServicios();
     }
 

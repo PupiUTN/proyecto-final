@@ -51,7 +51,7 @@ public class UserController {
      */
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET, value = "/me")
-    public ResponseEntity getProfile(HttpServletRequest request) throws Exception {
+    public ResponseEntity getProfile(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         return new ResponseEntity(principal, HttpStatus.OK);
     }

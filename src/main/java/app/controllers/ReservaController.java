@@ -6,17 +6,12 @@
 package app.controllers;
 
 import app.models.entities.Reserva;
-import app.security.MyUserPrincipal;
-import app.services.MailService;
 import app.services.ReservaService;
-import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -34,11 +29,10 @@ public class ReservaController {
     }
 
 
-    @RequestMapping(value = "/fromToday/" , method = RequestMethod.GET)
-    public List<Reserva> getReservasByCuidadorIdAndStatusFromTodaySinJoin(@RequestParam("idCuidador") Long idCuidador,@RequestParam("status") List<String> statusList) throws Exception {
+    @RequestMapping(value = "/fromToday/", method = RequestMethod.GET)
+    public List<Reserva> getReservasByCuidadorIdAndStatusFromTodaySinJoin(@RequestParam("idCuidador") Long idCuidador, @RequestParam("status") List<String> statusList) {
         return reservaService.getReservasByCuidadorIdAndStatusFromTodaySinJoin(idCuidador, statusList);
     }
-
 
 
 }

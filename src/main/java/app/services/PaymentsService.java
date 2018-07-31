@@ -5,12 +5,11 @@ import app.models.entities.Payment;
 import app.models.entities.Reserva;
 import app.models.entities.User;
 import app.persistence.PaymentRepository;
-import com.mercadopago.*;
+import com.mercadopago.MP;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +37,7 @@ public class PaymentsService {
         JSONArray items = new JSONArray();
         JSONObject item = new JSONObject();
         JSONObject payer = new JSONObject();
-        try{
+        try {
             item.put("title", "Pupi - Pago de Estadía");
             item.put("description", "Servicios de cuidado de mascotas a " + cuidador.getUser().getFullName());
             item.put("quantity", 1);
@@ -47,17 +46,17 @@ public class PaymentsService {
             item.put("unit_price", totalAmount);
             items.put(item);
 
-            if(user.getFullName() != null) {
+            if (user.getFullName() != null) {
                 String[] nombreCompleto = user.getFullName().split(" ");
                 payer.put("name", nombreCompleto[0]);
                 payer.put("surname", nombreCompleto[1]);
             }
 
-            if(user.getEmail() != null) {
+            if (user.getEmail() != null) {
                 payer.put("email", user.getEmail());
             }
 
-            if(user.getPhone() != null) {
+            if (user.getPhone() != null) {
                 JSONObject phone = new JSONObject();
                 phone.put("number", user.getPhone());
                 payer.put("phone", phone);
@@ -70,8 +69,7 @@ public class PaymentsService {
 
             preference = mp.createPreference(transactionInfo.toString());
             logger.info("Payment Preference - " + preference.toString());
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("Exception when trying to create preference " + e.toString());
             logger.error("Exception when trying to create preference " + e.toString());
         }
@@ -100,7 +98,7 @@ public class PaymentsService {
                 logger.info("EXTERNAL REFERENCE -> " + externalReference);
                 Float paidAmount = 0f;
                 JSONArray payments = merchantOrderInfo.getJSONObject("response").getJSONArray("payments");
-                if(payments.length() > 0) {
+                if (payments.length() > 0) {
                     for (int i = 0; i < payments.length(); i++) {
                         JSONObject payment = payments.getJSONObject(i);
                         if ("approved".equalsIgnoreCase(payment.getString("status"))) {
@@ -116,8 +114,7 @@ public class PaymentsService {
                     }
                 }
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.toString());
             logger.error("Error when trying to get payment info " + e.toString() + "\n");
             e.printStackTrace();

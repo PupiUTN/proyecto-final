@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 public class MailService {
     private final String FROM = "reservas@pupi.com.ar";
@@ -34,17 +36,14 @@ public class MailService {
         }
     }
 
-    private static SendEmailRequest createEmailRequest(String from, String to, MailType type, String username) {
-
+    private static SendEmailRequest createEmailRequest(String from, String to, MailType type, String username) throws IOException {
         String emailTemplate = type.getMailTemplate(username);
         Destination destination = new Destination().withToAddresses(to);
-        Content subjectContent = new Content().withData(type.getMailSubject());
+        Content subjectContent = new Content().withData(type.getMailSubject(username));
         Content textContent = new Content().withData(emailTemplate);
         Body body = new Body().withHtml(textContent);
         Message message = new Message().withSubject(subjectContent).withBody(body);
-
         return new SendEmailRequest().withSource(from).withDestination(destination).withMessage(message);
-
     }
 
 

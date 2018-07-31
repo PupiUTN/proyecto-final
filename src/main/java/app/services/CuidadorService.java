@@ -1,7 +1,6 @@
 package app.services;
 
 import app.models.entities.Cuidador;
-import app.models.entities.Direccion;
 import app.models.entities.Servicio;
 import app.persistence.CuidadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ public class CuidadorService {
     }
 
 
-    public Cuidador editCuidador(Cuidador entity) throws Exception {
+    public Cuidador editCuidador(Cuidador entity) {
         return cuidadorRepository.save(entity);
     }
 
@@ -59,8 +58,7 @@ public class CuidadorService {
     }
 
 
-    public Cuidador cuidadorXUser(Long id)
-    {
+    public Cuidador cuidadorXUser(Long id) {
         return cuidadorRepository.findcuidadorXUser(id);
     }
 
@@ -72,12 +70,12 @@ public class CuidadorService {
 
     public List<Cuidador> searchCuidadores(String ciudadPlaceId, Date from, Date to, String status) {
         List<Cuidador> cuidadores = new ArrayList<>();
-        if (from == null || to == null){
-            cuidadores = cuidadorRepository.findAllbyCiudadPlaceIdAndStatus(ciudadPlaceId,status);
+        if (from == null || to == null) {
+            cuidadores = cuidadorRepository.findAllbyCiudadPlaceIdAndStatus(ciudadPlaceId, status);
         } else {
             System.out.println(new SimpleDateFormat("YYYY-MM-dd").format(from));
             System.out.println(new SimpleDateFormat("YYYY-MM-dd").format(to));
-            cuidadores = cuidadorRepository.findAllbyCiudadYFecha(ciudadPlaceId,from,to,status);
+            cuidadores = cuidadorRepository.findAllbyCiudadYFecha(ciudadPlaceId, from, to, status);
         }
         return cuidadores;
 
@@ -85,6 +83,6 @@ public class CuidadorService {
     }
 
     public Long getTotalCuidadores() {
-       return  cuidadorRepository.count();
+        return cuidadorRepository.count();
     }
 }
