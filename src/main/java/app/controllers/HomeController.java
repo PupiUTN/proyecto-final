@@ -15,7 +15,7 @@ public class HomeController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public String home() throws Exception {
+    public String home() {
         return "/views/index/index.html";
     }
 

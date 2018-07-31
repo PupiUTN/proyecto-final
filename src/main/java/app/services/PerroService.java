@@ -1,7 +1,7 @@
 package app.services;
 
-import app.models.entities.User;
 import app.models.entities.Perro;
+import app.models.entities.User;
 import app.persistence.PerroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,17 +20,17 @@ public class PerroService {
         this.perroRepository = perroRepository;
     }
 
-    public Perro createPerro(Perro entity) throws Exception {
+    public Perro createPerro(Perro entity) {
         return perroRepository.save(entity);
     }
 
-    public List<Perro> getPerrosByUserId(Long id) throws Exception {
+    public List<Perro> getPerrosByUserId(Long id) {
         User user = new User();
         user.setId(id);
         return perroRepository.findAllByUser(user);
     }
 
-    public Perro getPerro(Long perroId) throws  Exception {
+    public Perro getPerro(Long perroId) {
         return perroRepository.findOne(perroId);
     }
 

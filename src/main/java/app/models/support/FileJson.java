@@ -5,8 +5,8 @@ package app.models.support;
  */
 public class FileJson {
 
-    public static final String FILE= "file";
-    public static final String DIR= "dir";
+    public static final String FILE = "file";
+    public static final String DIR = "dir";
 
 
     String tipoDeArchivo;

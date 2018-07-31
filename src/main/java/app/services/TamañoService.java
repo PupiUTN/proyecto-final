@@ -4,6 +4,7 @@ import app.models.entities.Tamaño;
 import app.persistence.TamanoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class TamañoService {
         this.tamanoRepository = tamanoRepository;
     }
 
-    public List<Tamaño> getTamaños() throws Exception {
+    public List<Tamaño> getTamaños() {
         return tamanoRepository.findAll();
     }
 }

@@ -13,9 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class StorageServiceFileSystem  implements  StorageService{
-
-
+public class StorageServiceFileSystem implements StorageService {
 
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -34,12 +32,10 @@ public class StorageServiceFileSystem  implements  StorageService{
         pathToLocalHost = rootPath + File.separator + "src" + File.separator + "main" + File.separator + "resources"
                 + File.separator + "static";
         folder = File.separator + "file_upload";
-        completePath = pathToLocalHost+ folder;
+        completePath = pathToLocalHost + folder;
         // Remote address
         hostName = InetAddress.getLoopbackAddress().getHostName();
     }
-
-
 
 
     public List<FileJson> loadAll() {
@@ -52,9 +48,9 @@ public class StorageServiceFileSystem  implements  StorageService{
 
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
-                result.add(new FileJson(FileJson.FILE , getUrlFromFileName(listOfFiles[i].getName())) );
+                result.add(new FileJson(FileJson.FILE, getUrlFromFileName(listOfFiles[i].getName())));
             } else if (listOfFiles[i].isDirectory()) {
-                result.add(new FileJson(FileJson.DIR , getUrlFromFileName(listOfFiles[i].getName())) );
+                result.add(new FileJson(FileJson.DIR, getUrlFromFileName(listOfFiles[i].getName())));
             }
         }
         return result;
@@ -62,7 +58,7 @@ public class StorageServiceFileSystem  implements  StorageService{
     }
 
 
-    public String store(MultipartFile remoteFile) throws IOException {
+    public String store(MultipartFile remoteFile) {
         InputStream inputStream = null;
         OutputStream outputStream = null;
 
@@ -94,14 +90,13 @@ public class StorageServiceFileSystem  implements  StorageService{
         }
 
 
-
         logger.info("file path:" + serverFile.getAbsolutePath());
         return getUrlFromFileName(serverFileName);
 
 
     }
 
-    private String getUrlFromFileName(String serverFileName){
+    private String getUrlFromFileName(String serverFileName) {
         String remoteUrl = folder + File.separator + serverFileName;
         logger.info("file url:" + remoteUrl);
         return remoteUrl;

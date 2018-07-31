@@ -19,23 +19,23 @@ public class RazaService {
         this.razaRepository = razaRepository;
     }
 
-    public List<Raza> getRazas() throws Exception {
+    public List<Raza> getRazas() {
         return razaRepository.findAll();
     }
 
-    public Raza createRaza(Raza entity) throws Exception {
+    public Raza createRaza(Raza entity) {
         return razaRepository.save(entity);
     }
 
-    public Raza getRaza(Long id) throws Exception {
+    public Raza getRaza(Long id) {
         return razaRepository.findOne(id);
     }
 
-    public void deleteRaza(Long id) throws Exception {
+    public void deleteRaza(Long id) {
         razaRepository.delete(id);
     }
 
-    public Raza editRaza(Raza entity) throws Exception {
+    public Raza editRaza(Raza entity) {
         return razaRepository.save(entity);
     }
 }

@@ -1,10 +1,9 @@
 package app.persistence;
 
-import app.models.entities.User;
 import app.models.entities.Perro;
+import app.models.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
