@@ -52,7 +52,7 @@ Vue.component('become-cuidador', {
             <div v-if="hasMpToken == false">
                 <a v-on:click="getMpToken" class="button preview pull-right" >Vincular <i class="fa fa-arrow-circle-right"></i></a>
             </div>
-            <div v-if="hasMpToken == true" align="right">
+            <div v-else align="right">
                 Validada <i class="im im-icon-Security-Check"></i>
             </div>
             </div>
@@ -108,13 +108,13 @@ Vue.component('become-cuidador', {
             </div>
         </div>
     </div>
-    </div> 
     <div class="row">
     <div class="col-s-3" style="margin-left: 2%;">
     <input type="submit" :disabled="isReadOnly" value="Enviar" name="enviarAltaCuidador" style=" height: 60px; width: 150px; position: relative; " class="button margin-top-10"/>
     </div>
     </div>
-</form>
+    </form>
+    </div> 
               
 </div>
     `,
@@ -191,8 +191,6 @@ Vue.component('become-cuidador', {
 
         isUserCuidador(sessionInfo) {
             this.user = sessionInfo.data.principal.user;
-            console.log(this.user.mpToken);
-            this.hasMpToken = this.user.mpToken != null;
             console.log(this.user);
             if (this.user.role == 'ROLE_CUIDADOR') {
                 sweetAlert({
@@ -205,6 +203,7 @@ Vue.component('become-cuidador', {
                     });
             }
             this.solicitudExistente();
+            this.checkIfHasMpToken();
 
         },
         solicitudExistente() {
@@ -244,6 +243,11 @@ Vue.component('become-cuidador', {
         },
         enviarAltaCuidador() {
             if (!this.isReadOnly) {
+
+                if (this.hasMpToken === false) {
+                    sweetAlert("Oops...", "Error, debes vincular tu cuenta de MercadoPago!", "error");
+                    return;
+                }
 
                 if (this.validarCantidadImagenes()) {
                     sweetAlert("Oops...", "Error, Se deben cargar ambas imagenes del dni", "error");
@@ -301,6 +305,13 @@ Vue.component('become-cuidador', {
             axios.get(this.url + "/get-mp-url?email=" + this.user.email)
                 .then((tokenUrl) => {
                     window.location.href = tokenUrl.data
+                })
+        },
+        checkIfHasMpToken() {
+            axios.get(this.url + "/has-mp-token?email=" + this.user.email)
+                .then((hasMpToken) => {
+                    console.log(hasMpToken);
+                    this.hasMpToken = hasMpToken.data;
                 })
         }
     }

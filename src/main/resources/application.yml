@@ -50,3 +50,15 @@ app:
         accessKey: ${SES_ACCESS_KEY}
         secretKey: ${SES_SECRET_KEY}
 
+---
+spring:
+  profiles: development
+app:
+  domain: http://localhost:5000
+
+---
+spring:
+  profiles: production
+app:
+  domain: http://pupi.com.ar
+

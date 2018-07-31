@@ -36,6 +36,9 @@ public class PaymentsService {
 
     private final ReservaService reservaService;
 
+    @Value("${app.domain")
+    private String urlDomain;
+
 
     private static final Logger logger = LogManager.getLogger(PaymentsService.class);
 

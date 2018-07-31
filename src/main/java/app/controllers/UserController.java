@@ -24,8 +24,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.security.Principal;
 
 
