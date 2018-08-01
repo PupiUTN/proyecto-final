@@ -15,7 +15,7 @@ import java.util.List;
 public class CalificacionService {
 
 
-    private CalificacionRepository calificacion;
+    private final CalificacionRepository calificacion;
 
     @Autowired
     public CalificacionService(CalificacionRepository calificacion) {

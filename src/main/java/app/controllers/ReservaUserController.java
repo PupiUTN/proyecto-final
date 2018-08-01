@@ -7,9 +7,7 @@ package app.controllers;
 
 import app.models.entities.Reserva;
 import app.security.MyUserPrincipal;
-import app.services.CalificacionService;
 import app.services.MailService;
-import app.services.PerroService;
 import app.services.ReservaService;
 import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +27,11 @@ public class ReservaUserController {
 
     private final ReservaService reservaService;
     private final MailService mailService;
-    private final PerroService perroService;
-    private final CalificacionService calificacionService;
 
     @Autowired
-    public ReservaUserController(ReservaService reservaService, MailService mailService, PerroService perroService, CalificacionService calificacionService) {
+    public ReservaUserController(ReservaService reservaService, MailService mailService) {
         this.reservaService = reservaService;
         this.mailService = mailService;
-        this.perroService = perroService;
-        this.calificacionService = calificacionService;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -60,7 +54,7 @@ public class ReservaUserController {
 
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(method = RequestMethod.PUT, value = "{reservaId}/cancelarUsuario")
+    @RequestMapping(method = RequestMethod.PUT, value ="{reservaId}/cancelarUsuario")
     public ResponseEntity cancelarCausaUsuario(@PathVariable Long reservaId) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;

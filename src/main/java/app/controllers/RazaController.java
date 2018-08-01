@@ -12,8 +12,7 @@ import java.util.List;
 @RequestMapping(value = "api/razas")
 public class RazaController {
 
-
-    RazaService razaService;
+    private final RazaService razaService;
 
     @Autowired
     public RazaController(RazaService razaService) {
@@ -21,28 +20,28 @@ public class RazaController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Raza> getRazas() throws Exception {
+    public List<Raza> getRazas() {
         return razaService.getRazas();
     }
 
 
     @RequestMapping(method = RequestMethod.POST)
-    public Raza createRaza(@RequestBody Raza entity) throws Exception {
+    public Raza createRaza(@RequestBody Raza entity) {
         return razaService.createRaza(entity);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Raza getRaza(@PathVariable("id") Long id) throws Exception {
+    public Raza getRaza(@PathVariable("id") Long id) {
         return razaService.getRaza(id);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public void deleteRaza(@PathVariable("id") Long id) throws Exception {
+    public void deleteRaza(@PathVariable("id") Long id) {
         razaService.deleteRaza(id);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public Raza editRaza(@PathVariable("id") Long id, @RequestBody Raza entity) throws Exception {
+    public Raza editRaza(@PathVariable("id") Long id, @RequestBody Raza entity) {
         entity.setId(id);
         return razaService.editRaza(entity);
     }

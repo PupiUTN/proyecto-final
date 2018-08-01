@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +16,7 @@ import java.util.List;
 @Service
 public class CuidadorService {
 
-    private CuidadorRepository cuidadorRepository;
+    private final CuidadorRepository cuidadorRepository;
 
     @Autowired
     public CuidadorService(CuidadorRepository cuidadorRepository) {
@@ -26,10 +25,6 @@ public class CuidadorService {
 
     public List<Cuidador> getCuidadores() {
         return cuidadorRepository.findAll();
-    }
-
-    public List<Cuidador> getCuidadoresPorLocalidad(Long id) {
-        throw new UnsupportedOperationException();
     }
 
     public Cuidador getCuidador(Long id) {
@@ -69,7 +64,7 @@ public class CuidadorService {
     }
 
     public List<Cuidador> searchCuidadores(String ciudadPlaceId, Date from, Date to, String status) {
-        List<Cuidador> cuidadores = new ArrayList<>();
+        List<Cuidador> cuidadores;
         if (from == null || to == null) {
             cuidadores = cuidadorRepository.findAllbyCiudadPlaceIdAndStatus(ciudadPlaceId, status);
         } else {

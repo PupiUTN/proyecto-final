@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Service
 public class PerroService {
-    PerroRepository perroRepository;
+    private final PerroRepository perroRepository;
 
     @Autowired
     public PerroService(PerroRepository perroRepository) {

@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class ServicioService {
 
-    private ServicioRepository servicioRepository;
+    private final ServicioRepository servicioRepository;
 
     @Autowired
     public ServicioService(ServicioRepository servicioRepository) {

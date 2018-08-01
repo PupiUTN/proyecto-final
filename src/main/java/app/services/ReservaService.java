@@ -48,7 +48,8 @@ public class ReservaService {
         //reserva.setFechaInicio(addDays(reserva.getFechaInicio(), 1));
 
         reserva.setStatus("creada-dueño");
-        float precioTotal = daysBetween(reserva.getFechaInicio(), reserva.getFechaFin()) * reserva.getCuidador().getPrecioPorNoche();
+        float precioTotal = daysBetween(reserva.getFechaInicio(), reserva.getFechaFin()) * reserva.getCuidador()
+                .getPrecioPorNoche();
         reserva.setPrecioTotal(precioTotal);
         Reserva savedObject = reservaRepository.save(reserva);
         return savedObject;
@@ -142,7 +143,8 @@ public class ReservaService {
 
 
     public List<Reserva> getReservasByStatus(EstadoReserva estadoReserva) {
-        if (estadoReserva.getStatus().equals("rechazada-cuidador")) {
+        if (estadoReserva.getStatus()
+                .equals("rechazada-cuidador")) {
             return reservaRepository.getCantidadByStatus(estadoReserva.getStatus(), "rechazada-dueño");
         }
 

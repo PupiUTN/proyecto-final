@@ -14,38 +14,45 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.rmi.ServerException;
 
 @Service
 public class MailService {
-    private final String FROM = "reservas@pupi.com.ar";
     @Value("${app.aws.ses.accessKey}")
     private String accesskey;
 
     @Value("${app.aws.ses.secretKey}")
     private String secretKey;
 
-    public int sendEmail(User user, MailType type) {
+    public void sendEmail(User user, MailType type) {
 
         try {
             AmazonSimpleEmailService client = getClient();
+            String FROM = "reservas@pupi.com.ar";
             SendEmailRequest sendEmailRequest = createEmailRequest(FROM, user.getEmail(), type, user.getUsername());
             SendEmailResult sendEmailResult = client.sendEmail(sendEmailRequest);
-            return sendEmailResult.getSdkHttpMetadata().getHttpStatusCode();
+            if (sendEmailResult.getSdkHttpMetadata()
+                    .getHttpStatusCode() != 200) {
+                throw new ServerException("Error when trying to send email");
+            }
         } catch (Exception e) {
             throw new AmazonSimpleEmailServiceException(e.toString());
         }
     }
 
     private static SendEmailRequest createEmailRequest(String from, String to, MailType type, String username) throws IOException {
+
         String emailTemplate = type.getMailTemplate(username);
         Destination destination = new Destination().withToAddresses(to);
         Content subjectContent = new Content().withData(type.getMailSubject());
         Content textContent = new Content().withData(emailTemplate);
         Body body = new Body().withHtml(textContent);
-        Message message = new Message().withSubject(subjectContent).withBody(body);
+        Message message = new Message().withSubject(subjectContent)
+                .withBody(body);
 
-        return new SendEmailRequest().withSource(from).withDestination(destination).withMessage(message);
-
+        return new SendEmailRequest().withSource(from)
+                .withDestination(destination)
+                .withMessage(message);
     }
 
 
@@ -61,8 +68,6 @@ public class MailService {
                                 .withConnectionTimeout(3000)
                                 .withRequestTimeout(3000));
 
-        AmazonSimpleEmailService service = builder.build();
-        return service;
-
+        return builder.build();
     }
 }
