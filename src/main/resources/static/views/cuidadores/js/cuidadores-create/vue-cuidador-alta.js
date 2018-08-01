@@ -45,12 +45,12 @@ Vue.component('become-cuidador', {
     <div class="row">
     <div class="col-md-12 margin-top-20 margin-bottom-20" >
         <div class="dashboard-list-box margin-top-0">
-            <h4 class="gray"> 	<i class="fa fa-paw"></i> Vincular Cuenta de MercadoPago </h4>
+            <h4 class="gray"> 	<i class="fa fa-paw"></i> Vincular Cuenta de MercadoPago <img src="/version-horizontal-small.png" align="right"></h4>
             <div class="dashboard-list-box-static"  > 
                         <label class="margin-top-0">Necesitamos que vincules tu cuenta de MercadoPago a tu cuenta de Pupi, para que podamos
             realizar el cobro de la estadía, y automáticamente el dinero sea depositado en tu cuenta.</label>
-            <div v-if="hasMpToken == false">
-                <a v-on:click="getMpToken" class="button preview pull-right" >Vincular <i class="fa fa-arrow-circle-right"></i></a>
+            <div v-if="hasMpToken == false" align="right">
+                <a v-on:click="getMpToken" class="button preview" >Vincular <i class="fa fa-arrow-circle-right"></i></a>
             </div>
             <div v-else align="right">
                 Validada <i class="im im-icon-Security-Check"></i>

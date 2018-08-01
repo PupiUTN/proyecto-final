@@ -21,11 +21,11 @@ public abstract class AbstractRestClientService implements RestClientInterface {
 
     @Override
     public JsonNode post(String uri, HttpEntity<JsonNode> entity) {
-        JsonNode resp = null;
         if (uri == null) {
             throw new RuntimeException("Uri can't be null");
         }
         ResponseEntity<String> response = restTemplate.postForEntity(uri, entity, String.class);
+        JsonNode resp = null;
         if (response.getStatusCode() == HttpStatus.OK) {
             try {
                 resp = mapper.readTree(response.getBody());
