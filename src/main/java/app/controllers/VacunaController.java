@@ -17,33 +17,37 @@ import java.util.List;
 @RequestMapping(value = "/api/vacunas")
 public class VacunaController {
 
+    private final VacunaService vacunaService;
+
     @Autowired
-    VacunaService vacunaService;
+    public VacunaController(VacunaService vacunaService) {
+        this.vacunaService = vacunaService;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Vacuna> getVacunas() throws Exception {
+    public List<Vacuna> getVacunas() {
         return vacunaService.getVacunas();
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Vacuna createVacuna(@RequestBody Vacuna entity) throws Exception {
+    public Vacuna createVacuna(@RequestBody Vacuna entity) {
         return vacunaService.createVacuna(entity);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public void deleteVacuna(@PathVariable Long id) throws Exception {
+    public void deleteVacuna(@PathVariable Long id) {
         vacunaService.deleteVacuna(id);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public Vacuna editVacuna(@PathVariable("id") Long id, @RequestBody Vacuna entity) throws Exception {
+    public Vacuna editVacuna(@PathVariable("id") Long id, @RequestBody Vacuna entity) {
         entity.setId(id);
         return vacunaService.editVacuna(entity);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Vacuna getVacuna(@PathVariable("id") Long id) throws Exception {
+    public Vacuna getVacuna(@PathVariable("id") Long id) {
         return vacunaService.getVacuna(id);
     }
 }

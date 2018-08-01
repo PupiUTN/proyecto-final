@@ -52,9 +52,12 @@ public class ReservaCuidadorController {
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
     @RequestMapping(method = RequestMethod.GET)
     public List<Reserva> get(@RequestParam("status") String status) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
-        long id = myUserPrincipal.getUser().getId();
+        long id = myUserPrincipal.getUser()
+                .getId();
         return reservaService.getReservasByCuidadorIdAndStatus(id, status);
     }
 
@@ -62,12 +65,16 @@ public class ReservaCuidadorController {
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
     @RequestMapping(method = RequestMethod.PUT, value = "{reservaId}/cancelarReserva")
     public ResponseEntity cancelar(@PathVariable Long reservaId) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
 
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
-        long id = myUserPrincipal.getUser().getId();
+        long id = myUserPrincipal.getUser()
+                .getId();
         reservaService.cancelar(reservaId, id);
-        User user = getReserva(reservaId).getPerro().getUser();
+        User user = getReserva(reservaId).getPerro()
+                .getUser();
         mailService.sendEmail(user, MailType.BOOKING_CANCELLATION_BY_HOST);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -75,12 +82,16 @@ public class ReservaCuidadorController {
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
     @RequestMapping(method = RequestMethod.PUT, value = "{reservaId}/confirmarReserva")
     public ResponseEntity Confirmar(@PathVariable Long reservaId) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
 
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
-        long id = myUserPrincipal.getUser().getId();
+        long id = myUserPrincipal.getUser()
+                .getId();
         reservaService.confirmar(reservaId, id);
-        User user = getReserva(reservaId).getPerro().getUser();
+        User user = getReserva(reservaId).getPerro()
+                .getUser();
         mailService.sendEmail(user, MailType.BOOKING_CONFIRMATION);
         return new ResponseEntity(HttpStatus.OK);
 
@@ -90,14 +101,19 @@ public class ReservaCuidadorController {
 
     @RequestMapping(value = "/PendientesReview/", method = RequestMethod.GET)
     public int[] getPendientesReview() {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
-        long id = myUserPrincipal.getUser().getId();
+        long id = myUserPrincipal.getUser()
+                .getId();
         int[] cant = new int[2];
         String status = "finalizada";
         // List reserva = ;
-        cant[0] = reservaService.getReservasByCuidadorIdAndStatus(id, status).size();
-        cant[1] = reservaService.getReservasByUserIdAndStatus(id, status).size();
+        cant[0] = reservaService.getReservasByCuidadorIdAndStatus(id, status)
+                .size();
+        cant[1] = reservaService.getReservasByUserIdAndStatus(id, status)
+                .size();
         return cant;
 
     }

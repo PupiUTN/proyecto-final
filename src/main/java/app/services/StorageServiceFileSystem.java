@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,16 +15,13 @@ import java.util.UUID;
 public class StorageServiceFileSystem implements StorageService {
 
 
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //Local
     private String rootPath;
     private String pathToLocalHost;
     private String folder;
     private String completePath;
-    // Remote address
-    private String hostName;
-    private String port = String.valueOf(5000);
 
     public StorageServiceFileSystem() {
         rootPath = System.getProperty("user.dir");
@@ -33,8 +29,6 @@ public class StorageServiceFileSystem implements StorageService {
                 + File.separator + "static";
         folder = File.separator + "file_upload";
         completePath = pathToLocalHost + folder;
-        // Remote address
-        hostName = InetAddress.getLoopbackAddress().getHostName();
     }
 
 
@@ -59,8 +53,8 @@ public class StorageServiceFileSystem implements StorageService {
 
 
     public String store(MultipartFile remoteFile) {
-        InputStream inputStream = null;
-        OutputStream outputStream = null;
+        InputStream inputStream;
+        OutputStream outputStream;
 
 
         File dir = new File(completePath);
@@ -69,7 +63,8 @@ public class StorageServiceFileSystem implements StorageService {
         String remoteFileName = remoteFile.getOriginalFilename();
         String remoteFileExtension = remoteFileName.substring(remoteFileName.lastIndexOf(".") + 1);
 
-        String serverFileName = UUID.randomUUID().toString() + "." + remoteFileExtension;
+        String serverFileName = UUID.randomUUID()
+                .toString() + "." + remoteFileExtension;
         File serverFile = new File(dir.getAbsolutePath() + File.separator + serverFileName);
 
         try {
@@ -79,7 +74,7 @@ public class StorageServiceFileSystem implements StorageService {
                 serverFile.createNewFile();
             }
             outputStream = new FileOutputStream(serverFile);
-            int read = 0;
+            int read;
             byte[] bytes = new byte[1024];
 
             while ((read = inputStream.read(bytes)) != -1) {

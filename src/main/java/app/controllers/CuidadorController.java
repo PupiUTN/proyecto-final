@@ -16,8 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -54,7 +52,7 @@ public class CuidadorController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Cuidador getCuidador(@PathVariable("id") Long id) throws Exception {
+    public Cuidador getCuidador(@PathVariable("id") Long id) {
         Cuidador cuidador = cuidadorService.getCuidador(id);
         if (cuidador != null) {
             cuidador.setCantidadVisitas(cuidador.getCantidadVisitas() + 1);
@@ -76,7 +74,7 @@ public class CuidadorController {
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public @ResponseBody
-    Cuidador editCuidador(@PathVariable("id") Long id, @RequestBody Cuidador entity) throws Exception {
+    Cuidador editCuidador(@PathVariable("id") Long id, @RequestBody Cuidador entity) {
         entity.setId(id);
         if ("approved".equalsIgnoreCase(entity.getEstado())) {
             mailService.sendEmail(entity.getUser(), MailType.WELCOME_HOST);
@@ -108,13 +106,7 @@ public class CuidadorController {
     }
 
     private void ordenarCuidadores(List<Cuidador> cuidadores) {
-        Collections.sort(cuidadores, new Comparator<Cuidador>() {
-            @Override
-            public int compare(Cuidador c1, Cuidador c2) {
-                return (int) (c2.getPonderacion() - c1.getPonderacion());
-            }
-
-        });
+        cuidadores.sort((c1, c2) -> (int) (c2.getPonderacion() - c1.getPonderacion()));
     }
 
 

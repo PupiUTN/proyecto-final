@@ -12,16 +12,6 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 				</div>
 			</div>
 		</div>
-		<!-- Content -->
-		<div class="row">
-			<div class="col-md-12 col-xs-12">			    
-				<div class="notification success closeable margin-bottom-30 ">
-					<p> <strong>Estos son tus datos</strong>!</p>    					                    <!-- <a class="close" href="#"></a>-->
-			</div>
-			
-			</div>
-		
-		</div>
 		
 		<div v-show="role === 'ROLE_USER'" class="col-md-12 row"> 
 			   <div class="col-md-3"></div>

@@ -14,7 +14,7 @@ import java.util.List;
 public class VacunaService {
 
 
-    VacunaRespository vacunaRespository;
+    private final VacunaRespository vacunaRespository;
 
     @Autowired
     public VacunaService(VacunaRespository vacunaRespository) {

@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Service
 public class RazaService {
-    RazaRepository razaRepository;
+    private final RazaRepository razaRepository;
 
     @Autowired
     public RazaService(RazaRepository razaRepository) {

@@ -1,26 +1,42 @@
 package app.services;
 
-import app.models.entities.Cuidador;
-import app.models.entities.Payment;
 import app.models.entities.Reserva;
 import app.models.entities.User;
+import app.models.mercadopago.Preference;
 import app.persistence.PaymentRepository;
-import com.mercadopago.MP;
+import app.utils.PaymentsUtils;
+import com.mercadopago.MercadoPago;
+import com.mercadopago.exceptions.MPException;
+import com.mercadopago.resources.MerchantOrder;
+import com.mercadopago.resources.Payment;
+import com.mercadopago.resources.datastructures.merchantorder.MerchantOrderPayment;
+import com.mercadopago.resources.datastructures.preference.BackUrls;
+import com.mercadopago.resources.datastructures.preference.Item;
+import com.mercadopago.resources.datastructures.preference.Payer;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class PaymentsService {
 
-    private PaymentRepository paymentRepository;
-    private ReservaService reservaService;
+    private final PaymentRepository paymentRepository;
+    private final ReservaService reservaService;
+    @Value("${app.mp.pupi.clientId}")
+    private String clientId;
+    @Value("${app.mp.pupi.clientSecret}")
+    private String clientSecret;
+    @Value("${app.domain")
+    private String urlDomain;
+
 
     private static final Logger logger = LogManager.getLogger(PaymentsService.class);
-    MP mp = new MP("92590042667422", "R8bMZvxKoJgO4gxALPfVnRv4ueJyqwRL");
 
     @Autowired
     public PaymentsService(PaymentRepository paymentRepository, ReservaService reservaService) {
@@ -28,90 +44,64 @@ public class PaymentsService {
         this.reservaService = reservaService;
     }
 
-    public JSONObject createPreference(Reserva reserva) {
-        Float totalAmount = reserva.getPrecioTotal();
-        User user = reserva.getPerro().getUser();
-        Cuidador cuidador = reserva.getCuidador();
-        JSONObject preference = null;
-        JSONObject transactionInfo = new JSONObject();
-        JSONArray items = new JSONArray();
-        JSONObject item = new JSONObject();
-        JSONObject payer = new JSONObject();
+    @PostConstruct
+    private void configureSDK() {
         try {
-            item.put("title", "Pupi - Pago de Estadía");
-            item.put("description", "Servicios de cuidado de mascotas a " + cuidador.getUser().getFullName());
-            item.put("quantity", 1);
-            item.put("picture_url", "http://pupi.com.ar/assets/images/logo.png");
-            item.put("currency_id", "ARS");
-            item.put("unit_price", totalAmount);
-            items.put(item);
-
-            if (user.getFullName() != null) {
-                String[] nombreCompleto = user.getFullName().split(" ");
-                payer.put("name", nombreCompleto[0]);
-                payer.put("surname", nombreCompleto[1]);
-            }
-
-            if (user.getEmail() != null) {
-                payer.put("email", user.getEmail());
-            }
-
-            if (user.getPhone() != null) {
-                JSONObject phone = new JSONObject();
-                phone.put("number", user.getPhone());
-                payer.put("phone", phone);
-            }
-
-            transactionInfo.put("items", items);
-            transactionInfo.put("payer", payer);
-            transactionInfo.put("notification_url", "http://pupi.com.ar/api/payments/notifications");
-            transactionInfo.put("external_reference", reserva.getId());
-
-            preference = mp.createPreference(transactionInfo.toString());
-            logger.info("Payment Preference - " + preference.toString());
-        } catch (Exception e) {
-            System.out.println("Exception when trying to create preference " + e.toString());
-            logger.error("Exception when trying to create preference " + e.toString());
+            MercadoPago.SDK.setClientId(clientId);
+            MercadoPago.SDK.setClientSecret(clientSecret);
+        } catch (MPException e) {
+            e.printStackTrace();
         }
+    }
+
+    public Preference createPreference(Reserva reserva) {
+
+        Preference preference = new Preference();
+
+        User user = reserva.getCuidador()
+                .getUser();
+
+        Item item = PaymentsUtils.fillItem(reserva.getPrecioTotal(), user.getFullName(), reserva.getId()
+                .toString());
+
+        Payer payer = PaymentsUtils.fillPayer(reserva.getPerro()
+                .getUser());
+
+        preference.setPayer(payer);
+        preference.appendItem(item);
+        preference.setNotificationUrl("http://pupi.com.ar/api/payments/notifications");
+        preference.setExternalReference(reserva.getId()
+                .toString());
+
+        //Acá seteamos el token del vendedor
+        Optional<String> mpToken = Optional.ofNullable(user.getMpToken());
+        mpToken.ifPresent(MercadoPago.SDK::setUserToken);
+
+        preference.setMarketplaceFee(20f);
+        BackUrls backUrls = new BackUrls("http://google.com", "http://google.com", "http://google.com");
+        preference.setBackUrls(backUrls);
+        try {
+            preference.save();
+        } catch (MPException e) {
+            e.printStackTrace();
+        }
+
         return preference;
     }
 
-    public JSONObject getPaymentInfo(String id, String topic) {
+    public void getPaymentInfo(String id, String topic) {
         try {
-            JSONObject merchantOrderInfo = null;
-            JSONObject paymentInfo = null;
-            if (topic.equalsIgnoreCase("payment")) {
-                paymentInfo = mp.get("/collections/notifications/" + id);
-                logger.info("TOPIC -> PAYMENT");
-                logger.info("paymentInfo - " + paymentInfo.toString());
-                Long merchantOrderId = paymentInfo.getJSONObject("response").getJSONObject("collection").optLong("merchant_order_id");
-                merchantOrderInfo = mp.get("/merchant_orders/" + merchantOrderId);
-                logger.info("merchantOrderInfo - " + merchantOrderInfo.toString());
-            } else if (topic.equalsIgnoreCase("merchant_order")) {
-                merchantOrderInfo = mp.get("/merchant_orders/" + id);
-                logger.info("TOPIC -> MERCHANT_ORDER");
-                logger.info("merchantOrderInfo - " + merchantOrderInfo.toString());
-            }
-            if (merchantOrderInfo != null && merchantOrderInfo.getInt("status") == 200) {
-                String externalReference = merchantOrderInfo.getJSONObject("response").getString("external_reference");
-                Reserva booking = getReserva(Long.parseLong(externalReference));
-                logger.info("EXTERNAL REFERENCE -> " + externalReference);
-                Float paidAmount = 0f;
-                JSONArray payments = merchantOrderInfo.getJSONObject("response").getJSONArray("payments");
-                if (payments.length() > 0) {
-                    for (int i = 0; i < payments.length(); i++) {
-                        JSONObject payment = payments.getJSONObject(i);
-                        if ("approved".equalsIgnoreCase(payment.getString("status"))) {
-                            paidAmount += Float.parseFloat(payment.get("transaction_amount").toString());
-                        }
-                        createPayment(booking, Long.valueOf(id), payment.getString("status"), payment.toString());
-                    }
-                    Float bookingAmount = Float.parseFloat(merchantOrderInfo.getJSONObject("response").get("total_amount").toString());
 
-                    if (paidAmount >= bookingAmount) {
-                        logger.info("RESERVA PAGADA - " + booking.toString());
-                        reservaService.setEstadoPagada(booking);
-                    }
+            MerchantOrder merchantOrder = topic.equalsIgnoreCase("payment") ? MerchantOrder.findById(Payment.findById(id)
+                    .getOrder()
+                    .getId()
+                    .toString()) : MerchantOrder.findById(id);
+
+            if (merchantOrder != null && merchantOrder.getLastApiResponse()
+                    .getStatusCode() == 200) {
+                Reserva booking = getReserva(Long.parseLong(merchantOrder.getExternalReference()));
+                if (calculatePaidAmountAndLog(merchantOrder.getPayments(), booking, id) >= merchantOrder.getTotalAmount()) {
+                    reservaService.setEstadoPagada(booking);
                 }
             }
         } catch (Exception e) {
@@ -119,16 +109,25 @@ public class PaymentsService {
             logger.error("Error when trying to get payment info " + e.toString() + "\n");
             e.printStackTrace();
         }
-        return null;
     }
 
-    public Payment createPayment(Reserva reserva, Long mpId, String status, String paymentData) {
-        Payment p = new Payment();
-        p.setUser(reserva.getPerro().getUser());
+    private float calculatePaidAmountAndLog(ArrayList<MerchantOrderPayment> payments, Reserva booking, String id) {
+        if (payments.isEmpty()) return 0f;
+        return (float) payments.stream()
+                .filter(pay -> "approved".equalsIgnoreCase(pay.getStatus()))
+                .peek(pay -> createPayment(booking, Long.valueOf(id), pay.getStatus()))
+                .mapToDouble(MerchantOrderPayment::getTransactionAmount)
+                .sum();
+    }
+
+    public void createPayment(Reserva reserva, Long mpId, String status) {
+        app.models.entities.Payment p = new app.models.entities.Payment();
+        p.setUser(reserva.getPerro()
+                .getUser());
         p.setPaymentData("DATOS PAGO");
         p.setMpPaymentId(mpId);
         p.setStatus(status);
-        return paymentRepository.save(p);
+        paymentRepository.save(p);
     }
 
     public Reserva getReserva(Long reservaId) {

@@ -42,7 +42,23 @@ Vue.component('become-cuidador', {
     </div>
     </div>
     <form id="altaCuidadorForm" v-on:submit.prevent='enviarAltaCuidador()' enctype="multipart/form-data">
-    <div class="row panelDiv">
+    <div class="row">
+    <div class="col-md-12 margin-top-20 margin-bottom-20" >
+        <div class="dashboard-list-box margin-top-0">
+            <h4 class="gray"> 	<i class="fa fa-paw"></i> Vincular Cuenta de MercadoPago <img src="/version-horizontal-small.png" align="right"></h4>
+            <div class="dashboard-list-box-static"  > 
+                        <label class="margin-top-0">Necesitamos que vincules tu cuenta de MercadoPago a tu cuenta de Pupi, para que podamos
+            realizar el cobro de la estadía, y automáticamente el dinero sea depositado en tu cuenta.</label>
+            <div v-if="hasMpToken == false" align="right">
+                <a v-on:click="getMpToken" class="button preview" >Vincular <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+            <div v-else align="right">
+                Validada <i class="im im-icon-Security-Check"></i>
+            </div>
+            </div>
+        </div>
+    </div>
+    </div>
     <div class="col-lg-6 col-md-12 margin-top-20 margin-bottom-20 " style="height:80%">
         <div class="dashboard-list-box margin-top-0">
             <h4 class="gray"> 	<i class="fa fa-paw"></i> Descripción </h4>
@@ -92,13 +108,13 @@ Vue.component('become-cuidador', {
             </div>
         </div>
     </div>
-    </div> 
     <div class="row">
     <div class="col-s-3" style="margin-left: 2%;">
     <input type="submit" :disabled="isReadOnly" value="Enviar" name="enviarAltaCuidador" style=" height: 60px; width: 150px; position: relative; " class="button margin-top-10"/>
     </div>
     </div>
-</form>
+    </form>
+    </div> 
               
 </div>
     `,
@@ -117,13 +133,12 @@ Vue.component('become-cuidador', {
                 estado: "pending",
             },
             user: {},
-
+            hasMpToken: false
         }
 
     },
     mounted() {
         this.getUserInfo();
-
     },
     methods: {
         filesChange(fileList, position) {
@@ -188,6 +203,7 @@ Vue.component('become-cuidador', {
                     });
             }
             this.solicitudExistente();
+            this.checkIfHasMpToken();
 
         },
         solicitudExistente() {
@@ -227,6 +243,11 @@ Vue.component('become-cuidador', {
         },
         enviarAltaCuidador() {
             if (!this.isReadOnly) {
+
+                if (this.hasMpToken === false) {
+                    sweetAlert("Oops...", "Error, debes vincular tu cuenta de MercadoPago!", "error");
+                    return;
+                }
 
                 if (this.validarCantidadImagenes()) {
                     sweetAlert("Oops...", "Error, Se deben cargar ambas imagenes del dni", "error");
@@ -276,14 +297,23 @@ Vue.component('become-cuidador', {
             this.dniReverso.url = this.cuidador.dniImagenes[1].url;
         },
         validarCantidadImagenes() {
-            if (this.dniAnverso.url == "/assets/images/nodni.png" || this.dniReverso.url == "/assets/images/nodni.png") {
-                return true;
-            }
+            return this.dniAnverso.url == "/assets/images/nodni.png" || this.dniReverso.url == "/assets/images/nodni.png";
+        }
+        ,
 
-            return false;
-
+        getMpToken() {
+            axios.get(this.url + "/get-mp-url?email=" + this.user.email)
+                .then((tokenUrl) => {
+                    window.location.href = tokenUrl.data
+                })
         },
-
+        checkIfHasMpToken() {
+            axios.get(this.url + "/has-mp-token?email=" + this.user.email)
+                .then((hasMpToken) => {
+                    console.log(hasMpToken);
+                    this.hasMpToken = hasMpToken.data;
+                })
+        }
     }
 });
 

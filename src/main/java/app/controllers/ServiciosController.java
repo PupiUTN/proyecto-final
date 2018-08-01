@@ -17,8 +17,12 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/servicios/")
 public class ServiciosController {
+    private final ServicioService servicioService;
+
     @Autowired
-    private ServicioService servicioService;
+    public ServiciosController(ServicioService servicioService) {
+        this.servicioService = servicioService;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Servicio> getCuidadores() {

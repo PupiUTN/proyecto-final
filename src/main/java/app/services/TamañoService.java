@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class TamañoService {
 
-    private TamanoRepository tamanoRepository;
+    private final TamanoRepository tamanoRepository;
 
     @Autowired
     public TamañoService(TamanoRepository tamanoRepository) {

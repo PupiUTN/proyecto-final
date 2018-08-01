@@ -25,7 +25,7 @@ import java.util.UUID;
 public class StorageServiceS3 implements StorageService {
 
 
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Value("${app.aws.s3.accessKey}")
     private String accesskey;
 

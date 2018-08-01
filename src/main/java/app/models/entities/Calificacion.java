@@ -17,7 +17,7 @@ public class Calificacion implements Serializable {
     private int puntaje;
 
 
-    private boolean from_owner;
+    private boolean fromOwner;
     private String comentario;
     @ManyToOne
     private Reserva reserva;
@@ -58,12 +58,12 @@ public class Calificacion implements Serializable {
         this.reserva = reserva;
     }
 
-    public boolean isFrom_owner() {
-        return from_owner;
+    public boolean isFromOwner() {
+        return fromOwner;
     }
 
-    public void setFrom_owner(boolean from_owner) {
-        this.from_owner = from_owner;
+    public void setFromOwner(boolean fromOwner) {
+        this.fromOwner = fromOwner;
     }
 
 
