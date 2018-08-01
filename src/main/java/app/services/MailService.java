@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.rmi.ServerException;
 
 @Service
@@ -39,7 +40,7 @@ public class MailService {
         }
     }
 
-    private static SendEmailRequest createEmailRequest(String from, String to, MailType type, String username) {
+    private static SendEmailRequest createEmailRequest(String from, String to, MailType type, String username) throws IOException {
 
         String emailTemplate = type.getMailTemplate(username);
         Destination destination = new Destination().withToAddresses(to);

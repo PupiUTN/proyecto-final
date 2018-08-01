@@ -16,7 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/cuidadores")
@@ -51,11 +52,12 @@ public class CuidadorController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Cuidador getCuidador(@PathVariable("id") Long id) throws Exception {
-      Cuidador cuidador = cuidadorService.getCuidador(id);
-        if (cuidador != null){
-           cuidador.setCantidadVisitas(cuidador.getCantidadVisitas() + 1);
-        cuidadorService.editCuidador(cuidador);}
+    public Cuidador getCuidador(@PathVariable("id") Long id) {
+        Cuidador cuidador = cuidadorService.getCuidador(id);
+        if (cuidador != null) {
+            cuidador.setCantidadVisitas(cuidador.getCantidadVisitas() + 1);
+            cuidadorService.editCuidador(cuidador);
+        }
         return cuidador;
     }
 

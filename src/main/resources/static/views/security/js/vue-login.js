@@ -259,12 +259,16 @@ let myLogin = Vue.component('my-login', {
                     this.resetVueJsData();
                 })
                 .catch(error => {
-                    if(error.response.status === 409){
-                        this.emailAlreadyExists = true;
+                    if (error.response) {
+                        if (error.response.status === 409) {
+                            this.emailAlreadyExists = true;
+                        }
                     }
+                    else {
                         console.log(error);
+                        sweetAlert("Error", "Error al registrarse. ", "error");
                     }
-                );
+                });
         },
         resetVueJsData() {
             Object.assign(this.$data, getDefaultData())

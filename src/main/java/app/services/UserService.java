@@ -62,10 +62,7 @@ public class UserService extends AbstractRestClientService {
 
     private boolean emailExist(String email) {
         User user = repository.findByEmail(email);
-        if (user != null) {
-            return true;
-        }
-        return false;
+        return user != null;
     }
 
     public User getUser(Long id) {
