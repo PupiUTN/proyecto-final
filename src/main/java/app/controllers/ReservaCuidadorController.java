@@ -1,9 +1,12 @@
 package app.controllers;
 
 
+import app.models.entities.Cuidador;
+import app.models.entities.Estadistica;
 import app.models.entities.Reserva;
 import app.models.entities.User;
 import app.security.MyUserPrincipal;
+import app.services.CuidadorService;
 import app.services.MailService;
 import app.services.ReservaService;
 import app.utils.MailType;
@@ -15,7 +18,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.DataBindingException;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Date;
+import java.util.Date.*;
 
 @RestController
 @RequestMapping(value = "/api/cuidador/me/reservas")
@@ -24,11 +31,13 @@ public class ReservaCuidadorController {
 
     private final ReservaService reservaService;
     private final MailService mailService;
+    private final CuidadorService cuidadorService;
 
     @Autowired
-    public ReservaCuidadorController(ReservaService reservaService, MailService mailService) {
+    public ReservaCuidadorController(ReservaService reservaService, MailService mailService, CuidadorService cuidadorService) {
         this.reservaService = reservaService;
         this.mailService = mailService;
+        this.cuidadorService = cuidadorService;
     }
 
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
@@ -91,12 +100,13 @@ public class ReservaCuidadorController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
-          int[]cant  = new int[2];
+        int[] cant = new int[2];
         String status = "finalizada";
-       // List reserva = ;
-        cant[0] =reservaService.getReservasByCuidadorIdAndStatus(id,status).size();
-        cant[1] =reservaService.getReservasByUserIdAndStatus(id,status).size();
+        // List reserva = ;
+        cant[0] = reservaService.getReservasByCuidadorIdAndStatus(id, status).size();
+        cant[1] = reservaService.getReservasByUserIdAndStatus(id, status).size();
         return cant;
 
     }
+
 }

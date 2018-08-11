@@ -41,6 +41,7 @@ public class Cuidador implements Serializable {
     private int dni;
     private int cantidadReviews;
     private int promedioReviews;
+    private int cantidadVisitas;
     @Transient
     private double ponderacion;
 
@@ -68,11 +69,4 @@ public class Cuidador implements Serializable {
                 ", dni=" + dni +
                 '}';
     }
-
-    public Double getPonderacion() {
-        this.ponderacion = (Math.pow(this.promedioReviews, 2) + this.cantidadReviews * 0.5);
-        return this.ponderacion;
-    }
-
-
 }
