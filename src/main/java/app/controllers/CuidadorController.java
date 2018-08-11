@@ -49,7 +49,6 @@ public class CuidadorController {
         return cuidadores;
 
     }
-
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Cuidador getCuidador(@PathVariable("id") Long id) throws Exception {
       Cuidador cuidador = cuidadorService.getCuidador(id);

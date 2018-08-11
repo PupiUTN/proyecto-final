@@ -162,7 +162,8 @@ public class EstadisticaController {
             estadisticaUser.setNombre(user.getUsername());
             estadisticaUser.setCantidadPorMes(getReservasXMes(list, item.getId()));
             estadisticaUser.setCantidadTotal(getCantidadTotal(aux));
-            estadisticaUser.setPromedio(getPromedio(item.getId()));
+           // estadisticaUser.setPromedio(getPromedio(item.getId()));
+            estadisticaUser.setPromedio(item.getPromedioReviews());
             estadisticaUser.setIdPerro(item.getId().intValue());
             estadisticaUser.setTotalCuidadores(getCuidadoresXPerro(list, item.getId()));
             estadisticaUserList.add(estadisticaUser);
@@ -183,7 +184,7 @@ public class EstadisticaController {
     }
 
 
-    private float getPromedio(Long id) throws Exception
+    public float getPromedio(Long id) throws Exception
     { float cont =0;
 
         List<Calificacion> list =  calificacionService.getCalificacionesPerro(id);

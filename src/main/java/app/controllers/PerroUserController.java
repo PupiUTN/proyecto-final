@@ -26,8 +26,8 @@ public class PerroUserController {
     public PerroUserController() {
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "{idUser}/perros")
-    public Perro createPerro(@PathVariable("idUser") Long id, @RequestBody @Valid Perro entity) throws Exception {
+    @RequestMapping(method = RequestMethod.POST, value = "createPerro/")
+    public Perro createPerro( @RequestBody @Valid Perro entity) throws Exception {
         return perroService.createPerro(entity);
     }
 
@@ -48,6 +48,11 @@ public class PerroUserController {
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
         return perroService.getPerrosByUserId(id);
+    }
+
+    @RequestMapping(value = "{idUser}/eliminarPerro/{perroId}", method = RequestMethod.GET)
+    public boolean deletePerro(@PathVariable("idUser") Long userId, @PathVariable("perroId") Long perroId) throws Exception {
+        return perroService.deletePerro(perroId);
     }
 
 }

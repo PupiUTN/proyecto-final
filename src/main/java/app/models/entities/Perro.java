@@ -54,5 +54,9 @@ public class Perro implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date birthday;
 
+    private String status;
+    private int cantidadReviews;
+    private float promedioReviews;
+
 
 }

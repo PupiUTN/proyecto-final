@@ -13,9 +13,15 @@ import java.util.List;
  */
 public interface PerroRepository extends JpaRepository<Perro, Long> {
 
-    List<Perro> findAllByUser(User user);
+    @Query("select r from Perro r  where  r.user.id = :#{#userId} and r.status = 'active'")
+    List<Perro> getPerrosbyUser(@Param("userId")long userId);
 
 
-    @Query("select count (r) from Perro r")
+    @Query("select count (r) from Perro r  where  r.status = 'active'")
     Long getTotal();
+
+    @Query("select count (r) from Perro r   where  r.user.id = :#{#userId} and  r.status = 'active'")
+    Long countPerrosbyUserId(@Param("userId")long userId);
+
+
 }

@@ -113,6 +113,9 @@ Vue.component('my-reservas-cuidador-list', {
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
                                             Calificar</a>
                                     </div>
+                                     <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'creada-dueño' &&  reserva.status !== 'aceptada-cuidador' &&  reserva.status !== 'rechazada-cuidador' &&  reserva.status !== 'cerrada' ">
+                                            <a v-on:click=""  style="color: black; border-color: black; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Denunciar</a>                        
+                                        </div>
                                 </div>
 
                             </a>

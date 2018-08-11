@@ -1,7 +1,6 @@
 package app.services;
 
 import app.models.entities.Cuidador;
-import app.models.entities.Direccion;
 import app.models.entities.Servicio;
 import app.persistence.CuidadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,10 @@ import java.util.List;
 public class CuidadorService {
 
     private CuidadorRepository cuidadorRepository;
+
+    private static final int cantXpage = 4;
+    private static List<Cuidador> cuidadores = new ArrayList<>();
+
 
     @Autowired
     public CuidadorService(CuidadorRepository cuidadorRepository) {
@@ -82,5 +85,9 @@ public class CuidadorService {
         return cuidadores;
 
 
+    }
+
+    public Long getTotalCuidadores() {
+       return  cuidadorRepository.count();
     }
 }

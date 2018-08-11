@@ -55,7 +55,7 @@ Vue.component('my-profile', {
                         <label class="margin-top-0">Teléfono</label>
                         <input v-model="user.phone" value="" type="number" required>
                         <label class="margin-top-0">Email</label>
-                        <input v-model="user.email" value="" type="email" required>
+                        <input v-model="user.email" value="" type="email" required disabled>
                     </div>
                 </div>
             </div>

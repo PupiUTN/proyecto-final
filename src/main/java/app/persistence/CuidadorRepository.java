@@ -50,5 +50,9 @@ public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
     @Query("select c from Cuidador c " + "where c.estado  like 'pending'" )
     List<Cuidador> getSolicitudes();
 
+    @Query("select count (c) from Cuidador c where c.estado = :#{#status}")
+    Long getCantidadCuidadoresEncontrados(@Param("status")String status);
+
+
 
 }

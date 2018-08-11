@@ -45,8 +45,6 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     @Query("select r from Reserva r where r.perro.user.id = :#{#userId} and r.status = 'comentario-cuidador' or r.status = 'finalizada'" )
     List<Reserva> findPendienteReviewCuidador();
 
-    @Query("select count (r) from Reserva r where r.cuidador.user.id = :#{#userId}")
-    int getCantidadReservas(@Param("userId")long userId);
 
     @Query("select r from Reserva r")
     List<Reserva> getCantidadReservasTotal();
@@ -56,4 +54,6 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     List<Reserva> getCantidadByStatus(@Param("statusId")String statusId, @Param("statusRechazada")String statusRechazada );
 
 
+    @Query("select r from Reserva r where NOT (r.status = 'cerrada' or r.status='rechazada-dueño' or r.status='rechazada-cuidador' ) and r.perro.id = :#{#perroId} ")
+    List<Reserva>  getReservaByDogIdAndStatus(@Param("perroId")long perroId);
 }

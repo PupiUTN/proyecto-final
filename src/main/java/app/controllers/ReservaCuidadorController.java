@@ -1,10 +1,7 @@
 package app.controllers;
 
 
-import app.models.entities.Cuidador;
-import app.models.entities.Estadistica;
-import app.models.entities.Reserva;
-import app.models.entities.User;
+import app.models.entities.*;
 import app.security.MyUserPrincipal;
 import app.services.CuidadorService;
 import app.services.MailService;
@@ -108,5 +105,6 @@ public class ReservaCuidadorController {
         return cant;
 
     }
+
 
 }

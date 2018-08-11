@@ -1,5 +1,6 @@
 package app.services;
 
+import app.models.entities.Calificacion;
 import app.models.entities.EstadoReserva;
 import app.models.entities.Reserva;
 import app.persistence.ReservaRepository;
@@ -127,10 +128,6 @@ public class ReservaService {
         return cal.getTime();
     }
 
-    public int getCantidadReservas(Long id) {
-        return reservaRepository.getCantidadReservas(id);
-    }
-
     public List<Reserva> findAllByCuidador( Long id) {
         return reservaRepository.findAllByCuidador(id);
     }
@@ -151,4 +148,9 @@ public class ReservaService {
 
         return reservaRepository.getCantidadByStatus(estadoReserva.getStatus(),"");}
 
+    public List<Reserva>  getReservasByDogId(Long perroId) {
+
+        return  reservaRepository.getReservaByDogIdAndStatus(perroId);
+
+    }
 }

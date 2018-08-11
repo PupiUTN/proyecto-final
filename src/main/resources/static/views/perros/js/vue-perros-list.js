@@ -29,7 +29,7 @@ Vue.component('my-perros-list', {
                     <!-- Listing Item -->
                     <div v-show="dogs.length > 0" v-for="dog in dogs" :id="dog.id" class="col-lg-6 col-md-12">
                         <div class="listing-item-container list-layout">
-                            <a href="#" class="listing-item">
+                            <a :href="'/views/perros/registrar-perros.html?id=' + dog.id " class="listing-item">
         
                                 <!-- Image -->
                                 <div class="listing-item-image">
@@ -43,15 +43,22 @@ Vue.component('my-perros-list', {
         
                                     <div class="listing-item-inner">
                                         <h3>{{dog.nombre}}</h3>
-                                        <span>{{dog.comentario}}</span>
+                                        <span>promedio:</span>
                                         <div class="star-rating" data-rating="3.5">
-                                            <div class="rating-counter">(12 reviews)</div>
+                                            <div class="rating-counter"><h3>{{dog.promedioReviews}}</h3></div>
+                                            
+                                                <br>
+                                                <br>
+                                             <div class="" >
+                                            <a v-on:click="eliminarPerro(dog.id)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Eliminar</a>
+                                 </div>
                                         </div>
-                                    </div>
-        
+                                    </div>                               
                                     <!--<span class="like-icon"></span>-->
                                 </div>
+                                
                             </a>
+                              
                         </div>
                     </div>
         
@@ -71,7 +78,11 @@ Vue.component('my-perros-list', {
                 user: {},
                 dogs: [],
                 url: "/api/user/",
-                message: ""
+                message: "",
+                deleteDog: false,
+                flagDelete: '',
+                indexPerro:0,
+                promedio:'3,5'
             }
         },
     mounted() {
@@ -101,6 +112,64 @@ Vue.component('my-perros-list', {
                 sweetAlert("Oops...", "Necesitas estar logueado para acceder a este contenido", "error");
             }
         },
+          eliminarPerro(index)
+          {
+              swal({
+                      title: "Estas seguro?",
+                      text: "Deseas eliminar esta mascota de tu lista ?",
+                      type: "warning",
+                      showCancelButton: true,
+                      cancelButtonText:"Cancelar",
+                      confirmButtonClass: "btn-danger",
+                      confirmButtonText: "si, hazlo!",
+                      closeOnConfirm: false
+                  },
+                  function(){
+
+                      vm.$refs.myPerrosList.$refs.currentView.eliminar(index);
+                  });
+
+
+          },
+        eliminar(index)
+        {
+            axios.get(this.url + this.user.id + "/eliminarPerro/" + index)
+                .then((response) => {
+                    this.deleteDog = response.data;
+
+                    if (this.deleteDog )
+                    {
+                        sweetAlert({
+                                title: "Tu mascota ha sido borrada!",
+                                text: "Tu mascota ha sido eliminada de tu lista",
+                                type: "success",
+                                confirmButtonText: "aceptar"
+                            },
+                            function(){
+                                vm.$refs.myPerrosList.$refs.currentView.getUserDogs();
+                            });
+
+                    }
+                    else
+                    {
+                        sweetAlert({
+                                title: "No se puede eliminar tu mascota!",
+                                text: "Tu mascota tiene una reserva en ejecuccion o un comentario pendiente, por lo tanto no puede ser eliminada",
+                                type: "warning",
+                                confirmButtonText: "aceptar"
+                            },
+                            function(){
+                            });
+                    }
+
+
+                })
+                .catch(error => {
+                    console.log(error);
+                    sweetAlert("Oops...", "Error, ver consola", "error");
+                });
+
+        },
         getUserDogs() {
             axios.get(this.url + this.user.id + "/perros")
                 .then((response) => {
@@ -108,6 +177,10 @@ Vue.component('my-perros-list', {
                     if (this.dogs.length === 0) {
                         this.message = "Actualmente no tenés ningún perro registrado. Agrega el primero!";
                     }
+
+
+
+
 
                 })
                 .catch(error => {
