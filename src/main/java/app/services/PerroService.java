@@ -4,7 +4,7 @@ import app.models.entities.*;
 import app.persistence.PerroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import app.utils.EstadoReserva;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class PerroService {
         this.calificacionService = calificacionService;
     }
 
-    public Perro createPerro(Perro entity) throws Exception {
+    public Perro createPerro(Perro entity)  {
         return perroRepository.save(entity);
     }
 
@@ -83,11 +83,11 @@ public class PerroService {
      {   status.clear();
          status.add( EstadoReserva.EJECUCION.getStatus());
          status.add( EstadoReserva.FINALZADA.getStatus());
-         status.add( EstadoReserva.COMENTARIODUEÑO.getStatus());
-         status.add( EstadoReserva.COMENTARIOCUIDADOR.getStatus());
+         status.add( EstadoReserva.COMENTARIO_DUEÑO.getStatus());
+         status.add( EstadoReserva.COMENTARIO_CUIDADOR.getStatus());
      }
 
-    public void editPerro(Perro perro, int puntaje) throws Exception {
+    public void editPerro(Perro perro, int puntaje)  {
         float cont =0;
         int cantidadReviews = 1;
         List<Calificacion> list = calificacionService.getCalificacionesPerro(perro.getId());

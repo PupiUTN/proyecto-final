@@ -50,4 +50,9 @@ public class PerroUserController {
         return perroService.getPerrosByUserId(id);
     }
 
+    @RequestMapping(value = "{idUser}/eliminarPerro/{perroId}", method = RequestMethod.GET)
+    public boolean deletePerro(@PathVariable("idUser") Long userId, @PathVariable("perroId") Long perroId) throws Exception {
+        return perroService.deletePerro(perroId);
+    }
+
 }

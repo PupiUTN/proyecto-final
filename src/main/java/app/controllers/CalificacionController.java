@@ -37,10 +37,9 @@ public class CalificacionController {
         this.calificacionService = calificacionService;
         this.reservaService = reservaService;
         this.cuidadorService = cuidadorService;
-        this.perroService = perroService
+        this.perroService = perroService;
     }
 
-    @Autowired
 
 
     @RequestMapping(method = RequestMethod.POST)
@@ -50,14 +49,14 @@ public class CalificacionController {
          Reserva res  =   reservaService.getReserva( entity.getReserva().getId()) ;
 
 
-          if(res.getStatus().equals("finalizada") && !calific.isFrom_owner())
+          if(res.getStatus().equals("finalizada") && !calific.isFromOwner())
           {
               res.setStatus("comentario-cuidador");
 
                setPromedioCalificacionPerro(res.getPerro(),entity.getPuntaje());
           }
           else
-          {  if(res.getStatus().equals("comentario-dueño") && !calific.isFrom_owner())
+          {  if(res.getStatus().equals("comentario-dueño") && !calific.isFromOwner())
                 { res.setStatus("cerrada");
                     setPromedioCalificacionPerro(res.getPerro(), entity.getPuntaje());
 
@@ -65,7 +64,7 @@ public class CalificacionController {
                 else
                         {
 
-                             if (res.getStatus().equals("comentario-cuidador") && calific.isFrom_owner())
+                             if (res.getStatus().equals("comentario-cuidador") && calific.isFromOwner())
                              {  Cuidador cuidador = cuidadorService.getCuidador( res.getCuidador().getId()) ;
                                  List<Calificacion> list   =calificacionService.getCalificacionesCuidador(cuidador.getId());
 
@@ -119,7 +118,7 @@ public class CalificacionController {
 
     }
 
-    private void setPromedioCalificacionPerro(Perro perro, int puntaje) throws Exception {
+    private void setPromedioCalificacionPerro(Perro perro, int puntaje)  {
 
         perroService.editPerro(perro,puntaje);
 
