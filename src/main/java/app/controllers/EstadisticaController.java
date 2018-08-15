@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by gabriellorenzatti on 5/6/18.
@@ -88,7 +85,7 @@ public class EstadisticaController {
          }
 
         estadistica.setTotalPorTipo(cantidadXtipo);
-        estadistica.setCantidadTotal(list.size());
+        estadistica.setCantidadTotal(list.size() );
         estadistica.setPromedio(cuidador.getPromedioReviews());
         estadistica.setCantidadPorMes(getReservasXMes(list));
         estadistica.setTotalVisitas(cuidador.getCantidadVisitas());
@@ -161,7 +158,7 @@ public class EstadisticaController {
             estadisticaUser.setNombrePerro(item.getNombre());
             estadisticaUser.setNombre(user.getUsername());
             estadisticaUser.setCantidadPorMes(getReservasXMes(list, item.getId()));
-            estadisticaUser.setCantidadTotal(getCantidadTotal(aux));
+            estadisticaUser.setCantidadTotal(getCantidadTotal(list,item));
            // estadisticaUser.setPromedio(getPromedio(item.getId()));
             estadisticaUser.setPromedio(item.getPromedioReviews());
             estadisticaUser.setIdPerro(item.getId().intValue());
@@ -174,13 +171,14 @@ public class EstadisticaController {
     }
 
 
-    private int getCantidadTotal(int[] aux) {
-        int cont = 0;
+    private int getCantidadTotal(List<Reserva> list, Perro perro ) {
+        long cont = 0;
 
-        for (int i = 0; i < aux.length; i++) {
-            cont += aux[i];
-        }
-        return cont;
+        cont  = list
+                .stream()
+                .filter(node -> Objects.equals(node.getPerro().getId(), perro.getId()))
+                .count();
+        return ((int) cont);
     }
 
 
