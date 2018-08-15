@@ -19,16 +19,17 @@ import java.util.List;
 @RequestMapping(value = "/api/tamaños")
 public class TamañoController {
 
-    @Autowired
-    TamañoService tamañoService;
+    private final TamañoService tamañoService;
 
-    public TamañoController() {
+    @Autowired
+    public TamañoController(TamañoService tamañoService) {
+        this.tamañoService = tamañoService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Tamaño> getTamaños() throws Exception {
+    public List<Tamaño> getTamaños() {
         return tamañoService.getTamaños();
     }
 
- 
+
 }

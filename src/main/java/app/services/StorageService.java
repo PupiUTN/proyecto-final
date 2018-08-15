@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface StorageService {
     List<FileJson> loadAll();
-    String store(MultipartFile remoteFile)throws IOException;
+
+    String store(MultipartFile remoteFile) throws IOException;
 }

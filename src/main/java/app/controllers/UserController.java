@@ -8,7 +8,6 @@ package app.controllers;
 import app.exception.EmailExistsException;
 import app.exception.PasswordDoesNotMatchException;
 import app.models.entities.User;
-import app.security.MyUserDetailsService;
 import app.security.MyUserPrincipal;
 import app.services.MailService;
 import app.services.UserService;
@@ -17,11 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -34,15 +33,11 @@ public class UserController {
 
 
     private final UserService userService;
-    private final AuthenticationManager authenticationManager;
-    private final MyUserDetailsService myUserDetailsService;
     private final MailService mailService;
 
     @Autowired
-    public UserController(UserService userService, AuthenticationManager authenticationManager, MyUserDetailsService myUserDetailsService, MailService mailService) {
+    public UserController(UserService userService, MailService mailService) {
         this.userService = userService;
-        this.authenticationManager = authenticationManager;
-        this.myUserDetailsService = myUserDetailsService;
         this.mailService = mailService;
     }
 
@@ -51,7 +46,7 @@ public class UserController {
      */
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET, value = "/me")
-    public ResponseEntity getProfile(HttpServletRequest request) throws Exception {
+    public ResponseEntity getProfile(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         return new ResponseEntity(principal, HttpStatus.OK);
     }
@@ -62,30 +57,48 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/registration")
     public ResponseEntity registerUserAccount(@RequestBody @Valid User user) throws EmailExistsException, PasswordDoesNotMatchException {
-        User userSaved = userService.registerNewUserAccount(user);
+        userService.registerNewUserAccount(user);
         mailService.sendEmail(user, MailType.WELCOME);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/get-mp-token")
+    public RedirectView setMercadoPagoToken(@RequestParam String code, @RequestParam String email) {
+        userService.setMercadoPagoToken(code, email);
+        return new RedirectView("/views/cuidadores/alta-cuidador.html");
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/has-mp-token")
+    public boolean userHasMpToken(@RequestParam String email) {
+        return userService.userHasMpToken(email);
+    }
+
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public User getUser(@PathVariable("id") Long id) throws Exception {
-        User user = userService.getUser(id);
-        return user;
+    public User getUser(@PathVariable("id") Long id) {
+        return userService.getUser(id);
     }
 
     @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_CUIDADOR')")
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public User editUser(@PathVariable("id") Long id, @RequestBody User entity) throws Exception {
+    public User editUser(@PathVariable("id") Long id, @RequestBody User entity) {
         entity.setId(id);
         User user = userService.editUser(entity);
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         myUserPrincipal.setUser(user);
 
         //update session information
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        SecurityContextHolder.getContext()
+                .setAuthentication(usernamePasswordAuthenticationToken);
         return user;
 
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/get-mp-url")
+    public String getMercadoPagoUrl(@RequestParam String email) {
+        return userService.getMercadoPagoUrl(email);
     }
 }

@@ -13,15 +13,6 @@ Vue.component('my-estadistica', {
 		</div>
 		<!-- Content -->
 		<div v-show="flag">
-		<div class="row">
-			<div class="col-md-12">			    
-				<div class="notification success closeable margin-bottom-30 ">
-					<p> <strong>Estos son tus datos</strong>!</p>    					                    <!-- <a class="close" href="#"></a>-->
-			</div>
-			
-			</div>
-		
-		</div>
 		
 		<div class="col-md-12 row"> 
 			   <div class="col-md-3"></div>

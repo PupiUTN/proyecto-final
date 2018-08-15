@@ -67,6 +67,8 @@ public class User implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     private Direccion direccion;
 
+    private String mpToken;
+
 
     public boolean passwordMatchingValidation() {
         return this.password.equals(this.matchingPassword);

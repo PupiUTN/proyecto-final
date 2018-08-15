@@ -12,30 +12,30 @@ import java.util.List;
  */
 @Service
 public class RazaService {
-    RazaRepository razaRepository;
+    private final RazaRepository razaRepository;
 
     @Autowired
     public RazaService(RazaRepository razaRepository) {
         this.razaRepository = razaRepository;
     }
 
-    public List<Raza> getRazas() throws Exception {
+    public List<Raza> getRazas() {
         return razaRepository.findAll();
     }
 
-    public Raza createRaza(Raza entity) throws Exception {
+    public Raza createRaza(Raza entity) {
         return razaRepository.save(entity);
     }
 
-    public Raza getRaza(Long id) throws Exception {
+    public Raza getRaza(Long id) {
         return razaRepository.findOne(id);
     }
 
-    public void deleteRaza(Long id) throws Exception {
+    public void deleteRaza(Long id) {
         razaRepository.delete(id);
     }
 
-    public Raza editRaza(Raza entity) throws Exception {
+    public Raza editRaza(Raza entity) {
         return razaRepository.save(entity);
     }
 }

@@ -8,7 +8,8 @@ Vue.component('mercadopago', {
                 url: "/api/payments/",
                 paymentPreference: {},
                 sandboxInitPoint: "",
-                initPoint: ""
+                initPoint: "",
+                showModal: false
             }
         },
     props: {
@@ -20,22 +21,33 @@ Vue.component('mercadopago', {
     },
     methods: {
         createPayment() {
+            console.log("CREATE PAYMENT");
+            console.log(this.url);
+            console.log(this.reserva);
+            this.parseDates();
             axios.post(this.url, this.reserva)
                 .then((paymentPreference) => {
-                    this.paymentPreference = paymentPreference.data.response;
-                    this.sandboxInitPoint = this.paymentPreference.init_point;
-                    this.openInNewTab(this.sandboxInitPoint);
+                    this.paymentPreference = paymentPreference.data;
+                    this.initPoint = this.paymentPreference.init_point;
+                    this.sandboxInitPoint = this.paymentPreference.sandbox_init_point;
+                    this.pay(this.sandboxInitPoint);
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
         executeOnMyReturn(response) {
+            console.log("EXECUTING EXECUTE ON MY RETURN");
             console.log(response);
         },
-        openInNewTab(url) {
-            var checkout = window.open(url, '_blank');
-            checkout.focus();
+        pay(url) {
+            console.log("PAY");
+            console.log(url);
+            window.location.href = url;
+        },
+        parseDates() {
+            this.reserva.fechaFin = fecha.format(fecha.parse(this.reserva.fechaFin, 'DD/MM/YYYY'), 'YYYY-MM-DD');
+            this.reserva.fechaInicio = fecha.format(fecha.parse(this.reserva.fechaInicio, 'DD/MM/YYYY'), 'YYYY-MM-DD');
         }
     }
 })

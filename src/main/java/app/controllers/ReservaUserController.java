@@ -5,11 +5,9 @@
  */
 package app.controllers;
 
-import app.models.entities.*;
+import app.models.entities.Reserva;
 import app.security.MyUserPrincipal;
-import app.services.CalificacionService;
 import app.services.MailService;
-import app.services.PerroService;
 import app.services.ReservaService;
 import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -32,20 +27,17 @@ public class ReservaUserController {
 
     private final ReservaService reservaService;
     private final MailService mailService;
-    private final PerroService perroService;
-    private final CalificacionService calificacionService;
 
     @Autowired
-    public ReservaUserController(ReservaService reservaService, MailService mailService, PerroService perroService,CalificacionService calificacionService) {
+
+    public ReservaUserController(ReservaService reservaService, MailService mailService) {
         this.reservaService = reservaService;
         this.mailService = mailService;
-        this.perroService = perroService;
-        this.calificacionService = calificacionService;
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST)
-    public Reserva post(@RequestBody Reserva entity) throws Exception {
+    public Reserva post(@RequestBody Reserva entity) {
         //TODO setear info del cuidador asi nadie puede meter info que no es.
         mailService.sendEmail(entity.getCuidador().getUser(), MailType.BOOKING_REQUEST);
         return reservaService.save(entity);
@@ -54,7 +46,7 @@ public class ReservaUserController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
-    public List<Reserva> get(@RequestParam("status") String status) throws Exception {
+    public List<Reserva> get(@RequestParam("status") String status) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
@@ -64,7 +56,7 @@ public class ReservaUserController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.PUT, value = "{reservaId}/cancelarUsuario")
-    public ResponseEntity cancelarCausaUsuario(@PathVariable Long reservaId) throws Exception {
+    public ResponseEntity cancelarCausaUsuario(@PathVariable Long reservaId) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
@@ -81,7 +73,7 @@ public class ReservaUserController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/PendientesReview/", method = RequestMethod.GET)
-    public long getPendientesReview() throws Exception {
+    public long getPendientesReview() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();

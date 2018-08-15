@@ -25,20 +25,26 @@ import java.util.List;
 @RequestMapping(value = "/api/calificaciones")
 public class CalificacionController {
 
-    @Autowired
-    private CalificacionService calificacionService;
+    private final CalificacionService calificacionService;
 
-    @Autowired
-    private ReservaService reservaService;
+    private final ReservaService reservaService;
 
-    @Autowired
-    private CuidadorService cuidadorService;
+    private final CuidadorService cuidadorService;
 
-    @Autowired
     private PerroService perroService;
+    @Autowired
+    public CalificacionController(CalificacionService calificacionService, ReservaService reservaService, CuidadorService cuidadorService, PerroService perroService) {
+        this.calificacionService = calificacionService;
+        this.reservaService = reservaService;
+        this.cuidadorService = cuidadorService;
+        this.perroService = perroService
+    }
+
+    @Autowired
+
 
     @RequestMapping(method = RequestMethod.POST)
-    public Calificacion createCalificacion(@RequestBody  Calificacion entity) throws  Exception {
+    public Calificacion createCalificacion(@RequestBody  Calificacion entity) {
             int aux=0;
         Calificacion calific = calificacionService.createCalificacion(entity);
          Reserva res  =   reservaService.getReserva( entity.getReserva().getId()) ;

@@ -7,39 +7,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class StorageServiceFileSystem  implements  StorageService{
+public class StorageServiceFileSystem implements StorageService {
 
 
-
-
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //Local
     private String rootPath;
     private String pathToLocalHost;
     private String folder;
     private String completePath;
-    // Remote address
-    private String hostName;
-    private String port = String.valueOf(5000);
 
     public StorageServiceFileSystem() {
         rootPath = System.getProperty("user.dir");
         pathToLocalHost = rootPath + File.separator + "src" + File.separator + "main" + File.separator + "resources"
                 + File.separator + "static";
         folder = File.separator + "file_upload";
-        completePath = pathToLocalHost+ folder;
-        // Remote address
-        hostName = InetAddress.getLoopbackAddress().getHostName();
+        completePath = pathToLocalHost + folder;
     }
-
-
 
 
     public List<FileJson> loadAll() {
@@ -52,9 +42,9 @@ public class StorageServiceFileSystem  implements  StorageService{
 
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
-                result.add(new FileJson(FileJson.FILE , getUrlFromFileName(listOfFiles[i].getName())) );
+                result.add(new FileJson(FileJson.FILE, getUrlFromFileName(listOfFiles[i].getName())));
             } else if (listOfFiles[i].isDirectory()) {
-                result.add(new FileJson(FileJson.DIR , getUrlFromFileName(listOfFiles[i].getName())) );
+                result.add(new FileJson(FileJson.DIR, getUrlFromFileName(listOfFiles[i].getName())));
             }
         }
         return result;
@@ -62,9 +52,9 @@ public class StorageServiceFileSystem  implements  StorageService{
     }
 
 
-    public String store(MultipartFile remoteFile) throws IOException {
-        InputStream inputStream = null;
-        OutputStream outputStream = null;
+    public String store(MultipartFile remoteFile) {
+        InputStream inputStream;
+        OutputStream outputStream;
 
 
         File dir = new File(completePath);
@@ -73,7 +63,8 @@ public class StorageServiceFileSystem  implements  StorageService{
         String remoteFileName = remoteFile.getOriginalFilename();
         String remoteFileExtension = remoteFileName.substring(remoteFileName.lastIndexOf(".") + 1);
 
-        String serverFileName = UUID.randomUUID().toString() + "." + remoteFileExtension;
+        String serverFileName = UUID.randomUUID()
+                .toString() + "." + remoteFileExtension;
         File serverFile = new File(dir.getAbsolutePath() + File.separator + serverFileName);
 
         try {
@@ -83,7 +74,7 @@ public class StorageServiceFileSystem  implements  StorageService{
                 serverFile.createNewFile();
             }
             outputStream = new FileOutputStream(serverFile);
-            int read = 0;
+            int read;
             byte[] bytes = new byte[1024];
 
             while ((read = inputStream.read(bytes)) != -1) {
@@ -94,14 +85,13 @@ public class StorageServiceFileSystem  implements  StorageService{
         }
 
 
-
         logger.info("file path:" + serverFile.getAbsolutePath());
         return getUrlFromFileName(serverFileName);
 
 
     }
 
-    private String getUrlFromFileName(String serverFileName){
+    private String getUrlFromFileName(String serverFileName) {
         String remoteUrl = folder + File.separator + serverFileName;
         logger.info("file url:" + remoteUrl);
         return remoteUrl;

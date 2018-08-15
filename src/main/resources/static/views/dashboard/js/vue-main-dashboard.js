@@ -147,7 +147,6 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
             flag: '',
             list:{},
             rol:'',
-            banner:'',
         }
     },
     watch: {
@@ -194,7 +193,6 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
            ///api/cuidador/me/reservas/estadisticas/
             axios.get('/api/estadisticas/cuidadores/')
                 .then((response) => {
-                    this.banner="Estos son tus datos";
                     this.estadisticas = response.data;
                     this.estadisticas.cantidadTotal = response.data.cantidadTotal.toString();
                     this.estadisticas.promedio = response.data.promedio.toString();
@@ -218,7 +216,6 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                 .then((response) => {
                     this.list = response.data;
                     if (this.list.length >0) {
-                        this.banner="Estos son tus datos";
                         for (i = 0; i < this.list.length; i++) {
                             this.dogs[i] = {value: i, text: this.list[i].nombrePerro};
                         }
@@ -231,8 +228,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                     }
                     else
                     {
-                        //sweetAlert("Estadisticas", "Actualmente no posees, genera reservas para ver tus estadísticas", "info");
-                        this.banner = "Actualmente no posees reservas, agrega tus mascotas para ver tus estadísticas";
+                        sweetAlert("Estadisticas", "Actualmente no posees, genera reservas para ver tus estadísticas", "info");
                         document.getElementById("selector_perro").disabled = true;
                         this.estadisticas.cantidadTotal = 0;
                         this.estadisticas.totalCuidadores =0;

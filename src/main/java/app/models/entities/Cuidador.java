@@ -49,8 +49,7 @@ public class Cuidador implements Serializable {
     @Override
     public boolean equals(Object o) {
         Cuidador oCuidador = (Cuidador) o;
-        if (this.id != oCuidador.id) return false;
-        return true;
+        return this.id == oCuidador.id;
     }
 
     @Override

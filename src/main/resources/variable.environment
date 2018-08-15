@@ -1,6 +1,8 @@
 
 #MAC OS -> Add this lines to .bash_profile
 
+
+nano ~/.bash_profile
 check our google drive file
 
 #reboot your server or
