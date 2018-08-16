@@ -154,7 +154,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                         <!-- Listings -->
                         <div class="row fs-listings">
                             <!-- Listing Item -->
-                            <div v-for="(item,n) in items" :id="item.id" class="col-lg-6 col-md-12">
+                            <div v-for="(item,n) in gridCuidadores" :id="item.id" class="col-lg-6 col-md-12">
 
                                 <a :href="'/views/cuidadores/cuidadores-perfil.html?id=' + item.id 
                     + getDatesUrl()" class="listing-item-container" :data-marker-id=n+1>
@@ -197,6 +197,30 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                     </div>
                 </div>
             </div>
+
+            
+            <div class="clearfix"></div>
+            <div >
+                <div class="col-md-6">
+                    <!-- Pagination -->
+                    <div class="pagination-container margin-top-20 margin-bottom-40">
+                        <nav class="pagination">
+                            <ul>
+
+                                <li><a :style="offset > 0 ? 'background-color: crimson' : 'background-color: darkgrey'" @click="previous()"><i class="sl sl-icon-arrow-left" style=" font-weight: bold;color: white;"></i></a></li>
+                                
+                                <li v-for="item in listaPaginas"><a  v-on:click="viewPage(item)">{{item}}</a></li>
+                                
+                                <li><a  :style="(offset + perPage) < gridData.length ? 'background-color: crimson' : 'background-color: darkgrey'" @click="next()"><i class="sl sl-icon-arrow-right" style=" font-weight: bold;color: white;"></i></a></li>
+
+                               
+                                 
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
         </div>
         
     `,
@@ -231,7 +255,19 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             precioMayor: true,
             listaOrdenes: this.crearListaOrden(),
             sortType: 'Ordenar Por',
+            offset: 0,
+            gridData:[],
+            gridCuidadores: [],
+            perPage: 3,
+            countPages:1,
+            listaPaginas:[],
         }
+    },
+    watch: {
+    offset: function () {
+        this.paginate();
+    }
+
     },
     mounted() {
         this.getServicios();
@@ -349,6 +385,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
         mostrarEnMapa() {
             console.log("mostrar");
             this.clearMarkers();
+            this.items = this.gridCuidadores;
             if (this.items != null) {
                 if (this.items.length > 0) {
                     if (this.items.length > 1) {
@@ -526,6 +563,13 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             }
         },
         calcularEncontrados() {
+
+            this.gridData = this.items;
+
+            this.gridCuidadores = this.gridData.slice(this.offset, this.offset + this.perPage);
+
+            this.countPagesCuidadores();
+
             this.encontrados = this.items.length;
             if (this.items.length === 1) {
                 this.encontrados += ' Resultado Encontrado';
@@ -648,6 +692,44 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 {id:'MYP', value: 'Mayor Precio', selected: false},
                 {id:'MNP', value: 'Menor Precio', selected: false}
             ]
+        },
+        paginate() {
+            this.gridCuidadores = this.gridData.slice(this.offset, this.offset + this.perPage);
+            this.mostrarEnMapa();
+
+        },
+        countPagesCuidadores(){
+            this.countPages = this.gridData.length / this.perPage;
+
+            if (this.countPages - Math.trunc(this.countPages)> 0.0)
+            {
+                this.countPages = Math.trunc(this.countPages) +1;
+            }
+            this.listaPaginas = [];
+            n = 1;
+
+            while (n <=this.countPages) {
+                this.listaPaginas.push(n);
+
+                n ++;
+            }
+
+        },
+
+
+        previous() {
+            if(this.offset >0)
+                this.offset = this.offset - this.perPage;
+        },
+        next() {
+            if (this.offset + this.perPage < this.gridData.length)
+                this.offset = this.offset + this.perPage;
+        },
+        viewPage(index)
+        {    var max = index *   this.perPage;
+            this.offset = max - this.perPage;
+         //   this.gridCuidadores = this.gridData.slice(this.offset, max);
+
         }
     }
 });

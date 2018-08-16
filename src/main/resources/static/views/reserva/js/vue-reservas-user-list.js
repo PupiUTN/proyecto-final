@@ -11,7 +11,12 @@ Vue.component('my-reservas-user-list', {
 				</div>
 			</div>
 		</div>
-
+   <div class="row">
+            <div class="col-md-12">            
+             <h4> Reservas : {{this.reservas.length}} </h4>
+            </div>
+     </div>
+    
 
     <div class="row" v-if="status === 'rechazada-cuidador' || status ==='rechazada-dueño'" >
     <a id="btn1" v-on:click="buscarCanceladasxCuid()" style="color: black; border-color: red; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  'red': ''}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
@@ -27,7 +32,7 @@ Vue.component('my-reservas-user-list', {
 					<div class="messages-inbox">
 				    <h3>{{ mensaje}}</h3>
 					<ul>
-                        <li v-for="(reserva, index) in reservas" v-bind:style="listColor">
+                        <li v-for="(reserva, index) in gridReservas" v-bind:style="listColor">
                             <a>
                                 <div class="message-avatar" style="top: 70px;"><img :src="reserva.cuidador.user.profileImageUrl"alt=""></div>
 
@@ -41,12 +46,13 @@ Vue.component('my-reservas-user-list', {
                                             <p><i> {{ reserva.mensaje}} </i></p>
                                             <p ><b>Perro: </b> {{ reserva.perro.nombre}}</p>
                                         </div>
-                                        <div class="col-xs-12 col-md-1">
-                                            <p><b>Precio</b> </br>{{ reserva.precioTotal }} $</p>
+                                        <div class="col-xs-12 col-md-2">
+                                            <p><b>Precio</b> </br>&#36 {{ reserva.precioTotal }}</p>
                                         </div>
                                         <div class="col-xs-12 col-md-2">
                                             <p><b>Desde</b> </br>{{ reserva.fechaInicio }}</p>
                                         </div>
+                                        <div class="col-xs-12 col-md-2"><p><b></b><br></p></div>
                                         <div class="col-xs-12 col-md-2">
                                             <p><b> Hasta </b> </br> {{ reserva.fechaFin }}</p>
                                         </div>
@@ -58,14 +64,17 @@ Vue.component('my-reservas-user-list', {
                                 <br>
                                 <div class="row">
                                 
-                                   <div class="col-xs-12 col-md-2" v-if="reserva.status !== 'finalizada' && reserva.status !== 'cerrada'  && reserva.status !== 'comentario-cuidador' && reserva.status !== 'rechazada-dueño' && reserva.status !=='rechazada-cuidador'">
+                                   <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'finalizada' && reserva.status !== 'cerrada'  && reserva.status !== 'comentario-cuidador' && reserva.status !== 'rechazada-dueño' && reserva.status !=='rechazada-cuidador'">
                                             <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
                                         </div>                                        
-                                         <div class="col-xs-12 col-md-3" v-if="reserva.status === 'pagada-dueño'">
+                                         <div class="col-xs-12 col-md-4" v-if="reserva.status === 'pagada-dueño'">
                                             <a v-on:click="verDetalleCompletoButton(index)" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                         </div>
-                                          <div class="col-xs-12 col-md-2" v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-cuidador'">
-                                            <a v-on:click="calificarReserva(index)"   href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
+                                          <div class="col-xs-12 col-md-3" v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-cuidador'">
+                                            <a v-on:click="calificarReserva(index)"  style="color: blue; border-color: blue; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
+                                        </div>
+                                           <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'creada-dueño' &&  reserva.status !== 'aceptada-cuidador' &&  reserva.status !== 'rechazada-dueño' &&  reserva.status !== 'cerrada' ">
+                                            <a v-on:click=""  style="color: black; border-color: black; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Denunciar</a>                        
                                         </div>
                                         <div class = "col-xs-12 col-md-6" v-if="reserva.status === 'aceptada-cuidador'">
                                             <mercadopago :reserva="reserva"></mercadopago>
@@ -81,6 +90,31 @@ Vue.component('my-reservas-user-list', {
 				</div>
 			</div>
 		</div>
+		
+		
+		       <!-- Pagination -->
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12" v-show=" this.reservas.length > 0" >
+        <!-- Pagination -->
+        <div class="pagination-container margin-top-20 margin-bottom-40">
+            <nav class="pagination">
+                <ul>
+               
+                    <li><a :style="offset > 0 ? 'background-color: crimson' : 'background-color: darkgrey'" @click="previous()"><i class="sl sl-icon-arrow-left" style=" font-weight: bold;color: white;"></i></a></li>
+
+                    <li><a  :style="(offset + perPage) < gridData.length ? 'background-color: crimson' : 'background-color: darkgrey'" @click="next()"><i class="sl sl-icon-arrow-right" style=" font-weight: bold;color: white;"></i></a></li>
+                
+                   <!-- <li><a href="#" class="current-page">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
 </div>    
     `,
     data:
@@ -115,16 +149,29 @@ Vue.component('my-reservas-user-list', {
                 cuidadorProfileUrl: '/views/cuidadores/cuidadores-perfil.html?id=',
                 status: null,
                 myValue: 1,
+                offset: 0,
+                gridData:[],
+                gridReservas: [],
+                perPage: 3,
+                countPages:1,
+
             }
         },
     mounted() {
         this.status = this.getParameterByName('status');
         this.getUserReservas();
     },
+    watch: {
+        offset: function () {
+            this.paginate();
+        }
+
+    },
     methods: {
         calificarReserva(index) {
-            var id = this.reservas[index].id;
+          //  var id = this.reservas[index].id;
 
+            var id = this.gridReservas[index].id;
             document.location.href = "/views/reserva/calificacion-reserva.html?id= " + id +
                 "&rol=" + "USER";
         },
@@ -151,10 +198,14 @@ Vue.component('my-reservas-user-list', {
                 reservas[i].fechaInicio =  new Date ( reservas[i].fechaInicio).toLocaleDateString();
                 reservas[i].fechaFin =  new Date ( reservas[i].fechaFin).toLocaleDateString();
             }
+            this.gridData = reservas;
+
+            this.gridReservas = this.gridData.slice(this.offset, this.offset + this.perPage);
         },
         cancelarReserva(index) {
 
-            var id = this.reservas[index].id;
+           // var id = this.reservas[index].id;
+            var id = this.gridReservas[index].id;
             axios.put('/api/user/me/reservas/' + id + '/cancelarUsuario')
                 .then((response) => {
                     sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
@@ -168,7 +219,8 @@ Vue.component('my-reservas-user-list', {
                 );
         },
         cancelarReservaActionButton(index) {
-            var reserva = this.reservas[index];
+           // var reserva = this.reservas[index];
+            var reserva = this.gridReservas[index];
             sweetAlert({
                     title: "Confirmar accion",
                     text: "Quiere eliminar su reserva con " + reserva.cuidador.user.fullName + " ?",
@@ -186,7 +238,8 @@ Vue.component('my-reservas-user-list', {
                 });
         },
         verDetalleCompletoButton(index) {
-            var id = this.reservas[index].id;
+         //   var id = this.reservas[index].id;
+            var id = this.gridReservas[index].id;
             document.location.href = "/views/reserva/detalle-reserva-completo.html?id=" + id;
         },
         getParameterByName(name) {
@@ -209,7 +262,25 @@ Vue.component('my-reservas-user-list', {
             this.status = "rechazada-cuidador";
             this.getUserReservas();
 
-        }
+        },
+        paginate() {
+            this.countPages = this.gridData / this.perPage;
+            if (this.countPages - Math.trunc(this.countPages)> 0.0)
+            {
+                this.countPages = Math.trunc(this.countPages) +1;
+            }
+
+            this.gridReservas = this.gridData.slice(this.offset, this.offset + this.perPage);
+
+        },
+        previous() {
+            if(this.offset >0)
+                this.offset = this.offset - this.perPage;
+        },
+        next() {
+            if (this.offset + this.perPage < this.gridData.length)
+                this.offset = this.offset + this.perPage;
+        },
     },
     computed: {
         tipoDeReservas: function () {

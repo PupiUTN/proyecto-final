@@ -50,7 +50,6 @@ public class CuidadorController {
         return cuidadores;
 
     }
-
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Cuidador getCuidador(@PathVariable("id") Long id) {
         Cuidador cuidador = cuidadorService.getCuidador(id);

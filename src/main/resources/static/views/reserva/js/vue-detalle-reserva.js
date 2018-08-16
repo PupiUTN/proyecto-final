@@ -263,9 +263,11 @@ Vue.component('my-detalle-reserva', {
                     <div class="pagination-container margin-top-15">
                         <nav class="pagination">
                             <ul>
-                                <li><a style=" background-color: crimson;" v-if="offset > 0"    v-on:click="previous()"><i class="sl sl-icon-arrow-left" style=" font-weight: bold;color: white;"></i></a></li>
+                                <ul>              
+                    <li><a :style="offset > 0 ? 'background-color: crimson' : 'background-color: darkgrey'" @click="previous()"><i class="sl sl-icon-arrow-left" style=" font-weight: bold;color: white;"></i></a></li>
 
-                                <li><a style=" background-color: crimson;" v-if="offset + perPage < DataReview.length"  v-on:click="next()"><i class="sl sl-icon-arrow-right" style=" font-weight: bold;color: white;"></i></a></li>
+                    <li><a  :style="(offset + perPage) < DataReview.length ? 'background-color: crimson' : 'background-color: darkgrey'" @click="next()"><i class="sl sl-icon-arrow-right" style=" font-weight: bold;color: white;"></i></a></li>
+                </ul>
 
                             </ul>
                         </nav>
@@ -588,9 +590,11 @@ Vue.component('my-detalle-reserva', {
 
         },
         previous() {
+            if(this.offset >0)
             this.offset = this.offset - this.perPage;
         },
         next () {
+            if (this.offset + this.perPage < this.DataReview.length)
             this.offset = this.offset + this.perPage;
         },
     },

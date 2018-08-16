@@ -52,6 +52,99 @@ let myIndex = Vue.component('my-index', {
     </div>
 </div>
 
+        <!-- Fullwidth Section -->
+        <section class="fullwidth margin-top-65 padding-top-75 padding-bottom-70" data-background-color="#f8f8f8">
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <h3 class="headline centered margin-bottom-45">
+                            Descubre Amigos para tus mejores amigos
+                            <span></span>
+                        </h3>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="simple-slick-carousel dots-nav">
+
+                            <!-- Listing Item -->
+                            <div class="carousel-item">
+                                <a href="/views/index/acerca-de-pupi.html" class="listing-item-container">
+                                    <div class="listing-item">
+                                        <img  src="/img/background11.jpg" alt="">
+
+
+
+                                        <div class="listing-item-content">
+
+                                            <h3   style="line-height: 200px; margin-left: 100px;" >Conocenos</h3>
+
+
+
+                                        </div>
+                                        <!--<i class="like-icon"></i>-->
+                                    </div>
+
+                                </a>
+                            </div>
+                            <!-- Listing Item / End -->
+
+                            <!-- Listing Item -->
+                            <div class="carousel-item">
+                                <a href="/views/dashboard/dashboard.html" class="listing-item-container">
+                                    <div class="listing-item">
+                                        <img src="/img/background12.jpg" alt="">
+                                        <div class="listing-item-details">
+
+                                        </div>
+                                        <div class="listing-item-content">
+
+                                            <h3   style="line-height: 200px; margin-left: 100px;" >Ingresá</h3>
+
+                                        </div>
+
+                                    </div>
+
+                                </a>
+                            </div>
+                            <!-- Listing Item / End -->
+
+                            <!-- Listing Item -->
+                            <div class="carousel-item">
+                                <a href="http://www.facebook.com/pupi.com.ar/" class="listing-item-container">
+                                    <div class="listing-item">
+                                        <img src="/img/background13.jpg" alt="">
+                                        <div class="listing-item-details">
+
+                                        </div>
+                                        <div class="listing-item-content">
+
+                                            <h3  style="line-height: 200px; margin-left: 100px;" >Conoce más</h3>
+
+                                        </div>
+
+                                    </div>
+
+                                </a>
+                            </div>
+                            <!-- Listing Item / End -->
+
+                            <!-- Listing Item -->
+
+                            <!-- Listing Item / End -->
+
+
+                            <!-- Listing Item / End -->
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+        <!-- Fullwidth Section / End -->
 
     <!-- Back To Top Button -->
     <div id="backtotop"><a href="#"></a></div>

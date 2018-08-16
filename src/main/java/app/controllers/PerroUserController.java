@@ -20,39 +20,39 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/user/")
 public class PerroUserController {
-    private final PerroService perroService;
-
     @Autowired
-    public PerroUserController(PerroService perroService) {
-        this.perroService = perroService;
+    PerroService perroService;
+
+    public PerroUserController() {
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "{idUser}/perros")
-    public Perro createPerro(@PathVariable("idUser") Long id, @RequestBody @Valid Perro entity) {
+    @RequestMapping(method = RequestMethod.POST, value = "createPerro/")
+    public Perro createPerro( @RequestBody @Valid Perro entity)  {
         return perroService.createPerro(entity);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "{idUser}/perros")
-    public List<Perro> getPerros(@PathVariable("idUser") Long id) {
+    public List<Perro> getPerros(@PathVariable("idUser") Long id) throws Exception {
         return perroService.getPerrosByUserId(id);
     }
 
     @RequestMapping(value = "{idUser}/perros/{perroId}", method = RequestMethod.GET)
-    public Perro getPerro(@PathVariable("idUser") Long userId, @PathVariable("perroId") Long perroId) {
+    public Perro getPerro(@PathVariable("idUser") Long userId, @PathVariable("perroId") Long perroId) throws Exception {
         return perroService.getPerro(perroId);
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET, value = "me/perros")
-    public List<Perro> getPerros() {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal();
+    public List<Perro> getPerros() throws Exception {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
-
-        long id = myUserPrincipal.getUser()
-                .getId();
+        long id = myUserPrincipal.getUser().getId();
         return perroService.getPerrosByUserId(id);
+    }
+
+    @RequestMapping(value = "{idUser}/eliminarPerro/{perroId}", method = RequestMethod.GET)
+    public boolean deletePerro(@PathVariable("idUser") Long userId, @PathVariable("perroId") Long perroId) throws Exception {
+        return perroService.deletePerro(perroId);
     }
 
 }

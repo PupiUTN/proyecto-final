@@ -12,6 +12,16 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 				</div>
 			</div>
 		</div>
+		<!-- Content -->
+		<div class="row">
+			<div class="col-md-12 col-xs-12">			    
+				<div class="notification success closeable margin-bottom-30 ">
+					<p> <strong>{{banner}}</strong>!</p>    					                    <!-- <a class="close" href="#"></a>-->
+			</div>
+			
+			</div>
+		
+		</div>
 		
 		<div v-show="role === 'ROLE_USER'" class="col-md-12 row"> 
 			   <div class="col-md-3"></div>
@@ -137,6 +147,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
             flag: '',
             list:{},
             rol:'',
+            banner:'',
         }
     },
     watch: {
@@ -183,6 +194,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
            ///api/cuidador/me/reservas/estadisticas/
             axios.get('/api/estadisticas/cuidadores/')
                 .then((response) => {
+                    this.banner="Estos son tus datos";
                     this.estadisticas = response.data;
                     this.estadisticas.cantidadTotal = response.data.cantidadTotal.toString();
                     this.estadisticas.promedio = response.data.promedio.toString();
@@ -206,6 +218,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                 .then((response) => {
                     this.list = response.data;
                     if (this.list.length >0) {
+                        this.banner="Estos son tus datos";
                         for (i = 0; i < this.list.length; i++) {
                             this.dogs[i] = {value: i, text: this.list[i].nombrePerro};
                         }
@@ -218,7 +231,8 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                     }
                     else
                     {
-                        sweetAlert("Estadisticas", "Actualmente no posees, genera reservas para ver tus estadísticas", "info");
+                        //sweetAlert("Estadisticas", "Actualmente no posees, genera reservas para ver tus estadísticas", "info");
+                        this.banner = "Actualmente no posees reservas, agrega tus mascotas para ver tus estadísticas";
                         document.getElementById("selector_perro").disabled = true;
                         this.estadisticas.cantidadTotal = 0;
                         this.estadisticas.totalCuidadores =0;

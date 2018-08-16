@@ -37,4 +37,13 @@ public class CalificacionService {
     public Long getTotalCalificaciones() {
         return calificacion.count();
     }
+
+    public List<Calificacion> getCalificacionesRealizadasCuidador(long id) {
+        return calificacion.getCalificacionesRealizadasCuidador(id);
+
+    }
+
+    public List<Calificacion> getCalificacionesRecibidasXPerro(long id) {
+        return calificacion.getCalificacionesRecibidasXPerro(id);
+    }
 }

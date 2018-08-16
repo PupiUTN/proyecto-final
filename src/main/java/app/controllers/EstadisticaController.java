@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by gabriellorenzatti on 5/6/18.
@@ -41,11 +38,12 @@ public class EstadisticaController {
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
 
     @RequestMapping(value = "/cuidadores/", method = RequestMethod.GET)
-    public Estadistica getEstadisticasCuidador() {
+    public Estadistica getEstadisticasCuidador() throws Exception {
         long id = getIdCuidador();
         int[] cantidadXtipo = new int[6];
         Estadistica estadistica = new Estadistica();
         List<Reserva> list = reservaService.findAllByCuidador(id);
+
 
 
         for (Reserva item : list) {
@@ -77,11 +75,14 @@ public class EstadisticaController {
             }
         }
         Cuidador cuidador;
-        if (list.size() > 0) {
-            cuidador = list.get(0).getCuidador();
-        } else {
-            cuidador = cuidadorService.cuidadorXUser(id);
-        }
+         if(list.size() > 0)
+         {
+              cuidador = list.get(0).getCuidador();
+         }
+         else
+         {
+              cuidador = cuidadorService.cuidadorXUser(id);
+         }
 
         estadistica.setTotalPorTipo(cantidadXtipo);
         estadistica.setCantidadTotal(list.size());
@@ -111,19 +112,19 @@ public class EstadisticaController {
         c.setTime(referenceDate);
         c.add(Calendar.MONTH, -6);
         beforeMonth = c.get(Calendar.MONTH);
-        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), 1);
-        month = 12 - beforeMonth;
+        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH),1);
+        month = 12- beforeMonth;
 
         for (Reserva item : reservas) {
             date = getDateReserva(item.getFechaTransaccion());
             if (date.getTime().after(c.getTime())) {
 
-                position = beforeMonth - date.get(Calendar.MONTH);
-                if (position <= 0) {
+                position = beforeMonth -date.get(Calendar.MONTH);
+                if(position <=0) {
                     cantidad[Math.abs(position)] = cantidad[Math.abs(position)] + 1;
-                } else {
+                } else{
 
-                    cantidad[date.get(Calendar.MONTH) + month] = cantidad[date.get(Calendar.MONTH) + 1] + 1;
+                    cantidad[date.get(Calendar.MONTH) +month] = cantidad[date.get(Calendar.MONTH) +1] + 1;
 
                 }
 
@@ -134,6 +135,8 @@ public class EstadisticaController {
     }
 
 
+
+
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/usuarios/", method = RequestMethod.GET)
     public List<EstadisticaUser> getEstadisticasUsuario() throws Exception {
@@ -141,7 +144,8 @@ public class EstadisticaController {
         List<EstadisticaUser> estadisticaUserList = new ArrayList<>();
 
         List<Reserva> list = reservaService.getReservasByUserId(id);
-        if (list.size() == 0) {
+        if (list.size() == 0)
+        {
             return estadisticaUserList;
         }
         User user = list.get(0).getPerro().getUser();
@@ -154,8 +158,9 @@ public class EstadisticaController {
             estadisticaUser.setNombrePerro(item.getNombre());
             estadisticaUser.setNombre(user.getUsername());
             estadisticaUser.setCantidadPorMes(getReservasXMes(list, item.getId()));
-            estadisticaUser.setCantidadTotal(getCantidadTotal(aux));
-            estadisticaUser.setPromedio(getPromedio(item.getId()));
+            estadisticaUser.setCantidadTotal(getCantidadTotal(list,item));
+           // estadisticaUser.setPromedio(getPromedio(item.getId()));
+            estadisticaUser.setPromedio(item.getPromedioReviews());
             estadisticaUser.setIdPerro(item.getId().intValue());
             estadisticaUser.setTotalCuidadores(getCuidadoresXPerro(list, item.getId()));
             estadisticaUserList.add(estadisticaUser);
@@ -166,36 +171,40 @@ public class EstadisticaController {
     }
 
 
-    private int getCantidadTotal(int[] aux) {
-        int cont = 0;
+    private int getCantidadTotal(List<Reserva> list, Perro perro ) {
+        long cont = 0;
 
-        for (int i = 0; i < aux.length; i++) {
-            cont += aux[i];
-        }
-        return cont;
+        cont  = list
+                .stream()
+                .filter(node -> Objects.equals(node.getPerro().getId(), perro.getId()))
+                .count();
+        return ((int) cont);
     }
 
 
-    private float getPromedio(Long id) throws Exception {
-        float cont = 0;
+    public float getPromedio(Long id) throws Exception
+    { float cont =0;
 
-        List<Calificacion> list = calificacionService.getCalificacionesPerro(id);
+        List<Calificacion> list =  calificacionService.getCalificacionesPerro(id);
 
-        if (list.size() > 0) {
+        if (list.size() >0 ) {
             for (Calificacion calificacion : list) {
                 cont += calificacion.getPuntaje();
             }
 
             return cont / list.size();
-        } else {
+        }
+        else
+        {
             return cont;
         }
     }
 
-    private int[] getCantidadXTipo(Long id, List<Reserva> list) {
-        int[] cantidadXtipo = new int[6];
+    private int[] getCantidadXTipo(Long id,  List<Reserva> list)
+    {  int[] cantidadXtipo = new int[6];
         for (Reserva item : list) {
-            if (item.getPerro().getId().equals(id)) {
+            if(item.getPerro().getId().equals(id))
+            {
                 switch (item.getStatus()) {
                     case "finalizada":
                         cantidadXtipo[0]++;
@@ -245,8 +254,8 @@ public class EstadisticaController {
         c.setTime(referenceDate);
         c.add(Calendar.MONTH, -6);
         beforeMonth = c.get(Calendar.MONTH);
-        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), 1);
-        month = 12 - beforeMonth;
+        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH),1);
+        month = 12- beforeMonth;
 
         for (Reserva item : reservas) {
 
@@ -272,7 +281,7 @@ public class EstadisticaController {
     }
 
 
-    private Calendar getDateReserva(Date item) {
+    private Calendar getDateReserva(Date item){
         Calendar reservaDate = Calendar.getInstance();
         reservaDate.setTime(item);
         return reservaDate;

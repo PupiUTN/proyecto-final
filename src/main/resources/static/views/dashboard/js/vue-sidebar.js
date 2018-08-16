@@ -19,7 +19,13 @@ let mySidebar = Vue.component('my-sidebar', {
 						<li><a href="/views/reserva/mis-reservas-user.html?status=cerrada">Finalizadas </a></li>
 					</ul>
 					</li>
-					                    <li><a href="/views/reserva/mis-reservas-user.html?status=finalizada"><i class="sl sl-icon-star"></i> Calificaciones<span v-if="pendientesUser > 0" class="nav-tag green">{{pendientesUser}}</span></a></li>
+					                    <li><a><i class="sl sl-icon-star"></i> Calificaciones<!--span v-if="pendientesUser > 0" class="nav-tag green">{{pendientesUser}}</span>--></a>
+					                    					                    
+					                  <ul>
+					    <li><a href="/views/reserva/mis-reservas-user.html?status=finalizada">Pendientes </a></li>
+					    <li><a href="/views/reserva/comentarios-dueño.html"> Recibidas </a></li>
+					                       </ul>	
+					                    </li>
 					                    
 					  <li v-show="role === 'ROLE_CUIDADOR'""><a href="/views/estadisticas/estadistica.html"><i class="sl sl-icon-pie-chart"></i> Mis Estadisticas </a></li>
 				
@@ -37,7 +43,13 @@ let mySidebar = Vue.component('my-sidebar', {
 			        	<li><a href="/views/reserva/mis-reservas-cuidador.html?status=cerrada">Finalizadas </a></li>
 					 </ul>	
 					 </li>
-					                     <li v-show="role === 'ROLE_CUIDADOR'"><a href="/views/reserva/mis-reservas-cuidador.html?status=finalizada"><i class="sl sl-icon-star"></i> Calificaciones<span v-if="pendientesCuidador > 0" class="nav-tag green">{{pendientesCuidador}}</span></a></li>
+					                     <li v-show="role === 'ROLE_CUIDADOR'"><a><i class="sl sl-icon-star"></i> Calificaciones<!--<span v-if="pendientesCuidador > 0" class="nav-tag green">{{pendientesCuidador}}</span>--></a>
+					                      <ul>
+					    <li><a href="/views/reserva/mis-reservas-cuidador.html?status=finalizada">Pendientes </a></li>
+					    <li><a href="/views/reserva/comentarios-cuidador.html"> Realizadas </a></li>
+					                       </ul>	
+					                     
+					                     </li>
 
                 </ul>
               

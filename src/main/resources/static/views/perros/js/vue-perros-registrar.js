@@ -10,18 +10,18 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
             </div>
         </div>
     </div>
-
     <div class="row">
         <!-- Profile -->
         <div class="col-lg-12 col-md-12">
-            <div class="dashboard-list-box margin-top-0">
-                <h4 class="gray">Detalles del perro</h4>
+            <!--<form class="dashboard-list-box margin-top-0">-->
+                <!--<h4 class="gray">Detalles del perro</h4>-->
+               
                 <div class="dashboard-list-box-static">
-                    <form id="imageForm" enctype="multipart/form-data">
+                    <form  id="editPerro" method="post" class="editPerro" v-on:submit.prevent='editProfilePerro()' enctype="multipart/form-data" >
                         <!-- Avatar -->
                         <div class="row">
                             <div class="edit-profile-photo col-xs-3 padding-left-30">
-                                <img :src="perro.fotoPerfil" alt="">
+                                <img id="imagen" :src="perro.fotoPerfil" alt="">
                                 <div class="change-photo-btn">
                                     <div class="photoUpload">
                                         <span><i class="fa fa-upload"></i> Subir Foto</span>
@@ -30,8 +30,8 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    <!-- Details -->
+                   
+                    <!-- Details -->                 
                     <div class="my-profile">
                             <label>Nombre</label>
                             <input v-model="perro.nombre" value="" type="text" required>
@@ -44,9 +44,9 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
                                 <option>Hembra</option>
                             </select>
                             <label>Raza</label>
-                            <select v-model="raza.id" required>
+                            <select id="mySelectRaza" v-model="raza.id" required>
                                 <option disabled value="">Seleccionar Raza</option>
-                                <option v-for="raza in razas" :value="raza.id">
+                                <option  v-for="raza in razas" :value="raza.id">
                                     {{ raza.nombre }}
                                 </option>
                             </select>
@@ -67,10 +67,13 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
                             </select>
                     </div>
                     <!--TODO on submit to validate the form-->
-                    <button v-on:click='saveDog()' class="button margin-top-15">Guardar</button>
+                    <button type="submit" value="Guardar" name="editProfilePerro" class="button margin-top-15">Guardar</button>
+                 </form>
                 </div>
+            
             </div>
         </div>
+        
     </div>
 </div>
     `,
@@ -80,6 +83,13 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
             perro: {
                 birthday: '',
                 fotoPerfil: "/img/no-perro.png",
+                raza: {
+                    id:'',
+                },
+                tamaño:{
+                    id:'',
+                },
+                listaVacunas:[],
             },
             url: "/api/user/",
             formPost: true,
@@ -91,10 +101,13 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
             listaVacunas: [],
             raza: {},
             tamaño: {},
+            idPerro:'',
         }
     },
     mounted() {
+        this.idPerro= this.getParameterByName('id');
         this.getUserInfo();
+
     },
     methods: {
 
@@ -127,7 +140,16 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
         getUserInfo() {
             axios.get(this.url + "me")
                 .then((sessionInfo) => {
+
+
                     this.isUserLoggedIn(sessionInfo);
+                    if(this.idPerro !== null && this.idPerro >0){
+
+                        this.getPerro();
+                    }
+                    this.getRazas();
+                    this.getTamaños();
+                    this.getVacunas();
                 })
                 .catch(error => {
                     console.log(error);
@@ -137,12 +159,36 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
 
                 });
         },
-        saveDog() {
+        getPerro()
+        {    let consulta =this.url + this.user.id + "/perros/" +this.idPerro ;
+
+            axios.get(consulta)
+                .then((response) => {
+                    this.perro = response.data;
+                    this.tamaño.id = this.perro.tamaño.id;
+                    this.raza.id= this.perro.raza.id ;
+                   // document.getElementById("mySelectRaza").selectedIndex = this.perro.raza.id;
+                    for (i = 0; i < this.perro.listaVacunas.length; i++) {
+                         let vac = {};
+                        vac = this.perro.listaVacunas[i];
+                        this.listaVacunas.push(vac.id);
+                    }
+                })
+                .catch(error => {
+                        console.log(error);
+                        sweetAlert("Oops...", "Error  ", "error");
+
+                    }
+                );
+
+        },
+        editProfilePerro() {
 
             this.perro.user = this.user;
             this.perro.listaVacunas = [];
             this.perro.tamaño = this.tamaño;
-            this.perro.raza = this.raza;
+            this.perro.raza = this.razas[this.raza.id-1];
+            this.perro.tamaño = this.sizes[this.tamaño.id-1];
             for (i = 0; i < this.listaVacunas.length; i++) {
                 let vacuna = {};
                 vacuna.id = this.listaVacunas[i];
@@ -152,15 +198,18 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
             if (!this.perro.birthday || this.perro.birthday == "") {
                 this.perro.birthday = "2016-01-01";
             }
+            this.perro.status = 'active';
             //this.perro.user.birthday=null;
+            var payload = jQuery.extend(true, {}, this.perro);
+            let consulta =this.url +"createPerro/" ;
 
-            axios.post(this.url + this.user.id + "/perros", this.perro)
+            axios.post(consulta, payload)
                 .then((response) => {
 
                     console.log(response);
                     swal({
                             title: "Guardado!",
-                            text: "Nuevo perro creado exitosamente",
+                            text: "Perro guardado exitosamente",
                             type: "success"
                         },
                         function () {
@@ -182,9 +231,7 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
                 }
                 this.direccion = address;
                 this.user = sessionInfo.data.principal.user;
-                this.getRazas();
-                this.getVacunas();
-                this.getTamaños();
+
             }
 
             else {
@@ -235,6 +282,20 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
                     }
                 );
         },
+        getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        },
+        inicializarVacuna(index)
+        {
+
+             var x = this.listaVacunas.includes(index);
+
+                return x;
+        }
+
     }
 });
 
