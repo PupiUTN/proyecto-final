@@ -55,6 +55,8 @@
         /*----------------------------------------------------*/
         /*  Sticky Header
         /*----------------------------------------------------*/
+
+        /*
         $("#header").not("#header.not-sticky").clone(true).addClass('cloned unsticky').insertAfter("#header");
         $("#navigation.style-2").clone(true).addClass('cloned unsticky').insertAfter("#navigation.style-2");
 
@@ -74,6 +76,7 @@
                 $("#navigation.style-2.cloned").addClass('unsticky').removeClass("sticky");
             }
         });
+        */
 
 
         /*----------------------------------------------------*/

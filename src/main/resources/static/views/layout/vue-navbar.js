@@ -6,7 +6,7 @@ Vue.component('my-navbar', {
     <header id="header-container">
 
         <!-- Header -->
-        <div id="header">
+        <div id="header" class="cloned sticky">
             <div class="container">
 
                 <!-- Left Side Content -->
