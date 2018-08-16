@@ -22,12 +22,15 @@ public class Denuncia {
     private Long id;
     @NotNull
     private String estado;
+    @NotNull
     private String comentario;
+    private String resolucion;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     @NotNull
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
     private Date fechaInicio;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -37,6 +40,10 @@ public class Denuncia {
     private Date fechaActualizacion;
     @OneToOne
     private Reserva reserva;
+    @OneToOne(cascade = CascadeType.ALL)
+    private TipoCierre tipoCierre;
+    @OneToOne(cascade = CascadeType.ALL)
+    private TipoDenuncia tipoDenuncia;
 
     public Long getId() {
         return id;
@@ -62,6 +69,14 @@ public class Denuncia {
         this.comentario = comentario;
     }
 
+    public String getResolucion() {
+        return resolucion;
+    }
+
+    public void setResolucion(String resolucion) {
+        this.resolucion = resolucion;
+    }
+
     public Date getFechaInicio() {
         return fechaInicio;
     }
@@ -84,5 +99,21 @@ public class Denuncia {
 
     public void setReserva(Reserva reserva) {
         this.reserva = reserva;
+    }
+
+    public TipoCierre getTipoCierre() {
+        return tipoCierre;
+    }
+
+    public void setTipoCierre(TipoCierre tipoCierre) {
+        this.tipoCierre = tipoCierre;
+    }
+
+    public TipoDenuncia getTipoDenuncia() {
+        return tipoDenuncia;
+    }
+
+    public void setTipoDenuncia(TipoDenuncia tipoDenuncia) {
+        this.tipoDenuncia = tipoDenuncia;
     }
 }

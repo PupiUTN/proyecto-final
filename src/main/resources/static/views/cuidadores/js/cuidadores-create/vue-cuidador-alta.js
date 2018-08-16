@@ -1,4 +1,5 @@
 Vue.component('become-cuidador', {
+    // lenguage=HTML
     template: `
 <div>
  <div id="titlebar">

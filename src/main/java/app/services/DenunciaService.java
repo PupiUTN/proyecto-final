@@ -2,19 +2,27 @@ package app.services;
 
 import app.models.entities.Denuncia;
 import app.models.entities.Reserva;
+import app.models.entities.TipoCierre;
+import app.models.entities.TipoDenuncia;
 import app.persistence.DenunciaRepository;
+import app.persistence.TipoDenunciaRepository;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class DenunciaService {
 
     private final DenunciaRepository denunciaRepository;
+    private final TipoDenunciaRepository tipoDenunciaRepository;
 
     @Autowired
-    public DenunciaService(DenunciaRepository denunciaRepository) {
+    public DenunciaService(DenunciaRepository denunciaRepository, TipoDenunciaRepository tipoDenunciaRepository) {
         this.denunciaRepository = denunciaRepository;
+        this.tipoDenunciaRepository = tipoDenunciaRepository;
     }
 
     public List<Denuncia> getDenunciasByStatus(String status) {
@@ -25,71 +33,29 @@ public class DenunciaService {
         return denunciaRepository.findById(id);
     }
 
-    public Reserva save(Reserva reserva) {
+    public Denuncia save(Denuncia denuncia) {
         //TODO hot fix, el formato de la fecha al no tener hora se desplaza un dia
         // https://stackoverflow.com/questions/7556591/javascript-date-object-always-one-day-off
         //reserva.setFechaFin(addDays(reserva.getFechaFin(), 1));
         //reserva.setFechaInicio(addDays(reserva.getFechaInicio(), 1));
 
-        reserva.setStatus("creada-dueño");
-        float precioTotal = daysBetween(reserva.getFechaInicio(), reserva.getFechaFin()) * reserva.getCuidador().getPrecioPorNoche();
-        reserva.setPrecioTotal(precioTotal);
-        Reserva savedObject = denunciaRepository.save(reserva);
+        denuncia.setEstado("creada");
+        Denuncia savedObject = denunciaRepository.save(denuncia);
         return savedObject;
     }
 
-    public Reserva setEstadoFinalizado(Reserva reserva) {
-        Reserva savedObject = reservaRepository.save(reserva);
+    public Denuncia setStatus(long denunciaId, String status) {
+        Date fechaActualizacion = DateTime.now().toDate();
+        Denuncia savedObject = denunciaRepository.updateStatus(denunciaId, status, fechaActualizacion);
         return savedObject;
     }
 
-
-    private static long daysBetween(Date one, Date two) {
-        long difference = (one.getTime() - two.getTime()) / 86400000;
-        return Math.abs(difference);
+    public Denuncia cerrar(Denuncia denuncia){
+        Denuncia savedObject = denunciaRepository.cerrar(denuncia.getId(), "cerrada", denuncia.getResolucion(), denuncia.getTipoCierre());
+        return savedObject;
     }
 
-    public void cancelarCausaUsuario(Long reservaId, Long userId) {
-        Reserva reserva = reservaRepository.findByUserIdAnId(userId, reservaId);
-        reserva.setStatus("rechazada-dueño");
-        reservaRepository.save(reserva);
-    }
-
-    public List<Reserva> getReservasByCuidadorIdAndStatus(Long id, String status) {
-
-        if (status.equals("finalizada")) {
-            String var1 = "comentario-dueño";
-            return reservaRepository.findAllByCuidadorAndStatusFinalizada(id, status, var1);
-
-        } else {
-            return reservaRepository.findAllByCuidadorAndStatus(id, status);
-        }
-
-    }
-
-    public void cancelar(Long reservaId, Long userId) {
-        Reserva reserva = reservaRepository.findByCuidadorIdAnId(userId, reservaId);
-        reserva.setStatus("rechazada-cuidador");
-        reservaRepository.save(reserva);
-    }
-
-
-    public void confirmar(Long reservaId, Long userId) {
-        Reserva reserva = reservaRepository.findByCuidadorIdAnId(userId, reservaId);
-        reserva.setStatus("aceptada-cuidador");
-        reservaRepository.save(reserva);
-    }
-
-    public List<Reserva> findPendienteReviewCuidador() {
-        return reservaRepository.findPendienteReviewCuidador();
-    }
-
-    public List<Reserva> findPendienteReviewUser() {
-        return reservaRepository.findPendienteReviewUser();
-    }
-
-    public void setEstadoPagada(Reserva reserva) {
-        reserva.setStatus("pagada-dueño");
-        reservaRepository.save(reserva);
+    public List<TipoDenuncia> getTipoDenuncias() {
+        return tipoDenunciaRepository.findAll();
     }
 }
