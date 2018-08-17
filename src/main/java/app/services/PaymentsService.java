@@ -4,6 +4,7 @@ import app.models.entities.Reserva;
 import app.models.entities.User;
 import app.models.mercadopago.Preference;
 import app.persistence.PaymentRepository;
+import app.security.Encryptor;
 import app.utils.PaymentsUtils;
 import com.mercadopago.MercadoPago;
 import com.mercadopago.exceptions.MPException;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.crypto.Cipher;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -28,6 +30,7 @@ public class PaymentsService {
 
     private final PaymentRepository paymentRepository;
     private final ReservaService reservaService;
+    private final Encryptor encryptor;
     @Value("${app.mp.pupi.clientId}")
     private String clientId;
     @Value("${app.mp.pupi.clientSecret}")
@@ -39,9 +42,10 @@ public class PaymentsService {
     private static final Logger logger = LogManager.getLogger(PaymentsService.class);
 
     @Autowired
-    public PaymentsService(PaymentRepository paymentRepository, ReservaService reservaService) {
+    public PaymentsService(PaymentRepository paymentRepository, ReservaService reservaService, Encryptor encryptor) {
         this.paymentRepository = paymentRepository;
         this.reservaService = reservaService;
+        this.encryptor = encryptor;
     }
 
     @PostConstruct
@@ -75,9 +79,10 @@ public class PaymentsService {
 
         //Acá seteamos el token del vendedor
         Optional<String> mpToken = Optional.ofNullable(user.getMpToken());
-        mpToken.ifPresent(MercadoPago.SDK::setUserToken);
 
-        preference.setMarketplaceFee(20f);
+        mpToken.ifPresent(token -> MercadoPago.SDK.setUserToken(getMercadoPagoToken(token)));
+
+        preference.setMarketplaceFee(getMarketplaceFee(reserva.getPrecioTotal()));
         BackUrls backUrls = new BackUrls("http://google.com", "http://google.com", "http://google.com");
         preference.setBackUrls(backUrls);
         try {
@@ -130,7 +135,15 @@ public class PaymentsService {
         paymentRepository.save(p);
     }
 
-    public Reserva getReserva(Long reservaId) {
+    private Reserva getReserva(Long reservaId) {
         return reservaService.getReserva(reservaId);
+    }
+
+    private String getMercadoPagoToken(String mpToken) {
+        return encryptor.run(mpToken, Cipher.DECRYPT_MODE).replace("\"", "");
+    }
+
+    private float getMarketplaceFee(float totalAmount) {
+        return (float) (totalAmount * 0.2);
     }
 }
