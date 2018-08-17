@@ -33,10 +33,8 @@ java:
   runtime:
       version: 1.8
 
-profiles: prod
-
 app:
-  domain: http://pupi.com.ar
+  environment: ${PUPI_ENVIRONMENT}
   mp:
     pupi:
       clientId: ${MP_CLIENT_ID}
@@ -54,14 +52,5 @@ app:
       ses:
         accessKey: ${SES_ACCESS_KEY}
         secretKey: ${SES_SECRET_KEY}
-
----
-spring:
-profiles: development
-app:
-  domain: http://localhost:5000
-  mp:
-    pupi:
-      redirectUri: /api/user/get-mp-token?email=%s
 
 

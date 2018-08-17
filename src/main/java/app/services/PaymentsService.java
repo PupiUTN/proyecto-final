@@ -35,8 +35,6 @@ public class PaymentsService {
     private String clientId;
     @Value("${app.mp.pupi.clientSecret}")
     private String clientSecret;
-    @Value("${app.domain")
-    private String urlDomain;
 
 
     private static final Logger logger = LogManager.getLogger(PaymentsService.class);
@@ -144,6 +142,6 @@ public class PaymentsService {
     }
 
     private float getMarketplaceFee(float totalAmount) {
-        return (float) (totalAmount * 0.2);
+        return totalAmount * 0.2f;
     }
 }

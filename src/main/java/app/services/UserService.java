@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.Cipher;
 
 @Service
@@ -31,7 +32,9 @@ public class UserService extends AbstractRestClientService {
     @Value("${app.mp.pupi.redirectUri}")
     private String MP_REDIRECT_URI;
 
-    @Value("${app.domain}")
+    @Value("${app.environment}")
+    private String ENVIRONMENT;
+
     private String APP_DOMAIN;
 
     @Autowired
@@ -39,6 +42,15 @@ public class UserService extends AbstractRestClientService {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.encryptor = encryptor;
+    }
+
+    @PostConstruct
+    private void setRedirectUri() {
+        if("prod".equalsIgnoreCase(ENVIRONMENT)) {
+            APP_DOMAIN = "http://www.pupi.com.ar";
+        } else {
+            APP_DOMAIN = "http://localhost:5000";
+        }
     }
 
     @Transactional
@@ -93,7 +105,7 @@ public class UserService extends AbstractRestClientService {
         json.put("client_secret", MercadoPago.SDK.getClientSecret());
         json.put("grant_type", "authorization_code");
         json.put("code", code);
-        json.put("redirect_uri", "http://localhost:5000/api/user/get-mp-token?email=" + email);
+        json.put("redirect_uri", String.format(APP_DOMAIN + MP_REDIRECT_URI, email));
         return new HttpEntity<>(json, PaymentsUtils.getMercadoPagoHeaders());
     }
 
