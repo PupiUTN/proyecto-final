@@ -460,7 +460,7 @@ Vue.component('my-detalle-reserva', {
                             type: "success",
                         },
                         function () {
-                            document.location.href = "/views/dashboard/dashboard.html";
+                            document.location.href = "/views/reserva/mis-reservas-cuidador.html?status=aceptada-cuidador";
                         })
                 })
                 .catch(error => {

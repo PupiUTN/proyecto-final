@@ -1,6 +1,6 @@
 package app.services;
 
-import app.models.entities.Calificacion;
+import app.exception.BussinesLogicException;
 import app.models.entities.Reserva;
 import app.persistence.ReservaRepository;
 import app.utils.EstadoReserva;
@@ -42,12 +42,17 @@ public class ReservaService {
         return reservaRepository.findOne(id);
     }
 
-    public Reserva save(Reserva reserva) {
+    public Reserva save(Reserva reserva) throws BussinesLogicException {
+
         //TODO hot fix, el formato de la fecha al no tener hora se desplaza un dia
         // https://stackoverflow.com/questions/7556591/javascript-date-object-always-one-day-off
         //reserva.setFechaFin(addDays(reserva.getFechaFin(), 1));
         //reserva.setFechaInicio(addDays(reserva.getFechaInicio(), 1));
-
+        int valorMaximoCuidador = reserva.getCuidador().getTamaño().getValorMaximo();
+        int valorMaximoPerro = reserva.getPerro().getTamaño().getValorMaximo();
+        if (valorMaximoPerro > valorMaximoCuidador) {
+            throw new BussinesLogicException("El tamaño del perro elegido en la reserva supera el tamaño maximo admitido por el cuidador");
+        }
         reserva.setStatus("creada-dueño");
         float precioTotal = daysBetween(reserva.getFechaInicio(), reserva.getFechaFin()) * reserva.getCuidador()
                 .getPrecioPorNoche();
@@ -133,7 +138,7 @@ public class ReservaService {
         return reservaRepository.getCantidadReservas(id);
     }
 
-    public List<Reserva> findAllByCuidador( Long id) {
+    public List<Reserva> findAllByCuidador(Long id) {
         return reservaRepository.findAllByCuidador(id);
     }
 
@@ -152,9 +157,9 @@ public class ReservaService {
         return reservaRepository.getCantidadByStatus(estadoReserva.getStatus(), "");
     }
 
-    public List<Reserva>  getReservasByDogId(Long perroId) {
+    public List<Reserva> getReservasByDogId(Long perroId) {
 
-        return  reservaRepository.getReservaByDogIdAndStatus(perroId);
+        return reservaRepository.getReservaByDogIdAndStatus(perroId);
 
     }
 }

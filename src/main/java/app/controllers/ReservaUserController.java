@@ -5,7 +5,8 @@
  */
 package app.controllers;
 
-import app.models.entities.*;
+import app.exception.BussinesLogicException;
+import app.models.entities.Reserva;
 import app.security.MyUserPrincipal;
 import app.services.CalificacionService;
 import app.services.MailService;
@@ -20,9 +21,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -45,7 +43,7 @@ public class ReservaUserController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST)
-    public Reserva post(@RequestBody Reserva entity) {
+    public Reserva post(@RequestBody Reserva entity) throws BussinesLogicException {
         //TODO setear info del cuidador asi nadie puede meter info que no es.
         mailService.sendEmail(entity.getCuidador().getUser(), MailType.BOOKING_REQUEST);
         return reservaService.save(entity);

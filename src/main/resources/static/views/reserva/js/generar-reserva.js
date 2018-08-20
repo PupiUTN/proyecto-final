@@ -1,3 +1,10 @@
+// https://stackoverflow.com/questions/4413590/javascript-get-array-of-dates-between-2-dates
+Date.prototype.addDays = function (days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
 let myGenerarReserva = Vue.component('my-generar-reserva', {
         template: `
 <div class="container">
@@ -28,12 +35,15 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
             <h3><i class="fa fa-calendar-check-o "></i> Fechas de Reserva </h3>
             <div class="row with-forms  margin-top-0">
                 <div class="col-lg-12 col-md-12">
-                    <my-hotel-date-picker
-                            ref="myHotelDatePicker"
-                            format="DD/MM/YYYY"
-                            v-on:updateDateRange="bindDates"
-                            datePickerId="datepickerId"
-                    ></my-hotel-date-picker>
+                        <my-hotel-date-picker
+                                ref="myHotelDatePicker"
+                                format="DD/MM/YYYY"
+                                v-on:updateDateRange="bindDates"
+                                datePickerId="datepickerId"
+                                :disabledDates="fechasDeshabilitadas"
+                                v-if="showDatePicker"
+                        >
+                        </my-hotel-date-picker>
                 </div>
             </div>
 
@@ -48,10 +58,10 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
             <div class="row with-forms  margin-top-0">
                 <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
                 <div class="col-lg-12 col-md-12">
-                    <div class="checkboxes in-row margin-top-0">
+                    <div class="radio-button-reserva in-row margin-top-0">
                         <template v-for="perro in perros">
-                            <input v-bind:id="'perro_' +perro.id" type="checkbox" name="check"
-                                   v-bind:value="perro.id"
+                            <input v-bind:id="'perro_' +perro.id" type="radio" name="perro"
+                                   v-bind:value="perro"
                                    v-model="checkboxPerros">
                             <label v-bind:for="'perro_' +perro.id">{{perro.nombre}}</label>
                         </template>
@@ -127,13 +137,17 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                     precioTotal: null,
                     mensaje: ''
                 },
-                checkboxPerros: [],
-                isMounted: false
+                checkboxPerros: {},
+                isMounted: false,
+                fechasDeshabilitadas: [],
+                showDatePicker: false,
+                idCuidador: null
             }
         }
         , mounted() {
             this.bindUrlWithVue();
             this.setDates();
+            this.getReservasPagadasYEjecucion();
         },
         methods: {
             bindDates(e) {
@@ -145,6 +159,7 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
             bindUrlWithVue() {
                 this.reserva.fechaInicio = this.getParameterByName('from');
                 this.reserva.fechaFin = this.getParameterByName('to');
+                this.idCuidador = this.getParameterByName('id');
             },
             loadReservaContent() {
                 this.idCuidador = this.getParameterByName('id');
@@ -159,7 +174,7 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                     })
                     .catch(error => {
                             console.log(error);
-                            sweetAlert("Oops...", "Error, de Cuidador ", "errorx");
+                            sweetAlert("Oops...", "Error, get Cuidador ", "error");
                         }
                     );
             },
@@ -188,18 +203,19 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                     })
                     .catch(error => {
                             console.log(error);
-                            sweetAlert("Oops...", "Error, ver consola", "error");
+                            sweetAlert("Oops...", "Error get perro, ver consola", "error");
                         }
                     );
             },
             postReserva() {
-                this.reserva.perro.id = this.checkboxPerros[0];
-
-
+                this.reserva.perro = this.checkboxPerros;
+                if (this.reserva.perro.tamaño.valorMaximo > this.reserva.cuidador.tamaño.valorMaximo) {
+                    sweetAlert("Perro Invalido", "El tamaño del perro selecionado excede el tamaño maximo admitido por el cuidador actual", "info");
+                    return;
+                }
                 if (this.reserva.fechaInicio == "" || this.reserva.fechaFin == "") {
                     console.log("fecha inicio vacia");
                     sweetAlert("Campo Vacio", "Completar Fecha Inicio", "info");
-
                     return;
                 }
                 var dateFromObj = fecha.parse(this.reserva.fechaInicio, 'DD/MM/YYYY'); // new Date(2010, 11, 10, 14, 11, 12)
@@ -210,7 +226,7 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                     sweetAlert("Campo Vacio", "Fecha inicio igual a fecha fin", "info");
                     return;
                 }
-                //MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
+                // todo MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
                 this.reserva.fechaInicio = fecha.format(dateFromObj, 'YYYY-MM-DD');
                 this.reserva.fechaFin = fecha.format(dateToObj, 'YYYY-MM-DD');
                 //this.reserva.cuidador.user.birthday = null;
@@ -230,7 +246,7 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                     })
                     .catch(error => {
                             console.log(error);
-                            sweetAlert("Oops...", "Error, ver consola", "error");
+                            sweetAlert("Oops...", "Error post reserva, ver consola", "error");
                         }
                     );
             },
@@ -242,6 +258,65 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
             },
             complemento: function (promedioReviews) {
                 return 5 - promedioReviews
+            },
+            getReservasPagadasYEjecucion() {
+                // obtengo las reservas
+                // PAGADAS DUEÑO y ejecucion
+                axios.get("/api/reservas/fromToday/?idCuidador=" + this.idCuidador + "&status=pagada-due%C3%B1o&status=ejecucion")
+                    .then((response) => {
+                        let fechasList = this.calcularListadoDeFechas(response.data);
+                        this.fechasDeshabilitadas = this.calcularFechasDeshabilitadas(fechasList);
+                        // como las properties del componente no son reactivas debo montar el date picker luego de calcular las fecha
+                        this.showDatePicker = true
+                    })
+                    .catch(error => {
+                        this.showDatePicker = true
+                        console.log(error);
+                        sweetAlert("Oops...", "Error getReservasPagadasYEjecucion ", "error");
+                    });
+
+            },
+            calcularFechasDeshabilitadas(fechasList) {
+                // debemos deshabilitar aquellas fechas que en el mismo dia tiene mayor o igual cantidad de reservas
+                // que la maxima admitida por el cuidador
+                let cantidadReservasPorDia = new Map()
+                for (let i = 0; i < fechasList.length; i++) {
+                    let fecha = fechasList[i];
+                    let frecuencia = cantidadReservasPorDia.get(fecha);
+                    if (frecuencia === undefined) {
+                        cantidadReservasPorDia.set(fecha, 1);
+                    } else {
+                        cantidadReservasPorDia.set(fecha, frecuencia + 1);
+                    }
+                }
+                let fechasSuperanCantidadMaximaDePerro = [];
+                for (var [key, value] of cantidadReservasPorDia.entries()) {
+                    if (value >= this.reserva.cuidador.cantidadMaxDePerros) {
+                        fechasSuperanCantidadMaximaDePerro.push(key)
+                    }
+                }
+                return fechasSuperanCantidadMaximaDePerro;
+            },
+            calcularListadoDeFechas(reservasPagadasYEjecucion) {
+                // creo una lista con todas las fechas de todas las reservas
+                let datesList = [];
+                for (var i = 0; i < reservasPagadasYEjecucion.length; i++) {
+                    // Do stuff with arr[i] or i
+                    let reserva = reservasPagadasYEjecucion[i];
+                    let dates = this.getDatesBetween(reserva.fechaInicio, reserva.fechaFin)
+                    datesList.push(...dates)
+                }
+                return datesList;
+            },
+            getDatesBetween(startDate, stopDate) {
+                var dateArray = new Array();
+                var currentDate = fecha.parse(startDate, 'YYYY-MM-DD');
+                var stopDate = fecha.parse(stopDate, 'YYYY-MM-DD');
+                while (currentDate <= stopDate) {
+                    dateArray.push(fecha.format(currentDate, 'YYYY-MM-DD'));
+                    currentDate = currentDate.addDays(1);
+                }
+                return dateArray;
             }
 
 
