@@ -65,7 +65,7 @@
 
 
         // sticky header script
-        var headerOffset = $("#header-container").height() * 2; // height on which the sticky header will shows
+        var headerOffset = $("#header").height() * 2; // height on which the sticky header will shows
 
         $(window).scroll(function () {
             if ($(window).scrollTop() >= headerOffset) {
@@ -725,9 +725,9 @@
         /*----------------------------------------------------*/
         $(window).on('load resize', function () {
             var winWidth = $(window).width();
-            var headerHeight = $("#header-container").height(); // height on which the sticky header will shows
+            var headerHeight = $("#header").height(); // height on which the sticky header will shows
 
-            $('.fs-inner-container, .fs-inner-container.map-fixed, #dashboard').css('padding-top', headerHeight);
+            /* JOSE: $('.fs-inner-container, .fs-inner-container.map-fixed, #dashboard').css('padding-top', headerHeight);*/
 
             if (winWidth < 992) {
                 $('.fs-inner-container.map-fixed').insertBefore('.fs-inner-container.content');
@@ -773,7 +773,7 @@
         // Dashbaord Nav Scrolling
         $(window).on('load resize', function () {
             var wrapperHeight = window.innerHeight;
-            var headerHeight = $("#header-container").height();
+            var headerHeight = $("#header").height();
             var winWidth = $(window).width();
 
             if (winWidth > 992) {
