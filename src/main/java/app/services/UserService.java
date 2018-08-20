@@ -47,7 +47,7 @@ public class UserService extends AbstractRestClientService {
     @PostConstruct
     private void setRedirectUri() {
         if("prod".equalsIgnoreCase(ENVIRONMENT)) {
-            APP_DOMAIN = "https://www.pupi.com.ar";
+            APP_DOMAIN = "https://pupi.com.ar";
         } else {
             APP_DOMAIN = "http://localhost:5000";
         }

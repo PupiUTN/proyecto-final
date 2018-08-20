@@ -71,7 +71,7 @@ public class PaymentsService {
 
         preference.setPayer(payer);
         preference.appendItem(item);
-        preference.setNotificationUrl("http://pupi.com.ar/api/payments/notifications");
+        preference.setNotificationUrl("https://pupi.com.ar/api/payments/notifications");
         preference.setExternalReference(reserva.getId()
                 .toString());
 
