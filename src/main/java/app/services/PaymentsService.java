@@ -14,8 +14,8 @@ import com.mercadopago.resources.datastructures.merchantorder.MerchantOrderPayme
 import com.mercadopago.resources.datastructures.preference.BackUrls;
 import com.mercadopago.resources.datastructures.preference.Item;
 import com.mercadopago.resources.datastructures.preference.Payer;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class PaymentsService {
     private String clientSecret;
 
 
-    private static final Logger logger = LogManager.getLogger(PaymentsService.class);
+    private static final Logger LOG  = LoggerFactory.getLogger(PaymentsService.class);
 
     @Autowired
     public PaymentsService(PaymentRepository paymentRepository, ReservaService reservaService, Encryptor encryptor) {
@@ -95,6 +95,8 @@ public class PaymentsService {
     public void getPaymentInfo(String id, String topic) {
         try {
 
+            LOG.info("Message received [message_id:{}] [topic:{}]", id, topic);
+
             MerchantOrder merchantOrder = topic.equalsIgnoreCase("payment") ? MerchantOrder.findById(Payment.findById(id)
                     .getOrder()
                     .getId()
@@ -109,7 +111,7 @@ public class PaymentsService {
             }
         } catch (Exception e) {
             System.out.println(e.toString());
-            logger.error("Error when trying to get payment info " + e.toString() + "\n");
+            LOG.error("Error when trying to get payment info [error:{}] [message:{}]", e.toString(), e.getMessage());
             e.printStackTrace();
         }
     }
