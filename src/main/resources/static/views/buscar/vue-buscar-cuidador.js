@@ -69,7 +69,10 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
                     let long = position.coords.longitude;
                     this.placeLng = long.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
                     //https://developers.google.com/maps/documentation/geocoding/start
-                    axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.placeLat + ',' + this.placeLng + '&sensor=true')
+
+                    https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=YOUR_API_KEY
+
+                        axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.placeLat + ',' + this.placeLng + '&sensor=true&key=AIzaSyBThXWEOGFIHdjSoweslrHBjFLVG9KA1fQ')
                         .then((data) => {
                             console.log(data.data);
                             var city = data.data.results[1];
