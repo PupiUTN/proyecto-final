@@ -11,7 +11,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
 <span>
 <!-- Slider
 ================================================== -->
-<div class="fs-container listing-slider mfp-gallery-container margin-bottom-0 " id="ContenedorImagen">
+<div class="listing-slider mfp-gallery-container margin-bottom-0" id="ContenedorImagen">
 </div>
 
 

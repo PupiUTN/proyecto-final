@@ -189,7 +189,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                 </div>
             </div>
-            <div class="fs-inner-container map-fixed" style="margin-top: 55px">
+            <div class="fs-inner-container map-fixed">
                 <!-- Map -->
                 <div id="map-container">
                     <div id="map" data-map-zoom="9" data-map-scroll="true">

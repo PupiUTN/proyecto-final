@@ -7,7 +7,7 @@ Date.prototype.addDays = function (days) {
 
 let myGenerarReserva = Vue.component('my-generar-reserva', {
         template: `
-<div class="fs-container">
+<div class="container">
     <form v-on:submit.prevent="postReserva">
         <div class="form-group">
         <!--cuidador resume-->
