@@ -368,7 +368,7 @@ header.fullwidth .container {
 }
 
 #header.cloned {
-    padding: 7px 0 7px 0;
+    padding: 18px 0 7px 0;
 }
 
 .sticky-logo {
@@ -1007,8 +1007,8 @@ body #navigation ul ul {
         color: #fff;
     }
 
-    #header.header-style-2 .left-side,
-    #header.header-style-2 .right-side,
+    #header-container.header-style-2 .left-side,
+    #header-container.header-style-2 .right-side,
     .right-side,
     .left-side {
         width: 100%;
@@ -1020,7 +1020,7 @@ body #navigation ul ul {
         z-index: 9;
     }
 
-    #header.header-style-2 .header-widget {
+    #header-container.header-style-2 .header-widget {
         float: left;
         margin-top: 35px;
         margin-bottom: -5px
@@ -1043,7 +1043,7 @@ body #navigation ul ul {
         padding: 0 15px;
     }
 
-    #header.header-style-2 .header-widget {
+    #header-container.header-style-2 .header-widget {
         width: calc(100%);
         border-top: 1px solid #e0e0e0;
         padding-top: 30px;
@@ -1060,25 +1060,25 @@ body #navigation ul ul {
         padding: 0 15px;
     }
 
-    #header.header-style-2 #header .container {
+    #header-container.header-style-2 #header .container {
         width: 100%;
     }
 
-    #header.header-style-2 .header-widget li .button {
+    #header-container.header-style-2 .header-widget li .button {
         margin-left: 0;
     }
 
-    #header.header-style-2 .header-widget li:after {
+    #header-container.header-style-2 .header-widget li:after {
         display: none;
     }
 
-    #header.header-style-2 .header-widget li {
+    #header-container.header-style-2 .header-widget li {
         width: 100%;
         padding: 10px 0;
         margin: 0;
     }
 
-    #header.header-style-2 .header-widget li i {
+    #header-container.header-style-2 .header-widget li i {
         width: 50px;
         margin: 0 0 0 0px;
         display: inline-block;
@@ -1275,6 +1275,7 @@ body #jPanelMenu-menu li li li a:before {
 
 /* Main Search Input */
 .main-search-input {
+    margin-top: 50px;
     border-radius: 50px;
     width: 100%;
     background-color: #fff;
@@ -2486,7 +2487,6 @@ button.panel-cancel:active {
 .fs-container {
     height: 100%;
     width: 100%;
-    margin-top: 55px;
 }
 
 .fs-container #map-container {
@@ -2546,7 +2546,7 @@ button.panel-cancel:active {
     font-size: 15px;
 }
 
-#header.fixed {
+#header-container.fixed {
     position: fixed;
     top: 0;
     width: 100%;
@@ -2558,6 +2558,7 @@ button.panel-cancel:active {
     height: 100vh;
     position: fixed;
     top: 0;
+    padding-top: 80px
 }
 
 button.fs-map-btn.button {
@@ -14172,6 +14173,10 @@ h4 span.headline-detail {
         min-height: 400px;
         max-height: 400px;
     }
+
+    #header.cloned {
+        display: none;
+    }
 }
 
 /* Reset for menu */
@@ -14249,7 +14254,7 @@ h4 span.headline-detail {
         max-height: 300px;
     }
 
-    #header.fixed {
+    #header-container.fixed {
         position: relative;
         top: 0;
         width: 100%;
@@ -14884,7 +14889,7 @@ h4 span.headline-detail {
     }
 
     .user-menu {
-        margin: 10px 0 0 25px;
+        margin: 10px 0 20px 25px;
         top: 0;
         display: block;
     }
