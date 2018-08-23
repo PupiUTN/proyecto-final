@@ -146,8 +146,6 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
         }
         , mounted() {
             this.bindUrlWithVue();
-            this.setDates();
-            this.getReservasPagadasYEjecucion();
         },
         methods: {
             bindDates(e) {
@@ -166,11 +164,11 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                 this.getCuidador();
                 this.getPerros();
             },
-
             getCuidador() {
                 axios.get(this.urlCuidador + "/" + this.idCuidador)
                     .then((response) => {
                         this.reserva.cuidador = response.data;
+                        this.getReservasPagadasYEjecucion();
                     })
                     .catch(error => {
                             console.log(error);
@@ -250,11 +248,15 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                         }
                     );
             },
-            setDates() {
-                if (this.reserva.fechaInicio != "" & this.reserva.fechaFin != "") {
-                    var value = this.reserva.fechaInicio + '-' + this.reserva.fechaFin;
-                    this.$refs.myHotelDatePicker.setValue(value);
-                }
+            setDatesToDatePickerInput() {
+                var self = this;
+                setTimeout(function () {
+                    if (self.reserva.fechaInicio != "" & self.reserva.fechaFin != "") {
+                        var value = self.reserva.fechaInicio + '-' + self.reserva.fechaFin;
+                        self.$refs.myHotelDatePicker.setValue(value);
+                    }
+                }, 1000);
+
             },
             complemento: function (promedioReviews) {
                 return 5 - promedioReviews
@@ -268,6 +270,7 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                         this.fechasDeshabilitadas = this.calcularFechasDeshabilitadas(fechasList);
                         // como las properties del componente no son reactivas debo montar el date picker luego de calcular las fecha
                         this.showDatePicker = true
+                        this.setDatesToDatePickerInput();
                     })
                     .catch(error => {
                         this.showDatePicker = true

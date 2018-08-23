@@ -21,7 +21,7 @@ public enum MailType {
         String text;
         switch (this) {
             case WELCOME:
-                text = "<b>¡Bienvenido a Pupi!</b> \uD83D\uDC3E\n <br>" +
+                text = "<b>¡Bienvenido a Pupi!</b> \uD83D\uDC3E <br>" +
                         "Somos la plataforma que conecta dueños de mascotas con cuidadores que hospedan perros en su casa, <br> " +
                         "brindando todo su cariño y seguridad. ";
                 break;
@@ -51,7 +51,7 @@ public enum MailType {
                 break;
 
             case WELCOME_HOST:
-                text = "<b>¡Bienvenido a Pupi!</b> \uD83D\uDC3E\n <br>" +
+                text = "<b>¡Bienvenido a Pupi!</b> \uD83D\uDC3E  <br>" +
                         "Gracias por ser parte de nuestra comunidad de cuidadores. <br> " +
                         "El siguiente paso es completar tu perfil como cuidador para empezar a ganar dinero con tus futuros clientes.";
                 break;
