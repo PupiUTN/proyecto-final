@@ -1,17 +1,27 @@
 package app.security;
 
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 
+@Service
 public class Encryptor {
 
-    public static String run(String key, String initVector, String value, int cipherMode) {
+    @Value("${app.mp.pupi.encryptKey}")
+    private String KEY;
+
+    @Value("${app.mp.pupi.encryptVector}")
+    private String VECTOR;
+
+    public String run(String value, int cipherMode) {
         try {
-            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+            IvParameterSpec iv = new IvParameterSpec(VECTOR.getBytes(StandardCharsets.UTF_8));
+            SecretKeySpec skeySpec = new SecretKeySpec(KEY.getBytes(StandardCharsets.UTF_8), "AES");
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(cipherMode, skeySpec, iv);
 

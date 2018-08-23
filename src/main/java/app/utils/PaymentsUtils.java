@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class PaymentsUtils {
 
-    private static final String TITLE = "Pupi - Pago de Estadía";
+    private static final String TITLE = "Pupi - Pago de Estadia";
     private static final String DESCRIPTION = "Servicios de cuidado de mascotas a ";
     private static final String PICTURE_URL = "http://pupi.com.ar/assets/images/logo.png";
     private static final String CURRENCY = "ARS";

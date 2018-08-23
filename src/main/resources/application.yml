@@ -5,6 +5,7 @@ spring:
     password: ${JDBC_DATABASE_PASSWORD}
     testWhileIdle: true
     validationQuery: SELECT 1
+
  jpa:
     hibernate:
       ddl-auto: none
@@ -32,7 +33,10 @@ java:
   runtime:
       version: 1.8
 
+profiles: prod
+
 app:
+  domain: http://pupi.com.ar
   mp:
     pupi:
       clientId: ${MP_CLIENT_ID}
@@ -40,7 +44,8 @@ app:
       encryptKey: ${MP_ENCRYPT_KEY}
       encryptVector: ${MP_ENCRYPT_VECTOR}
       url: https://auth.mercadopago.com.ar/authorization?client_id=%s&response_type=code&platform_id=mp&redirect_uri=%s
-      redirectUri: http://localhost:5000/api/user/get-mp-token?email=%s
+      redirectUri: /api/user/get-mp-token?email=%s
+
   aws:
       s3:
         bucketName: pupi-images
@@ -52,13 +57,11 @@ app:
 
 ---
 spring:
-  profiles: development
+profiles: development
 app:
   domain: http://localhost:5000
+  mp:
+    pupi:
+      redirectUri: /api/user/get-mp-token?email=%s
 
----
-spring:
-  profiles: production
-app:
-  domain: http://pupi.com.ar
 
