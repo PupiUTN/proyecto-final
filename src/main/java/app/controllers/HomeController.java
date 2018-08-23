@@ -19,5 +19,10 @@ public class HomeController {
         return "/views/index/index.html";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/api")
+    public String api() {
+        return "/swagger-ui.html";
+    }
+
 
 }

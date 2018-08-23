@@ -25,16 +25,16 @@ public class CronController {
     }
 
 
-    @RequestMapping(value = "/moverEstadoDeEjecucionACerrada", method = RequestMethod.POST)
-    @Scheduled(cron = "0 0 0 * * ?")// at 12:00 AM every day
-    public ResponseEntity moverEstadoDeEjecucionACerrada() {
-        Integer updates = cronService.moverEstadoDeEjecucionACerrada();
+    @RequestMapping(value = "/moverEstadoDeEjecucionAFinalizada", method = RequestMethod.POST)
+    @Scheduled(cron = "0 4 0 * * ?")// at 4:00 AM every day
+    public ResponseEntity moverEstadoDeEjecucionAFinalizada() {
+        Integer updates = cronService.moverEstadoDeEjecucionAFinalizada();
         return new ResponseEntity<>("{\"updates\": " + updates + "}", HttpStatus.OK);
     }
 
 
     @RequestMapping(value = "/moverEstadoDeAceptadaCuidadorACaido", method = RequestMethod.POST)
-    @Scheduled(cron = "0 0 0 * * ?")// at 12:00 AM every day
+    @Scheduled(cron = "0 4 0 * * ?")// at 4:00 AM every day
     public ResponseEntity moverEstadoDeAceptadaCuidadorACaido() {
         Integer updates = cronService.moverEstadoDeAceptadaCuidadorACaido();
         return new ResponseEntity<>("{\"updates\": " + updates + "}", HttpStatus.OK);
@@ -42,7 +42,7 @@ public class CronController {
 
 
     @RequestMapping(value = "/moverEstadoDeCreadaDueñoAAceptadaCuidador", method = RequestMethod.POST)
-    @Scheduled(cron = "0 0 0 * * ?")// at 12:00 AM every day
+    @Scheduled(cron = "0 4 0 * * ?")// at 4:00 AM every day
     public ResponseEntity moverEstadoDeCreadaDueñoAAceptadaCuidador() {
         Integer updates = cronService.moverEstadoDeCreadaDueñoAAceptadaCuidador();
         return new ResponseEntity<>("{\"updates\": " + updates + "}", HttpStatus.OK);
@@ -50,7 +50,7 @@ public class CronController {
 
 
     @RequestMapping(value = "/moverEstadoDePagadaAEjecucion", method = RequestMethod.POST)
-    @Scheduled(cron = "0 0 0 * * ?")// at 12:00 AM every day
+    @Scheduled(cron = "0 4 0 * * ?")// at 4:00 AM every day
     public ResponseEntity moverEstadoDePagadaAEjecucion() {
         Integer updates = cronService.moverEstadoDePagadaAEjecucion();
         return new ResponseEntity<>("{\"updates\": " + updates + "}", HttpStatus.OK);

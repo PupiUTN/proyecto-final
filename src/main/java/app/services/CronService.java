@@ -16,10 +16,10 @@ public class CronService {
     }
 
     /**
-     * - si la fecha de fin menor a hoy y estado ejecucion --> cerrada
+     * - si la fecha de fin menor a hoy y estado ejecucion --> finalizada
      */
-    public Integer moverEstadoDeEjecucionACerrada() {
-        return cronRepository.updateStateIfFechaFinMenorHoy(EstadoReserva.EJECUCION.getStatus(), EstadoReserva.CERRADA.getStatus());
+    public Integer moverEstadoDeEjecucionAFinalizada() {
+        return cronRepository.updateStateIfFechaFinMenorHoy(EstadoReserva.EJECUCION.getStatus(), EstadoReserva.FINALZADA.getStatus());
     }
 
     /**
