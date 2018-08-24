@@ -547,10 +547,10 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
         },
         getDatesBetween(startDate, stopDate) {
             var dateArray = new Array();
-            var currentDate =  fecha.parse(startDate, 'YYYY-MM-DD');
-            var stopDate =  fecha.parse(stopDate, 'YYYY-MM-DD');
+            var currentDate = fecha.parse(startDate, 'dd/MM/yyyy');
+            var stopDate = fecha.parse(stopDate, 'dd/MM/yyyy');
             while (currentDate <= stopDate) {
-                dateArray.push(fecha.format(currentDate,'YYYY-MM-DD'));
+                dateArray.push(fecha.format(currentDate, 'dd/MM/yyyy'));
                 currentDate = currentDate.addDays(1);
             }
             return dateArray;

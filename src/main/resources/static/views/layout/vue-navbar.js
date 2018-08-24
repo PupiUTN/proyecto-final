@@ -6,7 +6,7 @@ Vue.component('my-navbar', {
     <header id="header-container">
 
         <!-- Header -->
-        <div id="header" class="not-sticky">
+        <div id="header" class="sticky cloned">
             <div class="container">
 
                 <!-- Left Side Content -->
@@ -39,5 +39,6 @@ Vue.component('my-navbar', {
         isAuthenticatedMethod(isAuthenticated) {
             this.$emit('is-authenticated', isAuthenticated);
         }
-    }
+    },
+    props: {}
 });

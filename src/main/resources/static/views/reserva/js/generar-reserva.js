@@ -149,7 +149,7 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
         },
         methods: {
             bindDates(e) {
-                console.log()
+                console.log('bindDates', e);
                 var split = e.split('-');
                 this.reserva.fechaInicio = split[0].replace(/\s/g, '');
                 this.reserva.fechaFin = split[1].replace(/\s/g, '');
@@ -225,8 +225,6 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                     return;
                 }
                 // todo MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
-                this.reserva.fechaInicio = fecha.format(dateFromObj, 'YYYY-MM-DD');
-                this.reserva.fechaFin = fecha.format(dateToObj, 'YYYY-MM-DD');
                 //this.reserva.cuidador.user.birthday = null;
                 console.log(this.reserva);
                 axios.post("/api/user/me/reservas", this.reserva)
@@ -313,10 +311,10 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
             },
             getDatesBetween(startDate, stopDate) {
                 var dateArray = new Array();
-                var currentDate = fecha.parse(startDate, 'YYYY-MM-DD');
-                var stopDate = fecha.parse(stopDate, 'YYYY-MM-DD');
+                var currentDate = fecha.parse(startDate, 'dd/MM/yyyy');
+                var stopDate = fecha.parse(stopDate, 'dd/MM/yyyy');
                 while (currentDate <= stopDate) {
-                    dateArray.push(fecha.format(currentDate, 'YYYY-MM-DD'));
+                    dateArray.push(fecha.format(currentDate, 'dd/MM/yyyy'));
                     currentDate = currentDate.addDays(1);
                 }
                 return dateArray;

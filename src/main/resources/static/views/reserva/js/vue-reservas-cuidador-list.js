@@ -235,10 +235,6 @@ Vue.component('my-reservas-cuidador-list', {
                     });
             },
             ordenarFecha(reservas) {
-                for (i = 0, len = reservas.length; i < len; i++) {
-                    reservas[i].fechaInicio = new Date(reservas[i].fechaInicio).toLocaleDateString();
-                    reservas[i].fechaFin = new Date(reservas[i].fechaFin).toLocaleDateString();
-                }
                 this.gridData = reservas;
                 this.gridReservas = this.gridData.slice(this.offset, this.offset + this.perPage);
             },
@@ -258,7 +254,7 @@ Vue.component('my-reservas-cuidador-list', {
                         showLoaderOnConfirm: true,
                     },
                     function () {
-                        var id = this.gridReservas[index].id;
+                        var id = self.gridReservas[index].id;
                         axios.put('/api/cuidador/me/reservas/' + id + '/confirmarReserva')
                             .then((response) => {
 
