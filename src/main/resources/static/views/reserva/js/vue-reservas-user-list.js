@@ -306,7 +306,7 @@ Vue.component('my-reservas-user-list', {
         },
         tipoDeReservasDescripcion: function () {
             if (this.status == 'creada-dueño') {
-                return 'En espera de que el cuidador revise tu perfil y acepte o rechaze la solicitud'
+                return 'En espera de que el cuidador revise tu perfil y acepte o rechace la solicitud'
             }
             if (this.status == 'rechazada-dueño') {
                 return 'Yo las cancele'
@@ -315,7 +315,7 @@ Vue.component('my-reservas-user-list', {
                 return 'Me las rechazo el cuidador'
             }
             if (this.status == 'aceptada-cuidador') {
-                return 'El cuidador ah aceptado tu solicitud. Ahora pagalas para temrminar el proceso'
+                return 'El cuidador ha aceptado tu solicitud. Ahora sólo falta tu pago para finalizar el proceso.'
             }
             if (this.status == 'pagada-dueño') {
                 return 'Muy bien, ya pagaste. Ahora solo queda esperar la fecha de la reserva'
