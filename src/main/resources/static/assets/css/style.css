@@ -2530,7 +2530,6 @@ button.panel-cancel:active {
     width: 55%;
     background-color: #f7f7f7;
     z-index: 995;
-    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.12);
     position: relative;
     padding-top: 80px;
 }
@@ -2558,7 +2557,7 @@ button.panel-cancel:active {
     height: 100vh;
     position: fixed;
     top: 0;
-    padding-top: 80px
+    padding-top: 60px;
 }
 
 button.fs-map-btn.button {
@@ -9075,7 +9074,6 @@ span.like-icon {
     min-height: 100vh;
     display: flex;
     flex-wrap: wrap;
-    padding-top: 80px;
 }
 
 /* Flexbox Adjustments */
@@ -12990,6 +12988,7 @@ body p {
 
 #wrapper {
     background-color: #fff;
+    margin-top: 60px;
 }
 
 /* Main Font */
@@ -14174,9 +14173,6 @@ h4 span.headline-detail {
         max-height: 400px;
     }
 
-    #header.cloned {
-        display: none;
-    }
 }
 
 /* Reset for menu */

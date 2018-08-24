@@ -54,7 +54,7 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
         },
     mounted() {
         this.bindUrlWithVue();
-        this.setDates();
+        this.setDatesToDatePickerInput();
 
     },
     methods: {
@@ -131,7 +131,7 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
             this.dateFrom = split[0].replace(/\s/g, '');
             this.dateTo = split[1].replace(/\s/g, '');
         },
-        setDates() {
+        setDatesToDatePickerInput() {
             if (this.dateFrom != null & this.dateTo != null) {
                 var value = this.dateFrom + '-' + this.dateTo;
                 this.$refs.myHotelDatePicker.setValue(value);

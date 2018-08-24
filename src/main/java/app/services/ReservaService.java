@@ -7,9 +7,12 @@ import app.utils.EstadoReserva;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class ReservaService {
@@ -67,9 +70,8 @@ public class ReservaService {
     }
 
 
-    private static long daysBetween(Date one, Date two) {
-        long difference = (one.getTime() - two.getTime()) / 86400000;
-        return Math.abs(difference);
+    private static long daysBetween(LocalDate one, LocalDate two) {
+        return DAYS.between(one, two);
     }
 
     public void cancelarCausaUsuario(Long reservaId, Long userId) {

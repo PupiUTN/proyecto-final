@@ -146,12 +146,10 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
         }
         , mounted() {
             this.bindUrlWithVue();
-            this.setDates();
-            this.getReservasPagadasYEjecucion();
         },
         methods: {
             bindDates(e) {
-                console.log()
+                console.log('bindDates', e);
                 var split = e.split('-');
                 this.reserva.fechaInicio = split[0].replace(/\s/g, '');
                 this.reserva.fechaFin = split[1].replace(/\s/g, '');
@@ -166,11 +164,11 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                 this.getCuidador();
                 this.getPerros();
             },
-
             getCuidador() {
                 axios.get(this.urlCuidador + "/" + this.idCuidador)
                     .then((response) => {
                         this.reserva.cuidador = response.data;
+                        this.getReservasPagadasYEjecucion();
                     })
                     .catch(error => {
                             console.log(error);
@@ -227,8 +225,6 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                     return;
                 }
                 // todo MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
-                this.reserva.fechaInicio = fecha.format(dateFromObj, 'YYYY-MM-DD');
-                this.reserva.fechaFin = fecha.format(dateToObj, 'YYYY-MM-DD');
                 //this.reserva.cuidador.user.birthday = null;
                 console.log(this.reserva);
                 axios.post("/api/user/me/reservas", this.reserva)
@@ -250,11 +246,15 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                         }
                     );
             },
-            setDates() {
-                if (this.reserva.fechaInicio != "" & this.reserva.fechaFin != "") {
-                    var value = this.reserva.fechaInicio + '-' + this.reserva.fechaFin;
-                    this.$refs.myHotelDatePicker.setValue(value);
-                }
+            setDatesToDatePickerInput() {
+                var self = this;
+                setTimeout(function () {
+                    if (self.reserva.fechaInicio != "" & self.reserva.fechaFin != "") {
+                        var value = self.reserva.fechaInicio + '-' + self.reserva.fechaFin;
+                        self.$refs.myHotelDatePicker.setValue(value);
+                    }
+                }, 1000);
+
             },
             complemento: function (promedioReviews) {
                 return 5 - promedioReviews
@@ -268,6 +268,7 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                         this.fechasDeshabilitadas = this.calcularFechasDeshabilitadas(fechasList);
                         // como las properties del componente no son reactivas debo montar el date picker luego de calcular las fecha
                         this.showDatePicker = true
+                        this.setDatesToDatePickerInput();
                     })
                     .catch(error => {
                         this.showDatePicker = true
@@ -310,10 +311,10 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
             },
             getDatesBetween(startDate, stopDate) {
                 var dateArray = new Array();
-                var currentDate = fecha.parse(startDate, 'YYYY-MM-DD');
-                var stopDate = fecha.parse(stopDate, 'YYYY-MM-DD');
+                var currentDate = fecha.parse(startDate, 'dd/MM/yyyy');
+                var stopDate = fecha.parse(stopDate, 'dd/MM/yyyy');
                 while (currentDate <= stopDate) {
-                    dateArray.push(fecha.format(currentDate, 'YYYY-MM-DD'));
+                    dateArray.push(fecha.format(currentDate, 'dd/MM/yyyy'));
                     currentDate = currentDate.addDays(1);
                 }
                 return dateArray;

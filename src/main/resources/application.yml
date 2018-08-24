@@ -1,56 +1,51 @@
 spring:
- datasource:
-    url: ${JDBC_DATABASE_URL}
-    username: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE_PASSWORD}
-    testWhileIdle: true
-    validationQuery: SELECT 1
-
- jpa:
-    hibernate:
-      ddl-auto: none
-      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-    show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
- mail:
-   host: email-smtp.us-east-1.amazonaws.com
-   port: 465
-   protocol: smtps
-   properties.mail.smtp:
-                    auth: true
-                    starttls.enable: true
- http:
-   multipart:
-    max-file-size: 10MB
-    max-request-size: 10MB
-
+    datasource:
+        url: '${JDBC_DATABASE_URL}'
+        username: '${JDBC_DATABASE_USERNAME}'
+        password: '${JDBC_DATABASE_PASSWORD}'
+        testWhileIdle: true
+        validationQuery: 'SELECT 1'
+    jpa:
+        hibernate:
+            ddl-auto: none
+            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+        show-sql: true
+        properties:
+            hibernate: {dialect: org.hibernate.dialect.MySQL5Dialect}
+    mail:
+        host: email-smtp.us-east-1.amazonaws.com
+        port: 465
+        protocol: smtps
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+    http:
+        multipart: null
+        max-file-size: 10MB
+        max-request-size: 10MB
+    jackson:
+        serialization:
+          WRITE_DATES_AS_TIMESTAMPS: false
 server:
-  port: 5000
-
+    port: 5000
 java:
-  runtime:
-      version: 1.8
-
+    runtime:
+        version: 1.8
 app:
-  environment: ${PUPI_ENVIRONMENT}
-  mp:
-    pupi:
-      clientId: ${MP_CLIENT_ID}
-      clientSecret: ${MP_CLIENT_SECRET}
-      encryptKey: ${MP_ENCRYPT_KEY}
-      encryptVector: ${MP_ENCRYPT_VECTOR}
-      url: https://auth.mercadopago.com.ar/authorization?client_id=%s&response_type=code&platform_id=mp&redirect_uri=%s
-      redirectUri: /api/user/get-mp-token?email=%s
-
-  aws:
-      s3:
-        bucketName: pupi-images
-        accessKey: ${S3_ACCESS_KEY}
-        secretKey: ${S3_SECRET_KEY}
-      ses:
-        accessKey: ${SES_ACCESS_KEY}
-        secretKey: ${SES_SECRET_KEY}
-
-
+    environment: '${PUPI_ENVIRONMENT}'
+    mp:
+        pupi:
+            clientId: '${MP_CLIENT_ID}'
+            clientSecret: '${MP_CLIENT_SECRET}'
+            encryptKey: '${MP_ENCRYPT_KEY}'
+            encryptVector: '${MP_ENCRYPT_VECTOR}'
+            url: 'https://auth.mercadopago.com.ar/authorization?client_id=%s&response_type=code&platform_id=mp&redirect_uri=%s'
+            redirectUri: '/api/user/get-mp-token?email=%s'
+    aws:
+        s3:
+            bucketName: pupi-images
+            accessKey: '${S3_ACCESS_KEY}'
+            secretKey: '${S3_SECRET_KEY}'
+        ses:
+            accessKey: '${SES_ACCESS_KEY}'
+            secretKey: '${SES_SECRET_KEY}'

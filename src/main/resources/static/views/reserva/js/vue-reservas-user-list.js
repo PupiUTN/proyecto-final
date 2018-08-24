@@ -194,12 +194,7 @@ Vue.component('my-reservas-user-list', {
                 });
         },
         ordenarFecha(reservas) {
-            for (i = 0, len = reservas.length; i < len; i++) {
-                reservas[i].fechaInicio = new Date(reservas[i].fechaInicio).toLocaleDateString();
-                reservas[i].fechaFin = new Date(reservas[i].fechaFin).toLocaleDateString();
-            }
             this.gridData = reservas;
-
             this.gridReservas = this.gridData.slice(this.offset, this.offset + this.perPage);
         },
         cancelarReserva(index) {

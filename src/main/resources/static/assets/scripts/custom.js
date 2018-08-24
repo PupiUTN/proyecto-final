@@ -725,9 +725,9 @@
         /*----------------------------------------------------*/
         $(window).on('load resize', function () {
             var winWidth = $(window).width();
-            var headerHeight = $("#header-container").height(); // height on which the sticky header will shows
+            var headerHeight = $("#header").height() + $("#header").css('padding-top').replace('px', '') + $("#header").css('padding-bottom').replace('px', '');  // height on which the sticky header will shows
 
-            $('.fs-inner-container, .fs-inner-container.map-fixed, #dashboard').css('padding-top', headerHeight);
+            $('.fs-inner-container, .fs-inner-container.map-fixed, #dashboard, #wrapper').css('padding-top', headerHeight);
 
             if (winWidth < 992) {
                 $('.fs-inner-container.map-fixed').insertBefore('.fs-inner-container.content');
