@@ -18,10 +18,10 @@ Vue.component('my-reservas-user-list', {
      </div>
     
 
-    <div class="row" v-if="status === 'rechazada-cuidador' || status ==='rechazada-dueño'" >
-    <a id="btn1" v-on:click="buscarCanceladasxCuid()" style="color: black; border-color: red; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  'red': ''}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
-    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="color: black; border-color: red; background: red" href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 1 ?  'red': ''}"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
-    </div>
+   <div class="row" v-if="status === 'rechazada-cuidador' || status ==='rechazada-dueño'" >
+    <a id="btn1" v-on:click="buscarCanceladasxCuid()" style="color: black; border-color: black; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  'rgba(243, 12, 12, 0.15)' : ''}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
+    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="color: black; border-color: black; background: rgba(243, 12, 12, 0.15)" href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 1 ?  'rgba(243, 12, 12, 0.15)' : ''}"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
+</div>
 		<div class="row">
 			
 			<!-- Listings -->
@@ -73,9 +73,9 @@ Vue.component('my-reservas-user-list', {
                                           <div class="col-xs-12 col-md-3" v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-cuidador'">
                                             <a v-on:click="calificarReserva(index)"  style="color: blue; border-color: blue; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
                                         </div>
-                                           <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'creada-dueño' &&  reserva.status !== 'aceptada-cuidador' &&  reserva.status !== 'rechazada-dueño' &&  reserva.status !== 'cerrada' ">
+                                          <!-- <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'creada-dueño' &&  reserva.status !== 'aceptada-cuidador' &&  reserva.status !== 'rechazada-dueño' &&  reserva.status !== 'cerrada' ">
                                             <a v-on:click=""  style="color: black; border-color: black; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Denunciar</a>                        
-                                        </div>
+                                        </div>-->
                                         <div class = "col-xs-12 col-md-6" v-if="reserva.status === 'aceptada-cuidador'">
                                             <mercadopago :reserva="reserva"></mercadopago>
                                         </div>
@@ -177,6 +177,7 @@ Vue.component('my-reservas-user-list', {
         },
 
         getUserReservas() {
+            this.gridReservas = [];
             axios.get('/api/user/me/reservas?status=' + this.status)
                 .then((response) => {
                     this.reservas = response.data;
@@ -194,9 +195,19 @@ Vue.component('my-reservas-user-list', {
                 });
         },
         ordenarFecha(reservas){
+
+
             for (i = 0, len = reservas.length; i < len; i++) {
-                reservas[i].fechaInicio =  new Date ( reservas[i].fechaInicio).toLocaleDateString();
-                reservas[i].fechaFin =  new Date ( reservas[i].fechaFin).toLocaleDateString();
+                var dateEntrada = new Date(reservas[i].fechaInicio);
+                var dateSalida = new Date(reservas[i].fechaFin);
+                dateEntrada = dateEntrada.setDate(dateEntrada.getDate() + 1);
+                dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
+                reservas[i].fechaInicio = new Date(dateEntrada).toLocaleDateString();
+                reservas[i].fechaFin = new Date(dateSalida).toLocaleDateString();
+
+
+                //reservas[i].fechaInicio =  new Date ( reservas[i].fechaInicio).toLocaleDateString();
+                //reservas[i].fechaFin =  new Date ( reservas[i].fechaFin).toLocaleDateString();
             }
             this.gridData = reservas;
 
@@ -209,7 +220,7 @@ Vue.component('my-reservas-user-list', {
             axios.put('/api/user/me/reservas/' + id + '/cancelarUsuario')
                 .then((response) => {
                     sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
-                    Vue.delete(this.reservas, index);
+                    this.getUserReservas();
                 })
                 .catch(error => {
                         console.log(error);

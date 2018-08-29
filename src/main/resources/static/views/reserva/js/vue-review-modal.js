@@ -78,7 +78,7 @@ Vue.component('Review', {
                     id: '',
                     comentario: '',
                     puntaje: '',
-                    from_owner: '',
+                    fromOwner: '',
                     reserva: {
                         id: '',
                         status: '',
@@ -122,18 +122,17 @@ Vue.component('Review', {
 
                         this.entity.name = this.calificacion.reserva.perro.nombre;
                         this.entity.profileImage = this.calificacion.reserva.perro.fotoPerfil;
-                        this.calificacion.from_owner = false;
+                        this.calificacion.fromOwner = false;
                     }
                     else {
 
 
                         this.entity.name = this.calificacion.reserva.cuidador.user.fullName;
                         this.entity.profileImage = this.calificacion.reserva.cuidador.user.profileImageUrl;
-                        this.calificacion.from_owner = true;
+                        this.calificacion.fromOwner = true;
                     }
                     var id = this.calificacion.reserva.id;
                     var status = this.calificacion.reserva.status;
-                    var idCuidador = this.calificacion.reserva.cuidador.id;
                     this.calificacion.reserva = {};
                     this.calificacion.reserva.id = id;
                     this.calificacion.reserva.status = status;
@@ -150,6 +149,7 @@ Vue.component('Review', {
                 sweetAlert("Oops...", "Error, Se deben ingresar un Puntaje o comentario   ", "error");
                 return;
             }
+
             this.calificacion.puntaje = this.total;
             // var urlReview = "/api/calificaciones/";
             // this.setearEstadoReserva();

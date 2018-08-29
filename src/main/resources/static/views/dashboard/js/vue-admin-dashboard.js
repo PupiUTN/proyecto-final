@@ -20,6 +20,7 @@ Vue.component('admin-dashboard', {
 		
 		</div>
 		
+		 <div class="col-lg-2 col-md-1"></div>
 			<div class="row">
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
@@ -31,12 +32,14 @@ Vue.component('admin-dashboard', {
            
 			<!-- Item -->
 		
-			<div  class="col-lg-3 col-md-6">
-				<div class="dashboard-stat color-2">
-					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalDenuncias}}  <br><span>Denuncias</span></div>
-					<div class="dashboard-stat-icon"><i class="im im-icon-Close-Window"></i></div>
-				</div>
-			</div>
+			<!--
+<div  class="col-lg-3 col-md-6">
+    <div class="dashboard-stat color-2">
+        <div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalDenuncias}}  <br><span>Denuncias</span></div>
+        <div class="dashboard-stat-icon"><i class="im im-icon-Close-Window"></i></div>
+    </div>
+</div>-->
+
 	<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-4">
 					<div class="dashboard-stat-content"><h4>{{estadisticas.totalSolicitudes}} </h4> <span>Solicitudes</span></div>
@@ -231,12 +234,20 @@ Vue.component('admin-dashboard', {
                     this.estadisticas.totalDineroActual = response.data.totalDineroActual;
                     this.estadisticas.reservas = response.data.reservas;
                          var aux = [];
-                    this.estadisticas.reservas.forEach(function(element) {
-                        var fechaInicio = element.fechaInicio;
-                        var fechaFin =  element.fechaFin;
-                        var elem = {Cuidador: element.cuidador.user.fullName, Perro: element.perro.nombre, Inicio: fechaInicio,Fin:fechaFin ,Total: "$ " +  element.precioTotal};
-                        aux.push(elem)
-                    });
+                         if( this.estadisticas.reservas !== null) {
+                             this.estadisticas.reservas.forEach(function (element) {
+                                 var fechaInicio = element.fechaInicio;
+                                 var fechaFin = element.fechaFin;
+                                 var elem = {
+                                     Cuidador: element.cuidador.user.fullName,
+                                     Perro: element.perro.nombre,
+                                     Inicio: fechaInicio,
+                                     Fin: fechaFin,
+                                     Total: "$ " + element.precioTotal
+                                 };
+                                 aux.push(elem)
+                             });
+                         }
                     this.gridData = aux;
 
 

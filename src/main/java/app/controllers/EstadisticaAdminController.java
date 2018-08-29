@@ -58,7 +58,12 @@ public class EstadisticaAdminController {
 
 
             for (Reserva item : reservas) {
-                cont += item.getPrecioTotal();
+
+                if(statusOk(item.getStatus())){
+                    cont += item.getPrecioTotal();
+                }
+
+
                 if (item.getStatus().equals("pagada-dueño")) {
                     aux.add(item);
 
@@ -76,6 +81,11 @@ public class EstadisticaAdminController {
         }
 
         return estadisticaAdmin;
+    }
+
+    private boolean statusOk(String status) {
+
+        return !(status.equals(EstadoReserva.CREADA.getStatus()) || status.equals(EstadoReserva.CAIDA_FALTA_PAGO.getStatus()) || status.equals(EstadoReserva.ACEPTADA_CUIDADOR.getStatus()) || status.equals(EstadoReserva.RECHAZADA_CUIDADOR.getStatus()) || status.equals(EstadoReserva.RECHAZADA_DUEÑO.getStatus()));
     }
 
     @PreAuthorize("isAuthenticated()")

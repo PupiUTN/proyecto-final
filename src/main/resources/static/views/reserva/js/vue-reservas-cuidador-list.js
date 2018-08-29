@@ -33,10 +33,10 @@ Vue.component('my-reservas-cuidador-list', {
             </div>
      </div>
     
-    <div class="row" v-if="status === 'rechazada-cuidador' || status ==='rechazada-dueño'" >
-    <a id="btn1" v-on:click="buscarCanceladasxDueño()" style="color: black; border-color: red; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  'red': ''}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
-    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="color: black; border-color: red; background: red" href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 1 ?  'red': ''}"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
-    </div>
+<div class="row" v-if="status === 'rechazada-cuidador' || status ==='rechazada-dueño'" >
+    <a id="btn1" v-on:click="buscarCanceladasxDueño()" style="color: black; border-color: black; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  'rgba(243, 12, 12, 0.15)': ''}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
+    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="color: black; border-color: black; background: rgba(243, 12, 12, 0.15)" href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 1 ?  'rgba(243, 12, 12, 0.15)': ''}"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
+</div>
     <div class="row">
         <!-- Listings -->
         <div class="col-lg-12 col-md-12">
@@ -113,9 +113,9 @@ Vue.component('my-reservas-cuidador-list', {
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
                                             Calificar</a>
                                     </div>
-                                     <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'creada-dueño' &&  reserva.status !== 'aceptada-cuidador' &&  reserva.status !== 'rechazada-cuidador' &&  reserva.status !== 'cerrada' ">
+                                  <!--   <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'creada-dueño' &&  reserva.status !== 'aceptada-cuidador' &&  reserva.status !== 'rechazada-cuidador' &&  reserva.status !== 'cerrada' ">
                                             <a v-on:click=""  style="color: black; border-color: black; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Denunciar</a>                        
-                                        </div>
+                                        </div> -->
                                 </div>
 
                             </a>
@@ -223,6 +223,7 @@ Vue.component('my-reservas-cuidador-list', {
             },
 
             getCuidadorReservas() {
+                this.gridReservas = [];
                 axios.get('/api/cuidador/me/reservas?status=' + this.status)
                     .then((response) => {
                         this.reservas = response.data;
@@ -241,8 +242,17 @@ Vue.component('my-reservas-cuidador-list', {
             },
             ordenarFecha(reservas){
                 for (i = 0, len = reservas.length; i < len; i++) {
-                     reservas[i].fechaInicio =  new Date ( reservas[i].fechaInicio).toLocaleDateString();
-                    reservas[i].fechaFin =  new Date ( reservas[i].fechaFin).toLocaleDateString();
+
+                    var dateEntrada = new Date(reservas[i].fechaInicio);
+                    var dateSalida = new Date(reservas[i].fechaFin);
+                    dateEntrada = dateEntrada.setDate(dateEntrada.getDate() + 1);
+                    dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
+                    reservas[i].fechaInicio = new Date(dateEntrada).toLocaleDateString();
+                    reservas[i].fechaFin = new Date(dateSalida).toLocaleDateString();
+
+
+                   // reservas[i].fechaInicio =  new Date ( reservas[i].fechaInicio).toLocaleDateString();
+                   // reservas[i].fechaFin =  new Date ( reservas[i].fechaFin).toLocaleDateString();
                 }
                 this.gridData = reservas;
 
@@ -257,7 +267,7 @@ Vue.component('my-reservas-cuidador-list', {
                     .then((response) => {
 
                         sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
-                        Vue.delete(this.reservas, index);
+                        this.getCuidadorReservas();
                     })
                     .catch(error => {
                             console.log(error);
@@ -274,7 +284,7 @@ Vue.component('my-reservas-cuidador-list', {
                     .then((response) => {
 
                         sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped pague te confirmaremos la reserva.", "success");
-                        Vue.delete(this.reservas, index);
+                        this.getCuidadorReservas();
                     })
                     .catch(error => {
                             console.log(error);
