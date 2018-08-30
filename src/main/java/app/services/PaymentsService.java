@@ -4,6 +4,7 @@ import app.models.entities.Reserva;
 import app.models.entities.User;
 import app.models.mercadopago.Preference;
 import app.persistence.PaymentRepository;
+import app.security.Encryptor;
 import app.utils.PaymentsUtils;
 import com.mercadopago.MercadoPago;
 import com.mercadopago.exceptions.MPException;
@@ -13,13 +14,14 @@ import com.mercadopago.resources.datastructures.merchantorder.MerchantOrderPayme
 import com.mercadopago.resources.datastructures.preference.BackUrls;
 import com.mercadopago.resources.datastructures.preference.Item;
 import com.mercadopago.resources.datastructures.preference.Payer;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.crypto.Cipher;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -28,20 +30,20 @@ public class PaymentsService {
 
     private final PaymentRepository paymentRepository;
     private final ReservaService reservaService;
+    private final Encryptor encryptor;
     @Value("${app.mp.pupi.clientId}")
     private String clientId;
     @Value("${app.mp.pupi.clientSecret}")
     private String clientSecret;
-    @Value("${app.domain")
-    private String urlDomain;
 
 
-    private static final Logger logger = LogManager.getLogger(PaymentsService.class);
+    private static final Logger LOG  = LoggerFactory.getLogger(PaymentsService.class);
 
     @Autowired
-    public PaymentsService(PaymentRepository paymentRepository, ReservaService reservaService) {
+    public PaymentsService(PaymentRepository paymentRepository, ReservaService reservaService, Encryptor encryptor) {
         this.paymentRepository = paymentRepository;
         this.reservaService = reservaService;
+        this.encryptor = encryptor;
     }
 
     @PostConstruct
@@ -69,15 +71,16 @@ public class PaymentsService {
 
         preference.setPayer(payer);
         preference.appendItem(item);
-        preference.setNotificationUrl("http://pupi.com.ar/api/payments/notifications");
+        preference.setNotificationUrl("https://pupi.com.ar/api/payments/notifications");
         preference.setExternalReference(reserva.getId()
                 .toString());
 
         //Acá seteamos el token del vendedor
         Optional<String> mpToken = Optional.ofNullable(user.getMpToken());
-        mpToken.ifPresent(MercadoPago.SDK::setUserToken);
 
-        preference.setMarketplaceFee(20f);
+        mpToken.ifPresent(token -> MercadoPago.SDK.setUserToken(getMercadoPagoToken(token)));
+
+        preference.setMarketplaceFee(getMarketplaceFee(reserva.getPrecioTotal()));
         BackUrls backUrls = new BackUrls("http://google.com", "http://google.com", "http://google.com");
         preference.setBackUrls(backUrls);
         try {
@@ -91,6 +94,8 @@ public class PaymentsService {
 
     public void getPaymentInfo(String id, String topic) {
         try {
+
+            LOG.info("Message received [message_id:{}] [topic:{}]", id, topic);
 
             MerchantOrder merchantOrder = topic.equalsIgnoreCase("payment") ? MerchantOrder.findById(Payment.findById(id)
                     .getOrder()
@@ -106,7 +111,7 @@ public class PaymentsService {
             }
         } catch (Exception e) {
             System.out.println(e.toString());
-            logger.error("Error when trying to get payment info " + e.toString() + "\n");
+            LOG.error("Error when trying to get payment info [error:{}] [message:{}]", e.toString(), e.getMessage());
             e.printStackTrace();
         }
     }
@@ -130,7 +135,15 @@ public class PaymentsService {
         paymentRepository.save(p);
     }
 
-    public Reserva getReserva(Long reservaId) {
+    private Reserva getReserva(Long reservaId) {
         return reservaService.getReserva(reservaId);
+    }
+
+    private String getMercadoPagoToken(String mpToken) {
+        return encryptor.run(mpToken, Cipher.DECRYPT_MODE).replace("\"", "");
+    }
+
+    private float getMarketplaceFee(float totalAmount) {
+        return totalAmount * 0.2f;
     }
 }

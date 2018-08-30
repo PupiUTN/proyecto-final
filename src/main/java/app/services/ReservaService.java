@@ -1,15 +1,18 @@
 package app.services;
 
-import app.models.entities.Calificacion;
+import app.exception.BussinesLogicException;
 import app.models.entities.Reserva;
 import app.persistence.ReservaRepository;
 import app.utils.EstadoReserva;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class ReservaService {
@@ -42,12 +45,17 @@ public class ReservaService {
         return reservaRepository.findOne(id);
     }
 
-    public Reserva save(Reserva reserva) {
+    public Reserva save(Reserva reserva) throws BussinesLogicException {
+
         //TODO hot fix, el formato de la fecha al no tener hora se desplaza un dia
         // https://stackoverflow.com/questions/7556591/javascript-date-object-always-one-day-off
         //reserva.setFechaFin(addDays(reserva.getFechaFin(), 1));
         //reserva.setFechaInicio(addDays(reserva.getFechaInicio(), 1));
-
+        int valorMaximoCuidador = reserva.getCuidador().getTamaño().getValorMaximo();
+        int valorMaximoPerro = reserva.getPerro().getTamaño().getValorMaximo();
+        if (valorMaximoPerro > valorMaximoCuidador) {
+            throw new BussinesLogicException("El tamaño del perro elegido en la reserva supera el tamaño maximo admitido por el cuidador");
+        }
         reserva.setStatus("creada-dueño");
         float precioTotal = daysBetween(reserva.getFechaInicio(), reserva.getFechaFin()) * reserva.getCuidador()
                 .getPrecioPorNoche();
@@ -62,9 +70,8 @@ public class ReservaService {
     }
 
 
-    private static long daysBetween(Date one, Date two) {
-        long difference = (one.getTime() - two.getTime()) / 86400000;
-        return Math.abs(difference);
+    private static long daysBetween(LocalDate one, LocalDate two) {
+        return DAYS.between(one, two);
     }
 
     public void cancelarCausaUsuario(Long reservaId, Long userId) {
@@ -133,7 +140,7 @@ public class ReservaService {
         return reservaRepository.getCantidadReservas(id);
     }
 
-    public List<Reserva> findAllByCuidador( Long id) {
+    public List<Reserva> findAllByCuidador(Long id) {
         return reservaRepository.findAllByCuidador(id);
     }
 
@@ -152,9 +159,9 @@ public class ReservaService {
         return reservaRepository.getCantidadByStatus(estadoReserva.getStatus(), "");
     }
 
-    public List<Reserva>  getReservasByDogId(Long perroId) {
+    public List<Reserva> getReservasByDogId(Long perroId) {
 
-        return  reservaRepository.getReservaByDogIdAndStatus(perroId);
+        return reservaRepository.getReservaByDogIdAndStatus(perroId);
 
     }
 }

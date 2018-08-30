@@ -25,6 +25,80 @@
     gtag('js', new Date());
     gtag('send', {hitType: 'pageview', page: location.pathname});
     gtag('config', 'UA-74104605-6');</script>
+    <style>
+        /*----------------------------------- */
+        /* Custom radio-button-reserva
+        ------------------------------------- */
+        .radio-button-reserva {
+            list-style: none;
+            padding: 0;
+        }
+
+        .radio-button-reserva.in-row label {
+            margin-top: 9px;
+        }
+
+        .radio-button-reserva.one-in-row label {
+            margin-top: 9px;
+            width: 100%;
+        }
+
+        .radio-button-reserva li {
+            padding: 4px 0;
+        }
+
+        .radio-button-reserva li:last-child {
+            margin-bottom: -8px;
+        }
+
+        .radio-button-reserva label {
+            display: inline-block;
+            cursor: pointer;
+            position: relative;
+            padding-left: 28px;
+            margin-right: 20px;
+            margin-bottom: 0;
+            line-height: 24px;
+            font-size: 16px;
+        }
+
+        .radio-button-reserva label span {
+            color: #909090;
+        }
+
+        .radio-button-reserva input[type=radio] {
+            display: none;
+        }
+
+        .radio-button-reserva label:before {
+            content: "";
+            display: inline-block;
+            width: 19px;
+            height: 19px;
+            margin-right: 10px;
+            position: absolute;
+            left: 0;
+            top: 3px;
+            background-color: #fff;
+            border: 2px solid #d0d0d0;
+            border-radius: 4px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            transition: all 0.25s;
+            font-family: "FontAwesome";
+            font-size: 12px;
+            color: #fff;
+            text-align: center;
+            line-height: 15px;
+        }
+
+        .radio-button-reserva input[type=radio]:checked + label:before {
+            content: "\f00c";
+            background-color: #66676b;
+            border: 2px solid #66676b;
+        }
+    </style>
 </head>
 
 <body>

@@ -1,0 +1,29 @@
+drop table calificacion;
+
+drop table cuidador_dni_imagenes;
+
+drop table cuidador_lista_imagenes;
+
+drop table cuidador_lista_servicios;
+
+drop table denuncia;
+
+drop table owner;
+
+drop table payment;
+
+drop table perro_lista_imagenes;
+
+drop table imagen;
+
+drop table perro_lista_vacunas;
+
+drop table reserva;
+
+drop table cuidador;
+
+drop table perro;
+
+drop table user;
+
+drop table direccion;

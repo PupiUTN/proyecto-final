@@ -30,7 +30,7 @@ Vue.component('mercadopago', {
                     this.paymentPreference = paymentPreference.data;
                     this.initPoint = this.paymentPreference.init_point;
                     this.sandboxInitPoint = this.paymentPreference.sandbox_init_point;
-                    this.pay(this.sandboxInitPoint);
+                    this.pay(this.initPoint);
                 })
                 .catch(error => {
                     console.log(error);

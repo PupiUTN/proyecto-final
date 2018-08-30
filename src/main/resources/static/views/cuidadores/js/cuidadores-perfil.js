@@ -235,25 +235,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                     <img id="imgTamañoPerro" alt="">
                     <label style=" margin-left: 30px;"> {{item.tamaño}} </label>
                 </div>
-
-
             </div>
-
-
-            <!-- Share / Like -->
-            <div class="listing-share margin-top-40 margin-bottom-40 no-border">
-
-
-                <!-- Share Buttons -->
-                <ul class="share-buttons margin-top-40 margin-bottom-0">
-                    <li><a class="fb-share" href="#"><i class="fa fa-facebook"></i> Share</a></li>
-                    <li><a class="twitter-share" href="#"><i class="fa fa-twitter"></i> Tweet</a></li>
-                    <li><a class="gplus-share" href="#"><i class="fa fa-google-plus"></i> Share</a></li>
-                    <!-- <li><a class="pinterest-share" href="#"><i class="fa fa-pinterest-p"></i> Pin</a></li> -->
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-
         </div>
         <!-- Sidebar / End -->
 
@@ -315,9 +297,9 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
     ,
     mounted() {
         this.bindUrlWithVue();
-        this.setDates();
+        this.setDatesToDatePickerInput();
         this.getCuidador(this.url, this.idCuidador);
-        this.getReservasPagadasYEjecucion();
+
     },
     methods: {
         getCuidador() {
@@ -331,8 +313,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                     this.loadTamaño(this.item.tamaño);
                     this.geolocateCuidador(this.item.user.direccion);
                     this.getCalificacionesCuidador();
-
-
+                    this.getReservasPagadasYEjecucion();
                 })
                 .catch(error => {
                         console.log(error);
@@ -429,11 +410,10 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             this.item.tamaño = "Hasta " + param.valorMaximo + " " + "KG.";
         },
         hrerReserva() {
-
             var idUser = localStorage.getItem('idUser');
 
             if (parseInt(idUser) !== this.item.user.id) {
-            this.setDates();
+            this.setDatesToDatePickerInput();
             if (this.dateFrom != null & this.dateTo != null) {
                 document.location.href = '/views/reserva/generar-reserva.html?id=' + this.idCuidador + '&from=' + this.dateFrom + '&to=' + this.dateTo;
             } else {
@@ -461,7 +441,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             this.dateTo = this.getParameterByName('to');
             this.idCuidador = this.getParameterByName('id');
         },
-        setDates() {
+        setDatesToDatePickerInput() {
             if (this.dateFrom != null & this.dateTo != null) {
                 var value = this.dateFrom + '-' + this.dateTo;
                 this.$refs.myHotelDatePicker.setValue(value);
@@ -481,12 +461,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                     this.DataReview = response.data;
                     var cont = 0;
                     this.DataReview.forEach(function (item, value, array) {
-
-                        var dateEntrada = new Date(item.reserva.fechaInicio);
-                        dateEntrada = dateEntrada.setDate(dateEntrada.getDate() + 1);
-                        item.reserva.fechaInicio = new Date(dateEntrada).toLocaleDateString();
-
-                      //  item.reserva.fechaInicio =  new Date (  item.reserva.fechaInicio).toLocaleDateString();
+                        item.reserva.fechaInicio =  new Date (  item.reserva.fechaInicio).toLocaleDateString();
 
                         cont += item.puntaje;
 
@@ -559,6 +534,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                 }
             }
             let fechasSuperanCantidadMaximaDePerro = [];
+            console.log('calcularFechasDeshabilitadas, cantidad maxima de perros', this.item.cantidadMaxDePerros);
             for (var [key, value] of cantidadReservasPorDia.entries()) {
                 if (value >= this.item.cantidadMaxDePerros) {
                     fechasSuperanCantidadMaximaDePerro.push(key)
@@ -579,10 +555,10 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
         },
         getDatesBetween(startDate, stopDate) {
             var dateArray = new Array();
-            var currentDate =  fecha.parse(startDate, 'YYYY-MM-DD');
-            var stopDate =  fecha.parse(stopDate, 'YYYY-MM-DD');
+            var currentDate = fecha.parse(startDate, 'dd/MM/yyyy');
+            var stopDate = fecha.parse(stopDate, 'dd/MM/yyyy');
             while (currentDate <= stopDate) {
-                dateArray.push(fecha.format(currentDate,'YYYY-MM-DD'));
+                dateArray.push(fecha.format(currentDate, 'dd/MM/yyyy'));
                 currentDate = currentDate.addDays(1);
             }
             return dateArray;

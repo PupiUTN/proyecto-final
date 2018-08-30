@@ -7,7 +7,8 @@ Vue.component('my-reservas-user-list', {
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
-					<h2>Mis Reservas {{ tipoDeReservas }}</h2>
+					<h2>{{ tipoDeReservas }}</h2>
+					<p>{{ tipoDeReservasDescripcion }}</p>
 				</div>
 			</div>
 		</div>
@@ -150,10 +151,10 @@ Vue.component('my-reservas-user-list', {
                 status: null,
                 myValue: 1,
                 offset: 0,
-                gridData:[],
+                gridData: [],
                 gridReservas: [],
                 perPage: 3,
-                countPages:1,
+                countPages: 1,
 
             }
         },
@@ -169,7 +170,7 @@ Vue.component('my-reservas-user-list', {
     },
     methods: {
         calificarReserva(index) {
-          //  var id = this.reservas[index].id;
+            //  var id = this.reservas[index].id;
 
             var id = this.gridReservas[index].id;
             document.location.href = "/views/reserva/calificacion-reserva.html?id= " + id +
@@ -184,8 +185,7 @@ Vue.component('my-reservas-user-list', {
                     if (this.reservas.length === 0) {
                         this.message = "Actualmente no tenés ninguna reserva. Busca tu cuidador ideal!";
                     }
-                    else
-                    {
+                    else {
                         this.ordenarFecha(this.reservas);
                     }
                 })
@@ -194,33 +194,19 @@ Vue.component('my-reservas-user-list', {
                     sweetAlert("Oops...", "Error, ver consola", "error");
                 });
         },
-        ordenarFecha(reservas){
-
-
-            for (i = 0, len = reservas.length; i < len; i++) {
-                var dateEntrada = new Date(reservas[i].fechaInicio);
-                var dateSalida = new Date(reservas[i].fechaFin);
-                dateEntrada = dateEntrada.setDate(dateEntrada.getDate() + 1);
-                dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
-                reservas[i].fechaInicio = new Date(dateEntrada).toLocaleDateString();
-                reservas[i].fechaFin = new Date(dateSalida).toLocaleDateString();
-
-
-                //reservas[i].fechaInicio =  new Date ( reservas[i].fechaInicio).toLocaleDateString();
-                //reservas[i].fechaFin =  new Date ( reservas[i].fechaFin).toLocaleDateString();
-            }
+        ordenarFecha(reservas) {
             this.gridData = reservas;
-
             this.gridReservas = this.gridData.slice(this.offset, this.offset + this.perPage);
         },
         cancelarReserva(index) {
 
-           // var id = this.reservas[index].id;
+            // var id = this.reservas[index].id;
             var id = this.gridReservas[index].id;
             axios.put('/api/user/me/reservas/' + id + '/cancelarUsuario')
                 .then((response) => {
                     sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
                     this.getUserReservas();
+                  //  Vue.delete(this.reservas, index);
                 })
                 .catch(error => {
                         console.log(error);
@@ -249,7 +235,7 @@ Vue.component('my-reservas-user-list', {
                 });
         },
         verDetalleCompletoButton(index) {
-         //   var id = this.reservas[index].id;
+            //   var id = this.reservas[index].id;
             var id = this.gridReservas[index].id;
             document.location.href = "/views/reserva/detalle-reserva-completo.html?id=" + id;
         },
@@ -259,15 +245,13 @@ Vue.component('my-reservas-user-list', {
                 results = regex.exec(location.search);
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         },
-        buscarMisCancelaciones()
-        {   //document.getElementById("btn1").style.background='';
+        buscarMisCancelaciones() {   //document.getElementById("btn1").style.background='';
             //document.getElementById("btn2").style.background='red';
             this.myValue = 1;
             this.status = "rechazada-dueño";
             this.getUserReservas();
         },
-        buscarCanceladasxCuid()
-        {   //document.getElementById("btn1").style.background='red';
+        buscarCanceladasxCuid() {   //document.getElementById("btn1").style.background='red';
             //document.getElementById("btn2").style.background='';
             this.myValue = 2;
             this.status = "rechazada-cuidador";
@@ -276,16 +260,15 @@ Vue.component('my-reservas-user-list', {
         },
         paginate() {
             this.countPages = this.gridData / this.perPage;
-            if (this.countPages - Math.trunc(this.countPages)> 0.0)
-            {
-                this.countPages = Math.trunc(this.countPages) +1;
+            if (this.countPages - Math.trunc(this.countPages) > 0.0) {
+                this.countPages = Math.trunc(this.countPages) + 1;
             }
 
             this.gridReservas = this.gridData.slice(this.offset, this.offset + this.perPage);
 
         },
         previous() {
-            if(this.offset >0)
+            if (this.offset > 0)
                 this.offset = this.offset - this.perPage;
         },
         next() {
@@ -296,27 +279,51 @@ Vue.component('my-reservas-user-list', {
     computed: {
         tipoDeReservas: function () {
             if (this.status == 'creada-dueño') {
-                return 'pendientes'
+                return 'Mis Solicitudes de Reservas Generadas'
             }
             if (this.status == 'rechazada-dueño') {
-                return 'canceladas '
+                return 'Mis Reservas Rechazadas por mi'
             }
             if (this.status == 'rechazada-cuidador') {
-                return 'canceladas'
+                return 'Mis Reservas Rechazadas por el cuidador'
             }
             if (this.status == 'aceptada-cuidador') {
-                return 'Confirmadas'
+                return 'Mis Reservas Confirmadas'
             }
             if (this.status == 'pagada-dueño') {
-                return 'Pagadas'
+                return 'Mis Reservas Pagadas'
             }
             if (this.status == 'finalizada') {
-                return 'Pendiente de Calificacion'
+                return 'Mis Reservas Pendiente de Calificacion'
             }
             if (this.status == 'cerrada') {
-                return 'Finalizadas'
+                return 'Mis Reservas Finalizadas'
             }
-            return 'Error'
+            return 'Error, revisar estado de la reserva'
+        },
+        tipoDeReservasDescripcion: function () {
+            if (this.status == 'creada-dueño') {
+                return 'En espera de que el cuidador revise tu perfil y acepte o rechaze la solicitud'
+            }
+            if (this.status == 'rechazada-dueño') {
+                return 'Yo las cancele'
+            }
+            if (this.status == 'rechazada-cuidador') {
+                return 'Me las rechazo el cuidador'
+            }
+            if (this.status == 'aceptada-cuidador') {
+                return 'El cuidador ah aceptado tu solicitud. Ahora pagalas para temrminar el proceso'
+            }
+            if (this.status == 'pagada-dueño') {
+                return 'Muy bien, ya pagaste. Ahora solo queda esperar la fecha de la reserva'
+            }
+            if (this.status == 'finalizada') {
+                return 'Como te fue con el cuidador? Calificalo para que otros usuario puedan elegir el mejor cuidador.'
+            }
+            if (this.status == 'cerrada') {
+                return 'Tu historial de reservas terminadas'
+            }
+            return 'Error, revisar estado de la reserva'
         },
         listClass: function () {
             if (this.status == 'creada-dueño') {

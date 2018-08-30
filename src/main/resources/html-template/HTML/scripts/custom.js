@@ -65,7 +65,7 @@ $(document).ready(function(){
 
 
 	// sticky header script
-	var headerOffset = $("#header-container").height() * 2; // height on which the sticky header will shows
+    var headerOffset = $("#header-container").height() * 2; // height on which the sticky header will shows
 
 	$(window).scroll(function(){
 		if($(window).scrollTop() >= headerOffset){
@@ -724,7 +724,7 @@ $(document).ready(function(){
     /*----------------------------------------------------*/
 	$(window).on('load resize', function() {
 		var winWidth = $(window).width();
-		var headerHeight = $("#header-container").height(); // height on which the sticky header will shows
+        var headerHeight = $("#header-container").height(); // height on which the sticky header will shows
 		
 		$('.fs-inner-container, .fs-inner-container.map-fixed, #dashboard').css('padding-top', headerHeight);
 
@@ -772,7 +772,7 @@ $(document).ready(function(){
     // Dashbaord Nav Scrolling
 	$(window).on('load resize', function() {
 		var wrapperHeight = window.innerHeight;
-		var headerHeight = $("#header-container").height();
+        var headerHeight = $("#header-container").height();
 		var winWidth = $(window).width();
 
 		if(winWidth>992) {

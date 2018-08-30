@@ -38,8 +38,8 @@ var myHotelDatePicker = Vue.component('my-hotel-date-picker', {
             type: [Date, String, Boolean],
             default: function () {
                 var today = new Date();
-                var fiveMonths= today.setMonth(today.getMonth()+5);
-                return fiveMonths;
+                today.setMonth(today.getMonth() + 3);
+                return today;
             }
         },
         minNights: {

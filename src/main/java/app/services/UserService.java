@@ -17,18 +17,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.Cipher;
 
 @Service
 public class UserService extends AbstractRestClientService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
-
-    @Value("${app.mp.pupi.encryptKey}")
-    private String KEY;
-
-    @Value("${app.mp.pupi.encryptVector}")
-    private String VECTOR;
+    private final Encryptor encryptor;
 
     @Value("${app.mp.pupi.url}")
     private String MP_URL;
@@ -36,10 +32,25 @@ public class UserService extends AbstractRestClientService {
     @Value("${app.mp.pupi.redirectUri}")
     private String MP_REDIRECT_URI;
 
+    @Value("${app.environment}")
+    private String ENVIRONMENT;
+
+    private String APP_DOMAIN;
+
     @Autowired
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, Encryptor encryptor) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
+        this.encryptor = encryptor;
+    }
+
+    @PostConstruct
+    private void setRedirectUri() {
+        if("prod".equalsIgnoreCase(ENVIRONMENT)) {
+            APP_DOMAIN = "https://pupi.com.ar";
+        } else {
+            APP_DOMAIN = "http://localhost:5000";
+        }
     }
 
     @Transactional
@@ -79,13 +90,8 @@ public class UserService extends AbstractRestClientService {
         JsonNode json = post("https://api.mercadopago.com/oauth/token", getPostEntity(code, email));
         String mpToken = json.get("access_token")
                 .toString();
-        mpUser.setMpToken(Encryptor.run(KEY, VECTOR, mpToken, Cipher.ENCRYPT_MODE));
+        mpUser.setMpToken(encryptor.run(mpToken, Cipher.ENCRYPT_MODE));
         repository.save(mpUser);
-    }
-
-    public String getMercadoPagoToken(String email) {
-        User mpUser = repository.findByEmail(email);
-        return Encryptor.run(KEY, VECTOR, mpUser.getMpToken(), Cipher.DECRYPT_MODE);
     }
 
     public boolean userHasMpToken(String email) {
@@ -99,12 +105,13 @@ public class UserService extends AbstractRestClientService {
         json.put("client_secret", MercadoPago.SDK.getClientSecret());
         json.put("grant_type", "authorization_code");
         json.put("code", code);
-        json.put("redirect_uri", "http://localhost:5000/api/user/get-mp-token?email=" + email);
+        json.put("redirect_uri", String.format(APP_DOMAIN + MP_REDIRECT_URI, email));
         return new HttpEntity<>(json, PaymentsUtils.getMercadoPagoHeaders());
     }
 
     public String getMercadoPagoUrl(String email) {
-        String redirectUri = String.format(MP_REDIRECT_URI, email);
+
+        String redirectUri = String.format(APP_DOMAIN + MP_REDIRECT_URI, email);
 
         return String.format(MP_URL, MercadoPago.SDK.getClientId(), redirectUri);
     }

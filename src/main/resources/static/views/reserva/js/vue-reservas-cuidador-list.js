@@ -10,16 +10,16 @@ Vue.component('my-reservas-cuidador-list', {
                     <h2>Quieren reservar Conmigo</h2>
                 </div>
                 <div v-if="status === 'rechazada-cuidador' || status ==='rechazada-dueño'">
-                    <h2>reservas rechazadas</h2>
+                    <h2>Reservas rechazadas</h2>
                 </div>
                 <div v-if="status === 'aceptada-cuidador'">
-                    <h2> Mis reservas Confirmadas</h2>
+                    <h2> Mis reservas Aceptadas y Pendiente de Pago por parte del dueño</h2>
                 </div>
                 <div v-if="status === 'pagada-dueño'">
-                    <h2> Mis reservas pagadas</h2>
+                    <h2> Mis reservas Pagadas</h2>
                 </div>
                 <div v-if="status === 'finalizada'">
-                    <h2> Pendientes de Calificacion</h2>
+                    <h2> Finalizadas y Pendientes de Calificacion</h2>
                 </div>
                 <div v-if="status === 'cerrada'">
                     <h2> Finalizadas </h2>
@@ -81,7 +81,7 @@ Vue.component('my-reservas-cuidador-list', {
                                         <a v-on:click="confirmarReservaButton(index)"
                                            style="color: blue; border-color: blue; " href="#"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
-                                            Confirmar</a>
+                                            Confirmar solicitud</a>
                                     </div>
 
 
@@ -189,10 +189,10 @@ Vue.component('my-reservas-cuidador-list', {
                 showModal: false,
                 myValue: 1,
                 offset: 0,
-                gridData:[],
+                gridData: [],
                 gridReservas: [],
                 perPage: 3,
-                countPages:1,
+                countPages: 1,
 
             }
         },
@@ -210,28 +210,23 @@ Vue.component('my-reservas-cuidador-list', {
     methods:
         {
             verReserva(index) {
-
-
                 document.location.href = "/views/reserva/detalle-reserva.html?id= " + index;
             },
             calificarReserva(index) {
-            //    var id = this.reservas[index].id;
-
+                //    var id = this.reservas[index].id;
                 var id = this.gridReservas[index].id;
                 document.location.href = "/views/reserva/calificacion-reserva.html?id= " + id +
                     "&rol=" + "CUIDADOR";
             },
-
             getCuidadorReservas() {
                 this.gridReservas = [];
                 axios.get('/api/cuidador/me/reservas?status=' + this.status)
                     .then((response) => {
                         this.reservas = response.data;
                         if (this.reservas.length === 0) {
-                            this.message = "Actualmente no tenés ninguna reserva.";
+                            this.message = "Actualmente no tenés ninguna reserva como cuidador.";
                         }
-                            else
-                        {
+                        else {
                             this.ordenarFecha(this.reservas);
                         }
                     })
@@ -240,61 +235,13 @@ Vue.component('my-reservas-cuidador-list', {
                         sweetAlert("Oops...", "Error, ver consola", "error");
                     });
             },
-            ordenarFecha(reservas){
-                for (i = 0, len = reservas.length; i < len; i++) {
-
-                    var dateEntrada = new Date(reservas[i].fechaInicio);
-                    var dateSalida = new Date(reservas[i].fechaFin);
-                    dateEntrada = dateEntrada.setDate(dateEntrada.getDate() + 1);
-                    dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
-                    reservas[i].fechaInicio = new Date(dateEntrada).toLocaleDateString();
-                    reservas[i].fechaFin = new Date(dateSalida).toLocaleDateString();
-
-
-                   // reservas[i].fechaInicio =  new Date ( reservas[i].fechaInicio).toLocaleDateString();
-                   // reservas[i].fechaFin =  new Date ( reservas[i].fechaFin).toLocaleDateString();
-                }
+            ordenarFecha(reservas) {
                 this.gridData = reservas;
-
                 this.gridReservas = this.gridData.slice(this.offset, this.offset + this.perPage);
             },
-            cancelarReserva(index) {
-
-              //  var id = this.reservas[index].id;
-
-                var id = this.gridReservas[index].id;
-                axios.put('/api/cuidador/me/reservas/' + id + '/cancelarReserva')
-                    .then((response) => {
-
-                        sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
-                        this.getCuidadorReservas();
-                    })
-                    .catch(error => {
-                            console.log(error);
-                            sweetAlert("Oops...", "Error, ver consola", "error");
-                        }
-                    );
-            },
-            ConfirmarReserva(index) {
-
-                //  var id = this.reservas[index].id;
-
-                var id = this.gridReservas[index].id;
-                axios.put('/api/cuidador/me/reservas/' + id + '/confirmarReserva')
-                    .then((response) => {
-
-                        sweetAlert("Aceptada", "Has confirmado la solicitud de reserva, cuando el huesped pague te confirmaremos la reserva.", "success");
-                        this.getCuidadorReservas();
-                    })
-                    .catch(error => {
-                            console.log(error);
-                            sweetAlert("Oops...", "Error, ver consola", "error");
-
-                        }
-                    );
-            },
             confirmarReservaButton(index) {
-               // var reserva = this.reservas[index];
+                // var reserva = this.reservas[index];
+                let self = this;
                 var reserva = this.gridReservas[index];
                 sweetAlert({
                         title: "Confirmar accion",
@@ -308,12 +255,24 @@ Vue.component('my-reservas-cuidador-list', {
                         showLoaderOnConfirm: true,
                     },
                     function () {
-                        console.log(vm);
-                        vm.$refs.myReservasCuidadorList.$refs.currentView.ConfirmarReserva(index)
+                        var id = self.gridReservas[index].id;
+                        axios.put('/api/cuidador/me/reservas/' + id + '/confirmarReserva')
+                            .then((response) => {
+
+                                sweetAlert("Aceptada", "Has confirmado la <b>solicitud de reserva</b>, cuando el huesped pague te confirmaremos la <b>Reserva</b>.", "success");
+                                self.gridReservas.splice(index, 1);
+                            })
+                            .catch(error => {
+                                    console.log(error);
+                                    sweetAlert("Oops...", "Error, ver consola", "error");
+
+                                }
+                            );
                     });
             },
             cancelarReservaActionButton(index) {
-               // var reserva = this.reservas[index];
+                var self = this;
+                // var reserva = this.reservas[index];
                 var reserva = this.gridReservas[index];
                 sweetAlert({
                         title: "Confirmar accion",
@@ -327,8 +286,18 @@ Vue.component('my-reservas-cuidador-list', {
                         showLoaderOnConfirm: true,
                     },
                     function () {
-                        console.log(vm);
-                        vm.$refs.myReservasCuidadorList.$refs.currentView.cancelarReserva(index)
+                        var id = self.gridReservas[index].id;
+                        axios.put('/api/cuidador/me/reservas/' + id + '/cancelarReserva')
+                            .then((response) => {
+
+                                sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
+                                self.gridReservas.splice(index, 1);
+                            })
+                            .catch(error => {
+                                    console.log(error);
+                                    sweetAlert("Oops...", "Error, ver consola", "error");
+                                }
+                            );
                     });
             },
             getParameterByName(name) {
@@ -337,15 +306,13 @@ Vue.component('my-reservas-cuidador-list', {
                     results = regex.exec(location.search);
                 return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
             },
-            buscarMisCancelaciones()
-            {   //document.getElementById("btn1").style.background='';
+            buscarMisCancelaciones() {   //document.getElementById("btn1").style.background='';
                 //document.getElementById("btn2").style.background='red';
                 this.myValue = 1;
                 this.status = "rechazada-cuidador";
                 this.getCuidadorReservas();
             },
-            buscarCanceladasxDueño()
-            {   //document.getElementById("btn1").style.background='red';
+            buscarCanceladasxDueño() {   //document.getElementById("btn1").style.background='red';
                 //document.getElementById("btn2").style.background='';
                 this.myValue = 2;
                 this.status = "rechazada-dueño";
@@ -354,16 +321,15 @@ Vue.component('my-reservas-cuidador-list', {
             },
             paginate() {
                 this.countPages = this.gridData / this.perPage;
-                if (this.countPages - Math.trunc(this.countPages)> 0.0)
-                {
-                    this.countPages = Math.trunc(this.countPages) +1;
+                if (this.countPages - Math.trunc(this.countPages) > 0.0) {
+                    this.countPages = Math.trunc(this.countPages) + 1;
                 }
 
                 this.gridReservas = this.gridData.slice(this.offset, this.offset + this.perPage);
 
             },
             previous() {
-                if(this.offset >0)
+                if (this.offset > 0)
                     this.offset = this.offset - this.perPage;
             },
             next() {
