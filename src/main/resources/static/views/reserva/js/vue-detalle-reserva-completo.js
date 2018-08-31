@@ -232,7 +232,7 @@ Vue.component('my-detalle-reserva-completo', {
 
         <div class="col-md-3 col-xs-1"></div>
         <div class="col-xs-5 col-md-3" v-if="reserva.status !== 'rechazada-dueño' && reserva.status !== 'ejecucion'" >
-            <a v-on:click="cancelarReservaActionButton()"  href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar Reserva</a>
+            <a style="background-color: inherit;" v-on:click="cancelarReservaActionButton()"  href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar Reserva</a>
         </div>
     </div>
 
