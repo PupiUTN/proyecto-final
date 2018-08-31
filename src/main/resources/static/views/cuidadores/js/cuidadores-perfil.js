@@ -461,7 +461,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                     this.DataReview = response.data;
                     var cont = 0;
                     this.DataReview.forEach(function (item, value, array) {
-                        item.reserva.fechaInicio =  new Date (  item.reserva.fechaInicio).toLocaleDateString();
+                      //  item.reserva.fechaInicio =  new Date (  item.reserva.fechaInicio).toLocaleDateString();
 
                         cont += item.puntaje;
 

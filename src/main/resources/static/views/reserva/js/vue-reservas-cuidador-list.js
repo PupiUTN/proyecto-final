@@ -24,18 +24,21 @@ Vue.component('my-reservas-cuidador-list', {
                 <div v-if="status === 'cerrada'">
                     <h2> Finalizadas </h2>
                 </div>
+                 <div v-if="status === 'ejecucion'">
+                    <h2> Reservas en curso</h2>
+                </div>
             </div>
         </div>
     </div>
      <div class="row">
             <div class="col-md-12">            
-             <h4> Reservas : {{this.reservas.length}} </h4>
+             <h4> Reservas : {{contadorReservas}} </h4>
             </div>
      </div>
     
 <div class="row" v-if="status === 'rechazada-cuidador' || status ==='rechazada-dueño'" >
-    <a id="btn1" v-on:click="buscarCanceladasxDueño()" style="color: black; border-color: black; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  'rgba(243, 12, 12, 0.15)': ''}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
-    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="color: black; border-color: black; background: rgba(243, 12, 12, 0.15)" href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 1 ?  'rgba(243, 12, 12, 0.15)': ''}"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
+    <a id="btn1" v-on:click="buscarCanceladasxDueño()" style="color: black; border-color: black; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  'rgba(159, 195, 249)': ''}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
+    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="color: black; border-color: black; background: rgba(159, 195, 249)" href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 1 ?  'rgba(159, 195, 249)': ''}"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
 </div>
     <div class="row">
         <!-- Listings -->
@@ -86,7 +89,7 @@ Vue.component('my-reservas-cuidador-list', {
 
 
                                     <div class="col-xs-12 col-md-3"
-                                         v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'comentario-dueño' && reserva.status !== 'finalizada' && reserva.status !== 'cerrada' && reserva.status !=='rechazada-dueño'" >
+                                         v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'comentario-dueño' && reserva.status !== 'finalizada' && reserva.status !== 'cerrada' && reserva.status !=='rechazada-dueño' && reserva.status !== 'ejecucion'" >
                                         <a v-on:click="cancelarReservaActionButton(index)" style=""
                                            href="#" class="button medium border pull-right"><i
                                                 class="sl sl-icon-docs"></i> Cancelar</a>
@@ -99,7 +102,7 @@ Vue.component('my-reservas-cuidador-list', {
                                             Examinar</a>
 
                                     </div>
-                                    <div class="col-xs-12 col-md-4" v-if="reserva.status === 'pagada-dueño'">
+                                    <div class="col-xs-12 col-md-4" v-if="reserva.status === 'pagada-dueño' || reserva.status === 'ejecucion'">
                                         <a style=" color: blue;  border-color: blue; "
                                            v-on:click="verReserva(reserva.id)"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver
@@ -193,6 +196,7 @@ Vue.component('my-reservas-cuidador-list', {
                 gridReservas: [],
                 perPage: 3,
                 countPages: 1,
+                contadorReservas:0
 
             }
         },
@@ -220,6 +224,7 @@ Vue.component('my-reservas-cuidador-list', {
             },
             getCuidadorReservas() {
                 this.gridReservas = [];
+                this.contadorReservas = 0;
                 axios.get('/api/cuidador/me/reservas?status=' + this.status)
                     .then((response) => {
                         this.reservas = response.data;
@@ -238,6 +243,7 @@ Vue.component('my-reservas-cuidador-list', {
             ordenarFecha(reservas) {
                 this.gridData = reservas;
                 this.gridReservas = this.gridData.slice(this.offset, this.offset + this.perPage);
+                this.contadorReservas =this.gridReservas.length;
             },
             confirmarReservaButton(index) {
                 // var reserva = this.reservas[index];
@@ -261,6 +267,7 @@ Vue.component('my-reservas-cuidador-list', {
 
                                 sweetAlert("Aceptada", "Has confirmado la <b>solicitud de reserva</b>, cuando el huesped pague te confirmaremos la <b>Reserva</b>.", "success");
                                 self.gridReservas.splice(index, 1);
+                                self.contadorReservas =self.gridReservas.length;
                             })
                             .catch(error => {
                                     console.log(error);
@@ -292,6 +299,7 @@ Vue.component('my-reservas-cuidador-list', {
 
                                 sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
                                 self.gridReservas.splice(index, 1);
+                                self.contadorReservas =self.gridReservas.length;
                             })
                             .catch(error => {
                                     console.log(error);
@@ -360,6 +368,9 @@ Vue.component('my-reservas-cuidador-list', {
             if (this.status == 'cerrada') {
                 return 'Finalizadas'
             }
+            if (this.status == 'ejecucion') {
+                return 'Mis Reservas en curso'
+            }
             return 'Error'
         },
         listClass: function () {
@@ -384,31 +395,37 @@ Vue.component('my-reservas-cuidador-list', {
             if (this.status == 'cerrada') {
                 return 'col-xs-12 col-md-7'
             }
+            if (this.status == 'ejecucion') {
+                return 'col-xs-12 col-md-7'
+            }
         },
         listColor: function () {
             if (this.status == 'creada-dueño') {
-                return 'background: rgba(0, 169, 72, 0.15);'
+                return 'background: rgba(0,255,0,0.3); margin-bottom: 10px;'
             }
             if (this.status == 'rechazada-cuidador') {
-                return 'background: rgba(243, 12, 12, 0.15);'
+                return 'background: rgba(192,192,192); margin-bottom: 10px;'
             }
             if (this.status == 'rechazada-dueño') {
-                return 'background: rgba(243, 12, 12, 0.15);'
+                return 'background: rgba(192,192,192); margin-bottom: 10px;'
             }
             if (this.status == 'aceptada-cuidador') {
-                return 'background: rgba(255,255,0,0.3);'
+                return 'background: rgba(0,0,255,0.3); margin-bottom: 10px;'
             }
             if (this.status == 'pagada-dueño') {
-                return 'background: rgba(0,0,255,0.3); margin-bottom: 10px;'
+                return 'background: rgba(159, 195, 249); margin-bottom: 10px;'
 
             }
             if (this.status == 'finalizada') {
-                return 'background: rgba(0,255,0,0.3); margin-bottom: 10px;'
+                return 'background: rgba(255,255,0,0.3); margin-bottom: 10px;'
 
             }
             if (this.status == 'cerrada') {
                 return 'background: rgba(192,192,192,0.3); margin-bottom: 10px;'
 
+            }
+            if (this.status == 'ejecucion') {
+                return 'background: rgba(255, 219, 164); margin-bottom: 10px;'
             }
         }
 

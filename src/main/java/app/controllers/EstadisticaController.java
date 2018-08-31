@@ -40,7 +40,7 @@ public class EstadisticaController {
     @RequestMapping(value = "/cuidadores/", method = RequestMethod.GET)
     public Estadistica getEstadisticasCuidador() throws Exception {
         long id = getIdCuidador();
-        int[] cantidadXtipo = new int[6];
+        int[] cantidadXtipo = new int[7];
         Estadistica estadistica = new Estadistica();
         List<Reserva> list = reservaService.findAllByCuidador(id);
 
@@ -69,6 +69,9 @@ public class EstadisticaController {
                     break;
                 case "cerrada":
                     cantidadXtipo[5]++;
+                    break;
+                case "ejecucion":
+                    cantidadXtipo[6]++;
                     break;
                 default:
 
@@ -100,7 +103,6 @@ public class EstadisticaController {
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         return myUserPrincipal.getUser().getId();
     }
-
 
     private int[] getReservasXMes(List<Reserva> reservas) {
         int[] cantidad = new int[7];
@@ -201,7 +203,7 @@ public class EstadisticaController {
     }
 
     private int[] getCantidadXTipo(Long id,  List<Reserva> list)
-    {  int[] cantidadXtipo = new int[6];
+    {  int[] cantidadXtipo = new int[7];
         for (Reserva item : list) {
             if(item.getPerro().getId().equals(id))
             {
@@ -226,6 +228,9 @@ public class EstadisticaController {
                         break;
                     case "cerrada":
                         cantidadXtipo[5]++;
+                        break;
+                    case "ejecucion":
+                        cantidadXtipo[6]++;
                         break;
                     default:
 
