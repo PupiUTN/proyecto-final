@@ -265,7 +265,7 @@ Vue.component('my-reservas-cuidador-list', {
                         axios.put('/api/cuidador/me/reservas/' + id + '/confirmarReserva')
                             .then((response) => {
 
-                                sweetAlert("Aceptada", "Has confirmado la <b>solicitud de reserva</b>, cuando el huesped pague te confirmaremos la <b>Reserva</b>.", "success");
+                                sweetAlert("Aceptada", "Reserva confirmada", "success");
                                 self.gridReservas.splice(index, 1);
                                 self.contadorReservas =self.gridReservas.length;
                             })

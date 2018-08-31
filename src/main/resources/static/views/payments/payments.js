@@ -24,7 +24,6 @@ Vue.component('mercadopago', {
             console.log("CREATE PAYMENT");
             console.log(this.url);
             console.log(this.reserva);
-            this.parseDates();
             axios.post(this.url, this.reserva)
                 .then((paymentPreference) => {
                     this.paymentPreference = paymentPreference.data;
@@ -36,18 +35,10 @@ Vue.component('mercadopago', {
                     console.log(error);
                 });
         },
-        executeOnMyReturn(response) {
-            console.log("EXECUTING EXECUTE ON MY RETURN");
-            console.log(response);
-        },
         pay(url) {
             console.log("PAY");
             console.log(url);
             window.location.href = url;
-        },
-        parseDates() {
-            this.reserva.fechaFin = fecha.format(fecha.parse(this.reserva.fechaFin, 'DD/MM/YYYY'), 'YYYY-MM-DD');
-            this.reserva.fechaInicio = fecha.format(fecha.parse(this.reserva.fechaInicio, 'DD/MM/YYYY'), 'YYYY-MM-DD');
         }
     }
 })
