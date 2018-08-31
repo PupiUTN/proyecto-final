@@ -9352,7 +9352,7 @@ a.dashboard-responsive-nav-trigger {
 ------------------------------------- */
 #dashboard #titlebar {
     padding: 0;
-    margin: 0 0 40px 0;
+    margin: 0;
     display: block;
     background-color: transparent;
     background: transparent;
