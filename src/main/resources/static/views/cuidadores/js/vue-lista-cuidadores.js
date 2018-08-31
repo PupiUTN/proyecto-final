@@ -5,7 +5,8 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             <div id="content" class="fs-inner-container content padding-top-0">
                 <div class="fs-content">
                     <!-- Search -->
-                    <section class="search" style="padding-left: 45px; padding-right: 45px; padding-top: 15px; padding-bottom: 20px">
+                    <section class="search"
+                             style="padding-left: 45px; padding-right: 45px; padding-top: 15px; padding-bottom: 20px">
                         <div class="row">
                             <div class="col-md-12">
                                 <!-- Main Search Input -->
@@ -47,7 +48,8 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                                                 <td align="center">
                                                     <input :id="tamaño.nombre" type="checkbox" :value="tamaño.id"
-                                                           name="check" v-model="checkedTamaños" v-on:click="checkedPrimero('tamaño')">
+                                                           name="check" v-model="checkedTamaños"
+                                                           v-on:click="checkedPrimero('tamaño')">
                                                     <label :for="tamaño.nombre">{{tamaño.nombre}}</label>
                                                 </td>
                                                 <td>- De {{tamaño.valorMinimo}}kg&nbsp;</td>
@@ -72,8 +74,10 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                                         <!-- Checkboxes -->
                                         <div class="row">
                                             <div v-for=" cantidad in listaCantidad">
-                                                <input class="radio" :id="cantidad.id" type="checkbox" :value="cantidad.value"
-                                                       name="cantidad" v-model="checkedCantidad" v-on:click="checkedPrimero('cantidad')">
+                                                <input class="radio" :id="cantidad.id" type="checkbox"
+                                                       :value="cantidad.value"
+                                                       name="cantidad" v-model="checkedCantidad"
+                                                       v-on:click="checkedPrimero('cantidad')">
                                                 <label :for="cantidad.id">{{cantidad.nombre}}</label>
                                             </div>
                                         </div>
@@ -115,7 +119,8 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                                         <!-- Checkboxes -->
                                         <div class="row">
                                             <div v-for="orden in listaOrdenes">
-                                                <input class="radio" :id="orden.id" type="checkbox" :value="orden.value" :selected="orden.selected"
+                                                <input class="radio" :id="orden.id" type="checkbox" :value="orden.value"
+                                                       :selected="orden.selected"
                                                        name="orden" v-model="checkedOrdenes" v-on:click="ordenarPor()">
                                                 <label :for="orden.id">{{orden.value}}</label>
                                             </div>
@@ -198,31 +203,35 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 </div>
             </div>
 
-            
+
             <div class="clearfix"></div>
-            <div >
-                <div class="col-md-6">
-                    <!-- Pagination -->
-                    <div class="pagination-container margin-top-20 margin-bottom-40">
-                        <nav class="pagination">
-                            <ul>
 
-                                <li><a :style="offset > 0 ? 'background-color: crimson' : 'background-color: darkgrey'" @click="previous()"><i class="sl sl-icon-arrow-left" style=" font-weight: bold;color: white;"></i></a></li>
-                                
-                                <li v-for="item in listaPaginas"><a  v-on:click="viewPage(item)">{{item}}</a></li>
-                                
-                                <li><a  :style="(offset + perPage) < gridData.length ? 'background-color: crimson' : 'background-color: darkgrey'" @click="next()"><i class="sl sl-icon-arrow-right" style=" font-weight: bold;color: white;"></i></a></li>
+            <div class="col-md-6">
+                <!-- Pagination -->
+                <div class="pagination-container margin-top-20 margin-bottom-40">
+                    <nav class="pagination">
+                        <ul>
 
-                               
-                                 
-                            </ul>
-                        </nav>
-                    </div>
+                            <li><a :style="offset > 0 ? 'background-color: crimson' : 'background-color: darkgrey'"
+                                   @click="previous()"><i class="sl sl-icon-arrow-left"
+                                                          style=" font-weight: bold;color: white;"></i></a></li>
+
+                            <li v-for="item in listaPaginas"><a v-on:click="viewPage(item)">{{item}}</a></li>
+
+                            <li>
+                                <a :style="(offset + perPage) < gridData.length ? 'background-color: crimson' : 'background-color: darkgrey'"
+                                   @click="next()"><i class="sl sl-icon-arrow-right"
+                                                      style=" font-weight: bold;color: white;"></i></a></li>
+
+
+                        </ul>
+                    </nav>
                 </div>
             </div>
-            
+
+
         </div>
-        
+
     `,
     data: function () {
         return {
@@ -256,17 +265,17 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             listaOrdenes: this.crearListaOrden(),
             sortType: 'Ordenar Por',
             offset: 0,
-            gridData:[],
+            gridData: [],
             gridCuidadores: [],
             perPage: 3,
-            countPages:1,
-            listaPaginas:[],
+            countPages: 1,
+            listaPaginas: [],
         }
     },
     watch: {
-    offset: function () {
-        this.paginate();
-    }
+        offset: function () {
+            this.paginate();
+        }
 
     },
     mounted() {
@@ -482,20 +491,20 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
         filtrar() {
             this.items = this.itemsSinFiltro;
             var filtrados = [];
-                for (var i = 0; i < this.items.length; i++) {
-                    var cuidador = this.items[i];
-                    if(this.cumplePrecio(cuidador) && this.cumpleServicios(cuidador)
-                        && this.cumpleTamaño(cuidador) && this.cumpleCantidad(cuidador)){
-                        filtrados.push(cuidador);
-                    }
+            for (var i = 0; i < this.items.length; i++) {
+                var cuidador = this.items[i];
+                if (this.cumplePrecio(cuidador) && this.cumpleServicios(cuidador)
+                    && this.cumpleTamaño(cuidador) && this.cumpleCantidad(cuidador)) {
+                    filtrados.push(cuidador);
                 }
+            }
             this.items = filtrados;
             this.ordenarPor();
             this.calcularEncontrados();
             this.mostrarEnMapa();
         },
-        cumplePrecio(cuidador){
-            if(!this.precioHasta && !this.precioDesde){
+        cumplePrecio(cuidador) {
+            if (!this.precioHasta && !this.precioDesde) {
                 return true;
             }
             if (this.precioHasta) {
@@ -510,29 +519,29 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                 }
             } else {
                 if (this.precioDesde) {
-                        if (cuidador.precioPorNoche >= this.precioDesde) {
-                            return true;
-                        }
+                    if (cuidador.precioPorNoche >= this.precioDesde) {
+                        return true;
+                    }
                 }
             }
             return false;
 
         },
-        cumpleTamaño(cuidador){
-            if(this.checkedTamaños.length > 0){
-                for(var i = 0; i < this.checkedTamaños.length; i++){
-                    console.log(cuidador.user.fullName +" "+ cuidador.tamaño.id);
+        cumpleTamaño(cuidador) {
+            if (this.checkedTamaños.length > 0) {
+                for (var i = 0; i < this.checkedTamaños.length; i++) {
+                    console.log(cuidador.user.fullName + " " + cuidador.tamaño.id);
                     console.log(this.checkedTamaños[i]);
-                    if(cuidador.tamaño.id == this.checkedTamaños[i]){
+                    if (cuidador.tamaño.id == this.checkedTamaños[i]) {
                         return true;
                     }
                 }
                 return false;
-            }else{
+            } else {
                 return true;
             }
         },
-        cumpleServicios(cuidador){
+        cumpleServicios(cuidador) {
             if (this.checkedServicios && this.checkedServicios.length > 0) {
                 banderaServicios = 0;
                 for (var j = 0; j < cuidador.listaServicios.length; j++) {
@@ -547,18 +556,18 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                         return true;
                     }
                 }
-            }else {
+            } else {
                 return true;
             }
         },
-        cumpleCantidad(cuidador){
-            if(this.checkedCantidad && this.checkedCantidad[0]){
-                if(this.checkedCantidad[0] == 4){
+        cumpleCantidad(cuidador) {
+            if (this.checkedCantidad && this.checkedCantidad[0]) {
+                if (this.checkedCantidad[0] == 4) {
                     return cuidador.cantidadMaxDePerros >= 4;
-                }else{
+                } else {
                     return this.checkedCantidad[0] == cuidador.cantidadMaxDePerros;
                 }
-            }else{
+            } else {
                 return true;
             }
         },
@@ -588,17 +597,17 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
         complemento: function (promedioReviews) {
             return 5 - promedioReviews
         },
-        crearListaCantidad(){
-            var unPerro = {id:"1P", value:1, nombre: "1 Perro"};
-            var dosPerros = {id:"2P", value:2, nombre: "2 Perros"};
-            var tresPerros = {id:"3P", value:3, nombre: "3 Perros"};
-            var cuatroOMas = {id:"4P", value:4, nombre: "4 o más Perros"};
+        crearListaCantidad() {
+            var unPerro = {id: "1P", value: 1, nombre: "1 Perro"};
+            var dosPerros = {id: "2P", value: 2, nombre: "2 Perros"};
+            var tresPerros = {id: "3P", value: 3, nombre: "3 Perros"};
+            var cuatroOMas = {id: "4P", value: 4, nombre: "4 o más Perros"};
 
             return [unPerro, dosPerros, tresPerros, cuatroOMas];
         },
-        checkedPrimero(filtro){
+        checkedPrimero(filtro) {
             var lista;
-            switch (filtro){
+            switch (filtro) {
                 case 'tamaño':
                     this.checkedTamaños = this.limpiarLista(this.checkedTamaños);
                     break;
@@ -614,83 +623,83 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
 
         },
-        limpiarLista(lista){
-            if(lista.length > 1){
+        limpiarLista(lista) {
+            if (lista.length > 1) {
                 var i = lista.length - 1;
                 var item = lista[i];
                 lista = [item];
             }
             return lista;
         },
-        ordenarPor(){
+        ordenarPor() {
             this.ocultarOrdenar();
             this.checkedOrdenes = this.limpiarLista(this.checkedOrdenes);
-            if(this.checkedOrdenes.length == 0){
+            if (this.checkedOrdenes.length == 0) {
                 this.sortType = "Ordenar Por";
                 return;
             }
             this.sortType = this.checkedOrdenes[0];
             console.log(this.sortType)
-            if(this.sortType.includes("Precio")){
-                if(this.sortType.includes("Menor")){
+            if (this.sortType.includes("Precio")) {
+                if (this.sortType.includes("Menor")) {
                     this.ordenarPrecio("menor");
-                }else{
+                } else {
                     this.ordenarPrecio("mayor");
                 }
-            }else {
-                if(this.sortType.includes("Menor")){
+            } else {
+                if (this.sortType.includes("Menor")) {
                     this.ordenarRelevancia("menor");
-                }else{
+                } else {
                     console.log("entre");
                     this.ordenarRelevancia("mayor");
                 }
             }
         },
-        ordenarRelevancia(orden){
+        ordenarRelevancia(orden) {
             this.ordenarPorRelevancia();
-            if(orden == 'menor'){
+            if (orden == 'menor') {
                 this.items = this.items.slice().reverse();
                 this.relevanciaMayor = false;
             } else {
-                if(!this.relevanciaMayor){
+                if (!this.relevanciaMayor) {
                     this.relevanciaMayor = true;
                 }
             }
         },
-        ordenarPrecio(orden){
+        ordenarPrecio(orden) {
             this.ordenarPorPrecio();
-            if(orden == 'menor'){
+            if (orden == 'menor') {
                 this.items = this.items.slice().reverse();
                 this.precioMayor = false;
             } else {
-                if(!this.precioMayor){
+                if (!this.precioMayor) {
                     this.precioMayor = true;
                 }
             }
         },
-        ordenarPorPrecio(){
+        ordenarPorPrecio() {
             this.items = this.items.sort((a, b) => a.precioPorNoche < b.precioPorNoche);
         },
-        ordenarPorRelevancia(){
+        ordenarPorRelevancia() {
             this.items = this.items.sort((a, b) => a.ponderacion < b.ponderacion);
         },
-        ocultarOrdenar(){
+        ocultarOrdenar() {
             var classes = $('#ordenar')[0].getAttribute('class').split(" ");
-            classes = classes.splice(0,2);
+            classes = classes.splice(0, 2);
             var clase = classes[0] + " " + classes[1];
             $('#ordenar')[0].setAttribute('class', clase);
 
             var classesMain = $('#content')[0].getAttribute('class').split(" ");
-            classesMain = classesMain.splice(0,3);
+            classesMain = classesMain.splice(0, 3);
             var claseMain = classesMain[0] + " " + classesMain[1] + " " + classesMain[2];
             $('#content')[0].setAttribute('class', claseMain);
         },
-        crearListaOrden(){
+        crearListaOrden() {
             return [
-                {id:'MYR', value: 'Mayor Relevancia', selected: true},
-                {id:'MNR', value: 'Menor Relevancia', selected: false},
-                {id:'MYP', value: 'Mayor Precio', selected: false},
-                {id:'MNP', value: 'Menor Precio', selected: false}
+                {id: 'MYR', value: 'Mayor Relevancia', selected: true},
+                {id: 'MNR', value: 'Menor Relevancia', selected: false},
+                {id: 'MYP', value: 'Mayor Precio', selected: false},
+                {id: 'MNP', value: 'Menor Precio', selected: false}
             ]
         },
         paginate() {
@@ -698,37 +707,36 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             this.mostrarEnMapa();
 
         },
-        countPagesCuidadores(){
+        countPagesCuidadores() {
             this.countPages = this.gridData.length / this.perPage;
 
-            if (this.countPages - Math.trunc(this.countPages)> 0.0)
-            {
-                this.countPages = Math.trunc(this.countPages) +1;
+            if (this.countPages - Math.trunc(this.countPages) > 0.0) {
+                this.countPages = Math.trunc(this.countPages) + 1;
             }
             this.listaPaginas = [];
             n = 1;
 
-            while (n <=this.countPages) {
+            while (n <= this.countPages) {
                 this.listaPaginas.push(n);
 
-                n ++;
+                n++;
             }
 
         },
 
 
         previous() {
-            if(this.offset >0)
+            if (this.offset > 0)
                 this.offset = this.offset - this.perPage;
         },
         next() {
             if (this.offset + this.perPage < this.gridData.length)
                 this.offset = this.offset + this.perPage;
         },
-        viewPage(index)
-        {    var max = index *   this.perPage;
+        viewPage(index) {
+            var max = index * this.perPage;
             this.offset = max - this.perPage;
-         //   this.gridCuidadores = this.gridData.slice(this.offset, max);
+            //   this.gridCuidadores = this.gridData.slice(this.offset, max);
 
         }
     }

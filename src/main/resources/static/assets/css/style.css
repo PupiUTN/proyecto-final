@@ -1275,7 +1275,6 @@ body #jPanelMenu-menu li li li a:before {
 
 /* Main Search Input */
 .main-search-input {
-    margin-top: 50px;
     border-radius: 50px;
     width: 100%;
     background-color: #fff;

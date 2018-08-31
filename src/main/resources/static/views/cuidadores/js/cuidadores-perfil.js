@@ -207,12 +207,13 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                         <my-hotel-date-picker
                                 ref="myHotelDatePicker"
                                 format="DD/MM/YYYY"
+                                infoFormat="DD/MM/YYYY"
                                 v-on:updateDateRange="bindDates"
                                 datePickerId="datepickerId"
                                 :disabledDates="fechasDeshabilitadas"
-                                selectForward="true"
+                                :selectForward="true"
                                 v-if="showDatePicker"
-                                moveBothMonths="true"
+                                :moveBothMonths="true"
                         >
                         </my-hotel-date-picker>
                     </div>
@@ -543,7 +544,9 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             console.log('calcularFechasDeshabilitadas, cantidad maxima de perros', this.item.cantidadMaxDePerros);
             for (var [key, value] of cantidadReservasPorDia.entries()) {
                 if (value >= this.item.cantidadMaxDePerros) {
-                    fechasSuperanCantidadMaximaDePerro.push(key)
+                    // An array of strings in this format: 'YYYY-MM-DD' (note the ''). All the dates passed to the list will be disabled.
+                    var disableDate = fecha.parse(key, 'D/MM/YYYY');
+                    fechasSuperanCantidadMaximaDePerro.push(fecha.format(disableDate, 'YYYY-MM-DD'))
                 }
             }
             return fechasSuperanCantidadMaximaDePerro;
@@ -561,10 +564,10 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
         },
         getDatesBetween(startDate, stopDate) {
             var dateArray = new Array();
-            var currentDate = fecha.parse(startDate, 'dd/MM/yyyy');
-            var stopDate = fecha.parse(stopDate, 'dd/MM/yyyy');
+            var currentDate = fecha.parse(startDate, 'D/MM/YYYY');
+            var stopDate = fecha.parse(stopDate, 'D/MM/YYYY');
             while (currentDate <= stopDate) {
-                dateArray.push(fecha.format(currentDate, 'dd/MM/yyyy'));
+                dateArray.push(fecha.format(currentDate, 'D/MM/YYYY'));
                 currentDate = currentDate.addDays(1);
             }
             return dateArray;
