@@ -23,6 +23,7 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
             format="DD/MM/YYYY"
             v-on:updateDateRange="bindDates"
             datepickerId="datepickerId"
+            removeLeft
         > 
 </my-hotel-date-picker>
               <a><i class="fa fa-calendar-check-o"></i></a>

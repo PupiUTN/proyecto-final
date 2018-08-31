@@ -210,7 +210,9 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                                 v-on:updateDateRange="bindDates"
                                 datePickerId="datepickerId"
                                 :disabledDates="fechasDeshabilitadas"
+                                selectForward="true"
                                 v-if="showDatePicker"
+                                moveBothMonths="true"
                         >
                         </my-hotel-date-picker>
                     </div>
@@ -297,7 +299,6 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
     ,
     mounted() {
         this.bindUrlWithVue();
-        this.setDatesToDatePickerInput();
         this.getCuidador(this.url, this.idCuidador);
 
     },
@@ -442,9 +443,13 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             this.idCuidador = this.getParameterByName('id');
         },
         setDatesToDatePickerInput() {
-            if (this.dateFrom != null & this.dateTo != null) {
+            if (this.dateFrom && this.dateTo && this.$refs.myHotelDatePicker) {
                 var value = this.dateFrom + '-' + this.dateTo;
                 this.$refs.myHotelDatePicker.setValue(value);
+            } else {
+                setTimeout(function () {
+                    this.setDatesToDatePickerInput()
+                }.bind(this), 1000)
             }
         },
         bindDates(e) {
@@ -512,6 +517,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                     this.fechasDeshabilitadas = this.calcularFechasDeshabilitadas(fechasList);
                     // como las properties del componente no son reactivas debo montar el date picker luego de calcular las fecha
                     this.showDatePicker = true
+                    this.setDatesToDatePickerInput();
                 })
                 .catch(error => {
                     this.showDatePicker = true

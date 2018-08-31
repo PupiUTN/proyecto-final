@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.Cipher;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -35,6 +37,11 @@ public class PaymentsService {
     private String clientId;
     @Value("${app.mp.pupi.clientSecret}")
     private String clientSecret;
+
+    @Value("${app.environment}")
+    private String ENVIRONMENT;
+
+    private String APP_DOMAIN;
 
 
     private static final Logger LOG  = LoggerFactory.getLogger(PaymentsService.class);
@@ -53,6 +60,15 @@ public class PaymentsService {
             MercadoPago.SDK.setClientSecret(clientSecret);
         } catch (MPException e) {
             e.printStackTrace();
+        }
+    }
+
+    @PostConstruct
+    private void setRedirectUri() {
+        if("prod".equalsIgnoreCase(ENVIRONMENT)) {
+            APP_DOMAIN = "https://pupi.com.ar";
+        } else {
+            APP_DOMAIN = "http://localhost:5000";
         }
     }
 
@@ -81,8 +97,16 @@ public class PaymentsService {
         mpToken.ifPresent(token -> MercadoPago.SDK.setUserToken(getMercadoPagoToken(token)));
 
         preference.setMarketplaceFee(getMarketplaceFee(reserva.getPrecioTotal()));
-        BackUrls backUrls = new BackUrls("http://google.com", "http://google.com", "http://google.com");
-        preference.setBackUrls(backUrls);
+        String backUrl = null;
+        try {
+            backUrl = new URI(APP_DOMAIN + "/views/reserva/mis-reservas-user.html?status=pagada-dueño").toASCIIString();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        if(backUrl != null) {
+            BackUrls backUrls = new BackUrls().setSuccess(backUrl);
+            preference.setBackUrls(backUrls);
+        }
         try {
             preference.save();
         } catch (MPException e) {

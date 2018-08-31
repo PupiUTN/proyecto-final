@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -31,8 +31,8 @@ public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
             "or r.fechaFin between :#{#from} AND :#{#to} ))) "/* +
            "order by c.promedioReviews desc, c.cantidadReviews desc"*/)
     List<Cuidador> findAllbyCiudadYFecha(@Param("ciudadPlaceId") String ciudadPlaceId,
-                                         @Param("from") Date from,
-                                         @Param("to") Date to,
+                                         @Param("from") LocalDate from,
+                                         @Param("to") LocalDate to,
                                          @Param("status") String status);
 
 

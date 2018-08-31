@@ -16,7 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -26,6 +27,7 @@ public class CuidadorController {
 
     private final CuidadorService cuidadorService;
     private final MailService mailService;
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @Autowired
     public CuidadorController(CuidadorService cuidadorService, MailService mailService) {
@@ -41,15 +43,23 @@ public class CuidadorController {
     @RequestMapping(value = "/search/", method = RequestMethod.GET)
     public List<Cuidador> getCuidadoresPorDireccionYFechasReseva(
             @RequestParam(value = "ciudadPlaceId", required = false) String ciudadPlaceId,
-            @RequestParam(value = "from", required = false) Date from,
-            @RequestParam(value = "to", required = false) Date to,
+            @RequestParam(value = "from", required = false) String fromString,
+            @RequestParam(value = "to", required = false) String toString,
             @RequestParam(value = "status", defaultValue = "completed") String status) {
+
+        LocalDate from = null;
+        LocalDate to = null;
+        if (fromString != null && toString != null) {
+            from = LocalDate.parse(fromString, dateTimeFormatter);
+            to = LocalDate.parse(toString, dateTimeFormatter);
+        }
 
         List<Cuidador> cuidadores = cuidadorService.searchCuidadores(ciudadPlaceId, from, to, status);
         ordenarCuidadores(cuidadores);
         return cuidadores;
 
     }
+
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Cuidador getCuidador(@PathVariable("id") Long id) {
         Cuidador cuidador = cuidadorService.getCuidador(id);
