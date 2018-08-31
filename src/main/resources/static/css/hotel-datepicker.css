@@ -304,6 +304,7 @@
 @media (min-width: 768px) {
     .datepicker {
         width: 560px;
+        left: -250px;
     }
 
     .datepicker__month {
@@ -315,5 +316,18 @@
         position: absolute;
         right: 0;
         top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .datepicker {
+        left: 0px;
+    }
+
+}
+
+@media (min-width: 1024px) {
+    .datepicker {
+        left: -300px;
     }
 }

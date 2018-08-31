@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -26,6 +27,7 @@ public class CuidadorController {
 
     private final CuidadorService cuidadorService;
     private final MailService mailService;
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @Autowired
     public CuidadorController(CuidadorService cuidadorService, MailService mailService) {
@@ -41,10 +43,12 @@ public class CuidadorController {
     @RequestMapping(value = "/search/", method = RequestMethod.GET)
     public List<Cuidador> getCuidadoresPorDireccionYFechasReseva(
             @RequestParam(value = "ciudadPlaceId", required = false) String ciudadPlaceId,
-            @RequestParam(value = "from", required = false) LocalDate from,
-            @RequestParam(value = "to", required = false) LocalDate to,
+            @RequestParam(value = "from", required = false) String fromString,
+            @RequestParam(value = "to", required = false) String toString,
             @RequestParam(value = "status", defaultValue = "completed") String status) {
 
+        LocalDate from = LocalDate.parse(fromString, dateTimeFormatter);
+        LocalDate to = LocalDate.parse(toString, dateTimeFormatter);
         List<Cuidador> cuidadores = cuidadorService.searchCuidadores(ciudadPlaceId, from, to, status);
         ordenarCuidadores(cuidadores);
         return cuidadores;
