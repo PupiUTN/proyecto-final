@@ -83,6 +83,10 @@ var myHotelDatePicker = Vue.component('my-hotel-date-picker', {
         autoClose: {
             type: Boolean,
             default: true
+        },
+        removeLeft: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
@@ -182,6 +186,11 @@ var myHotelDatePicker = Vue.component('my-hotel-date-picker', {
             // showTopbar is not implement from hotel datepicker now...
             const hdpkrTopbar = document.querySelector('.datepicker__topbar')
             hdpkrTopbar.style.display = 'none'
+        }
+        if (this.removeLeft) {
+            // showTopbar is not implement from hotel datepicker now...
+            const hdpkrTopbar = document.querySelector('.datepicker')
+            hdpkrTopbar.style.left = 0
         }
     }
 });

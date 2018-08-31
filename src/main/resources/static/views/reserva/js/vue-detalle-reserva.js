@@ -25,18 +25,18 @@ Vue.component('my-detalle-reserva', {
                 <h5>  </h5>
                 <img id="foto_user"  :src="reserva.perro.fotoPerfil" alt="" style="width:300px;" >
             </div>
-
             <div class="col-md-4">
+            <div class="col-md-12">
                 <h5><i class="sl sl-icon-user-following" style="color:red; margin-right: 10px; "></i>  Nombre </h5>
                 <h3><b>{{reserva.perro.nombre}}</b></h3>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <h5><i class="im im-icon-Old-Telephone" style="color:red; margin-right: 10px;"></i>Raza </h5>
                 <h3><b>{{reserva.perro.raza.nombre}}</b></h3>
             </div>
 
-           <div class="col-md-4">
+           <div class="col-md-12">
                 <h5><i class="im im-icon-Starfish" style="color:red; margin-right: 10px"></i>Calificacion </h5>
                 <h3><b>  <div class="star-rating"  id="rating" data-rating ="0">
                   <span v-bind:class="{'star': puntaje >= 1, 'star empty': puntaje < 1 }" ></span>
@@ -46,12 +46,13 @@ Vue.component('my-detalle-reserva', {
                  <span v-bind:class="{'star': puntaje >= 5, 'star empty': puntaje < 5 }"></span>
                </div></b></h3>
             </div>
-            
-            <div class="col-md-4">
+            <div class=""></div>
+            <div class="col-md-12">
                 <h5><i class="im im-icon-Paw" style="color:red; margin-right: 10px;" ></i>Sexo </h5>
                 <h3><b>{{reserva.perro.sexo}}</b></h3>
             </div>
         </div>
+          </div>
 
 
     </div>
@@ -288,11 +289,11 @@ Vue.component('my-detalle-reserva', {
     <div class="center-block">
 
         <div class="col-md-1"></div>
-        <div class="col-xs-5 col-md-3" v-if="reserva.status === 'creada-dueño'" >
+        <div class="col-xs-5 col-md-3" v-if="reserva.status === 'creada-dueño' && reserva.status !== 'ejecucion' " >
             <a v-on:click="confirmarReservaButton()"  style="color: blue; border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Confirmar</a>
         
         </div>
-            <div class="col-xs-5 col-md-6" v-if="reserva.status !== 'rechazada-cuidador'" >
+            <div class="col-xs-5 col-md-6" v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'ejecucion'" >
             <a v-on:click="cancelarReservaActionButton()"  href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
         </div>
         
@@ -394,12 +395,12 @@ Vue.component('my-detalle-reserva', {
                     }
                     var date = new Date(this.reserva.fechaTransaccion);
                     this.reserva.fechaTransaccion = date.toLocaleDateString();
-                    var dateEntrada = new Date(this.reserva.fechaInicio);
+                   /* var dateEntrada = new Date(this.reserva.fechaInicio);
                     var dateSalida = new Date(this.reserva.fechaFin);
                     dateEntrada = dateEntrada.setDate(dateEntrada.getDate() + 1);
                     dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
                     this.reserva.fechaInicio = new Date(dateEntrada).toLocaleDateString();
-                    this.reserva.fechaFin = new Date(dateSalida).toLocaleDateString();
+                    this.reserva.fechaFin = new Date(dateSalida).toLocaleDateString();*/
                     if (this.reserva.cuidador.user.birthday !== null) {
                         this.edadUsuario = this.calcularEdad(this.reserva.cuidador.user.birthday);
                     }

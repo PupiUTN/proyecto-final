@@ -9,11 +9,7 @@ Vue.component('my-cuidador-edit', {
                         <h2>Mi Descripción</h2>
                         <!-- Breadcrumbs -->
                         <nav id="breadcrumbs">
-                            <ul>
-                                <li><a href="#">General</a></li>
-                                <li><a href="#">Menu</a></li>
-                                <li>Mi Descripción</li>
-                            </ul>
+                          
                         </nav>
                     </div>
                 </div>

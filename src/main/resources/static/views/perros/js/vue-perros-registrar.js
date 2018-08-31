@@ -36,7 +36,7 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
                             <label>Nombre</label>
                             <input v-model="perro.nombre" value="" type="text" required>
                             <label class="">Fecha de Nacimiento</label>
-                            <input type="date" v-model="perro.birthday" required>
+                            <input id="NacimientoPerro" type="date" v-model="perro.birthday" required>
                             <label>Sexo</label>
                             <select v-model="perro.sexo" required>
                                 <option disabled value="">Seleccionar Sexo</option>
@@ -107,10 +107,30 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
     mounted() {
         this.idPerro= this.getParameterByName('id');
         this.getUserInfo();
+        this.SetFechaMaximaNacimiento();
 
     },
     methods: {
 
+        SetFechaMaximaNacimiento()
+        {
+            var dtToday = new Date();
+
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+            var year = dtToday.getFullYear();
+
+            if(month < 10)
+                month = '0' + month.toString();
+            if(day < 10)
+                day = '0' + day.toString();
+
+            var maxDate = year + '-' + month + '-' + day;
+
+            var input = document.getElementById("NacimientoPerro");
+            input.setAttribute("max", maxDate);
+
+        },
         upload(formData) {
             axios.post('/api/file/', formData)
                 .then((response) => {

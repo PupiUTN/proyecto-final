@@ -7,12 +7,23 @@ Vue.component('my-estadistica', {
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12">
-					<h2> Mis Estadisticas </h2> <h2> </h2> 
+					<h2> Estadisticas de mis mascotas</h2> <h2> </h2> 
 				</div>
 			</div>
 		</div>
 		<!-- Content -->
-		<div v-show="flag">
+    
+    
+    <div class="row">
+			<div class="col-md-12 col-xs-12">			    
+				<div class="notification success closeable margin-bottom-30 ">
+					<p> <strong>{{banner}}</strong>!</p>    					                    <!-- <a class="close" href="#"></a>-->
+			</div>
+			
+			</div>
+		
+		</div>
+		
 		
 		<div class="col-md-12 row"> 
 			   <div class="col-md-3"></div>
@@ -66,8 +77,9 @@ Vue.component('my-estadistica', {
 		</div>
 		
 		<br>
-			<div class="zoom">
-		<div class="col-lg-12 col-md-12">
+		 <div class="col-lg-1 col-md-1"></div>
+			<div class ="row" >
+		<div class="col-lg-9 col-md-10 col-xs-12">
 		
 				<div class="dashboard-list-box invoices with-icons">
 				<h4 style="background-color:gainsboro;"> <i class="im im-icon-Line-Chart"></i> Mis ultimos  meses</h4>
@@ -78,18 +90,11 @@ Vue.component('my-estadistica', {
          </div>
          </div>
 
-        <br>
-         <br>
-         <div class="row">
-        <label class="col-lg-12"> </label>
-        <br>
-         <label class="col-lg-12"> </label>   
-        <br>
-        <label class="col-lg-12"> </label>
-        </div>
+          <div class="col-lg-1 col-md-1"></div>
+        <div class ="row">
          
-         <div class="zoom">
-         <div class="col-lg-12 col-md-12">
+         <div>
+         <div class="col-lg-9 col-md-9 col-xs-12">
 				<div class="dashboard-list-box invoices with-icons">
 				<h4 style="background-color: gainsboro;"><i class="im im-icon-Line-Chart"></i> Estados de mis Reservas</h4>
                <chart-pie :totalPorTipo="estadisticas.totalPorTipo">
@@ -123,6 +128,7 @@ Vue.component('my-estadistica', {
             cont: 0,
             flag: false,
             list:{},
+            banner:'',
         }
     },
     watch: {
@@ -151,9 +157,11 @@ Vue.component('my-estadistica', {
 
             axios.get('/api/estadisticas/usuarios/')
                 .then((response) => {
+
                     this.list = response.data;
-                    if (this.length > 0) {
-                        this.flag = true;
+                    if (this.list.length > 0) {
+                        this.banner="Estos son tus datos";
+                      //  this.flag = true;
                     for (i = 0; i < this.list.length; i++) {
                         this.dogs[i] = {value: i, text: this.list[i].nombrePerro};
                     }
@@ -167,17 +175,11 @@ Vue.component('my-estadistica', {
 
                 }
                     else
-                    {    this.flag = false;
-                        sweetAlert({
-                                title: "No encontramos reservas!",
-                                text: "Tus perros no poseen reservas",
-                                type: "warning",
-                                confirmButtonText: "agrega uno!"
-                            },
-                        function(){
-                            document.location.href = '/views/perros/registrar-perros.html';
-                        });
-
+                    {       this.banner = "Actualmente no posees reservas, agrega tus mascotas para ver tus estadísticas";
+                        document.getElementById("selector_perro").disabled = true;
+                        this.estadisticas.cantidadTotal = 0;
+                        this.estadisticas.totalCuidadores =0;
+                        this.estadisticas.promedio =0;
 
 
                     }

@@ -48,7 +48,6 @@ public class CalificacionController {
         Calificacion calific = calificacionService.createCalificacion(entity);
          Reserva res  =   reservaService.getReserva( entity.getReserva().getId()) ;
 
-
           if(res.getStatus().equals("finalizada") && !calific.isFromOwner())
           {
               res.setStatus("comentario-cuidador");

@@ -14,7 +14,7 @@ Vue.component('estadisticas-admin', {
 		<div class="row">
     <div class="col-md-12">
         <div class="notification success closeable margin-bottom-30 ">
-            <p> <strong>Estadisticas de pupi</strong></p>    					                    <!-- <a class="close" href="#"></a>-->
+            <p> <strong>{{banner}}</strong></p>    					                    <!-- <a class="close" href="#"></a>-->
         </div>
 
     </div>
@@ -22,6 +22,9 @@ Vue.component('estadisticas-admin', {
 </div>
 		
 			<br>
+			<div>
+			
+
 			<div class=" row">
 		
 		<div class="col-lg-6 col-md-6">
@@ -47,12 +50,13 @@ Vue.component('estadisticas-admin', {
          </div>
            
 			</div>
-			
+			</div>
 			<br>
 			<br>
 			
 			
-	       <div class="row">
+	        <div id="mapaReservas">
+	        <div class="row" >
 	        <h4 class="headline margin-top-70 margin-bottom-30">
                <i class="im im-icon-Map2"></i> MAPA DE RESERVAS</h4>
 	        <br>
@@ -74,6 +78,7 @@ Vue.component('estadisticas-admin', {
                </div>
             </div>
    
+           </div>
            </div>
    
    
@@ -189,7 +194,9 @@ Vue.component('estadisticas-admin', {
             },
             array:[],
             arrayCuidadores:[],
-
+            banner:"Actualmente no hay reservas!",
+            show: false,
+            flag:'',
         }
 
     },
@@ -199,6 +206,10 @@ Vue.component('estadisticas-admin', {
         },
         arrayCuidadores:function(newVal, oldVal) { // watch it
             this.renderChartCuidadores();
+        },
+        flag :function(newVal, oldVal) { // watch it
+            this.show = true;
+            this.banner ='Estadisticas de pupi!';
         },
 
     },
@@ -220,6 +231,24 @@ Vue.component('estadisticas-admin', {
                     this.estadisticas.totalCuidadoresPorProvincia = response.data.totalCuidadoresPorProvincia;
                     this.setDescriptionxProvincia(this.estadisticas.totalPorProvincia);
                     this.setDescriptionCuidadoresxProvincia(this.estadisticas.totalCuidadoresPorProvincia);
+
+
+
+
+                    var found =  response.data.totalPorTipo.find(function(element) {
+                        return element > 0;
+                    });
+                         if (found >0)
+                         {
+                             this.show = true;
+                             this.banner ="Estadisticas de pupi!";
+                         }
+                         else {
+
+                             document.getElementById('mapaReservas').style.display = 'none';
+                         }
+
+
                 })
                 .catch(error => {
                     console.log(error);
@@ -228,7 +257,7 @@ Vue.component('estadisticas-admin', {
         },
          setDescriptionxProvincia(list){
              var cont = 0;
-
+              var self = this;
              this.estadisticas.mapa.forEach(function(obj)
              { obj.description = "reservas: " + list[cont];
                  obj.value = getElementHeat(list[cont]);
@@ -239,6 +268,7 @@ Vue.component('estadisticas-admin', {
 
              function getElementHeat(value)
              {
+
                  if (value === 0 )
                  {
                      return 493782;
@@ -265,6 +295,7 @@ Vue.component('estadisticas-admin', {
                  }
 
                  return 33871648;
+
              }
          },
         setDescriptionCuidadoresxProvincia(list){

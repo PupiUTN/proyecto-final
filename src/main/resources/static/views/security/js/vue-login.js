@@ -148,7 +148,7 @@ let myLogin = Vue.component('my-login', {
                         <p class="form-row form-row-wide">
                             <label for="password1">Contraseña:
                                 <i class="im im-icon-Lock-2"></i>
-                                <input class="input-text" type="password"
+                                <input minlength=4 class="input-text" type="password"
                                        v-model="user.password" id="password1" required/>
                             </label>
                         </p>
@@ -195,6 +195,7 @@ let myLogin = Vue.component('my-login', {
                 .then((response) => {
                     console.log(response.data);
                     this.user = response.data.principal.user;
+                    localStorage.setItem("idUser", this.user.id);
                     this.isAuthenticated = true;
                     var magnificPopup = $.magnificPopup.instance;
                     // save instance in magnificPopup variable

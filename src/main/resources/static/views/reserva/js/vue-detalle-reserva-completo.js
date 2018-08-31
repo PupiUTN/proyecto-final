@@ -231,7 +231,7 @@ Vue.component('my-detalle-reserva-completo', {
     <div class="center-block">
 
         <div class="col-md-3 col-xs-1"></div>
-        <div class="col-xs-5 col-md-3" v-if="reserva.status !== 'rechazada-dueño'" >
+        <div class="col-xs-5 col-md-3" v-if="reserva.status !== 'rechazada-dueño' && reserva.status !== 'ejecucion'" >
             <a v-on:click="cancelarReservaActionButton()"  href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar Reserva</a>
         </div>
     </div>
@@ -336,13 +336,13 @@ Vue.component('my-detalle-reserva-completo', {
                     }
                     // this.edadCuidador = this.calcularEdad(this.reserva.cuidador.user.birthday);
                     var date = new Date(this.reserva.fechaTransaccion);
-                    this.reserva.fechaTransaccion = date.toLocaleDateString();
-                    var dateEntrada = new Date(this.reserva.fechaInicio);
+                   this.reserva.fechaTransaccion = date.toLocaleDateString();
+                    /*  var dateEntrada = new Date(this.reserva.fechaInicio);
                     var dateSalida = new Date(this.reserva.fechaFin);
                     dateEntrada = dateEntrada.setDate(dateEntrada.getDate() + 1);
                     dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
                     this.reserva.fechaInicio = new Date(dateEntrada).toLocaleDateString();
-                    this.reserva.fechaFin = new Date(dateSalida).toLocaleDateString();
+                    this.reserva.fechaFin = new Date(dateSalida).toLocaleDateString();*/
                     this.numeroReserva = 570011223344;
                     this.mostrarEdad();
 

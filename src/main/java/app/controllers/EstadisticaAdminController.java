@@ -58,7 +58,12 @@ public class EstadisticaAdminController {
 
 
             for (Reserva item : reservas) {
-                cont += item.getPrecioTotal();
+
+                if(statusOk(item.getStatus())){
+                    cont += item.getPrecioTotal();
+                }
+
+
                 if (item.getStatus().equals("pagada-dueño")) {
                     aux.add(item);
 
@@ -76,6 +81,11 @@ public class EstadisticaAdminController {
         }
 
         return estadisticaAdmin;
+    }
+
+    private boolean statusOk(String status) {
+
+        return !(status.equals(EstadoReserva.CREADA.getStatus()) || status.equals(EstadoReserva.CAIDA_FALTA_PAGO.getStatus()) || status.equals(EstadoReserva.ACEPTADA_CUIDADOR.getStatus()) || status.equals(EstadoReserva.RECHAZADA_CUIDADOR.getStatus()) || status.equals(EstadoReserva.RECHAZADA_DUEÑO.getStatus()));
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -107,6 +117,9 @@ public class EstadisticaAdminController {
                 break;
             case 8:
                 estadoReserva = EstadoReserva.COMENTARIO_DUEÑO;
+                break;
+            case 9:
+                estadoReserva = EstadoReserva.EJECUCION;
                 break;
             default:
 
@@ -434,7 +447,7 @@ public class EstadisticaAdminController {
                 case "rechazada-cuidador":
                     cantidadXtipo[3]++;
                     break;
-                case "ejecución":
+                case "ejecucion":
                     cantidadXtipo[4]++;
                     break;
                 case "finalizada":
@@ -491,6 +504,7 @@ public class EstadisticaAdminController {
     }
 
     private Calendar getDateReserva(Date item) {
+     //  Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Calendar reservaDate = Calendar.getInstance();
         reservaDate.setTime(item);
         return reservaDate;
