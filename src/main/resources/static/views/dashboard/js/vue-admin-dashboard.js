@@ -140,6 +140,7 @@ Vue.component('admin-dashboard', {
                     <option value="6">Cerradas</option>
                     <option value="7">Comentarios cuidador</option>
                     <option value="8">Comentarios dueño</option>
+                    <option value="9">Ejecucion</option>
                 </select>
             </div>
     </form>

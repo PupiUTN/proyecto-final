@@ -55,7 +55,7 @@ Vue.component('estadisticas-admin', {
 			<br>
 			
 			
-	        <div v-show="show">
+	        <div id="mapaReservas">
 	        <div class="row" >
 	        <h4 class="headline margin-top-70 margin-bottom-30">
                <i class="im im-icon-Map2"></i> MAPA DE RESERVAS</h4>
@@ -243,6 +243,10 @@ Vue.component('estadisticas-admin', {
                              this.show = true;
                              this.banner ="Estadisticas de pupi!";
                          }
+                         else {
+
+                             document.getElementById('mapaReservas').style.display = 'none';
+                         }
 
 
                 })
@@ -253,7 +257,7 @@ Vue.component('estadisticas-admin', {
         },
          setDescriptionxProvincia(list){
              var cont = 0;
-
+              var self = this;
              this.estadisticas.mapa.forEach(function(obj)
              { obj.description = "reservas: " + list[cont];
                  obj.value = getElementHeat(list[cont]);
@@ -264,6 +268,7 @@ Vue.component('estadisticas-admin', {
 
              function getElementHeat(value)
              {
+
                  if (value === 0 )
                  {
                      return 493782;
@@ -290,6 +295,7 @@ Vue.component('estadisticas-admin', {
                  }
 
                  return 33871648;
+
              }
          },
         setDescriptionCuidadoresxProvincia(list){

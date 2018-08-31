@@ -215,10 +215,7 @@ Vue.component('my-comentarios-recibidos-list', {
                             this.message = "Actualmente no tienes ninguna calificacion.";
                         }
                         else
-                        {     this.calificaciones.forEach(function(element) {
-                            element.reserva.fechaInicio =  new Date (  element.reserva.fechaInicio).toLocaleDateString();
-                        });
-
+                        {
                             this.message = "Te calificaron " +this.calificaciones.length + " veces!" ;
 
                             this.gridData = this.calificaciones;
