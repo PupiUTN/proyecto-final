@@ -327,8 +327,8 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
 
                     if (dateToObj >= dateFromObj) {
 
-                        consulta += '&from=' + dateFromObj +
-                            '&to=' + dateToObj;
+                        consulta += '&from=' + this.dateFrom +
+                            '&to=' + this.dateTo;
                         axios.get(consulta)
                             .then((response) => {
                                 console.log(this.placeID);

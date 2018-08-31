@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -41,8 +41,8 @@ public class CuidadorController {
     @RequestMapping(value = "/search/", method = RequestMethod.GET)
     public List<Cuidador> getCuidadoresPorDireccionYFechasReseva(
             @RequestParam(value = "ciudadPlaceId", required = false) String ciudadPlaceId,
-            @RequestParam(value = "from", required = false) Date from,
-            @RequestParam(value = "to", required = false) Date to,
+            @RequestParam(value = "from", required = false) LocalDate from,
+            @RequestParam(value = "to", required = false) LocalDate to,
             @RequestParam(value = "status", defaultValue = "completed") String status) {
 
         List<Cuidador> cuidadores = cuidadorService.searchCuidadores(ciudadPlaceId, from, to, status);
