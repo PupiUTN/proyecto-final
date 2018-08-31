@@ -118,6 +118,9 @@ public class EstadisticaAdminController {
             case 8:
                 estadoReserva = EstadoReserva.COMENTARIO_DUEÑO;
                 break;
+            case 9:
+                estadoReserva = EstadoReserva.EJECUCION;
+                break;
             default:
 
         }
@@ -444,7 +447,7 @@ public class EstadisticaAdminController {
                 case "rechazada-cuidador":
                     cantidadXtipo[3]++;
                     break;
-                case "ejecución":
+                case "ejecucion":
                     cantidadXtipo[4]++;
                     break;
                 case "finalizada":
@@ -501,6 +504,7 @@ public class EstadisticaAdminController {
     }
 
     private Calendar getDateReserva(Date item) {
+     //  Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Calendar reservaDate = Calendar.getInstance();
         reservaDate.setTime(item);
         return reservaDate;

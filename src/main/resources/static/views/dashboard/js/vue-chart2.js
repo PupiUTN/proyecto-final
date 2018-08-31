@@ -39,12 +39,13 @@ Vue.component('chart-pie', {
             var myChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: ['Finalizadas', 'Pagadas', 'Creadas', 'Aceptadas', 'Rechazadas','Cerradas'],
+                    labels: ['Finalizadas', 'Pagadas', 'Creadas', 'Aceptadas', 'Rechazadas','Cerradas','Ejecucion'],
                     datasets: [{
                         label:  this.nombre,
                         data: this.totalPorTipo,
-                        backgroundColor: ['#bb0007', '#f87233', '#01bb00', '#bb686a', '#bb4e00', '#0c0001'],
+                        backgroundColor: ['#ffff00', '#9fc3f9', '#00ff00', '#0000ff', '#c0c0c0', '#0c0001','#ffdba4'],
                         borderColor: [
+                            'rgba(0, 0, 0, 0.5)',
                             'rgba(0, 0, 0, 0.5)',
                             'rgba(0, 0, 0, 0.5)',
                             'rgba(0, 0, 0, 0.5)',
