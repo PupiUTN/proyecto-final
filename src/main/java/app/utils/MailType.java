@@ -26,25 +26,25 @@ public enum MailType {
                         "brindando todo su cariño y seguridad. ";
                 break;
             case BOOKING_REQUEST:
-                text = "Haz recibido una <b>solicitud de reserva</b> por tu perfil como cuidador<br>" +
-                        "Tienes 72 hs para aceptarla o rechazarla, revisa el perfil del dueño y de su mascota para que no haya inconvenitnes. <br> " +
+                text = "Has recibido una <b>solicitud de reserva</b> por tu perfil como cuidador<br>" +
+                        "Tienes 72 hs para aceptarla o rechazarla, revisa el perfil del dueño y de su mascota para que no haya inconvenientes. <br> " +
                         "Una vez aceptada el dueño tendra 72hs para pagar su reserva. ";
                 break;
 
             case BOOKING_CONFIRMATION:
                 text = "Tu reserva ha sido <b>confirmada</b>.<br>" +
                         "Tienes 72 hs para pagarla. <br> " +
-                        "Una vez pagada te brindares los datos de contacto del cuidador para que puedas efectuar tu reserva. ";
+                        "Una vez pagada te brindaremos los datos de contacto del cuidador para que puedas efectuar tu reserva. ";
                 break;
 
             case BOOKING_CANCELLATION_BY_HOST:
-                text = "Tu reserva ha sido <b>canecelada</b> por el cuidador.<br>" +
+                text = "Tu reserva ha sido <b>cancelada</b> por el cuidador.<br>" +
                         "No te desanimes, ya encontraras tu cuidador ideal. <br> " +
                         "Te recomendamos completar tu perfil para aumentar tus probalidades. ";
                 break;
 
             case BOOKING_CANCELLATION_BY_USER:
-                text = "Unas de tus reservas ha sido <b>canecelada</b> por el usuario.<br>" +
+                text = "Una de tus reservas ha sido <b>cancelada</b> por el usuario.<br>" +
                         "No te desanimes, ya vendran nuevos clientes. <br> " +
                         "Te recomendamos completar tu perfil para aumentar tus chances. ";
 
