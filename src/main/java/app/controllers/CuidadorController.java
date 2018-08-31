@@ -47,13 +47,19 @@ public class CuidadorController {
             @RequestParam(value = "to", required = false) String toString,
             @RequestParam(value = "status", defaultValue = "completed") String status) {
 
-        LocalDate from = LocalDate.parse(fromString, dateTimeFormatter);
-        LocalDate to = LocalDate.parse(toString, dateTimeFormatter);
+        LocalDate from = null;
+        LocalDate to = null;
+        if (fromString != null && toString != null) {
+            from = LocalDate.parse(fromString, dateTimeFormatter);
+            to = LocalDate.parse(toString, dateTimeFormatter);
+        }
+
         List<Cuidador> cuidadores = cuidadorService.searchCuidadores(ciudadPlaceId, from, to, status);
         ordenarCuidadores(cuidadores);
         return cuidadores;
 
     }
+
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Cuidador getCuidador(@PathVariable("id") Long id) {
         Cuidador cuidador = cuidadorService.getCuidador(id);
