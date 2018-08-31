@@ -46,7 +46,7 @@ Vue.component('my-detalle-reserva', {
                  <span v-bind:class="{'star': puntaje >= 5, 'star empty': puntaje < 5 }"></span>
                </div></b></h3>
             </div>
-            
+            <div class=" col-md-8"></div>
             <div class="col-md-4">
                 <h5><i class="im im-icon-Paw" style="color:red; margin-right: 10px;" ></i>Sexo </h5>
                 <h3><b>{{reserva.perro.sexo}}</b></h3>

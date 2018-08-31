@@ -33,7 +33,7 @@ Vue.component('my-profile', {
                             <label class="margin-top-0">Nombre y Apellido</label>
                             <input v-model="user.fullName" value="" type="text" required>
                             <label class="margin-top-0">Fecha de Nacimiento</label>
-                            <input type="date" v-model="user.birthday" required>    
+                            <input  id="fechaNacimiento"  type="date" v-model="user.birthday" required>    
                             <label class="margin-top-0">Género</label>
                             <select v-model="user.gender" required>
                                 <option disabled selected value="Seleccionar Género">Seleccionar Género</option>
@@ -53,7 +53,7 @@ Vue.component('my-profile', {
                 <div class="dashboard-list-box-static">
                     <div class="my-profile">
                         <label class="margin-top-0">Teléfono</label>
-                        <input v-model="user.phone" value="" type="number" required>
+                        <input v-model="user.phone" value="" type="number" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
                         <label class="margin-top-0">Email</label>
                         <input v-model="user.email" value="" type="email" required disabled>
                     </div>
@@ -119,6 +119,7 @@ Vue.component('my-profile', {
         this.autocompleteAddress();
         this.getUserInfo();
         this.preventEnter();
+        this.SetFechaMaximaNacimiento();
     },
     methods: {
         preventEnter() {
@@ -313,6 +314,7 @@ Vue.component('my-profile', {
 
         },
         frontEndDateFormat() {
+
             console.log(this.user.birthday);
             //MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
             this.user.birthday = fecha.format(fecha.parse(this.user.birthday, 'YYYY/MM/DD'), 'YYYY-MM-DD');
@@ -321,6 +323,25 @@ Vue.component('my-profile', {
             console.log(this.user.birthday);
             //MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
             this.user.birthday = fecha.format(fecha.parse(this.user.birthday, 'YYYY/MM/DD'), 'YYYY-MM-DD');
+        },
+        SetFechaMaximaNacimiento()
+        {
+            var dtToday = new Date();
+
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+            var year = dtToday.getFullYear();
+
+            if(month < 10)
+                month = '0' + month.toString();
+            if(day < 10)
+                day = '0' + day.toString();
+
+            var maxDate = year + '-' + month + '-' + day;
+
+            var input = document.getElementById("fechaNacimiento");
+            input.setAttribute("max", maxDate);
+
         }
     }
 });

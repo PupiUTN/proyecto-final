@@ -217,7 +217,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
 
                 </div>
                 <!-- progress button animation handled via custom.js -->
-                <button class="progress-button button fullwidth margin-top-5" v-on:click="hrerReserva"><span>Reservá ahora </span>
+                <button id="reservarCuidador" class="progress-button button fullwidth margin-top-5" v-on:click="hrerReserva"><span>Reservá ahora </span>
                 </button>
             </div>
             <!-- Book Now / End -->
@@ -227,7 +227,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
 
                 <h3><i class="im im-icon-Dog"></i> Preferencias de tamaños </h3>
                 <div class="col-lg-6 col-md-5" style="width: 80px;">
-                    <label style=" margin-top: 12px; width: 60px;">Hasta</label>
+                    <label style=" margin-top: 12px; width: 60px;"></label>
                 </div>
 
 
@@ -309,7 +309,6 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                     this.item.ciudad = this.item.user.direccion.ciudad;
                     this.puntaje = this.item.promedioReviews;
                     document.getElementById("imagenAvatar").src = this.item.user.profileImageUrl;
-
                     this.loadImages(this.item.listaImagenes);
                     this.loadTamaño(this.item.tamaño);
                     this.geolocateCuidador(this.item.user.direccion);
@@ -407,14 +406,23 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
 
             }
 
-            this.item.tamaño = param.valorMinimo + " a " + param.valorMaximo + " " + "KG.";
+          //  this.item.tamaño = param.valorMinimo + " a " + param.valorMaximo + " " + "KG.";
+            this.item.tamaño = "Hasta " + param.valorMaximo + " " + "KG.";
         },
         hrerReserva() {
+            var idUser = localStorage.getItem('idUser');
+
+            if (parseInt(idUser) !== this.item.user.id) {
             this.setDatesToDatePickerInput();
             if (this.dateFrom != null & this.dateTo != null) {
                 document.location.href = '/views/reserva/generar-reserva.html?id=' + this.idCuidador + '&from=' + this.dateFrom + '&to=' + this.dateTo;
             } else {
                 document.location.href = '/views/reserva/generar-reserva.html?id=' + this.idCuidador;
+
+            }
+        }
+        else {
+                sweetAlert("Atención!", "No puedes reservarte a ti mismo!", "warning");
 
             }
 

@@ -43,7 +43,7 @@ Vue.component('my-perros-list', {
         
                                     <div class="listing-item-inner">
                                         <h3>{{dog.nombre}}</h3>
-                                        <span>promedio:</span>
+                                        <span>Promedio de calficaciones:</span>
                                         <div class="star-rating" data-rating="3.5">
                                             <div class="rating-counter"><h3>{{dog.promedioReviews}}</h3></div>
                                             
@@ -122,7 +122,8 @@ Vue.component('my-perros-list', {
                       cancelButtonText:"Cancelar",
                       confirmButtonClass: "btn-danger",
                       confirmButtonText: "si, hazlo!",
-                      closeOnConfirm: false
+                      closeOnConfirm: false,
+                      showLoaderOnConfirm: true,
                   },
                   function(){
 

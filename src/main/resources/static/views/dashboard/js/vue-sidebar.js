@@ -4,8 +4,9 @@ let mySidebar = Vue.component('my-sidebar', {
             <div class="dashboard-nav-inner">
 
                 <ul data-submenu-title="Principal">
-                    <li class="active"><a href="/views/dashboard/dashboard.html"><i class="sl sl-icon-settings"></i> Panel</a></li>
+                    <li class=""><a href="/views/dashboard/dashboard.html"><i class="sl sl-icon-home"></i> Inicio </a></li>
                 </ul>
+                 
 
                 <ul v-show="role === 'ROLE_USER' || role === 'ROLE_CUIDADOR'"  data-submenu-title="Cuenta">
                     <li><a href="/views/due%C3%B1o/perfil.html"><i class="sl sl-icon-user"></i> Mi Perfil</a></li>	
@@ -31,7 +32,7 @@ let mySidebar = Vue.component('my-sidebar', {
 				
 				</ul>
                 	
-                <ul  data-submenu-title="Cuidador">
+                <ul v-show="role === 'ROLE_CUIDADOR'" data-submenu-title="Cuidador">
                     <li v-show="role === 'ROLE_USER'"><a href="/views/cuidadores/alta-cuidador.html"><i class="sl sl-icon-user"></i> Convertirse</a></li>
                      <li v-show="role === 'ROLE_CUIDADOR'"><a href="/views/cuidadores/cuidadores-editar.html"><i class="sl sl-icon-book-open"></i> Mi Descripcion</a></li>
                      <li v-show="role === 'ROLE_CUIDADOR'"><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>

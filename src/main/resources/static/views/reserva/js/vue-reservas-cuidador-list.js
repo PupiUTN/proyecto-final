@@ -33,10 +33,10 @@ Vue.component('my-reservas-cuidador-list', {
             </div>
      </div>
     
-    <div class="row" v-if="status === 'rechazada-cuidador' || status ==='rechazada-dueño'" >
-    <a id="btn1" v-on:click="buscarCanceladasxDueño()" style="color: black; border-color: red; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  'red': ''}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
-    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="color: black; border-color: red; background: red" href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 1 ?  'red': ''}"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
-    </div>
+<div class="row" v-if="status === 'rechazada-cuidador' || status ==='rechazada-dueño'" >
+    <a id="btn1" v-on:click="buscarCanceladasxDueño()" style="color: black; border-color: black; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  'rgba(243, 12, 12, 0.15)': ''}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
+    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="color: black; border-color: black; background: rgba(243, 12, 12, 0.15)" href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 1 ?  'rgba(243, 12, 12, 0.15)': ''}"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
+</div>
     <div class="row">
         <!-- Listings -->
         <div class="col-lg-12 col-md-12">
@@ -81,7 +81,7 @@ Vue.component('my-reservas-cuidador-list', {
                                         <a v-on:click="confirmarReservaButton(index)"
                                            style="color: blue; border-color: blue; " href="#"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
-                                            Confirmar solicitud de reserva</a>
+                                            Confirmar solicitud</a>
                                     </div>
 
 
@@ -113,9 +113,9 @@ Vue.component('my-reservas-cuidador-list', {
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
                                             Calificar</a>
                                     </div>
-                                     <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'creada-dueño' &&  reserva.status !== 'aceptada-cuidador' &&  reserva.status !== 'rechazada-cuidador' &&  reserva.status !== 'cerrada' ">
+                                  <!--   <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'creada-dueño' &&  reserva.status !== 'aceptada-cuidador' &&  reserva.status !== 'rechazada-cuidador' &&  reserva.status !== 'cerrada' ">
                                             <a v-on:click=""  style="color: black; border-color: black; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Denunciar</a>                        
-                                        </div>
+                                        </div> -->
                                 </div>
 
                             </a>
@@ -219,6 +219,7 @@ Vue.component('my-reservas-cuidador-list', {
                     "&rol=" + "CUIDADOR";
             },
             getCuidadorReservas() {
+                this.gridReservas = [];
                 axios.get('/api/cuidador/me/reservas?status=' + this.status)
                     .then((response) => {
                         this.reservas = response.data;
