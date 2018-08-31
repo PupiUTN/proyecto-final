@@ -9520,7 +9520,7 @@ a.dashboard-responsive-nav-trigger {
 .messages-inbox ul li a {
     position: relative;
     display: block;
-    padding: 30px;
+    padding: 15px;
 }
 
 .messages-inbox ul li {
@@ -14250,7 +14250,6 @@ h4 span.headline-detail {
     }
 
     #header-container.fixed {
-        position: relative;
         top: 0;
         width: 100%;
     }
