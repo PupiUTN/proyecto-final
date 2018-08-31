@@ -26,18 +26,18 @@ Vue.component('my-cuidador-edit', {
                     <div class="dashboard-list-box margin-top-0">
                         <h4 class="gray"> 	<i class="fa fa-paw"></i>	 Precios </h4>
                         <div class="dashboard-list-box-static"      style="height: 515px; ">
-                            Recuerda que Pupi cobra una comisión del 20% del total de la tarifa que estableces en cada servicio.
+                            Recuerda que Pupi cobra una comisión del 25% del total de la tarifa que estableces en cada servicio, de los cuales mercado pago retiene el 5%
                             <!-- Change Password -->
                             <div class="my-profile">
 
                                 <label>Mi precio  </label>
-                                <input v-model="precioNeto"  style=" text-align: right" id="precioNeto" type="number" required>
+                                <input v-model="precioFinal"  style=" text-align: right" id="precioNeto" type="number" required>
 
                                 <label>Porcentaje Pupi  </label>
                                 <input v-model="porcentaje" id="porcentaje"  style=" text-align: right" type="number" readonly>
 
-                                <label>Mi precio Final </label>
-                                <input v-model="precioFinal" id="precioFinal"  style=" text-align: right" value="" type="number" readonly>
+                                <label>Mi Ganancia final</label>
+                                <input v-model="precioNeto" id="precioFinal"  style=" text-align: right" value="" type="number" readonly>
 
                             </div>
 
@@ -170,7 +170,7 @@ Vue.component('my-cuidador-edit', {
             url: "/api/user/",
             //  formPost: true,
             listaServicios: [],
-            precioNeto: '',
+           precioNeto: '',
             porcentaje: '',
             //   precioFinal:'',
             cuidador:
@@ -178,6 +178,7 @@ Vue.component('my-cuidador-edit', {
                     descripcion: '',
                     cantidadMaxDePerros: '',
                     listaServicios: [],
+                    precioPorNoche:0,
                 },
             tamaño: '',
             cantidadMaxDePerros: '',
@@ -194,17 +195,29 @@ Vue.component('my-cuidador-edit', {
             //
             // }
             get: function () {
-                return ( this.precioNeto * 1.20 ).toFixed(2);
+
+                if(this.cuidador.precioPorNoche > 0){
+                return (this.cuidador.precioPorNoche);}
+
             },
             set: function (newVal) {
                 this.cuidador.precioPorNoche = newVal;
+                this.precioNeto  = (this.cuidador.precioPorNoche - (this.cuidador.precioPorNoche * 0.2533));
             }
         },
+
     },
+    watch:
+        {
+            precioFinal: function () {
+                this.precioNeto  = (this.cuidador.precioPorNoche - (this.cuidador.precioPorNoche * 0.20));
+            }
+
+        },
     mounted() {
 
         this.BuscarServicios();
-        this.porcentaje = 20;
+        this.porcentaje = 25.33;
         this.selector_cantidad();
         this.getUserInfo();
 
@@ -315,7 +328,7 @@ Vue.component('my-cuidador-edit', {
                 .then((data) => {
 
                     this.cuidador = data.data;
-                    this.precioNeto = (this.cuidador.precioPorNoche / 1.20).toFixed(2);
+                   this.precioNeto = (this.cuidador.precioPorNoche - (this.cuidador.precioPorNoche * 0.2533)).toFixed(2);
 
 
                     // this.formPost = false;

@@ -37,8 +37,8 @@ Vue.component('my-reservas-cuidador-list', {
      </div>
     
 <div class="row" v-if="status === 'rechazada-cuidador' || status ==='rechazada-dueño'" >
-    <a id="btn1" v-on:click="buscarCanceladasxDueño()" style="color: black; border-color: black; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  'rgba(159, 195, 249)': ''}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
-    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="color: black; border-color: black; background: rgba(159, 195, 249)" href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 1 ?  'rgba(159, 195, 249)': ''}"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
+    <a id="btn1" v-on:click="buscarCanceladasxDueño()" style="background-color: inherit; color: black; border-color: black; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  'rgba(159, 195, 249)': 'inherit'}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
+    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="background-color: inherit; color: black; border-color: black; background: rgba(159, 195, 249)" href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 1 ?  'rgba(159, 195, 249)': 'inherit'}"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
 </div>
     <div class="row">
         <!-- Listings -->
@@ -57,7 +57,7 @@ Vue.component('my-reservas-cuidador-list', {
                                     <div class="row">
                                         <div v-bind:class="listClass">
                                             <div class="message-by-headline">
-                                                <a href="www.pupi.com.ar" style="all: unset"><h5>{{
+                                                <a style="all: unset"><h5>{{
                                                     reserva.perro.user.fullName }} </h5></a>
                                             </div>
                                             <div class="col-xs-12 col-md-10">
@@ -82,7 +82,7 @@ Vue.component('my-reservas-cuidador-list', {
 
                                     <div class="col-xs-12 col-md-3" v-if="reserva.status === 'creada-dueño'">
                                         <a v-on:click="confirmarReservaButton(index)"
-                                           style="color: blue; border-color: blue; " href="#"
+                                           style="color: blue; border-color: blue; background-color: inherit;" href="#"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
                                             Confirmar solicitud</a>
                                     </div>
@@ -90,20 +90,20 @@ Vue.component('my-reservas-cuidador-list', {
 
                                     <div class="col-xs-12 col-md-3"
                                          v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'comentario-dueño' && reserva.status !== 'finalizada' && reserva.status !== 'cerrada' && reserva.status !=='rechazada-dueño' && reserva.status !== 'ejecucion'" >
-                                        <a v-on:click="cancelarReservaActionButton(index)" style=""
+                                        <a v-on:click="cancelarReservaActionButton(index)" style="background-color: inherit; color: red;"
                                            href="#" class="button medium border pull-right"><i
                                                 class="sl sl-icon-docs"></i> Cancelar</a>
                                     </div>
 
                                     <div class="col-xs-12 col-md-3" v-if="reserva.status === 'creada-dueño'">
-                                        <a style="color: blue;  border-color: blue; "
+                                        <a style="color: blue;  border-color: blue; background-color: inherit;"
                                            v-on:click="verReserva(reserva.id)"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
                                             Examinar</a>
 
                                     </div>
                                     <div class="col-xs-12 col-md-4" v-if="reserva.status === 'pagada-dueño' || reserva.status === 'ejecucion'">
-                                        <a style=" color: blue;  border-color: blue; "
+                                        <a style=" color: blue;  border-color: blue; background-color: inherit;"
                                            v-on:click="verReserva(reserva.id)"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver
                                             Detalle Completo</a>
@@ -112,12 +112,12 @@ Vue.component('my-reservas-cuidador-list', {
                                     <div class="col-xs-12 col-md-3"
                                          v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-dueño'">
                                         <a v-on:click="calificarReserva(index)"
-                                           style="color: blue; border-color: blue; " href="#"
+                                           style="color: blue; border-color: blue; background-color: inherit;" href="#"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
                                             Calificar</a>
                                     </div>
                                   <!--   <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'creada-dueño' &&  reserva.status !== 'aceptada-cuidador' &&  reserva.status !== 'rechazada-cuidador' &&  reserva.status !== 'cerrada' ">
-                                            <a v-on:click=""  style="color: black; border-color: black; " href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Denunciar</a>                        
+                                            <a v-on:click=""  style="color: black; border-color: black; background-color: inherit;" href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Denunciar</a>                        
                                         </div> -->
                                 </div>
 
@@ -242,8 +242,9 @@ Vue.component('my-reservas-cuidador-list', {
             },
             ordenarFecha(reservas) {
                 this.gridData = reservas;
+                this.contadorReservas =this.gridData.length;
                 this.gridReservas = this.gridData.slice(this.offset, this.offset + this.perPage);
-                this.contadorReservas =this.gridReservas.length;
+
             },
             confirmarReservaButton(index) {
                 // var reserva = this.reservas[index];
@@ -267,7 +268,7 @@ Vue.component('my-reservas-cuidador-list', {
 
                                 sweetAlert("Aceptada", "Reserva confirmada", "success");
                                 self.gridReservas.splice(index, 1);
-                                self.contadorReservas =self.gridReservas.length;
+                                self.contadorReservas =self.contadorReservas - 1;
                             })
                             .catch(error => {
                                     console.log(error);
@@ -299,7 +300,7 @@ Vue.component('my-reservas-cuidador-list', {
 
                                 sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
                                 self.gridReservas.splice(index, 1);
-                                self.contadorReservas =self.gridReservas.length;
+                                self.contadorReservas =self.contadorReservas - 1;
                             })
                             .catch(error => {
                                     console.log(error);
