@@ -645,6 +645,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                     this.ordenarRelevancia("mayor");
                 }
             }
+            this.calcularEncontrados();
         },
         ordenarRelevancia(orden){
             this.ordenarPorRelevancia();
