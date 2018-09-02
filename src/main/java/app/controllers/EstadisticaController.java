@@ -44,34 +44,35 @@ public class EstadisticaController {
         Estadistica estadistica = new Estadistica();
         List<Reserva> list = reservaService.findAllByCuidador(id);
 
-
+//'Creadas','Aceptadas', 'Pagadas','Ejecucion','Finalizadas','Cerradas','Rechazadas'
+//   2         3            1         6            0            5           4
 
         for (Reserva item : list) {
 
             switch (item.getStatus()) {
                 case "finalizada":
-                    cantidadXtipo[0]++;
+                    cantidadXtipo[4]++;
                     break;
                 case "pagada-dueño":
-                    cantidadXtipo[1]++;
-                    break;
-                case "creada-dueño":
                     cantidadXtipo[2]++;
                     break;
+                case "creada-dueño":
+                    cantidadXtipo[0]++;
+                    break;
                 case "aceptada-cuidador":
-                    cantidadXtipo[3]++;
+                    cantidadXtipo[1]++;
                     break;
                 case "rechazada-dueño":
-                    cantidadXtipo[4]++;
+                    cantidadXtipo[6]++;
                     break;
                 case "rechazada-cuidador":
-                    cantidadXtipo[4]++;
+                    cantidadXtipo[6]++;
                     break;
                 case "cerrada":
                     cantidadXtipo[5]++;
                     break;
                 case "ejecucion":
-                    cantidadXtipo[6]++;
+                    cantidadXtipo[3]++;
                     break;
                 default:
 
@@ -209,28 +210,28 @@ public class EstadisticaController {
             {
                 switch (item.getStatus()) {
                     case "finalizada":
-                        cantidadXtipo[0]++;
-                        break;
-                    case "creada-dueño":
-                        cantidadXtipo[2]++;
+                        cantidadXtipo[4]++;
                         break;
                     case "pagada-dueño":
-                        cantidadXtipo[1]++;
+                        cantidadXtipo[2]++;
+                        break;
+                    case "creada-dueño":
+                        cantidadXtipo[0]++;
                         break;
                     case "aceptada-cuidador":
-                        cantidadXtipo[3]++;
+                        cantidadXtipo[1]++;
                         break;
                     case "rechazada-dueño":
-                        cantidadXtipo[4]++;
+                        cantidadXtipo[6]++;
                         break;
                     case "rechazada-cuidador":
-                        cantidadXtipo[4]++;
+                        cantidadXtipo[6]++;
                         break;
                     case "cerrada":
                         cantidadXtipo[5]++;
                         break;
                     case "ejecucion":
-                        cantidadXtipo[6]++;
+                        cantidadXtipo[3]++;
                         break;
                     default:
 
