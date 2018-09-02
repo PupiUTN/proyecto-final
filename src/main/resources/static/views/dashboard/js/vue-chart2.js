@@ -39,11 +39,11 @@ Vue.component('chart-pie', {
             var myChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: ['Finalizadas', 'Pagadas', 'Creadas', 'Aceptadas', 'Rechazadas','Cerradas','Ejecucion'],
+                    labels: ['Creadas','Aceptadas', 'Pagadas','Ejecucion','Finalizadas','Cerradas','Rechazadas'],
                     datasets: [{
                         label:  this.nombre,
                         data: this.totalPorTipo,
-                        backgroundColor: ['#ffff00', '#9fc3f9', '#00ff00', '#0000ff', '#c0c0c0', '#0c0001','#ffdba4'],
+                        backgroundColor: ['#00ff00', '#0000ff','#9fc3f9','#ffdba4','#ffff00','#0c0001','#c0c0c0'],
                         borderColor: [
                             'rgba(0, 0, 0, 0.5)',
                             'rgba(0, 0, 0, 0.5)',
@@ -64,4 +64,9 @@ Vue.component('chart-pie', {
 
 
 });
-
+//     0             1         2           3            4           5           6
+//'Finalizadas', 'Pagadas', 'Creadas', 'Aceptadas', 'Rechazadas','Cerradas','Ejecucion'
+//'#ffff00', '#9fc3f9', '#00ff00', '#0000ff', '#c0c0c0', '#0c0001','#ffdba4'
+//'Creadas','Aceptadas', 'Pagadas','Ejecucion','Finalizadas','Cerradas','Rechazadas'
+//   2         3            1         6            0            5           4
+//'#00ff00', '#0000ff','#9fc3f9','#ffdba4','#ffff00','#0c0001''#c0c0c0'

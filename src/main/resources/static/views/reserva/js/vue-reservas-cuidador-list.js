@@ -95,7 +95,7 @@ Vue.component('my-reservas-cuidador-list', {
                                                 class="sl sl-icon-docs"></i> Cancelar</a>
                                     </div>
 
-                                    <div class="col-xs-12 col-md-3" v-if="reserva.status === 'creada-dueño'">
+                                    <div class="col-xs-12 col-md-3" v-if="reserva.status === 'creada-dueño' || reserva.status === 'aceptada-cuidador' ">
                                         <a style="color: blue;  border-color: blue; background-color: inherit;"
                                            v-on:click="verReserva(reserva.id)"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>

@@ -30,10 +30,12 @@ let mySidebar = Vue.component('my-sidebar', {
 					                    </li>
 					                    
 					  <li v-show="role === 'ROLE_CUIDADOR'""><a href="/views/estadisticas/estadistica.html"><i class="sl sl-icon-pie-chart"></i> Mis Estadisticas </a></li>
+					  
+					     <li v-show="role === 'ROLE_USER'"><a href="/views/cuidadores/alta-cuidador.html"><i class="sl sl-icon-user"></i> Convertirse</a></li>
 				
 				</ul>  	
                 <ul v-show="role === 'ROLE_CUIDADOR'" data-submenu-title="Cuidador">
-                    <li v-show="role === 'ROLE_USER'"><a href="/views/cuidadores/alta-cuidador.html"><i class="sl sl-icon-user"></i> Convertirse</a></li>
+                 
                      <li v-show="role === 'ROLE_CUIDADOR'"><a href="/views/cuidadores/cuidadores-editar.html"><i class="sl sl-icon-book-open"></i> Mi Descripcion</a></li>
                      <li v-show="role === 'ROLE_CUIDADOR'"><a><i class="sl sl-icon-layers"></i> Mis Reservas</a>
 					 <ul>
