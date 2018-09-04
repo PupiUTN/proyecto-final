@@ -3,6 +3,7 @@ package app.services;
 import app.models.entities.Cuidador;
 import app.models.entities.Servicio;
 import app.persistence.CuidadorRepository;
+import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +18,17 @@ import java.util.List;
 public class CuidadorService {
 
     private final CuidadorRepository cuidadorRepository;
+    private final MailService mailService;
+
 
     private static final int cantXpage = 4;
     private static List<Cuidador> cuidadores = new ArrayList<>();
 
 
     @Autowired
-    public CuidadorService(CuidadorRepository cuidadorRepository) {
+    public CuidadorService(CuidadorRepository cuidadorRepository, MailService mailService) {
         this.cuidadorRepository = cuidadorRepository;
+        this.mailService = mailService;
     }
 
     public List<Cuidador> getCuidadores() {
@@ -47,6 +51,11 @@ public class CuidadorService {
 
 
     public Cuidador editCuidador(Cuidador entity) {
+        if ("approved".equalsIgnoreCase(entity.getEstado())) {
+            mailService.sendEmail(entity.getUser(), MailType.WELCOME_HOST);
+        } else if ("rejected".equalsIgnoreCase(entity.getEstado())) {
+            mailService.sendEmail(entity.getUser(), MailType.HOST_REJECTED);
+        }
         return cuidadorRepository.save(entity);
     }
 

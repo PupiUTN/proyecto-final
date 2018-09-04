@@ -1,10 +1,14 @@
 package app.services;
 
-import app.models.entities.*;
+import app.models.entities.Calificacion;
+import app.models.entities.Perro;
+import app.models.entities.Reserva;
+import app.models.entities.User;
 import app.persistence.PerroRepository;
+import app.utils.EstadoReserva;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import app.utils.EstadoReserva;
+
 import java.util.ArrayList;
 import java.util.List;
 

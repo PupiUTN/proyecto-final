@@ -2,8 +2,10 @@ package app.services;
 
 import app.exception.BussinesLogicException;
 import app.models.entities.Reserva;
+import app.models.entities.User;
 import app.persistence.ReservaRepository;
 import app.utils.EstadoReserva;
+import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +20,12 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class ReservaService {
 
     private final ReservaRepository reservaRepository;
+    private final MailService mailService;
 
     @Autowired
-    public ReservaService(ReservaRepository reservaRepository) {
+    public ReservaService(ReservaRepository reservaRepository, MailService mailService) {
         this.reservaRepository = reservaRepository;
+        this.mailService = mailService;
     }
 
     public List<Reserva> getReservasByUserId(Long id) {
@@ -36,9 +40,6 @@ public class ReservaService {
         } else {
             return reservaRepository.findAllByUserAndStatus(id, status);
         }
-
-
-        // return reservaRepository.findAllByUserAndStatus(id,status);
     }
 
     public Reserva getReserva(Long id) {
@@ -46,11 +47,6 @@ public class ReservaService {
     }
 
     public Reserva save(Reserva reserva) throws BussinesLogicException {
-
-        //TODO hot fix, el formato de la fecha al no tener hora se desplaza un dia
-        // https://stackoverflow.com/questions/7556591/javascript-date-object-always-one-day-off
-        //reserva.setFechaFin(addDays(reserva.getFechaFin(), 1));
-        //reserva.setFechaInicio(addDays(reserva.getFechaInicio(), 1));
         int valorMaximoCuidador = reserva.getCuidador().getTamaño().getValorMaximo();
         int valorMaximoPerro = reserva.getPerro().getTamaño().getValorMaximo();
         if (valorMaximoPerro > valorMaximoCuidador) {
@@ -61,6 +57,7 @@ public class ReservaService {
                 .getPrecioPorNoche();
         reserva.setPrecioTotal(precioTotal);
         Reserva savedObject = reservaRepository.save(reserva);
+        mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_REQUEST);
         return savedObject;
     }
 
@@ -78,13 +75,13 @@ public class ReservaService {
         Reserva reserva = reservaRepository.findByUserIdAnId(userId, reservaId);
         reserva.setStatus("rechazada-dueño");
         reservaRepository.save(reserva);
+        mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_CANCELLATION_BY_USER);
     }
 
     public List<Reserva> getReservasByCuidadorIdAndStatus(Long id, String status) {
         if (status.equals("finalizada")) {
             String var1 = "comentario-dueño";
             return reservaRepository.findAllByCuidadorAndStatusFinalizada(id, status, var1);
-
         } else {
             return reservaRepository.findAllByCuidadorAndStatus(id, status);
         }
@@ -107,6 +104,8 @@ public class ReservaService {
         Reserva reserva = reservaRepository.findByCuidadorIdAnId(userId, reservaId);
         reserva.setStatus("rechazada-cuidador");
         reservaRepository.save(reserva);
+        User user = getReserva(reservaId).getPerro().getUser();
+        mailService.sendEmail(user, MailType.BOOKING_CANCELLATION_BY_HOST);
     }
 
 
@@ -114,6 +113,8 @@ public class ReservaService {
         Reserva reserva = reservaRepository.findByCuidadorIdAnId(userId, reservaId);
         reserva.setStatus("aceptada-cuidador");
         reservaRepository.save(reserva);
+        User user = getReserva(reservaId).getPerro().getUser();
+        mailService.sendEmail(user, MailType.BOOKING_CONFIRMATION);
     }
 
     public List<Reserva> findPendienteReviewCuidador() {
@@ -127,6 +128,8 @@ public class ReservaService {
     public void setEstadoPagada(Reserva reserva) {
         reserva.setStatus("pagada-dueño");
         reservaRepository.save(reserva);
+        mailService.sendEmail(reserva.getPerro().getUser(), MailType.BOOKING_PAYMENT_TO_USER);
+        mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_PAYMENT_TO_HOST);
     }
 
     public Date addDays(Date date, int days) {

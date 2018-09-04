@@ -65,7 +65,7 @@ let myLogin = Vue.component('my-login', {
         <div class="header-widget">
             <a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i
                     class="sl sl-icon-login"></i>
-                Iniciar Sesión o Registrarse</a>
+                Iniciar Sesión</a>
         </div>
     </div>
     <!-- Right Side Content / End -->

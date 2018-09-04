@@ -6,6 +6,7 @@ import app.exception.PasswordDoesNotMatchException;
 import app.models.entities.User;
 import app.persistence.UserRepository;
 import app.security.Encryptor;
+import app.utils.MailType;
 import app.utils.PaymentsUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -25,6 +26,8 @@ public class UserService extends AbstractRestClientService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final Encryptor encryptor;
+    private final MailService mailService;
+
 
     @Value("${app.mp.pupi.url}")
     private String MP_URL;
@@ -38,10 +41,11 @@ public class UserService extends AbstractRestClientService {
     private String APP_DOMAIN;
 
     @Autowired
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, Encryptor encryptor) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, Encryptor encryptor, MailService mailService) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.encryptor = encryptor;
+        this.mailService = mailService;
     }
 
     @PostConstruct
@@ -68,7 +72,9 @@ public class UserService extends AbstractRestClientService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("ROLE_USER");
-        return repository.save(user);
+        User save = repository.save(user);
+        mailService.sendEmail(user, MailType.WELCOME);
+        return save;
     }
 
     private boolean emailExist(String email) {
