@@ -121,7 +121,7 @@ public class PaymentsService {
 
             LOG.info("Message received [message_id:{}] [topic:{}]", id, topic);
 
-            if(MercadoPago.SDK.getAccessToken() == null) {
+            if (MercadoPago.SDK.getAccessToken() == null) {
                 configureSDK();
             }
 
