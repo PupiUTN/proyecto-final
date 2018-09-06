@@ -394,13 +394,7 @@ Vue.component('my-detalle-reserva', {
                         this.edadPerro = "-";
                     }
                     var date = new Date(this.reserva.fechaTransaccion);
-                    this.reserva.fechaTransaccion = date.toLocaleDateString();
-                   /* var dateEntrada = new Date(this.reserva.fechaInicio);
-                    var dateSalida = new Date(this.reserva.fechaFin);
-                    dateEntrada = dateEntrada.setDate(dateEntrada.getDate() + 1);
-                    dateSalida = dateSalida.setDate(dateSalida.getDate() + 1);
-                    this.reserva.fechaInicio = new Date(dateEntrada).toLocaleDateString();
-                    this.reserva.fechaFin = new Date(dateSalida).toLocaleDateString();*/
+                    this.reserva.fechaTransaccion = date.toLocaleDateString('en-GB');
                     if (this.reserva.cuidador.user.birthday !== null) {
                         this.edadUsuario = this.calcularEdad(this.reserva.cuidador.user.birthday);
                     }
