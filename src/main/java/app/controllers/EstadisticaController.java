@@ -6,6 +6,7 @@ import app.services.CalificacionService;
 import app.services.CuidadorService;
 import app.services.PerroService;
 import app.services.ReservaService;
+import app.utils.EstadoReserva;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -51,6 +52,12 @@ public class EstadisticaController {
 
             switch (item.getStatus()) {
                 case "finalizada":
+                    cantidadXtipo[4]++;
+                    break;
+                case "comentario-cuidador":
+                    cantidadXtipo[5]++;
+                    break;
+                case "comentario-dueño":
                     cantidadXtipo[4]++;
                     break;
                 case "pagada-dueño":
@@ -233,6 +240,12 @@ public class EstadisticaController {
                     case "ejecucion":
                         cantidadXtipo[3]++;
                         break;
+                    case "comentario-cuidador":
+                        cantidadXtipo[4]++;
+                        break;
+                    case "comentario-dueño":
+                        cantidadXtipo[5]++;
+                        break;
                     default:
 
                 }
@@ -299,7 +312,8 @@ public class EstadisticaController {
 
         ArrayList<Integer> aux = new ArrayList<>();
         for (Reserva item : reservas) {
-            if (item.getPerro().getId().equals(id)) {
+
+            if (item.getPerro().getId().equals(id) && isReservaConcretada(item.getStatus())) {
                 if (cont == 0) {
                     aux.add(item.getCuidador().getId().intValue());
                     cont++;
@@ -310,15 +324,26 @@ public class EstadisticaController {
                         cont++;
                     }
 
-
                 }
-
 
             }
 
         }
 
         return cont;
+    }
+
+    private boolean isReservaConcretada(String item) {
+        ArrayList<String> estados = new ArrayList<>();
+        estados.add(EstadoReserva.PAGADA_DUEÑO.getStatus());
+        estados.add(EstadoReserva.COMENTARIO_CUIDADOR.getStatus());
+        estados.add(EstadoReserva.COMENTARIO_DUEÑO.getStatus());
+        estados.add(EstadoReserva.FINALZADA.getStatus());
+        estados.add(EstadoReserva.CERRADA.getStatus());
+        estados.add(EstadoReserva.EJECUCION.getStatus());
+
+      return estados.contains(item);
+
     }
 
 
