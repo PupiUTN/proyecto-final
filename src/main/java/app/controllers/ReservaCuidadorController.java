@@ -1,12 +1,9 @@
 package app.controllers;
 
 
-import app.models.entities.*;
+import app.models.entities.Reserva;
 import app.security.MyUserPrincipal;
-import app.services.CuidadorService;
-import app.services.MailService;
 import app.services.ReservaService;
-import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.bind.DataBindingException;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Date;
-import java.util.Date.*;
 
 @RestController
 @RequestMapping(value = "/api/cuidador/me/reservas")
@@ -27,14 +20,10 @@ public class ReservaCuidadorController {
 
 
     private final ReservaService reservaService;
-    private final MailService mailService;
-    private final CuidadorService cuidadorService;
 
     @Autowired
-    public ReservaCuidadorController(ReservaService reservaService, MailService mailService, CuidadorService cuidadorService) {
+    public ReservaCuidadorController(ReservaService reservaService) {
         this.reservaService = reservaService;
-        this.mailService = mailService;
-        this.cuidadorService = cuidadorService;
     }
 
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
@@ -71,8 +60,7 @@ public class ReservaCuidadorController {
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
         reservaService.cancelar(reservaId, id);
-        User user = getReserva(reservaId).getPerro().getUser();
-        mailService.sendEmail(user, MailType.BOOKING_CANCELLATION_BY_HOST);
+
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -84,8 +72,7 @@ public class ReservaCuidadorController {
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
         reservaService.confirmar(reservaId, id);
-        User user = getReserva(reservaId).getPerro().getUser();
-        mailService.sendEmail(user, MailType.BOOKING_CONFIRMATION);
+
         return new ResponseEntity(HttpStatus.OK);
 
     }

@@ -121,6 +121,10 @@ public class PaymentsService {
 
             LOG.info("Message received [message_id:{}] [topic:{}]", id, topic);
 
+            if (MercadoPago.SDK.getAccessToken() == null) {
+                configureSDK();
+            }
+
             MerchantOrder merchantOrder = topic.equalsIgnoreCase("payment") ? MerchantOrder.findById(Payment.findById(id)
                     .getOrder()
                     .getId()

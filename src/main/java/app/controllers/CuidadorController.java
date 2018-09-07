@@ -8,8 +8,6 @@ package app.controllers;
 import app.models.entities.Cuidador;
 import app.models.entities.Servicio;
 import app.services.CuidadorService;
-import app.services.MailService;
-import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,13 +24,11 @@ public class CuidadorController {
 
 
     private final CuidadorService cuidadorService;
-    private final MailService mailService;
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @Autowired
-    public CuidadorController(CuidadorService cuidadorService, MailService mailService) {
+    public CuidadorController(CuidadorService cuidadorService) {
         this.cuidadorService = cuidadorService;
-        this.mailService = mailService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -85,11 +81,7 @@ public class CuidadorController {
     public @ResponseBody
     Cuidador editCuidador(@PathVariable("id") Long id, @RequestBody Cuidador entity) {
         entity.setId(id);
-        if ("approved".equalsIgnoreCase(entity.getEstado())) {
-            mailService.sendEmail(entity.getUser(), MailType.WELCOME_HOST);
-        } else if ("rejected".equalsIgnoreCase(entity.getEstado())) {
-            mailService.sendEmail(entity.getUser(), MailType.HOST_REJECTED);
-        }
+
         return cuidadorService.editCuidador(entity);
     }
 

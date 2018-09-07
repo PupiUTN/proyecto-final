@@ -1,32 +1,46 @@
 package app.services;
 
+import app.models.entities.Reserva;
 import app.persistence.CronRepository;
 import app.utils.EstadoReserva;
+import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
 public class CronService {
-    CronRepository cronRepository;
+    private final CronRepository cronRepository;
+    private final MailService mailService;
 
     @Autowired
-    public CronService(CronRepository cronRepository) {
+    public CronService(CronRepository cronRepository, MailService mailService) {
         this.cronRepository = cronRepository;
+        this.mailService = mailService;
     }
 
     /**
      * - si la fecha de fin menor a hoy y estado ejecucion --> finalizada
      */
     public Integer moverEstadoDeEjecucionAFinalizada() {
-        return cronRepository.updateStateIfFechaFinMenorHoy(EstadoReserva.EJECUCION.getStatus(), EstadoReserva.FINALZADA.getStatus());
+        List<Reserva> reservaList = cronRepository.getIfFechaFinMenorHoy(EstadoReserva.EJECUCION.getStatus());
+        for (int i = 0; i < reservaList.size(); i++) {
+            Reserva reserva = reservaList.get(i);
+            mailService.sendEmail(reserva.getPerro().getUser(), MailType.REVIEW_REQUEST_TO_USER);
+            mailService.sendEmail(reserva.getCuidador().getUser(), MailType.REVIEW_REQUEST_TO_HOST);
+            reserva.setStatus(EstadoReserva.FINALZADA.getStatus());
+            cronRepository.save(reserva);
+        }
+        return reservaList.size();
     }
 
     /**
      * - si fecha inicio es == hoy y estado pagada --> ejecucion
      */
     public Integer moverEstadoDePagadaAEjecucion() {
-        return cronRepository.updateStateIfFechaInicioIgualHoy(EstadoReserva.PAGADA_DUEÑO.getStatus(), EstadoReserva.EJECUCION.getStatus());
+        return cronRepository.updateStateIfFechaInicioMenorHoy(EstadoReserva.PAGADA_DUEÑO.getStatus(), EstadoReserva.EJECUCION.getStatus());
     }
 
     /**
@@ -40,6 +54,6 @@ public class CronService {
      * - si fecha inicio es == hoy y creada.dueño o aceptada-cudiador --> caido-falta-pago
      */
     public Integer moverEstadoDeCreadaDueñoAAceptadaCuidador() {
-        return cronRepository.updateStateIfFechaInicioIgualHoy(EstadoReserva.CREADA.getStatus(), EstadoReserva.CAIDA_FALTA_PAGO.getStatus());
+        return cronRepository.updateStateIfFechaInicioMenorHoy(EstadoReserva.CREADA.getStatus(), EstadoReserva.CAIDA_FALTA_PAGO.getStatus());
     }
 }

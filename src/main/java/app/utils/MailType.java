@@ -15,7 +15,11 @@ public enum MailType {
     BOOKING_CANCELLATION_BY_HOST,
     BOOKING_CANCELLATION_BY_USER,
     HOST_REJECTED,
-    WELCOME_HOST;
+    WELCOME_HOST,
+    REVIEW_REQUEST_TO_HOST,
+    REVIEW_REQUEST_TO_USER,
+    BOOKING_PAYMENT_TO_HOST,
+    BOOKING_PAYMENT_TO_USER;
 
     public String getMailTemplate(String username) throws IOException {
         String text;
@@ -34,7 +38,7 @@ public enum MailType {
             case BOOKING_CONFIRMATION:
                 text = "Tu reserva ha sido <b>confirmada</b>.<br>" +
                         "Tienes 72 hs para pagarla. <br> " +
-                        "Una vez pagada te brindaremos los datos de contacto del cuidador para que puedas efectuar tu reserva. ";
+                        "Una vez pagada te brindaremos los datos de contacto del cuidador para que puedas efectuar tu estadia. ";
                 break;
 
             case BOOKING_CANCELLATION_BY_HOST:
@@ -49,7 +53,14 @@ public enum MailType {
                         "Te recomendamos completar tu perfil para aumentar tus chances. ";
 
                 break;
-
+            case BOOKING_PAYMENT_TO_USER:
+                text = "Tu reserva ha sido <b>pagada</b>.<br>" +
+                        "Ingresa a la plataforma para obtener los datos de contacto de tu cuidador. ";
+                break;
+            case BOOKING_PAYMENT_TO_HOST:
+                text = "Una de tus reserva ha sido <b>pagada</b>.<br>" +
+                        "En breve se contactara tu huesped para coordinar la entragd el perro. ";
+                break;
             case WELCOME_HOST:
                 text = "<b>¡Bienvenido a Pupi!</b> \uD83D\uDC3E  <br>" +
                         "Gracias por ser parte de nuestra comunidad de cuidadores. <br> " +
@@ -63,6 +74,16 @@ public enum MailType {
                         "te invitamos a que te contactes con nosotros para revisar el caso personalmente.";
                 break;
 
+            case REVIEW_REQUEST_TO_HOST:
+                text = "Tu Reserva como Cuidador a <b>finalizado</b><br>" +
+                        "Nos gustaría saber cómo te fue con la estadia.<br> " +
+                        "Califica al Perro para ayudar a la comunidad.<br>";
+                break;
+            case REVIEW_REQUEST_TO_USER:
+                text = "Tu Estadia en Pupi a <b>finalizado</b><br>" +
+                        "Nos gustaría saber cómo te fue con la estadia.<br> " +
+                        "Califica al Cuidador para ayudar a la comunidad.<br>";
+                break;
             default:
                 throw new AssertionError("Unknown email type " + this);
 
@@ -100,57 +121,10 @@ public enum MailType {
                 return username + ", Solicitud de Cuidador Aprobada - Pupi";
             case HOST_REJECTED:
                 return username + ", Solicitud de Cuidador Rechazada - Pupi";
-            default:
-                throw new AssertionError("Unknown email type " + this);
-        }
-    }
-
-    public String getMailText(String username) {
-        switch (this) {
-            case WELCOME:
-                return username + ", Bienvenido";
-            case BOOKING_REQUEST:
-                return username + ", Tienes una solicitud de reserva";
-            case BOOKING_CONFIRMATION:
-                return username + ", Tu reserva ha sido confirmada";
-            case BOOKING_CANCELLATION_BY_HOST:
-                return username + ", Tu solicitud de reserva ha sido cancelada";
-            case BOOKING_CANCELLATION_BY_USER:
-                return username + ", Tu reserva ha sido cancelada";
-            case WELCOME_HOST:
-                return username + ", Has sido aprobado como cuidador";
-            case HOST_REJECTED:
-                return username + ", Lo sentimos, no fuiste aprobado";
-            default:
-                throw new AssertionError("Unknown email type " + this);
-        }
-    }
-
-    public String getButtonText() {
-        switch (this) {
-            case WELCOME:
-            case WELCOME_HOST:
-            case HOST_REJECTED:
-                return "Ir a Pupi";
-            default:
-                return "Ver Detalle";
-        }
-    }
-
-    public String getRedirectUrl() {
-        switch (this) {
-            case WELCOME:
-            case WELCOME_HOST:
-            case HOST_REJECTED:
-                return "";
-            case BOOKING_REQUEST:
-                return "/views/reserva/mis-reservas-cuidador.html?status=CONFIRMATION_PENDING";
-            case BOOKING_CONFIRMATION:
-                return "/views/reserva/mis-reservas-user.html?status=ACCEPTED";
-            case BOOKING_CANCELLATION_BY_HOST:
-                return "/views/reserva/mis-reservas-cuidador.html?status=CANCEL";
-            case BOOKING_CANCELLATION_BY_USER:
-                return "/views/reserva/mis-reservas-user.html?status=CANCEL_BY_USER";
+            case REVIEW_REQUEST_TO_USER:
+                return username + ", Hospedaje Finalizado - Pupi";
+            case REVIEW_REQUEST_TO_HOST:
+                return username + ", Hospedaje Finalizado - Pupi";
             default:
                 throw new AssertionError("Unknown email type " + this);
         }

@@ -63,16 +63,16 @@ Vue.component('my-reservas-user-list', {
                                     </div>
                                 </div>
                                 <div class="row">
-                                   <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'finalizada' && reserva.status !== 'cerrada'  && reserva.status !== 'comentario-cuidador' && reserva.status !== 'rechazada-dueño' && reserva.status !=='rechazada-cuidador' && reserva.status !== 'ejecucion'">
-                                            <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-right" style="background-color: inherit;"><i class="sl sl-icon-docs"></i> Cancelar</a>
+                                   <div class="col-xs-6 col-md-3" v-if="reserva.status !== 'finalizada' && reserva.status !== 'cerrada'  && reserva.status !== 'comentario-cuidador' && reserva.status !== 'rechazada-dueño' && reserva.status !=='rechazada-cuidador' && reserva.status !== 'ejecucion'">
+                                            <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-left" style="background-color: inherit;"><i class="sl sl-icon-docs"></i> Cancelar</a>
                                         </div>                                        
-                                         <div class="col-xs-12 col-md-4" v-if="reserva.status === 'pagada-dueño' || reserva.status === 'ejecucion'">
+                                         <div class="col-xs-6 col-md-4" v-if="reserva.status === 'pagada-dueño' || reserva.status === 'ejecucion'">
                                             <a v-on:click="verDetalleCompletoButton(index)" href="#" class="button medium border pull-right" style="background-color: inherit;"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                         </div>
-                                          <div class="col-xs-12 col-md-3" v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-cuidador'">
+                                          <div class="col-xs-6 col-md-3" v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-cuidador'">
                                             <a v-on:click="calificarReserva(index)"  style="color: blue; border-color: blue; background-color: inherit;" href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
                                         </div>
-                                        <div class = "col-xs-12 col-md-6" v-if="reserva.status === 'aceptada-cuidador'">
+                                        <div class = "col-xs-6 col-md-6" v-if="reserva.status === 'aceptada-cuidador'">
                                             <mercadopago :reserva="reserva"></mercadopago>
                                         </div>
                                 </div>
@@ -94,15 +94,8 @@ Vue.component('my-reservas-user-list', {
         <div class="pagination-container margin-top-20 margin-bottom-40">
             <nav class="pagination">
                 <ul>
-               
                     <li><a :style="offset > 0 ? 'background-color: crimson' : 'background-color: darkgrey'" @click="previous()"><i class="sl sl-icon-arrow-left" style=" font-weight: bold;color: white;"></i></a></li>
-
                     <li><a  :style="(offset + perPage) < gridData.length ? 'background-color: crimson' : 'background-color: darkgrey'" @click="next()"><i class="sl sl-icon-arrow-right" style=" font-weight: bold;color: white;"></i></a></li>
-                
-                   <!-- <li><a href="#" class="current-page">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>-->
                 </ul>
             </nav>
         </div>

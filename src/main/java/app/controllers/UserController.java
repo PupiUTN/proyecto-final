@@ -9,9 +9,7 @@ import app.exception.EmailExistsException;
 import app.exception.PasswordDoesNotMatchException;
 import app.models.entities.User;
 import app.security.MyUserPrincipal;
-import app.services.MailService;
 import app.services.UserService;
-import app.utils.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,14 +29,11 @@ import java.security.Principal;
 @RequestMapping(value = "/api/user/")
 public class UserController {
 
-
     private final UserService userService;
-    private final MailService mailService;
 
     @Autowired
-    public UserController(UserService userService, MailService mailService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.mailService = mailService;
     }
 
     /**
@@ -58,7 +53,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "/registration")
     public ResponseEntity registerUserAccount(@RequestBody @Valid User user) throws EmailExistsException, PasswordDoesNotMatchException {
         userService.registerNewUserAccount(user);
-        mailService.sendEmail(user, MailType.WELCOME);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
