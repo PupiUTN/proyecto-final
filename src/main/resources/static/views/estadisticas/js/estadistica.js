@@ -44,7 +44,7 @@ Vue.component('my-estadistica', {
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-1">
-					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.cantidadTotal}} <br><span>Reservas</span></div>
+					<div class="dashboard-stat-content" style="font-size: 35px;">{{estadisticas.cantidadTotal}} <br><span>Reservas</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Cursor-Click2"></i></div>
 				</div>
 			</div>
@@ -167,6 +167,7 @@ Vue.component('my-estadistica', {
                     }
                     this.estadisticas.cantidadTotal = this.list[0].cantidadTotal.toString();
                     this.estadisticas.promedio = this.list[0].promedio.toString();
+                    this.estadisticas.promedio =   this.estadisticas.promedio + " / 5";
                     this.estadisticas.cantidadPorMes = this.list[0].cantidadPorMes;
                     this.estadisticas.totalPorTipo = this.list[0].totalPorTipo;
                     this.estadisticas.nombre = this.list[0].nombre;
@@ -179,7 +180,7 @@ Vue.component('my-estadistica', {
                         document.getElementById("selector_perro").disabled = true;
                         this.estadisticas.cantidadTotal = 0;
                         this.estadisticas.totalCuidadores =0;
-                        this.estadisticas.promedio =0;
+                        this.estadisticas.promedio ="0 / 5";
 
 
                     }

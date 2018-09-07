@@ -39,7 +39,7 @@ Vue.component('chart-pie', {
             var myChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: ['Creadas','Aceptadas', 'Pagadas','Ejecucion','Finalizadas','Cerradas','Rechazadas'],
+                    labels: ['Creadas','Aceptadas', 'Pagadas','Ejecucion','Pendientes de calificar','Cerradas','Rechazadas'],
                     datasets: [{
                         label:  this.nombre,
                         data: this.totalPorTipo,
