@@ -82,8 +82,8 @@
 /* Webfont Icons: FontAwesome, Line, Simple Line */
 @import url("plugins/revolutionslider.css");
 /* Revolution Slider Style Sheets */
-@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:600,700');
+@import url('google-font/FontRelawey.css');
+@import url('google-font/FontOpenSans.css');
 
 /* ------------------------------------------------------------------- */
 /*  02. Layout Components

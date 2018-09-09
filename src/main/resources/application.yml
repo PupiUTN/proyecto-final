@@ -26,6 +26,8 @@ spring:
     jackson:
         serialization:
           WRITE_DATES_AS_TIMESTAMPS: false
+    resources:
+        cache-period: 10
 server:
     port: 5000
 java:
@@ -49,3 +51,7 @@ app:
         ses:
             accessKey: '${SES_ACCESS_KEY}'
             secretKey: '${SES_SECRET_KEY}'
+
+
+    # Comma-separated list of paths to exclude from the default secured
+security.ignored: /assets/**
