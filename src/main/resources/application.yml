@@ -27,7 +27,7 @@ spring:
         serialization:
           WRITE_DATES_AS_TIMESTAMPS: false
     resources:
-        cache-period: 10
+        cache-period: 86400 # 1 day in seconds
 server:
     port: 5000
 java:
