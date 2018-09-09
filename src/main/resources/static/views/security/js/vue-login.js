@@ -195,6 +195,7 @@ let myLogin = Vue.component('my-login', {
                 .then((response) => {
                     console.log(response.data);
                     this.user = response.data.principal.user;
+                    localStorage.setItem("isAuthenticated", true);
                     localStorage.setItem("idUser", this.user.id);
                     this.isAuthenticated = true;
                     var magnificPopup = $.magnificPopup.instance;
@@ -204,6 +205,8 @@ let myLogin = Vue.component('my-login', {
                 })
                 .catch(error => {
                         if (error.response.status == 401) {
+                            localStorage.setItem("isAuthenticated", false);
+                            localStorage.removeItem("idUser");
                             this.isAuthenticated = false;
                             console.log("usuario no logeado");
                         } else {
@@ -236,6 +239,8 @@ let myLogin = Vue.component('my-login', {
                 .then((response) => {
                     console.log("logout exitoso");
                     document.location.href = "/";
+                    localStorage.setItem("isAuthenticated", false);
+                    localStorage.removeItem("idUser");
                     this.resetVueJsData();
                 })
                 .catch(error => {

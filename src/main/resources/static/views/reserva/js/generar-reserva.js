@@ -154,9 +154,11 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                 this.idCuidador = parseInt(this.getParameterByName('id'), 10);
             },
             loadReservaContent() {
-                this.bindUrlWithVue()
-                this.getCuidador();
-                this.getPerros();
+                if (localStorage.getItem("isAuthenticated")) {
+                    this.bindUrlWithVue();
+                    this.getCuidador();
+                    this.getPerros();
+                }
             },
             getCuidador() {
                 this.showDatePicker = false;
@@ -200,7 +202,6 @@ let myGenerarReserva = Vue.component('my-generar-reserva', {
                     })
                     .catch(error => {
                             console.log(error);
-                            sweetAlert("Oops...", "Error get perro, ver consola", "error");
                         }
                     );
             },

@@ -7,25 +7,25 @@ Vue.component('my-reservas-cuidador-list', {
         <div class="row">
             <div class="col-md-12">
                 <div v-if="status === 'creada-dueño'">
-                    <h2>Quieren reservar Conmigo</h2>
+                    <h2><b>Cuidador:</b> Quieren reservar Conmigo</h2>
                 </div>
                 <div v-if="status === 'rechazada-cuidador' || status ==='rechazada-dueño'">
-                    <h2>Reservas rechazadas</h2>
+                    <h2><b>Cuidador:</b> Reservas rechazadas</h2>
                 </div>
                 <div v-if="status === 'aceptada-cuidador'">
-                    <h2> Mis reservas Aceptadas y Pendiente de Pago por parte del dueño</h2>
+                    <h2><b>Cuidador:</b> Mis reservas Aceptadas y Pendiente de Pago por parte del dueño</h2>
                 </div>
                 <div v-if="status === 'pagada-dueño'">
-                    <h2> Mis reservas Pagadas</h2>
+                    <h2><b>Cuidador:</b> Mis reservas Pagadas</h2>
                 </div>
                 <div v-if="status === 'finalizada'">
-                    <h2> Finalizadas y Pendientes de Calificacion</h2>
+                    <h2><b>Cuidador:</b>  Finalizadas y Pendientes de Calificacion</h2>
                 </div>
                 <div v-if="status === 'cerrada'">
-                    <h2> Finalizadas </h2>
+                    <h2><b>Cuidador:</b>  Finalizadas </h2>
                 </div>
                  <div v-if="status === 'ejecucion'">
-                    <h2> Reservas en curso</h2>
+                    <h2><b>Cuidador:</b>  Reservas en curso</h2>
                 </div>
             </div>
         </div>

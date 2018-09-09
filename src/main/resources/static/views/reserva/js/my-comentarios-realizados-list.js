@@ -7,7 +7,7 @@ Vue.component('my-comentarios-realizados-list', {
         <div class="row">
             <div class="col-md-12">
                 <div >
-                    <h2>Calificaciones realizadas</h2>
+                    <h2><b>Cuidador:</b> Calificaciones realizadas</h2>
                 </div>
              
         </div>

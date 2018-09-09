@@ -6,7 +6,7 @@ Vue.component('my-cuidador-edit', {
              <div id="titlebar">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Mi Descripción</h2>
+                        <h2><b>Cuidador:</b> Mi Descripción</h2>
                         <!-- Breadcrumbs -->
                         <nav id="breadcrumbs">
                           
@@ -159,8 +159,8 @@ Vue.component('my-cuidador-edit', {
                     </div>
 
                 </div>
-                <input type="submit" value="Guardar" name="editCuidador" style=" height: 60px; width: 150px; position: relative;" class="button margin-top-20"/>
-
+                <input type="submit" value="Guardar" name="editCuidador" style=" height: 60px; width: 150px; position: relative;" class="button margin-top-20 pull-right"/>
+ 
             </form>
 </div>
     `,

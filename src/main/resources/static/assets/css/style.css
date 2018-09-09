@@ -9532,8 +9532,7 @@ a.dashboard-responsive-nav-trigger {
     border-bottom: none;
 }
 
-.messages-inbox ul li.unread,
-.messages-inbox ul li:hover {
+.messages-inbox ul li.unread {
     background-color: #fbfbfb;
 }
 
