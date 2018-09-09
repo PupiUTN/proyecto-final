@@ -42,7 +42,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6 col-xs-12">
 				<div class="dashboard-stat color-1">
-					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.cantidadTotal}} <br><span>Reservas</span></div>
+					<div class="dashboard-stat-content" style="font-size: 35px;">{{estadisticas.cantidadTotal}} <br><span>Reservas</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Cursor-Click2"></i></div>
 				</div>
 			</div>
@@ -198,6 +198,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                     this.estadisticas = response.data;
                     this.estadisticas.cantidadTotal = response.data.cantidadTotal.toString();
                     this.estadisticas.promedio = response.data.promedio.toString();
+                    this.estadisticas.promedio =   this.estadisticas.promedio + " / 5";
                     this.estadisticas.cantidadPorMes = response.data.cantidadPorMes;
                     this.estadisticas.totalVisitas = response.data.totalVisitas.toString();
                     this.estadisticas.totalPorTipo = response.data.totalPorTipo;
@@ -224,6 +225,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                         }
                         this.estadisticas.cantidadTotal = this.list[0].cantidadTotal.toString();
                         this.estadisticas.promedio = this.list[0].promedio.toString();
+                        this.estadisticas.promedio =   this.estadisticas.promedio + " / 5";
                         this.estadisticas.cantidadPorMes = this.list[0].cantidadPorMes;
                         this.estadisticas.totalPorTipo = this.list[0].totalPorTipo;
                         this.estadisticas.nombre = this.list[0].nombre;
@@ -236,7 +238,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                         document.getElementById("selector_perro").disabled = true;
                         this.estadisticas.cantidadTotal = 0;
                         this.estadisticas.totalCuidadores =0;
-                        this.estadisticas.promedio =0;
+                        this.estadisticas.promedio ="0 / 5";
                     }
 
                 })
