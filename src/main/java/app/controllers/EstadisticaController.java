@@ -100,7 +100,7 @@ public class EstadisticaController {
         estadistica.setPromedio(cuidador.getPromedioReviews());
         estadistica.setCantidadPorMes(getReservasXMes(list));
         estadistica.setTotalVisitas(cuidador.getCantidadVisitas());
-        estadistica.setNombre(cuidador.getUser().getUsername());
+        estadistica.setNombre(cuidador.getUser().getFullName());
         return estadistica;
 
     }
@@ -166,7 +166,7 @@ public class EstadisticaController {
             int[] aux = getCantidadXTipo(item.getId(), list);
             estadisticaUser.setTotalPorTipo(aux);
             estadisticaUser.setNombrePerro(item.getNombre());
-            estadisticaUser.setNombre(user.getUsername());
+            estadisticaUser.setNombre(user.getFullName());
             estadisticaUser.setCantidadPorMes(getReservasXMes(list, item.getId()));
             estadisticaUser.setCantidadTotal(getCantidadTotal(list,item));
            // estadisticaUser.setPromedio(getPromedio(item.getId()));

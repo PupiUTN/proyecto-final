@@ -15,11 +15,11 @@ public class MyUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
-//        http://www.baeldung.com/spring-security-authentication-with-a-database
-        User user = userRepository.findByEmail(username);
+    public UserDetails loadUserByUsername(String email) {
+        //http://www.baeldung.com/spring-security-authentication-with-a-database
+        User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException(email);
         }
         return new MyUserPrincipal(user);
     }

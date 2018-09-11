@@ -33,8 +33,8 @@ public class User implements Serializable {
 
     @NotNull
     @NotEmpty
-    @Column(nullable = false, unique = true)
-    private String username;
+    @Column(nullable = false)
+    private String fullName;
 
     @NotNull
     @NotEmpty
@@ -47,11 +47,8 @@ public class User implements Serializable {
     @Transient
     private String matchingPassword;
 
-
     @Column(nullable = false)
     private String role;
-
-    private String fullName;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -80,7 +77,7 @@ public class User implements Serializable {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
+                ", fullName='" + fullName + '\'' +
                 ", profileImageUrl='" + profileImageUrl + '\'' +
                 ", password='" + password + '\'' +
                 ", matchingPassword='" + matchingPassword + '\'' +

@@ -21,7 +21,7 @@ public enum MailType {
     BOOKING_PAYMENT_TO_HOST,
     BOOKING_PAYMENT_TO_USER;
 
-    public String getMailTemplate(String username) throws IOException {
+    public String getMailTemplate(String fullName) throws IOException {
         String text;
         switch (this) {
             case WELCOME:
@@ -89,10 +89,10 @@ public enum MailType {
 
 
         }
-        return this.getTemplate(username, text);
+        return this.getTemplate(fullName, text);
     }
 
-    public String getTemplate(String username, String bodyText) throws IOException {
+    public String getTemplate(String fullName, String bodyText) throws IOException {
         InputStream inputStream = new ClassPathResource("email/template-stripo.html").getInputStream();
         String content;
         try (BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -100,31 +100,31 @@ public enum MailType {
         }
         //
         content = content.replace("{{bodyText}}", bodyText);
-        content = content.replace("{{username}}", username);
+        content = content.replace("{{fullName}}", fullName);
         return content;
 
     }
 
-    public String getMailSubject(String username) {
+    public String getMailSubject(String fullName) {
         switch (this) {
             case WELCOME:
-                return username + ", Bienvenido a Pupi!";
+                return fullName + ", Bienvenido a Pupi!";
             case BOOKING_REQUEST:
-                return username + ", Nueva Solicitud de Reserva - Pupi";
+                return fullName + ", Nueva Solicitud de Reserva - Pupi";
             case BOOKING_CONFIRMATION:
-                return username + ", Confirmación de Reserva - Pupi";
+                return fullName + ", Confirmación de Reserva - Pupi";
             case BOOKING_CANCELLATION_BY_HOST:
-                return username + ", Cancelación de Solicitud de Reserva - Pupi";
+                return fullName + ", Cancelación de Solicitud de Reserva - Pupi";
             case BOOKING_CANCELLATION_BY_USER:
-                return username + ", Cancelación de Reserva - Pupi";
+                return fullName + ", Cancelación de Reserva - Pupi";
             case WELCOME_HOST:
-                return username + ", Solicitud de Cuidador Aprobada - Pupi";
+                return fullName + ", Solicitud de Cuidador Aprobada - Pupi";
             case HOST_REJECTED:
-                return username + ", Solicitud de Cuidador Rechazada - Pupi";
+                return fullName + ", Solicitud de Cuidador Rechazada - Pupi";
             case REVIEW_REQUEST_TO_USER:
-                return username + ", Hospedaje Finalizado - Pupi";
+                return fullName + ", Hospedaje Finalizado - Pupi";
             case REVIEW_REQUEST_TO_HOST:
-                return username + ", Hospedaje Finalizado - Pupi";
+                return fullName + ", Hospedaje Finalizado - Pupi";
             default:
                 throw new AssertionError("Unknown email type " + this);
         }

@@ -24,26 +24,26 @@ public class MailService {
     @Value("${app.aws.ses.secretKey}")
     private String secretKey;
 
+    private static SendEmailRequest createEmailRequest(String from, String to, MailType type, String fullName) throws IOException {
+        String emailTemplate = type.getMailTemplate(fullName);
+        Destination destination = new Destination().withToAddresses(to);
+        Content subjectContent = new Content().withData(type.getMailSubject(fullName));
+        Content textContent = new Content().withData(emailTemplate);
+        Body body = new Body().withHtml(textContent);
+        Message message = new Message().withSubject(subjectContent).withBody(body);
+        return new SendEmailRequest().withSource(from).withDestination(destination).withMessage(message);
+    }
+
     public int sendEmail(User user, MailType type) {
 
         try {
             AmazonSimpleEmailService client = getClient();
-            SendEmailRequest sendEmailRequest = createEmailRequest(FROM, user.getEmail(), type, user.getUsername());
+            SendEmailRequest sendEmailRequest = createEmailRequest(FROM, user.getEmail(), type, user.getFullName());
             SendEmailResult sendEmailResult = client.sendEmail(sendEmailRequest);
             return sendEmailResult.getSdkHttpMetadata().getHttpStatusCode();
         } catch (Exception e) {
             throw new AmazonSimpleEmailServiceException(e.toString());
         }
-    }
-
-    private static SendEmailRequest createEmailRequest(String from, String to, MailType type, String username) throws IOException {
-        String emailTemplate = type.getMailTemplate(username);
-        Destination destination = new Destination().withToAddresses(to);
-        Content subjectContent = new Content().withData(type.getMailSubject(username));
-        Content textContent = new Content().withData(emailTemplate);
-        Body body = new Body().withHtml(textContent);
-        Message message = new Message().withSubject(subjectContent).withBody(body);
-        return new SendEmailRequest().withSource(from).withDestination(destination).withMessage(message);
     }
 
 

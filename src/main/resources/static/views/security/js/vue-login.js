@@ -13,7 +13,7 @@ function getDefaultData() {
             id: null,
             profileImageUrl: '/img/no-avatar.png',
             email: '',
-            username: '',
+            fullName: '',
             password: '',
             matchingPassword: '',
             role: ''
@@ -41,7 +41,7 @@ let myLogin = Vue.component('my-login', {
             <div class="user-menu">
                 <div class="user-name hidden-xs hidden-sm">
                     <span><img v-bind:src="user.profileImageUrl" alt=""></span>
-                    {{ user.username }}
+                    {{ user.fullName }}
                 </div>
                 
                 <div class="user-name hidden-md hidden-lg" >
@@ -50,7 +50,7 @@ let myLogin = Vue.component('my-login', {
                 
                 <ul>
                     <li><a v-on:click="micuenta()" ><i class="sl sl-icon-settings"></i> Mi cuenta</a></li>
-                    <li><a v-on:click="logout()"><i class="sl sl-icon-power"></i> Salir</a></li>
+                    <li><a v-on:click="logout()"><i class="sl sl-icon-power"></i> Cerar Sesion</a></li>
                 </ul>
             </div>
         </div>
@@ -81,8 +81,8 @@ let myLogin = Vue.component('my-login', {
         <div class="sign-in-form style-1">
 
             <ul class="tabs-nav">
-                <li class=""><a href="#tab1">Iniciar Sesión</a></li>
-                <li><a href="#tab2">Registrarse</a></li>
+                <li class=""><a href="#tab1" v-on:click="resetVueJsData()">Iniciar Sesión</a></li>
+                <li><a href="#tab2" v-on:click="resetVueJsData()">Registrarse</a></li>
             </ul>
 
             <div class="tabs-container alt">
@@ -97,7 +97,9 @@ let myLogin = Vue.component('my-login', {
                                 <input type="email" class="input-text"
                                        v-model="credentials.username"
                                        id="email"
-                                       value="" required/>
+                                       value=""
+                                       oninvalid="this.setCustomValidity('Debe ingresar su Email')"
+                                       required/>
                             </label>
                         </p>
 
@@ -106,6 +108,7 @@ let myLogin = Vue.component('my-login', {
                                 <i class="im im-icon-Lock-2"></i>
                                 <input class="input-text" type="password"
                                        v-model="credentials.password"
+                                       oninvalid="this.setCustomValidity('Debe ingresar su Contraseña')"
                                        id="password" required/>
                             </label>
                         </p>
@@ -127,10 +130,11 @@ let myLogin = Vue.component('my-login', {
 
                     <form class="register" v-on:submit.prevent='register()'>
                         <p class="form-row form-row-wide">
-                            <label for="email2">Usuario:
+                            <label for="email2">Nombre y Apellido:
                                 <i class="im im-icon-Male"></i>
-                                <input type="username" class="input-text" v-model="user.username"
-                                       id="username" value="" required/>
+                                <input type="fullName" class="input-text" v-model="user.fullName"
+                                       id="fullName" value="" required
+                                       oninvalid="this.setCustomValidity('Campo Requerido')"/>
                             </label>
                         </p>
                         
@@ -138,7 +142,8 @@ let myLogin = Vue.component('my-login', {
                             <label for="email2">Email:
                                 <i class="im im-icon-Mail"></i>
                                 <input type="email" class="input-text" v-model="user.email"
-                                       id="email2" value="" required/>
+                                       id="email2" value="" required
+                                       oninvalid="this.setCustomValidity('Campo Requerido')"/>
                             </label>
                         </p>
                         <div class="notification warning" v-show="emailAlreadyExists">
@@ -149,7 +154,8 @@ let myLogin = Vue.component('my-login', {
                             <label for="password1">Contraseña:
                                 <i class="im im-icon-Lock-2"></i>
                                 <input minlength=4 class="input-text" type="password"
-                                       v-model="user.password" id="password1" required/>
+                                       v-model="user.password" id="password1" required
+                                       oninvalid="this.setCustomValidity('Campo Requerido')"/>
                             </label>
                         </p>
 
@@ -158,7 +164,8 @@ let myLogin = Vue.component('my-login', {
                                 <i class="im im-icon-Lock-2"></i>
                                 <input class="input-text" type="password"
                                        v-model="user.matchingPassword" 
-                                       ref="password2" required/>
+                                       ref="password2" required
+                                       oninvalid="this.setCustomValidity('Campo Requerido')"/>
                             </label>
 
                         </p>
@@ -252,7 +259,7 @@ let myLogin = Vue.component('my-login', {
             this.emailAlreadyExists = false;
             axios.post(this.registrationUrl, this.user)
                 .then((response) => {
-                    this.credentials.username = this.user.email;
+                    this.credentials.fullName = this.user.email;
                     this.credentials.password = this.user.password;
 
                     this.login();
