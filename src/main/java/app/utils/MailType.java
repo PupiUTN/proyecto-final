@@ -75,12 +75,12 @@ public enum MailType {
                 break;
 
             case REVIEW_REQUEST_TO_HOST:
-                text = "Tu Reserva como Cuidador a <b>finalizado</b><br>" +
+                text = "Tu Reserva como Cuidador ha <b>finalizado</b><br>" +
                         "Nos gustaría saber cómo te fue con la estadia.<br> " +
                         "Califica al Perro para ayudar a la comunidad.<br>";
                 break;
             case REVIEW_REQUEST_TO_USER:
-                text = "Tu Estadia en Pupi a <b>finalizado</b><br>" +
+                text = "Tu Estadia en Pupi ha <b>finalizado</b><br>" +
                         "Nos gustaría saber cómo te fue con la estadia.<br> " +
                         "Califica al Cuidador para ayudar a la comunidad.<br>";
                 break;
