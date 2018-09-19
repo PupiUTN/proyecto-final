@@ -50,7 +50,7 @@ let myLogin = Vue.component('my-login', {
                 
                 <ul>
                     <li><a v-on:click="micuenta()" ><i class="sl sl-icon-settings"></i> Mi cuenta</a></li>
-                    <li><a v-on:click="logout()"><i class="sl sl-icon-power"></i> Cerar Sesion</a></li>
+                    <li><a v-on:click="logout()"><i class="sl sl-icon-power"></i> Cerrar Sesion</a></li>
                 </ul>
             </div>
         </div>
