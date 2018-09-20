@@ -30,8 +30,7 @@ let mySidebar = Vue.component('my-sidebar', {
 					                    </li>
 					                    
 					  <li v-show="role === 'ROLE_CUIDADOR'""><a href="/views/estadisticas/estadistica.html"><i class="sl sl-icon-pie-chart"></i> Mis Estadisticas </a></li>
-					  
-					     <li v-show="role === 'ROLE_USER'"><a href="/views/cuidadores/alta-cuidador.html"><i class="sl sl-icon-user"></i> Convertirse</a></li>
+					  <li v-show="role === 'ROLE_USER'"><a href="/views/cuidadores/alta-cuidador.html"><i class="sl sl-icon-user"></i> Convertirse</a></li>
 				
 				</ul>  	
                 <ul v-show="role === 'ROLE_CUIDADOR'" data-submenu-title="Cuidador">
@@ -58,7 +57,8 @@ let mySidebar = Vue.component('my-sidebar', {
           
                 <ul v-show="role === 'ROLE_ADMIN'" data-submenu-title="Admin" >
                     <li><a href="/views/admin/moderar-cuidador.html"><i class="sl sl-icon-user"></i> Moderar Solicitud</a></li>
-                     <li><a href="/views/admin/estadisticas-admin.html"><i class="sl sl-icon-pie-chart"></i> Estadisticas</a></li>
+                    <li><a href="/views/admin/estadisticas-admin.html"><i class="sl sl-icon-pie-chart"></i> Estadisticas</a></li>
+                    <li><a href="/views/raza/raza.html"><i class="im im-icon-Dog"></i> Razas</a></li>
                    
                 </ul>
 

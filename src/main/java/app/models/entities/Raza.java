@@ -26,7 +26,8 @@ public class Raza implements Serializable {
     private Long id;
     @NotNull
     private String nombre;
-
+    @NotNull
+    private String estado = "CREADA";
     @Override
     public String toString() {
         return "Raza{" + "id=" + id + ", nombre=" + nombre + '}';
