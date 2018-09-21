@@ -1,5 +1,5 @@
 let myListaCuidadores = Vue.component('my-lista-cuidadores', {
-    // language=HTML
+    //language=HTML
     template: `
         <div class="fs-container">
             <div id="content" class="fs-inner-container content padding-top-0">
@@ -129,19 +129,6 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                                 </div>
                                 <!-- Panel Dropdown / End -->
                             </div>
-                            <!-- Filters / End -->
-                            <!-- sort by 
-                            <div class="dashboard-list-box">
-                                <!-- Sort by 
-                                <div class="sort-by" style="top: 0px">
-                                    <div class="sort-by-select">
-                                        <select class="chosen-select-no-single" v-on:change="ordenarPor" v-model="sortType">
-                                            <option v-for="orden in ordenarOpciones" :value="orden.value">{{orden.text}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- sort by / End -->
                         </div>
 
                     </section>
