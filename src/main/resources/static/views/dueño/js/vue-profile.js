@@ -287,9 +287,6 @@ Vue.component('my-profile', {
             if (!this.user.email) {
                 return;
             }
-            if (!this.user.username) {
-                return;
-            }
             if (this.user.profileImageUrl == "/img/no-avatar.png") {
                 return;
             }
