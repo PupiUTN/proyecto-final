@@ -31,6 +31,8 @@ public class Tamaño implements Serializable {
     private int valorMinimo;
     @NotNull
     private int valorMaximo;
+    @NotNull
+    private String estado = "ALTA";
 
 
     @Override

@@ -27,7 +27,8 @@ public class Vacuna implements Serializable {
     private Long id;
     @NotNull
     private String nombre;
-
+    @NotNull
+    private String estado = "ALTA";
     @Override
     public String toString() {
         return "Vacuna{" + "id=" + id + ", nombre=" + nombre + '}';

@@ -23,4 +23,20 @@ public class ServicioService {
     public List<Servicio> getServicios() {
         return servicioRepository.findAll();
     }
+
+    public Servicio createServicio(Servicio entity) {
+        return servicioRepository.save(entity);
+    }
+
+    public void deleteServicio(Long id) {
+        servicioRepository.delete(id);
+    }
+
+    public Servicio editServicio(Servicio entity) {
+        return servicioRepository.save(entity);
+    }
+
+    public Servicio getServicio(Long id) {
+        return servicioRepository.findOne(id);
+    }
 }

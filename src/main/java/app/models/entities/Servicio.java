@@ -21,7 +21,8 @@ public class Servicio implements Serializable {
     private Long id;
     @NotNull
     private String nombre;
-
+    @NotNull
+    private String estado = "ALTA";
 
     @Override
     public String toString() {
