@@ -255,7 +255,7 @@ Vue.component('my-comentarios-recibidos-list', {
         },
     computed: {
         listColor: function () {
-            return 'background: rgba(192,192,192,0.3); margin-bottom: 10px;';
+            return 'background: #f5f5f5; margin-bottom: 10px;';
         }
 
     }

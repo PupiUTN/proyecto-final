@@ -20,8 +20,8 @@ Vue.component('my-reservas-user-list', {
     
 
    <div class="row" v-if="status === 'rechazada-cuidador' || status ==='rechazada-dueño'" >
-    <a id="btn1" v-on:click="buscarCanceladasxCuid()" style="background-color: inherit; color: black; border-color: black; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  'rgba(159, 195, 249)' : ''}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
-    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="background-color: inherit; color: black; border-color: black; background: rgba(159, 195, 249)" href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 1 ?  'rgba(159, 195, 249)' : ''}"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
+    <a id="btn1" v-on:click="buscarCanceladasxCuid()" style="background-color: inherit; color: black; border-color: black; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  '#e3f2fd' : ''}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
+    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="background-color: inherit; color: black; border-color: black; background: #e3f2fd" href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 1 ?  '#e3f2fd' : ''}"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
 </div>
 		<div class="row">
 			
@@ -352,19 +352,22 @@ Vue.component('my-reservas-user-list', {
         },
         listColor: function () {
             if (this.status == 'creada-dueño') {
-                return 'background: rgba(0,255,0,0.3); margin-bottom: 10px;'
+                // verde
+                return 'background: #c8e6c9; margin-bottom: 10px;'
             }
             if (this.status == 'rechazada-cuidador') {
-                return 'background: rgba(192,192,192); margin-bottom: 10px;'
+                return 'background: #f5f5f5); margin-bottom: 10px;'
             }
             if (this.status == 'rechazada-dueño') {
-                return 'background: rgba(192,192,192); margin-bottom: 10px;'
+                return 'background: #f5f5f5); margin-bottom: 10px;'
             }
             if (this.status == 'aceptada-cuidador') {
-                return 'background: rgba(0,0,255,0.3); margin-bottom: 10px;'
+                // amarilla
+                return 'background: #fffde7; margin-bottom: 10px;'
             }
             if (this.status == 'pagada-dueño') {
-                return 'background: rgba(159, 195, 249); margin-bottom: 10px;'
+                // azul
+                return 'background: #e3f2fd; margin-bottom: 10px;'
 
             }
             if (this.status == 'finalizada') {
@@ -372,11 +375,12 @@ Vue.component('my-reservas-user-list', {
 
             }
             if (this.status == 'cerrada') {
-                return 'background: rgba(192,192,192,0.3); margin-bottom: 10px;'
+                return 'background: #f5f5f5; margin-bottom: 10px;'
 
             }
             if (this.status == 'ejecucion') {
-                return 'background: rgba(255, 219, 164); margin-bottom: 10px;'
+                // rojo
+                return 'background: #ffebee; margin-bottom: 10px;'
             }
         }
 
