@@ -293,7 +293,7 @@ Vue.component('my-detalle-reserva', {
             <a v-on:click="confirmarReservaButton()"  style="background-color: inherit; color: blue; border-color: blue; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Confirmar</a>
         
         </div>
-            <div class="col-xs-5 col-md-6" v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'ejecucion'" >
+            <div class="col-xs-5 col-md-6" v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'ejecucion' && reserva.status !== 'pagada-dueño'" >
             <a v-on:click="cancelarReservaActionButton()"  hstyle="background-color: inherit;" ref="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Cancelar</a>
         </div>
         

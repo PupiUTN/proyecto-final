@@ -167,6 +167,7 @@ Vue.component('my-reservas-user-list', {
         getUserReservas() {
             this.gridReservas = [];
             this.contadorReservas = 0;
+            this.offset = 0;
             axios.get('/api/user/me/reservas?status=' + this.status)
                 .then((response) => {
                     this.reservas = response.data;
