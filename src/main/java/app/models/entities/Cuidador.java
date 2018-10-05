@@ -42,6 +42,8 @@ public class Cuidador implements Serializable {
     private int cantidadReviews;
     private int promedioReviews;
     private int cantidadVisitas;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<CalendarioCuidador> calendarioCuidadorList;
     @Transient
     private double ponderacion;
 
