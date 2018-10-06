@@ -6,7 +6,7 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
     <div id="titlebar">
         <div class="row">
             <div class="col-md-12">
-                <h2>Nuevo Perro</h2>
+                <h2>{{mensaje}}</h2>
             </div>
         </div>
     </div>
@@ -102,6 +102,7 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
             raza: {},
             tamaño: {},
             idPerro:'',
+            mensaje: '',
         }
     },
     mounted() {
@@ -166,6 +167,11 @@ let myPerrosRegistrar = Vue.component('my-perros-registrar', {
                     if(this.idPerro !== null && this.idPerro >0){
 
                         this.getPerro();
+                        this.mensaje = 'Editar Perro';
+                    }
+                    else {
+                        this.mensaje = 'Nuevo Perro';
+
                     }
                     this.getRazas();
                     this.getTamaños();

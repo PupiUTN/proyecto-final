@@ -237,7 +237,7 @@ Vue.component('my-detalle-reserva', {
                         
                         <div class="comment-content">
 
-                            <div class="comment-by">{{calificacion.reserva.cuidador.user.username}}<span class="date"></span>
+                            <div class="comment-by">{{calificacion.reserva.cuidador.user.fullName}}<span class="date"></span>
                                     <div class="col-md-3 star-rating" >
                                         <span v-bind:class="{'star': calificacion.puntaje >= 1, 'star empty': calificacion.puntaje < 1 }" ></span>
                                         <span v-bind:class="{'star': calificacion.puntaje >= 2, 'star empty': calificacion.puntaje < 2 }"></span>
@@ -363,6 +363,7 @@ Vue.component('my-detalle-reserva', {
                         user: {
                             profileImageUrl: '',
                             username: '',
+                            fullName:''
                         }
                     },
                     fechaTransaccion: '',
