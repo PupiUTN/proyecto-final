@@ -89,7 +89,7 @@ Vue.component('my-reservas-cuidador-list', {
 
 
                                     <div class="col-xs-12 col-md-3"
-                                         v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'comentario-dueño' && reserva.status !== 'finalizada' && reserva.status !== 'cerrada' && reserva.status !=='rechazada-dueño' && reserva.status !== 'ejecucion'" >
+                                         v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'comentario-dueño' && reserva.status !== 'finalizada' && reserva.status !== 'cerrada' && reserva.status !=='rechazada-dueño' && reserva.status !== 'ejecucion' && reserva.status !== 'pagada-dueño'" >
                                         <a v-on:click="cancelarReservaActionButton(index)" style="background-color: inherit; color: red;"
                                            href="#" class="button medium border pull-right"><i
                                                 class="sl sl-icon-docs"></i> Cancelar</a>
@@ -224,6 +224,7 @@ Vue.component('my-reservas-cuidador-list', {
             },
             getCuidadorReservas() {
                 this.gridReservas = [];
+                this. offset = 0;
                 this.contadorReservas = 0;
                 axios.get('/api/cuidador/me/reservas?status=' + this.status)
                     .then((response) => {

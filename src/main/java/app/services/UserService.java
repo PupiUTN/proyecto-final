@@ -123,4 +123,10 @@ public class UserService extends AbstractRestClientService {
     }
 
 
+    public  Long getTotalDueños()
+    {
+
+        return repository.getTotalDueños();
+    }
+
 }

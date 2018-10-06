@@ -85,6 +85,17 @@ Vue.component('admin-dashboard', {
 
 				</div>
 				
+				<div class="plan">
+
+					<div class="plan-price">
+						<h3>Dueños</h3>
+						<span class="value">{{estadisticas.totalDueños}}</span>
+						<span class="period"></span>
+					</div>
+
+
+				</div>
+				
 					<div class="plan">
 
 					<div class="plan-price">
@@ -166,6 +177,7 @@ Vue.component('admin-dashboard', {
             estadisticas:{
                  totalReservas: 0,
          totalDenuncias: 0,
+         totalDueños: 0,
          totalSolicitudes: 0,
          totalCalificaciones: 0,
          totalPerros: 0,
@@ -230,6 +242,7 @@ Vue.component('admin-dashboard', {
                     this.estadisticas.totalDenuncias = response.data.totalDenuncias.toString();
                     this.estadisticas.totalSolicitudes = response.data.totalSolicitudes.toString();
                     this.estadisticas.totalCalificaciones = response.data.totalCalificaciones.toString();
+                    this.estadisticas.totalDueños = response.data.totalDueños.toString();
                     this.estadisticas.totalPerros = response.data.totalPerros;
                     this.estadisticas.totalCuidadores = response.data.totalCuidadores;
                     this.estadisticas.totalDineroActual = response.data.totalDineroActual;

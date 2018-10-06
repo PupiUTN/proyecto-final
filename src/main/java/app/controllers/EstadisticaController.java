@@ -311,9 +311,10 @@ public class EstadisticaController {
         int cont = 0;
 
         ArrayList<Integer> aux = new ArrayList<>();
+        ArrayList<String> estados = getEstadosReserva();
         for (Reserva item : reservas) {
 
-            if (item.getPerro().getId().equals(id) && isReservaConcretada(item.getStatus())) {
+            if (item.getPerro().getId().equals(id) && isReservaConcretada(item.getStatus(),estados)) {
                 if (cont == 0) {
                     aux.add(item.getCuidador().getId().intValue());
                     cont++;
@@ -333,18 +334,24 @@ public class EstadisticaController {
         return cont;
     }
 
-    private boolean isReservaConcretada(String item) {
-        ArrayList<String> estados = new ArrayList<>();
-        estados.add(EstadoReserva.PAGADA_DUEÑO.getStatus());
-        estados.add(EstadoReserva.COMENTARIO_CUIDADOR.getStatus());
-        estados.add(EstadoReserva.COMENTARIO_DUEÑO.getStatus());
-        estados.add(EstadoReserva.FINALZADA.getStatus());
-        estados.add(EstadoReserva.CERRADA.getStatus());
-        estados.add(EstadoReserva.EJECUCION.getStatus());
-
+    private boolean isReservaConcretada(String item, ArrayList<String>  estados) {
       return estados.contains(item);
 
     }
+
+
+      private  ArrayList<String> getEstadosReserva()
+      {
+          ArrayList<String> estados = new ArrayList<>();
+          estados.add(EstadoReserva.COMENTARIO_CUIDADOR.getStatus());
+          estados.add(EstadoReserva.COMENTARIO_DUEÑO.getStatus());
+          estados.add(EstadoReserva.FINALZADA.getStatus());
+          estados.add(EstadoReserva.CERRADA.getStatus());
+          estados.add(EstadoReserva.EJECUCION.getStatus());
+          return estados;
+
+
+      }
 
 
 }
