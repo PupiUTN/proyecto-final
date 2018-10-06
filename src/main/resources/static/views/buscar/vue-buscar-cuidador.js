@@ -75,8 +75,22 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
 
                         axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.placeLat + ',' + this.placeLng + '&sensor=true&key=AIzaSyBThXWEOGFIHdjSoweslrHBjFLVG9KA1fQ')
                         .then((data) => {
-                            console.log(data.data);
-                            var city = data.data.results[1];
+                            console.log(data.data.results);
+                            var city = null;
+                            console.log(city);
+
+                            for (var i = 0; i < data.data.results.length; i++){
+                                console.log(data.data.results[i].types);
+                                for (var j=0; j < data.data.results[i].types.length; j++){
+                                    if (data.data.results[i].types[j]== "locality") {
+                                        city = data.data.results[i];
+                                        break;
+                                    }
+                                }
+                                if(city != null){
+                                    break;
+                                }
+                            }
                             vm.$refs.myIndex.$refs.currentView.$refs.myBuscarCuidadores.placeID = city.place_id;
                             vm.$refs.myIndex.$refs.currentView.$refs.myBuscarCuidadores.placeLat = city.geometry.location.lat;
                             vm.$refs.myIndex.$refs.currentView.$refs.myBuscarCuidadores.placeLng = city.geometry.location.lng;
@@ -87,7 +101,6 @@ var myBuscarCuidadores = Vue.component('my-buscar-cuidadores', {
                         });
                 });
             }
-            ;
         },
         setPlaceId(addressData, placeResultData) {
             this.placeID = placeResultData.place_id;

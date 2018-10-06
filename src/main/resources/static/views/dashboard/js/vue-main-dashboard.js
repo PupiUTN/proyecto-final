@@ -8,15 +8,15 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12 col-xs-12">
-					<h2> Bienvenido {{estadisticas.nombre}} !</h2> <h2> </h2> 
+					<h2> Bienvenido {{estadisticas.nombre}} !</h2>
 				</div>
 			</div>
 		</div>
 		<!-- Content -->
 		<div class="row">
 			<div class="col-md-12 col-xs-12">			    
-				<div class="notification success closeable margin-bottom-30 ">
-					<p> <strong>{{banner}}</strong>!</p>    					                    <!-- <a class="close" href="#"></a>-->
+				<div class="notification closeable margin-bottom-30{{}} ">
+					<p> <strong>{{banner}}</strong></p>    					              
 			</div>
 			
 			</div>
@@ -209,8 +209,16 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 
                 })
                 .catch(error => {
-                    console.log(error);
-                    sweetAlert("Oops...", "Error, ver consola", "error");
+                    sweetAlert({
+                            title: "Error",
+                            text: "No se pudo recuperar la información",
+                            type: "error",
+                            confirmButtonText: "Aceptar",
+                            closeOnConfirm: false,
+                        },
+                        function () {
+                                window.location.href = "/";
+                        });
                 });
         },
         getUserEstadistica() {

@@ -24,6 +24,10 @@
         #dashboard {
             background-color: #f919420d;
         }
+
+        .messages-container {
+            background-color: transparent;
+        }
     </style>
 
 </head>
@@ -33,7 +37,7 @@
 <!-- Wrapper -->
 <div id="wrapper">
     <div id="page-loader"></div>
-    <my-dashboard current-view="my-comentarios-realizados-list" ref="myComentariosRealizadosList"></my-dashboard>
+    <my-dashboard current-view="mi-calendario-cuidador" ref="miCalendarioCuidador"></my-dashboard>
 </div>
 <!-- Wrapper / End -->
 
@@ -63,11 +67,17 @@
 <script type="text/javascript" src="/views/dashboard/js/vue-header.js"></script>
 <script type="text/javascript" src="/views/dashboard/js/vue-sidebar.js"></script>
 <!--own-->
-<script src="js/my-comentarios-realizados-list.js"></script>
+<script src="js/vue-mi-calendario-cuidador.js"></script>
 
 
 <!--INIT-->
 <script type="text/javascript" src="/views/dashboard/js/vue-dashboard-template.js"></script>
+
+<!-- NEW DATE PICKER -->
+<link href="/css/hotel-datepicker.css" rel="stylesheet">
+<script src="/js/fecha.min.js"></script>
+<script src="/js/hotel-datepicker.min.js"></script>
+<script src="/views/buscar/vue-hotel-datepicker.js"></script>
 
 <script>
     let vm = new Vue({

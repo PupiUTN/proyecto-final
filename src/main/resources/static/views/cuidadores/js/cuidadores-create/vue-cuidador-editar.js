@@ -1,9 +1,10 @@
 Vue.component('my-cuidador-edit', {
+    //language=HTML
     template:
-        `
-<div>
-                <!-- Titlebar -->
-             <div id="titlebar">
+            `
+        <div>
+            <!-- Titlebar -->
+            <div id="titlebar">
                 <div class="row">
                     <div class="col-md-12">
                         <h2><b>Cuidador:</b> Mi Descripción</h2>
@@ -16,17 +17,17 @@ Vue.component('my-cuidador-edit', {
             </div>
 
             <form   method="post" class="editCuidador" v-on:submit.prevent='editCuidador()'>
-            <!-- Titlebar -->
+                <!-- Titlebar -->
 
 
-            <!--<div class="row">-->
+                <!--<div class="row">-->
 
 
                 <div class="col-lg-6 col-md-12" >
                     <div class="dashboard-list-box margin-top-0">
                         <h4 class="gray"> 	<i class="fa fa-paw"></i>	 Precios </h4>
                         <div class="dashboard-list-box-static"      style="height: 515px; ">
-                            Recuerda que Pupi cobra una comisión del 25% del total de la tarifa que estableces en cada servicio, de los cuales mercado pago retiene el 5%
+                            Recuerda que Pupi cobra una comisión del 25% del total de la tarifa que estableces en cada servicio, de los cuales <strong>Mercado Pago </strong> retiene el 5%
                             <!-- Change Password -->
                             <div class="my-profile">
 
@@ -44,9 +45,7 @@ Vue.component('my-cuidador-edit', {
                         </div>
                     </div>
                 </div>
-
-
-
+                
                 <div class="col-lg-6 col-md-12">
                     <div class="dashboard-list-box margin-top-0">
                         <h4 class="gray"> 	<i class="fa fa-paw"></i> Descripcion </h4>
@@ -72,7 +71,7 @@ Vue.component('my-cuidador-edit', {
                             <div class="my-profile">
                                 <label class="margin-top-0">Mi descripcion</label>
                                 <textarea v-model="cuidador.descripcion"  rows="4" cols="50" maxlength="1000"  placeholder="Descripcion" required>
-                               </textarea>
+                                </textarea>
                             </div>
 
                         </div>
