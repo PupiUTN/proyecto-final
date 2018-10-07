@@ -27,9 +27,11 @@ Vue.component('my-reservas-cuidador-list', {
                  <div v-if="status === 'ejecucion'">
                     <h2><b>Cuidador:</b>  Reservas en curso</h2>
                 </div>
+                
+                <p>{{ descripcionReservaCreada }}</p>
             </div>
         </div>
-    </div>
+    </div>              
      <div class="row">
             <div class="col-md-12">            
              <h4> Reservas : {{contadorReservas}} </h4>
@@ -429,6 +431,17 @@ Vue.component('my-reservas-cuidador-list', {
             if (this.status == 'ejecucion') {
                 return 'background: #ffebee; margin-bottom: 10px;'
             }
+        },
+        descripcionReservaCreada : function (){
+
+            if (this.status == 'creada-dueño') {
+                return ' Recordá que tenes 72 hs para aceptar o rechazar la solicitud, sino la reserva se cancelará'
+            }
+            else
+            {
+                return '' ;
+            }
+
         }
 
     }
