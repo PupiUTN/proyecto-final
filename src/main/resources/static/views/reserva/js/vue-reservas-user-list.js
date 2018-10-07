@@ -9,6 +9,8 @@ Vue.component('my-reservas-user-list', {
 				<div class="col-md-12">
 					<h2>{{ tipoDeReservas }}</h2>
 					<p>{{ tipoDeReservasDescripcion }}</p>
+					
+					<p>{{ descripcionReservaAceptada }}</p>
 				</div>
 			</div>
 		</div>
@@ -141,7 +143,8 @@ Vue.component('my-reservas-user-list', {
                 gridReservas: [],
                 perPage: 3,
                 countPages: 1,
-                contadorReservas: 0
+                contadorReservas: 0,
+
 
             }
         },
@@ -383,7 +386,19 @@ Vue.component('my-reservas-user-list', {
                 // rojo
                 return 'background: #ffebee; margin-bottom: 10px;'
             }
+        },
+        descripcionReservaAceptada : function (){
+
+            if (this.status == 'aceptada-cuidador') {
+                return ' Recordá que tenes 72 hs para realizar el pago, sino la reserva se cancelará'
+            }
+            else
+            {
+                return '' ;
+            }
+
         }
+
 
     }
 });
