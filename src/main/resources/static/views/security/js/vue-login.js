@@ -98,7 +98,6 @@ let myLogin = Vue.component('my-login', {
                                        v-model="credentials.username"
                                        id="email"
                                        value=""
-                                       oninvalid="this.setCustomValidity('Debe ingresar su Email')"
                                        required/>
                             </label>
                         </p>
@@ -108,7 +107,6 @@ let myLogin = Vue.component('my-login', {
                                 <i class="im im-icon-Lock-2"></i>
                                 <input class="input-text" type="password"
                                        v-model="credentials.password"
-                                       oninvalid="this.setCustomValidity('Debe ingresar su Contraseña')"
                                        id="password" required/>
                             </label>
                         </p>
@@ -134,7 +132,7 @@ let myLogin = Vue.component('my-login', {
                                 <i class="im im-icon-Male"></i>
                                 <input type="fullName" class="input-text" v-model="user.fullName"
                                        id="fullName" value="" required
-                                       oninvalid="this.setCustomValidity('Campo Requerido')"/>
+                                       />
                             </label>
                         </p>
                         
@@ -143,7 +141,7 @@ let myLogin = Vue.component('my-login', {
                                 <i class="im im-icon-Mail"></i>
                                 <input type="email" class="input-text" v-model="user.email"
                                        id="email2" value="" required
-                                       oninvalid="this.setCustomValidity('Campo Requerido')"/>
+                                       />
                             </label>
                         </p>
                         <div class="notification warning" v-show="emailAlreadyExists">
@@ -155,7 +153,7 @@ let myLogin = Vue.component('my-login', {
                                 <i class="im im-icon-Lock-2"></i>
                                 <input minlength=4 class="input-text" type="password"
                                        v-model="user.password" id="password1" required
-                                       oninvalid="this.setCustomValidity('Campo Requerido')"/>
+                                       />
                             </label>
                         </p>
 
@@ -164,8 +162,7 @@ let myLogin = Vue.component('my-login', {
                                 <i class="im im-icon-Lock-2"></i>
                                 <input class="input-text" type="password"
                                        v-model="user.matchingPassword" 
-                                       ref="password2" required
-                                       oninvalid="this.setCustomValidity('Campo Requerido')"/>
+                                       ref="password2" required/>
                             </label>
 
                         </p>
@@ -235,10 +232,10 @@ let myLogin = Vue.component('my-login', {
                     this.getUserProfile();
                 })
                 .catch(error => {
-                    console.log("login error");
-                    this.loginLoading = false;
-                    this.loginError = true;
-                    console.log(error);
+                        console.log("login error");
+                        this.loginLoading = false;
+                        this.loginError = true;
+                        console.log(error);
                     }
                 );
         },
@@ -281,6 +278,7 @@ let myLogin = Vue.component('my-login', {
         },
         resetVueJsData() {
             Object.assign(this.$data, getDefaultData())
+            this.isMounted = true;
         },
         openLoginPopUp() {
             var magnificPopup = $.magnificPopup.instance;
@@ -303,15 +301,19 @@ let myLogin = Vue.component('my-login', {
     ,
     computed: {
         matchingPassword() {
-            if (!this.isMounted)
-                return;
+            if (!this.isMounted) return;
             var confirm_password = this.$refs.password2;
-            if (this.user.matchingPassword !== this.user.password && this.user.matchingPassword !== '') {
-                confirm_password.setCustomValidity("Passwords Don't Match");
-                return true;
+            if (confirm_password) {
+                if (this.user.matchingPassword !== this.user.password && this.user.matchingPassword) {
+                    confirm_password.setCustomValidity("Passwords Don't Match");
+                    return true;
+                }
+                confirm_password.setCustomValidity("");
+                return false;
             }
-            confirm_password.setCustomValidity("");
             return false;
+
+
         }
     },
     watch: {
