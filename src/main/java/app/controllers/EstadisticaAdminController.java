@@ -3,11 +3,9 @@ package app.controllers;
 import app.models.entities.Cuidador;
 import app.models.entities.EstadisticaAdmin;
 import app.models.entities.Reserva;
-import app.services.CalificacionService;
-import app.services.CuidadorService;
-import app.services.PerroService;
-import app.services.ReservaService;
+import app.services.*;
 import app.utils.EstadoReserva;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,13 +28,15 @@ public class EstadisticaAdminController {
     private final CuidadorService cuidadorService;
     private final PerroService perroService;
     private final CalificacionService calificacionService;
+    private final UserService userService;
 
-
-    public EstadisticaAdminController(ReservaService reservaService, CuidadorService cuidadorService, PerroService perroService, CalificacionService calificacionService) {
+    @Autowired
+    public EstadisticaAdminController(ReservaService reservaService, CuidadorService cuidadorService, PerroService perroService, CalificacionService calificacionService, UserService userService) {
         this.reservaService = reservaService;
         this.cuidadorService = cuidadorService;
         this.perroService = perroService;
         this.calificacionService = calificacionService;
+        this.userService = userService;
 
     }
 
@@ -51,6 +51,7 @@ public class EstadisticaAdminController {
         Long CantCuidadores = cuidadorService.getTotalCuidadores();
         int cantSolicitudes = cuidadorService.getSolicitudes().size();
         Long CantCalificaciones = calificacionService.getTotalCalificaciones();
+        Long cantDueños = userService.getTotalDueños();
         int totalDenuncias = 1;
         Double cont = 0.0;
         if (reservas.size() > 0) {
@@ -76,6 +77,7 @@ public class EstadisticaAdminController {
             estadisticaAdmin.setTotalSolicitudes(cantSolicitudes);
             estadisticaAdmin.setTotalCalificaciones(CantCalificaciones);
             estadisticaAdmin.setTotalDenuncias(totalDenuncias);
+            estadisticaAdmin.setTotalDueños(cantDueños);
             estadisticaAdmin.setReservas(aux);
 
         }
