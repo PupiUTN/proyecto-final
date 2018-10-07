@@ -33,6 +33,12 @@ public class ReservaService {
     }
 
     public List<Reserva> getReservasByUserIdAndStatus(Long id, String status) {
+
+        if (status.equals("cerrada")) {
+            String var2 = "comentario-dueño";
+            return reservaRepository.findAllByUserAndStatusFinalizada(id, status, var2);
+        }
+
         if (status.equals("finalizada")) {
             String var1 = "comentario-cuidador";
             return reservaRepository.findAllByUserAndStatusFinalizada(id, status, var1);
@@ -40,6 +46,8 @@ public class ReservaService {
         } else {
             return reservaRepository.findAllByUserAndStatus(id, status);
         }
+
+
     }
 
     public Reserva getReserva(Long id) {
@@ -79,6 +87,12 @@ public class ReservaService {
     }
 
     public List<Reserva> getReservasByCuidadorIdAndStatus(Long id, String status) {
+
+        if (status.equals("cerrada")) {
+            String var2 = "comentario-cuidador";
+            return reservaRepository.findAllByUserAndStatusFinalizada(id, status, var2);
+        }
+
         if (status.equals("finalizada")) {
             String var1 = "comentario-dueño";
             return reservaRepository.findAllByCuidadorAndStatusFinalizada(id, status, var1);
