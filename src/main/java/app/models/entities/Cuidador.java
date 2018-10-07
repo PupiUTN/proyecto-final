@@ -70,4 +70,8 @@ public class Cuidador implements Serializable {
                 ", dni=" + dni +
                 '}';
     }
+
+    public int getPonderacion(){
+        return  (this.cantidadReviews/2) * (int) (Math.pow(this.promedioReviews, 2));
+    }
 }
