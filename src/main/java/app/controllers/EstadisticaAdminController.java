@@ -72,15 +72,16 @@ public class EstadisticaAdminController {
 
             }
             estadisticaAdmin.setTotalDineroActual(df.format(cont * 0.2));
-            estadisticaAdmin.setTotalPerros(cantPerros);
-            estadisticaAdmin.setTotalCuidadores(CantCuidadores);
-            estadisticaAdmin.setTotalSolicitudes(cantSolicitudes);
-            estadisticaAdmin.setTotalCalificaciones(CantCalificaciones);
-            estadisticaAdmin.setTotalDenuncias(totalDenuncias);
-            estadisticaAdmin.setTotalDueños(cantDueños);
+
             estadisticaAdmin.setReservas(aux);
 
         }
+        estadisticaAdmin.setTotalPerros(cantPerros);
+        estadisticaAdmin.setTotalCuidadores(CantCuidadores);
+        estadisticaAdmin.setTotalSolicitudes(cantSolicitudes);
+        estadisticaAdmin.setTotalCalificaciones(CantCalificaciones);
+        estadisticaAdmin.setTotalDenuncias(totalDenuncias);
+        estadisticaAdmin.setTotalDueños(cantDueños);
 
         return estadisticaAdmin;
     }
