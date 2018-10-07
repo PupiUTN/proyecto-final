@@ -146,7 +146,7 @@ Vue.component('my-profile', {
         },
         completar() {
             this.place = this.autocomplete.getPlace();
-            //console.log(this.place);
+            console.log("hola");
             if (this.place.types && this.place.types[0] != "street_address") {//si es direccion, tiene qie tener numero
                 sweetAlert("Información", "Ingrese una dirección válida (Calle Número, Ciudad, Provincia)", "info");
                 return;
@@ -193,10 +193,24 @@ Vue.component('my-profile', {
             var lng = this.direccion.longitud.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
             axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=true&key=AIzaSyBThXWEOGFIHdjSoweslrHBjFLVG9KA1fQ')
                 .then((data) => {
-                    console.log('obtener cuidad place id a partir de la direccion', data);
-                    var city = data.data.results[1];
+                    console.log(data.data.results);
+                    var city = null;
+                    console.log(city);
+
+                    for (var i = 0; i < data.data.results.length; i++){
+                        console.log(data.data.results[i].types);
+                        for (var j=0; j < data.data.results[i].types.length; j++){
+                            if (data.data.results[i].types[j]== "locality") {
+                                city = data.data.results[i];
+                                break;
+                            }
+                        }
+                        if(city != null){
+                            break;
+                        }
+                    }
                     this.direccion.ciudadPlaceId = city.place_id;
-                    //console.log(this.direccion);
+                    console.log(this.direccion);
                 });
         },
         filesChange(fileList) {
