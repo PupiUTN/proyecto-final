@@ -7,7 +7,7 @@ spring:
         validationQuery: 'SELECT 1'
     jpa:
         hibernate:
-            ddl-auto: update
+            ddl-auto: none
             naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
         show-sql: true
         properties:
