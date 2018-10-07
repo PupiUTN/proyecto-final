@@ -69,13 +69,13 @@ Vue.component('my-profile', {
                 <div class="my-profile">
                     <input id="autocomplete" type="text" placeholder="Ingrese su dirección">
                     <label class="margin-top-0">Número</label>
-                    <input v-model="direccion.numero" type="number" class="street_number" :disabled="disabled" >
+                    <input v-model="direccion.numero" type="number" class="street_number" :disabled="disabled" required>
                     <label class="margin-top-0">Calle</label>
-                    <input v-model="direccion.calle" type="text" class="route" :disabled="disabled" >
+                    <input v-model="direccion.calle" type="text" class="route" :disabled="disabled" required>
                     <label class="margin-top-0">Ciudad (salvo CABA)</label>
-                    <input v-model="direccion.ciudad" type="text" class="locality sublocality_level_1" :disabled="disabled" >
+                    <input v-model="direccion.ciudad" type="text" class="locality sublocality_level_1" :disabled="disabled" required>
                     <label class="margin-top-0">Provincia</label>
-                    <input v-model="direccion.provincia" type="text" class="administrative_area_level_1" :disabled="disabled" >
+                    <input v-model="direccion.provincia" type="text" class="administrative_area_level_1" :disabled="disabled" required>
                 </div>
             </div>
         </div>
@@ -191,9 +191,9 @@ Vue.component('my-profile', {
             this.direccion.placeId = this.place.id;
             var lat = this.direccion.latitud.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
             var lng = this.direccion.longitud.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
-            axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=true')
+            axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=true&key=AIzaSyBThXWEOGFIHdjSoweslrHBjFLVG9KA1fQ')
                 .then((data) => {
-                    //console.log(data.data);
+                    console.log('obtener cuidad place id a partir de la direccion', data);
                     var city = data.data.results[1];
                     this.direccion.ciudadPlaceId = city.place_id;
                     //console.log(this.direccion);
@@ -242,9 +242,6 @@ Vue.component('my-profile', {
                 if (this.user.direccion != null) {
                     this.direccion = this.user.direccion;
                 }
-                this.frontEndDateFormat();
-                console.log(this.user.birthday);
-
             }
             else {
                 console.log(sessionInfo.status + "|" + sessionInfo.statusText);
@@ -253,7 +250,6 @@ Vue.component('my-profile', {
         },
         editUserInfo() {
             //MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
-            this.backEndDateFormat();
             console.log(this.user.birthday);
             this.user.direccion = this.direccion;
             this.isUserCompleted();
@@ -271,7 +267,6 @@ Vue.component('my-profile', {
                             window.location.href = "/views/dueño/perfil.html";
                         }
                     );
-                    this.frontEndDateFormat();
                     console.log(response);
                 })
                 .catch(error => {
@@ -309,17 +304,6 @@ Vue.component('my-profile', {
             this.user.status = "COMPLETED";
 
 
-        },
-        frontEndDateFormat() {
-
-            console.log(this.user.birthday);
-            //MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
-            this.user.birthday = fecha.format(fecha.parse(this.user.birthday, 'YYYY/MM/DD'), 'YYYY-MM-DD');
-        },
-        backEndDateFormat() {
-            console.log(this.user.birthday);
-            //MUY IMPORTANTE, EL FORMATO EN FRONT Y EN BACK DEBE SER EL MISMO
-            this.user.birthday = fecha.format(fecha.parse(this.user.birthday, 'YYYY/MM/DD'), 'YYYY-MM-DD');
         },
         SetFechaMaximaNacimiento()
         {

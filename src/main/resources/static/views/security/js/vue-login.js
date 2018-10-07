@@ -235,9 +235,10 @@ let myLogin = Vue.component('my-login', {
                     this.getUserProfile();
                 })
                 .catch(error => {
-                        this.loginLoading = false;
-                        this.loginError = true;
-                        console.log(error);
+                    console.log("login error");
+                    this.loginLoading = false;
+                    this.loginError = true;
+                    console.log(error);
                     }
                 );
         },
@@ -259,16 +260,11 @@ let myLogin = Vue.component('my-login', {
             this.emailAlreadyExists = false;
             axios.post(this.registrationUrl, this.user)
                 .then((response) => {
-                    this.credentials.fullName = this.user.email;
+                    this.credentials.username = this.user.email;
                     this.credentials.password = this.user.password;
-
                     this.login();
                     console.log("registro exitoso");
                     sweetAlert("Exito", "Registro exitoso. ", "success");
-                    // var magnificPopup = $.magnificPopup.instance;
-                    // // save instance in magnificPopup variable
-                    // magnificPopup.close();
-                    // Close popup that is currently opened
                     this.resetVueJsData();
                 })
                 .catch(error => {
