@@ -8,7 +8,7 @@ drop table cuidador_lista_servicios;
 
 drop table denuncia;
 
-drop table owner;
+drop table user;
 
 drop table payment;
 

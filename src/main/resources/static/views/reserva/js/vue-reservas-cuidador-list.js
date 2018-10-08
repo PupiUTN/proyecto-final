@@ -19,7 +19,7 @@ Vue.component('my-reservas-cuidador-list', {
                     <h2><b>Cuidador:</b> Mis reservas Pagadas</h2>
                 </div>
                 <div v-if="status === 'finalizada'">
-                    <h2><b>Cuidador:</b>  Finalizadas y Pendientes de Calificacion</h2>
+                    <h2><b>Cuidador:</b>  Pendientes de Calificacion</h2>
                 </div>
                 <div v-if="status === 'cerrada'">
                     <h2><b>Cuidador:</b>  Finalizadas </h2>
@@ -405,31 +405,36 @@ Vue.component('my-reservas-cuidador-list', {
         },
         listColor: function () {
             if (this.status == 'creada-dueño') {
-                return 'background: #c8e6c9; margin-bottom: 10px;'
-            }
-            if (this.status == 'rechazada-cuidador') {
-                return 'background: #f5f5f5); margin-bottom: 10px;'
-            }
-            if (this.status == 'rechazada-dueño') {
-                return 'background: #f5f5f5); margin-bottom: 10px;'
-            }
-            if (this.status == 'aceptada-cuidador') {
+                // amarilla
                 return 'background: #fffde7; margin-bottom: 10px;'
             }
+            if (this.status == 'aceptada-cuidador') {
+                // Lime
+                return 'background: #f0f4c3; margin-bottom: 10px;'
+            }
             if (this.status == 'pagada-dueño') {
-                return 'background: #e3f2fd; margin-bottom: 10px;'
-
-            }
-            if (this.status == 'finalizada') {
-                return 'background: rgba(255,255,0,0.3); margin-bottom: 10px;'
-
-            }
-            if (this.status == 'cerrada') {
-                return 'background: #f5f5f5; margin-bottom: 10px;'
-
+                // verde
+                return 'background: #c8e6c9; margin-bottom: 10px;'
             }
             if (this.status == 'ejecucion') {
+                // azul
+                return 'background: #e3f2fd; margin-bottom: 10px;'
+            }
+            if (this.status == 'rechazada-cuidador') {
+                // rojo
                 return 'background: #ffebee; margin-bottom: 10px;'
+            }
+            if (this.status == 'rechazada-dueño') {
+                // rojo
+                return 'background: #ffebee; margin-bottom: 10px;'
+            }
+            if (this.status == 'finalizada') {
+                // marron -- pendiente review
+                return 'background: #d7ccc8; margin-bottom: 10px;'
+            }
+            if (this.status == 'cerrada') {
+                // gris
+                return 'background: #cfd8dc; margin-bottom: 10px;'
             }
         },
         descripcionReservaCreada : function (){

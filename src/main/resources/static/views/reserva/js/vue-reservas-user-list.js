@@ -8,9 +8,9 @@ Vue.component('my-reservas-user-list', {
 			<div class="row">
 				<div class="col-md-12">
 					<h2>{{ tipoDeReservas }}</h2>
-					<p>{{ tipoDeReservasDescripcion }}</p>
-					
-					<p>{{ descripcionReservaAceptada }}</p>
+					<p>{{ tipoDeReservasDescripcion }} </br>
+					{{ descripcionReservaAceptada }}
+					</p>
 				</div>
 			</div>
 		</div>
@@ -65,7 +65,7 @@ Vue.component('my-reservas-user-list', {
                                     </div>
                                 </div>
                                 <div class="row">
-                                   <div class="col-xs-6 col-md-3" v-if="reserva.status !== 'finalizada' && reserva.status !== 'cerrada'  && reserva.status !== 'comentario-cuidador' && reserva.status !== 'rechazada-dueño' && reserva.status !=='rechazada-cuidador' && reserva.status !== 'ejecucion'">
+                                   <div class="col-xs-6 col-md-3" v-if="botonCancelar">
                                             <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-left" style="background-color: inherit;"><i class="sl sl-icon-docs"></i> Cancelar</a>
                                         </div>                                        
                                          <div class="col-xs-6 col-md-4" v-if="reserva.status === 'pagada-dueño' || reserva.status === 'ejecucion'">
@@ -276,7 +276,7 @@ Vue.component('my-reservas-user-list', {
     computed: {
         tipoDeReservas: function () {
             if (this.status == 'creada-dueño') {
-                return 'Mis Solicitudes de Reservas Generadas'
+                return 'Mis Solicitudes de Reservas'
             }
             if (this.status == 'rechazada-dueño') {
                 return 'Mis Reservas Rechazadas por mi'
@@ -318,7 +318,7 @@ Vue.component('my-reservas-user-list', {
                 return 'Muy bien, ya pagaste. Ahora solo queda esperar la fecha de la reserva'
             }
             if (this.status == 'finalizada') {
-                return 'Como te fue con el cuidador? Calificalo para que otros usuario puedan elegir el mejor cuidador.'
+                return 'Como te fue con el cuidador? Calificalo para que otros usuarios puedan elegir el mejor cuidador.'
             }
             if (this.status == 'cerrada') {
                 return 'Tu historial de reservas terminadas'
@@ -356,41 +356,58 @@ Vue.component('my-reservas-user-list', {
         },
         listColor: function () {
             if (this.status == 'creada-dueño') {
-                // verde
-                return 'background: #c8e6c9; margin-bottom: 10px;'
-            }
-            if (this.status == 'rechazada-cuidador') {
-                return 'background: #f5f5f5); margin-bottom: 10px;'
-            }
-            if (this.status == 'rechazada-dueño') {
-                return 'background: #f5f5f5); margin-bottom: 10px;'
-            }
-            if (this.status == 'aceptada-cuidador') {
                 // amarilla
                 return 'background: #fffde7; margin-bottom: 10px;'
             }
+            if (this.status == 'aceptada-cuidador') {
+                // Lime
+                return 'background: #f0f4c3; margin-bottom: 10px;'
+            }
             if (this.status == 'pagada-dueño') {
-                // azul
-                return 'background: #e3f2fd; margin-bottom: 10px;'
-
-            }
-            if (this.status == 'finalizada') {
-                return 'background: rgba(255,255,0,0.3); margin-bottom: 10px;'
-
-            }
-            if (this.status == 'cerrada') {
-                return 'background: #f5f5f5; margin-bottom: 10px;'
-
+                // verde
+                return 'background: #c8e6c9; margin-bottom: 10px;'
             }
             if (this.status == 'ejecucion') {
+                // azul
+                return 'background: #e3f2fd; margin-bottom: 10px;'
+            }
+            if (this.status == 'rechazada-cuidador') {
                 // rojo
                 return 'background: #ffebee; margin-bottom: 10px;'
             }
+            if (this.status == 'rechazada-dueño') {
+                // rojo
+                return 'background: #ffebee; margin-bottom: 10px;'
+            }
+            if (this.status == 'finalizada') {
+                // marron -- pendiente review
+                return 'background: #d7ccc8; margin-bottom: 10px;'
+            }
+            if (this.status == 'cerrada') {
+                // gris
+                return 'background: #cfd8dc; margin-bottom: 10px;'
+            }
+
+        },
+        botonCancelar: function () {
+            if (this.status == 'creada-dueño') {
+                return true
+            }
+            if (this.status == 'aceptada-cuidador') {
+                return true
+            }
+            if (this.status == 'pagada-dueño') {
+                return true
+            }
+            if (this.status == 'ejecucion') {
+                return true
+            }
+            return false
         },
         descripcionReservaAceptada : function (){
 
             if (this.status == 'aceptada-cuidador') {
-                return ' Recordá que tenes 72 hs para realizar el pago, sino la reserva se cancelará'
+                return ' Recordá que tenes 72 hs para realizar el pago, sino la solicitud de reserva se cancelará.'
             }
             else
             {

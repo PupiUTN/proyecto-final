@@ -1,4 +1,4 @@
-Vue.component('Review', {
+let review = Vue.component('Review', {
     template: `
 <div>
 
@@ -168,13 +168,20 @@ Vue.component('Review', {
                         var pendientesUser = parseInt(localStorage.getItem("pendingCountUser")) - 1;
                         localStorage.setItem("pendingCountUser", pendientesUser);
                     }
+                    var self = this
                     sweetAlert({
                             title: " Calificación exitosa ",
                             text: "tu calificación  fue  guardarda  exitosamente.",
                             type: "success",
                         },
                         function () {
-                            window.location.href = "/views/dashboard/dashboard.html";
+                            console.log('vue model alert ', vm)
+                            if (vm.$refs.Review.$refs.currentView.rol === "CUIDADOR") {
+                                window.location.href = "/views/reserva/mis-reservas-cuidador.html?status=finalizada";
+                            }
+                            else {
+                                window.location.href = "/views/reserva/mis-reservas-user.html?status=finalizada";
+                            }
                         });
 
                     // sweetAlert("Guardada!", "tu calificacion  fue  guardarda  exitosamente.", "success");

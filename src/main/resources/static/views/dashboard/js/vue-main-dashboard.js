@@ -8,21 +8,11 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 		<div id="titlebar">
 			<div class="row">
 				<div class="col-md-12 col-xs-12">
-					<h2> Bienvenido {{estadisticas.nombre}} !</h2>
+					<h2> Resumen</h2>
 				</div>
 			</div>
 		</div>
 		<!-- Content -->
-		<div class="row">
-			<div class="col-md-12 col-xs-12">			    
-				<div class="notification closeable margin-bottom-30{{}} ">
-					<p> <strong>{{banner}}</strong></p>    					              
-			</div>
-			
-			</div>
-		
-		</div>
-		
 		<div v-show="role === 'ROLE_USER'" class="col-md-12 row"> 
 			   <div class="col-md-3"></div>
 			   <div class="col-md-3 margin-top-10 row opening-day js-demo-hours"> <label><h4><i class="im im-icon-Dog" style="margin-right: 10px;"></i>Elige a tu mascota</h4></label></div>
@@ -194,7 +184,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
            ///api/cuidador/me/reservas/estadisticas/
             axios.get('/api/estadisticas/cuidadores/')
                 .then((response) => {
-                    this.banner="Estos son tus datos";
+                    this.banner="Resumen";
                     this.estadisticas = response.data;
                     this.estadisticas.cantidadTotal = response.data.cantidadTotal.toString();
                     this.estadisticas.promedio = response.data.promedio.toString();

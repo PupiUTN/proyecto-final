@@ -27,7 +27,7 @@ spring:
         serialization:
           WRITE_DATES_AS_TIMESTAMPS: false
     resources:
-        cache-period: 86400 # 1 day in seconds
+        cache-period: 172800 # 1 day in seconds = 86400 , 2 day = 172800
 server:
     port: 5000
 java:
@@ -53,5 +53,5 @@ app:
             secretKey: '${SES_SECRET_KEY}'
 
 
-    # Comma-separated list of paths to exclude from the default secured
-security.ignored: /assets/**
+# Comma-separated list of paths to exclude from the default secured
+# security.ignored: /assets/**

@@ -70,7 +70,7 @@ Vue.component('my-cuidador-edit', {
                             <!-- Change Password -->
                             <div class="my-profile">
                                 <label class="margin-top-0">Mi descripcion</label>
-                                <textarea v-model="cuidador.descripcion"  rows="4" cols="50" maxlength="1000"  placeholder="Descripcion" required>
+                                <textarea v-model="cuidador.descripcion"  rows="4" cols="50" maxlength="500"  placeholder="Descripcion" required>
                                 </textarea>
                             </div>
 
@@ -353,7 +353,7 @@ Vue.component('my-cuidador-edit', {
         },
         editCuidador() {
             if (this.validarCantidadImagenes()) {
-                sweetAlert("Oops...", "Error, Se deben cargar 4 imagenes ", "error");
+                sweetAlert("", "Debe cargar 4 imagenes para guardar su perfil ", "warning");
                 return;
             }
 

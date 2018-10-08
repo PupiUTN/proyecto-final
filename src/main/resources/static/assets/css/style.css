@@ -14270,6 +14270,7 @@ h4 span.headline-detail {
     /* Trigger */
     a.dashboard-responsive-nav-trigger {
         width: 90%;
+        height: fit-content;
         margin: 0 5%;
         margin-top: 40px;
         background-color: #333;

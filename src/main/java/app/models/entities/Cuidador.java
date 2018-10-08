@@ -26,6 +26,7 @@ public class Cuidador implements Serializable {
     private int cantidadMaxDePerros;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Imagen> listaImagenes;
+    @Column(length = 500)
     private String descripcion;
     private float precioPorNoche;
     @OneToOne(cascade = CascadeType.MERGE)
