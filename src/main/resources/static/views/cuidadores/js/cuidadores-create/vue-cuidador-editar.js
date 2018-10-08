@@ -27,7 +27,7 @@ Vue.component('my-cuidador-edit', {
                     <div class="dashboard-list-box margin-top-0">
                         <h4 class="gray"> 	<i class="fa fa-paw"></i>	 Precios </h4>
                         <div class="dashboard-list-box-static"      style="height: 515px; ">
-                            Recuerda que Pupi cobra una comisión del 25% del total de la tarifa que estableces en cada servicio, de los cuales <strong>Mercado Pago </strong> retiene el 5%
+                            Recuerda que Pupi cobra una comisión del 25.33% del total de la tarifa que estableces en cada servicio, de los cuales <strong> MercadoPago </strong> retiene el 5.33%
                             <!-- Change Password -->
                             <div class="my-profile">
 
