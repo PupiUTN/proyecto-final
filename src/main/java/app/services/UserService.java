@@ -50,7 +50,7 @@ public class UserService extends AbstractRestClientService {
 
     @PostConstruct
     private void setRedirectUri() {
-        if("prod".equalsIgnoreCase(ENVIRONMENT)) {
+        if ("prod".equalsIgnoreCase(ENVIRONMENT)) {
             APP_DOMAIN = "https://pupi.com.ar";
         } else {
             APP_DOMAIN = "http://localhost:5000";
@@ -123,9 +123,7 @@ public class UserService extends AbstractRestClientService {
     }
 
 
-    public  Long getTotalDueños()
-    {
-
+    public Long getTotalDueños() {
         return repository.getTotalDueños();
     }
 

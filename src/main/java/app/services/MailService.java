@@ -25,13 +25,17 @@ public class MailService {
     private String secretKey;
 
     private static SendEmailRequest createEmailRequest(String from, String to, MailType type, String fullName) throws IOException {
-        String emailTemplate = type.getMailTemplate(fullName);
-        Destination destination = new Destination().withToAddresses(to);
-        Content subjectContent = new Content().withData(type.getMailSubject(fullName));
-        Content textContent = new Content().withData(emailTemplate);
-        Body body = new Body().withHtml(textContent);
-        Message message = new Message().withSubject(subjectContent).withBody(body);
-        return new SendEmailRequest().withSource(from).withDestination(destination).withMessage(message);
+
+        return new SendEmailRequest()
+                .withDestination(
+                        new Destination().withToAddresses(to))
+                .withMessage(new Message()
+                        .withBody(new Body()
+                                .withHtml(new Content()
+                                        .withCharset("UTF-8").withData(type.getMailTemplate(fullName))))
+                        .withSubject(new Content()
+                                .withCharset("UTF-8").withData(type.getMailSubject(fullName))))
+                .withSource(from);
     }
 
     public int sendEmail(User user, MailType type) {
