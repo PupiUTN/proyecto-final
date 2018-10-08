@@ -180,6 +180,13 @@ Vue.component('my-perros-list', {
                     }
 
 
+                    this.dogs.forEach(function(element) {
+
+                        element.promedioReviews = Math.trunc(element.promedioReviews) + " / 5";
+                    });
+
+
+
 
 
 

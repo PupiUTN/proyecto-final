@@ -223,7 +223,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                         }
                         this.estadisticas.cantidadTotal = this.list[0].cantidadTotal.toString();
                         this.estadisticas.promedio = this.list[0].promedio.toString();
-                        this.estadisticas.promedio =   this.estadisticas.promedio + " / 5";
+                        this.estadisticas.promedio =   Math.trunc(this.estadisticas.promedio) + " / 5";
                         this.estadisticas.cantidadPorMes = this.list[0].cantidadPorMes;
                         this.estadisticas.totalPorTipo = this.list[0].totalPorTipo;
                         this.estadisticas.nombre = this.list[0].nombre;
