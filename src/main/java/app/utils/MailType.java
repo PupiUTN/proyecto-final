@@ -20,7 +20,8 @@ public enum MailType {
     REVIEW_REQUEST_TO_USER,
     BOOKING_PAYMENT_TO_HOST,
     BOOKING_PAYMENT_TO_USER,
-    BOOKING_STARTING;
+    BOOKING_STARTING_USER,
+    BOOKING_STARTING_HOST;
 
     public String getMailTemplate(String fullName) throws IOException {
         String text;
@@ -90,10 +91,16 @@ public enum MailType {
                         "Califica al Cuidador para ayudar a la comunidad.<br>";
                 break;
 
-            case BOOKING_STARTING:
+            case BOOKING_STARTING_USER:
                 text = "Tu Estadia en Pupi <b>está a punto de comenzar</b><br>" +
                         "Quédate tranquilo, tu mejor amigo estará muy a gusto con el Cuidador que elegiste!<br> " +
                         "Gracias Por Elegirnos.<br>";
+                break;
+
+            case BOOKING_STARTING_HOST:
+                text = "En las próximas horas comenzarás a cuidar <b>a una mascota</b><br>" +
+                        "Ante cualquier inconveniente ponete en contacto con nosotros<br> " +
+                        "Mucha Suerte!<br>";
                 break;
 
             default:
@@ -141,8 +148,10 @@ public enum MailType {
                 return fullName + ", Un Dueño Pagó una Reserva - Pupi";
             case BOOKING_PAYMENT_TO_USER:
                 return fullName + ", Reserva Pagada - Pupi";
-            case BOOKING_STARTING:
+            case BOOKING_STARTING_USER:
                 return fullName + ", Tu Reserva Comienza en las Próximas Horas - Pupi";
+            case BOOKING_STARTING_HOST:
+                return fullName + ", En las Próximas Horas Recibirás una Mascota - Pupi";
             default:
                 throw new AssertionError("Unknown email type " + this);
         }
