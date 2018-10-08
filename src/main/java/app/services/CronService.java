@@ -40,7 +40,13 @@ public class CronService {
      * - si fecha inicio es == hoy y estado pagada --> ejecucion
      */
     public Integer moverEstadoDePagadaAEjecucion() {
-        return cronRepository.updateStateIfFechaInicioMenorHoy(EstadoReserva.PAGADA_DUEÑO.getStatus(), EstadoReserva.EJECUCION.getStatus());
+        List<Reserva> reservaList = cronRepository.getIfFechaInicioMenorHoy(EstadoReserva.PAGADA_DUEÑO.getStatus());
+        Integer updates = cronRepository.updateStateIfFechaInicioMenorHoy(EstadoReserva.PAGADA_DUEÑO.getStatus(), EstadoReserva.EJECUCION.getStatus());
+        reservaList.forEach(reserva -> {
+            mailService.sendEmail(reserva.getPerro().getUser(), MailType.BOOKING_STARTING_USER);
+            mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_STARTING_HOST);
+        });
+        return updates;
     }
 
     /**

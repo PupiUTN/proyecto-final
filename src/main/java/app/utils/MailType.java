@@ -19,7 +19,9 @@ public enum MailType {
     REVIEW_REQUEST_TO_HOST,
     REVIEW_REQUEST_TO_USER,
     BOOKING_PAYMENT_TO_HOST,
-    BOOKING_PAYMENT_TO_USER;
+    BOOKING_PAYMENT_TO_USER,
+    BOOKING_STARTING_USER,
+    BOOKING_STARTING_HOST;
 
     public String getMailTemplate(String fullName) throws IOException {
         String text;
@@ -29,6 +31,7 @@ public enum MailType {
                         "Somos la plataforma que conecta dueños de mascotas con cuidadores que hospedan perros en su casa, <br> " +
                         "brindando todo su cariño y seguridad. ";
                 break;
+
             case BOOKING_REQUEST:
                 text = "Has recibido una <b>solicitud de reserva</b> por tu perfil como cuidador<br>" +
                         "Tienes 72 hs para aceptarla o rechazarla, revisa el perfil del dueño y de su mascota para que no haya inconvenientes. <br> " +
@@ -53,13 +56,15 @@ public enum MailType {
                         "Te recomendamos completar tu perfil para aumentar tus chances. ";
 
                 break;
+
             case BOOKING_PAYMENT_TO_USER:
                 text = "Tu reserva ha sido <b>pagada</b>.<br>" +
                         "Ingresa a la plataforma para obtener los datos de contacto de tu cuidador. ";
                 break;
+
             case BOOKING_PAYMENT_TO_HOST:
-                text = "Una de tus reserva ha sido <b>pagada</b>.<br>" +
-                        "En breve se contactara tu huesped para coordinar la entragd el perro. ";
+                text = "Una de tus reservas ha sido <b>pagada</b>.<br>" +
+                        "En breve te contactará el Dueño para coordinar la entrega del perro. ";
                 break;
             case WELCOME_HOST:
                 text = "<b>¡Bienvenido a Pupi!</b> \uD83D\uDC3E  <br>" +
@@ -79,11 +84,25 @@ public enum MailType {
                         "Nos gustaría saber cómo te fue con la estadia.<br> " +
                         "Califica al Perro para ayudar a la comunidad.<br>";
                 break;
+
             case REVIEW_REQUEST_TO_USER:
                 text = "Tu Estadia en Pupi ha <b>finalizado</b><br>" +
                         "Nos gustaría saber cómo te fue con la estadia.<br> " +
                         "Califica al Cuidador para ayudar a la comunidad.<br>";
                 break;
+
+            case BOOKING_STARTING_USER:
+                text = "Tu Estadia en Pupi <b>está a punto de comenzar</b><br>" +
+                        "Quédate tranquilo, tu mejor amigo estará muy a gusto con el Cuidador que elegiste!<br> " +
+                        "Gracias Por Elegirnos.<br>";
+                break;
+
+            case BOOKING_STARTING_HOST:
+                text = "En las próximas horas comenzarás a cuidar <b>a una mascota</b><br>" +
+                        "Ante cualquier inconveniente ponete en contacto con nosotros<br> " +
+                        "Mucha Suerte!<br>";
+                break;
+
             default:
                 throw new AssertionError("Unknown email type " + this);
 
@@ -125,6 +144,14 @@ public enum MailType {
                 return fullName + ", Hospedaje Finalizado - Pupi";
             case REVIEW_REQUEST_TO_HOST:
                 return fullName + ", Hospedaje Finalizado - Pupi";
+            case BOOKING_PAYMENT_TO_HOST:
+                return fullName + ", Un Dueño Pagó una Reserva - Pupi";
+            case BOOKING_PAYMENT_TO_USER:
+                return fullName + ", Reserva Pagada - Pupi";
+            case BOOKING_STARTING_USER:
+                return fullName + ", Tu Reserva Comienza en las Próximas Horas - Pupi";
+            case BOOKING_STARTING_HOST:
+                return fullName + ", En las Próximas Horas Recibirás una Mascota - Pupi";
             default:
                 throw new AssertionError("Unknown email type " + this);
         }
