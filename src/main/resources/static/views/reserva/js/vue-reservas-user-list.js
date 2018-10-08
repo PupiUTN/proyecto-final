@@ -78,6 +78,8 @@ Vue.component('my-reservas-user-list', {
                                             <mercadopago :reserva="reserva"></mercadopago>
                                         </div>
                                 </div>
+                                
+                                
                             </a>
                                 
                         </li>
@@ -294,7 +296,7 @@ Vue.component('my-reservas-user-list', {
                 return 'Mis Reservas Pendiente de Calificacion'
             }
             if (this.status == 'cerrada') {
-                return 'Mis Reservas Finalizadas'
+                return 'Mis Reservas Cerradas'
             }
             if (this.status == 'ejecucion') {
                 return 'Mis Reservas en curso'
@@ -321,7 +323,7 @@ Vue.component('my-reservas-user-list', {
                 return 'Como te fue con el cuidador? Calificalo para que otros usuarios puedan elegir el mejor cuidador.'
             }
             if (this.status == 'cerrada') {
-                return 'Tu historial de reservas terminadas'
+                return 'Tu historial de reservas cerradas'
             }
             if (this.status == 'ejecucion') {
                 return 'Tus reservas que estan ocurriendo'

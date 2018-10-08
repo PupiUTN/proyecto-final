@@ -370,7 +370,7 @@ Vue.component('my-reservas-cuidador-list', {
                 return 'Pendiente de Calificacion'
             }
             if (this.status == 'cerrada') {
-                return 'Finalizadas'
+                return 'Cerradas'
             }
             if (this.status == 'ejecucion') {
                 return 'Mis Reservas en curso'
