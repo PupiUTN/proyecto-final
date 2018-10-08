@@ -254,7 +254,7 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
             offset: 0,
             gridData: [],
             gridCuidadores: [],
-            perPage: 3,
+            perPage: 4,
             countPages: 1,
             listaPaginas: [],
         }
