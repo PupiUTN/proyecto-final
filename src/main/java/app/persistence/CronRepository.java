@@ -20,6 +20,9 @@ public interface CronRepository extends JpaRepository<Reserva, Long> {
     @Query("select r from Reserva r where r.fechaFin < CURDATE() and r.status = :currentState ")
     List<Reserva> getIfFechaFinMenorHoy(@Param("currentState") String currentState);
 
+    @Query("select r from Reserva r where r.fechaInicio <= CURDATE() and r.status = :currentState ")
+    List<Reserva> getIfFechaInicioMenorHoy(@Param("currentState") String currentState);
+
     /**
      * @return cantidad de registros actualizados
      */
