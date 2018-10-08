@@ -56,6 +56,11 @@ app:
             accessKey: '${SES_ACCESS_KEY}'
             secretKey: '${SES_SECRET_KEY}'
 
-
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
+        sql: debug
 # Comma-separated list of paths to exclude from the default secured
 # security.ignored: /assets/**
