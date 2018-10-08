@@ -1,6 +1,6 @@
 Vue.component('mercadopago', {
     template: `
-    <a v-on:click="createPayment" class="button medium border pull-right" target="_blank">Pagar <i class="im im-icon-Money-2"></i></a>
+    <a v-on:click="createPayment" class="button medium border pull-right" target="_blank" style="background-color: inherit;">Pagar <i class="im im-icon-Money-2"></i></a>
     `,
     data:
         function () {

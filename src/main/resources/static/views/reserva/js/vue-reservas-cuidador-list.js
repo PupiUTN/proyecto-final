@@ -82,7 +82,7 @@ Vue.component('my-reservas-cuidador-list', {
                                   <br>  
                                 <div class="row">
 
-                                    <div class="col-xs-12 col-md-3" v-if="reserva.status === 'creada-dueño'">
+                                    <div class="col-xs-6 col-md-3" v-if="reserva.status === 'creada-dueño'">
                                         <a v-on:click="confirmarReservaButton(index)"
                                            style="color: blue; border-color: blue; background-color: inherit;" href="#"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
@@ -90,37 +90,34 @@ Vue.component('my-reservas-cuidador-list', {
                                     </div>
 
 
-                                    <div class="col-xs-12 col-md-3"
+                                    <div class="col-xs-6 col-md-3"
                                          v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'comentario-dueño' && reserva.status !== 'finalizada' && reserva.status !== 'cerrada' && reserva.status !=='rechazada-dueño' && reserva.status !== 'ejecucion' && reserva.status !== 'pagada-dueño'" >
                                         <a v-on:click="cancelarReservaActionButton(index)" style="background-color: inherit; color: red;"
-                                           href="#" class="button medium border pull-right"><i
+                                           href="#" class="button medium border pull-left"><i
                                                 class="sl sl-icon-docs"></i> Cancelar</a>
                                     </div>
 
-                                    <div class="col-xs-12 col-md-3" v-if="reserva.status === 'creada-dueño' || reserva.status === 'aceptada-cuidador' ">
+                                    <div class="col-xs-6 col-md-3" v-if="reserva.status === 'creada-dueño' || reserva.status === 'aceptada-cuidador' ">
                                         <a style="color: blue;  border-color: blue; background-color: inherit;"
                                            v-on:click="verReserva(reserva.id)"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
                                             Examinar</a>
 
                                     </div>
-                                    <div class="col-xs-12 col-md-4" v-if="reserva.status === 'pagada-dueño' || reserva.status === 'ejecucion'">
+                                    <div class="col-xs-6 col-md-4" v-if="reserva.status === 'pagada-dueño' || reserva.status === 'ejecucion'">
                                         <a style=" color: blue;  border-color: blue; background-color: inherit;"
                                            v-on:click="verReserva(reserva.id)"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Ver
                                             Detalle Completo</a>
                                     </div>
 
-                                    <div class="col-xs-12 col-md-3"
+                                    <div class="col-xs-6 col-md-3"
                                          v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-dueño'">
                                         <a v-on:click="calificarReserva(index)"
                                            style="color: blue; border-color: blue; background-color: inherit;" href="#"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
                                             Calificar</a>
                                     </div>
-                                  <!--   <div class="col-xs-12 col-md-3" v-if="reserva.status !== 'creada-dueño' &&  reserva.status !== 'aceptada-cuidador' &&  reserva.status !== 'rechazada-cuidador' &&  reserva.status !== 'cerrada' ">
-                                            <a v-on:click=""  style="color: black; border-color: black; background-color: inherit;" href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Denunciar</a>                        
-                                        </div> -->
                                 </div>
 
                             </a>
