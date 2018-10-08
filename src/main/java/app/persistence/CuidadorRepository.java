@@ -21,14 +21,15 @@ public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
     @Query("select c from Cuidador c " +
             "where c.user.direccion.ciudadPlaceId = :#{#ciudadPlaceId} " +
             "AND c.estado = :#{#status} " +
-            "AND not exists ( " +
-            "select 1 from Reserva r " +
-            "where r.cuidador = c and c.estado = :#{#status} " +
-            "and r.status like 'pagada-dueño' " +
+            "AND c.cantidadMaxDePerros > COALESCE(( " +
+            "select count(r) from Reserva r " +
+            "where r.status like 'pagada-dueño' or r.status like 'aceptada-cuidador' or r.status like 'ejecucion' " +
             "and (( :#{#from} between r.fechaInicio AND r.fechaFin " +
             "or  :#{#to} between r.fechaInicio AND r.fechaFin ) " +
             "or (r.fechaInicio between :#{#from} AND :#{#to} " +
-            "or r.fechaFin between :#{#from} AND :#{#to} ))) "/* +
+            "or r.fechaFin between :#{#from} AND :#{#to} )) " +
+            "GROUP BY r.cuidador " +
+            "HAVING r.cuidador = c),0) "/* +
            "order by c.promedioReviews desc, c.cantidadReviews desc"*/)
     List<Cuidador> findAllbyCiudadYFecha(@Param("ciudadPlaceId") String ciudadPlaceId,
                                          @Param("from") LocalDate from,

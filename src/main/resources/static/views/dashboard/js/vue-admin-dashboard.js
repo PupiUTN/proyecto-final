@@ -41,8 +41,8 @@ Vue.component('admin-dashboard', {
 </div>-->
 
 <div class="col-lg-3 col-md-6">
-    <div class="dashboard-stat color-3">
-        <div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalSolicitudes}} <br> <span> calificaciones</span></div>
+    <div class="dashboard-stat color-2">
+        <div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalSolicitudes}} <br> <span> Solicitudes</span></div>
         <div class="dashboard-stat-icon"><i class="im im-icon-Warning-Window"></i></div>
     </div>
 </div>
@@ -246,11 +246,11 @@ Vue.component('admin-dashboard', {
                     this.estadisticas.totalDueños = response.data.totalDueños.toString();
                     this.estadisticas.totalPerros = response.data.totalPerros;
                     this.estadisticas.totalCuidadores = response.data.totalCuidadores;
-                    this.estadisticas.totalDineroActual = "0";
+                    this.estadisticas.totalDineroActual = response.data.totalDineroActual;
                     this.estadisticas.reservas = response.data.reservas;
                          var aux = [];
                          if( this.estadisticas.reservas !== null) {
-                             this.estadisticas.totalDineroActual = response.data.totalDineroActual;
+
                              this.estadisticas.reservas.forEach(function (element) {
                                  var fechaInicio = element.fechaInicio;
                                  var fechaFin = element.fechaFin;
