@@ -95,8 +95,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                         <h4>Estadía</h4>
                         <ul>
                             <li>
-                                <h5>Por día</h5>
-                                <p>servicio por día</p>
+                                <h5>Precio por Noche</h5>
                                 <span style="color: forestgreen; font-size: x-large;"> <b>$ {{item.precioPorNoche}}</b></span>
                             </li>
 
