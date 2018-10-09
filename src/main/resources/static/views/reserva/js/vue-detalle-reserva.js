@@ -105,9 +105,10 @@ Vue.component('my-detalle-reserva', {
                 <h3><b>{{reserva.perro.user.fullName}}</b></h3>
             </div>
 
+            
             <div class="col-md-4">
-                <h5><i class="im im-icon-Money-2" style="color:red; margin-right: 10px; "></i>Precio total</h5>
-                <h3><b><label style=" color: green;font-size: 30px;">&#36 {{reserva.precioTotal}} </label></b></h3>
+                <h5><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px; "></i>Fecha De Reserva </h5>
+                <h3><b>{{reserva.fechaTransaccion}}</b></h3>
             </div>
         </div>
         
@@ -129,14 +130,14 @@ Vue.component('my-detalle-reserva', {
         
         <!-- Title -->
         <div class="row with-forms">
-            <div class="col-md-8">
-                <h5><i class="im im-icon-Security-Check" style="color:red; margin-right: 10px;"></i>Estado</h5>
-                <h3><b>{{reserva.status}}</b></h3>
+           <div class="col-md-8">
+                <h5><i class="im im-icon-Money-2" style="color:red; margin-right: 10px; "></i>Mi ganancia</h5>
+                <h3><b><label style=" color: green;font-size: 30px;">&#36 {{ganancia}} </label></b></h3>
             </div>
 
             <div class="col-md-4">
-                <h5><i class="im im-icon-Timer-2" style="color:red; margin-right: 10px; "></i>Fecha De Reserva </h5>
-                <h3><b>{{reserva.fechaTransaccion}}</b></h3>
+                <h5><i class="im im-icon-Money-2" style="color:red; margin-right: 10px; "></i>Precio total</h5>
+                <h3><b><label style=" color: green;font-size: 30px;">&#36 {{reserva.precioTotal}} </label></b></h3>
             </div>
         </div>
 
@@ -160,7 +161,7 @@ Vue.component('my-detalle-reserva', {
     </div>
     
     
-    <div v-if="reserva.status === 'pagada-dueño'">
+    <div v-if="reserva.status === 'pagada-dueño' || reserva.status === 'ejecucion' ">
 
       <div class="add-listing-section margin-top-45">
 
@@ -374,6 +375,7 @@ Vue.component('my-detalle-reserva', {
             perPage: 2,
             DataReview: [],
             puntajeUsuario: 0,
+            ganancia: '',
 
         }
     },
@@ -419,6 +421,7 @@ Vue.component('my-detalle-reserva', {
                         }
 
                     }
+                    this.ganancia = (this.reserva.precioTotal - (this.reserva.precioTotal * 0.2533)).toFixed(2)
                     this.tamaño = this.reserva.perro.tamaño.nombre + " " + " (" + this.reserva.perro.tamaño.valorMinimo + " - " + this.reserva.perro.tamaño.valorMaximo + ")" + " kgs";
                     //  this.reserva.mensaje = " hola que tal buenos dias cmo va
                     this.getCalificacionesPerro();

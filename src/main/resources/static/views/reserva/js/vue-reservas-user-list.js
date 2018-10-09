@@ -401,9 +401,6 @@ Vue.component('my-reservas-user-list', {
             if (this.status == 'pagada-dueño') {
                 return true
             }
-            if (this.status == 'ejecucion') {
-                return true
-            }
             return false
         },
         descripcionReservaAceptada : function (){
