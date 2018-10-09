@@ -23,8 +23,8 @@ Vue.component('mi-calendario-cuidador', {
                                 :selectForward="true"
                                 v-if="showDatePicker"
                                 :moveBothMonths="true"
-                                :idCuidador="user.id"
-                                :cantidadMaxDePerros="user.">
+                                :idCuidador="idUser"
+                                :cantidadMaxDePerros="cantidadMaxDePerros">
                                 </my-hotel-date-picker>
                             </div>
                             <div class="col-md-2 col-sm-12">
@@ -96,7 +96,7 @@ Vue.component('mi-calendario-cuidador', {
     `,
     data: function () {
         return {
-            meUrl: "/api/user/me",
+            cuidadorUrl: "/api/cuidadores",
             url: "/api/cuidadores/calendario",
             item: {
                 id: null,
@@ -106,7 +106,8 @@ Vue.component('mi-calendario-cuidador', {
             items: [],
             formPost: true,
             showDatePicker: false,
-            user: null
+            idUser: localStorage.getItem('idUser'),
+            cuidador: null
         }
     },
     mounted() {
@@ -118,11 +119,28 @@ Vue.component('mi-calendario-cuidador', {
             axios.get(this.url)
                 .then((response) => {
                     this.items = response.data;
+                    // en caso de no tener calendario necesito acceder a las reservas del cuidador de otra forma
+                    if (this.items.left === 0) {
+                        this.getCuidador()
+                    } else {
+                        this.showDatePicker = true
+                    }
+                }).catch(error => {
+                console.log(error);
+                sweetAlert("Oops...", "Error, getCalendario", "error");
+            });
+        },
+        getCuidador() {
+            this.showDatePicker = false
+            axios.get(this.cuidadorUrl + "/" + this.idUser)
+                .then((response) => {
+                    this.cuidador = response.data;
                     this.showDatePicker = true
                 })
                 .catch(error => {
-                    console.log(error);
-                        sweetAlert("Oops...", "Error, ver consola", "error");
+                        this.showDatePicker = true
+                        console.log(error);
+                        sweetAlert("Oops...", "Error getCuidador ", "error");
                     }
                 );
         },
@@ -141,7 +159,6 @@ Vue.component('mi-calendario-cuidador', {
                     }
                 );
         },
-
         deleteItem(index) {
 
             var id = this.items[index].id;
@@ -175,5 +192,14 @@ Vue.component('mi-calendario-cuidador', {
                 });
         }
 
+    },
+    computed: {
+        cantidadMaxDePerros: function () {
+            if (this.cuidador) {
+                return this.cuidador.cantidadMaxDePerros
+            } else {
+                this.items[0].cuidador.cantidadMaxDePerros
+            }
+        }
     }
 });
