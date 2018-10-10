@@ -9,7 +9,7 @@ Date.prototype.addDays = function (days) {
 var myHotelDatePicker = Vue.component('my-hotel-date-picker', {
     template: `
 <div>
-    <input v-if="showDatePicker" class="datepicker__input" type="text" :id="datePickerId" :placeholder="placeholder" autocomplete="off"/>
+    <input v-if="showDatePicker" class="datepicker__input" type="text" :id="datePickerId" :placeholder="placeholder" autocomplete="off" :required="required"/>
     <p  v-if="!showDatePicker" > Calculando Fechas Disponibles</p>
 </div>
 
@@ -99,13 +99,18 @@ var myHotelDatePicker = Vue.component('my-hotel-date-picker', {
         cantidadMaxDePerros: {
             type: Number
         },
+        required: {
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return {
             inputValue: '',
             hdpkr: {},
             showDatePicker: true,
-            disabledDates: []
+            disabledDates: [],
+            reservas: []
         }
     },
     computed: {},
@@ -174,7 +179,9 @@ var myHotelDatePicker = Vue.component('my-hotel-date-picker', {
             // PAGADAS DUEÑO y ejecucion
             axios.get("/api/reservas/fromToday/?idCuidador=" + idCuidador + "&status=pagada-due%C3%B1o&status=ejecucion&status=aceptada-cuidador")
                 .then((response) => {
-                    let fechasList = this.calcularListadoDeFechas(response.data);
+                    this.reservas = response.data
+                    let fechasList = this.getDatesBetweenFromList(response.data);
+                    console.log('fechasList y tipo', fechasList)
                     this.disabledDates = this.calcularFechasDeshabilitadas(fechasList);
                     // como las properties del componente no son reactivas debo montar el date picker luego de calcular las fecha
                     this.mount()
@@ -186,35 +193,23 @@ var myHotelDatePicker = Vue.component('my-hotel-date-picker', {
                 });
 
         },
-        getReservasPagadasYEjecucion() {
-            // obtengo las reservas
-            // PAGADAS DUEÑO y ejecucion
-            axios.get("/api/reservas/fromToday/?idCuidador=" + this.idCuidador + "&status=pagada-due%C3%B1o&status=ejecucion&status=aceptada-cuidador")
-                .then((response) => {
-                    let fechasList = this.calcularListadoDeFechas(response.data);
-                    this.disabledDates = this.calcularFechasDeshabilitadas(fechasList);
-                    // como las properties del componente no son reactivas debo montar el date picker luego de calcular las fecha
-                    this.mount()
-                })
-                .catch(error => {
-                    this.mount()
-                    console.log(error);
-                    sweetAlert("Oops...", "Error  getReservasPagadasYEjecucion", "error");
-                });
-
-        },
         calcularFechasDeshabilitadas(fechasList) {
             // debemos deshabilitar aquellas fechas que en el mismo dia tiene mayor o igual cantidad de reservas
             // que la maxima admitida por el cuidador
             let cantidadReservasPorDia = new Map()
             for (let i = 0; i < fechasList.length; i++) {
-                let fecha = fechasList[i];
-                let frecuencia = cantidadReservasPorDia.get(fecha);
-                if (frecuencia === undefined) {
-                    cantidadReservasPorDia.set(fecha, 1);
-                } else {
-                    cantidadReservasPorDia.set(fecha, frecuencia + 1);
+                let fecha = fechasList[i].fecha;
+                if (fechasList[i].isCalendarioCuidador){
+                    cantidadReservasPorDia.set(fecha, 99999);
+                }else {
+                    let frecuencia = cantidadReservasPorDia.get(fecha);
+                    if (frecuencia === undefined) {
+                        cantidadReservasPorDia.set(fecha, 1);
+                    } else {
+                        cantidadReservasPorDia.set(fecha, frecuencia + 1);
+                    }
                 }
+
             }
             let fechasSuperanCantidadMaximaDePerro = [];
             console.log('calcularFechasDeshabilitadas, cantidad maxima de perros', this.cantidadMaxDePerros, cantidadReservasPorDia);
@@ -227,23 +222,28 @@ var myHotelDatePicker = Vue.component('my-hotel-date-picker', {
             }
             return fechasSuperanCantidadMaximaDePerro;
         },
-        calcularListadoDeFechas(reservasPagadasYEjecucion) {
+        getDatesBetweenFromList(reservasPagadasYEjecucion) {
             // creo una lista con todas las fechas de todas las reservas
             let datesList = [];
             for (var i = 0; i < reservasPagadasYEjecucion.length; i++) {
                 // Do stuff with arr[i] or i
                 let reserva = reservasPagadasYEjecucion[i];
-                let dates = this.getDatesBetween(reserva.fechaInicio, reserva.fechaFin)
+                let isCalendarioCuidador = reserva.status === 'DESHABILITADA_CALENDARIO' ? true : false;
+                let dates = this.getDatesBetween(reserva.fechaInicio, reserva.fechaFin, isCalendarioCuidador)
                 datesList.push(...dates)
             }
             return datesList;
         },
-        getDatesBetween(startDate, stopDate) {
+        getDatesBetween(startDate, stopDate, isCalendarioCuidador) {
             var dateArray = new Array();
             var currentDate = fecha.parse(startDate, 'DD/MM/YYYY');
             var stopDate = fecha.parse(stopDate, 'DD/MM/YYYY');
             while (currentDate <= stopDate) {
-                dateArray.push(fecha.format(currentDate, 'DD/MM/YYYY'));
+                let aux = {
+                    fecha: fecha.format(currentDate, 'DD/MM/YYYY'),
+                    isCalendarioCuidador: isCalendarioCuidador
+                }
+                dateArray.push(aux);
                 currentDate = currentDate.addDays(1);
             }
             return dateArray;

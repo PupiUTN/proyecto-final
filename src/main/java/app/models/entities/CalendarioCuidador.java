@@ -21,7 +21,7 @@ public class CalendarioCuidador implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy")
     @NotNull
     private LocalDate fechaDeshabilitada;
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "cuidador_id")
     private Cuidador cuidador;
 }
