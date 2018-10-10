@@ -43,7 +43,7 @@ Vue.component('chart-pie', {
                     datasets: [{
                         label:  this.nombre,
                         data: this.totalPorTipo,
-                        backgroundColor: ['#00ff00', '#0000ff','#9fc3f9','#ffdba4','#ffff00','#0c0001','#c0c0c0'],
+                        backgroundColor: ['#fffde7', '#f0f4c3','#c8e6c9','#e3f2fd','#d7ccc8','#cfd8dc','#ffebee'],
                         borderColor: [
                             'rgba(0, 0, 0, 0.5)',
                             'rgba(0, 0, 0, 0.5)',
