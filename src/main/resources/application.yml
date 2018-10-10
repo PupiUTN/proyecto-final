@@ -7,7 +7,7 @@ spring:
         validationQuery: 'SELECT 1'
     jpa:
         hibernate:
-            ddl-auto: none
+            ddl-auto: none # nunca pero nunca, create
             naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
         show-sql: true
         properties:
@@ -60,7 +60,7 @@ logging:
   level:
     org:
       hibernate:
-        type: trace
+        type: off
         sql: debug
 # Comma-separated list of paths to exclude from the default secured
 # security.ignored: /assets/**

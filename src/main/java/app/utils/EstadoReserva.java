@@ -22,9 +22,9 @@ public enum EstadoReserva {
 
     CERRADA("cerrada"),
 
-    CAIDA_FALTA_PAGO("caida-falta-pago");
+    CAIDA_FALTA_PAGO("caida-falta-pago"),
 
-
+    DESHABILITADA_CALENDARIO("DESHABILITADA_CALENDARIO");
     private final String status;
 
     EstadoReserva(String status) {

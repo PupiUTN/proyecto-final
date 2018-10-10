@@ -49,6 +49,7 @@ public class Cuidador implements Serializable {
     private double ponderacion;
 
 
+
     @Override
     public boolean equals(Object o) {
         Cuidador oCuidador = (Cuidador) o;

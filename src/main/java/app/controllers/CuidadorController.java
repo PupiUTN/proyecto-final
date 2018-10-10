@@ -73,6 +73,8 @@ public class CuidadorController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity createCuidador(@RequestBody @Valid Cuidador entity) {
+        // muy importante
+        entity.setId(entity.getUser().getId());
         cuidadorService.createCuidador(entity);
         return new ResponseEntity<>(entity, HttpStatus.OK);
     }

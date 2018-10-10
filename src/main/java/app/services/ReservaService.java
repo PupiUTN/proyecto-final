@@ -1,8 +1,11 @@
 package app.services;
 
 import app.exception.BussinesLogicException;
+import app.models.entities.CalendarioCuidador;
+import app.models.entities.Cuidador;
 import app.models.entities.Reserva;
 import app.models.entities.User;
+import app.persistence.CalendarioCuidadorRepository;
 import app.persistence.ReservaRepository;
 import app.utils.EstadoReserva;
 import app.utils.MailType;
@@ -20,11 +23,13 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class ReservaService {
 
     private final ReservaRepository reservaRepository;
+    private final CalendarioCuidadorRepository calendarioCuidadorRepository;
     private final MailService mailService;
 
     @Autowired
-    public ReservaService(ReservaRepository reservaRepository, MailService mailService) {
+    public ReservaService(ReservaRepository reservaRepository, CalendarioCuidadorRepository calendarioCuidadorRepository, MailService mailService) {
         this.reservaRepository = reservaRepository;
+        this.calendarioCuidadorRepository = calendarioCuidadorRepository;
         this.mailService = mailService;
     }
 
@@ -109,6 +114,17 @@ public class ReservaService {
             Reserva reserva = reservas.get(i);
             reserva.setCuidador(null);
             reserva.setPerro(null);
+        }
+        Cuidador cuidador = new Cuidador();
+        cuidador.setId(id);
+        List<CalendarioCuidador> calendarioCuidadorList = calendarioCuidadorRepository.findAllByCuidadorFromToday(cuidador.getId());
+        for (int i = 0; i < calendarioCuidadorList.size(); i++) {
+            CalendarioCuidador calendarioCuidador =  calendarioCuidadorList.get(i);
+            Reserva reservaFake = new Reserva();
+            reservaFake.setFechaInicio(calendarioCuidador.getFechaDeshabilitada());
+            reservaFake.setFechaFin(calendarioCuidador.getFechaDeshabilitada());
+            reservaFake.setStatus(EstadoReserva.DESHABILITADA_CALENDARIO.getStatus());
+            reservas.add(reservaFake);
         }
         return reservas;
 

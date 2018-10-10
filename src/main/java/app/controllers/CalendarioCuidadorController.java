@@ -7,16 +7,14 @@ package app.controllers;
 
 import app.models.entities.CalendarioCuidador;
 import app.models.entities.Cuidador;
-import app.models.entities.Servicio;
 import app.security.MyUserPrincipal;
 import app.services.CalendarioCuidadorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -34,16 +32,22 @@ public class CalendarioCuidadorController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
-    public List<CalendarioCuidador> getCalendario(){
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal();
-        MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public List<CalendarioCuidador> getCalendarioCuidador(@PathVariable("id") Long id) {
         Cuidador cuidador = new Cuidador();
-        Long id = myUserPrincipal.getUser().getId();
         cuidador.setId(id);
-        return calendarioCuidadorService.getCalendarios(cuidador);
+        return calendarioCuidadorService.findAllByCuidadorFromToday(cuidador);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
+    public List<CalendarioCuidador> postCalendarioCuidador(@RequestBody List<CalendarioCuidador> entityList) {
+        return calendarioCuidadorService.save(entityList);
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
+    public void deleteCalendarioCuidador(@PathVariable("id") Long id) {
+        calendarioCuidadorService.delete(id);
     }
 }

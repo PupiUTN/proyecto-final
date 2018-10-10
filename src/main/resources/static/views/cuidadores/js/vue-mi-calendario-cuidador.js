@@ -12,57 +12,30 @@ Vue.component('mi-calendario-cuidador', {
                 </div>
                 <!-- Form -->
                 <div class="row">
-                    <div v-if="formPost">
+                    <div>
                         <form v-on:submit.prevent='postItem()'>
-                            <div class="col-md-10 col-sm-12">
+                            <div class="col-md-6 col-sm-12">
                                 <my-hotel-date-picker
                                 ref="myHotelDatePicker"
                                 format="DD/MM/YYYY"
                                 infoFormat="DD/MM/YYYY"
                                 datePickerId="datepickerId"
+                                v-on:updateDateRange="bindDates"
                                 :selectForward="true"
                                 v-if="showDatePicker"
                                 :moveBothMonths="true"
-                                :idCuidador="idUser"
-                                :cantidadMaxDePerros="cantidadMaxDePerros">
+                                :idCuidador="cuidador.id"
+                                :cantidadMaxDePerros="cuidador.cantidadMaxDePerros"
+                                required
+                                removeLeft
+                                 >
                                 </my-hotel-date-picker>
                             </div>
-                            <div class="col-md-2 col-sm-12">
+                            <div class="col-md-6 col-sm-12">
                                 <div>
-                                    <button type="submit" class="button medium border"><i
+                                    <button type="submit" class="button medium border pull-right"><i
                                             class="sl sl-icon-plus"></i> Insertar Fechas
                                     </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div v-else>
-                        <form v-on:submit='editItem()'>
-                            <div class="col-md-2 col-sm-12">
-                                <div>
-                                    <input type="number" class="disabled" v-model="item.id" placeholder="Id"
-                                           required="required" disabled>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-12">
-
-                                <div>
-                                    <input type="text" v-model="item.nombre" placeholder="Raza"
-                                           required="required">
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-sm-12">
-                                <div>
-                                    <button type="submit" class="button medium border"><i
-                                            class="sl sl-icon-note"></i> Editar Raza
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-sm-12">
-                                <div>
-                                    <a href="#" class="button medium border"
-                                       v-on:click='editItemButtonUndo'><i
-                                            class="sl sl-icon-action-undo"></i> Volver a Nueva</a>
                                 </div>
                             </div>
                         </form>
@@ -98,76 +71,96 @@ Vue.component('mi-calendario-cuidador', {
         return {
             cuidadorUrl: "/api/cuidadores",
             url: "/api/cuidadores/calendario",
-            item: {
-                id: null,
-                fechaDeshabilitada: null,
-                cuidador: null
-            },
             items: [],
             formPost: true,
             showDatePicker: false,
-            idUser: localStorage.getItem('idUser'),
-            cuidador: null
+            idUser: parseInt(localStorage.getItem('idUser'), 10),
+            cuidador: null,
+            fechaInicio: null,
+            fechaFin: null
         }
     },
     mounted() {
-        this.getCalendario(this.url);
+        this.getCuidadorByUserId(this.url);
     },
     methods: {
         getCalendario() {
-            this.showDatePicker = false
-            axios.get(this.url)
+            axios.get(this.url + "/" + this.cuidador.id)
                 .then((response) => {
                     this.items = response.data;
-                    // en caso de no tener calendario necesito acceder a las reservas del cuidador de otra forma
-                    if (this.items.left === 0) {
-                        this.getCuidador()
-                    } else {
-                        this.showDatePicker = true
-                    }
+                    this.showDatePicker = true
                 }).catch(error => {
                 console.log(error);
                 sweetAlert("Oops...", "Error, getCalendario", "error");
             });
         },
-        getCuidador() {
+        getCuidadorByUserId() {
             this.showDatePicker = false
-            axios.get(this.cuidadorUrl + "/" + this.idUser)
+            axios.get(this.cuidadorUrl + "/user/", {
+                params: {
+                    "id": this.idUser
+                }
+            })
                 .then((response) => {
                     this.cuidador = response.data;
-                    this.showDatePicker = true
+                    this.getCalendario()
                 })
                 .catch(error => {
                         this.showDatePicker = true
                         console.log(error);
-                        sweetAlert("Oops...", "Error getCuidador ", "error");
+                        sweetAlert("Oops...", "Error getCuidadorByUserId ", "error");
                     }
                 );
         },
+        bindDates(e) {
+            console.log('bindDates', e);
+            var split = e.split('-');
+            this.fechaInicio = split[0].replace(/\s/g, '');
+            this.fechaFin = split[1].replace(/\s/g, '');
+        },
         postItem() {
-            var payload = jQuery.extend(true, {}, this.item); //copio el objeto a mandar porque despues lo edito
-            axios.post(this.url, payload)
+            let fechasArray = this.$refs.myHotelDatePicker.getDatesBetween(this.fechaInicio, this.fechaFin)
+            let body = []
+            for (let i = 0; i < fechasArray.length; i++) {
+                const fecha = fechasArray[i];
+                body.push({
+                    fechaDeshabilitada: fecha.fecha,
+                    cuidador: this.cuidador
+
+                })
+            }
+            this.showDatePicker = false
+            axios.post(this.url, body)
                 .then((response) => {
                     console.log(response);
-                    this.items.push(response.data); //agrego la respuesta asi no refresco la pagina
-                    this.item.nombre = '';
-                    sweetAlert("Guardado!", "Nueva Raza creada exitosamente.", "success");
+                    this.items = this.items.concat(response.data); //agrego la respuesta asi no refresco la pagina
+                    this.fechaInicio = null;
+                    this.fechaFin = null;
+                    sweetAlert("Guardado!", "Nuevo Calendario agregado exitosamente.", "success");
+                    this.showDatePicker = true
+                    setTimeout(() => {
+                        this.$refs.myHotelDatePicker.clear()
+                    }, 1000);
+
                 })
                 .catch(error => {
                         console.log(error);
                         sweetAlert("Oops...", "Error, ver consola", "error");
+                        this.showDatePicker = true
                     }
                 );
         },
         deleteItem(index) {
-
             var id = this.items[index].id;
+            this.showDatePicker = false
             axios.delete(this.url + '/' + id)
                 .then((response) => {
-                    sweetAlert("Eliminada!", "Raza eliminada correctamente.", "success");
+                    this.showDatePicker = true
+                    sweetAlert("Eliminada!", "Fecha eliminada correctamente.", "success");
                     Vue.delete(this.items, index);
                 })
                 .catch(error => {
+                        this.showDatePicker = true
                         console.log(error);
                         sweetAlert("Oops...", "Error, ver consola", "error");
 
@@ -178,7 +171,7 @@ Vue.component('mi-calendario-cuidador', {
             var id = this.items[index].id;
             sweetAlert({
                     title: "Confirmar accion",
-                    text: "Quiere eliminar la Raza con id: " + id + " ?",
+                    text: "Quiere eliminar la Fecha con id: " + id + " ?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -188,18 +181,10 @@ Vue.component('mi-calendario-cuidador', {
                     showLoaderOnConfirm: true,
                 },
                 function () {
-                    vm.$refs.myRaza.$refs.currentView.deleteItem(index, id)
+                    vm.$refs.miCalendarioCuidador.$refs.currentView.deleteItem(index, id)
                 });
         }
 
     },
-    computed: {
-        cantidadMaxDePerros: function () {
-            if (this.cuidador) {
-                return this.cuidador.cantidadMaxDePerros
-            } else {
-                this.items[0].cuidador.cantidadMaxDePerros
-            }
-        }
-    }
+    computed: {}
 });

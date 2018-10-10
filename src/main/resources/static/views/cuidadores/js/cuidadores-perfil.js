@@ -451,10 +451,10 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             }
         },
         bindDates(e) {
-            console.log("bin date");
+            console.log('bindDates', e);
             var split = e.split('-');
-            this.dateFrom = split[0].replace(/\s/g, '');
-            this.dateTo = split[1].replace(/\s/g, '');
+            this.reserva.fechaInicio = split[0].replace(/\s/g, '');
+            this.reserva.fechaFin = split[1].replace(/\s/g, '');
         },
         getCalificacionesCuidador() {
             var urlCalificaciones = "/api/calificaciones/calificacionesCuidador/";

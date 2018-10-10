@@ -19,7 +19,14 @@ public class CalendarioCuidadorService {
         this.calendarioCuidadorRepository = calendarioCuidadorRepository;
     }
 
-    public List<CalendarioCuidador> getCalendarios(Cuidador cuidador) {
-        return calendarioCuidadorRepository.findAllByCuidador(cuidador);
+    public List<CalendarioCuidador> findAllByCuidadorFromToday(Cuidador cuidador) {
+        return calendarioCuidadorRepository.findAllByCuidadorFromToday(cuidador.getId());
+    }
+
+    public List<CalendarioCuidador> save(List<CalendarioCuidador> entityList) {
+        return calendarioCuidadorRepository.save(entityList);
+    }
+    public void delete(Long id) {
+        calendarioCuidadorRepository.delete(id);
     }
 }
