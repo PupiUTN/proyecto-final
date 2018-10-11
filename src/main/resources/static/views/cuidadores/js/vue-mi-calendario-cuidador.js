@@ -21,7 +21,7 @@ Vue.component('mi-calendario-cuidador', {
                                 infoFormat="DD/MM/YYYY"
                                 datePickerId="datepickerId"
                                 v-on:updateDateRange="bindDates"
-                                :selectForward="true"
+                                :selectForward="false"
                                 v-if="showDatePicker"
                                 :moveBothMonths="true"
                                 :idCuidador="cuidador.id"
@@ -47,7 +47,7 @@ Vue.component('mi-calendario-cuidador', {
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Fecha</th>
+                        <th>Fecha Deshabilitada</th>
                         <th>Eliminar</th>
                     </tr>
                     </thead>
