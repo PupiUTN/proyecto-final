@@ -3,7 +3,7 @@ Vue.component('chart-pie', {
     template:
         `
 <div>
-      <div class="chart-container">
+      <div class="chart-container" id="chart-container">
                   <canvas id="myChart"></canvas>
                      
       </div> 
@@ -18,6 +18,7 @@ Vue.component('chart-pie', {
     },
     watch: {
         totalPorTipo: function(newVal, oldVal) { // watch it
+            this.resetCanvas();
             this.setNombre()
         }
         },
@@ -57,6 +58,13 @@ Vue.component('chart-pie', {
                     }]
                 }
             });
+
+        },
+
+        resetCanvas(){
+
+            $('#myChart').remove(); // this is my <canvas> element
+            $('#chart-container').append('<canvas id="myChart"></canvas>');
 
         }
 

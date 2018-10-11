@@ -32,7 +32,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6 col-xs-12">
 				<div class="dashboard-stat color-1">
-					<div class="dashboard-stat-content" style="font-size: 35px;">{{estadisticas.cantidadTotal}} <br><span>Reservas</span></div>
+					<div class="dashboard-stat-content" style="font-size: 35px;">{{estadisticas.cantidadTotal}} <br><span style="font-size: small;">Reservas exitosas</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Cursor-Click2"></i></div>
 				</div>
 			</div>
@@ -41,13 +41,13 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 		
 			<div v-show="role === 'ROLE_CUIDADOR'" class="col-lg-3 col-md-6 col-xs-12">
 				<div class="dashboard-stat color-2">
-					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalVisitas}} <br><span>Visitas</span></div>
+					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalVisitas}} <br><span style="font-size: small;">Visitas a mi perfil</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Line-Chart"></i></div>
 				</div>
 			</div>
 	<div v-show="role === 'ROLE_USER'" class="col-lg-3 col-md-6 col-xs-12">
 				<div class="dashboard-stat color-2">
-					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalCuidadores}} <br><span>Me Cuidaron</span></div>
+					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalCuidadores}} <br><span style="font-size: small;">Cuidadores me recibieron</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-MaleFemale"></i></div>
 				</div>
 			</div>
@@ -58,7 +58,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6 col-xs-12">
 				<div class="dashboard-stat color-3">
-					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.promedio}}<br> <span>Puntaje</span></div>
+					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.promedio}}<br> <span style="font-size: small;">Puntaje promedio</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Add-UserStar"></i></div>
 				</div>
 			</div>
@@ -80,7 +80,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
 		<div class="col-lg-9 col-md-10 col-xs-12">
 		
 				<div class="dashboard-list-box invoices with-icons">
-				<h4 style="background-color:gainsboro;"> <i class="im im-icon-Line-Chart"></i> Mis ultimos  meses</h4>
+				<h4  style="background-color:gainsboro;"> <i class="im im-icon-Line-Chart"></i>{{mensajeXmes}}</h4>
              <button-counter :cantidad="estadisticas.cantidadPorMes" > 
             </button-counter>
                 </div>
@@ -96,9 +96,11 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
          <div class="col-lg-9 col-md-9 col-xs-12">
 				<div class="dashboard-list-box invoices with-icons">
 				<h4 style="background-color: gainsboro;"><i class="im im-icon-Line-Chart"></i> Estados de mis Reservas</h4>
-               <chart-pie :totalPorTipo="estadisticas.totalPorTipo" >
+				<div id="chartConteiner">
+               <chart-pie  id ="chartPie" :totalPorTipo="estadisticas.totalPorTipo" >
                
                 </chart-pie>
+                </div>
                 </div>
          </div>
           
@@ -138,6 +140,7 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
             list:{},
             rol:'',
             banner:'',
+            mensajeXmes:'',
         }
     },
     watch: {
@@ -146,11 +149,13 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
             if (this.role == "ROLE_CUIDADOR")
             {   this.rol = this.role;
                 this.getCuidadorEstadistica();
+                this.mensajeXmes = "Reservas recibidas en los ultimos  meses";
             }
 
             if (this.role == "ROLE_USER")
             {       this.rol = this.role;
                 this.getUserEstadistica();
+                this.mensajeXmes = "Reservas realizadas en los ultimos  meses";
 
             }
             if (this.role == "ROLE_ADMIN")
@@ -161,11 +166,14 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
         selected: function(newVal, oldVal) { // watch it
 
             this.estadisticas.cantidadTotal = this.list[newVal].cantidadTotal.toString();
-            this.estadisticas.promedio = this.list[newVal].promedio.toString();
+            this.estadisticas.promedio =  Math.trunc(this.list[newVal].promedio) + " / 5";
             this.estadisticas.cantidadPorMes = this.list[newVal].cantidadPorMes;
+            this.estadisticas.totalPorTipo = [];
             this.estadisticas.totalPorTipo = this.list[newVal].totalPorTipo;
             this.estadisticas.nombre = this.list[newVal].nombre;
             this.estadisticas.totalCuidadores = this.list[newVal].totalCuidadores;
+
+            this.resetCanvas();
         },
 
 
@@ -244,7 +252,9 @@ let myMainDashboard = Vue.component('my-main-dashboard', {
                     console.log(error);
                     sweetAlert("Oops...", "Error, ver consola", "error");
                 });
-        }
+        },
+
+
 
     }
 });

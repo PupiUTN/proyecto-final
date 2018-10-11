@@ -42,6 +42,7 @@ public class EstadisticaController {
     public Estadistica getEstadisticasCuidador() throws Exception {
         long id = getIdCuidador();
         int[] cantidadXtipo = new int[7];
+        int cantidadExitosas = 0;
         Estadistica estadistica = new Estadistica();
         List<Reserva> list = reservaService.findAllByCuidador(id);
 
@@ -53,12 +54,15 @@ public class EstadisticaController {
             switch (item.getStatus()) {
                 case "finalizada":
                     cantidadXtipo[4]++;
+                    cantidadExitosas++;
                     break;
                 case "comentario-cuidador":
                     cantidadXtipo[5]++;
+                    cantidadExitosas++;
                     break;
                 case "comentario-dueño":
                     cantidadXtipo[4]++;
+                    cantidadExitosas++;
                     break;
                 case "pagada-dueño":
                     cantidadXtipo[2]++;
@@ -77,9 +81,11 @@ public class EstadisticaController {
                     break;
                 case "cerrada":
                     cantidadXtipo[5]++;
+                    cantidadExitosas++;
                     break;
                 case "ejecucion":
                     cantidadXtipo[3]++;
+                    cantidadExitosas++;
                     break;
                 default:
 
@@ -96,7 +102,7 @@ public class EstadisticaController {
          }
 
         estadistica.setTotalPorTipo(cantidadXtipo);
-        estadistica.setCantidadTotal(list.size());
+        estadistica.setCantidadTotal(cantidadExitosas);
         estadistica.setPromedio(cuidador.getPromedioReviews());
         estadistica.setCantidadPorMes(getReservasXMes(list));
         estadistica.setTotalVisitas(cuidador.getCantidadVisitas());
@@ -168,7 +174,7 @@ public class EstadisticaController {
             estadisticaUser.setNombrePerro(item.getNombre());
             estadisticaUser.setNombre(user.getFullName());
             estadisticaUser.setCantidadPorMes(getReservasXMes(list, item.getId()));
-            estadisticaUser.setCantidadTotal(getCantidadTotal(list,item));
+            estadisticaUser.setCantidadTotal(getCantidadExitosas(list,item));
            // estadisticaUser.setPromedio(getPromedio(item.getId()));
             estadisticaUser.setPromedio(item.getPromedioReviews());
             estadisticaUser.setIdPerro(item.getId().intValue());
@@ -181,15 +187,19 @@ public class EstadisticaController {
     }
 
 
-    private int getCantidadTotal(List<Reserva> list, Perro perro ) {
+    private int getCantidadExitosas(List<Reserva> list, Perro perro ) {
         long cont = 0;
-
+        ArrayList<String> listaEstados =  getEstadosReserva();
         cont  = list
                 .stream()
                 .filter(node -> Objects.equals(node.getPerro().getId(), perro.getId()))
+                .filter( node -> listaEstados.contains(node.getStatus()))
                 .count();
         return ((int) cont);
     }
+
+
+
 
 
     public float getPromedio(Long id) throws Exception

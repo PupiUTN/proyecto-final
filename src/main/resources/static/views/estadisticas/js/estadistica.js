@@ -44,7 +44,8 @@ Vue.component('my-estadistica', {
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-1">
-					<div class="dashboard-stat-content" style="font-size: 35px;">{{estadisticas.cantidadTotal}} <br><span>Reservas</span></div>
+					<div class="dashboard-stat-content" style="font-size: 35px;">{{estadisticas.cantidadTotal}} <br>
+					<span style="font-size: small;">Reservas exitosas</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Cursor-Click2"></i></div>
 				</div>
 			</div>
@@ -53,7 +54,8 @@ Vue.component('my-estadistica', {
 	
 	<div  class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-2">
-					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalCuidadores}} <br><span>Me Cuidaron</span></div>
+					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalCuidadores}} <br>
+					<span style="font-size: small;">Cuidadores me recibieron</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-MaleFemale"></i></div>
 				</div>
 			</div>
@@ -62,7 +64,8 @@ Vue.component('my-estadistica', {
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
 				<div class="dashboard-stat color-3">
-					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.promedio}}<br> <span>Puntaje</span></div>
+					<div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.promedio}}<br> 
+					<span style="font-size: small;">Puntaje promedio</span></div>
 					<div class="dashboard-stat-icon"><i class="im im-icon-Add-UserStar"></i></div>
 				</div>
 			</div>
@@ -82,7 +85,7 @@ Vue.component('my-estadistica', {
 		<div class="col-lg-9 col-md-10 col-xs-12">
 		
 				<div class="dashboard-list-box invoices with-icons">
-				<h4 style="background-color:gainsboro;"> <i class="im im-icon-Line-Chart"></i> Mis ultimos  meses</h4>
+				<h4 style="background-color:gainsboro;"> <i class="im im-icon-Line-Chart"></i>Reservas realizadas en los ultimos  meses</h4>
              <button-counter :cantidad="estadisticas.cantidadPorMes" >
              
             </button-counter>
@@ -135,11 +138,14 @@ Vue.component('my-estadistica', {
         selected: function(newVal, oldVal) { // watch it
 
             this.estadisticas.cantidadTotal = this.list[newVal].cantidadTotal.toString();
-            this.estadisticas.promedio = this.list[newVal].promedio.toString();
+            this.estadisticas.promedio =  Math.trunc(this.list[newVal].promedio) + " / 5";
+            this.estadisticas.totalPorTipo = [];
             this.estadisticas.cantidadPorMes = this.list[newVal].cantidadPorMes;
             this.estadisticas.totalPorTipo = this.list[newVal].totalPorTipo;
             this.estadisticas.nombre = this.list[newVal].nombre;
             this.estadisticas.totalCuidadores = this.list[newVal].totalCuidadores;
+
+            this.resetCanvas();
         },
 
 
