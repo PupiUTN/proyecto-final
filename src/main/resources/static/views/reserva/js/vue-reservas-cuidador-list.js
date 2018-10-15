@@ -39,8 +39,8 @@ Vue.component('my-reservas-cuidador-list', {
      </div>
     
 <div class="row" v-if="status === 'rechazada-cuidador' || status ==='rechazada-dueño'" >
-    <a id="btn1" v-on:click="buscarCanceladasxDueño()" style="background-color: inherit; color: black; border-color: black; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  '#e3f2fd': 'inherit'}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
-    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="background-color: inherit; color: black; border-color: black; background: #e3f2fd" href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 1 ?  '#e3f2fd': 'inherit'}"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
+    <a id="btn1" v-on:click="buscarCanceladasxDueño()" style="background-color: inherit; color: black; border-color: black; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
+    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="background-color: inherit; color: black; border-color: black; background: #e3f2fd" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
 </div>
     <div class="row">
         <!-- Listings -->

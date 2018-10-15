@@ -22,8 +22,8 @@ Vue.component('my-reservas-user-list', {
     
 
    <div class="row" v-if="status === 'rechazada-cuidador' || status ==='rechazada-dueño'" >
-    <a id="btn1" v-on:click="buscarCanceladasxCuid()" style="background-color: inherit; color: black; border-color: black; " href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 2 ?  '#e3f2fd' : ''}"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
-    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="background-color: inherit; color: black; border-color: black; background: #e3f2fd" href="#" class="button medium border pull-right" v-bind:style="{'background-color':myValue == 1 ?  '#e3f2fd' : ''}"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
+    <a id="btn1" v-on:click="buscarCanceladasxCuid()" style="background-color: inherit; color: black; border-color: black; " href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Me cancelaron</a>
+    <a id="btn2" v-on:click="buscarMisCancelaciones()" style="background-color: inherit; color: black; border-color: black; background: #e3f2fd" href="#" class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Mis cancelaciones</a>
 </div>
 		<div class="row">
 			
@@ -72,7 +72,7 @@ Vue.component('my-reservas-user-list', {
                                             <a v-on:click="verDetalleCompletoButton(index)" href="#" class="button medium border pull-right" style="background-color: inherit;"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                         </div>
                                           <div class="col-xs-6 col-md-3" v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-cuidador'">
-                                            <a v-on:click="calificarReserva(index)"  style="color: blue; border-color: blue; background-color: inherit;" href="#"class="button medium border pull-right" style="background-color: inherit;"><i class="sl sl-icon-docs"></i> Calificar</a>                        
+                                            <a v-on:click="calificarReserva(index)"  style="color: blue; border-color: blue; background-color: inherit;" href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
                                         </div> 
                                         <div class = "col-xs-6 col-md-6" v-if="reserva.status === 'aceptada-cuidador'">
                                             <mercadopago :reserva="reserva"></mercadopago>

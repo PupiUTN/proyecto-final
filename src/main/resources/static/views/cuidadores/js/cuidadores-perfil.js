@@ -449,7 +449,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             } else {
                 setTimeout(function () {
                     this.setDatesToDatePickerInput()
-                }.bind(this), 5000)
+                }.bind(this), 1000)
             }
         },
         bindDates(e) {
