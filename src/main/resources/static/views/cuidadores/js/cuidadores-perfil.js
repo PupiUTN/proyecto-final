@@ -439,15 +439,17 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             this.dateFrom = this.getParameterByName('from');
             this.dateTo = this.getParameterByName('to');
             this.idCuidador = parseInt(this.getParameterByName('id'), 10);
+            this.setDatesToDatePickerInput();
         },
         setDatesToDatePickerInput() {
+            console.log('setDatesToDatePickerInput')
             if (this.dateFrom && this.dateTo && this.$refs.myHotelDatePicker) {
                 var value = this.dateFrom + '-' + this.dateTo;
                 this.$refs.myHotelDatePicker.setValue(value);
             } else {
                 setTimeout(function () {
                     this.setDatesToDatePickerInput()
-                }.bind(this), 1000)
+                }.bind(this), 5000)
             }
         },
         bindDates(e) {
