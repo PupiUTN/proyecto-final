@@ -40,6 +40,13 @@ public class CronController {
         return new ResponseEntity<>("{\"updates\": " + updates + "}", HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/moverEstadoDeCreadaARechazada", method = RequestMethod.POST)
+    @Scheduled(cron = "0 4 0 * * ?")// at 4:00 AM every day
+    public ResponseEntity moverEstadoDeCreadaARechazada() {
+        Integer updates = cronService.moverEstadoDeCreadaDueñoARechazado();
+        return new ResponseEntity<>("{\"updates\": " + updates + "}", HttpStatus.OK);
+    }
+
 
     @RequestMapping(value = "/moverEstadoDeCreadaDueñoAAceptadaCuidador", method = RequestMethod.POST)
     @Scheduled(cron = "0 4 0 * * ?")// at 4:00 AM every day
