@@ -69,4 +69,11 @@ public class CronService {
     public Integer moverEstadoDeCreadaDueñoARechazado() {
         return cronRepository.updateStateIfFechaTransaccionMas72hs(EstadoReserva.CREADA.getStatus(), EstadoReserva.RECHAZADA_DUEÑO.getStatus());
     }
+
+    /**
+     * - si fecha finalizada + 72hs es mayor a la fecha de hoy y estado no cerrado --> cerrado
+     */
+    public Integer moverEstadoDeNoComentadoACerrado() {
+        return cronRepository.finalizadoStateIfFechaFinMas72hs();
+    }
 }

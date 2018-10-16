@@ -2,6 +2,7 @@ package app.persistence;
 
 import app.models.entities.Cuidador;
 import app.models.entities.Servicio;
+import app.models.entities.CalendarioCuidador;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,7 +22,7 @@ public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
     @Query("select c from Cuidador c " +
             "where c.user.direccion.ciudadPlaceId = :#{#ciudadPlaceId} " +
             "AND c.estado = :#{#status} " +
-            "AND c.cantidadMaxDePerros > COALESCE(( " +
+            "AND (c.cantidadMaxDePerros > COALESCE(( " +
             "select count(r) from Reserva r " +
             "where (r.status = 'pagada-dueño' or r.status = 'aceptada-cuidador' or r.status = 'ejecucion') " +
             "and (( :#{#from} between r.fechaInicio AND r.fechaFin " +
@@ -29,7 +30,11 @@ public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
             "or (r.fechaInicio between :#{#from} AND :#{#to} " +
             "or r.fechaFin between :#{#from} AND :#{#to} )) " +
             "GROUP BY r.cuidador " +
-            "HAVING r.cuidador = c),0) "/* +
+            "HAVING r.cuidador = c),0)) " +
+            "AND (NOT EXISTS (" +
+            "SELECT 1 FROM CalendarioCuidador cc " +
+            "WHERE cc.cuidador = c " +
+            "AND (cc.fechaDeshabilitada between :#{#from} AND :#{#to} ))) " /*
            "order by c.promedioReviews desc, c.cantidadReviews desc"*/)
     List<Cuidador> findAllbyCiudadYFecha(@Param("ciudadPlaceId") String ciudadPlaceId,
                                          @Param("from") LocalDate from,

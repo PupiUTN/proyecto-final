@@ -49,4 +49,10 @@ public interface CronRepository extends JpaRepository<Reserva, Long> {
             " and r.status = :currentState")
     Integer updateStateIfFechaAceptacionMas72hs(@Param("currentState") String currentState, @Param("nextState") String nextState);
 
+    @Modifying
+    @Query("update Reserva r set r.status = 'cerrada' " +
+            " where TIMESTAMPDIFF(HOUR, r.fechaFin, CURDATE()) >= 72" +
+            " and (r.status = 'finalizada' or r.status = 'comentario-dueño' or r.status = 'comentario-cuidador')")
+    Integer finalizadoStateIfFechaFinMas72hs();
+
 }
