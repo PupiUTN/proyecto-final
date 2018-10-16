@@ -9,20 +9,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.annotation.security.PermitAll;
+
 @Controller
 @RequestMapping(value = "/")
 public class HomeController {
 
 
     @RequestMapping(method = RequestMethod.GET)
+    @PermitAll
     public String home() {
         return "/views/index/index.html";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/api")
-    public String api() {
-        return "/swagger-ui.html";
-    }
 
 
 }
