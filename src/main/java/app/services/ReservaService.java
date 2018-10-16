@@ -142,6 +142,7 @@ public class ReservaService {
     public void confirmar(Long reservaId, Long userId) {
         Reserva reserva = reservaRepository.findByCuidadorIdAnId(userId, reservaId);
         reserva.setStatus("aceptada-cuidador");
+        reserva.setFechaAceptacion(LocalDate.now());
         reservaRepository.save(reserva);
         User user = getReserva(reservaId).getPerro().getUser();
         mailService.sendEmail(user, MailType.BOOKING_CONFIRMATION);

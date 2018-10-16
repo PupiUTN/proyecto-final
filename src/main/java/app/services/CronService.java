@@ -50,10 +50,10 @@ public class CronService {
     }
 
     /**
-     * - si fecha transaccion + 72hs es mayor a la fecha de hoy y estado acepatada cuidador --> caido-falta-pago
+     * - si fecha aceptacion + 72hs es mayor a la fecha de hoy y estado acepatada cuidador --> caido-falta-aceptacion
      */
     public Integer moverEstadoDeAceptadaCuidadorACaido() {
-        return cronRepository.updateStateIfFechaTransaccionMas72hs(EstadoReserva.ACEPTADA_CUIDADOR.getStatus(), EstadoReserva.CAIDA_FALTA_PAGO.getStatus());
+        return cronRepository.updateStateIfFechaAceptacionMas72hs(EstadoReserva.ACEPTADA_CUIDADOR.getStatus(), EstadoReserva.CAIDA_FALTA_PAGO.getStatus());
     }
 
     /**
@@ -61,5 +61,12 @@ public class CronService {
      */
     public Integer moverEstadoDeCreadaDueñoAAceptadaCuidador() {
         return cronRepository.updateStateIfFechaInicioMenorHoy(EstadoReserva.CREADA.getStatus(), EstadoReserva.CAIDA_FALTA_PAGO.getStatus());
+    }
+
+    /**
+     * - si fecha transicion + 72hs es mayor a la fecha de hoy y estado acepatada cuidador --> caido-falta-pago
+     */
+    public Integer moverEstadoDeCreadaDueñoARechazado() {
+        return cronRepository.updateStateIfFechaTransaccionMas72hs(EstadoReserva.CREADA.getStatus(), EstadoReserva.RECHAZADA_DUEÑO.getStatus());
     }
 }

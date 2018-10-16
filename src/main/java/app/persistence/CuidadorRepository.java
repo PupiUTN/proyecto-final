@@ -23,7 +23,7 @@ public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
             "AND c.estado = :#{#status} " +
             "AND c.cantidadMaxDePerros > COALESCE(( " +
             "select count(r) from Reserva r " +
-            "where r.status like 'pagada-dueño' or r.status like 'aceptada-cuidador' or r.status like 'ejecucion' " +
+            "where (r.status = 'pagada-dueño' or r.status = 'aceptada-cuidador' or r.status = 'ejecucion') " +
             "and (( :#{#from} between r.fechaInicio AND r.fechaFin " +
             "or  :#{#to} between r.fechaInicio AND r.fechaFin ) " +
             "or (r.fechaInicio between :#{#from} AND :#{#to} " +

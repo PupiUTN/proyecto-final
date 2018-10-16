@@ -352,6 +352,9 @@ public class EstadisticaAdminController {
                     case "Buenos Aires":
                         cuidadores[0]++;
                         break;
+                    case "Pcia de Buenos Aires":
+                        cuidadores[0]++;
+                        break;
                     case "Catamarca":
                         cuidadores[1]++;
                     case "Chaco":
