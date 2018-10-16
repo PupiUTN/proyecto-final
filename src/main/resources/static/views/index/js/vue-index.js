@@ -6,8 +6,8 @@ let myIndex = Vue.component('my-index', {
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2> Tú mascota es nuestra mascota</h2>
-                    <h4>Porque tú mejor amigo no merece estar solo en casa</h4>
+                    <h2> Tu perro es nuestra mascota</h2>
+                    <h4>Porque tu mejor amigo no merece estar solo en casa</h4>
                     <my-buscar-cuidadores ref="myBuscarCuidadores"></my-buscar-cuidadores>
                 </div>
             </div>
@@ -17,10 +17,10 @@ let myIndex = Vue.component('my-index', {
 <!-- Info Section -->
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+         <div class="col-md-8 col-md-offset-2">
             <h2 class="headline centered margin-top-80">
                 Planea la estadía de sus sueños
-                <span class="margin-top-25"> Explora algunos de los mejores cuidadores del país. Descubre nuevas experiencias y haz a tu perro feliz </span>
+                <span class="margin-top-25"> Explora algunos de los mejores cuidadores del país.<br/> Descubre nuevas experiencias y haz a tu perro feliz </span>
             </h2>
         </div>
     </div>
