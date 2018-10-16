@@ -93,7 +93,7 @@ public enum MailType {
 
             case BOOKING_STARTING_USER:
                 text = "Tu Estadia en Pupi <b>está a punto de comenzar</b><br>" +
-                        "Quédate tranquilo, tu mejor amigo estará muy a gusto con el Cuidador que elegiste!<br> " +
+                        "Quédate tranquilo/a, tu mejor amigo estará muy a gusto con el Cuidador que elegiste!<br> " +
                         "Gracias Por Elegirnos.<br>";
                 break;
 
