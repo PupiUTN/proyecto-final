@@ -10,7 +10,7 @@ let review = Vue.component('Review', {
                 
                  <div class="row">
                          <div class="col-md-8"> 
-                              	<h3 class="listing-desc-headline margin-bottom-20" style="font-size: xx-large;">tu  calificación para {{entity.name}}</h3>
+                              	<h3 class="listing-desc-headline margin-bottom-20" style="font-size: xx-large;">Tu calificación para {{entity.name}}</h3>
                          
                          </div>
                    <div class="col-md-3">
@@ -171,7 +171,7 @@ let review = Vue.component('Review', {
                     var self = this
                     sweetAlert({
                             title: " Calificación exitosa ",
-                            text: "tu calificación  fue  guardarda  exitosamente.",
+                            text: "tu calificación fue guardarda exitosamente.",
                             type: "success",
                         },
                         function () {
