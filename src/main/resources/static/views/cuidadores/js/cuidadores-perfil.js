@@ -197,6 +197,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                     <div class="col-md-12">
                         <my-hotel-date-picker
                                 ref="myHotelDatePicker"
+                                v-model="datePikcerText"
                                 format="DD/MM/YYYY"
                                 infoFormat="DD/MM/YYYY"
                                 v-on:updateDateRange="bindDates"
@@ -256,18 +257,18 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                 profile_image_url: '',
                 tamaño: '',
                 listaServicios: '',
-                promedioReviews:'',
-                cantidadReviews:'',
+                promedioReviews: '',
+                cantidadReviews: '',
             },
             idCuidador: 0,
             dateFrom: null,
             dateTo: null,
             puntaje: 0,
-            calificaciones:[{
-                id:'',
-                comentario:'',
-                puntaje:'',
-                from_owner:'',
+            calificaciones: [{
+                id: '',
+                comentario: '',
+                puntaje: '',
+                from_owner: '',
                 reserva: {
                     id: '',
                     status: '',
@@ -278,7 +279,7 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
                         }
                     },
                     fechaTransaccion: '',
-                    fechaInicio:'',
+                    fechaInicio: '',
                 },
             }],
             offset: 0,
@@ -286,8 +287,9 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             perPage: 3,
             DataReview: [],
             puntajeUsuario: 0,
-            fechasDeshabilitadas:[],
-            showDatePicker: false
+            fechasDeshabilitadas: [],
+            showDatePicker: false,
+            datePikcerText: ''
         }
     }
     ,
@@ -314,8 +316,8 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
 
                 })
                 .catch(error => {
-                    this.showDatePicker = true
-                    console.log(error);
+                        this.showDatePicker = true
+                        console.log(error);
                         sweetAlert("Oops...", "Error  ", "error");
 
                     }
@@ -405,22 +407,22 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
 
             }
 
-          //  this.item.tamaño = param.valorMinimo + " a " + param.valorMaximo + " " + "KG.";
+            //  this.item.tamaño = param.valorMinimo + " a " + param.valorMaximo + " " + "KG.";
             this.item.tamaño = "Hasta " + param.valorMaximo + " " + "KG.";
         },
         hrerReserva() {
             var idUser = localStorage.getItem('idUser');
 
             if (parseInt(idUser) !== this.item.user.id) {
-            this.setDatesToDatePickerInput();
-            if (this.dateFrom != null & this.dateTo != null) {
-                document.location.href = '/views/reserva/generar-reserva.html?id=' + this.idCuidador + '&from=' + this.dateFrom + '&to=' + this.dateTo;
-            } else {
-                document.location.href = '/views/reserva/generar-reserva.html?id=' + this.idCuidador;
+                this.setDatesToDatePickerInput();
+                if (this.dateFrom != null & this.dateTo != null) {
+                    document.location.href = '/views/reserva/generar-reserva.html?id=' + this.idCuidador + '&from=' + this.dateFrom + '&to=' + this.dateTo;
+                } else {
+                    document.location.href = '/views/reserva/generar-reserva.html?id=' + this.idCuidador;
 
+                }
             }
-        }
-        else {
+            else {
                 sweetAlert("Atención!", "No puedes reservarte a ti mismo!", "warning");
 
             }
@@ -442,10 +444,24 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
             this.setDatesToDatePickerInput();
         },
         setDatesToDatePickerInput() {
-            console.log('setDatesToDatePickerInput')
             if (this.dateFrom && this.dateTo && this.$refs.myHotelDatePicker) {
-                var value = this.dateFrom + '-' + this.dateTo;
-                this.$refs.myHotelDatePicker.setValue(value);
+                try {
+                    setTimeout(function () {
+                        console.log('setDatesToDatePickerInput')
+                        var value = this.dateFrom + '-' + this.dateTo;
+                        this.datePikcerText = value
+                        this.$refs.myHotelDatePicker.setValue(value);
+                    }.bind(this), 1000)
+                }
+                catch (err) {
+                    setTimeout(function () {
+                        console.log('setDatesToDatePickerInput')
+                        var value = this.dateFrom + '-' + this.dateTo;
+                        this.datePikcerText = value
+                        this.$refs.myHotelDatePicker.setValue(value);
+                    }.bind(this), 1000)
+                }
+
             } else {
                 setTimeout(function () {
                     this.setDatesToDatePickerInput()
@@ -455,8 +471,8 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
         bindDates(e) {
             console.log('bindDates', e);
             var split = e.split('-');
-            this.reserva.fechaInicio = split[0].replace(/\s/g, '');
-            this.reserva.fechaFin = split[1].replace(/\s/g, '');
+            this.dateFrom = split[0].replace(/\s/g, '');
+            this.dateTo = split[1].replace(/\s/g, '');
         },
         getCalificacionesCuidador() {
             var urlCalificaciones = "/api/calificaciones/calificacionesCuidador/";
@@ -487,12 +503,12 @@ let myCuidadorPerfil = Vue.component('my-cuidador-perfil', {
 
         },
         previous() {
-            if(this.offset >0)
-            this.offset = this.offset - this.perPage;
+            if (this.offset > 0)
+                this.offset = this.offset - this.perPage;
         },
         next() {
             if (this.offset + this.perPage < this.DataReview.length)
-            this.offset = this.offset + this.perPage;
+                this.offset = this.offset + this.perPage;
         }
     },
     watch: {
