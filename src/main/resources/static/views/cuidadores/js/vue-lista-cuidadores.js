@@ -400,10 +400,15 @@ let myListaCuidadores = Vue.component('my-lista-cuidadores', {
                             //extend the bounds to include each marker's position
                             var id = item.id;
 
-                            var content =
-                                '<div class="marker-item" id="bodyContent">' +
-                                '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">' +
-                                '<h4>' + item.user.fullName + '</h4> ' +
+                            var dates = this.getDatesUrl();
+                            console.log(dates);
+                            var content = '<div class="marker-item" id="bodyContent"> ';
+                            if (dates != ""){
+                                content += '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + dates + '">';
+                            } else {
+                                content += '<a href="/views/cuidadores/cuidadores-perfil.html?id=' + id + '">';
+                            }
+                            content += '<h4>' + item.user.fullName + '</h4> ' +
                                 '<img style="height: 100%; width: 100%;" src=' + item.user.profileImageUrl + ' alt=""></a>' +
                                 '</div>';
                             var infowindow = new google.maps.InfoWindow();
