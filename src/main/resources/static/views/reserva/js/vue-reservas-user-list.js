@@ -8,7 +8,9 @@ Vue.component('my-reservas-user-list', {
 			<div class="row">
 				<div class="col-md-12">
 					<h2>{{ tipoDeReservas }}</h2>
-					<p>{{ tipoDeReservasDescripcion }} </br>
+					<p>
+					<span v-html="tipoDeReservasDescripcion"></span>
+					</br>
 					{{ descripcionReservaAceptada }}
 					</p>
 				</div>
@@ -320,7 +322,8 @@ Vue.component('my-reservas-user-list', {
                 return 'Muy bien, ya pagaste. Ahora solo queda esperar la fecha de la reserva'
             }
             if (this.status == 'finalizada') {
-                return 'Como te fue con el cuidador? Calificalo para que otros usuarios puedan elegir el mejor cuidador.'
+                return 'Como te fue con el cuidador? Calificalo para que otros usuarios puedan elegir el mejor cuidador.' +
+                    '\n <br> Recordá que tenes 72 hs para calificar la reserva, sino la reserva se cerrará sin puntuar.'
             }
             if (this.status == 'cerrada') {
                 return 'Tu historial de reservas cerradas'
@@ -403,14 +406,12 @@ Vue.component('my-reservas-user-list', {
             }
             return false
         },
-        descripcionReservaAceptada : function (){
-
+        descripcionReservaAceptada: function () {
             if (this.status == 'aceptada-cuidador') {
                 return ' Recordá que tenes 72 hs para realizar el pago, sino la solicitud de reserva se cancelará.'
             }
-            else
-            {
-                return '' ;
+            else {
+                return '';
             }
 
         }

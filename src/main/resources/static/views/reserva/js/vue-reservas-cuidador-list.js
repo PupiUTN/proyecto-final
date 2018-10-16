@@ -27,8 +27,11 @@ Vue.component('my-reservas-cuidador-list', {
                  <div v-if="status === 'ejecucion'">
                     <h2><b>Cuidador:</b>  Reservas en curso</h2>
                 </div>
-                
-                <p>{{ descripcionReservaCreada }}</p>
+                <p>
+					<span v-html="tipoDeReservasDescripcion"></span>
+					</br>
+					{{ descripcionReservaAceptada }}
+				</p>
             </div>
         </div>
     </div>              
@@ -195,7 +198,7 @@ Vue.component('my-reservas-cuidador-list', {
                 gridReservas: [],
                 perPage: 3,
                 countPages: 1,
-                contadorReservas:0
+                contadorReservas: 0
 
             }
         },
@@ -223,7 +226,7 @@ Vue.component('my-reservas-cuidador-list', {
             },
             getCuidadorReservas() {
                 this.gridReservas = [];
-                this. offset = 0;
+                this.offset = 0;
                 this.contadorReservas = 0;
                 axios.get('/api/cuidador/me/reservas?status=' + this.status)
                     .then((response) => {
@@ -242,7 +245,7 @@ Vue.component('my-reservas-cuidador-list', {
             },
             ordenarFecha(reservas) {
                 this.gridData = reservas;
-                this.contadorReservas =this.gridData.length;
+                this.contadorReservas = this.gridData.length;
                 this.gridReservas = this.gridData.slice(this.offset, this.offset + this.perPage);
 
             },
@@ -268,7 +271,7 @@ Vue.component('my-reservas-cuidador-list', {
 
                                 sweetAlert("Aceptada", "Reserva confirmada", "success");
                                 self.gridReservas.splice(index, 1);
-                                self.contadorReservas =self.contadorReservas - 1;
+                                self.contadorReservas = self.contadorReservas - 1;
                             })
                             .catch(error => {
                                     console.log(error);
@@ -300,7 +303,7 @@ Vue.component('my-reservas-cuidador-list', {
 
                                 sweetAlert("Cancelada", "Tu reserva ha sido cancelada", "success");
                                 self.gridReservas.splice(index, 1);
-                                self.contadorReservas =self.contadorReservas - 1;
+                                self.contadorReservas = self.contadorReservas - 1;
                             })
                             .catch(error => {
                                     console.log(error);
@@ -374,6 +377,12 @@ Vue.component('my-reservas-cuidador-list', {
             }
             return 'Error'
         },
+        tipoDeReservasDescripcion: function () {
+            if (this.status == 'finalizada') {
+                return 'Como te fue con el perro? Calificalo para que otros cuidadores conozcan más del mismo.' +
+                    '\n <br> Recordá que tenes 72 hs para calificar, sino la reserva se cerrará sin puntuar.'
+            }
+        },
         listClass: function () {
             if (this.status == 'creada-dueño') {
                 return 'col-xs-12 col-md-7'
@@ -434,14 +443,13 @@ Vue.component('my-reservas-cuidador-list', {
                 return 'background: #cfd8dc; margin-bottom: 10px;'
             }
         },
-        descripcionReservaCreada : function (){
+        descripcionReservaCreada: function () {
 
             if (this.status == 'creada-dueño') {
-                return ' Recordá que tenes 72 hs para aceptar o rechazar la solicitud, sino la reserva se cancelará'
+                return ' Recordá que tenes 72 hs para aceptar o rechazar la solicitud, sino la reserva se cancelará.'
             }
-            else
-            {
-                return '' ;
+            else {
+                return '';
             }
 
         }
