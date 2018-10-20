@@ -100,7 +100,7 @@ Vue.component('admin-dashboard', {
 					<div class="plan">
 
 					<div class="plan-price">
-						<h3>Cuidadores</h3>
+						<h3>Total de cuidadores</h3>
 						<span class="value">{{estadisticas.totalCuidadores}}</span>
 						<span class="period"></span>
 					</div>
