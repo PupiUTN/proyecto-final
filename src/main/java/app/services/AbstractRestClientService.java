@@ -1,5 +1,6 @@
 package app.services;
 
+import app.models.entities.User;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpEntity;
@@ -37,5 +38,4 @@ public abstract class AbstractRestClientService implements RestClientInterface {
         }
         return resp;
     }
-
 }

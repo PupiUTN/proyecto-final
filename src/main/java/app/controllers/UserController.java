@@ -7,6 +7,7 @@ package app.controllers;
 
 import app.exception.EmailExistsException;
 import app.exception.PasswordDoesNotMatchException;
+import app.exception.UserNotFoundException;
 import app.models.entities.User;
 import app.security.MyUserPrincipal;
 import app.services.UserService;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.UUID;
 
 
 @RestController
@@ -95,5 +97,27 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET, value = "/get-mp-url")
     public String getMercadoPagoUrl(@RequestParam String email) {
         return userService.getMercadoPagoUrl(email);
+    }
+
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity resetPassword(@RequestParam("email") String userEmail) throws UserNotFoundException {
+        User user = userService.findUserByEmail(userEmail);
+        if (user == null) {
+            throw new UserNotFoundException("Reset password no found for this email");
+        }
+        String token = UUID.randomUUID().toString();
+        userService.createPasswordResetTokenForUser(user, token);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity changePassword(@RequestParam String token, @RequestParam String passwordUpdated, @RequestParam String passwordMatch) throws UserNotFoundException, PasswordDoesNotMatchException {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
+        User user = myUserPrincipal.getUser();
+        userService.chnagePassword(user, token, passwordUpdated, passwordMatch);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

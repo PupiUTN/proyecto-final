@@ -3,7 +3,9 @@ package app.services;
 
 import app.exception.EmailExistsException;
 import app.exception.PasswordDoesNotMatchException;
+import app.models.entities.PasswordResetToken;
 import app.models.entities.User;
+import app.persistence.PasswordResetTokenRepository;
 import app.persistence.UserRepository;
 import app.security.Encryptor;
 import app.utils.MailType;
@@ -27,6 +29,7 @@ public class UserService extends AbstractRestClientService {
     private final PasswordEncoder passwordEncoder;
     private final Encryptor encryptor;
     private final MailService mailService;
+    private final PasswordResetTokenRepository passwordResetTokenRepository;
 
 
     @Value("${app.mp.pupi.url}")
@@ -41,11 +44,12 @@ public class UserService extends AbstractRestClientService {
     private String APP_DOMAIN;
 
     @Autowired
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, Encryptor encryptor, MailService mailService) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, Encryptor encryptor, MailService mailService, PasswordResetTokenRepository passwordResetTokenRepository) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.encryptor = encryptor;
         this.mailService = mailService;
+        this.passwordResetTokenRepository = passwordResetTokenRepository;
     }
 
     @PostConstruct
@@ -74,6 +78,19 @@ public class UserService extends AbstractRestClientService {
         user.setRole("ROLE_USER");
         User save = repository.save(user);
         mailService.sendEmail(user, MailType.WELCOME);
+        return save;
+    }
+
+    @Transactional
+    public User chnagePassword(User user, String token, String passwordUpdated,String passwordMatch) throws PasswordDoesNotMatchException {
+
+        if (!user.passwordMatchingValidation()) {
+            throw new PasswordDoesNotMatchException(
+                    "Password does not match");
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User save = repository.save(user);
+        mailService.sendEmail(user, MailType.PASSWORD_CHANGED);
         return save;
     }
 
@@ -127,4 +144,13 @@ public class UserService extends AbstractRestClientService {
         return repository.getTotalDueños();
     }
 
+    public User findUserByEmail(String userEmail) {
+        return repository.findByEmail(userEmail);
+    }
+
+    public void createPasswordResetTokenForUser(User user, String token) {
+        PasswordResetToken myToken = new PasswordResetToken(token, user);
+        passwordResetTokenRepository.save(myToken);
+        mailService.sendEmail(user, MailType.RESET_PASSWORD, "/resetPasswrod/" + myToken, "Reset Password");
+    }
 }

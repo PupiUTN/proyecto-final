@@ -21,7 +21,10 @@ public enum MailType {
     BOOKING_PAYMENT_TO_HOST,
     BOOKING_PAYMENT_TO_USER,
     BOOKING_STARTING_USER,
-    BOOKING_STARTING_HOST;
+    BOOKING_STARTING_HOST,
+    RESET_PASSWORD,
+    PASSWORD_CHANGED;
+
 
     public String getMailTemplate(String fullName) throws IOException {
         String text;
@@ -102,16 +105,34 @@ public enum MailType {
                         "Ante cualquier inconveniente ponete en contacto con nosotros<br> " +
                         "Mucha Suerte!<br>";
                 break;
+            case PASSWORD_CHANGED:
+                text = "Usted cambio su contraseña";
+                break;
 
             default:
                 throw new AssertionError("Unknown email type " + this);
 
 
         }
-        return this.getTemplate(fullName, text);
+        return this.getTemplate(fullName, text, null, null);
     }
 
-    public String getTemplate(String fullName, String bodyText) throws IOException {
+    public String getMailTemplate(String fullName, String url, String buttonText) throws IOException {
+        String text;
+        switch (this) {
+            case RESET_PASSWORD:
+                text = "<b>Instrucciones para restablecer la contraseña</b><br>" +
+                        "Haga clic en el botón para restablecer su contraseña para su cuenta de pupi.com.ar";
+                break;
+            default:
+                throw new AssertionError("Unknown email type " + this);
+
+
+        }
+        return this.getTemplate(fullName, text, url, buttonText);
+    }
+
+    public String getTemplate(String fullName, String bodyText, String url, String buttonText) throws IOException {
         InputStream inputStream = new ClassPathResource("email/template-stripo.html").getInputStream();
         String content;
         try (BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -120,6 +141,14 @@ public enum MailType {
         //
         content = content.replace("{{bodyText}}", bodyText);
         content = content.replace("{{fullName}}", fullName);
+        if (url == null) {
+            url = "https://pupi.com.ar";
+        }
+        content = content.replace("{{url}}", url);
+        if (buttonText == null) {
+            buttonText = "Ir a Pupi";
+        }
+        content = content.replace("{{buttonText}}", buttonText);
         return content;
 
     }

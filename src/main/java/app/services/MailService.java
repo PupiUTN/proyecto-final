@@ -24,7 +24,7 @@ public class MailService {
     @Value("${app.aws.ses.secretKey}")
     private String secretKey;
 
-    private static SendEmailRequest createEmailRequest(String from, String to, MailType type, String fullName) throws IOException {
+    private static SendEmailRequest createEmailRequest(String from, String to, MailType type, String fullName, String url, String buttonText) throws IOException {
 
         return new SendEmailRequest()
                 .withDestination(
@@ -39,10 +39,20 @@ public class MailService {
     }
 
     public int sendEmail(User user, MailType type) {
-
         try {
             AmazonSimpleEmailService client = getClient();
-            SendEmailRequest sendEmailRequest = createEmailRequest(FROM, user.getEmail(), type, user.getFullName());
+            SendEmailRequest sendEmailRequest = createEmailRequest(FROM, user.getEmail(), type, user.getFullName(),null,null);
+            SendEmailResult sendEmailResult = client.sendEmail(sendEmailRequest);
+            return sendEmailResult.getSdkHttpMetadata().getHttpStatusCode();
+        } catch (Exception e) {
+            throw new AmazonSimpleEmailServiceException(e.toString());
+        }
+    }
+
+    public int sendEmail(User user, MailType type,String url, String buttonText) {
+        try {
+            AmazonSimpleEmailService client = getClient();
+            SendEmailRequest sendEmailRequest = createEmailRequest(FROM, user.getEmail(), type,user.getFullName(), url, buttonText);
             SendEmailResult sendEmailResult = client.sendEmail(sendEmailRequest);
             return sendEmailResult.getSdkHttpMetadata().getHttpStatusCode();
         } catch (Exception e) {
