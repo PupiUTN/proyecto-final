@@ -3,24 +3,35 @@ let myResetPassword = Vue.component('my-reset-password', {
     template:
         `
 <div class="container">
-    <div class="row">
-         <div class="col-md-12">
-            <form class="login" v-on:submit.prevent='login()'>
-                <p class="form-row form-row-wide">
-                    <label for="email">Email:
-                        <i class="im im-icon-Email"></i>
-                        <input type="email" class="input-text"
-                               v-model="email"
-                               id="email"
-                               value=""
-                               required/>
-                    </label>
-                </p>
-                <div class="form-row">
-                    <button class="button border margin-top-5">
-                      <i class="fa fa-spinner fa-spin" v-show="recuperarContrasenaLoading"></i>  Recuperar Contraseña
-                    </button>
-                </div>
+    <div class="row margin-top-50">
+         <div class="col-12 col-sm-6 col-sm-offset-3 ">
+            <h3> Recuperar Contraseña</h3>
+            <form  v-on:submit.prevent='resetPasswword()'>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email</label>
+                <input v-model="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+              </div>
+              <div class="form-row" style="text-align: right">
+                <button class="button border margin-top-5">
+                  <i class="fa fa-spinner fa-spin" v-show="recuperarContrasenaLoading"></i>  Recuperar Contraseña
+                </button>
+              </div>
+            </form>
+        </div>
+    </div>
+    <div class="row margin-top-50">
+         <div class="col-12 col-sm-6 col-sm-offset-3 ">
+            <h3> Recuperar Contraseña</h3>
+            <form  v-on:submit.prevent='resetPasswword()'>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email</label>
+                <input v-model="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+              </div>
+              <div class="form-row" style="text-align: right">
+                <button class="button border margin-top-5">
+                  <i class="fa fa-spinner fa-spin" v-show="recuperarContrasenaLoading"></i>  Recuperar Contraseña
+                </button>
+              </div>
             </form>
         </div>
     </div>
@@ -36,16 +47,19 @@ let myResetPassword = Vue.component('my-reset-password', {
         }
     },
     mounted() {
+        this.token = this.getParameterByName('token');
     },
     methods: {
-        passwordReset() {
+        resetPasswword() {
             const config = {
                 params: {
                     email: this.email
                 }
             }
-            axios.post('/api/user/resetPassword', config)
+            this.recuperarContrasenaLoading = true
+            axios.post('/api/user/resetPassword', {}, config)
                 .then((response) => {
+                    this.recuperarContrasenaLoading = false
                     sweetAlert("Exito al recuperar contraseña", "Direjase a su email para continuar el proces", "success")
                         .then((result) => {
                             document.location.href = "/"
@@ -53,88 +67,13 @@ let myResetPassword = Vue.component('my-reset-password', {
                 })
                 .catch(error => {
                         console.log(error);
-
+                        this.recuperarContrasenaLoading = false
 
                     }
                 );
 
 
         },
-        login() {
-            localStorage.setItem("pending", 1);
-            this.loginLoading = true;
-            axios.post(this.entryUrl, jQuery.param(this.credentials))
-                .then((response) => {
-                    console.log("login exitoso");
-                    console.log(response.data);
-                    this.getUserProfile();
-                })
-                .catch(error => {
-                        console.log("login error");
-                        this.loginLoading = false;
-                        this.loginError = true;
-                        console.log(error);
-                    }
-                );
-        },
-        logout() {
-            axios.post(this.exitUrl)
-                .then((response) => {
-                    console.log("logout exitoso");
-                    document.location.href = "/";
-                    localStorage.setItem("isAuthenticated", false);
-                    localStorage.removeItem("idUser");
-                    this.resetVueJsData();
-                })
-                .catch(error => {
-                        console.log(error);
-                    }
-                );
-        },
-        register() {
-            this.emailAlreadyExists = false;
-            axios.post(this.registrationUrl, this.user)
-                .then((response) => {
-                    this.credentials.username = this.user.email;
-                    this.credentials.password = this.user.password;
-                    this.login();
-                    console.log("registro exitoso");
-                    sweetAlert("Exito", "Registro exitoso. ", "success");
-                    this.resetVueJsData();
-                })
-                .catch(error => {
-                    if (error.response) {
-                        if (error.response.status === 409) {
-                            this.emailAlreadyExists = true;
-                        }
-                    }
-                    else {
-                        console.log(error);
-                        sweetAlert("Error", "Error al Registrarse. ", "error");
-                    }
-                });
-        },
-        resetVueJsData() {
-            Object.assign(this.$data, getDefaultData())
-            this.isMounted = true;
-        },
-        openLoginPopUp() {
-            var magnificPopup = $.magnificPopup.instance;
-            // save instance in magnificPopup variable
-            magnificPopup.open({
-                items: {
-                    src: '#sign-in-dialog',
-                },
-                type: 'inline',
-                modal: true
-            });
-        },
-        micuenta() { //href="/views/dashboard/dashboard.html"
-            localStorage.setItem("pending", true);
-            localStorage.setItem("pendingCountCuidador", 0);
-            localStorage.setItem("pendingCountUser", 0);
-            document.location.href = "/views/dashboard/dashboard.html";
-        }
     }
     ,
     computed: {
@@ -152,12 +91,17 @@ let myResetPassword = Vue.component('my-reset-password', {
             return false;
 
 
+        },
+        getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
         }
     },
-    watch: {
-        'isAuthenticated': function () {
-            this.$emit('is-authenticated', this.isAuthenticated);
-        }
-    }
+    watch: {}
 });
 
