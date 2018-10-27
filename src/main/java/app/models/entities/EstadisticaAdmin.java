@@ -28,6 +28,7 @@ public class EstadisticaAdmin {
     int[] totalPorProvincia;
     int[] totalCuidadoresPorProvincia;
     long totalDueños;
+    long totalOperativos;
 
 
 }

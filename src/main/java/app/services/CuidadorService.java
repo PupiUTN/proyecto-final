@@ -91,4 +91,8 @@ public class CuidadorService {
     public Long getTotalCuidadores() {
         return cuidadorRepository.count();
     }
+
+    public Long getTotalCuidadoresOperativos() {
+        return cuidadorRepository.getTotalCuidadoresOperativos();
+    }
 }
