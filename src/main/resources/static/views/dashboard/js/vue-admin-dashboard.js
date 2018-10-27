@@ -270,7 +270,7 @@ Vue.component('admin-dashboard', {
                 })
                 .catch(error => {
                     console.log(error);
-                    sweetAlert("Oops...", "Error, ver consola", "error");
+
                 });
         },
         getReservasByStatus (value){
