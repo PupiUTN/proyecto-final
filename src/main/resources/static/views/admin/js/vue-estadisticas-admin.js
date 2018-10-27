@@ -73,7 +73,7 @@ Vue.component('estadisticas-admin', {
                 <div class="col-lg-6 col-md-6">
                
                <div class="dashboard-list-box invoices with-icons">
-				<h4 style="background-color:gainsboro;"> <i class="im im-icon-Line-Chart" style=" margin-right: 10px; "></i>Cuidadores por Provincia </h4>
+				<h4 style="background-color:gainsboro;"> <i class="im im-icon-Line-Chart" style=" margin-right: 10px; "></i>Cuidadores operativos por Provincia </h4>
            <div  class="chart-container"  id="chartdiv1" style="height: 484px; width: 100%;"></div>
                </div>
             </div>

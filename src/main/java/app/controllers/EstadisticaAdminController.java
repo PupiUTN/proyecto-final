@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.models.entities.Cuidador;
 import app.models.entities.EstadisticaAdmin;
+import app.models.entities.Ganancias;
 import app.models.entities.Reserva;
 import app.services.*;
 import app.utils.EstadoReserva;
@@ -48,21 +49,20 @@ public class EstadisticaAdminController {
         List<Reserva> reservas = reservaService.getCantidadReservasTotal();
         List<Reserva> aux = new ArrayList<>();
         Long cantPerros = perroService.getPerrosTotal();
-        Long CantCuidadores = cuidadorService.getTotalCuidadores();
+        Long cantCuidadores = cuidadorService.getTotalCuidadores();
+        Long cantOperativos = cuidadorService.getTotalCuidadoresOperativos();
         int cantSolicitudes = cuidadorService.getSolicitudes().size();
         Long CantCalificaciones = calificacionService.getTotalCalificaciones();
         Long cantDueños = userService.getTotalDueños();
         int totalDenuncias = 1;
-        Double cont = 0.0;
+
         if (reservas.size() > 0) {
             estadisticaAdmin.setTotalReservas(reservas.size());
 
 
             for (Reserva item : reservas) {
 
-                if(statusOk(item.getStatus())){
-                    cont += item.getPrecioTotal();
-                }
+
 
 
                 if (item.getStatus().equals("pagada-dueño")) {
@@ -71,25 +71,22 @@ public class EstadisticaAdminController {
                 }
 
             }
-            estadisticaAdmin.setTotalDineroActual(df.format(cont * 0.2));
+
 
             estadisticaAdmin.setReservas(aux);
 
         }
         estadisticaAdmin.setTotalPerros(cantPerros);
-        estadisticaAdmin.setTotalCuidadores(CantCuidadores);
+        estadisticaAdmin.setTotalCuidadores(cantCuidadores);
         estadisticaAdmin.setTotalSolicitudes(cantSolicitudes);
         estadisticaAdmin.setTotalCalificaciones(CantCalificaciones);
         estadisticaAdmin.setTotalDenuncias(totalDenuncias);
         estadisticaAdmin.setTotalDueños(cantDueños);
+        estadisticaAdmin.setTotalOperativos(cantOperativos);
 
         return estadisticaAdmin;
     }
 
-    private boolean statusOk(String status) {
-
-        return !(status.equals(EstadoReserva.CREADA.getStatus()) || status.equals(EstadoReserva.CAIDA_FALTA_PAGO.getStatus()) || status.equals(EstadoReserva.ACEPTADA_CUIDADOR.getStatus()) || status.equals(EstadoReserva.RECHAZADA_CUIDADOR.getStatus()) || status.equals(EstadoReserva.RECHAZADA_DUEÑO.getStatus()));
-    }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/getReservas", method = RequestMethod.GET)
@@ -159,6 +156,13 @@ public class EstadisticaAdminController {
             Long idAux = item.getCuidador().getUser().getId();
             switch (item.getCuidador().getUser().getDireccion().getProvincia()) {
                 case "Buenos Aires":
+                    if (!id.contains(idAux)) {
+                        cuidadores[0]++;
+                        id.add(idAux);
+                    }
+                    arrayReservas[0]++;
+                    break;
+                case "Pcia de Buenos Aires":
                     if (!id.contains(idAux)) {
                         cuidadores[0]++;
                         id.add(idAux);
@@ -517,5 +521,14 @@ public class EstadisticaAdminController {
 
     }
 
+
+
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/getGanancias", method = RequestMethod.GET)
+    public List<Ganancias> getGanancias(@RequestParam("año") int año) {
+
+        return reservaService.getGananciasXMes(año);
+    }
 
 }
