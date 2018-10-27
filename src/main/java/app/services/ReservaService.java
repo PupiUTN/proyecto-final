@@ -1,10 +1,7 @@
 package app.services;
 
 import app.exception.BussinesLogicException;
-import app.models.entities.CalendarioCuidador;
-import app.models.entities.Cuidador;
-import app.models.entities.Reserva;
-import app.models.entities.User;
+import app.models.entities.*;
 import app.persistence.CalendarioCuidadorRepository;
 import app.persistence.ReservaRepository;
 import app.utils.EstadoReserva;
@@ -13,9 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.time.ZoneId;
+import java.util.*;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -198,4 +194,47 @@ public class ReservaService {
         return reservaRepository.getReservaByDogIdAndStatus(perroId);
 
     }
+
+    public List<Ganancias> getGananciasXMes(int año) {
+        List<Ganancias> gananciasList = new ArrayList<>();
+         setMesesGancias(gananciasList);
+        Date  initDate= new GregorianCalendar(año, Calendar.JANUARY, 1).getTime();
+        Date endDate = new GregorianCalendar(año, Calendar.DECEMBER, 31).getTime();
+
+        List <Reserva> reservaList = reservaRepository.getReservasByFechas(initDate, endDate);
+
+        for (Reserva item : reservaList) {
+
+            LocalDate localDate = item.getFechaTransaccion().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            int month = localDate.getMonthValue();
+
+            gananciasList.stream()
+                    .filter(x -> x.getMes() == month)
+                    .forEach(y -> y.addGanancia(getGananciaReserva(item.getPrecioTotal()), item.getStatus()));
+            }
+
+        return gananciasList ;
+    }
+
+
+
+     public float getGananciaReserva (float precioTotal)
+     {
+          return (float) ( precioTotal * 0.2);
+
+
+     }
+
+
+     public void setMesesGancias(  List<Ganancias> gananciasList)
+     {
+                Ganancias ganancias;
+          for ( int i = 1; i < 13 ; i++)
+          {
+                ganancias = new Ganancias();
+               ganancias.setMes(i);
+               gananciasList.add(ganancias);
+          }
+
+     }
 }

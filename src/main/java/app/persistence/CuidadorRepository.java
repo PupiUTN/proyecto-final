@@ -56,5 +56,6 @@ public interface CuidadorRepository extends JpaRepository<Cuidador, Long> {
     Long getCantidadCuidadoresEncontrados(@Param("status")String status);
 
 
-
+    @Query("select count (c) from Cuidador c where c.estado like 'completed'")
+    Long getTotalCuidadoresOperativos();
 }
