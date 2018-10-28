@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "Bussines Logic Expcetion")
 public class BussinesLogicException extends Exception {
     public BussinesLogicException(String s) {
-
+        super(s);
     }
 }

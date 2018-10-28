@@ -26,7 +26,7 @@ public enum MailType {
     PASSWORD_CHANGED;
 
 
-    public String getMailTemplate(String fullName) throws IOException {
+    public String getMailTemplate(String fullName, String url, String buttonText) throws IOException {
         String text;
         switch (this) {
             case WELCOME:
@@ -106,20 +106,8 @@ public enum MailType {
                         "Mucha Suerte!<br>";
                 break;
             case PASSWORD_CHANGED:
-                text = "Usted cambio su contraseña";
+                text = "Usted a actualizado su contraseña correctamente.";
                 break;
-
-            default:
-                throw new AssertionError("Unknown email type " + this);
-
-
-        }
-        return this.getTemplate(fullName, text, null, null);
-    }
-
-    public String getMailTemplate(String fullName, String url, String buttonText) throws IOException {
-        String text;
-        switch (this) {
             case RESET_PASSWORD:
                 text = "<b>Instrucciones para restablecer la contraseña</b><br>" +
                         "Haga clic en el botón para restablecer su contraseña para su cuenta de pupi.com.ar";
@@ -142,7 +130,7 @@ public enum MailType {
         content = content.replace("{{bodyText}}", bodyText);
         content = content.replace("{{fullName}}", fullName);
         if (url == null) {
-            url = "https://pupi.com.ar";
+            url = "/";
         }
         content = content.replace("{{url}}", url);
         if (buttonText == null) {
@@ -181,6 +169,10 @@ public enum MailType {
                 return fullName + ", Tu Reserva Comienza en las Próximas Horas - Pupi";
             case BOOKING_STARTING_HOST:
                 return fullName + ", En las Próximas Horas Recibirás una Mascota - Pupi";
+            case RESET_PASSWORD:
+                return fullName + ", Recuperar Contraseña - Pupi";
+            case PASSWORD_CHANGED:
+                return fullName + ", Contraseña cambiada - Pupi";
             default:
                 throw new AssertionError("Unknown email type " + this);
         }

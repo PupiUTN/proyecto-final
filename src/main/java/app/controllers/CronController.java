@@ -26,7 +26,7 @@ public class CronController {
 
 
     @RequestMapping(value = "/moverEstadoDeEjecucionAFinalizada", method = RequestMethod.POST)
-    @Scheduled(cron = "0 4 0 * * ?")// at 4:00 AM every day
+    @Scheduled(cron = "0 0 0/1 * * ?") // every 1 hour
     public ResponseEntity moverEstadoDeEjecucionAFinalizada() {
         Integer updates = cronService.moverEstadoDeEjecucionAFinalizada();
         return new ResponseEntity<>("{\"updates\": " + updates + "}", HttpStatus.OK);
@@ -34,14 +34,14 @@ public class CronController {
 
 
     @RequestMapping(value = "/moverEstadoDeAceptadaCuidadorACaido", method = RequestMethod.POST)
-    @Scheduled(cron = "0 4 0 * * ?")// at 4:00 AM every day
+    @Scheduled(cron = "0 0 0/1 * * ?") // every 1 hour
     public ResponseEntity moverEstadoDeAceptadaCuidadorACaido() {
         Integer updates = cronService.moverEstadoDeAceptadaCuidadorACaido();
         return new ResponseEntity<>("{\"updates\": " + updates + "}", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/moverEstadoDeCreadaARechazada", method = RequestMethod.POST)
-    @Scheduled(cron = "0 4 0 * * ?")// at 4:00 AM every day
+    @Scheduled(cron = "0 0 0/1 * * ?") // every 1 hour
     public ResponseEntity moverEstadoDeCreadaARechazada() {
         Integer updates = cronService.moverEstadoDeCreadaDueñoARechazado();
         return new ResponseEntity<>("{\"updates\": " + updates + "}", HttpStatus.OK);
@@ -49,7 +49,7 @@ public class CronController {
 
 
     @RequestMapping(value = "/moverEstadoDeCreadaDueñoAAceptadaCuidador", method = RequestMethod.POST)
-    @Scheduled(cron = "0 4 0 * * ?")// at 4:00 AM every day
+    @Scheduled(cron = "0 0 0/1 * * ?") // every 1 hour
     public ResponseEntity moverEstadoDeCreadaDueñoAAceptadaCuidador() {
         Integer updates = cronService.moverEstadoDeCreadaDueñoAAceptadaCuidador();
         return new ResponseEntity<>("{\"updates\": " + updates + "}", HttpStatus.OK);
@@ -57,7 +57,7 @@ public class CronController {
 
 
     @RequestMapping(value = "/moverEstadoDePagadaAEjecucion", method = RequestMethod.POST)
-    @Scheduled(cron = "0 4 0 * * ?")// at 4:00 AM every day
+    @Scheduled(cron = "0 0 0/1 * * ?") // every 1 hour
     public ResponseEntity moverEstadoDePagadaAEjecucion() {
         Integer updates = cronService.moverEstadoDePagadaAEjecucion();
         return new ResponseEntity<>("{\"updates\": " + updates + "}", HttpStatus.OK);
@@ -65,13 +65,11 @@ public class CronController {
 
 
     @RequestMapping(value = "/moverEstadoDeNoCerradaACerrada", method = RequestMethod.POST)
-    @Scheduled(cron = "0 4 0 * * ?")// at 4:00 AM every day
+    @Scheduled(cron = "0 0 0/1 * * ?") // every 1 hour
     public ResponseEntity moverEstadoDeNoCerradaACerrada() {
         Integer updates = cronService.moverEstadoDeNoComentadoACerrado();
         return new ResponseEntity<>("{\"updates\": " + updates + "}", HttpStatus.OK);
     }
-
-
 
 
 }

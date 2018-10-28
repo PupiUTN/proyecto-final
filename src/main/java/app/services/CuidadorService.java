@@ -21,10 +21,6 @@ public class CuidadorService {
     private final MailService mailService;
 
 
-    private static final int cantXpage = 4;
-    private static List<Cuidador> cuidadores = new ArrayList<>();
-
-
     @Autowired
     public CuidadorService(CuidadorRepository cuidadorRepository, MailService mailService) {
         this.cuidadorRepository = cuidadorRepository;
@@ -52,9 +48,9 @@ public class CuidadorService {
 
     public Cuidador editCuidador(Cuidador entity) {
         if ("approved".equalsIgnoreCase(entity.getEstado())) {
-            mailService.sendEmail(entity.getUser(), MailType.WELCOME_HOST);
+            mailService.sendEmail(entity.getUser(), MailType.WELCOME_HOST, null, "Ir a pupi");
         } else if ("rejected".equalsIgnoreCase(entity.getEstado())) {
-            mailService.sendEmail(entity.getUser(), MailType.HOST_REJECTED);
+            mailService.sendEmail(entity.getUser(), MailType.HOST_REJECTED, null, "Ir a pupi");
         }
         return cuidadorRepository.save(entity);
     }

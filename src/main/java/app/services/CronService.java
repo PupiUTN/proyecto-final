@@ -28,8 +28,8 @@ public class CronService {
         List<Reserva> reservaList = cronRepository.getIfFechaFinMenorHoy(EstadoReserva.EJECUCION.getStatus());
         for (int i = 0; i < reservaList.size(); i++) {
             Reserva reserva = reservaList.get(i);
-            mailService.sendEmail(reserva.getPerro().getUser(), MailType.REVIEW_REQUEST_TO_USER);
-            mailService.sendEmail(reserva.getCuidador().getUser(), MailType.REVIEW_REQUEST_TO_HOST);
+            mailService.sendEmail(reserva.getPerro().getUser(), MailType.REVIEW_REQUEST_TO_USER,null,"Reservas Pendientes de Calificacion");
+            mailService.sendEmail(reserva.getCuidador().getUser(), MailType.REVIEW_REQUEST_TO_HOST, null,"Reservas Pendientes de Calificacion");
             reserva.setStatus(EstadoReserva.FINALZADA.getStatus());
             cronRepository.save(reserva);
         }
@@ -43,8 +43,8 @@ public class CronService {
         List<Reserva> reservaList = cronRepository.getIfFechaInicioMenorHoy(EstadoReserva.PAGADA_DUEÑO.getStatus());
         Integer updates = cronRepository.updateStateIfFechaInicioMenorHoy(EstadoReserva.PAGADA_DUEÑO.getStatus(), EstadoReserva.EJECUCION.getStatus());
         reservaList.forEach(reserva -> {
-            mailService.sendEmail(reserva.getPerro().getUser(), MailType.BOOKING_STARTING_USER);
-            mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_STARTING_HOST);
+            mailService.sendEmail(reserva.getPerro().getUser(), MailType.BOOKING_STARTING_USER, null, "Reservas en Ejecucion");
+            mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_STARTING_HOST, null, "Reservas en Ejecucion");
         });
         return updates;
     }

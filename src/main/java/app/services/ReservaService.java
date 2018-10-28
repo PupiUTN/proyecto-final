@@ -66,7 +66,7 @@ public class ReservaService {
                 .getPrecioPorNoche();
         reserva.setPrecioTotal(precioTotal);
         Reserva savedObject = reservaRepository.save(reserva);
-        mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_REQUEST);
+        mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_REQUEST, null, "Reservas Nuevas");
         return savedObject;
     }
 
@@ -84,7 +84,7 @@ public class ReservaService {
         Reserva reserva = reservaRepository.findByUserIdAnId(userId, reservaId);
         reserva.setStatus("rechazada-dueño");
         reservaRepository.save(reserva);
-        mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_CANCELLATION_BY_USER);
+        mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_CANCELLATION_BY_USER,null, "Reservas Canceladas");
     }
 
     public List<Reserva> getReservasByCuidadorIdAndStatus(Long id, String status) {
@@ -131,7 +131,7 @@ public class ReservaService {
         reserva.setStatus("rechazada-cuidador");
         reservaRepository.save(reserva);
         User user = getReserva(reservaId).getPerro().getUser();
-        mailService.sendEmail(user, MailType.BOOKING_CANCELLATION_BY_HOST);
+        mailService.sendEmail(user, MailType.BOOKING_CANCELLATION_BY_HOST, null , "Reservas Canceladas");
     }
 
 
@@ -141,7 +141,7 @@ public class ReservaService {
         reserva.setFechaAceptacion(LocalDate.now());
         reservaRepository.save(reserva);
         User user = getReserva(reservaId).getPerro().getUser();
-        mailService.sendEmail(user, MailType.BOOKING_CONFIRMATION);
+        mailService.sendEmail(user, MailType.BOOKING_CONFIRMATION, null, "Reservas Aceptadas");
     }
 
     public List<Reserva> findPendienteReviewCuidador() {
@@ -156,8 +156,8 @@ public class ReservaService {
         reserva.setStatus("pagada-dueño");
         reserva.setPaymentId(payment);
         reservaRepository.save(reserva);
-        mailService.sendEmail(reserva.getPerro().getUser(), MailType.BOOKING_PAYMENT_TO_USER);
-        mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_PAYMENT_TO_HOST);
+        mailService.sendEmail(reserva.getPerro().getUser(), MailType.BOOKING_PAYMENT_TO_USER, null, "Reservas Pagadas");
+        mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_PAYMENT_TO_HOST, null, "Reservas Pagadas");
     }
 
     public Date addDays(Date date, int days) {

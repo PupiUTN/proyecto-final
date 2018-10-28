@@ -3,6 +3,8 @@ package app.services;
 
 import app.exception.EmailExistsException;
 import app.exception.PasswordDoesNotMatchException;
+import app.exception.TokenException;
+import app.exception.UserNotFoundException;
 import app.models.entities.PasswordResetToken;
 import app.models.entities.User;
 import app.persistence.PasswordResetTokenRepository;
@@ -22,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.Cipher;
+import java.util.Calendar;
+import java.util.UUID;
 
 @Service
 public class UserService extends AbstractRestClientService {
@@ -77,20 +81,37 @@ public class UserService extends AbstractRestClientService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("ROLE_USER");
         User save = repository.save(user);
-        mailService.sendEmail(user, MailType.WELCOME);
+        mailService.sendEmail(user, MailType.WELCOME, null, "Ir a pupi");
         return save;
     }
 
     @Transactional
-    public User chnagePassword(User user, String token, String passwordUpdated,String passwordMatch) throws PasswordDoesNotMatchException {
+    public User changePassword(String email, String token, String passwordUpdated, String passwordMatch) throws PasswordDoesNotMatchException, TokenException {
+        PasswordResetToken passToken =
+                passwordResetTokenRepository.findByToken(token);
+        if ((passToken == null) || !passToken.getUser().getEmail().equalsIgnoreCase(email)) {
+           throw new TokenException("Token inexistente  o no corresponde para el usuario ingresado");
+        }
 
+        Calendar cal = Calendar.getInstance();
+        if ((passToken.getExpiryDate()
+                .getTime() - cal.getTime()
+                .getTime()) <= 0) {
+            throw new TokenException("Token expirado");
+        }
+
+        User user = passToken.getUser();
+        user.setPassword(passwordUpdated);
+        user.setMatchingPassword(passwordMatch);
         if (!user.passwordMatchingValidation()) {
             throw new PasswordDoesNotMatchException(
                     "Password does not match");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User save = repository.save(user);
-        mailService.sendEmail(user, MailType.PASSWORD_CHANGED);
+        passwordResetTokenRepository.delete(passToken.getId());
+        mailService.sendEmail(user, MailType.PASSWORD_CHANGED, null, "Ir a Pupi");
+
         return save;
     }
 
@@ -148,9 +169,17 @@ public class UserService extends AbstractRestClientService {
         return repository.findByEmail(userEmail);
     }
 
-    public void createPasswordResetTokenForUser(User user, String token) {
+    public void createPasswordResetTokenForUser( String userEmail) throws UserNotFoundException {
+        User user = this.findUserByEmail(userEmail);
+        if (user == null) {
+            throw new UserNotFoundException("UserNotFoundException");
+        }
+        String token = UUID.randomUUID().toString();
         PasswordResetToken myToken = new PasswordResetToken(token, user);
+        //passwordResetTokenRepository.deleteAllByUser(user);
         passwordResetTokenRepository.save(myToken);
-        mailService.sendEmail(user, MailType.RESET_PASSWORD, "/resetPasswrod/" + myToken, "Reset Password");
+        mailService.sendEmail(user, MailType.RESET_PASSWORD, "/views/security/reset-password.html?token=" + myToken.getToken(), "Recuperar Contraseña");
     }
+
+
 }
