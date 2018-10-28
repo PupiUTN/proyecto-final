@@ -92,7 +92,6 @@ Vue.component('my-reservas-cuidador-list', {
                                             Confirmar solicitud</a>
                                     </div>
 
-
                                     <div class="col-xs-6 col-md-3"
                                          v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'comentario-dueño' && reserva.status !== 'finalizada' && reserva.status !== 'cerrada' && reserva.status !=='rechazada-dueño' && reserva.status !== 'ejecucion' && reserva.status !== 'pagada-dueño'" >
                                         <a v-on:click="cancelarReservaActionButton(index)" style="background-color: inherit; color: red;"
@@ -120,6 +119,13 @@ Vue.component('my-reservas-cuidador-list', {
                                            style="color: blue; border-color: blue; background-color: inherit;" href="#"
                                            class="button medium border pull-right"><i class="sl sl-icon-docs"></i>
                                             Calificar</a>
+                                    </div>
+                                    
+                                    <div class="col-md-offset-5 col-xs-6 col-md-3"
+                                         v-if="reserva.status == 'pagada-dueño'" >
+                                        <a v-on:click="devolverDinero(reserva)" style="background-color: inherit; color: red;"
+                                           href="#" class="button medium border pull-left"><i
+                                                class="sl sl-icon-docs"></i> Devolver Dinero</a>
                                     </div>
                                 </div>
 
@@ -330,6 +336,23 @@ Vue.component('my-reservas-cuidador-list', {
                 this.status = "rechazada-dueño";
                 this.getCuidadorReservas();
 
+            },
+            devolverDinero(reserva) {
+
+                sweetAlert({
+                        title: "¿Quiere devolverle el dinero a " + reserva.perro.user.fullName + " ?",
+                        text: "Ingrese al detalle del pago #"+ reserva.paymentID + " y seleccione \"Devolver dinero\".",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Ir a Mercado Pago",
+                        closeOnConfirm: true,
+                        cancelButtonText: "Cancelar",
+                        showLoaderOnConfirm: false,
+                    },
+                    function () {
+                        window.location.href = "https://www.mercadopago.com.ar"
+                    });
             },
             paginate() {
                 this.countPages = this.gridData / this.perPage;

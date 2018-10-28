@@ -152,8 +152,9 @@ public class ReservaService {
         return reservaRepository.findPendienteReviewUser();
     }
 
-    public void setEstadoPagada(Reserva reserva) {
+    public void setEstadoPagada(Reserva reserva, String payment) {
         reserva.setStatus("pagada-dueño");
+        reserva.setPaymentId(payment);
         reservaRepository.save(reserva);
         mailService.sendEmail(reserva.getPerro().getUser(), MailType.BOOKING_PAYMENT_TO_USER);
         mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_PAYMENT_TO_HOST);

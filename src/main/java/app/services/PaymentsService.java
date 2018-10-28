@@ -134,7 +134,8 @@ public class PaymentsService {
                     .getStatusCode() == 200) {
                 Reserva booking = getReserva(Long.parseLong(merchantOrder.getExternalReference()));
                 if (calculatePaidAmountAndLog(merchantOrder.getPayments(), booking, id) >= merchantOrder.getTotalAmount()) {
-                    reservaService.setEstadoPagada(booking);
+                    String paymentId = getPaymentId(merchantOrder.getPayments());
+                    reservaService.setEstadoPagada(booking, paymentId);
                 }
             }
         } catch (Exception e) {
@@ -173,5 +174,14 @@ public class PaymentsService {
 
     private float getMarketplaceFee(float totalAmount) {
         return totalAmount * 0.2f;
+    }
+
+    private String getPaymentId(ArrayList<MerchantOrderPayment> payments){
+        if (payments.isEmpty()) return null;
+        return payments.stream()
+                .filter(pay -> "approved".equalsIgnoreCase(pay.getStatus()))
+                .findFirst()
+                .get()
+                .getId();
     }
 }

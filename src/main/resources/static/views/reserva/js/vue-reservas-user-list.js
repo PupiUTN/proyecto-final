@@ -71,13 +71,16 @@ Vue.component('my-reservas-user-list', {
                                             <a v-on:click="cancelarReservaActionButton(index)" href="#" class="button medium border pull-left" style="background-color: inherit;"><i class="sl sl-icon-docs"></i> Cancelar</a>
                                         </div>                                        
                                          <div class="col-xs-6 col-md-4" v-if="reserva.status === 'pagada-dueño' || reserva.status === 'ejecucion'">
-                                            <a v-on:click="verDetalleCompletoButton(index)" href="#" class="button medium border pull-right" style="background-color: inherit;"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
+                                            <a v-on:click="verDetalleCompletoButton(index)" href="#" class="button medium border pull-right" style=" color: blue;  border-color: blue; background-color: inherit;"><i class="sl sl-icon-docs"></i> Ver Detalle Completo</a>
                                         </div>
                                           <div class="col-xs-6 col-md-3" v-if="reserva.status === 'finalizada' || reserva.status === 'comentario-cuidador'">
                                             <a v-on:click="calificarReserva(index)"  style="color: blue; border-color: blue; background-color: inherit;" href="#"class="button medium border pull-right"><i class="sl sl-icon-docs"></i> Calificar</a>                        
                                         </div> 
                                         <div class = "col-xs-6 col-md-6" v-if="reserva.status === 'aceptada-cuidador'">
                                             <mercadopago :reserva="reserva"></mercadopago>
+                                        </div>
+                                        <div class="col-xs-6 col-md-4" v-if="reserva.status === 'pagada-dueño' || reserva.status === 'ejecucion'">
+                                            <a v-on:click="haveProblem(reserva.paymentId)" href="#" class="button medium border pull-right" style="background-color: inherit;"><i class="sl sl-icon-docs"></i>Tengo un problema</a>
                                         </div>
                                 </div>
                                 
@@ -258,6 +261,22 @@ Vue.component('my-reservas-user-list', {
             this.status = "rechazada-cuidador";
             this.getUserReservas();
 
+        },
+        haveProblem(paymentID){
+            sweetAlert({
+                    title: "¿Tiene problemas con el pago?",
+                    text: "Ingrese al detalle del pago #"+ paymentID + " y seleccione \"Tengo un problema\".",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Ir a Mercado Pago",
+                    closeOnConfirm: true,
+                    cancelButtonText: "Cancelar",
+                    showLoaderOnConfirm: false,
+                },
+                function () {
+                    window.location.href = "https://www.mercadopago.com.ar"
+                });
         },
         paginate() {
             this.countPages = this.gridData / this.perPage;
