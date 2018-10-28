@@ -32,22 +32,12 @@ public class MailService {
                 .withMessage(new Message()
                         .withBody(new Body()
                                 .withHtml(new Content()
-                                        .withCharset("UTF-8").withData(type.getMailTemplate(fullName))))
+                                        .withCharset("UTF-8").withData(type.getMailTemplate(fullName, url, buttonText))))
                         .withSubject(new Content()
                                 .withCharset("UTF-8").withData(type.getMailSubject(fullName))))
                 .withSource(from);
     }
 
-    public int sendEmail(User user, MailType type) {
-        try {
-            AmazonSimpleEmailService client = getClient();
-            SendEmailRequest sendEmailRequest = createEmailRequest(FROM, user.getEmail(), type, user.getFullName(),null,null);
-            SendEmailResult sendEmailResult = client.sendEmail(sendEmailRequest);
-            return sendEmailResult.getSdkHttpMetadata().getHttpStatusCode();
-        } catch (Exception e) {
-            throw new AmazonSimpleEmailServiceException(e.toString());
-        }
-    }
 
     public int sendEmail(User user, MailType type,String url, String buttonText) {
         try {

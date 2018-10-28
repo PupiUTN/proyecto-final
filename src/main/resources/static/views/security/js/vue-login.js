@@ -118,6 +118,9 @@ let myLogin = Vue.component('my-login', {
                               <i class="fa fa-spinner fa-spin" v-show="loginLoading"></i>  Iniciar Sesión
                             </button>
                         </div>
+                        <div class="form-row">
+                            <a href="/views/security/reset-password.html"> Recuperar Contraseña</a>
+                        </div>
 
                     </form>
 

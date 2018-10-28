@@ -30,6 +30,6 @@ public class EmailController {
     @ResponseBody
     public void sendEmail(@PathVariable Long id) {
         User user = repository.getOne(id);
-        mailService.sendEmail(user, MailType.WELCOME);
+        mailService.sendEmail(user, MailType.WELCOME, null, "Ir a pupi");
     }
 }

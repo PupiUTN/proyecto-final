@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -13,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class PasswordResetToken {
 
-    private static final int EXPIRATION = 60 * 24; //24hs
+    private static final int EXPIRATION = 1; //1 day
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,5 +31,9 @@ public class PasswordResetToken {
     public PasswordResetToken(String token, User user) {
         this.token = token;
         this.user = user;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DATE, EXPIRATION); //minus number would decrement the days
+        expiryDate = cal.getTime();
     }
 }
