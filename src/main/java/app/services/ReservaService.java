@@ -56,8 +56,12 @@ public class ReservaService {
     }
 
     public Reserva save(Reserva reserva) throws BussinesLogicException {
-        int valorMaximoCuidador = reserva.getCuidador().getTamaño().getValorMaximo();
-        int valorMaximoPerro = reserva.getPerro().getTamaño().getValorMaximo();
+        int valorMaximoCuidador = reserva.getCuidador()
+                .getTamaño()
+                .getValorMaximo();
+        int valorMaximoPerro = reserva.getPerro()
+                .getTamaño()
+                .getValorMaximo();
         if (valorMaximoPerro > valorMaximoCuidador) {
             throw new BussinesLogicException("El tamaño del perro elegido en la reserva supera el tamaño maximo admitido por el cuidador");
         }
@@ -66,7 +70,8 @@ public class ReservaService {
                 .getPrecioPorNoche();
         reserva.setPrecioTotal(precioTotal);
         Reserva savedObject = reservaRepository.save(reserva);
-        mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_REQUEST, null, "Reservas Nuevas");
+        mailService.sendEmail(reserva.getCuidador()
+                .getUser(), MailType.BOOKING_REQUEST, null, "Reservas Nuevas");
         return savedObject;
     }
 
@@ -84,7 +89,8 @@ public class ReservaService {
         Reserva reserva = reservaRepository.findByUserIdAnId(userId, reservaId);
         reserva.setStatus("rechazada-dueño");
         reservaRepository.save(reserva);
-        mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_CANCELLATION_BY_USER,null, "Reservas Canceladas");
+        mailService.sendEmail(reserva.getCuidador()
+                .getUser(), MailType.BOOKING_CANCELLATION_BY_USER, null, "Reservas Canceladas");
     }
 
     public List<Reserva> getReservasByCuidadorIdAndStatus(Long id, String status) {
@@ -115,7 +121,7 @@ public class ReservaService {
         cuidador.setId(id);
         List<CalendarioCuidador> calendarioCuidadorList = calendarioCuidadorRepository.findAllByCuidadorFromToday(cuidador.getId());
         for (int i = 0; i < calendarioCuidadorList.size(); i++) {
-            CalendarioCuidador calendarioCuidador =  calendarioCuidadorList.get(i);
+            CalendarioCuidador calendarioCuidador = calendarioCuidadorList.get(i);
             Reserva reservaFake = new Reserva();
             reservaFake.setFechaInicio(calendarioCuidador.getFechaDeshabilitada());
             reservaFake.setFechaFin(calendarioCuidador.getFechaDeshabilitada());
@@ -130,8 +136,9 @@ public class ReservaService {
         Reserva reserva = reservaRepository.findByCuidadorIdAnId(userId, reservaId);
         reserva.setStatus("rechazada-cuidador");
         reservaRepository.save(reserva);
-        User user = getReserva(reservaId).getPerro().getUser();
-        mailService.sendEmail(user, MailType.BOOKING_CANCELLATION_BY_HOST, null , "Reservas Canceladas");
+        User user = getReserva(reservaId).getPerro()
+                .getUser();
+        mailService.sendEmail(user, MailType.BOOKING_CANCELLATION_BY_HOST, null, "Reservas Canceladas");
     }
 
 
@@ -140,7 +147,8 @@ public class ReservaService {
         reserva.setStatus("aceptada-cuidador");
         reserva.setFechaAceptacion(LocalDate.now());
         reservaRepository.save(reserva);
-        User user = getReserva(reservaId).getPerro().getUser();
+        User user = getReserva(reservaId).getPerro()
+                .getUser();
         mailService.sendEmail(user, MailType.BOOKING_CONFIRMATION, null, "Reservas Aceptadas");
     }
 
@@ -155,8 +163,17 @@ public class ReservaService {
     public void setEstadoPagada(Reserva reserva) {
         reserva.setStatus("pagada-dueño");
         reservaRepository.save(reserva);
-        mailService.sendEmail(reserva.getPerro().getUser(), MailType.BOOKING_PAYMENT_TO_USER, null, "Reservas Pagadas");
-        mailService.sendEmail(reserva.getCuidador().getUser(), MailType.BOOKING_PAYMENT_TO_HOST, null, "Reservas Pagadas");
+        mailService.sendEmail(reserva.getPerro()
+                .getUser(), MailType.BOOKING_PAYMENT_TO_USER, null, "Reservas Pagadas");
+        mailService.sendEmail(reserva.getCuidador()
+                .getUser(), MailType.BOOKING_PAYMENT_TO_HOST, null, "Reservas Pagadas");
+    }
+
+    public void setEstadoRefunded(Reserva reserva) {
+        reserva.setStatus("refunded");
+        reservaRepository.save(reserva);
+        mailService.sendEmail(reserva.getPerro()
+                .getUser(), MailType.PAYMENT_REFUNDED, null, "Devoluciones");
     }
 
     public Date addDays(Date date, int days) {
@@ -197,44 +214,41 @@ public class ReservaService {
 
     public List<Ganancias> getGananciasXMes(int año) {
         List<Ganancias> gananciasList = new ArrayList<>();
-         setMesesGancias(gananciasList);
-        Date  initDate= new GregorianCalendar(año, Calendar.JANUARY, 1).getTime();
+        setMesesGanancias(gananciasList);
+        Date initDate = new GregorianCalendar(año, Calendar.JANUARY, 1).getTime();
         Date endDate = new GregorianCalendar(año, Calendar.DECEMBER, 31).getTime();
 
-        List <Reserva> reservaList = reservaRepository.getReservasByFechas(initDate, endDate);
+        List<Reserva> reservaList = reservaRepository.getReservasByFechas(initDate, endDate);
 
         for (Reserva item : reservaList) {
 
-            LocalDate localDate = item.getFechaTransaccion().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate localDate = item.getFechaTransaccion()
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
             int month = localDate.getMonthValue();
 
             gananciasList.stream()
                     .filter(x -> x.getMes() == month)
                     .forEach(y -> y.addGanancia(getGananciaReserva(item.getPrecioTotal()), item.getStatus()));
-            }
+        }
 
-        return gananciasList ;
+        return gananciasList;
     }
 
 
-
-     public float getGananciaReserva (float precioTotal)
-     {
-          return (float) ( precioTotal * 0.2);
-
-
-     }
+    public float getGananciaReserva(float precioTotal) {
+        return (float) (precioTotal * 0.2);
+    }
 
 
-     public void setMesesGancias(  List<Ganancias> gananciasList)
-     {
-                Ganancias ganancias;
-          for ( int i = 1; i < 13 ; i++)
-          {
-                ganancias = new Ganancias();
-               ganancias.setMes(i);
-               gananciasList.add(ganancias);
-          }
+    public void setMesesGanancias(List<Ganancias> gananciasList) {
+        Ganancias ganancias;
+        for (int i = 1; i < 13; i++) {
+            ganancias = new Ganancias();
+            ganancias.setMes(i);
+            gananciasList.add(ganancias);
+        }
 
-     }
+    }
 }

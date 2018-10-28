@@ -23,7 +23,8 @@ public enum MailType {
     BOOKING_STARTING_USER,
     BOOKING_STARTING_HOST,
     RESET_PASSWORD,
-    PASSWORD_CHANGED;
+    PASSWORD_CHANGED,
+    PAYMENT_REFUNDED;
 
 
     public String getMailTemplate(String fullName, String url, String buttonText) throws IOException {
@@ -106,12 +107,18 @@ public enum MailType {
                         "Mucha Suerte!<br>";
                 break;
             case PASSWORD_CHANGED:
-                text = "Usted a actualizado su contraseña correctamente.";
+                text = "Usted ha actualizado su contraseña correctamente.";
                 break;
             case RESET_PASSWORD:
                 text = "<b>Instrucciones para restablecer la contraseña</b><br>" +
                         "Haga clic en el botón para restablecer su contraseña para su cuenta de pupi.com.ar";
                 break;
+            case PAYMENT_REFUNDED:
+                text = "<b>Has recibido una devolución de un pago que realizaste por una reserva</b><br>" +
+                        "El cuidador ha tenido algún inconveniente para recibir a tu perro." +
+                        "No te desanimes, hay muchos más para elegir!";
+                break;
+
             default:
                 throw new AssertionError("Unknown email type " + this);
 
@@ -124,7 +131,8 @@ public enum MailType {
         InputStream inputStream = new ClassPathResource("email/template-stripo.html").getInputStream();
         String content;
         try (BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream))) {
-            content = buffer.lines().collect(Collectors.joining("\n"));
+            content = buffer.lines()
+                    .collect(Collectors.joining("\n"));
         }
         //
         content = content.replace("{{bodyText}}", bodyText);
@@ -173,6 +181,8 @@ public enum MailType {
                 return fullName + ", Recuperar Contraseña - Pupi";
             case PASSWORD_CHANGED:
                 return fullName + ", Contraseña cambiada - Pupi";
+            case PAYMENT_REFUNDED:
+                return fullName + ", Devolución de un Pago - Pupi";
             default:
                 throw new AssertionError("Unknown email type " + this);
         }
