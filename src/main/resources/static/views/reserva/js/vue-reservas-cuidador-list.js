@@ -27,6 +27,9 @@ Vue.component('my-reservas-cuidador-list', {
                  <div v-if="status === 'ejecucion'">
                     <h2><b>Cuidador:</b>  Reservas en curso</h2>
                 </div>
+                <div v-if="status === 'refunded'">
+                    <h2><b>Cuidador:</b>  Reservas en las que devolví el dinero al dueño</h2>
+                </div>
                 <p>
 					<span v-html="tipoDeReservasDescripcion"></span>
 					</br>
@@ -60,7 +63,7 @@ Vue.component('my-reservas-cuidador-list', {
                                 <div class="message-by">
 
                                     <div class="row">
-                                        <div v-bind:class="listClass">
+                                        <div class="col-xs-12 col-md-7">
                                             <div class="message-by-headline">
                                                 <a style="all: unset"><h5>{{
                                                     reserva.perro.user.fullName }} </h5></a>
@@ -93,7 +96,7 @@ Vue.component('my-reservas-cuidador-list', {
                                     </div>
 
                                     <div class="col-xs-6 col-md-3"
-                                         v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'comentario-dueño' && reserva.status !== 'finalizada' && reserva.status !== 'cerrada' && reserva.status !=='rechazada-dueño' && reserva.status !== 'ejecucion' && reserva.status !== 'pagada-dueño'" >
+                                         v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'comentario-dueño' && reserva.status !== 'finalizada' && reserva.status !== 'cerrada' && reserva.status !=='rechazada-dueño' && reserva.status !== 'ejecucion' && reserva.status !== 'pagada-dueño' && reserva.status !== 'refunded'" >
                                         <a v-on:click="cancelarReservaActionButton(index)" style="background-color: inherit; color: red;"
                                            href="#" class="button medium border pull-left"><i
                                                 class="sl sl-icon-docs"></i> Cancelar</a>
@@ -341,7 +344,7 @@ Vue.component('my-reservas-cuidador-list', {
 
                 sweetAlert({
                         title: "¿Quiere devolverle el dinero a " + reserva.perro.user.fullName + " ?",
-                        text: "Ingrese al detalle del pago #"+ reserva.paymentID + " y seleccione \"Devolver dinero\".",
+                        text: "Ingrese al detalle del pago #" + reserva.paymentId + " y seleccione \"Devolver dinero\".",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
@@ -375,13 +378,13 @@ Vue.component('my-reservas-cuidador-list', {
     computed: {
         tipoDeReservas: function () {
             if (this.status == 'creada-dueño') {
-                return 'pendientes'
+                return 'Pendientes'
             }
             if (this.status == 'rechazada-cuidador') {
-                return 'canceladas por mi'
+                return 'Canceladas por mi'
             }
             if (this.status == 'rechazada-dueño') {
-                return 'me cancelaron'
+                return 'Me cancelaron'
             }
             if (this.status == 'aceptada-cuidador') {
                 return 'Confirmadas'
@@ -390,7 +393,7 @@ Vue.component('my-reservas-cuidador-list', {
                 return 'Pagadas'
             }
             if (this.status == 'finalizada') {
-                return 'Pendiente de Calificacion'
+                return 'Pendiente de calificacion'
             }
             if (this.status == 'cerrada') {
                 return 'Cerradas'
@@ -398,38 +401,15 @@ Vue.component('my-reservas-cuidador-list', {
             if (this.status == 'ejecucion') {
                 return 'Mis Reservas en curso'
             }
+            if (this.status == 'refunded') {
+                return 'Reservas en las que no pude cuidar al perro y decidí devolver el dinero'
+            }
             return 'Error'
         },
         tipoDeReservasDescripcion: function () {
             if (this.status == 'finalizada') {
                 return 'Como te fue con el perro? Calificalo para que otros cuidadores conozcan más del mismo.' +
                     '\n <br> Recordá que tenes 72 hs para calificar, sino la reserva se cerrará sin puntuar.'
-            }
-        },
-        listClass: function () {
-            if (this.status == 'creada-dueño') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.status == 'rechazada-cuidador') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.status == 'rechazada-dueño') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.status == 'aceptada-cuidador') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.status == 'pagada-dueño') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.status == 'finalizada') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.status == 'cerrada') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.status == 'ejecucion') {
-                return 'col-xs-12 col-md-7'
             }
         },
         listColor: function () {
