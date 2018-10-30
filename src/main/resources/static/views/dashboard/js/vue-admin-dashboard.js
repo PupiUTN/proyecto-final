@@ -20,7 +20,7 @@ Vue.component('admin-dashboard', {
 		
 		</div>
 		
-		 <div class="col-lg-2 col-md-1"></div>
+		 <div class=""></div>
 			<div class="row">
 			<!-- Item -->
 			<div class="col-lg-3 col-md-6">
@@ -32,13 +32,13 @@ Vue.component('admin-dashboard', {
            
 			<!-- Item -->
 		
-			<!--
+			
 <div  class="col-lg-3 col-md-6">
-    <div class="dashboard-stat color-2">
-        <div class="dashboard-stat-content" style="font-size: 40px;">{{estadisticas.totalDenuncias}}  <br><span>Denuncias</span></div>
-        <div class="dashboard-stat-icon"><i class="im im-icon-Close-Window"></i></div>
+    <div class="dashboard-stat color-4">
+        <div class="dashboard-stat-content" style="font-size: 30px;"> &#36  {{estadisticas.totalDineroActual}}  <br><span style="font-size: medium;">Ganancia anual</span></div>
+        <div class="dashboard-stat-icon"><i class="im im-icon-Dollar-Sign"></i></div>
     </div>
-</div>-->
+</div>
 
 <div class="col-lg-3 col-md-6">
     <div class="dashboard-stat color-2">
@@ -178,6 +178,7 @@ Vue.component('admin-dashboard', {
             estadisticas:{
                  totalReservas: 0,
          totalDenuncias: 0,
+         totalGananciaAnual: '730.25',
          totalDueños: 0,
         totalSolicitudes: 0,
          totalCalificaciones: 0,

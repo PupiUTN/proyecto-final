@@ -6,6 +6,7 @@ import app.models.entities.Ganancias;
 import app.models.entities.Reserva;
 import app.services.*;
 import app.utils.EstadoReserva;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +55,13 @@ public class EstadisticaAdminController {
         int cantSolicitudes = cuidadorService.getSolicitudes().size();
         Long CantCalificaciones = calificacionService.getTotalCalificaciones();
         Long cantDueños = userService.getTotalDueños();
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        List<Reserva> gananciasList = reservaService.getCantidadReservasXaño(year);
+
+        Double gananciaAcum = gananciasList.stream()
+                .filter(x-> statusOk (x.getStatus()))
+                .mapToDouble(f -> (f.getPrecioTotal() * 0.2)).sum();
+
         int totalDenuncias = 1;
 
         if (reservas.size() > 0) {
@@ -83,7 +91,7 @@ public class EstadisticaAdminController {
         estadisticaAdmin.setTotalDenuncias(totalDenuncias);
         estadisticaAdmin.setTotalDueños(cantDueños);
         estadisticaAdmin.setTotalOperativos(cantOperativos);
-
+        estadisticaAdmin.setTotalDineroActual( String.format("%.2f", gananciaAcum));
         return estadisticaAdmin;
     }
 
@@ -531,4 +539,9 @@ public class EstadisticaAdminController {
         return reservaService.getGananciasXMes(año);
     }
 
+
+    private  boolean statusOk(String status) {
+
+        return !(status.equals(EstadoReserva.CREADA.getStatus()) || status.equals(EstadoReserva.CAIDA_FALTA_PAGO.getStatus()) || status.equals(EstadoReserva.ACEPTADA_CUIDADOR.getStatus()) || status.equals(EstadoReserva.RECHAZADA_CUIDADOR.getStatus()) || status.equals(EstadoReserva.RECHAZADA_DUEÑO.getStatus()));
+    }
 }

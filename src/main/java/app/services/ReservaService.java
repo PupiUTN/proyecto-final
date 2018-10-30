@@ -196,13 +196,23 @@ public class ReservaService {
 
     }
 
+    public  List <Reserva> getCantidadReservasXaño (int year)
+    {
+        Date  initDate= new GregorianCalendar(year, Calendar.JANUARY, 1).getTime();
+        Date endDate = new GregorianCalendar(year, Calendar.DECEMBER, 31).getTime();
+
+    return reservaRepository.getReservasByFechas(initDate, endDate);
+
+    }
+
+
     public List<Ganancias> getGananciasXMes(int año) {
         List<Ganancias> gananciasList = new ArrayList<>();
          setMesesGancias(gananciasList);
-        Date  initDate= new GregorianCalendar(año, Calendar.JANUARY, 1).getTime();
-        Date endDate = new GregorianCalendar(año, Calendar.DECEMBER, 31).getTime();
-
-        List <Reserva> reservaList = reservaRepository.getReservasByFechas(initDate, endDate);
+        //Date  initDate= new GregorianCalendar(año, Calendar.JANUARY, 1).getTime();
+        //Date endDate = new GregorianCalendar(año, Calendar.DECEMBER, 31).getTime();
+        //List <Reserva> reservaList = reservaRepository.getReservasByFechas(initDate, endDate);
+        List <Reserva> reservaList = getCantidadReservasXaño(año);
 
         for (Reserva item : reservaList) {
 
