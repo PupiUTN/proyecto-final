@@ -52,7 +52,7 @@ public class Reserva implements Serializable {
     @NotNull
     private String mensaje;
 
-
+    private String paymentId;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate fechaAceptacion;

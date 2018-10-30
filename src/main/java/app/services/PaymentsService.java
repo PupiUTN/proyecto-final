@@ -144,12 +144,14 @@ public class PaymentsService {
                 } else if (calculatePaidAmountAndLog(merchantOrder.getPayments(), booking, id) >= merchantOrder.getTotalAmount()) {
                     LOG.info("CHECK REFUND DIO FALSE");
                     System.out.println("CHECK REFUND DIO FALSE");
-                    reservaService.setEstadoPagada(booking);
+                    String paymentId = getPaymentId(merchantOrder.getPayments());
+                    reservaService.setEstadoPagada(booking, paymentId);
                 }
             } else {
                 LOG.info("EL MERCHANT ORDER NO TIENE STATUS 200");
                 System.out.println("EL MERCHANT ORDER NO TIENE STATUS 200");
             }
+
         } catch (Exception e) {
             System.out.println("Error when trying to get payment info: " + e.toString());
             LOG.error("Error when trying to get payment info [error:{}] [message:{}]", e.toString(), e.getMessage());
@@ -194,5 +196,14 @@ public class PaymentsService {
 
     private float getMarketplaceFee(float totalAmount) {
         return totalAmount * 0.2f;
+    }
+
+    private String getPaymentId(ArrayList<MerchantOrderPayment> payments) {
+        if (payments.isEmpty()) return null;
+        return payments.stream()
+                .filter(pay -> "approved".equalsIgnoreCase(pay.getStatus()))
+                .findFirst()
+                .get()
+                .getId();
     }
 }
