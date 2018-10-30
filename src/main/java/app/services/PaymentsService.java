@@ -134,15 +134,24 @@ public class PaymentsService {
                     .getStatusCode() == 200) {
                 Reserva booking = getReserva(Long.parseLong(merchantOrder.getExternalReference()));
 
+                LOG.info("Merchant Order [message:{}] [status:{}]", merchantOrder.toString(), merchantOrder.getStatus());
+
                 if (checkRefund(merchantOrder.getPayments())) {
+                    LOG.info("CHECK REFUND DIO TRUE");
+                    System.out.println("CHECK REFUND DIO TRUE");
                     reservaService.setEstadoRefunded(booking);
 
                 } else if (calculatePaidAmountAndLog(merchantOrder.getPayments(), booking, id) >= merchantOrder.getTotalAmount()) {
+                    LOG.info("CHECK REFUND DIO FALSE");
+                    System.out.println("CHECK REFUND DIO FALSE");
                     reservaService.setEstadoPagada(booking);
                 }
+            } else {
+                LOG.info("EL MERCHANT ORDER NO TIENE STATUS 200");
+                System.out.println("EL MERCHANT ORDER NO TIENE STATUS 200");
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println("Error when trying to get payment info: " + e.toString());
             LOG.error("Error when trying to get payment info [error:{}] [message:{}]", e.toString(), e.getMessage());
             e.printStackTrace();
         }
@@ -158,6 +167,8 @@ public class PaymentsService {
     }
 
     private boolean checkRefund(ArrayList<MerchantOrderPayment> payments) {
+        LOG.info("ENTRO AL CHECK REFUND");
+        System.out.println("ENTRO AL CHECK REFUND");
         return payments.stream()
                 .anyMatch(pay -> "refunded".equalsIgnoreCase(pay.getStatus()));
     }
