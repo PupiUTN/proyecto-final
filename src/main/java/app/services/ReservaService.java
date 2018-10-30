@@ -97,7 +97,7 @@ public class ReservaService {
 
         if (status.equals("cerrada")) {
             String var2 = "comentario-cuidador";
-            return reservaRepository.findAllByUserAndStatusFinalizada(id, status, var2);
+            return reservaRepository.findAllByCuidadorAndStatusFinalizada(id, status, var2);
         }
 
         if (status.equals("finalizada")) {
@@ -213,13 +213,18 @@ public class ReservaService {
 
     }
 
+    public List<Reserva> getCantidadReservasXaño(int year) {
+        Date initDate = new GregorianCalendar(year, Calendar.JANUARY, 1).getTime();
+        Date endDate = new GregorianCalendar(year, Calendar.DECEMBER, 31).getTime();
+
+        return reservaRepository.getReservasByFechas(initDate, endDate);
+    }
+
+
     public List<Ganancias> getGananciasXMes(int año) {
         List<Ganancias> gananciasList = new ArrayList<>();
-        setMesesGanancias(gananciasList);
-        Date initDate = new GregorianCalendar(año, Calendar.JANUARY, 1).getTime();
-        Date endDate = new GregorianCalendar(año, Calendar.DECEMBER, 31).getTime();
-
-        List<Reserva> reservaList = reservaRepository.getReservasByFechas(initDate, endDate);
+         setMesesGanancias(gananciasList);
+        List <Reserva> reservaList = getCantidadReservasXaño(año);
 
         for (Reserva item : reservaList) {
 
