@@ -91,7 +91,7 @@ public class ReservaService {
 
         if (status.equals("cerrada")) {
             String var2 = "comentario-cuidador";
-            return reservaRepository.findAllByUserAndStatusFinalizada(id, status, var2);
+            return reservaRepository.findAllByCuidadorAndStatusFinalizada(id, status, var2);
         }
 
         if (status.equals("finalizada")) {

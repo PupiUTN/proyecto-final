@@ -93,7 +93,7 @@ Vue.component('my-reservas-cuidador-list', {
                                     </div>
 
                                     <div class="col-xs-6 col-md-3"
-                                         v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'comentario-dueño' && reserva.status !== 'finalizada' && reserva.status !== 'cerrada' && reserva.status !=='rechazada-dueño' && reserva.status !== 'ejecucion' && reserva.status !== 'pagada-dueño'" >
+                                         v-if="reserva.status !== 'rechazada-cuidador' && reserva.status !== 'comentario-dueño' && reserva.status !== 'finalizada' && reserva.status !== 'cerrada' && reserva.status !=='rechazada-dueño' && reserva.status !== 'ejecucion' && reserva.status !== 'pagada-dueño' && reserva.status !== 'comentario-cuidador'" >
                                         <a v-on:click="cancelarReservaActionButton(index)" style="background-color: inherit; color: red;"
                                            href="#" class="button medium border pull-left"><i
                                                 class="sl sl-icon-docs"></i> Cancelar</a>
