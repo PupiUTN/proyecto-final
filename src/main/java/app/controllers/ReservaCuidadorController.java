@@ -45,7 +45,6 @@ public class ReservaCuidadorController {
     @RequestMapping(method = RequestMethod.GET)
     public List<Reserva> get(@RequestParam("status") String status) throws Exception {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        ;
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;
         long id = myUserPrincipal.getUser().getId();
         return reservaService.getReservasByCuidadorIdAndStatus(id, status);
@@ -66,7 +65,7 @@ public class ReservaCuidadorController {
 
     @PreAuthorize("hasAuthority('ROLE_CUIDADOR')")
     @RequestMapping(method = RequestMethod.PUT, value = "{reservaId}/confirmarReserva")
-    public ResponseEntity Confirmar(@PathVariable Long reservaId) throws Exception {
+    public ResponseEntity confirmar(@PathVariable Long reservaId) throws Exception {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         MyUserPrincipal myUserPrincipal = (MyUserPrincipal) userDetails;

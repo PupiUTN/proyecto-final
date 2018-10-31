@@ -31,10 +31,10 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     @Query("select r from Reserva r where r.cuidador.id = :#{#cuidadorId} and r.status IN :#{#statusId} and r.fechaFin >= CURDATE()")
     List<Reserva> findAllByCuidadorIdAndStatusListAndFechaVigente(@Param("cuidadorId")long cuidadorId, @Param("statusId")List<String> statusList);
 
-    @Query("select r from Reserva r where r.cuidador.user.id = :#{#userId} and r.status =:#{#statusId} or r.status =:#{#statusUsuario} order by r.fechaTransaccion")
+    @Query("select r from Reserva r where r.cuidador.user.id = :#{#userId} and r.status =:#{#statusId} or r.status =:#{#statusUsuario} order by r.fechaTransaccion DESC")
     List<Reserva> findAllByCuidadorAndStatusFinalizada(@Param("userId")long userId, @Param("statusId")String statusId, @Param("statusUsuario")String statusUsuario);
 
-    @Query("select r from Reserva r where r.perro.user.id = :#{#userId} and r.status =:#{#statusId} or r.status =:#{#statusUsuario} order by r.fechaTransaccion")
+    @Query("select r from Reserva r where r.perro.user.id = :#{#userId} and r.status =:#{#statusId} or r.status =:#{#statusUsuario} order by r.fechaTransaccion DESC")
     List<Reserva> findAllByUserAndStatusFinalizada(@Param("userId")long userId, @Param("statusId")String statusId, @Param("statusUsuario")String statusUsuario);
 
 
