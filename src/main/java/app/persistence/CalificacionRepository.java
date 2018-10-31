@@ -12,17 +12,17 @@ import java.util.List;
  */
 public interface CalificacionRepository extends JpaRepository<Calificacion, Long> {
 
-    @Query("select c from Calificacion as c join c.reserva as r  where " + "  c.fromOwner = true AND r.cuidador.id =:#{#id}")
+    @Query("select c from Calificacion as c join c.reserva as r where " + " c.fromOwner = true AND r.cuidador.id =:#{#id} ORDER BY c.reserva.fechaInicio DESC")
     List<Calificacion> getCalificacionesCuidador(@Param("id") long id);
 
-    @Query("select c from Calificacion as c join c.reserva as r  where " + "  c.fromOwner = false AND r.perro.id =:#{#id}" )
+    @Query("select c from Calificacion as c join c.reserva as r where " + " c.fromOwner = false AND r.perro.id =:#{#id} ORDER BY c.reserva.fechaInicio DESC")
     List<Calificacion> getCalificacionesPerro(@Param("id")long id);
 
 
-    @Query("select c from Calificacion  as c  where c.reserva.cuidador.user.id = :#{#userId}  AND  c.fromOwner = false " )
+    @Query("select c from Calificacion as c where c.reserva.cuidador.user.id = :#{#userId} AND c.fromOwner = false ORDER BY c.reserva.fechaInicio DESC" )
     List<Calificacion> getCalificacionesRealizadasCuidador(@Param("userId")long userId);
 
 
-    @Query("select c from Calificacion  as c  where c.reserva.perro.id = :#{#userId}  AND  c.fromOwner = false " )
+    @Query("select c from Calificacion as c where c.reserva.perro.id = :#{#userId} AND c.fromOwner = false ORDER BY c.reserva.fechaInicio DESC" )
     List<Calificacion> getCalificacionesRecibidasXPerro(@Param("userId")long userId);
 }

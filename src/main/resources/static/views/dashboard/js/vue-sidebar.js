@@ -19,6 +19,7 @@ let mySidebar = Vue.component('my-sidebar', {
 						<li><a href="/views/reserva/mis-reservas-user.html?status=ejecucion" style="color: #e3f2fd"><span class="nav-tag" style="background-color: #e3f2fd"></span> En ejecucion </a></li>
 						<li><a href="/views/reserva/mis-reservas-user.html?status=cerrada" style="color: #cfd8dc"> <span class="nav-tag" style="background-color: #cfd8dc"></span> Cerradas </a></li>
 						<li><a href="/views/reserva/mis-reservas-user.html?status=rechazada-dueño" style="color: #ffebee"><span class="nav-tag" style="background-color: #ffebee"></span> Canceladas </a></li>
+						<li><a href="/views/reserva/mis-reservas-user.html?status=refunded" style="color: #ffebee"><span class="nav-tag" style="background-color: #ffebee"></span> Devueltas </a></li>
 					</ul>
 					</li>
 					    <li><a><i class="sl sl-icon-star"></i> Calificaciones<!--span v-if="pendientesUser > 0" class="nav-tag green">{{pendientesUser}}</span>--></a>
@@ -45,6 +46,7 @@ let mySidebar = Vue.component('my-sidebar', {
 						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=ejecucion" style="color: #e3f2fd"><span class="nav-tag" style="background-color: #e3f2fd"></span> En ejecucion </a></li>
 						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=cerrada" style="color: #cfd8dc"> <span class="nav-tag" style="background-color: #cfd8dc"></span> Cerradas </a></li>
 						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=rechazada-cuidador" style="color: #ffebee"><span class="nav-tag" style="background-color: #ffebee"></span> Canceladas </a></li>
+						<li><a href="/views/reserva/mis-reservas-cuidador.html?status=refunded" style="color: #ffebee"><span class="nav-tag" style="background-color: #ffebee"></span> Devueltas </a></li>
 					 </ul>
 				<li v-show="role === 'ROLE_CUIDADOR'"><a><i class="sl sl-icon-star"></i> Calificaciones</a>
 					<ul>

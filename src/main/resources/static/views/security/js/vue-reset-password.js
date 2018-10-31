@@ -106,7 +106,7 @@ let myResetPassword = Vue.component('my-reset-password', {
                     this.recuperarContrasenaLoading = false
                     sweetAlert({
                             title: "Exito",
-                            text: "Tu contraseña a sido actualizada.",
+                            text: "Tu contraseña ha sido actualizada.",
                             type: "success"
                         },
                         function () {

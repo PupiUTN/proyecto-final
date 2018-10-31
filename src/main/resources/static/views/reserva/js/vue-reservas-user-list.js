@@ -47,7 +47,7 @@ Vue.component('my-reservas-user-list', {
 
                                 <div class="message-by">
                                     <div class="row">
-                                        <div  v-bind:class="listClass">
+                                        <div class="col-xs-12 col-md-7">
                                             <div class="message-by-headline">
                                                 <a :href="cuidadorProfileUrl + reserva.cuidador.id" style="all: unset"><h5>{{ reserva.cuidador.user.fullName }} </h5></a>  
                                             </div>
@@ -262,10 +262,10 @@ Vue.component('my-reservas-user-list', {
             this.getUserReservas();
 
         },
-        haveProblem(paymentID){
+        haveProblem(paymentID) {
             sweetAlert({
                     title: "¿Tiene problemas con el pago?",
-                    text: "Ingrese al detalle del pago #"+ paymentID + " y seleccione \"Tengo un problema\".",
+                    text: "Ingrese al detalle del pago #" + paymentID + " y seleccione \"Tengo un problema\".",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -322,6 +322,9 @@ Vue.component('my-reservas-user-list', {
             if (this.status == 'ejecucion') {
                 return 'Mis Reservas en curso'
             }
+            if (this.status == 'refunded') {
+                return 'Reservas en las que me devolvieron el dinero'
+            }
             return 'Error, revisar estado de la reserva'
         },
         tipoDeReservasDescripcion: function () {
@@ -350,33 +353,10 @@ Vue.component('my-reservas-user-list', {
             if (this.status == 'ejecucion') {
                 return 'Tus reservas que estan ocurriendo'
             }
+            if (this.status == 'refunded') {
+                return 'El cuidador tuvo algún inconveniente y decidió devolverte el dinero'
+            }
             return 'Error, revisar estado de la reserva'
-        },
-        listClass: function () {
-            if (this.status == 'creada-dueño') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.status == 'rechazada-dueño') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.status == 'rechazada-cuidador') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.status == 'aceptada-cuidador') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.status == 'pagada-dueño') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.status == 'finalizada') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.status == 'cerrada') {
-                return 'col-xs-12 col-md-7'
-            }
-            if (this.status == 'ejecucion') {
-                return 'col-xs-12 col-md-7'
-            }
         },
         listColor: function () {
             if (this.status == 'creada-dueño') {

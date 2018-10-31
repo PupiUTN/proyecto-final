@@ -44,7 +44,7 @@ public class PaymentsService {
     private String APP_DOMAIN;
 
 
-    private static final Logger LOG  = LoggerFactory.getLogger(PaymentsService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PaymentsService.class);
 
     @Autowired
     public PaymentsService(PaymentRepository paymentRepository, ReservaService reservaService, Encryptor encryptor) {
@@ -65,7 +65,7 @@ public class PaymentsService {
 
     @PostConstruct
     private void setRedirectUri() {
-        if("prod".equalsIgnoreCase(ENVIRONMENT)) {
+        if ("prod".equalsIgnoreCase(ENVIRONMENT)) {
             APP_DOMAIN = "https://pupi.com.ar";
         } else {
             APP_DOMAIN = "http://localhost:5000";
@@ -103,7 +103,7 @@ public class PaymentsService {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        if(backUrl != null) {
+        if (backUrl != null) {
             BackUrls backUrls = new BackUrls().setSuccess(backUrl);
             preference.setBackUrls(backUrls);
         }
@@ -133,13 +133,17 @@ public class PaymentsService {
             if (merchantOrder != null && merchantOrder.getLastApiResponse()
                     .getStatusCode() == 200) {
                 Reserva booking = getReserva(Long.parseLong(merchantOrder.getExternalReference()));
-                if (calculatePaidAmountAndLog(merchantOrder.getPayments(), booking, id) >= merchantOrder.getTotalAmount()) {
+
+                if (checkRefund(merchantOrder.getPayments())) {
+                    reservaService.setEstadoRefunded(booking);
+
+                } else if (calculatePaidAmountAndLog(merchantOrder.getPayments(), booking, id) >= merchantOrder.getTotalAmount()) {
                     String paymentId = getPaymentId(merchantOrder.getPayments());
                     reservaService.setEstadoPagada(booking, paymentId);
                 }
             }
+
         } catch (Exception e) {
-            System.out.println(e.toString());
             LOG.error("Error when trying to get payment info [error:{}] [message:{}]", e.toString(), e.getMessage());
             e.printStackTrace();
         }
@@ -152,6 +156,11 @@ public class PaymentsService {
                 .peek(pay -> createPayment(booking, Long.valueOf(id), pay.getStatus()))
                 .mapToDouble(MerchantOrderPayment::getTransactionAmount)
                 .sum();
+    }
+
+    private boolean checkRefund(ArrayList<MerchantOrderPayment> payments) {
+        return payments.stream()
+                .anyMatch(pay -> "refunded".equalsIgnoreCase(pay.getStatus()));
     }
 
     public void createPayment(Reserva reserva, Long mpId, String status) {
@@ -169,14 +178,15 @@ public class PaymentsService {
     }
 
     private String getMercadoPagoToken(String mpToken) {
-        return encryptor.run(mpToken, Cipher.DECRYPT_MODE).replace("\"", "");
+        return encryptor.run(mpToken, Cipher.DECRYPT_MODE)
+                .replace("\"", "");
     }
 
     private float getMarketplaceFee(float totalAmount) {
         return totalAmount * 0.2f;
     }
 
-    private String getPaymentId(ArrayList<MerchantOrderPayment> payments){
+    private String getPaymentId(ArrayList<MerchantOrderPayment> payments) {
         if (payments.isEmpty()) return null;
         return payments.stream()
                 .filter(pay -> "approved".equalsIgnoreCase(pay.getStatus()))
