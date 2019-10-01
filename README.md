@@ -5,15 +5,13 @@ Integracion Continua: Travis [![Build Status](https://travis-ci.org/PupiUTN/proy
 
 Code Quality: [![BCH compliance](https://bettercodehub.com/edge/badge/PupiUTN/Agiles?branch=master)](https://bettercodehub.com/)
 
-> Lo que no se ve, no existe para los profes (Documentacion)
-## 1. Manifiesto
+## 1. Our Manifesto
 
-La parte más dura de hacer software es, precisamente, decidir lo que hacer. Ninguna otra de las partes en que se divide este trabajo es tan difícil como establecer los requisitos técnicos detallados, incluyendo todas las interfaces con la personas, las máquinas y los otros sistemas de software. Ninguna otra parte del trabajo destroza tanto el resultado final si se hace mal. Ninguna otra parte resulta tan díficil de rectificar a posteriori.
+The hardest part of making software is precisely deciding what to do. No other part in which this work is divided is as difficult as establishing detailed technical requirements, including all interfaces with people, machines and other software systems. No other part of the job destroys the end result so much if it is done badly. No other part is so difficult to rectify a posteriori.
 
-Por tanto, la función más importante que realiza el diseñador de software para el cliente es la extracción iterativa y el refinamiento de los requisitos del producto. La verdas es que el cliente no sabe lo que quiere.
+Therefore, the most important function performed by the software designer for the client is the iterative extraction and refinement of the product requirements. The truth is that the client does not know what he wants.
 
-
-## 2. Estado del producto
+## 2. The Product
 
 <br>
 <img src="https://github.com/PupiUTN/proyecto-final/blob/master/images/poster-pasos.png" height="400">
@@ -21,19 +19,16 @@ Por tanto, la función más importante que realiza el diseñador de software par
 <img src="https://github.com/PupiUTN/proyecto-final/blob/master/images/technologies.png" height="400">
 <br>
 
-![BPMN](https://k61.kn3.net/2/1/C/0/E/7/93C.png)
+## 3. The Process (BPMN) 
 
 ![BPMN-v3](https://k61.kn3.net/3/E/5/0/9/3/990.png)
 
-## 3.1 Estado de la documentacion
-![WBS](https://k60.kn3.net/BBBD4A974.png)
 
 
-### 3.3 Proyecto
-
+## 4. The Proyect
 
 [Plantilla Sprint](https://github.com/PupiUTN/proyecto-final/wiki/Plantilla-Sprint )
 
-### Wiki
+## 5. Documentation
 
 [https://github.com/PupiUTN/Agiles/wiki](https://github.com/PupiUTN/Agiles/wiki)
